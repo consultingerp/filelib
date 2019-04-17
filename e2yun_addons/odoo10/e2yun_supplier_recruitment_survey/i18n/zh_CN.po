@@ -1,0 +1,324 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* e2yun_supplier_recruitment_survey
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-04-02 06:16+0000\n"
+"PO-Revision-Date: 2019-04-02 06:16+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:ir.model,name:e2yun_supplier_recruitment_survey.model_supplier_job
+msgid " Supplier Job Position"
+msgstr " Supplier Job Position"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.recruitment_1_3_1
+msgid "0-15"
+msgstr "0-15"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.recruitment_1_3_2
+msgid "16-20"
+msgstr "16-20"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.recruitment_1_3_3
+msgid "21-30"
+msgstr "21-30"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.recruitment_1_3_4
+msgid "31-40"
+msgstr "31-40"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.recruitment_1_3_5
+msgid "41-50"
+msgstr "41-50"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.recruitment_1_3_6
+msgid "51-60"
+msgstr "51-60"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.recruitment_1_3_7
+msgid "61-70"
+msgstr "61-70"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.recruitment_1_3_8
+msgid "71+"
+msgstr "71+"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:ir.ui.view,arch_db:e2yun_supplier_recruitment_survey.crm_case_form_view_job_inherit
+msgid "<span class=\"o_stat_text\">Print</span>\n"
+"                        <span class=\"o_stat_text\">Interview</span>"
+msgstr "<span class=\"o_stat_text\">Print</span>\n"
+"                        <span class=\"o_stat_text\">Interview</span>"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:ir.ui.view,arch_db:e2yun_supplier_recruitment_survey.crm_case_form_view_job_inherit
+msgid "<span class=\"o_stat_text\">Start</span>\n"
+"                        <span class=\"o_stat_text\">Interview</span>"
+msgstr "<span class=\"o_stat_text\">Start</span>\n"
+"                        <span class=\"o_stat_text\">Interview</span>"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.question,question:e2yun_supplier_recruitment_survey.recruitment_2_4
+msgid "Activities"
+msgstr "Activities"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:ir.ui.view,arch_db:e2yun_supplier_recruitment_survey.crm_case_form_view_job_inherit
+msgid "Answer related job question"
+msgstr "Answer related job question"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:ir.model,name:e2yun_supplier_recruitment_survey.model_supplier_applicant
+msgid "Applicant"
+msgstr "申请人"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.page,title:e2yun_supplier_recruitment_survey.recruitment_1
+msgid "Basic information"
+msgstr "Basic information"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:ir.model.fields,help:e2yun_supplier_recruitment_survey.field_supplier_applicant_survey_id
+#: model:ir.model.fields,help:e2yun_supplier_recruitment_survey.field_supplier_job_survey_id
+msgid "Choose an interview form for this job position and you will be able to print/answer this interview from all applicants who apply for this job"
+msgstr "Choose an interview form for this job position and you will be able to print/answer this interview from all applicants who apply for this job"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.rrow_2_1_4
+msgid "Desk space"
+msgstr "Desk space"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:ir.ui.view,arch_db:e2yun_supplier_recruitment_survey.supplier_job_survey_inherit
+#: model:ir.ui.view,arch_db:e2yun_supplier_recruitment_survey.view_supplier_job_kanban_inherit
+msgid "Display Interview Form"
+msgstr "Display Interview Form"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.rrow_2_1_11
+msgid "Dress code"
+msgstr "Dress code"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.question,question:e2yun_supplier_recruitment_survey.recruitment_2_2
+msgid "Education"
+msgstr "Education"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.page,title:e2yun_supplier_recruitment_survey.recruitment_2
+msgid "Education and Activities"
+msgstr "Education and Activities"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.question,question:e2yun_supplier_recruitment_survey.recruitment_2_3
+msgid "Experience"
+msgstr "Experience"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.recruitment_1_2_2
+msgid "Female"
+msgstr "Female"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.rrow_2_1_8
+msgid "Freebies such as tea, coffee and stationery"
+msgstr "Freebies such as tea, coffee and stationery"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.question,question:e2yun_supplier_recruitment_survey.recruitment_1_1
+msgid "From which university will you graduate?"
+msgstr "From which university will you graduate?"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.rrow_2_1_2
+msgid "Getting on with colleagues"
+msgstr "Getting on with colleagues"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.rrow_2_1_7
+msgid "Good management"
+msgstr "Good management"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.rrow_2_1_1
+msgid "Good pay"
+msgstr "Good pay"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.rrow_2_1_13
+msgid "Good social life"
+msgstr "Good social life"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.page,title:e2yun_supplier_recruitment_survey.recruitment_3
+msgid "Importance"
+msgstr "Importance"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.rcol_3_1_3
+msgid "Important"
+msgstr "Important"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:ir.model.fields,field_description:e2yun_supplier_recruitment_survey.field_supplier_job_survey_id
+#: model:ir.ui.view,arch_db:e2yun_supplier_recruitment_survey.view_supplier_job_kanban_inherit
+msgid "Interview Form"
+msgstr "面试表单"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.question,question:e2yun_supplier_recruitment_survey.recruitment_2_1
+msgid "Knowledge"
+msgstr "Knowledge"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.recruitment_1_2_1
+msgid "Male"
+msgstr "Male"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.rcol_3_1_5
+msgid "Most important"
+msgstr "Most important"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:ir.ui.view,arch_db:e2yun_supplier_recruitment_survey.view_supplier_job_kanban_inherit
+msgid "No Interview Form"
+msgstr "No Interview Form"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.rrow_2_1_10
+msgid "No out of hours working"
+msgstr "No out of hours working"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.rcol_3_1_1
+msgid "Not important"
+msgstr "Not important"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.rrow_2_1_3
+msgid "Office environment"
+msgstr "Office environment"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.rrow_2_1_6
+msgid "Office location"
+msgstr "Office location"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.rrow_2_1_9
+msgid "Perks such as free parking, gym passes"
+msgstr "Perks such as free parking, gym passes"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:ir.ui.view,arch_db:e2yun_supplier_recruitment_survey.crm_case_form_view_job_inherit
+msgid "Print interview report"
+msgstr "Print interview report"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.question,question:e2yun_supplier_recruitment_survey.recruitment_3_1
+msgid "Rate the Importance"
+msgstr "Rate the Importance"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.survey,title:e2yun_supplier_recruitment_survey.recruitment_form
+msgid "Recruitment Form"
+msgstr "Recruitment Form"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.rrow_2_1_12
+msgid "Regular meetings"
+msgstr "Regular meetings"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:ir.model.fields,field_description:e2yun_supplier_recruitment_survey.field_supplier_applicant_response_id
+msgid "Response"
+msgstr "Response"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.rcol_3_1_2
+msgid "Somewhat important"
+msgstr "Somewhat important"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.rrow_2_1_5
+msgid "State of the art technology"
+msgstr "State of the art technology"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:ir.model.fields,field_description:e2yun_supplier_recruitment_survey.field_supplier_applicant_survey_id
+msgid "Survey"
+msgstr "问卷"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.survey,description:e2yun_supplier_recruitment_survey.recruitment_form
+msgid "This form is intended to help the responsible of a recruitment interview."
+msgstr "This form is intended to help the responsible of a recruitment interview."
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.label,value:e2yun_supplier_recruitment_survey.rcol_3_1_4
+msgid "Very important"
+msgstr "Very important"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.question,question:e2yun_supplier_recruitment_survey.recruitment_1_3
+msgid "What age group do you belong to?"
+msgstr "What age group do you belong to?"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:survey.question,question:e2yun_supplier_recruitment_survey.recruitment_1_2
+msgid "What is your gender?"
+msgstr "What is your gender?"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:supplier.job,name:e2yun_supplier_recruitment_survey.job_ceo
+msgid "ceo"
+msgstr "ceo"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:supplier.job,name:e2yun_supplier_recruitment_survey.job_consultant
+msgid "consultant"
+msgstr "consultant"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:supplier.job,name:e2yun_supplier_recruitment_survey.job_cto
+msgid "cto"
+msgstr "cto"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:supplier.job,name:e2yun_supplier_recruitment_survey.job_developer
+msgid "developer"
+msgstr "developer"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:supplier.job,name:e2yun_supplier_recruitment_survey.job_hrm
+msgid "hrm"
+msgstr "hrm"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:supplier.job,name:e2yun_supplier_recruitment_survey.job_marketing
+msgid "marketing"
+msgstr "marketing"
+
+#. module: e2yun_supplier_recruitment_survey
+#: model:supplier.job,name:e2yun_supplier_recruitment_survey.job_trainee
+msgid "trainee"
+msgstr "trainee"
+

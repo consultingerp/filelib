@@ -1,0 +1,5 @@
+import supplier_product
+import supplier_recruitment
+import supplier_supplier
+import supplier_job
+import supplier_recruitment_config_settings

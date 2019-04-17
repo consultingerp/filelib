@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_supplier_job_public,supplier.job.public,e2yun_supplier_recruitment.model_supplier_job,,1,0,0,0
+access_supplier_product_public,supplier.product.public,e2yun_supplier_recruitment.model_product_template,base.group_public,1,0,0,0
