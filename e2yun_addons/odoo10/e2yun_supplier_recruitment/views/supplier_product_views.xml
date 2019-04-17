@@ -1,0 +1,169 @@
+<odoo>
+    <!--<record id="view_supplier_filter" model="ir.ui.view">
+            <field name="name">supplier.supplier.search</field>
+            <field name="model">product.supplierinfo</field>
+            <field name="arch" type="xml">
+                <search string="Supplier">
+                    <field name="name" string="Supplier" filter_domain="[('name','ilike',self)]"/>
+                    <field name="product_id"/>
+                    <field name="category_ids" groups="group_supplier_user"/>
+                    <field name="job_id" />
+                    <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction','=',True)]"/>
+                    <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Manager" domain="[]" context="{'group_by':'parent_id'}"/>
+                        <filter string="Coach" domain="[]" context="{'group_by':'coach_id'}"/>
+                        <filter string="Product" domain="[]" context="{'group_by':'product_id'}"/>
+                        <filter string="Job" domain="[]" context="{'group_by':'job_id'}"/>
+                        <filter string="Company" domain="[]" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
+                    </group>
+                </search>
+             </field>
+    </record>
+-->
+    <record id="act_supplier_from_product" model="ir.actions.act_window">
+            <field name="name">Suppliers</field>
+            <field name="res_model">product.supplierinfo</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,form,tree</field>
+            <!--<field name="search_view_id" ref="view_supplier_filter"/> -->
+            <field name="context">{
+                "search_default_product_id": [active_id],
+                "default_product_id": active_id}
+            </field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a new supplier.
+              </p><p>
+                With just a quick glance on the Odoo supplier screen, you
+                can easily find all the information you need for each person;
+                contact data, job position, availability, etc.
+              </p>
+            </field>
+        </record>
+    <record id="supplier_product_view_kanban" model="ir.ui.view" >
+            <field name="name">supplier.product.kanban</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <kanban class="oe_background_grey o_kanban_dashboard o_hr_kanban">
+                    <field name="name"/>
+                    <field name="company_id"/>
+                    <field name="manager_id"/>
+                    <field name="color"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{kanban_color(record.color.raw_value)}">
+                                <div class="o_kanban_card_header">
+                                    <div class="o_kanban_card_header_title">
+                                        <div class="o_primary"><field name="name"/></div>
+                                        <div class="o_secondary"><field name="company_id"/></div>
+                                    </div>
+                                    <div class="o_kanban_manage_button_section">
+                                        <a class="o_kanban_manage_toggle_button" href="#">More <i class="fa fa-caret-down"/></a>
+                                    </div>
+                                </div>
+                                <div class="container o_kanban_card_content o_visible">
+                                    <div class="row">
+                                        <div class="col-xs-6 o_kanban_primary_left">
+                                            <button class="btn btn-primary" name="%(act_supplier_from_product)d" type="action">Suppliers</button>
+                                        </div>
+                                        <div class="col-xs-6 o_kanban_primary_right">
+                                        </div>
+                                    </div>
+                                </div><div class="container o_kanban_card_manage_pane o_invisible">
+                                    <div class="row">
+                                        <div class="col-xs-4 o_kanban_card_manage_section o_kanban_manage_to_do">
+                                            <div class="o_kanban_card_manage_title">
+                                                <span>To Do</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4 o_kanban_card_manage_section o_kanban_manage_to_approve">
+                                            <div class="o_kanban_card_manage_title">
+                                                <span>To Approve</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4 o_kanban_card_manage_section o_kanban_manage_reports">
+                                            <div class="o_kanban_card_manage_title">
+                                                <span>Reports</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div t-if="widget.editable" class="o_kanban_card_manage_settings row">
+                                        <div class="col-xs-8">
+                                            <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                        </div>
+                                        <div class="col-xs-4 text-right">
+                                            <a type="edit">Settings</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+    <!--Hr Product Inherit Kanban view-->
+    <record id="supplier_product_view_kanban_inherit" model="ir.ui.view">
+        <field name="name">supplier.product.kanban.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="supplier_product_view_kanban"/>
+        <field name="groups_id" eval="[(4,ref('e2yun_supplier_recruitment.group_supplier_recruitment_user'))]"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//templates" position="before">
+                    <field name="new_applicant_count"/>
+                    <field name="new_certified_supplier"/>
+                    <field name="expected_supplier"/>
+                </xpath>
+
+                <xpath expr="//div[contains(@class, 'o_kanban_primary_right')]" position="inside">
+                    <div t-if="record.new_applicant_count.raw_value > 0" class="row">
+                        <div class="col-xs-9">
+                            <a name="%(supplier_applicant_action_from_product)d" type="action">
+                                New Applicants
+                            </a>
+                        </div>
+                        <div class="col-xs-3">
+                            <field name="new_applicant_count"/>
+                        </div>
+                    </div>
+                </xpath>
+
+                <xpath expr="//div[contains(@class, 'o_kanban_manage_to_do')]" position="inside">
+                    <div class="row">
+                        <div class="col-xs-12 text-left">
+                            <a name="%(supplier_applicant_action_from_product)d" type="action">
+                                <t t-esc="record.new_applicant_count.raw_value or 0"/> New Applicants
+                            </a>
+                        </div>
+                    </div>
+                </xpath>
+
+                <xpath expr="//div[contains(@class, 'o_kanban_manage_reports')]" position="inside">
+                    <div class="row">
+                        <div class="col-xs-12 text-left">
+                            <a name="%(action_supplier_recruitment_report_filtered_product)d" type="action">
+                                Recruitments
+                            </a>
+                        </div>
+                    </div>
+                </xpath>
+
+            </data>
+        </field>
+    </record>
+
+    <record id="action_supplier_product" model="ir.actions.act_window">
+        <field name="name">Products</field>
+        <field name="res_model">product.template</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_supplier_product" name="Products"
+            parent="menu_supplier_recruitment_configuration" action="action_supplier_product"/>
+</odoo>

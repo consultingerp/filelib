@@ -1,0 +1,1024 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* e2yun_website_supplier_recruitment
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-04-02 06:18+0000\n"
+"PO-Revision-Date: 2019-04-02 06:18+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.model,name:e2yun_website_supplier_recruitment.model_supplier_job
+msgid " Supplier Job Position"
+msgstr " Supplier Job Position"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "$15k"
+msgstr "$15k"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "10  / 40 people"
+msgstr "10  / 40 人"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "3 months"
+msgstr "3个月"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "50% YoY"
+msgstr "50% YoY"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "<i>Work in a fun atmosphere</i>"
+msgstr "<i>Work in a fun atmosphere</i>"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "<i>You are passionate</i>"
+msgstr "<i>You are passionate</i>"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "<i>You autonomously and quickly learn</i>"
+msgstr "<i>You autonomously and quickly learn</i>"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+msgid "<i>You easily manage them</i>"
+msgstr "<i>You easily manage them</i>"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.apply
+msgid "<span class=\"btn btn-primary btn-lg o_website_form_send\">Submit</span>\n"
+"                                <span id=\"o_website_form_result\"/>"
+msgstr "<span class=\"btn btn-primary btn-lg o_website_form_send\">提交</span>\n"
+"                                <span id=\"o_website_form_result\"/>"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "<strong>Challenges</strong>"
+msgstr "<strong>Challenges</strong>"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "<strong>Must Have</strong>"
+msgstr "<strong>Must Have</strong>"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "<strong>Responsibilities</strong>"
+msgstr "<strong>Responsibilities</strong>"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "<strong>What's great in the job?</strong>"
+msgstr "<strong>What's great in the job?</strong>"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "A full time job, with an attractive salary package in a small team of smart people. You will start contract with a full technical and functional training. If you are passionate, motivate and flexible apply for this job, you will certainly join the best company ever."
+msgstr "A full time job, with an attractive salary package in a small team of smart people. You will start contract with a full technical and functional training. If you are passionate, motivate and flexible apply for this job, you will certainly join the best company ever."
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "A good job in a young and dynamic team"
+msgstr "A good job in a young and dynamic team"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Achieve monthly targets"
+msgstr "Achieve monthly targets"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.job_countries
+msgid "All Countries"
+msgstr "All Countries"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.job_products
+msgid "All Departments"
+msgstr "All Departments"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.job_offices
+msgid "All Offices"
+msgstr "All Offices"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+msgid "Analyse needs, write specification documents and quotation"
+msgstr "Analyse needs, write specification documents and quotation"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.model,name:e2yun_website_supplier_recruitment.model_supplier_applicant
+msgid "Applicant"
+msgstr "申请人"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.apply
+msgid "Apply Job"
+msgstr "申请供应商资格"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.detail
+msgid "Apply Now!"
+msgstr "现在就申请!"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Avg Deal Size:"
+msgstr "Avg Deal Size:"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+msgid "Because of our constant growth, we're now looking for people to reinforce our team of enthusiastic chief technical officer. So if working on an open source project in a friendly and cooperative atmosphere sounds like fun to you, read on..."
+msgstr "由于我们的不断发展，我们现在正在寻找人来加强我们的热情的首席技术官的团队。 因此，如果在一个友好合作的气氛中工作的开源项目听起来很有趣，请继续阅读…"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+msgid "Because of our constant growth, we're now looking for people to reinforce our team of enthusiastic developers. So if working on an open source project in a friendly and cooperative atmosphere sounds like fun to you, read on..."
+msgstr "Because of our constant growth, we're now looking for people to reinforce our team of enthusiastic developers. So if working on an open source project in a friendly and cooperative atmosphere sounds like fun to you, read on..."
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "Because of our constant growth, we're now looking for people to reinforce our team of enthusiastic trainees. So if working on an open source project in a friendly and cooperative atmosphere sounds like fun to you, read on..."
+msgstr "Because of our constant growth, we're now looking for people to reinforce our team of enthusiastic trainees. So if working on an open source project in a friendly and cooperative atmosphere sounds like fun to you, read on..."
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Benefits"
+msgstr "Benefits"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Brand-name product and services in categories like travel, electronics, health, fitness, cellular, and more"
+msgstr "品牌产品和服务类别，如旅游，电子，健康，健身，手机等"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "Close to the perfection ..."
+msgstr "Close to the perfection ..."
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Company Growth:"
+msgstr "Company Growth:"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Company Maturity:"
+msgstr "Company Maturity:"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.index
+msgid "Contact us"
+msgstr "联系我们"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.thankyou
+msgid "Continue To Our Website"
+msgstr "Continue To Our Website"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "Contributions to open source projects"
+msgstr "Contributions to open source projects"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.index
+msgid "Create new job pages from the <strong><i>+New</i></strong> top-right button."
+msgstr "Create new job pages from the <strong><i>+New</i></strong> top-right button."
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+msgid "Define a clear communication strategy"
+msgstr "Define a clear communication strategy"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+msgid "Deliver generic Odoo functional training sessions"
+msgstr "Deliver generic Odoo functional training sessions"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Direct coordination with functional consultants for qualification and follow ups"
+msgstr "与招聘主管直接协调和后续跟进"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Discount Programs"
+msgstr "Discount Programs"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Eat &amp; Drink"
+msgstr "Eat &amp; Drink"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+msgid "Follow and check the development part"
+msgstr "Follow and check the development part"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Full sales cycle"
+msgstr "Full sales cycle"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+msgid "Good knowledge of HTML and Javascript"
+msgstr "Good knowledge of HTML and Javascript"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "Good knowledge of object oriented programming"
+msgstr "Good knowledge of object oriented programming"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "Good knowledge of the latest web technologies"
+msgstr "Good knowledge of the latest web technologies"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "Good knowledge of the programming language"
+msgstr "Good knowledge of the programming language"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "Good knowledge of web design"
+msgstr "Good knowledge of web design"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "Good language skills in another language"
+msgstr "Good language skills in another language"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Healthcare, dental, vision, life insurance, Flexible Spending Account (FSA), Health Savings Account (HSA)"
+msgstr "Healthcare, dental, vision, life insurance, Flexible Spending Account (FSA), Health Savings Account (HSA)"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+msgid "Help with the configuration of the software"
+msgstr "Help with the configuration of the software"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "High commissions for good performers"
+msgstr "High commissions for good performers"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+msgid "Hire a team of great Human Resources people"
+msgstr "Hire a team of great Human Resources people"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+msgid "Hire a team of great executive people"
+msgstr "Hire a team of great executive people"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+msgid "Hire a team of great marketing people"
+msgstr "Hire a team of great marketing people"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+msgid "Improve our communication to customers"
+msgstr "Improve our communication to customers"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+msgid "Increase opportunities"
+msgstr "Increase opportunities"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+msgid "Increase the visibility of the product"
+msgstr "Increase the visibility of the product"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.apply
+msgid "Job Application Form"
+msgstr "寻源需求申请表格"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Job Complexity:"
+msgstr "Job Complexity:"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.detail
+msgid "Job Detail"
+msgstr "需求明细"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Job Security:"
+msgstr "Job Security:"
+
+#. module: e2yun_website_supplier_recruitment
+#: code:addons/e2yun_website_supplier_recruitment/controllers/main.py:74
+#, python-format
+msgid "Job Title"
+msgstr "Job Title"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.detail
+msgid "Jobs"
+msgstr "工作"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.index
+msgid "Join us and help disrupt the enterprise market!"
+msgstr "加入我们，帮助颠覆企业市场!"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.index
+msgid "Join us, we offer you an extraordinary chance to learn, to\n"
+"                                    develop and to be part of an exciting experience and\n"
+"                                    team."
+msgstr "加入我们，我们将为您提供一个非凡的发展的机会，\n"
+"并成为一个具有令人振奋的体验团队的一部分。"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Large apps scope: CRM, MRP, Accounting, Inventory, Supplier, Project Mgt, etc."
+msgstr "应用范围：销售，生产，会计，库存，人力资源，项目管理等。"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+msgid "Launch new marketing campaigns and offers"
+msgstr "Launch new marketing campaigns and offers"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+msgid "Launch new products, Human Resources campaigns and offers"
+msgstr "Launch new products, Human Resources campaigns and offers"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+msgid "Launch new products, marketing campaigns and offers"
+msgstr "Launch new products, marketing campaigns and offers"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "Master or engineer in computer science"
+msgstr "Master or engineer in computer science"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "Must have ..."
+msgstr "Must have ..."
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Need More Info?"
+msgstr "Need More Info?"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.content_new_job_offer
+msgid "New Job Offer"
+msgstr "New Job Offer"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "Nice to have"
+msgstr "优先考虑"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "No outbound calls, you get leads and focus on providing value to them"
+msgstr "No outbound calls, you get leads and focus on providing value to them"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Only a couple blocs from BART, Caltrain, Highway 101, carpool pickup, and Bay Bridge."
+msgstr "只有两个集团从巴特，加州火车、公路101、拼车皮卡，与海湾大桥。"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.index
+msgid "Our Job Offers"
+msgstr "我们的寻源需求"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "Our staff at work"
+msgstr "我们的供应商"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Overachieving Possibilities:"
+msgstr "Overachieving Possibilities:"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "PTOs"
+msgstr "PTOs"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+msgid "Passion for the Internet and its culture"
+msgstr "Passion for the Internet and its culture"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Peet's and Philz coffee provided all day to order and pantry snacks"
+msgstr "Peet's and Philz coffee provided all day to order and pantry snacks"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Personal Evolution:"
+msgstr "Personal Evolution:"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "Pictures of smart and enthusiastic people"
+msgstr "Pictures of smart and enthusiastic people"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Play any sport with colleagues and the bill is covered"
+msgstr "Play any sport with colleagues and the bill is covered"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Pre-tax commuter benefitsbr <br/>(parking and transit)"
+msgstr "Pre-tax commuter benefitsbr <br/>(parking and transit)"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "Preferably 1 year of experience"
+msgstr "Preferably 1 year of experience"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Prime location"
+msgstr "Prime location"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Profitable"
+msgstr "Profitable"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+msgid "Quantify and negotiate the resources required"
+msgstr "Quantify and negotiate the resources required"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+msgid "Quick and autonomous learner"
+msgstr "Quick and autonomous learner"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "Responsibilities"
+msgstr "责任"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.apply
+msgid "Resume"
+msgstr "简介"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Sales Cycle:"
+msgstr "Sales Cycle:"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Save on commute"
+msgstr "Save on commute"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+msgid "Scale our events organization all around the world"
+msgstr "Scale our events organization all around the world"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.apply
+msgid "Short Introduction"
+msgstr "概述"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Short summary of the job: A sales job for smart people and can\n"
+"                learn quickly new industries management practices. You will be\n"
+"                in charge of the full sales cycle from the opportunity\n"
+"                qualification to the negotiation, going through astonishing\n"
+"                product demos."
+msgstr "Short summary of the job: A sales job for smart people and can\n"
+"                learn quickly new industries management practices. You will be\n"
+"                in charge of the full sales cycle from the opportunity\n"
+"                qualification to the negotiation, going through astonishing\n"
+"                product demos."
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "Skills"
+msgstr "必备技术要求"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.model,name:e2yun_website_supplier_recruitment.model_supplier_recruitment_source
+msgid "Source of Applicants"
+msgstr "申请来源"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Sponsored Events"
+msgstr "Sponsored Events"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Sport Activity"
+msgstr "Sport Activity"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.job_footer_custom
+#: model:website.menu,name:e2yun_website_supplier_recruitment.menu_supplierjobs
+msgid "SupplierJobs"
+msgstr "供应商寻源"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+msgid "Take part in the consulting services"
+msgstr "Take part in the consulting services"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Team / Company Size:"
+msgstr "Team / Company Size:"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+msgid "Team spirit and good communication"
+msgstr "Team spirit and good communication"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.thankyou
+msgid "Thank you!"
+msgstr "谢谢！"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "The culture"
+msgstr "The culture"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "The founder’s story"
+msgstr "The founder’s story"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+msgid "Transform our product into a suite of well positioned business Apps"
+msgstr "Transform our product into a suite of well positioned business Apps"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Tuesday Dinners, Monthly Lunch Mixers, Monthly Happy Hour, Annual day event"
+msgstr "Tuesday Dinners, Monthly Lunch Mixers, Monthly Happy Hour, Annual day event"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "US + Canada Territory"
+msgstr "US + Canada Territory"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.model.fields,field_description:e2yun_website_supplier_recruitment.field_supplier_recruitment_source_url
+msgid "Url Parameters"
+msgstr "Url Parameters"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Vacation, Sick, and Holiday paid leaves"
+msgstr "Vacation, Sick, and Holiday paid leaves"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "Variability of the Job:"
+msgstr "Variability of the Job:"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+msgid "We are looking for a motivated and results-driven Functional Consultant! You will take part in the consulting services we provide to our partners and customers, on the functional side. Your job start from the quotation to the customer to the delivery to the customer. You listen the customer and try to give him the best service. You report to the head of consulting service and will be coached by a senior consultant."
+msgstr "我们在寻找以动机和结果为导向的顾问，来参与到我们给顾客和往来单位提供的咨询服务中。 在功能方面，您的工作将会从给顾客报价一直到交货为止。倾听并给客户提供最好的服务。回报对象是咨询部门领导。并且由高级顾问对您进行培训。"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+msgid "We are looking for a passionated Human Resources Manager to help us make products people love to use. We need someone who is ambitious, passionated, and ..... not afraid to start new things, a lot of new things and scale them."
+msgstr "We are looking for a passionated Human Resources Manager to help us make products people love to use. We need someone who is ambitious, passionated, and ..... not afraid to start new things, a lot of new things and scale them."
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+msgid "We are looking for a passionated executive manager to help us make products people love to use. We need someone who is ambitious, passionated, and ..... not afraid to start new things, a lot of new things and scale them."
+msgstr "We are looking for a passionated executive manager to help us make products people love to use. We need someone who is ambitious, passionated, and ..... not afraid to start new things, a lot of new things and scale them."
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+msgid "We are looking for a passionated marketer manager to help us make products people love to use. We need someone who is ambitious, passionated, and ..... not afraid to start new things, a lot of new things and scale them."
+msgstr "We are looking for a passionated marketer manager to help us make products people love to use. We need someone who is ambitious, passionated, and ..... not afraid to start new things, a lot of new things and scale them."
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.actions.act_url,name:e2yun_website_supplier_recruitment.action_open_website
+msgid "Website Recruitment Form"
+msgstr "Website Recruitment Form"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.model.fields,field_description:e2yun_website_supplier_recruitment.field_supplier_job_website_description
+msgid "Website description"
+msgstr "网站说明"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "What people say about us?"
+msgstr "What people say about us?"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "What we offer"
+msgstr "我们提供什么"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "What you will do ..."
+msgstr "What you will do ..."
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+msgid "Will report to the Head of Professional Services"
+msgstr "Will report to the Head of Professional Services"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "With our product, which is a suite of 3000 business apps. It is fully open source, full featured and it’s online offer is 3 times cheaper than traditional competitors. We have 2.000.000 users, and we're growing fast."
+msgstr "我们的产品是一个有着3000个APP的商务应用程序，它是全部开源的，有非常多的功能并且在线报价比传统的竞争者便宜３倍，我们有超过 2百万用户，并且我们正在快速增长。"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+msgid "Write attractive content"
+msgstr "Write attractive content"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+msgid "Write attractive content and build up Human Resources materials"
+msgstr "Write attractive content and build up Human Resources materials"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+msgid "Write attractive content and build up executive materials"
+msgstr "Write attractive content and build up executive materials"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+msgid "You are a quick and autonomous learner"
+msgstr "You are a quick and autonomous learner"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+msgid "You are an excellent communicator and negotiator"
+msgstr "You are an excellent communicator and negotiator"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+msgid "You are approachable, honest and fun team player"
+msgstr "You are approachable, honest and fun team player"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+msgid "You are available immediately"
+msgstr "You are available immediately"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+msgid "You are creative"
+msgstr "You are creative"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+msgid "You are ready to travel in US"
+msgstr "You are ready to travel in US"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+msgid "You are ready to work in a dynamic company"
+msgstr "You are ready to work in a dynamic company"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+msgid "You have 2 or 3 years of experience"
+msgstr "You have 2 or 3 years of experience"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+msgid "You have a Master degree in Business Management"
+msgstr "You have a Master degree in Business Management"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+msgid "You have an affinity with the IT world"
+msgstr "You have an affinity with the IT world"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+msgid "You have an affinity with the product"
+msgstr "You have an affinity with the product"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+msgid "You have good knowledge in accounting"
+msgstr "You have good knowledge in accounting"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.default_website_description
+msgid "You sell management software to directors of SMEs: interesting projects and people"
+msgstr "面向中小型企业的管理层销售管理软件：是非常有意义的"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+msgid "You speak a third language"
+msgstr "You speak a third language"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_consultant
+msgid "You speak fluently French and English"
+msgstr "You speak fluently French and English"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "You will be responsible for developing and improving applications. You will work autonomously as well as                     coordinate and supervise small distributed development teams for specific projects. You will become a technical                 expert of the product."
+msgstr "您将负责开发和改进应用程序。 您将自主地工作，以及协调和监督特定项目的小型分布式开发团队。 您将成为该产品的技术专家。"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+msgid "You will be responsible for developing and improving applications. You will work autonomously as well as coordinate and supervise small distributed development teams for specific projects. You will become a technical expert of the product."
+msgstr "您将负责开发和改进应用程序。 您将自主地工作，以及协调和监督特定项目的小型分布式开发团队。 您将成为该产品的技术专家。"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_ceo
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_hrm
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_marketing
+msgid "You will be responsible for developing and improving product communication. You will work autonomously as well as coordinate and supervise small distributed development teams for specific projects. You will become a techinical expert of the product."
+msgstr "You will be responsible for developing and improving product communication. You will work autonomously as well as coordinate and supervise small distributed development teams for specific projects. You will become a techinical expert of the product."
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "You will become a technical expert of the product."
+msgstr "You will become a technical expert of the product."
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+msgid "You will initially be coached by senior developers"
+msgstr "You will initially be coached by senior developers"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+msgid "You will initially be coached by senior technical officer"
+msgstr "You will initially be coached by senior technical officer"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "You will initially be coached by senior trainees"
+msgstr "You will initially be coached by senior trainees"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "You will report to the head of R&amp;D"
+msgstr "You will report to the head of R&amp;D"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_developer
+msgid "You will work closely with all developers"
+msgstr "You will work closely with all developers"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_cto
+msgid "You will work closely with all technical officer"
+msgstr "You will work closely with all technical officer"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,website_description:e2yun_website_supplier_recruitment.job_trainee
+msgid "You will work closely with all trainees"
+msgstr "You will work closely with all trainees"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.apply
+msgid "Your Email"
+msgstr "你的电子邮件"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.apply
+msgid "Your Name"
+msgstr "你的姓名"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.apply
+msgid "Your Phone Number"
+msgstr "Your Phone Number"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.thankyou
+msgid "Your job application has been successfully registered,\n"
+"                        we will get back to you soon."
+msgstr "Your job application has been successfully registered,\n"
+"                        we will get back to you soon."
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.index
+msgid "for job opportunities."
+msgstr "for job opportunities."
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,name:e2yun_website_supplier_recruitment.job_ceo
+msgid "job_ceo"
+msgstr "job_ceo"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,name:e2yun_website_supplier_recruitment.job_consultant
+msgid "job_consultant"
+msgstr "job_consultant"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,name:e2yun_website_supplier_recruitment.job_cto
+msgid "job_cto"
+msgstr "job_cto"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,name:e2yun_website_supplier_recruitment.job_developer
+msgid "job_developer"
+msgstr "job_developer"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,name:e2yun_website_supplier_recruitment.job_hrm
+msgid "job_hrm"
+msgstr "job_hrm"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,name:e2yun_website_supplier_recruitment.job_marketing
+msgid "job_marketing"
+msgstr "job_marketing"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:supplier.job,name:e2yun_website_supplier_recruitment.job_trainee
+msgid "job_trainee"
+msgstr "job_trainee"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.index
+msgid "open positions"
+msgstr "开放的需求"
+
+#. module: e2yun_website_supplier_recruitment
+#: model:ir.ui.view,arch_db:e2yun_website_supplier_recruitment.index
+msgid "unpublished"
+msgstr "未发布"
+
