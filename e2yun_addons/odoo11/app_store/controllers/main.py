@@ -43,7 +43,7 @@ class AppsController(http.Controller):
         modules = request.env['module.overview'].search([])
         return http.request.render('app_store.app_list', {'modules':modules})
 
-    def zip_dir(dirname, zipfilename):
+    def zip_dir(self,dirname, zipfilename):
         filelist = []
         if os.path.isfile(dirname):
             filelist.append(dirname)
@@ -77,9 +77,9 @@ class AppsController(http.Controller):
         #app_directory = home_directory + "/apps"
         module_directory = app_directory + "/" + module_name
         zip_directory = app_directory + "/zip"
-        if not  os.path.dirname(zip_directory):
+        if not  os.path.exists(zip_directory):
             os.mkdir(zip_directory)
-        self.zip_dir(module_directory + "/" + module_name , zip_directory + "/" + module_name + ".zip")
+        self.zip_dir(module_directory  , zip_directory + "/" + module_name + ".zip")
         response = werkzeug.wrappers.Response(open(zip_directory + "/" + module_name + ".zip", mode="r+b"), headers=headers, direct_passthrough=True)
         return response
 
