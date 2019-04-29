@@ -79,6 +79,8 @@ class AppsController(http.Controller):
         zip_directory = app_directory + "/zip"
         if not  os.path.exists(zip_directory):
             os.mkdir(zip_directory)
+        elif os.path.exists(zip_directory + "/" + module_name + ".zip"):
+            os.remove(zip_directory + "/" + module_name + ".zip")
         self.zip_dir(module_directory  , zip_directory + "/" + module_name + ".zip")
         response = werkzeug.wrappers.Response(open(zip_directory + "/" + module_name + ".zip", mode="r+b"), headers=headers, direct_passthrough=True)
         return response
