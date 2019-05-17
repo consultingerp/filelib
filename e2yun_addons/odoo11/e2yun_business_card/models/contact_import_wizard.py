@@ -224,61 +224,101 @@ class ImportContactImportWizard(models.TransientModel):
     def _create_contact_from_file(self, attachment):
 
         contact_form = Form(self.env['res.partner'], view='crm.view_partners_form_crm1')
-        image = base64.b64decode(attachment)
-        result = self._get_contact_from_aipocr(image)
+        imagedata = base64.b64decode(attachment)
+        result = self._get_contact_from_aipocr(imagedata)
         if result['words_result_num'] > 0:
             contact = result['words_result']
-            if contact['NAME'] or contact['MOBILE']:
-                partner = self.env['res.partner'].search(
-                    [('name', 'ilike', contact['NAME']),'|',
-                     ('parent_name', 'ilike', contact['COMPANY']),
-                     ('email', '=', contact['EMAIL'])], limit=1)
+            if ((contact['NAME'] and contact['NAME'] != [''])
+                    or (contact['MOBILE']and contact['MOBILE'] != [''])):
+                [name] = contact['NAME']
+                [mobile] = contact['MOBILE']
+                if contact['COMPANY'] and contact['COMPANY'] != ['']:
+
+                    [company] = contact['COMPANY']
+                    partner = self.env['res.partner'].search(
+                        [('name', 'ilike', name),
+                        ('parent_name', 'ilike', company)], limit=1)
+                elif contact['EMAIL'] and contact['EMAIL'] != ['']:
+                    [email] = contact['EMAIL']
+                    partner = self.env['res.partner'].search(
+                        [('name', 'ilike', name),
+                         ('email', '=', email)], limit=1)
                 if not partner: #如果不存在，新建联系人
                     #contact['FAX']
-                    contact_form.phone = contact['TEL']
-                    contact_form.name = contact['NAME']
-                    contact_form.title = contact['TITLE']
-                    contact_form.mobile = contact['MOBILE']
-                    contact_form.email = contact['EMAIL']
+                    if contact['TEL'] and contact['TEL'] != ['']:
+                        [contact_form.phone] = contact['TEL']
+                    if contact['NAME'] and contact['NAME'] != ['']:
+                        [contact_form.name] = contact['NAME']
+                    if contact['TITLE'] and contact['TITLE']!=['']:
+                        [contact_form.title] = contact['TITLE']
+                    if contact['MOBILE'] and contact['MOBILE'] != ['']:
+                        [contact_form.mobile] = contact['MOBILE']
+                    if contact['EMAIL'] and contact['EMAIL'] != ['']:
+                        [contact_form.email] = contact['EMAIL']
                     #contact['PC']
-                    contact_form.website = contact['URL']
-                    for item in contact['ADDR']:
-                        contact_form.street += item
-                    if contact['COMPANY']:
-                        partner = self.env['res.partner'].search([('name', 'ilike', contact['COMPANY']),('company_type','=','company')], limit=1)
+                    if contact['URL'] and contact['URL'] != ['']:
+                        [contact_form.website] = contact['URL']
+                    if contact['ADDR'] and contact['ADDR'] != ['']:
+                        street = ''
+                        for item in contact['ADDR']:
+                            street += item
+                        contact_form.street = street
+                    if contact['COMPANY'] and contact['COMPANY'] != ['']:
+                        [company] = contact['COMPANY']
+                        partner = self.env['res.partner'].search([('name', 'ilike', company),('company_type','=','company')], limit=1)
                         if not partner:
-                            partner = self.env['res.partner'].create({'name': contact['COMPANY'],
+                            partner = self.env['res.partner'].create({'name': company,
                                                                       'company_type': 'company',
                                                                       'street': contact_form.street,
                                                                       'website': contact_form.website})
                         contact_form.parent_id = partner
+                    contact_form.image = attachment
+                    partner = contact_form.save()
 
-                    contact = contact_form.save()
-                    attachment.write({'res_model': 'res.partner', 'res_id': contact.id})
-                    contact.message_post(attachment_ids=[attachment.id])
-                    return contact
+                    image = self.env['ir.attachment'].create({
+                        'name': 'Business Card: '+partner.name,
+                        'res_id': partner.id,
+                        'res_model': 'res.partner',
+                        'datas': attachment,
+                        'datas_fname': partner.name + '.jpeg',
+                        'description': partner.name + partner.phone + partner.email,
+                        'type': 'binary',
+                    })
+                    partner.message_post(attachment_ids=[image.id])
+                    return partner
                 else: #修改现有联系人信息
                     modify={}
-                    if partner.phone != contact['TEL']:
-                        modify['phone'] = contact['TEL']
-                    if partner.title != contact['TITLE']:
-                        modify['title'] = contact['TITLE']
-                    if partner.mobile != contact['MOBILE']:
-                        modify['mobile'] = contact['MOBILE']
-                    if partner.email != contact['EMAIL']:
-                        modify['email'] = contact['EMAIL']
-                    if partner.website != contact['URL']:
-                        modify['website'] = contact['URL']
+                    if contact['TEL'] and contact['TEL'] != [''] and [partner.phone] != contact['TEL']:
+                        [modify['phone']] = contact['TEL']
+                    if contact['TITLE'] and contact['TITLE'] != [''] and [partner.title] != contact['TITLE']:
+                        [modify['title']] = contact['TITLE']
+                    if contact['MOBILE'] and contact['MOBILE'] != [''] and [partner.mobile] != contact['MOBILE']:
+                        [modify['mobile']] = contact['MOBILE']
+                    if contact['EMAIL'] and contact['EMAIL'] != [''] and [partner.email] != contact['EMAIL']:
+                        [modify['email']] = contact['EMAIL']
+                    if contact['URL'] and contact['URL'] != [''] and [partner.website] != contact['URL']:
+                        [modify['website']] = contact['URL']
                     street = ''
-                    for item in contact['ADDR']:
-                        street += item
-                    if partner.street != street:
+                    if contact['ADDR'] and contact['ADDR'] != ['']:
+                        for item in contact['ADDR']:
+                            street += item
+                    if street != '' and partner.street != street:
                         modify['street'] = street
                     if modify:
                         partner.write(modify)
-                    attachment.write({'res_model': 'res.partner', 'res_id': partner.id})
-                    partner.message_post(attachment_ids=[attachment.id])
-                    return partner
+
+                        image = self.env['ir.attachment'].create({
+                            'name': 'Business Card: '+ partner.name,
+                            'res_id': partner.id,
+                            'res_model': 'res.partner',
+                            'datas': attachment,
+                            'datas_fname': partner.name + '.jpeg',
+                            'description': partner.name + partner.phone + partner.email,
+                            'type': 'binary',
+                        })
+
+                        partner.message_post(attachment_ids=[image.id])
+                        return partner
         return False
 
     @api.multi
