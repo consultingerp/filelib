@@ -11,25 +11,30 @@ from odoo.tests.common import Form
 from odoo.exceptions import UserError
 _logger = logging.getLogger(__name__)
 
+
 def preProcess(image):
     ratio = image.shape[0] / 500.0
     image = imutils.resize(image, height=500)
 
     grayImage  = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     gaussImage = cv2.GaussianBlur(grayImage, (5, 5), 0)
-    edgedImage = cv2.Canny(gaussImage, 75, 200)
+    edgedImage = cv2.dilate(gaussImage, numpy.ones((3, 3), numpy.uint8), iterations=2)
+    edgedImage = cv2.erode(edgedImage, numpy.ones((2, 2), numpy.uint8), iterations=3)
+    edgedImage = cv2.Canny(edgedImage, 70, 200)
 
     cnts = cv2.findContours(edgedImage.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     cnts = cnts[1] if imutils.is_cv3() else cnts[0]
     cnts = sorted(cnts, key=cv2.contourArea, reverse=True)
-    screenCnt = False
+    screenCnt = {}
     for c in cnts:
         peri = cv2.arcLength(c, True)  # Calculating contour circumference
         approx = cv2.approxPolyDP(c, 0.02 * peri, True)
 
         if len(approx) == 4:
-            screenCnt = approx
-            break
+            if (abs(round((approx[0][0][0] - approx[1][0][0]) / image.shape[0])) == 1 or
+                abs(round((approx[2][0][1] - approx[0][0][1]) / image.shape[1])) == 1):
+                screenCnt = approx
+                break
 
 
     return screenCnt, ratio
@@ -43,25 +48,33 @@ class ImportContactImportWizard(models.TransientModel):
 
     @api.multi
     def _correct_image(self, image):
+
         screenCnt, ratio = preProcess(image)
-        if screenCnt.any():
+        if len(screenCnt) > 0:
             warped = four_point_transform(image, screenCnt.reshape(4, 2) * ratio)
             enhancer = imgenhance.Enhancer()
             return enhancer.sharp(warped, 4.0)
-        return False
+        return {}
 
     @api.multi
     def _get_logo_image(self, image):
         result = self._get_contact_from_aipimageclassify(image)
         if 'error_code' in result:
-            return False
+            return False,{}
         if 'result_num' in result and result['result_num'] > 0:
-            left = result['result'][0]['location']['left']
-            top = result['result'][0]['location']['top']
-            right = result['result'][0]['location']['left'] + result['result'][0]['location']['width']
-            buttom = result['result'][0]['location']['top'] + result['result'][0]['location']['height']
-            return cv2.imdecode(numpy.fromstring(image, numpy.uint8), cv2.IMREAD_COLOR)[top:buttom, left:right]
-        return False
+            area = 0
+            for item in result['result']:
+                if round(item['probability']) == 1:
+                    if item['location']['width'] * item['location']['height'] > area:
+                        area = item['location']['width'] * item['location']['height']
+                        left = item['location']['left']
+                        top = item['location']['top']
+                        right = item['location']['left'] + item['location']['width']
+                        buttom = item['location']['top'] + item['location']['height']
+                        name = item['name']
+                    if area > 0:
+                        return name, cv2.imdecode(numpy.fromstring(image, numpy.uint8), cv2.IMREAD_COLOR)[top:buttom, left:right]
+        return False, {}
 
     @api.multi
     def _get_contact_from_aipimageclassify(self, image):
@@ -128,7 +141,7 @@ class ImportContactImportWizard(models.TransientModel):
         imagedata = base64.b64decode(attachment.datas)
         image_tmp = cv2.imdecode(numpy.fromstring(imagedata, numpy.uint8), cv2.IMREAD_COLOR)
         image = self._correct_image(image_tmp)
-        if image.any():
+        if len(image) > 0:
             img_encode = cv2.imencode('.jpeg', image)[1]
             imagedata = numpy.array(img_encode).tostring()
             attachment.datas = base64.b64encode(imagedata)
@@ -138,7 +151,7 @@ class ImportContactImportWizard(models.TransientModel):
                               'datas_fname':  'test.jpeg',
                               'description': 'test',
                               })
-            return False
+            return {}
         if 'words_result_num' in result and result['words_result_num'] > 0:
             contact = result['words_result']
             if ((contact['NAME'] and contact['NAME'] != [''])
@@ -162,7 +175,8 @@ class ImportContactImportWizard(models.TransientModel):
                     else:
                         mobile += ',' + item
                 contact_form.mobile = mobile
-
+                company = False
+                partner = False
                 if contact['COMPANY'] and contact['COMPANY'] != ['']:
 
                     [company] = contact['COMPANY']
@@ -176,6 +190,7 @@ class ImportContactImportWizard(models.TransientModel):
                          ('email', '=', email)], limit=1)
                 if not partner: #如果不存在，新建联系人
                     #contact['FAX']
+
                     if contact['TEL'] and contact['TEL'] != ['']:
                         phone = ''
                         i = 0
@@ -187,16 +202,7 @@ class ImportContactImportWizard(models.TransientModel):
                                 phone += ',' + item
                         contact_form.phone = phone
 
-                    # if contact['NAME'] and contact['NAME'] != ['']:
-                    #     name = ''
-                    #     i = 0
-                    #     for item in contact['NAME']:
-                    #         if i == 0:
-                    #             name += item
-                    #             i += 1
-                    #         else:
-                    #             name += ',' + item
-                    #     contact_form.name = name
+
 
                     if contact['TITLE'] and contact['TITLE']!=['']:
                         title =''
@@ -209,8 +215,6 @@ class ImportContactImportWizard(models.TransientModel):
                                 title += ',' + item
                         contact_form.title = title
 
-                    # if contact['MOBILE'] and contact['MOBILE'] != ['']:
-                    #     [contact_form.mobile] = contact['MOBILE']
                     if contact['EMAIL'] and contact['EMAIL'] != ['']:
                         [contact_form.email] = contact['EMAIL']
                     #contact['PC']
@@ -221,27 +225,31 @@ class ImportContactImportWizard(models.TransientModel):
                         for item in contact['ADDR']:
                             street += item
                         contact_form.street = street
-                    if contact['COMPANY'] and contact['COMPANY'] != ['']:
-                        [company] = contact['COMPANY']
-                        partner = self.env['res.partner'].search([('name', 'ilike', company),('company_type','=','company')], limit=1)
-                        if not partner:
+                    parent_partner = False
 
-                            logo_image = self._get_logo_image(imagedata)
+                    if company:
+                        parent_partner = self.env['res.partner'].search([('name', 'ilike', company),('company_type','=','company')], limit=1)
+                    if not parent_partner:
+
+                        company_name,logo_image = self._get_logo_image(imagedata)
+
+                        parent_partner = self.env['res.partner'].create({'name': company if company else company_name,
+                                                                  'company_type': 'company',
+                                                                  'street': contact_form.street,
+                                                                  'website': contact_form.website})
+                        if company_name and logo_image.any():
                             logo_datas = cv2.imencode('.jpg', logo_image)[1].tostring()
-                            partner = self.env['res.partner'].create({'name': company,
-                                                                      'company_type': 'company',
-                                                                      'street': contact_form.street,
-                                                                      'website': contact_form.website})
-                            partner.image = base64.b64encode(logo_datas)
+                            parent_partner.image = base64.b64encode(logo_datas)
 
-                        contact_form.parent_id = partner
+                    contact_form.parent_id = parent_partner
                     contact_form.image = attachment.datas
                     partner = contact_form.save()
                     attachment.write({'name': 'Business Card: '+partner.name,
                                       'res_id': partner.id,
                                       'res_model': 'res.partner',
                                       'datas_fname': partner.name + '.jpeg',
-                                      'description': partner.name + partner.phone if partner.phone else '' + partner.email if partner.email else  '',
+                                      'description': partner.name + partner.phone if partner.phone else '' +
+                                                     partner.email if partner.email else '',
                                       })
                     partner.message_post(attachment_ids=[attachment.id])
                     return partner
@@ -270,11 +278,12 @@ class ImportContactImportWizard(models.TransientModel):
                                           'res_id': partner.id,
                                           'res_model': 'res.partner',
                                           'datas_fname': partner.name + '.jpeg',
-                                          'description': partner.name + partner.phone + partner.email,
+                                          'description': partner.name + partner.phone if partner.phone else '' +
+                                                     partner.email if partner.email else '',
                                           })
                         partner.message_post(attachment_ids=[attachment.id])
                         return partner
-        return False
+        return {}
 
     @api.multi
     def create_contacts(self):
@@ -286,7 +295,7 @@ class ImportContactImportWizard(models.TransientModel):
         contacts = self.env['res.partner']
         for attachment in self.attachment_ids:
             contact =self._create_contact_from_file(attachment)
-            if contact:
+            if len(contact):
                 contacts += contact
         if len(contacts) < 1:
             return
