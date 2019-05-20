@@ -9,12 +9,17 @@ def preProcess(image):
 
     grayImage  = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     gaussImage = cv2.GaussianBlur(grayImage, (5, 5), 0)
-    edgedImage = cv2.Canny(gaussImage, 75, 200)
-    # cv2.imshow("gray", imutils.resize(grayImage, height=500))
-    # cv2.imshow("gauss", imutils.resize(gaussImage, height=500))
-    # cv2.imshow("edged", imutils.resize(edgedImage, height=500))
-    #
-    # cv2.destroyAllWindows()
+    edgedImage = cv2.Canny(gaussImage, 70, 100)
+
+    edgedImage = cv2.dilate(edgedImage,numpy.ones((3, 3), numpy.uint8), iterations=2)
+    edgedImage = cv2.erode(edgedImage, numpy.ones((2, 2), numpy.uint8), iterations=3)
+
+    # edgedImage = cv2.Canny(gaussImage, 1, 10)
+    cv2.imshow("gray", imutils.resize(grayImage, height=500))
+    cv2.imshow("gauss", imutils.resize(gaussImage, height=500))
+    cv2.imshow("edged70_100", imutils.resize(edgedImage, height=500))
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
     cnts = cv2.findContours(edgedImage.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
     cnts = cnts[1] if imutils.is_cv3() else cnts[0]
     cnts = sorted(cnts, key=cv2.contourArea, reverse=True)
@@ -31,7 +36,7 @@ def preProcess(image):
 
 if __name__ == "__main__":
 
-    image = cv2.imread("img2.jpg")
+    image = cv2.imread("img3.jpeg")
     screenCnt, ratio = preProcess(image)
     warped = four_point_transform(image, screenCnt.reshape(4, 2) * ratio)
 
