@@ -298,7 +298,7 @@ msgstr "工业"
 #: model:ir.actions.act_window,name:e2yun_customer_info.action_partner_customer_form
 #: model:ir.ui.menu,name:e2yun_customer_info.res_partner_menu
 msgid "Ineffective Customers"
-msgstr "新客户"
+msgstr "潜在客户"
 
 #. module: e2yun_customer_info
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_partner_form
@@ -688,7 +688,7 @@ msgstr "例如：www.odoo.com"
 #. module: e2yun_customer_info
 #: model:ir.model,name:e2yun_customer_info.model_e2yun_customer_info
 msgid "e2yun.customer.info"
-msgstr "新客户模块"
+msgstr "潜在客户模块"
 
 #. module: e2yun_customer_info
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_partner_form
