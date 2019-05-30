@@ -280,7 +280,7 @@ class e2yun_customer_info(models.Model):
     def customer_transfer_to_normal(self):
         self.ensure_one()
         data = {}
-        UNINCLUDE_COL = ['user_ids','category_id','state', 'commercial_partner_id', 'child_ids', 'parent_id', 'display_name', 'tz_offset', 'lang', 'tz', 'self', 'id', 'create_uid', 'create_uid', 'create_date', 'write_uid',
+        UNINCLUDE_COL = ['bank_ids','user_ids','category_id','state', 'commercial_partner_id', 'child_ids', 'parent_id', 'display_name', 'tz_offset', 'lang', 'tz', 'self', 'id', 'create_uid', 'create_uid', 'create_date', 'write_uid',
                          'write_date', '__last_update']
         child_datas = []
         for field in self.fields_get():
