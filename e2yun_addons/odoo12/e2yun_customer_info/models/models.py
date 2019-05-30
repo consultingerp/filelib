@@ -8,6 +8,7 @@ from email.utils import formataddr
 
 ADDRESS_FIELDS = ('street', 'street2', 'zip', 'city', 'state_id', 'country_id')
 
+
 @api.model
 def _lang_get(self):
     return self.env['res.lang'].get_installed()
@@ -15,12 +16,14 @@ def _lang_get(self):
 
 # put POSIX 'Etc/*' entries at the end to avoid confusing users - see bug 1086728
 _tzs = [(tz, tz) for tz in sorted(pytz.all_timezones, key=lambda tz: tz if not tz.startswith('Etc/') else '_')]
+
+
 def _tz_get(self):
     return _tzs
 
+
 class e2yun_customer_info(models.Model):
     _name = 'e2yun.customer.info'
-
 
     def _default_category(self):
         return self.env['res.partner.category'].browse(self._context.get('category_id'))
@@ -45,21 +48,21 @@ class e2yun_customer_info(models.Model):
                                "render date and time values: your computer's timezone.")
     tz_offset = fields.Char(compute='_compute_tz_offset', string='Timezone offset', invisible=True)
     user_id = fields.Many2one('res.users', string='Salesperson',
-      help='The internal user in charge of this contact.')
+                              help='The internal user in charge of this contact.')
     vat = fields.Char(string='Tax ID', help="The Tax Identification Number. Complete it if the contact is subjected to government taxes. Used in some legal statements.")
     bank_ids = fields.One2many('res.partner.bank', 'partner_id', string='Banks')
     website = fields.Char()
     comment = fields.Text(string='Notes')
 
     category_id = fields.Many2many('res.partner.category', column1='partner_id',
-                                    column2='category_id', string='Tags', default=_default_category)
+                                   column2='category_id', string='Tags', default=_default_category)
     credit_limit = fields.Float(string='Credit Limit')
     barcode = fields.Char(oldname='ean13', help="Use a barcode to identify this contact from the Point of Sale.")
     active = fields.Boolean(default=True)
     customer = fields.Boolean(string='Is a Customer', default=True,
-                               help="Check this box if this contact is a customer. It can be selected in sales orders.")
+                              help="Check this box if this contact is a customer. It can be selected in sales orders.")
     supplier = fields.Boolean(string='Is a Vendor',
-                               help="Check this box if this contact is a vendor. It can be selected in purchase orders.")
+                              help="Check this box if this contact is a vendor. It can be selected in purchase orders.")
     employee = fields.Boolean(help="Check this box if this contact is an Employee.")
     function = fields.Char(string='Job Position')
     type = fields.Selection(
@@ -68,7 +71,7 @@ class e2yun_customer_info(models.Model):
          ('delivery', 'Shipping address'),
          ('other', 'Other address'),
          ("private", "Private Address"),
-        ], string='Address Type',
+         ], string='Address Type',
         default='contact',
         help="Used by Sales and Purchase Apps to select the relevant address depending on the context.")
     street = fields.Char()
@@ -84,12 +87,12 @@ class e2yun_customer_info(models.Model):
     phone = fields.Char()
     mobile = fields.Char()
     is_company = fields.Boolean(string='Is a Company', default=False,
-        help="Check if the contact is a company, otherwise it is a person")
+                                help="Check if the contact is a company, otherwise it is a person")
     industry_id = fields.Many2one('res.partner.industry', 'Industry')
     # company_type is only an interface field, do not use it in business logic
     company_type = fields.Selection(string='Company Type',
-        selection=[('person', 'Individual'), ('company', 'Company')],
-        compute='_compute_company_type', inverse='_write_company_type')
+                                    selection=[('person', 'Individual'), ('company', 'Company')],
+                                    compute='_compute_company_type', inverse='_write_company_type')
     company_id = fields.Many2one('res.company', 'Company', index=True, default=_default_company)
     color = fields.Integer(string='Color Index', default=0)
     user_ids = fields.One2many('res.users', 'partner_id', string='Users', auto_join=True)
@@ -101,34 +104,32 @@ class e2yun_customer_info(models.Model):
 
     # technical field used for managing commercial fields
     commercial_partner_id = fields.Many2one('e2yun.customer.info', compute='_compute_commercial_partner',
-                                             string='Commercial Entity', store=True, index=True)
+                                            string='Commercial Entity', store=True, index=True)
     commercial_company_name = fields.Char('Company Name Entity', compute='_compute_commercial_company_name',
                                           store=True)
     company_name = fields.Char('Company Name')
 
     # image: all image fields are base64 encoded and PIL-supported
     image = fields.Binary("Image", attachment=True,
-        help="This field holds the image used as avatar for this contact, limited to 1024x1024px",)
+                          help="This field holds the image used as avatar for this contact, limited to 1024x1024px", )
     image_medium = fields.Binary("Medium-sized image", attachment=True,
-        help="Medium-sized image of this contact. It is automatically "\
-             "resized as a 128x128px image, with aspect ratio preserved. "\
-             "Use this field in form views or some kanban views.")
+                                 help="Medium-sized image of this contact. It is automatically " \
+                                      "resized as a 128x128px image, with aspect ratio preserved. " \
+                                      "Use this field in form views or some kanban views.")
     image_small = fields.Binary("Small-sized image", attachment=True,
-        help="Small-sized image of this contact. It is automatically "\
-             "resized as a 64x64px image, with aspect ratio preserved. "\
-             "Use this field anywhere a small image is required.")
+                                help="Small-sized image of this contact. It is automatically " \
+                                     "resized as a 64x64px image, with aspect ratio preserved. " \
+                                     "Use this field anywhere a small image is required.")
     # hack to allow using plain browse record in qweb views, and used in ir.qweb.field.contact
     self = fields.Many2one(comodel_name=_name, compute='_compute_get_ids')
 
-
     property_payment_term_id = fields.Many2one('account.payment.term', company_dependent=True,
-        string='Customer Payment Terms',
-        help="This payment term will be used instead of the default one for sales orders and customer invoices", oldname="property_payment_term")
+                                               string='Customer Payment Terms',
+                                               help="This payment term will be used instead of the default one for sales orders and customer invoices", oldname="property_payment_term")
 
     _sql_constraints = [
         ('check_name', "CHECK( (type='contact' AND name IS NOT NULL) or (type!='contact') )", 'Contacts require a name.'),
     ]
-
 
     @api.depends('is_company')
     def _compute_company_type(self):
@@ -166,8 +167,6 @@ class e2yun_customer_info(models.Model):
                 partner.commercial_partner_id = partner
             else:
                 partner.commercial_partner_id = partner.parent_id.commercial_partner_id
-
-
 
     @api.depends('tz')
     def _compute_tz_offset(self):
@@ -220,7 +219,6 @@ class e2yun_customer_info(models.Model):
             else:
                 partner.email_formatted = ''
 
-
     @api.multi
     def _display_address(self, without_company=False):
 
@@ -263,7 +261,6 @@ class e2yun_customer_info(models.Model):
             'company_name', 'state_id.code', 'state_id.name',
         ]
 
-
     @api.model
     def _get_default_address_format(self):
         return "%(street)s\n%(street2)s\n%(city)s %(state_code)s %(zip)s\n%(country_name)s"
@@ -276,13 +273,14 @@ class e2yun_customer_info(models.Model):
     def _get_country_name(self):
         return self.country_id.name or ''
 
-
     def customer_transfer_to_normal(self):
         self.ensure_one()
         data = {}
-        UNINCLUDE_COL = ['bank_ids','user_ids','category_id','state', 'commercial_partner_id', 'child_ids', 'parent_id', 'display_name', 'tz_offset', 'lang', 'tz', 'self', 'id', 'create_uid', 'create_uid', 'create_date', 'write_uid',
+        UNINCLUDE_COL = ['bank_ids', 'user_ids', 'state', 'commercial_partner_id', 'child_ids', 'parent_id', 'display_name', 'tz_offset', 'lang', 'tz', 'self', 'id', 'create_uid',
+                         'create_uid', 'create_date', 'write_uid',
                          'write_date', '__last_update']
         child_datas = []
+        many_cols = []
         for field in self.fields_get():
             if self[field] and self[field] != False:
                 if field == 'child_ids':
@@ -298,14 +296,24 @@ class e2yun_customer_info(models.Model):
                                 else:
                                     data1[field1] = field2[field1].id
                         child_datas.append(data1)
+                    continue
+                # if fields.type in ('one2many','many2many'):
+                #     values = []
+                #     for field2 in self[field]:
+                #         values.append(field2.id)
                 if field in UNINCLUDE_COL:
                     continue
 
-                if isinstance(self[field],str) or isinstance(self[field],int) or isinstance(self[field],float) or isinstance(self[field],bool):
+                if isinstance(self[field], str) or isinstance(self[field], int) or isinstance(self[field], float) or isinstance(self[field], bool):
                     data[field] = self[field]
                 else:
-                    data[field] = self[field].id
+                    if self.fields_get()[field]['type'] in ('one2many', 'many2many'):
+                        many_cols.append(field)
+                    else:
+                        data[field] = self[field].id
         id = self.env['res.partner'].create(data)
+        for many_col in many_cols:
+            id[many_col] = self[many_col]
         if child_datas:
             for child_data in child_datas:
                 child_data['parent_id'] = id.id
