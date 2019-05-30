@@ -279,21 +279,36 @@ class e2yun_customer_info(models.Model):
 
     def customer_transfer_to_normal(self):
         self.ensure_one()
-        print(self)
         data = {}
+        UNINCLUDE_COL = ['user_ids','category_id','state', 'commercial_partner_id', 'child_ids', 'parent_id', 'display_name', 'tz_offset', 'lang', 'tz', 'self', 'id', 'create_uid', 'create_uid', 'create_date', 'write_uid',
+                         'write_date', '__last_update']
+        child_datas = []
         for field in self.fields_get():
             if self[field] and self[field] != False:
                 if field == 'child_ids':
-                    for field1 in self[field].fields_get():
-                        print(field1)
-
-                if field in ['commercial_partner_id','child_ids','parent_id','display_name','tz_offset','lang','tz','self','id','create_uid','create_uid','create_date','write_uid','write_date','__last_update']:
+                    # data[field] = []
+                    for field2 in self[field]:
+                        data1 = {}
+                        for field1 in field2.fields_get():
+                            if field2[field1] and field2[field1] != False:
+                                if field1 in UNINCLUDE_COL:
+                                    continue
+                                if isinstance(field2[field1], str) or isinstance(field2[field1], int) or isinstance(field2[field1], float) or isinstance(field2[field1], bool):
+                                    data1[field1] = field2[field1]
+                                else:
+                                    data1[field1] = field2[field1].id
+                        child_datas.append(data1)
+                if field in UNINCLUDE_COL:
                     continue
 
                 if isinstance(self[field],str) or isinstance(self[field],int) or isinstance(self[field],float) or isinstance(self[field],bool):
                     data[field] = self[field]
                 else:
                     data[field] = self[field].id
-        self.env['res.partner'].create(data)
+        id = self.env['res.partner'].create(data)
+        if child_datas:
+            for child_data in child_datas:
+                child_data['parent_id'] = id.id
+                self.env['res.partner'].create(child_data)
         # print(data)
         return False
