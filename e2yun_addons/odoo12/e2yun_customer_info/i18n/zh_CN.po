@@ -142,6 +142,11 @@ msgid "Company Name Entity"
 msgstr "公司名称实体"
 
 #. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.customer_id
+msgid "Normal Customer"
+msgstr "正式客户"
+
+#. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__company_type
 msgid "Company Type"
 msgstr "公司类别"

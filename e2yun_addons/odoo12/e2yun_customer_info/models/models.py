@@ -3,10 +3,14 @@
 from odoo import models, fields, api
 import datetime
 import pytz
+import logging
+from odoo.exceptions import UserError
 
 from email.utils import formataddr
 
 ADDRESS_FIELDS = ('street', 'street2', 'zip', 'city', 'state_id', 'country_id')
+
+logger = logging.getLogger(__name__)
 
 
 @api.model
@@ -122,6 +126,8 @@ class e2yun_customer_info(models.Model):
                                      "Use this field anywhere a small image is required.")
     # hack to allow using plain browse record in qweb views, and used in ir.qweb.field.contact
     self = fields.Many2one(comodel_name=_name, compute='_compute_get_ids')
+
+    customer_id = fields.Many2one('res.partner', company_dependent=True,string='Normal Customer')
 
     property_payment_term_id = fields.Many2one('account.payment.term', company_dependent=True,
                                                string='Customer Payment Terms',
@@ -312,11 +318,16 @@ class e2yun_customer_info(models.Model):
                     else:
                         data[field] = self[field].id
         id = self.env['res.partner'].create(data)
+
         for many_col in many_cols:
             id[many_col] = self[many_col]
         if child_datas:
             for child_data in child_datas:
                 child_data['parent_id'] = id.id
                 self.env['res.partner'].create(child_data)
-        # print(data)
+        self.customer_id = id
+        # try:
+        self.state = 'done'
+        # except Exception as e:
+        #     raise UserError(u'转正式客户失败，请在工作流中添加^完成^状态')
         return False
