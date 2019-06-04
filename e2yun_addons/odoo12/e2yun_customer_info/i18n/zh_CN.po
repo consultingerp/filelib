@@ -142,11 +142,6 @@ msgid "Company Name Entity"
 msgstr "公司名称实体"
 
 #. module: e2yun_customer_info
-#: model:ir.model.fields,field_description:e2yun_customer_info.customer_id
-msgid "Normal Customer"
-msgstr "正式客户"
-
-#. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__company_type
 msgid "Company Type"
 msgstr "公司类别"
@@ -704,4 +699,14 @@ msgstr "内部备注..."
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_partner_form
 msgid "转正式客户"
 msgstr ""
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__customer_id
+msgid "Normal Customer"
+msgstr "正式客户"
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:crm_team.field_crm_team__parent_id
+msgid "Parent Team"
+msgstr "上级团队"
 
