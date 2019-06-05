@@ -87,12 +87,34 @@
             </field>
         </record>
 
+        <record id="mail_activity_view_pivot" model="ir.ui.view">
+            <field name="name">mail.activity.pivot</field>
+            <field name="model">mail.activity</field>
+            <field name="arch" type="xml">
+                <pivot string="Activity Info">
+                    <field name="user_id" type="row"/>
+                    <field name="activity_type_id" type="col"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="mail_activity_view_graph" model="ir.ui.view">
+            <field name="name">mail.activity.graph</field>
+            <field name="model">mail.activity</field>
+            <field name="arch" type="xml">
+                <graph string="Activity Info">
+                    <field name="user_id" type="row"/>
+                    <field name="activity_type_id" type="col"/>
+                </graph>
+            </field>
+        </record>
+
         <record id="action_mail_activity_form" model="ir.actions.act_window">
             <field name="name">Activity Info</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">mail.activity</field>
             <field name="view_type">form</field>
-            <field name="view_mode">calendar,tree,form</field>
+            <field name="view_mode">calendar,tree,form,graph,pivot</field>
             <field name="domain">[]</field>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
