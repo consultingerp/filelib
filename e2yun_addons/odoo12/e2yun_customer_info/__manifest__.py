@@ -28,6 +28,7 @@
         # 'security/ir.model.access.csv',
         'views/res_partner_views.xml',
         'views/crm_team_view.xml',
+        'views/mail_activity_view.xml',
         # 'views/templates.xml',
     ],
     # only loaded in demonstration mode
