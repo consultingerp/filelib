@@ -226,6 +226,8 @@
                                 </div>
                                 <field name="vat" placeholder="e.g. BE0477472701" attrs="{'readonly': [('parent_id','!=',False)]}"/>
                                 <field name="customer_id" readonly="True"/>
+                                <field name="team_id"/>
+                                <field name="parent_team_id" invisible="True"/>
                             </group>
                             <group>
                                 <field name="function" placeholder="e.g. Sales Director"

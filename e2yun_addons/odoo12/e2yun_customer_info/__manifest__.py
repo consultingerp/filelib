@@ -26,9 +26,11 @@
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'views/res_partner_views.xml',
+        'views/e2yun_customer_info_view.xml',
         'views/crm_team_view.xml',
         'views/mail_activity_view.xml',
+        'views/res_partner_view.xml',
+        'views/res_currency_view.xml',
         # 'views/templates.xml',
     ],
     # only loaded in demonstration mode
