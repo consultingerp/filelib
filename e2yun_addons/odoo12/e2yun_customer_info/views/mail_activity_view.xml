@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <!-- Partner -->
+        <record id="view_mail_activity_tree" model="ir.ui.view">
+            <field name="name">mail.activity.tree</field>
+            <field name="model">mail.activity</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Next Activities" decoration-danger="date_deadline &lt; current_date"
+                      decoration-success="date_deadline == current_date" default_order="date_deadline" create="false">
+                    <field name="res_name"/>
+                    <field name="activity_type_id"/>
+                    <field name="summary"/>
+                    <field name="res_id"/>
+                    <field name="res_model_id"/>
+                    <field name="create_uid"/>
+                    <field name="user_id"/>
+                    <field name="create_date"/>
+                    <field name="date_deadline"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_mail_activity_form" model="ir.ui.view">
+            <field name="name">mail.activity.form</field>
+            <field name="model">mail.activity</field>
+            <field name="arch" type="xml">
+                <form string="Log an Activity" create="false">
+                    <sheet string="Activity">
+                        <group invisible="1">
+                            <field name="activity_category" invisible="1"/>
+                            <field name="res_model" invisible="1"/>
+                            <field name="res_model_id" invisible="1"/>
+                            <field name="res_id" invisible="1"/>
+                            <field name="force_next" invisible="1"/>
+                            <field name="previous_activity_type_id"/>
+                            <field name="has_recommended_activities"/>
+                        </group>
+                        <group attrs="{'invisible': [('has_recommended_activities','=',False)]}">
+                            <div class="o_row">
+                                <strong>Recommended Activities</strong>
+                                <field name="recommended_activity_type_id" widget="selection_badge"
+                                       domain="[('previous_type_ids', '=', previous_activity_type_id)]" nolabel="1"/>
+                            </div>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="activity_type_id" required="1"
+                                       options="{'no_create': True, 'no_open': True}"/>
+                                <field name="summary" placeholder="e.g. Discuss proposal"/>
+                            </group>
+                            <group>
+                                <field name="date_deadline"/>
+                                <field name="user_id"/>
+                            </group>
+                        </group>
+                        <field name="note" placeholder="Log a note..."/>
+                        <footer>
+                            <button string="Schedule" name="action_close_dialog" type="object" class="btn-primary"/>
+                            <button attrs="{'invisible': [('force_next', '=', True)]}" string="Mark as Done"
+                                    name="action_done" type="object" class="btn-secondary"
+                                    context="{'mail_activity_quick_update': True}"/>
+                            <button attrs="{'invisible': [('force_next', '=', True)]}" string="Done &amp; Schedule Next"
+                                    name="action_done_schedule_next" type="object" class="btn-secondary"
+                                    context="{'mail_activity_quick_update': True}"/>
+                            <button attrs="{'invisible': [('force_next', '=', False)]}" string="Done &amp; Launch Next"
+                                    name="action_done_schedule_next" type="object" class="btn-secondary"
+                                    context="{'mail_activity_quick_update': True}"/>
+                            <button string="Discard" class="btn-secondary" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_mail_activity_calendar" model="ir.ui.view">
+            <field name="name">mail.activity.calendar</field>
+            <field name="model">mail.activity</field>
+            <field eval="2" name="priority"/>
+            <field name="arch" type="xml">
+                <calendar date_start="date_deadline" string="Tasks" mode="month" color="user_id">
+                    <field name="summary"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record id="mail_activity_view_pivot" model="ir.ui.view">
+            <field name="name">mail.activity.pivot</field>
+            <field name="model">mail.activity</field>
+            <field name="arch" type="xml">
+                <pivot string="Activity Info">
+                    <field name="user_id" type="row"/>
+                    <field name="activity_type_id" type="col"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="mail_activity_view_graph" model="ir.ui.view">
+            <field name="name">mail.activity.graph</field>
+            <field name="model">mail.activity</field>
+            <field name="arch" type="xml">
+                <graph string="Activity Info">
+                    <field name="user_id" type="row"/>
+                    <field name="activity_type_id" type="col"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_mail_activity_form" model="ir.actions.act_window">
+            <field name="name">Activity Info</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mail.activity</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">calendar,tree,form,graph,pivot</field>
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Activity
+                </p>
+            </field>
+        </record>
+        <record id="action_mail_activity_form_view1" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="view_mail_activity_calendar"/>
+            <field name="act_window_id" ref="action_mail_activity_form"/>
+        </record>
+        <record id="action_mail_activity_form_view2" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_mail_activity_tree"/>
+            <field name="act_window_id" ref="action_mail_activity_form"/>
+        </record>
+        <record id="action_mail_activity_form_view3" model="ir.actions.act_window.view">
+            <field eval="3" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_mail_activity_form"/>
+            <field name="act_window_id" ref="action_mail_activity_form"/>
+        </record>
+
+
+        <menuitem id="mail_activity_menu"
+                  parent="crm.crm_menu_sales"
+                  action="action_mail_activity_form"
+                  sequence="6" groups="sales_team.group_sale_salesman"/>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="crm_team_view_form_modify" model="ir.ui.view">
+            <field name="model">crm.team</field>
+            <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='team_type']" position="after">
+                    <field name="parent_id" domain="[('id', '!=', id)]"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
