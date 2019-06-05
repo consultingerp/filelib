@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-05 05:47+0000\n"
-"PO-Revision-Date: 2019-06-05 05:47+0000\n"
+"POT-Creation-Date: 2019-06-05 08:42+0000\n"
+"PO-Revision-Date: 2019-06-05 08:42+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -46,6 +46,8 @@ msgstr "活动"
 #. module: e2yun_customer_info
 #: model:ir.actions.act_window,name:e2yun_customer_info.action_mail_activity_form
 #: model:ir.ui.menu,name:e2yun_customer_info.mail_activity_menu
+#: model_terms:ir.ui.view,arch_db:e2yun_customer_info.mail_activity_view_graph
+#: model_terms:ir.ui.view,arch_db:e2yun_customer_info.mail_activity_view_pivot
 msgid "Activity Info"
 msgstr "活动"
 
@@ -169,6 +171,7 @@ msgstr "完整地址"
 
 #. module: e2yun_customer_info
 #: selection:e2yun.customer.info,type:0
+#: model:ir.model,name:e2yun_customer_info.model_res_partner
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_partner_simple_form
 msgid "Contact"
 msgstr "联系人"
@@ -215,6 +218,11 @@ msgid "Create a new Activity"
 msgstr "创建活动"
 
 #. module: e2yun_customer_info
+#: model_terms:ir.actions.act_window,help:e2yun_customer_info.action_res_currency_form
+msgid "Create a new Currency"
+msgstr "创建新货币信息"
+
+#. module: e2yun_customer_info
 #: model_terms:ir.actions.act_window,help:e2yun_customer_info.action_partner_customer_form
 msgid "Create a new customer in your address book"
 msgstr "在你的地址簿中创建一个联系人"
@@ -233,6 +241,12 @@ msgstr "创建时间"
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__credit_limit
 msgid "Credit Limit"
 msgstr "信用额度"
+
+#. module: e2yun_customer_info
+#: model:ir.actions.act_window,name:e2yun_customer_info.action_res_currency_form
+#: model:ir.ui.menu,name:e2yun_customer_info.res_currency_menu
+msgid "Currency Info"
+msgstr "货币信息"
 
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__property_payment_term_id
@@ -283,7 +297,7 @@ msgstr "要么是客户（非用户），要么是共享用户。表明当前的
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__email
 msgid "Email"
-msgstr "邮件"
+msgstr "EMail"
 
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__employee
@@ -489,6 +503,9 @@ msgstr "其他地址"
 
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_crm_team__parent_id
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__parent_team_id
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_res_partner__parent_team_id
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_res_users__parent_team_id
 msgid "Parent Team"
 msgstr "上级团队"
 
@@ -655,6 +672,11 @@ msgid "Tax ID"
 msgstr "税号"
 
 #. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__team_id
+msgid "Team"
+msgstr "团队"
+
+#. module: e2yun_customer_info
 #: model:ir.model.fields,help:e2yun_customer_info.field_e2yun_customer_info__vat
 msgid "The Tax Identification Number. Complete it if the contact is subjected to government taxes. Used in some legal statements."
 msgstr "税号。 如果联系人需缴纳税款，请填写。 用于某些法律声明。"
@@ -780,4 +802,3 @@ msgstr "内部备注..."
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_partner_form
 msgid "转正式客户"
 msgstr ""
-

@@ -41,7 +41,8 @@ class e2yun_customer_info(models.Model):
     title = fields.Many2one('res.partner.title')
     parent_id = fields.Many2one('e2yun.customer.info', string='Related Company', index=True)
     parent_name = fields.Char(related='parent_id.name', readonly=True, string='Parent name')
-    child_ids = fields.One2many('e2yun.customer.info', 'parent_id', string='Contacts', domain=[('active', '=', True)])  # force "active_test" domain to bypass _search() override
+    child_ids = fields.One2many('e2yun.customer.info', 'parent_id', string='Contacts', domain=[
+        ('active', '=', True)])  # force "active_test" domain to bypass _search() override
     ref = fields.Char(string='Internal Reference', index=True)
     lang = fields.Selection(_lang_get, string='Language', default=lambda self: self.env.lang,
                             help="All the emails and documents sent to this contact will be translated in this language.")
@@ -53,7 +54,8 @@ class e2yun_customer_info(models.Model):
     tz_offset = fields.Char(compute='_compute_tz_offset', string='Timezone offset', invisible=True)
     user_id = fields.Many2one('res.users', string='Salesperson',
                               help='The internal user in charge of this contact.')
-    vat = fields.Char(string='Tax ID', help="The Tax Identification Number. Complete it if the contact is subjected to government taxes. Used in some legal statements.")
+    vat = fields.Char(string='Tax ID',
+                      help="The Tax Identification Number. Complete it if the contact is subjected to government taxes. Used in some legal statements.")
     bank_ids = fields.One2many('res.partner.bank', 'partner_id', string='Banks')
     website = fields.Char()
     comment = fields.Text(string='Notes')
@@ -127,14 +129,20 @@ class e2yun_customer_info(models.Model):
     # hack to allow using plain browse record in qweb views, and used in ir.qweb.field.contact
     self = fields.Many2one(comodel_name=_name, compute='_compute_get_ids')
 
-    customer_id = fields.Many2one('res.partner', company_dependent=True,string='Normal Customer')
+    customer_id = fields.Many2one('res.partner', company_dependent=True, string='Normal Customer')
 
     property_payment_term_id = fields.Many2one('account.payment.term', company_dependent=True,
                                                string='Customer Payment Terms',
-                                               help="This payment term will be used instead of the default one for sales orders and customer invoices", oldname="property_payment_term")
+                                               help="This payment term will be used instead of the default one for sales orders and customer invoices",
+                                               oldname="property_payment_term")
+
+    team_id = fields.Many2one('crm.team', 'Team')
+
+    parent_team_id = fields.Many2one(comodel_name='crm.team', compute='_compute_parent_team_id', store=True)
 
     _sql_constraints = [
-        ('check_name', "CHECK( (type='contact' AND name IS NOT NULL) or (type!='contact') )", 'Contacts require a name.'),
+        ('check_name', "CHECK( (type='contact' AND name IS NOT NULL) or (type!='contact') )",
+         'Contacts require a name.'),
     ]
 
     @api.depends('is_company')
@@ -200,6 +208,11 @@ class e2yun_customer_info(models.Model):
     @api.one
     def _compute_get_ids(self):
         self.self = self.id
+
+    @api.one
+    @api.depends('team_id')
+    def _compute_parent_team_id(self):
+        self.parent_team_id = self.team_id.parent_id.id
 
     def _display_address_depends(self):
         # field dependencies of method _display_address()
@@ -282,7 +295,8 @@ class e2yun_customer_info(models.Model):
     def customer_transfer_to_normal(self):
         self.ensure_one()
         data = {}
-        UNINCLUDE_COL = ['bank_ids', 'user_ids', 'state', 'commercial_partner_id', 'child_ids', 'parent_id', 'display_name', 'tz_offset', 'lang', 'tz', 'self', 'id', 'create_uid',
+        UNINCLUDE_COL = ['bank_ids', 'user_ids', 'state', 'commercial_partner_id', 'child_ids', 'parent_id',
+                         'display_name', 'tz_offset', 'lang', 'tz', 'self', 'id', 'create_uid',
                          'create_uid', 'create_date', 'write_uid',
                          'write_date', '__last_update']
         child_datas = []
@@ -297,7 +311,8 @@ class e2yun_customer_info(models.Model):
                             if field2[field1] and field2[field1] != False:
                                 if field1 in UNINCLUDE_COL:
                                     continue
-                                if isinstance(field2[field1], str) or isinstance(field2[field1], int) or isinstance(field2[field1], float) or isinstance(field2[field1], bool):
+                                if isinstance(field2[field1], str) or isinstance(field2[field1], int) or isinstance(
+                                        field2[field1], float) or isinstance(field2[field1], bool):
                                     data1[field1] = field2[field1]
                                 else:
                                     data1[field1] = field2[field1].id
@@ -310,7 +325,9 @@ class e2yun_customer_info(models.Model):
                 if field in UNINCLUDE_COL:
                     continue
 
-                if isinstance(self[field], str) or isinstance(self[field], int) or isinstance(self[field], float) or isinstance(self[field], bool):
+                if isinstance(self[field], str) or isinstance(self[field], int) or isinstance(self[field],
+                                                                                              float) or isinstance(
+                    self[field], bool):
                     data[field] = self[field]
                 else:
                     if self.fields_get()[field]['type'] in ('one2many', 'many2many'):
