@@ -19,8 +19,8 @@
             <!-- Temporary fix: preload all needed JS file instead of loading it by widget component -->
             <script type="text/javascript" src="/web_diagram/static/lib/js/raphael.js"/>
             <script type="text/javascript" src="/web/static/lib/ace/ace.odoo-custom.js"/>
-            <script type="text/javascript" src="/web/static/lib/ace/mode-python.js"/>
-            <script type="text/javascript" src="/web/static/lib/ace/mode-xml.js"/>
+            <!--<script type="text/javascript" src="/web/static/lib/ace/mode-python.js"/>
+            <script type="text/javascript" src="/web/static/lib/ace/mode-xml.js"/>-->
         </xpath>
     </template>
 
