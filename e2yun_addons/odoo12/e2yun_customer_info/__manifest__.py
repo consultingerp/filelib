@@ -31,6 +31,7 @@
         'views/mail_activity_view.xml',
         'views/res_partner_view.xml',
         'views/res_currency_view.xml',
+        'views/crm_lead_view.xml',
         # 'views/templates.xml',
     ],
     # only loaded in demonstration mode
