@@ -19,7 +19,7 @@ class PublisherWarrantyContract(models.AbstractModel):
         is_enterprise = version_info[5] == 'e'
         _logger.debug('is_enterprise=%s', is_enterprise)
         # Running Odoo EE without calling super is illegal. So, make it impossible to disable in enterprise. See README.rst for details
-        if is_enterprise and self.env['ir.config_parameter'].get_debranding_parameters().get('app_send_publisher_warranty_url') == '1':
+        if is_enterprise and self.env['ir.config_parameter'].get_param('app_send_publisher_warranty_url',default='0') == '1':        
             return super(PublisherWarrantyContract, self).update_notification(cron_mode)
         else:
             return True
