@@ -18,7 +18,7 @@ PARAMS = [
     ('web_debranding.planner_footer', ''),
     ('web_debranding.icon_url', ''),
     ('web_debranding.apple_touch_icon_url', ''),
-
+    ('database.expiration_date', '2099-06-17 01:45:20'),
 ]
 
 
