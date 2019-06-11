@@ -1,0 +1,34 @@
+/* Copyright 2016 Ponto Suprimentos Ltda.
+   Copyright 2018 Alexandre Díaz
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+
+.o_view_controller {
+    > .table-responsive {
+        overflow-x:visible!important;
+    }
+}
+
+.custom-control-label{
+    z-index: 5;
+}
+
+// Sticky Header & Footer in List View
+.o_view_controller {
+    >.table-responsive {
+        >.o_list_view {
+            thead tr:nth-child(1) th {
+                position: sticky;
+                top: 0;
+                background-color: #EEEEEE;
+                z-index: 10;
+                //border: none;
+            }
+            tfoot tr:nth-child(1) td {
+                position: sticky;
+                bottom: 0;
+                background-color: #EEEEEE;
+                z-index: 10;
+            }
+        }
+    }
+}
