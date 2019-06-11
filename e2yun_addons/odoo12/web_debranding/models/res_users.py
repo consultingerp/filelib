@@ -9,6 +9,14 @@ class ResUsers(models.Model):
 
     odoobot_state = fields.Selection(string="Bot Status")
 
+    notification_type = fields.Selection([
+        ('email', 'Handle by Emails'),
+        ('inbox', 'Handle in System')],
+        'Notification Management', required=True, default='email',
+        help="Policy on how to handle Chatter notifications:\n"
+             "- Handle by Emails: notifications are sent to your email address\n"
+             "- Handle in System: notifications appear in your System Inbox")
+
     @api.multi
     def is_admin(self):
         # By default Python functions starting with _ are considered private methods.
