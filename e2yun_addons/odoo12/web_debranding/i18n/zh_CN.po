@@ -1,0 +1,22 @@
+#. module: mail
+#: selection:res.users,notification_type:0
+msgid "Handle in System"
+msgstr "在系统内处理"
+
+#. module: mail
+#: model:ir.model.fields,help:mail.field_res_users__notification_type
+msgid ""
+"Policy on how to handle Chatter notifications:\n"
+"- Handle by Emails: notifications are sent to your email address\n"
+"- Handle in System: notifications appear in your System Inbox"
+msgstr ""
+"处理聊天通知的规则:\n"
+"- 通过EMail处理: 通知会发送至您的EMail地址\n"
+"- 系统内部处理: 通知会出现在系统收件箱"
+
+#. module: mail
+#. openerp-web
+#: code:addons/mail/static/src/xml/thread.xml:131
+#, python-format
+msgid "New messages appear here."
+msgstr "新消息在此呈现。"
