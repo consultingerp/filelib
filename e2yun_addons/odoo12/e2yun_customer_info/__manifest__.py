@@ -32,6 +32,7 @@
         'views/res_partner_view.xml',
         'views/res_currency_view.xml',
         'views/crm_lead_view.xml',
+        'security/access_restricted_security.xml',
         # 'views/templates.xml',
     ],
     # only loaded in demonstration mode
