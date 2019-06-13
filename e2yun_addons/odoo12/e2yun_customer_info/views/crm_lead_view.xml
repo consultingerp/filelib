@@ -12,5 +12,17 @@
             </field>
         </record>
 
+
+         <record id="crm_case_form_view_oppor_modify" model="ir.ui.view">
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@class='oe_highlight']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', ('stage_id', '!=', 4)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
     </data>
 </odoo>
