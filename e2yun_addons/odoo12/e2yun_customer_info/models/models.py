@@ -205,6 +205,10 @@ class e2yun_customer_info(models.Model):
             p = partner.commercial_partner_id
             partner.commercial_company_name = p.is_company and p.name or partner.company_name
 
+    @api.onchange('company_type')
+    def onchange_company_type(self):
+        self.is_company = (self.company_type == 'company')
+
     @api.one
     def _compute_get_ids(self):
         self.self = self.id
