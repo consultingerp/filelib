@@ -30,3 +30,4 @@ odoo.define('e2yun_geoengine_bing.BackgroundLayers', function (require) {
         },
     });
 });
+
