@@ -503,9 +503,9 @@ msgstr "其他地址"
 
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_crm_team__parent_id
-#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__parent_team_id
-#: model:ir.model.fields,field_description:e2yun_customer_info.field_res_partner__parent_team_id
-#: model:ir.model.fields,field_description:e2yun_customer_info.field_res_users__parent_team_id
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__parent_parent_team_id
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_res_partner__parent_parent_team_id
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_res_users__parent_parent_team_id
 msgid "Parent Team"
 msgstr "上级团队"
 
@@ -672,7 +672,7 @@ msgid "Tax ID"
 msgstr "税号"
 
 #. module: e2yun_customer_info
-#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__team_id
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__parent_team_id
 msgid "Team"
 msgstr "团队"
 
@@ -802,3 +802,9 @@ msgstr "内部备注..."
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_partner_form
 msgid "转正式客户"
 msgstr ""
+
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_crm_lead__parent_team_id
+msgid "Parent Team id"
+msgstr "上级团队"
