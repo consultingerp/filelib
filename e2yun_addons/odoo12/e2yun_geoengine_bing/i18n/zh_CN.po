@@ -1,0 +1,147 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* e2yun_geoengine_bing
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-14 15:53+0000\n"
+"PO-Revision-Date: 2019-06-15 00:11+0800\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"X-Generator: Poedit 1.8.12\n"
+
+#. module: e2yun_geoengine_bing
+#: selection:geoengine.raster.layer,bing_imagery_set:0
+msgid "Aerial"
+msgstr "航空影像"
+
+#. module: e2yun_geoengine_bing
+#: selection:geoengine.raster.layer,bing_imagery_set:0
+msgid "Aerial With Labels"
+msgstr "航空影像(已弃用)"
+
+#. module: e2yun_geoengine_bing
+#: selection:geoengine.raster.layer,bing_imagery_set:0
+msgid "Aerial With Labels OnDemand"
+msgstr "使用动态磁贴服务的道路覆盖的航拍图像"
+
+#. module: e2yun_geoengine_bing
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "Bing"
+msgstr "必应"
+
+#. module: e2yun_geoengine_bing
+#: model:ir.model.fields,field_description:e2yun_geoengine_bing.field_geoengine_raster_layer__bing_key
+msgid "Bing Key"
+msgstr "必应 API 密码"
+
+#. module: e2yun_geoengine_bing
+#: selection:geoengine.raster.layer,bing_imagery_set:0
+msgid "Birds eye"
+msgstr "鸟瞰（倾斜角度）图像"
+
+#. module: e2yun_geoengine_bing
+#: selection:geoengine.raster.layer,bing_imagery_set:0
+msgid "Birds eye V2"
+msgstr "第二代鸟眼（斜角）图像"
+
+#. module: e2yun_geoengine_bing
+#: selection:geoengine.raster.layer,bing_imagery_set:0
+msgid "Birds eye V2 With Labels"
+msgstr "具有道路覆盖的第二代鸟瞰（倾斜角度）图像"
+
+#. module: e2yun_geoengine_bing
+#: selection:geoengine.raster.layer,bing_imagery_set:0
+msgid "Birds eye With Labels"
+msgstr "带有道路覆盖的鸟瞰图像"
+
+#. module: e2yun_geoengine_bing
+#: selection:geoengine.raster.layer,bing_imagery_set:0
+msgid "Canvas Dark"
+msgstr "黑夜版的路线图"
+
+#. module: e2yun_geoengine_bing
+#: selection:geoengine.raster.layer,bing_imagery_set:0
+msgid "Canvas Gray"
+msgstr "路线图的灰度版本"
+
+#. module: e2yun_geoengine_bing
+#: selection:geoengine.raster.layer,bing_imagery_set:0
+msgid "Canvas Light"
+msgstr "道路地图的明亮版本，也有一些细节，如禁用山阴影"
+
+#. module: e2yun_geoengine_bing
+#: model:ir.model.fields,field_description:e2yun_geoengine_bing.field_geoengine_raster_layer__culture
+msgid "Culture"
+msgstr "语言"
+
+#. module: e2yun_geoengine_bing
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "Distant WMS"
+msgstr "网络地球服务距离"
+
+#. module: e2yun_geoengine_bing
+#: model:ir.model.fields,field_description:e2yun_geoengine_bing.field_geoengine_raster_layer__bing_imagery_set
+msgid "Imagery Set"
+msgstr "请求元数据的图像类型"
+
+#. module: e2yun_geoengine_bing
+#: model:ir.model.fields,field_description:e2yun_geoengine_bing.field_geoengine_raster_layer__is_bing
+msgid "Is Bing"
+msgstr "使用必应地图"
+
+#. module: e2yun_geoengine_bing
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "Odoo field"
+msgstr "Odoo 字段"
+
+#. module: e2yun_geoengine_bing
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "OpenStreetMap"
+msgstr "开放街道地图"
+
+#. module: e2yun_geoengine_bing
+#: selection:geoengine.raster.layer,bing_imagery_set:0
+msgid "Ordnance Survey"
+msgstr "军械测量图像。此图像仅适用于伦敦地区"
+
+#. module: e2yun_geoengine_bing
+#: model:ir.model,name:e2yun_geoengine_bing.model_geoengine_raster_layer
+msgid "Raster Layer"
+msgstr "栅格图层"
+
+#. module: e2yun_geoengine_bing
+#: model:ir.model.fields,field_description:e2yun_geoengine_bing.field_geoengine_raster_layer__raster_type
+msgid "Raster layer type"
+msgstr "栅格图层类型"
+
+#. module: e2yun_geoengine_bing
+#: selection:geoengine.raster.layer,bing_imagery_set:0
+msgid "Road"
+msgstr "道路（已弃用）"
+
+#. module: e2yun_geoengine_bing
+#: selection:geoengine.raster.layer,bing_imagery_set:0
+msgid "Road on demand"
+msgstr "没有附加图像的道路，使用动态图块服务"
+
+#. module: e2yun_geoengine_bing
+#: selection:geoengine.raster.layer,bing_imagery_set:0
+msgid "Street side"
+msgstr "街道图像"
+
+#. module: e2yun_geoengine_bing
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "Swisstopo"
+msgstr "瑞士地图"
+
+#. module: e2yun_geoengine_bing
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "WMTS"
+msgstr ""
