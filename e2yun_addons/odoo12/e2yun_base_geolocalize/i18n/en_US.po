@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-16 12:27+0000\n"
-"PO-Revision-Date: 2019-06-16 20:35+0800\n"
+"POT-Creation-Date: 2019-06-16 12:38+0000\n"
+"PO-Revision-Date: 2019-06-16 20:43+0800\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"Language: zh\n"
+"Language: en_US\n"
 "X-Generator: Poedit 1.8.12\n"
 
 #. module: e2yun_base_geolocalize
@@ -27,11 +27,10 @@ msgid ""
 "                          Visit http://lbsyun.baidu.com/apiconsole/key/create for more information.\n"
 "                          "
 msgstr ""
-"需要用于定位的百度地图API密钥。\n"
+"API key for GeoCoding (Places) required.\n"
 "\n"
-"\t将该键保存在系统参数中：baidu.api_key_geocode，值： <your api key>\n"
-"更多信息，请访问\n"
-"http://lbsyun.baidu.com/apiconsole/key/create。"
+"                          Save this key in System Parameters with key: baidu.api_key_geocode, value: <your api key>\n"
+"                          Visit http://lbsyun.baidu.com/apiconsole/key/create for more information."
 
 #. module: e2yun_base_geolocalize
 #: code:addons/e2yun_base_geolocalize/models/res_partner.py:71
@@ -44,43 +43,44 @@ msgid ""
 "                          for more information.\n"
 "                          "
 msgstr ""
-"需要必应地图定位API key。\n"
+"API key for GeoCoding (Places) required.\n"
 "\n"
-"在系统参数中保存这个键值：\n"
-"bing.api_key_geocode, 值:<bing api key>\n"
-"访问https://docs.microsoft.com/en-us/bingmaps/getting-started/bing-maps-dev-center-help/getting-a-bing-maps-key可获得更多信息。"
+"                          Save this key in System Parameters with key: bing.api_key_geocode, value: <your api key>\n"
+"                          Visit https://docs.microsoft.com/en-us/bingmaps/getting-started/bing-maps-dev-center-help/getting-a-bing-maps-key\n"
+"                          for more information.\n"
+"                          "
 
 #. module: e2yun_base_geolocalize
 #: model:geoengine.raster.layer,name:e2yun_base_geolocalize.geoengine_raster_layer_partnerbing
 msgid "Bing Map"
-msgstr "必应地图"
+msgstr "Bing Map"
 
 #. module: e2yun_base_geolocalize
 #: code:addons/e2yun_base_geolocalize/models/res_partner.py:29
 #: code:addons/e2yun_base_geolocalize/models/res_partner.py:81
 #, python-format
 msgid "Cannot contact geolocation servers. Please make sure that your Internet connection is up and running (%s)."
-msgstr "无法连接地理信息服务器。请确保你的互联网链接畅通(%s)。"
+msgstr "Cannot contact geolocation servers. Please make sure that your Internet connection is up and running (%s)."
 
 #. module: e2yun_base_geolocalize
 #: model:ir.model,name:e2yun_base_geolocalize.model_res_company
 msgid "Companies"
-msgstr "公司"
+msgstr "Companies"
 
 #. module: e2yun_base_geolocalize
 #: model:ir.model,name:e2yun_base_geolocalize.model_res_partner
 msgid "Contact"
-msgstr "联系人"
+msgstr "Contact"
 
 #. module: e2yun_base_geolocalize
 #: model:ir.model.fields,field_description:e2yun_base_geolocalize.field_res_partner__shape
 msgid "Coordinate"
-msgstr "坐标系"
+msgstr "Coordinate"
 
 #. module: e2yun_base_geolocalize
 #: model:geoengine.vector.layer,name:e2yun_base_geolocalize.geoengine_vector_layer_partner_city
 msgid "Partner Point"
-msgstr "合作伙伴点"
+msgstr "Partner Point"
 
 #. module: e2yun_base_geolocalize
 #: code:addons/e2yun_base_geolocalize/models/res_partner.py:86
@@ -95,13 +95,13 @@ msgid ""
 "Geocoding, Maps Static, Maps Javascript.\n"
 "statusDescription"
 msgstr ""
-"不能定位，收到如下错误:\n"
+"Unable to geolocate, received the error:\n"
 "%s\n"
 "\n"
-"Bing将这一功能变成了付费功能\n"
-"您应该首先启用Bing帐户上的计费功能\n"
-"然后，转到Developer Console，并启用api:\n"
-"地理编码，地图静态，地图Javascript.\n"
+"Bing made this a paid feature.\n"
+"You should first enable billing on your Bing account.\n"
+"Then, go to Developer Console, and enable the APIs:\n"
+"Geocoding, Maps Static, Maps Javascript.\n"
 "statusDescription"
 
 #. module: e2yun_base_geolocalize
@@ -116,69 +116,69 @@ msgid ""
 "Then, go to Developer Console, and enable the APIs:\n"
 "Geocoding, Maps Static, Maps Javascript.\n"
 msgstr ""
-"无法进行地理定位，收到错误：\n"
+"Unable to geolocate, received the error:\n"
 "[%s]%s\n"
 "\n"
-"百度将此作为付费功能。\n"
-"您应首先在百度帐户上启用结算功能。\n"
-"然后，转到开发者控制台，并启用API：\n"
-"地理编码，地图静态，地图Javascript。\n"
+"Baidu made this a paid feature.\n"
+"You should first enable billing on your Baidu account.\n"
+"Then, go to Developer Console, and enable the APIs:\n"
+"Geocoding, Maps Static, Maps Javascript.\n"
 
 #. module: e2yun_base_geolocalize
 #: model:geoengine.raster.layer,name:e2yun_base_geolocalize.geoengine_raster_layer_partneramap
 msgid "aMap Map"
-msgstr "高德地图"
+msgstr "aMap Map"
 
 #. module: e2yun_base_geolocalize
 #: code:addons/e2yun_base_geolocalize/models/res_partner.py:41
 #, python-format
 msgid "ak不存在或者非法"
-msgstr "AK不存在或者非法"
+msgstr "Ak does not exist or is illegal"
 
 #. module: e2yun_base_geolocalize
 #: code:addons/e2yun_base_geolocalize/models/res_partner.py:45
 #, python-format
 msgid "不通过白名单或者安全码不对"
-msgstr "不通过白名单或者安全码不对"
+msgstr "Not passing whitelist or wrong security code"
 
 #. module: e2yun_base_geolocalize
 #: code:addons/e2yun_base_geolocalize/models/res_partner.py:47
 #, python-format
 msgid "无权限"
-msgstr "无权限"
+msgstr "Without permission"
 
 #. module: e2yun_base_geolocalize
 #: code:addons/e2yun_base_geolocalize/models/res_partner.py:33
 #, python-format
 msgid "服务器内部错误"
-msgstr "服务器内部错误"
+msgstr "Server internal error"
 
 #. module: e2yun_base_geolocalize
 #: code:addons/e2yun_base_geolocalize/models/res_partner.py:43
 #, python-format
 msgid "服务禁用"
-msgstr "服务禁用"
+msgstr "Service is disabled"
 
 #. module: e2yun_base_geolocalize
 #: code:addons/e2yun_base_geolocalize/models/res_partner.py:37
 #, python-format
 msgid "权限校验失败"
-msgstr "权限校验失败"
+msgstr "Permission check failed"
 
 #. module: e2yun_base_geolocalize
 #: code:addons/e2yun_base_geolocalize/models/res_partner.py:35
 #, python-format
 msgid "请求参数非法"
-msgstr "请求参数非法"
+msgstr "Invalid request parameter"
 
 #. module: e2yun_base_geolocalize
 #: code:addons/e2yun_base_geolocalize/models/res_partner.py:39
 #, python-format
 msgid "配额校验失败"
-msgstr "配额校验失败"
+msgstr "Quota check failed"
 
 #. module: e2yun_base_geolocalize
 #: code:addons/e2yun_base_geolocalize/models/res_partner.py:49
 #, python-format
 msgid "配额错误"
-msgstr "配额错误"
+msgstr "The quota error"

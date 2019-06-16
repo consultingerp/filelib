@@ -2,9 +2,9 @@
    :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
    :alt: License: LGPL-3
 
-==========================
-E2yun Partners Geolocation
-==========================
+======================
+E2yun Base Geolocation
+======================
 This module extends Partners Geolocation
 if partner.country_id.code == 'CN' use Baidu Geolocation
 others use Bing Geolocation
@@ -13,25 +13,10 @@ replace website google map with baidu map
 Requirements
 ============
 
-You need to install and to start a baidu aip sdk to use this module.
-Documentation is available on `Baidu AIP website`_.
-
-You need to install package `baidu-aip`::
-
-    pip install baidu-aip
-
-.. _`Baidu AIP website`: http://ai.baidu.com/docs#/OCR-Python-SDK/top
-
+You need to apply bing api key
 
 Configuration
 =============
-
-
-Set the configuration parameter ``baidu_app_id``
-
-Set the configuration parameter ``baidu_app_key``
-
-Set the configuration parameter ``baidu_secret_key``
 
 
 
