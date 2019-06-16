@@ -1,0 +1,68 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* e2yun_base_geolocalize_bing
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-14 16:24+0000\n"
+"PO-Revision-Date: 2019-06-15 00:32+0800\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: zh\n"
+"X-Generator: Poedit 1.8.12\n"
+
+#. module: e2yun_base_geolocalize_bing
+#: code:addons/e2yun_base_geolocalize_bing/models/res_partner.py:19
+#, python-format
+msgid ""
+"API key for GeoCoding (Places) required.\n"
+"\n"
+"                          Save this key in System Parameters with key: bing.api_key_geocode, value: <your api key>\n"
+"                          Visit https://docs.microsoft.com/en-us/bingmaps/getting-started/bing-maps-dev-center-help/getting-a-bing-maps-key\n"
+"                          for more information.\n"
+"                          "
+msgstr ""
+"需要GeoCoding（Places）的API key。\n"
+"\n"
+"在系统参数中保存这个键值：\n"
+"bing.api_key_geocode, 值:<bing api key>\n"
+"访问https://docs.microsoft.com/en-us/bingmaps/getting-started/bing-maps-dev-center-help/getting-a-bing-maps-key可获得更多信息。"
+
+#. module: e2yun_base_geolocalize_bing
+#: code:addons/e2yun_base_geolocalize_bing/models/res_partner.py:29
+#, python-format
+msgid "Cannot contact geolocation servers. Please make sure that your Internet connection is up and running (%s)."
+msgstr "无法连接地理信息服务器。请确保你的互联网链接畅通(%s)。"
+
+#. module: e2yun_base_geolocalize_bing
+#: model:ir.model,name:e2yun_base_geolocalize_bing.model_res_partner
+msgid "Contact"
+msgstr "联系人"
+
+#. module: e2yun_base_geolocalize_bing
+#: code:addons/e2yun_base_geolocalize_bing/models/res_partner.py:34
+#, python-format
+msgid ""
+"Unable to geolocate, received the error:\n"
+"%s\n"
+"\n"
+"Bing made this a paid feature.\n"
+"You should first enable billing on your Bing account.\n"
+"Then, go to Developer Console, and enable the APIs:\n"
+"Geocoding, Maps Static, Maps Javascript.\n"
+"statusDescription"
+msgstr ""
+"不能定位，收到如下错误:\n"
+"%s\n"
+"\n"
+"Bing将这一功能变成了付费功能\n"
+"您应该首先启用Bing帐户上的计费功能\n"
+"然后，转到Developer Console，并启用api:\n"
+"地理编码，地图静态，地图Javascript.\n"
+"statusDescription"
