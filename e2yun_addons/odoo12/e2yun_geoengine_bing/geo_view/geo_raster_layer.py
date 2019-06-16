@@ -12,13 +12,14 @@ class GeoengineRasterLayer(models.Model):
 
     _inherit = "geoengine.raster.layer"
 
-    raster_type = fields.Selection(selection_add=[('bing', 'Bing')])
+    raster_type = fields.Selection(selection_add=[('bing', 'Bing')], default='bing')
     is_bing = fields.Boolean(compute='_compute_is_bing')
     culture = fields.Char(compute='_compute_culture',store=False)
     bing_imagery_set = fields.Selection([
         ('Road', 'Road'),
         ('RoadOnDemand', 'Road on demand'),
         ('Aerial', 'Aerial'),
+        ('AerialWithLabels', 'Aerial With Labels'),
         ('AerialWithLabelsOnDemand', 'Aerial With Labels OnDemand'),
         ('Birdseye', 'Birds eye'),
         ('BirdseyeWithLabels', 'Birds eye With Labels'),
@@ -29,7 +30,7 @@ class GeoengineRasterLayer(models.Model):
         ('CanvasLight', 'Canvas Light'),
         ('CanvasGray', 'Canvas Gray'),
         ('ordnanceSurvey', 'Ordnance Survey')
-        ], string="Imagery Set", default="AerialWithLabels")
+        ], string="Imagery Set", default="CanvasLight")
 
     bing_key = fields.Char()
 
@@ -41,8 +42,10 @@ class GeoengineRasterLayer(models.Model):
 
     @api.multi
     def _compute_culture(self):
+        lang = self.env.lang if self.env.lang else self.env.user.lang
         for rec in self:
-            if self.env.lang == 'zh_CN':
+            if lang == 'zh_CN':
                 rec.culture = 'zh-cN'
             else:
                 rec.culture = 'en-us'
+

@@ -18,7 +18,8 @@ def geo_find_bing(addr, apikey=False):
     if not apikey:
         raise UserError(_('''API key for GeoCoding (Places) required.\n
                           Save this key in System Parameters with key: bing.api_key_geocode, value: <your api key>
-                          Visit https://developers.google.com/maps/documentation/geocoding/get-api-key for more information.
+                          Visit https://docs.microsoft.com/en-us/bingmaps/getting-started/bing-maps-dev-center-help/getting-a-bing-maps-key
+                          for more information.
                           '''))
 
     url = "https://dev.virtualearth.net/REST/v1/Locations/?"
@@ -79,7 +80,7 @@ class ResPartner(models.Model):
     def geo_localize(self):
         # We need country names in English below
         apikey = self.env['ir.config_parameter'].sudo().get_param('bing.api_key_geocode',default='AqY4IFeQhJPHi5FjGBNc7hfgUNcaVf7S_qyyP_dlVCesSJUqI7dBA-gsyoAIUvGu')
-        for partner in self.with_context(lang='zh_CN'):
+        for partner in self.with_context(lang='en_US'):
             result = partner._geo_localize(apikey,
                                            partner.street,
                                            partner.zip,
