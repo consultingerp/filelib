@@ -4,7 +4,9 @@
 E2yun Geoengine Maps
 ====================
 
-This module adds Bing, aMap, Baidu, Google cn raster support. A Bing API key or A Baidu API key is required to use this features.
+This module adds Bing, aMap, Baidu, Google cn raster support.
+
+A Bing API key or A Baidu API key is required to use this features.
 
 Bug Tracker
 ===========
@@ -21,6 +23,7 @@ Contributors
 
 * Kerrim Abdelhamed <kerrim.abdelhamed@mukit.at>
 * Mathias Markl <mathias.markl@mukit.at>
+* Joytao Zhu <joytao.zhu@e2yun.com>
 
 Maintainer
 ----------
