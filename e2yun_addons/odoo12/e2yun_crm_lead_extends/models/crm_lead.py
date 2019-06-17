@@ -9,9 +9,21 @@ class CrmLead(models.Model):
     _inherit = 'crm.lead'
 
     tag_ids = fields.Many2one('crm.lead.tag', string='Opportunity Type',required=True, help="Classify and analyze your lead/opportunity categories like: Training, Service")
-    property_product_pricelist = fields.Many2one('product.pricelist',string='Pricelist')
-    amount = fields.Float(string='Amount',digits=dp.get_precision('Product Price'))
+    property_product_pricelist = fields.Many2one('product.pricelist',string='Pricelist',required=True)
+    amount = fields.Float(string='Amount',digits=dp.get_precision('Product Price'),required=True)
     amount_usd = fields.Float(string='Amount USD',digits=dp.get_precision('Product Price'))
+
+    # _sql_constraints = [
+    #     ('amount_gt_zero','CHECK (amount > 0)','The amount of opportunity must be greater than 0')
+    # ]
+
+    @api.constrains('amount')
+    def check_gt_zero(self):
+        for s in self:
+            if s.amount<= 0:
+                raise ValidationError('The amount of opportunity must be greater than 0')
+
+
 
     rec_rev = fields.Selection([("HB","HB-Hour Base"),
         ("DB","DB-Day Base"),
@@ -44,7 +56,10 @@ class CrmLead(models.Model):
 
     @api.onchange("amount","property_product_pricelist")
     def onchange_amount_price(self):
-        if self.property_product_pricelist and self.amount:
+        if not self.amount or self.amount == 0:
+            self.planned_revenue = 0
+            self.amount_usd = 0
+        elif self.property_product_pricelist and self.amount:
             company_id = self.company_id or self.env.user.company_id
             create_date = self.create_date or self._origin.create_date or fields.Date.today()
 
@@ -95,12 +110,14 @@ class CrmLeadLost(models.TransientModel):
 
     lost_reason_id = fields.Many2one('crm.lost.reason', 'Lost Reason',default=lambda self: self._default_lost_reason_id())
 
-    # @api.multi
-    # def action_lost_reason_apply(self):
-    #     leads = self.env['crm.lead'].browse(self.env.context.get('active_ids'))
-    #     for l in leads:
-    #         if l.stage_id.name in ['Closed-DROPOUT','Closed Lost'] and (not self.lost_reason_id or not l.lost_reason):
-    #             raise ValidationError("丢失原因必须输入")
-    #     leads.write({'lost_reason': self.lost_reason_id.id})
-    #     return leads.action_set_lost()
+    @api.multi
+    def action_lost_reason_apply(self):
+        leads = self.env['crm.lead'].browse(self.env.context.get('active_ids'))
+        btn_type = self.env.context.get('btn_type',False)
+        if btn_type:
+            stage = self.env['crm.stage'].search([('name','=',btn_type)])
+            leads.write({'lost_reason': self.lost_reason_id.id,'stage_id':stage[0].id})
+        else:
+            leads.write({'lost_reason': self.lost_reason_id.id})
+        return leads.action_set_lost()
 
