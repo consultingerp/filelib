@@ -12,6 +12,10 @@
                  <xpath expr="//field[@name='priority']" position="after">
                     <field name="payment_team_id" />
                     <field name="parent_payment_team_id" />
+                 </xpath>
+
+                <xpath expr="//button[@class='oe_highlight']" position="attributes">
+                   <attribute name="invisible">True</attribute>
                 </xpath>
 
             </field>
@@ -21,10 +25,24 @@
          <record id="crm_case_form_view_oppor_modify" model="ir.ui.view">
             <field name="model">crm.lead</field>
             <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+            <field name="groups_id" eval="[(6, 0, [ref('e2yun_customer_info.groups_the_new_quotation') ])]"/>
             <field name="arch" type="xml">
-                <xpath expr="//button[@class='oe_highlight']" position="attributes">
-                    <attribute name="attrs">{'invisible': ['|', ('stage_id', '!=', 4)]}</attribute>
+
+                <xpath expr="//button[@name='%(sale_crm.sale_action_quotations_new)d']" position="replace">
+                   <!-- <attribute name="attrs">{'invisible': ['|', ('stage_id', '!=', 4)]}</attribute>-->
+                         <button string="New Quotation" name="%(sale_crm.sale_action_quotations_new)d" type="action" class="oe_highlight"
+                        attrs="{'invisible': ['&amp;', ('probability', '=', 0), ('active', '=', False)]}"
+                        context="{'search_default_partner_id': partner_id,
+                                  'default_partner_id': partner_id,
+                                  'default_team_id': team_id,
+                                  'default_campaign_id': campaign_id,
+                                  'default_medium_id': medium_id,
+                                  'default_origin': name,
+                                  'default_source_id': source_id}"/>
+
                 </xpath>
+
+
             </field>
         </record>
 
