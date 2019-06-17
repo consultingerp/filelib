@@ -9,6 +9,11 @@
                 <xpath expr="//field[@name='team_id']" position="after">
                     <field name="parent_team_id" />
                 </xpath>
+                 <xpath expr="//field[@name='priority']" position="after">
+                    <field name="payment_team_id" />
+                    <field name="parent_payment_team_id" />
+                </xpath>
+
             </field>
         </record>
 

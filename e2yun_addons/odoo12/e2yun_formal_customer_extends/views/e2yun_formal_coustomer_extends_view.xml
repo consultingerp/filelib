@@ -5,8 +5,10 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='company_type']" position="after">
-                    <field name="customer_id" readonly="True"/>
+                <xpath expr="//h1" position="before">
+                    <div class="o_form_label">
+                            <field name="customer_id"/>
+                    </div>
                 </xpath>
             </field>
         </record>
