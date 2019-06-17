@@ -821,3 +821,9 @@ msgstr "支付团队"
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_crm_lead__parent_payment_team_id
 msgid "Delivery team L1"
 msgstr "支付团队L1"
+
+#. module: e2yun_customer_info
+#: model_terms:ir.ui.view,arch_db:e2yun_customer_info.crm_case_form_view_oppor_modify
+msgid "New Quotation"
+msgstr "新报价单"
+
