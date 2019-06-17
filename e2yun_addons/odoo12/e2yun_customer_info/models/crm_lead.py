@@ -4,56 +4,30 @@ from odoo import models, fields, api
 import logging
 
 logger = logging.getLogger(__name__)
-
+from odoo.exceptions import UserError
 
 class crm_lead(models.Model):
     _inherit = 'crm.lead'
 
     parent_team_id = fields.Many2one(comodel_name='crm.team', string='Parent Team id',compute='_compute_parent_team_id', store=True)
+    payment_team_id = fields.Many2one('crm.team', string='Delivery team', oldname='section_id', default=lambda self: self.env['crm.team'].sudo()._get_default_team_id(user_id=self.env.uid),
+        index=True, track_visibility='onchange', help='When sending mails, the default email address is taken from the Sales Team.')
+    parent_payment_team_id= fields.Many2one(comodel_name='crm.team', string='Delivery team L1',compute='_compute_parent_payment__team_id', store=True)
+
 
     @api.one
     @api.depends('team_id')
     def _compute_parent_team_id(self):
         self.parent_team_id = self.team_id.parent_id.id
 
+    @api.one
+    @api.depends('payment_team_id')
+    def _compute_parent_payment__team_id(self):
+        self.parent_payment_team_id = self.payment_team_id.parent_id.id
 
-
-    @api.model
-    def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
-
-        domain=[]
-        domain.append('|')
-
-        list_domain_temp=[]
-        list_domain_temp.append('user_id')
-        list_domain_temp.append('=')
-        list_domain_temp.append(self._uid)
-        domain.append(list_domain_temp)
-
-        list_domain_temp = []
-        list_domain_temp.append('create_uid')
-        list_domain_temp.append('=')
-        list_domain_temp.append(self._uid)
-        domain.append(list_domain_temp)
-
-        records = self.search(domain or [], offset=offset, limit=limit, order=order)
-        if not records:
-            return []
-        if fields and fields == ['id']:
-            # shortcut read if we only want the ids
-            return [{'id': record.id} for record in records]
-        # read() ignores active_test, but it would forward it to any downstream search call
-        # (e.g. for x2m or function fields), and this is not the desired behavior, the flag
-        # was presumably only meant for the main search().
-        # TODO: Move this to read() directly?
-        if 'active_test' in self._context:
-            context = dict(self._context)
-            del context['active_test']
-            records = records.with_context(context)
-
-        result = records.read(fields)
-        if len(result) <= 1:
-            return result
-        # reorder read
-        index = {vals['id']: vals for vals in result}
-        return [index[record.id] for record in records if record.id in index]
+    @api.multi
+    def write(self, values):
+       #状态 4 和 8 时 无法更新数据
+       if self.stage_id.id==4 or self.stage_id.id==4:
+           raise UserError('当前状态下无法操作更新，请联系管理员')
+       res = super(crm_lead, self).write(values)

@@ -807,4 +807,17 @@ msgstr ""
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_crm_lead__parent_team_id
 msgid "Parent Team id"
-msgstr "上级团队"
+msgstr "上级销售团队"
+
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_crm_lead__payment_team_id
+msgid "Delivery team"
+msgstr "支付团队"
+
+
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_crm_lead__parent_payment_team_id
+msgid "Delivery team L1"
+msgstr "支付团队L1"
