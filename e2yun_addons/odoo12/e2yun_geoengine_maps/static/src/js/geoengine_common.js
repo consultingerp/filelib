@@ -19,7 +19,7 @@ odoo.define('e2yun_geoengine_map.BackgroundLayers', function (require) {
             });
             // 创建百度行政区划
             var baiduSource = new ol.source.TileImage({
-                projection: "EPSG:3857",
+                projection: "EPSG:4326",
                 tileGrid: tileGrid,
                 tileUrlFunction: function(tileCoord, pixelRatio, proj) {
                     if (!tileCoord) {
