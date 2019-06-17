@@ -10,9 +10,9 @@ class crm_lead(models.Model):
     _inherit = 'crm.lead'
 
     parent_team_id = fields.Many2one(comodel_name='crm.team', string='Parent Team id',compute='_compute_parent_team_id', store=True)
-    payment_team_id = fields.Many2one('crm.team', string='Payment Team', oldname='section_id', default=lambda self: self.env['crm.team'].sudo()._get_default_team_id(user_id=self.env.uid),
+    payment_team_id = fields.Many2one('crm.team', string='Delivery team', oldname='section_id', default=lambda self: self.env['crm.team'].sudo()._get_default_team_id(user_id=self.env.uid),
         index=True, track_visibility='onchange', help='When sending mails, the default email address is taken from the Sales Team.')
-    parent_payment_team_id= fields.Many2one(comodel_name='crm.team', string='Parent Payment Team',compute='_compute_parent_payment__team_id', store=True)
+    parent_payment_team_id= fields.Many2one(comodel_name='crm.team', string='Delivery team L1',compute='_compute_parent_payment__team_id', store=True)
 
 
     @api.one
