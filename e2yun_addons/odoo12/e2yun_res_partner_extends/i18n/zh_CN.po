@@ -1,0 +1,39 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* e2yun_res_partner_extends
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-17 03:11+0000\n"
+"PO-Revision-Date: 2019-06-17 03:11+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: e2yun_res_partner_extends
+#: model:ir.model,name:e2yun_res_partner_extends.model_res_partner
+msgid "Contact"
+msgstr "联系人"
+
+#. module: e2yun_res_partner_extends
+#: model:ir.model.fields,field_description:e2yun_res_partner_extends.field_res_partner__is_strategic
+#: model:ir.model.fields,field_description:e2yun_res_partner_extends.field_res_users__is_strategic
+msgid "Is Strategic"
+msgstr "战略客户"
+
+#. module: e2yun_res_partner_extends
+#: model:ir.model.fields,field_description:e2yun_res_partner_extends.field_res_partner__parent_account
+#: model:ir.model.fields,field_description:e2yun_res_partner_extends.field_res_users__parent_account
+msgid "Parent Account"
+msgstr "母公司"
+
+#. module: e2yun_res_partner_extends
+#: sql_constraint:res.partner:0
+msgid "The name you entered already exists"
+msgstr "你输入的名称已经存在"
+

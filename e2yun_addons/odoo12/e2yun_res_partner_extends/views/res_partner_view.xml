@@ -9,7 +9,8 @@
                 <field name="parent_account"/>
             </xpath>
             <xpath expr="//field[@name='category_id']" position="after">
-                <field name="is_strategic"/>
+                <field name="strategic_edit" invisible="1"/>
+                <field name="is_strategic" attrs="{'readonly': [('strategic_edit','=',False)]}"/>
             </xpath>
         </field>
     </record>
