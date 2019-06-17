@@ -76,6 +76,8 @@ class CrmLead(models.Model):
     def onchange_rec_rev(self):
         if self.rec_rev in ['HN', 'SN', 'HG', 'SG']:
             self.cooperate_with_partner = True
+        else:
+            self.cooperate_with_partner = False
 
     def _onchange_partner_id_values(self, partner_id):
         res = super(CrmLead, self)._onchange_partner_id_values(partner_id)
