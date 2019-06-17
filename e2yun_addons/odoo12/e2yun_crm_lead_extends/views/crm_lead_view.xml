@@ -11,10 +11,14 @@
                         <field name="amount" string="Amount"/>
                   </group>
                   <group>
-                        <field name="amount_usd" string="Amount USD"/>
+                        <field name="amount_usd" string="Amount USD" readonly="1" force_save="1"/>
                   </group>
                 </group>
               </xpath>
+            <xpath expr="//field[@name='planned_revenue']" position="attributes">
+                <attribute name="readonly">1</attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
             <xpath expr="//field[@name='tag_ids']" position="replace">
                 <field name="tag_ids" options="{'no_create_edit': True}"/>
             </xpath>
@@ -27,17 +31,17 @@
             <xpath expr="//button[@name='%(crm.crm_lead_lost_action)d']" position="replace">
                 <button name="%(crm.crm_lead_lost_action)d" string="Mark Lost"
                                 type="action" class="oe_highlight"
-                                context="{'default_lead_id': active_id,'lost_reason':lost_reason}"
+                                context="{'default_lead_id': active_id,'lost_reason':lost_reason,'btn_type':'Closed Lost'}"
                                 attrs="{'invisible': [('active', '=', False),('probability', '&lt;', 100)]}"/>
             </xpath>
             <xpath expr="//button[@name='toggle_active']" position="before">
                 <button name="%(crm.crm_lead_lost_action)d" string="Dropout"
                                 type="action" class="oe_highlight"
-                                context="{'default_lead_id': active_id,'lost_reason':lost_reason}"
+                                context="{'default_lead_id': active_id,'lost_reason':lost_reason,'btn_type':'Closed - DROPOUT'}"
                                 attrs="{'invisible': [('active', '=', False),('probability', '&lt;', 100)]}"/><!--,('stage_id','in',[8,9])-->
                 <button name="%(crm.crm_lead_lost_action)d" string="Suspended"
                                 type="action" class="oe_highlight"
-                                context="{'default_lead_id': active_id,'lost_reason':lost_reason}"
+                                context="{'default_lead_id': active_id,'lost_reason':lost_reason,'btn_type':'Suspended'}"
                                 attrs="{'invisible': [('active', '=', False),('probability', '&lt;', 100)]}"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
