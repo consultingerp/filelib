@@ -302,7 +302,7 @@ class e2yun_customer_info(models.Model):
         UNINCLUDE_COL = ['bank_ids', 'user_ids', 'state', 'commercial_partner_id', 'child_ids', 'parent_id',
                          'display_name', 'tz_offset', 'lang', 'tz', 'self', 'id', 'create_uid',
                          'create_uid', 'create_date', 'write_uid',
-                         'write_date', '__last_update']
+                         'write_date', '__last_update','message_follower_ids','message_partner_ids','message_ids','website_message_ids']
         child_datas = []
         many_cols = []
         for field in self.fields_get():
