@@ -67,4 +67,11 @@
     <field name="perm_create" eval="True"/>
     <field name="perm_unlink" eval="True"/>
   </record>
+
+  <record model="res.groups" id="groups_the_new_quotation">
+        <field name="name">新报价单按钮组</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+  </record>
+
+
 </odoo>
