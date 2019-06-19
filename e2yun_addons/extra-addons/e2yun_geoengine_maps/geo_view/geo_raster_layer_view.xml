@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record id="geo_raster_view_form" model="ir.ui.view">
+        <field name="name">geoengine.raster.layer.form</field>
+        <field name="model">geoengine.raster.layer</field>
+        <field name="inherit_id" ref="base_geoengine.geo_raster_view_form" />
+        <field name="arch" type="xml">
+
+            <xpath expr="//form" position="inside">
+                <group string="Bing Map options" attrs="{'invisible': [('raster_type', '!=', 'bing')]}" colspan="4">
+                  <field name="bing_key" attrs="{'required': [('raster_type', '=', 'bing')]}"/>
+                  <field name="bing_imagery_set" attrs="{'required': [('raster_type', '=', 'bing')]}"/>
+                </group>
+                <group string="Baidu Map options" attrs="{'invisible': [('raster_type', '!=', 'baidu')]}" colspan="4">
+                  <field name="baidu_key" attrs="{'required': [('raster_type', '=', 'baidu')]}"/>
+                  <field name="baidu_imagery_set" attrs="{'required': [('raster_type', '=', 'baidu')]}"/>
+                </group>
+                <group string="aMap options" attrs="{'invisible': [('raster_type', '!=', 'amap')]}" colspan="4">
+                  <field name="amap_imagery_set" attrs="{'required': [('raster_type', '=', 'amap')]}"/>
+                </group>
+                <group string="Google CN Map options" attrs="{'invisible': [('raster_type', '!=', 'google_cn')]}" colspan="4">
+                  <field name="google_cn_imagery_set" attrs="{'required': [('raster_type', '=', 'google_cn')]}"/>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='url']" position="attributes">
+                <attribute name="attrs">{'required': [('is_wmts', '=', True)],
+                    'invisible': [('raster_type', 'in', ['swisstopo','bing','amap','baidu','google_cn'])]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
