@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="assets_backend" name="e2yun_web_form assets backend" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/e2yun_web_form_view/static/src/js/view/form_view.js"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

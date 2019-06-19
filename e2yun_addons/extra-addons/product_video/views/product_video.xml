@@ -1,0 +1,80 @@
+<odoo>
+    <data>
+
+        <record id="product_video_view_tree" model="ir.ui.view">
+            <field name="name">product.video.tree</field>
+            <field name="model">product.video</field>
+            <field name="type">tree</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <tree string="Products Video" >
+                    <field name="name" />
+                    <field name="attachment_type"/>
+                    <field name="url" />
+                    <field name="mine_type"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="product_video_view_form" model="ir.ui.view">
+            <field name="name">product.video.form</field>
+            <field name="model">product.video</field>
+            <field name="type">form</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <form string="Products Video">
+                        <group>
+                            <field name='name'/>
+                            <field name="attachment_type"/>
+                            <field name="data_file"/>
+                            <field name="url"/>
+                            <field name="mine_type"/>
+                            <field name="description"/>
+                        
+                        </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="wp_odoo_video_action">
+            <field name="name">Product Video</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.video</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+           <field name="view_id" ref="product_video_view_form" />
+    </record>
+
+
+        <record model="ir.actions.act_window.view" id="wp_odoo_video_action_form">
+            <field name="act_window_id_video" ref="wp_odoo_video_action" />
+            <field name="sequence" eval="20" />
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="product_video_view_form" />
+        </record>
+
+        <record model="ir.actions.act_window.view" id="wp_odoo_video_action_tree">
+            <field name="act_window_id_video" ref="wp_odoo_video_action" />
+            <field name="sequence" eval="10" />
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="product_video_view_tree" />
+        </record>
+
+
+
+            <record id="video_action" model="ir.actions.act_window">
+            <field name="name">Product_Video</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.video</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+        </record>
+
+
+    </data>
+</odoo>

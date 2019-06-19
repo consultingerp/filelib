@@ -1,0 +1,605 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* e2yun_dynamic_workflow
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-03-07 08:02+0000\n"
+"PO-Revision-Date: 2019-03-07 08:02+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow
+msgid "<span>Buttons</span>"
+msgstr "<span>按鈕</span>"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow
+msgid "<span>Links</span>"
+msgstr "<span>链接</span>"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow
+msgid "<span>Nodes</span>"
+msgstr "<span>节点</span>"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow
+msgid "<strong>Note:</strong> Workflow engine can only alter normal models like\n"
+"                            crm.*, sale.*, hr.*, etc... (not transient like wizards nor abstract like reports)\n"
+"                            also resource (res.*) &amp; interface (ir.*) models are excluded from workflow engine."
+msgstr "<strong>注意:</strong> 工作流引擎只能改变普通的模型\n"
+"                            crm.*, sale.*, hr.*, etc... (不能改变像瞬态和报表模型)\n"
+"                            还有基础模型 (res.*) &amp; 接口模型 (ir.*) 这些将不会归入到可以用工作流来配置."
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button_action_type
+msgid "Action Type"
+msgstr "动作类型"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_node_button
+msgid "Actions"
+msgstr "动作"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_followers_add
+msgid "Add Followers to Model"
+msgstr "添加订阅者到模型"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_mail_thread_add
+msgid "Add Mailthread/Messaging to Model"
+msgstr "将邮件线程/消息添加到模型"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_update_wizard
+msgid "After creating or modifying any workflow, you have to update system in order to allow it to use new updates."
+msgstr "在创建或修改任何工作流之后，您必须更新系统才能允许它使用新的更新。"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_is_visible
+msgid "Appear in Statusbar"
+msgstr "出现在状态栏中"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_node_field
+msgid "Attributes"
+msgstr "属性"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button_btn_key
+msgid "Button Key"
+msgstr "按钮Key"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button_name
+msgid "Button String"
+msgstr "按钮字符"
+
+#. module: e2yun_dynamic_workflow
+#: code:addons/e2yun_dynamic_workflow/models/e2yun_workflow.py:136
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button_ids
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_node
+#, python-format
+msgid "Buttons"
+msgstr "按钮"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_refuse_wizard
+msgid "Cancel"
+msgstr "取消"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_node_button
+msgid "Condition"
+msgstr "条件"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_link_condition_code
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button_condition_code
+msgid "Condition Code"
+msgstr "条件码"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_create_uid
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_link_create_uid
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_model_create_uid
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button_create_uid
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_create_uid
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_field_create_uid
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_refuse_wizard_create_uid
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_update_wizard_create_uid
+msgid "Created by"
+msgstr "创建人"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_create_date
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_link_create_date
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_model_create_date
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button_create_date
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_create_date
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_field_create_date
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_refuse_wizard_create_date
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_update_wizard_create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_link_node_to
+msgid "Destination Node"
+msgstr "目标节点"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_display_name
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_link_display_name
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_model_display_name
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button_display_name
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_display_name
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_field_display_name
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_refuse_wizard_display_name
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_update_wizard_display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_diagram_e2yun_workflow
+msgid "Dynamic Workflow Designer."
+msgstr "动态工作流设计器。"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_field_name
+msgid "Field"
+msgstr "字段"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_field_ids
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_node
+msgid "Fields"
+msgstr "字段"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_flow_end
+msgid "Flow End"
+msgstr "流端"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_flow_start
+msgid "Flow Start"
+msgstr "流程开始"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_field_group_ids
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_node_field
+msgid "Groups"
+msgstr "群组"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button_has_icon
+msgid "Has Icon"
+msgstr "有图标"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button_btn_hide
+msgid "Hide Button if Condition isn't fulfilled"
+msgstr "条件未满足时隐藏按钮"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_id
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_link_id
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_model_id_3163
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button_id
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_field_id
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_id
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_refuse_wizard_id
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_update_wizard_id
+msgid "ID"
+msgstr "ID"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button_icon
+msgid "Icon"
+msgstr "图标"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_node_button
+msgid "In this case you can't use 'obj' variable because the code will be populated on whole view."
+msgstr "In this case you can't use 'obj' variable because the code will be populated on whole view."
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_in_link_ids
+msgid "Incoming Transitions"
+msgstr "入向转换"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_node
+msgid "Ingoing Links"
+msgstr "输入链接"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_field_invisible
+msgid "Invisible"
+msgstr "隐藏"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button_is_highlight
+msgid "Is Highlighted"
+msgstr "突出显示"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_ir_act_server_is_workflow
+msgid "Is Workflow Server Action"
+msgstr "是工作流服务器操作"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow___last_update
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_link___last_update
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_model___last_update
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node___last_update
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button___last_update
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_field___last_update
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_refuse_wizard___last_update
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_update_wizard___last_update
+msgid "Last Modified on"
+msgstr "最后修改日"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_link_write_uid
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_model_write_uid
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button_write_uid
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_field_write_uid
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_write_uid
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_refuse_wizard_write_uid
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_update_wizard_write_uid
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_write_uid
+msgid "Last Updated by"
+msgstr "最后更新人"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_link_write_date
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_model_write_date
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button_write_date
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_field_write_date
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_write_date
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_refuse_wizard_write_date
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_update_wizard_write_date
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button_link_id
+msgid "Link"
+msgstr "链接"
+
+#. module: e2yun_dynamic_workflow
+#: code:addons/e2yun_dynamic_workflow/models/e2yun_workflow.py:151
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_node
+#, python-format
+msgid "Links"
+msgstr "链接"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_node
+msgid "Load Model Fields"
+msgstr "加载模型字段"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_link
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_node_field
+msgid "Main Information"
+msgstr "主要信息"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_model_id
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_field_model_id
+msgid "Model"
+msgstr "模型"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_model_id
+msgid "Model Ref."
+msgstr "模型参考。"
+
+#. module: e2yun_dynamic_workflow
+#: code:addons/e2yun_dynamic_workflow/models/e2yun_workflow.py:87
+#: sql_constraint:e2yun.workflow:0
+#, python-format
+msgid "Model must be unique."
+msgstr "模型必须唯一。"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_link_name
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_name
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_name
+msgid "Name"
+msgstr "名字"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_field_node_id
+msgid "Node Ref."
+msgstr "节点参考。"
+
+#. module: e2yun_dynamic_workflow
+#: code:addons/e2yun_dynamic_workflow/models/e2yun_workflow.py:121
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_ids
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_link
+#, python-format
+msgid "Nodes"
+msgstr "结点"
+
+#. module: e2yun_dynamic_workflow
+#: code:addons/e2yun_dynamic_workflow/models/e2yun_workflow.py:110
+#, python-format
+msgid "Nodes' sequence must be unique per workflow."
+msgstr "每个工作流的节点序列必须唯一。"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_diagram_e2yun_workflow
+msgid "Notes: You can only have one start node and multiple end nodes."
+msgstr "注意：您只能有一个开始节点和多个结束节点。"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model,name:e2yun_dynamic_workflow.model_e2yun_workflow
+msgid "Odoo Workflow"
+msgstr "Odoo 工作流"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model,name:e2yun_dynamic_workflow.model_e2yun_workflow_link
+msgid "Odoo Workflow Links"
+msgstr "Odoo 工作流链接"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model,name:e2yun_dynamic_workflow.model_e2yun_workflow_model
+msgid "Odoo Workflow Model"
+msgstr "Odoo 工作流模型"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model,name:e2yun_dynamic_workflow.model_e2yun_workflow_node_button
+msgid "Odoo Workflow Node Buttons"
+msgstr "Odoo 工作流节点按钮"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model,name:e2yun_dynamic_workflow.model_e2yun_workflow_node_field
+msgid "Odoo Workflow Node Fields"
+msgstr "Odoo 工作流节点字段"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model,name:e2yun_dynamic_workflow.model_e2yun_workflow_node
+msgid "Odoo Workflow Nodes"
+msgstr "Odoo 工作流节点"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_node
+msgid "Outgoing Links"
+msgstr "输出链接"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_out_link_ids
+msgid "Outgoing Transitions"
+msgstr "出向转换"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button_code
+#: selection:e2yun.workflow.node.button,action_type:0
+msgid "Python Code"
+msgstr "Python 代码"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_field_readonly
+msgid "Readonly"
+msgstr "只读"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_refuse_wizard_reason
+msgid "Reason"
+msgstr "原因"
+
+#. module: e2yun_dynamic_workflow
+#: code:addons/e2yun_dynamic_workflow/wizards/e2yun_workflow_refuse_wizard.py:33
+#, python-format
+msgid "Reason of refusal is '%s'"
+msgstr "拒绝的原因是 '%s'"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_refuse_wizard
+msgid "Refusal Reason"
+msgstr "拒绝的原因"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.actions.act_window,name:e2yun_dynamic_workflow.action_e2yun_workflow_refuse_wizard
+msgid "Refusal Reason Wizard"
+msgstr "拒绝原因向导"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_remove_default_attrs_mod
+msgid "Remove Default Attributes & Modifiers"
+msgstr "删除默认属性和修饰符"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_field_required
+msgid "Required"
+msgstr "必须的"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button_sequence
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_sequence
+msgid "Sequence"
+msgstr "序号"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button_server_action_id
+#: selection:e2yun.workflow.node.button,action_type:0
+msgid "Server Action"
+msgstr "服务器动作"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.actions.act_window,name:e2yun_dynamic_workflow.action_ir_actions_server
+#: model:ir.ui.menu,name:e2yun_dynamic_workflow.menu_ir_actions_server
+msgid "Server Actions"
+msgstr "服务器动作"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.menu,name:e2yun_dynamic_workflow.ir_logging_all_menu
+msgid "Server Logging"
+msgstr "服务器日志记录"
+
+#. module: e2yun_dynamic_workflow
+#: code:addons/e2yun_dynamic_workflow/models/e2yun_workflow.py:220
+#, python-format
+msgid "Sorry, source & destination nodes can't be the same."
+msgstr "抱歉，源节点和目标节点不能相同。"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_link_node_from
+msgid "Source Node"
+msgstr "源节点"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_model_state
+msgid "Status"
+msgstr "状态"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_refuse_wizard
+msgid "Submit"
+msgstr "提交"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_node_name
+msgid "Technical Name"
+msgstr "技术名称"
+
+#. module: e2yun_dynamic_workflow
+#: selection:e2yun.workflow.node.button,action_type:0
+msgid "Trigger Link"
+msgstr "出发链接"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_update_wizard
+msgid "Update"
+msgstr "更新"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.actions.act_window,name:e2yun_dynamic_workflow.action_e2yun_workflow_update_wizard
+#: model:ir.ui.menu,name:e2yun_dynamic_workflow.menu_e2yun_workflow_update
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_update_wizard
+msgid "Update Workflows"
+msgstr "更新工作流"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_field_user_ids
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_node_field
+msgid "Users"
+msgstr "用户"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button_win_act_id
+#: selection:e2yun.workflow.node.button,action_type:0
+msgid "Window Action"
+msgstr "窗口操作"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.actions.act_window,name:e2yun_dynamic_workflow.action_e2yun_workflow
+#: model:ir.ui.menu,name:e2yun_dynamic_workflow.menu_e2yun_workflow
+#: model:ir.ui.menu,name:e2yun_dynamic_workflow.menu_e2yun_workflow_root
+msgid "Workflow"
+msgstr "工作流"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_diagram_e2yun_workflow
+msgid "Workflow Editor"
+msgstr "工作流编辑器"
+
+#. module: e2yun_dynamic_workflow
+#: model:res.groups,name:e2yun_dynamic_workflow.group_manager
+msgid "Workflow Manager"
+msgstr "工作流管理器"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button_node_id
+msgid "Workflow Node Ref."
+msgstr "工作流节点参考"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_button_workflow_id
+#: model:ir.model.fields,field_description:e2yun_dynamic_workflow.field_e2yun_workflow_node_workflow_id
+msgid "Workflow Ref."
+msgstr "工作流参考文件"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model,name:e2yun_dynamic_workflow.model_e2yun_workflow_refuse_wizard
+msgid "Workflow Refuse Wizard"
+msgstr "工作流拒绝向导"
+
+#. module: e2yun_dynamic_workflow
+#: code:addons/e2yun_dynamic_workflow/models/e2yun_workflow.py:101
+#, python-format
+msgid "Workflow must have only one start node."
+msgstr "工作流必须只有一个开始节点。"
+
+#. module: e2yun_dynamic_workflow
+#: code:addons/e2yun_dynamic_workflow/models/e2yun_workflow.py:86
+#: sql_constraint:e2yun.workflow:0
+#, python-format
+msgid "Workflow name must be unique."
+msgstr "工作流名称必须唯一。"
+
+#. module: e2yun_dynamic_workflow
+#: code:addons/e2yun_dynamic_workflow/models/e2yun_workflow.py:316
+#: code:addons/e2yun_dynamic_workflow/models/e2yun_workflow.py:371
+#: code:addons/e2yun_dynamic_workflow/models/e2yun_workflow.py:399
+#, python-format
+msgid "Wrong python code defined.\n"
+"\n"
+"Error: %s\n"
+"Line: %s, Column: %s\n"
+"\n"
+"%s"
+msgstr "定义了错误的python代码\n"
+"\n"
+"错误: %s\n"
+"行: %s, 列: %s\n"
+"\n"
+"%s"
+
+#. module: e2yun_dynamic_workflow
+#: code:addons/e2yun_dynamic_workflow/models/e2yun_workflow_model.py:166
+#, python-format
+msgid "Wrong python condition defined."
+msgstr "定义了错误的python条件。"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_node
+msgid "ex. 'Draft' or 'Direct Manager'"
+msgstr "例如“草稿”或“直接经理”"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_node
+msgid "ex. 'draft' or 'direct_manager'"
+msgstr "例如“草稿”或“直接经理”"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model,name:e2yun_dynamic_workflow.model_ir_actions_server
+msgid "ir.actions.server"
+msgstr "ir.actions.server"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.model,name:e2yun_dynamic_workflow.model_e2yun_workflow_update_wizard
+msgid "e2yun.workflow.update.wizard"
+msgstr "e2yun.workflow.update.wizard"
+
+#. module: e2yun_dynamic_workflow
+#: model:ir.ui.view,arch_db:e2yun_dynamic_workflow.view_form_e2yun_workflow_refuse_wizard
+msgid "or"
+msgstr "or"
+
