@@ -143,7 +143,22 @@ class e2yun_customer_info(models.Model):
     _sql_constraints = [
         ('check_name', "CHECK( (type='contact' AND name IS NOT NULL) or (type!='contact') )",
          'Contacts require a name.'),
+        ('name_unique', 'unique(name)', "The name you entered already exists"),
     ]
+
+    @api.onchange('name')
+    def onchange_name(self):
+        name = self.name
+        count = self.env['res.partner'].search_count([('name', '=', name)])
+        if count > 0:
+            self.name = False
+            msg = "The name you entered already exists for customers."
+            return {
+                'warning': {
+                    'title': 'Tips',
+                    'message': msg
+                }
+            }
 
     @api.depends('is_company')
     def _compute_company_type(self):

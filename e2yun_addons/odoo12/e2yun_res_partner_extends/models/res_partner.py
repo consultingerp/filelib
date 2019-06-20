@@ -23,3 +23,17 @@ class ResPartner(models.Model):
     _sql_constraints = [
         ('name_unique', 'unique(name)', "The name you entered already exists"),
     ]
+
+    @api.onchange('name')
+    def onchange_name(self):
+        name = self.name
+        count = self.env['e2yun.customer.info'].search_count([('name','=',name)])
+        if count > 0:
+            self.name = False
+            msg = "The name you entered already exists for potential customers."
+            return {
+                'warning': {
+                    'title': 'Tips',
+                    'message': msg
+                }
+            }
