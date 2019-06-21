@@ -1,0 +1,22 @@
+<odoo>
+  <data>
+    <record id="crm_partner_form_extend" model="ir.ui.view">
+      <field name="name">CRM Partner Form Extends</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+        <field name="vat" position="before">
+          <field name="app_code"/>
+          <field name="shop_code"/>
+          <field name="shop_name"/>
+          <field name="referrer"/>
+          <field name="occupation"/>
+          <field name="car_brand"/>
+          <field name="user_nick_name"/>
+          <field name="gender"/>
+          <field name="customer_source"/>
+        </field>
+      </field>
+    </record>
+  </data>
+</odoo>
