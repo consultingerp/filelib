@@ -27,7 +27,14 @@ class crm_lead(models.Model):
 
     @api.multi
     def write(self, values):
+        #读取按钮权限组s
+       groups = self.env['res.groups'].search([('name', '=', '线索状态更新权限组')])
+       #groups_users = self.env['res.groups.users.rel'].search(['&',('gid', '=',groups.id),('uid','=',self._uid)])
+       sql='SELECT * from res_groups_users_rel where gid=%s and uid=%s'
+       self._cr.execute(sql, (groups.id,self._uid,))
+       groups_users=self._cr.fetchone()
+
        #状态 4 和 8 时 无法更新数据
-       if self.stage_id.id==4 or self.stage_id.id==4:
+       if self.stage_id.id==4 and not groups_users:
            raise UserError('当前状态下无法操作更新，请联系管理员')
        res = super(crm_lead, self).write(values)

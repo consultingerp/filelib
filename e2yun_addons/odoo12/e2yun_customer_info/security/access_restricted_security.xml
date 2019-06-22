@@ -73,5 +73,11 @@
         <field name="model_id" ref="crm.model_crm_lead"/>
   </record>
 
+    <record model="res.groups" id="groups_lead_stage_id_update">
+        <field name="name">线索状态更新权限组</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+  </record>
+
+
 
 </odoo>
