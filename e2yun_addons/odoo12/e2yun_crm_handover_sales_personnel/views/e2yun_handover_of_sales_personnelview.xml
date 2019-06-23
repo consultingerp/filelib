@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+          <record id="view_users_form_extends" model="ir.ui.view">
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//field[@name='login']" position="after">
+                    <label for="transfer_user" class="oe_edit_only" string="Transfer the user"/>
+                    <field name="transfer_user"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
