@@ -58,6 +58,11 @@ msgid "Dropout"
 msgstr "退出"
 
 #. module: e2yun_crm_lead_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_crm_lead_extends.crm_case_form_view_oppor_extends
+msgid "Mark Won"
+msgstr "标记赢得"
+
+#. module: e2yun_crm_lead_extends
 #: selection:crm.lead,rec_rev:0
 msgid "FP-Fixed price"
 msgstr ""
