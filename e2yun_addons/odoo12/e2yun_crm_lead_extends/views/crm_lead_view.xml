@@ -28,8 +28,8 @@
             <xpath expr="//field[@name='priority']" position="after">
                 <field name="rec_rev"/>
             </xpath>
-            <xpath expr="//field[@name='lost_reason']" position="attributes">
-                <attribute name="invisible">[('active', '=', True)]</attribute>
+            <xpath expr="//field[@name='lost_reason']" position="replace">
+                <field name="lost_reason" attrs="{'invisible': [('active', '=', True)]}"/>
             </xpath>
             <xpath expr="//field[@name='lost_reason']" position="after">
                 <field name="losssuspend_detail" attrs="{'invisible':[('active', '=', True)]}"/>
