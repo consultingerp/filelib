@@ -28,24 +28,37 @@
             <xpath expr="//field[@name='priority']" position="after">
                 <field name="rec_rev"/>
             </xpath>
-            <xpath expr="//field[@name='lost_reason']" position="after">
-                <field name="losssuspend_detail" invisible="1"/>
+            <xpath expr="//field[@name='lost_reason']" position="attributes">
+                <attribute name="invisible">[('active', '=', True)]</attribute>
             </xpath>
+            <xpath expr="//field[@name='lost_reason']" position="after">
+                <field name="losssuspend_detail" attrs="{'invisible':[('active', '=', True)]}"/>
+            </xpath>
+            <xpath expr="//button[@name='action_set_won_rainbowman']" position="replace">
+                <button name="action_set_won_rainbowman" string="Mark Won"
+                type="object" class="oe_highlight"
+                groups="ZCRM.lead close"
+                attrs="{'invisible': ['|', ('active','=',False), ('probability', '=', 100)]}"/>
+            </xpath>
+
             <xpath expr="//button[@name='%(crm.crm_lead_lost_action)d']" position="replace">
                 <button name="%(crm.crm_lead_lost_action)d" string="Mark Lost"
-                                type="action" class="oe_highlight"
-                                context="{'default_lead_id': active_id,'lost_reason':lost_reason,'btn_type':'Closed Lost','losssuspend_detail':losssuspend_detail}"
-                                attrs="{'invisible': [('active', '=', False),('probability', '&lt;', 100)]}"/>
+                type="action" class="oe_highlight"
+                groups="ZCRM.lead close"
+                context="{'default_lead_id': active_id,'lost_reason':lost_reason,'btn_type':'Closed Lost','losssuspend_detail':losssuspend_detail}"
+                attrs="{'invisible': [('active', '=', False),('probability', '&lt;', 100)]}"/>
             </xpath>
             <xpath expr="//button[@name='toggle_active']" position="before">
                 <button name="%(crm.crm_lead_lost_action)d" string="Dropout"
-                                type="action" class="oe_highlight"
-                                context="{'default_lead_id': active_id,'lost_reason':lost_reason,'btn_type':'Closed - DROPOUT','losssuspend_detail':losssuspend_detail}"
-                                attrs="{'invisible': [('active', '=', False),('probability', '&lt;', 100)]}"/><!--,('stage_id','in',[8,9])-->
+                    type="action" class="oe_highlight"
+                    groups="ZCRM.lead close"
+                    context="{'default_lead_id': active_id,'lost_reason':lost_reason,'btn_type':'Closed - DROPOUT','losssuspend_detail':losssuspend_detail}"
+                    attrs="{'invisible': [('active', '=', False),('probability', '&lt;', 100)]}"/><!--,('stage_id','in',[8,9])-->
                 <button name="%(crm.crm_lead_lost_action)d" string="Suspended"
-                                type="action" class="oe_highlight"
-                                context="{'default_lead_id': active_id,'lost_reason':lost_reason,'btn_type':'Suspended','losssuspend_detail':losssuspend_detail}"
-                                attrs="{'invisible': [('active', '=', False),('probability', '&lt;', 100)]}"/>
+                    type="action" class="oe_highlight"
+                    groups="ZCRM.lead close"
+                    context="{'default_lead_id': active_id,'lost_reason':lost_reason,'btn_type':'Suspended','losssuspend_detail':losssuspend_detail}"
+                    attrs="{'invisible': [('active', '=', False),('probability', '&lt;', 100)]}"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
                 <page name="alliance" string="Alliance Information">
