@@ -93,6 +93,12 @@ msgid "Lost Reason"
 msgstr "失去原因"
 
 #. module: e2yun_crm_lead_extends
+#: model:ir.model.fields,field_description:e2yun_crm_lead_extends.field_crm_lead_lost__losssuspend_detail
+#: model:ir.model.fields,field_description:e2yun_crm_lead_extends.field_crm_lead__losssuspend_detail
+msgid "Loss/Suspend detail"
+msgstr "丢单/放弃/暂停 详细原因"
+
+#. module: e2yun_crm_lead_extends
 #: selection:crm.lead,rec_rev:0
 msgid "MB-Month Base"
 msgstr ""

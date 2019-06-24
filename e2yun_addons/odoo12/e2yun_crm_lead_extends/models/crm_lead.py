@@ -53,6 +53,7 @@ class CrmLead(models.Model):
     product_name3 = fields.Many2one('product.product',string='Product Name 3')
     product_name4= fields.Many2one('product.product',string='Product Name 4')
     other_product= fields.Char(string='Other Product')
+    losssuspend_detail= fields.Char(string='Loss/Suspend detail')
 
     @api.onchange("amount","property_product_pricelist")
     def onchange_amount_price(self):
@@ -108,7 +109,11 @@ class CrmLeadLost(models.TransientModel):
     def _default_lost_reason_id(self):
         return self._context.get('lost_reason',False)
 
-    lost_reason_id = fields.Many2one('crm.lost.reason', 'Lost Reason',default=lambda self: self._default_lost_reason_id())
+    def _default_losssuspend_detail(self):
+        return self._context.get('losssuspend_detail',False)
+
+    lost_reason_id = fields.Many2one('crm.lost.reason', 'Lost Reason',required=True,default=lambda self: self._default_lost_reason_id())
+    losssuspend_detail = fields.Char(string='Loss/Suspend detail',required=True,default=lambda self: self._default_losssuspend_detail())
 
     @api.multi
     def action_lost_reason_apply(self):
@@ -116,8 +121,8 @@ class CrmLeadLost(models.TransientModel):
         btn_type = self.env.context.get('btn_type',False)
         if btn_type:
             stage = self.env['crm.stage'].search([('name','=',btn_type)])
-            leads.write({'lost_reason': self.lost_reason_id.id,'stage_id':stage[0].id})
+            leads.write({'lost_reason': self.lost_reason_id.id,'stage_id':stage[0].id,'losssuspend_detail':self.losssuspend_detail})
         else:
-            leads.write({'lost_reason': self.lost_reason_id.id})
+            leads.write({'lost_reason': self.lost_reason_id.id,'losssuspend_detail':self.losssuspend_detail})
         return leads.action_set_lost()
 
