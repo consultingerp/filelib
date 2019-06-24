@@ -28,7 +28,7 @@ class crm_lead(models.Model):
     @api.multi
     def write(self, values):
         #读取按钮权限组s
-       groups = self.env['res.groups'].search([('name', '=', '线索状态更新权限组')])
+       groups = self.env['res.groups'].search([('name', '=', 'ZCRM-线索状态更新权限组')])
        #groups_users = self.env['res.groups.users.rel'].search(['&',('gid', '=',groups.id),('uid','=',self._uid)])
        sql='SELECT * from res_groups_users_rel where gid=%s and uid=%s'
        self._cr.execute(sql, (groups.id,self._uid,))
