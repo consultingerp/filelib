@@ -38,7 +38,7 @@
         'views/res_partner_views.xml',
         'views/wx_userodoouser.xml',
         'views/crm_team_views.xml',
-
+        'views/wx_para_config.xml',
     ],
     'qweb': [
     ],
