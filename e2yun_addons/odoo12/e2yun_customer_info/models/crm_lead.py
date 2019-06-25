@@ -28,10 +28,9 @@ class crm_lead(models.Model):
     @api.multi
     def write(self, values):
         #读取按钮权限组s
-       groups = self.env['res.groups'].search([('name', '=', 'ZCRM-线索状态更新权限组')])
-       #groups_users = self.env['res.groups.users.rel'].search(['&',('gid', '=',groups.id),('uid','=',self._uid)])
+       groups_id=self.env.ref('e2yun_customer_info.groups_lead_stage_id_update').id
        sql='SELECT * from res_groups_users_rel where gid=%s and uid=%s'
-       self._cr.execute(sql, (groups.id,self._uid,))
+       self._cr.execute(sql, (groups_id,self._uid,))
        groups_users=self._cr.fetchone()
 
        #状态 4 和 8 时 无法更新数据
