@@ -470,7 +470,7 @@
                                         <field name="x_studio_annual_revenue" attrs="{'invisible': [('customer', '=', False)]}"/>
                                         <field name="x_studio_stock_code" attrs="{'invisible': [('customer', '=', False)]}"/>
                                     </group>
-                                     <group string="Purchase" name="purchase" priority="2">
+                                     <group priority="2">
                                          <field name="x_studio_annual_profitusdk" attrs="{'invisible': [('customer', '=', False)]}"/>
                                          <field name="x_studio_market_value" attrs="{'invisible': [('customer', '=', False)]}"/>
                                      </group>
