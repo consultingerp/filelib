@@ -129,7 +129,7 @@ class e2yun_customer_info(models.Model):
     # hack to allow using plain browse record in qweb views, and used in ir.qweb.field.contact
     self = fields.Many2one(comodel_name=_name, compute='_compute_get_ids')
 
-    customer_id = fields.Many2one('res.partner', company_dependent=True, string='Normal Customer')
+    partner_id = fields.Many2one('res.partner', company_dependent=True, string='Normal Customer')
 
     property_payment_term_id = fields.Many2one('account.payment.term', company_dependent=True,
                                                string='Customer Payment Terms',
@@ -139,6 +139,42 @@ class e2yun_customer_info(models.Model):
     team_id = fields.Many2one('crm.team', 'Team')
 
     parent_team_id = fields.Many2one(comodel_name='crm.team', compute='_compute_parent_team_id', store=True)
+
+    # 新增客户中的字段
+    customer_id = fields.Char('	Customer Id', required=True)
+    x_studio_name_en_1 = fields.Char('Name_En')
+    x_studio_account_group = fields.Char('Account Group')
+    parent_account = fields.Many2one('res.partner', company_dependent=True, string='母公司')
+    x_studio_account_type = fields.Selection([["Target Client", "Target Client"], ["Active Client", "Active Client"],
+                                              ["Significant Client", "Significant Client"]], 'Account type')
+    activity_user_id = fields.Many2one('res.users', company_dependent=True, string='责任用户')
+    x_studio__1 = fields.Selection(
+        [["华中", "华中"], ["华东", "华东"], ["西南", "西南"], ["华南", "华南"], ["华北", "华北"], ["东北", "东北"], ["西北", "西北"],
+         ["Greater China", "Greater China"], ["Japan", "Japan"], ["Asia Pacific", "Asia Pacific"], ["Europe", "Europe"],
+         ["North America", "North America"], ["Rest of World", "Rest of World"]], 'Account Region')
+    x_studio_ = fields.Selection(
+        [["客户类型", "T&M contract,by Month/by Quarter billing"], ["行业1", "FP by Milestone billing"],
+         ["银行", "pay after project is completed and project cycle<2 months"],
+         ["制造业", "pay after project is completed and project cycle>2 months"]], 'Way of settlement')
+    x_studio_ender_customer = fields.Char('Ender Customer')
+    x_studio_account_management = fields.Selection([["NMA", "NMA"], ["CMA", "CMA"]], 'Account Management')
+    x_studio_account_source = fields.Selection([["Other", "Other"]], 'Account Source')
+    x_studio_registration_address = fields.Char('Registration Address')
+    grade_id = fields.Many2one('res.partner.grade', 'Level')
+    secondary_industry_ids = fields.Many2many(
+        comodel_name='res.partner.industry', string="Secondary Industries",
+        domain="[('id', '!=', industry_id)]")
+    x_studio__2 = fields.Integer('Number of employees')
+    x_studio_revenue_forcast_for_future_4q = fields.Float('Revenue forcast for future 4Q')
+    property_product_pricelist = fields.Many2one('product.pricelist', string='Pricelist', required=True)
+    x_studio_is_new_logo = fields.Boolean('Is New LOGO')
+    is_strategic = fields.Boolean(string='Is Strategic')
+    x_studio_is_a_public_company = fields.Selection([["YES", "YES"]], string='Is Strategic')
+    x_studio_annual_revenue = fields.Float('Annual Revenue')
+    x_studio_ipo_location = fields.Char('IPO Location')
+    x_studio_stock_code = fields.Char('Stock Code')
+    x_studio_annual_profitusdk = fields.Float('Annual Profit（USDK）')
+    x_studio_market_value = fields.Float('Market Value')
 
     _sql_constraints = [
         ('check_name', "CHECK( (type='contact' AND name IS NOT NULL) or (type!='contact') )",
@@ -315,9 +351,9 @@ class e2yun_customer_info(models.Model):
         self.ensure_one()
         data = {}
         UNINCLUDE_COL = ['bank_ids', 'user_ids', 'state', 'commercial_partner_id', 'child_ids', 'parent_id',
-                         'display_name', 'tz_offset', 'lang', 'tz', 'self', 'id', 'create_uid',
-                         'create_uid', 'create_date', 'write_uid',
-                         'write_date', '__last_update','message_follower_ids','message_partner_ids','message_ids','website_message_ids']
+                         'partner_id', 'display_name', 'tz_offset', 'lang', 'tz', 'self', 'id', 'create_uid',
+                         'create_uid', 'create_date', 'write_uid', 'write_date', '__last_update',
+                         'message_follower_ids', 'message_partner_ids', 'message_ids', 'website_message_ids']
         child_datas = []
         many_cols = []
         for field in self.fields_get():
