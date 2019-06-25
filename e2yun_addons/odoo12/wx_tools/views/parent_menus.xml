@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <menuitem id="parent_menu_119" name="微信" parent=""  sequence="10"/>
+        <menuitem id="parent_menu_120" name="公众号用户管理" parent="parent_menu_119"  sequence="1"/>
+        <menuitem id="parent_menu_122" name="信息回复" parent="parent_menu_119"  sequence="10"/>
+        <menuitem id="parent_menu_121" name="返回动作" parent="parent_menu_122"  sequence="99"/>
+        <menuitem id="parent_menu_123" name="公众号设置" parent="parent_menu_119"  sequence="10"/>
+        <menuitem id="parent_menu_286" name="企业微信管理" parent="parent_menu_119"  sequence="2"   groups="wx_tools.hideme"/>
+        <menuitem id="parent_menu_300" name="小程序管理" parent="parent_menu_119"  sequence="2"   groups="wx_tools.hideme"/>
+        <menuitem id="parent_menu_126_1542014737" name="公众号素材" parent="parent_menu_119"  sequence="1"/>
+
+
+    </data>
+</openerp>
