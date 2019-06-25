@@ -1,0 +1,17 @@
+#. module: e2yun_crm_lead_product_extends
+#: model:ir.model.fields,field_description:e2yun_crm_lead_product_extends.field_crm_lead_line__price_tax
+msgid "Total Tax"
+msgstr "含税金额"
+
+
+#. module: e2yun_crm_lead_product_extends
+#: model:ir.model.fields,field_description:e2yun_crm_lead_product_extends.field_crm_lead_line__tax_id
+msgid "Taxes"
+msgstr "税率"
+
+
+#. module: e2yun_crm_lead_product_extends
+#: model:ir.model.fields,field_description:e2yun_crm_lead_product_extends.field_crm_lead_line__price_subtotal
+msgid "Subtotal"
+msgstr "不含税金额"
+
