@@ -6,7 +6,6 @@ import os
 import datetime
 from odoo import fields
 
-
 from odoo.http import request
 import odoo
 from .. import client
@@ -111,6 +110,7 @@ def main(robot):
         ret_msg = ''
         cr, uid, context, db = request.cr, request.uid or odoo.SUPERUSER_ID, request.context, request.db
         uuid = ''  # 获取上次连接会话
+        active_id = ''  # 会话ID用户于连接到会话
         wxuserinfo = request.env['wx.user'].sudo().search([('openid', '=', openid)])
         if not wxuserinfo.exists():
             info = client.wxclient.get_user_info(openid)  # 获取用户信息
@@ -123,6 +123,7 @@ def main(robot):
             channel = request.env['mail.channel'].sudo().search([('uuid', '=', wxuseruuid.last_uuid)])
             if channel.exists():
                 uuid = wxuseruuid.last_uuid
+                active_id = channel.id
         uuid_type = None
         if partner_user_id and uuid:  # 需要联系客服要 存在上次会话
             _logger.info('需要联系客服要 存在上次会话')
@@ -148,6 +149,7 @@ def main(robot):
                 session_info, ret_msg = request.env["im_livechat.channel"].create_mail_channel(channel_id,
                                                                                                anonymous_name,
                                                                                                content)
+                active_id = session_info["id"]
             else:  # 联系客户经理
                 _logger.info('需要联系客服要，创建新的会话')
                 obj = request.env['wx.user.odoouser'].sudo().search([('openid', '=', openid)])
@@ -155,7 +157,8 @@ def main(robot):
                 # partners_to = [partner_user_id.partner_id.id, partner.id]
                 partners_to = [partner_user_id.partner_id.id]
                 # session_info = request.env["mail.channel"].create_user(partners_to);
-                session_info = request.env["mail.channel"].channel_get(partners_to);
+                session_info = request.env["mail.channel"].channel_get(partners_to)
+                active_id = session_info["id"]
                 _logger.info('需要联系客服要，创建新的会话')
             if session_info:
                 uuid = session_info['uuid']
@@ -164,7 +167,12 @@ def main(robot):
                 wx_user.update_last_uuid(uuid, partner_user_id.id if partner_user_id else None, uuid_type)
 
         if uuid:
-            consultation_reminder(request, partner_user_id.partner_id.wx_user_id.openid, origin_content, 60)
+            if partner_user_id:
+                # 发送信息到导购
+                if partner_user_id.partner_id.im_status == 'offline':
+                    consultation_reminder(request, partner, partner_user_id.partner_id.wx_user_id.openid,
+                                          origin_content,
+                                          active_id)
             wx_user.update_last_uuid(uuid, partner_user_id.id if partner_user_id else None, uuid_type)
             localkwargs = {'weixin_id': openid, 'wx_type': 'wx'}
             message_type = "message"
@@ -189,14 +197,14 @@ def main(robot):
         if ret_msg:
             return ret_msg
 
-    def consultation_reminder(self, openid, message, active_id):
+    def consultation_reminder(self, partner, openid, message, active_id):
         data = {
             "first": {
                 "value": "客户咨询服务提醒",
                 "color": "#173177"
             },
             "keyword1": {
-                "value": '微信客户'
+                "value": partner.name
             },
             "keyword2": {
                 "value": '微信客户'
@@ -209,10 +217,20 @@ def main(robot):
                 "value": "信息：" + message
             }
         }
+        discuss_menu_id = None
+        discuss_menu = self.env["wx.paraconfig"].sudo().search([('paraconfig_name', '=', 'Discuss_menu_id')])
+        if discuss_menu:
+            discuss_menu_id = discuss_menu[0].paraconfig_value
+        discuss_action_id = None
+        discuss_action = self.env["wx.paraconfig"].sudo().search([('paraconfig_name', '=', 'Discuss_action')])
+        if discuss_action:
+            discuss_action_id = discuss_action[0].paraconfig_value
+
         template_id = 'mZMBZn7KcAtNiRYMUYa0GTnO_zZBAdtb5aCJp8wVgqU'
         url = client.wxenv(
             self.env).server_url + '/web/login?usercode=message&codetype=wx&' \
-                                   'redirect=/web#action=94&active_id=%s&menu_id=75' % (active_id)
+                                   'redirect=/web#action=%s&active_id=%s&menu_id=%s' % (
+                  discuss_action_id, active_id, discuss_menu_id)
         client.send_template_message(self, openid, template_id, data, url, 'message')
         return True
 
