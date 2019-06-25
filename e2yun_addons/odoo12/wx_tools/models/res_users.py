@@ -14,6 +14,10 @@ class WxResUsers(models.Model):
     qrcode_url = fields.Char(u'二维码url')
     qrcodeimg = fields.Html(compute='_get_qrcodeimg', string=u'二维码')
 
+    # @api.multi
+    # def _compute_im_status(self):
+    #     super(WxResUsers, self)._compute_im_status()
+
     @api.one
     def _get_qrcodeimg(self):
         if not self.qrcode_ticket:

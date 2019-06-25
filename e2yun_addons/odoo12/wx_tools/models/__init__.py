@@ -19,3 +19,4 @@ from . import wx_userodoouser
 from . import crm_team
 from . import mail_channel
 from . import wx_config
+from . import wx_par_config
