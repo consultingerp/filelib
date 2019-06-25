@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_team_information_add" model="ir.ui.view">
+            <field name="name">crm.team.information.form</field>
+            <field name="model">crm.team</field>
+            <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='left']" position="inside">
+                    <field name="shop_code"/>
+                </xpath>
+                <xpath expr="//group[@name='right']" position="inside">
+                    <field name="sales_organization"/>
+                    <field name="sales_organization_name"/>
+                    <field name="sales_channel"/>
+                    <field name="sales_office"/>
+                    <field name="sales_office_description"/>
+                    <field name="address"/>
+                    <field name="tel"/>
+                </xpath>
+
+                <xpath expr="//t[@t-name='kanban-box']//strong[@class='o_kanban_record_title']" position="after">
+                    <div class="o_kanban_record_medium">
+                        <field name="member_type"/>
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>
