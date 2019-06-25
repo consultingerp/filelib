@@ -340,6 +340,24 @@ msgid "Delivery team L1"
 msgstr "支付团队L1"
 
 #. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_crm_lead__contract_number
+msgid "Contract Number"
+msgstr "合同号"
+
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_crm_lead__pid
+msgid "PID"
+msgstr "PID"
+
+
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_crm_lead__cgm
+msgid "CGM%"
+msgstr "CGM%"
+
+#. module: e2yun_customer_info
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_mail_activity_form
 msgid "Discard"
 msgstr "丢弃"
@@ -1083,3 +1101,7 @@ msgstr ""
 msgid "转正式客户"
 msgstr ""
 
+#. module: e2yun_customer_info
+#: model_terms:ir.ui.view,arch_db:e2yun_customer_info.crm_case_form_view_oppor_modify
+msgid "New Quotation"
+msgstr "新报价单"
