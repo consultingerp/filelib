@@ -397,7 +397,7 @@ class e2yun_customer_info(models.Model):
             for child_data in child_datas:
                 child_data['parent_id'] = id.id
                 self.env['res.partner'].create(child_data)
-        self.customer_id = id
+        self.partner_id = id
         # try:
         self.state = 'done'
         # except Exception as e:
