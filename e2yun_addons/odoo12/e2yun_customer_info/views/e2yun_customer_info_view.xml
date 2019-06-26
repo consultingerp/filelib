@@ -258,9 +258,6 @@
                                            options='{"no_open": True, "no_create": True}'
                                            attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
                                 </div>
-                                <field name="vat" placeholder="e.g. BE0477472701"
-                                       attrs="{'readonly': [('parent_id','!=',False)]}"/>
-
                                 <field name="x_studio_account_type" required="True"/>
                                 <field name="create_uid" readonly="True"/>
                                 <field name="user_id"/>
