@@ -30,7 +30,7 @@ msgstr "通过二维码"
 #: model:ir.model.fields,field_description:e2yun_csutomer_extends.field_res_partner__car_brand
 #: model:ir.model.fields,field_description:e2yun_csutomer_extends.field_res_users__car_brand
 msgid "Car Brand"
-msgstr "骑车品牌"
+msgstr "汽车车品牌"
 
 #. module: e2yun_csutomer_extends
 #: model:ir.model,name:e2yun_csutomer_extends.model_res_partner
