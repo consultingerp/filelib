@@ -176,6 +176,11 @@ class e2yun_customer_info(models.Model):
     x_studio_annual_profitusdk = fields.Float('Annual Profit（USDK）')
     x_studio_market_value = fields.Float('Market Value')
 
+    state = fields.Selection([
+        ('Draft', '新建'),
+        ('done', '完成')
+    ], string='Status', readonly=True, required=True, track_visibility='always', copy=False, default='Draft')
+
     _sql_constraints = [
         ('check_name', "CHECK( (type='contact' AND name IS NOT NULL) or (type!='contact') )",
          'Contacts require a name.'),
