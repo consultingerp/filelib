@@ -39,7 +39,7 @@
                 </field>
             </xpath>
         </field>
-    </record>-->
+    </record>
 
     <record id="crm_case_form_view_oppor_modify" model="ir.ui.view">
         <field name="model">crm.lead</field>
@@ -59,6 +59,6 @@
             </xpath>
         </field>
     </record>
-
+-->
 
 </odoo>
