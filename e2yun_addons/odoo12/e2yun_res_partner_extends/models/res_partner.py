@@ -22,6 +22,7 @@ class ResPartner(models.Model):
 
     _sql_constraints = [
         ('name_unique', 'unique(name)', "The name you entered already exists"),
+        ('vat_unique', 'unique(vat)', "The Duty paragraph you entered already exists"),
     ]
 
     @api.onchange('name')
@@ -37,3 +38,18 @@ class ResPartner(models.Model):
                     'message': msg
                 }
             }
+
+    @api.onchange('vat')
+    def onchange_vat(self):
+        vat = self.vat
+        if vat:
+            count = self.env['e2yun.customer.info'].search_count([('vat', '=', vat)])
+            if count > 0:
+                self.vat = False
+                msg = "The Duty paragraph you entered already exists for potential customers."
+                return {
+                    'warning': {
+                        'title': 'Tips',
+                        'message': msg
+                    }
+                }
