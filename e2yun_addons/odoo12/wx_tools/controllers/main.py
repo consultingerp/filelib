@@ -113,3 +113,8 @@ class WxMp(http.Controller):
     def mpcrop(self, **kwargs):
         # response = http.send_file('MP_verify_xobfOnBKmFpc9HEU.txt')
         return 'npgHFdA6yan51Qd5'
+
+    @http.route(['/MP_verify_PT4MgExxX4ZXjTpP.txt'], type='http', auth="public")
+    def mp_lh(self, **kwargs):
+        # response = http.send_file('MP_verify_xobfOnBKmFpc9HEU.txt')
+        return 'PT4MgExxX4ZXjTpP'
