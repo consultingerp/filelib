@@ -106,8 +106,8 @@ class wx_action_act_url(models.Model):
     #_inherit = []
 
     name = fields.Char(u'名称', )
-    url = fields.Char(u'链接地址', )
     code = fields.Char(u'授权CODE', )
+    url = fields.Char(u'链接地址', )
 
     #_defaults = {
     #}

@@ -226,7 +226,11 @@ def main(robot):
         if discuss_action:
             discuss_action_id = discuss_action[0].paraconfig_value
 
-        template_id = 'mZMBZn7KcAtNiRYMUYa0GTnO_zZBAdtb5aCJp8wVgqU'
+        template_id = ''
+        configer_para = self.env["wx.paraconfig"].sudo().search([('paraconfig_name', '=', '客户咨询提醒模板ID')])
+        if configer_para:
+            template_id = configer_para[0].paraconfig_value
+        # template_id = 'mZMBZn7KcAtNiRYMUYa0GTnO_zZBAdtb5aCJp8wVgqU'
         url = client.wxenv(
             self.env).server_url + '/web/login?usercode=message&codetype=wx&' \
                                    'redirect=/web#action=%s&active_id=%s&menu_id=%s' % (
