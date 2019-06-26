@@ -10,15 +10,15 @@
                     <field name="parent_team_id" />
                 </xpath>
 
-                 <xpath expr="//field[@name='partner_is_blacklisted']" position="after">
+              <!--   <xpath expr="//field[@name='partner_is_blacklisted']" position="after">
                     <field name="contract_number" />
                     <field name="pid" />
-                 </xpath>
+                 </xpath>-->
 
                  <xpath expr="//field[@name='priority']" position="after">
                     <field name="payment_team_id" />
                     <field name="parent_payment_team_id" />
-                    <field name="cgm" />
+                    <!--<field name="cgm" />-->
                  </xpath>
 
 
