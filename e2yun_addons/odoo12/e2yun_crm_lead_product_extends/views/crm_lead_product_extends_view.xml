@@ -41,8 +41,6 @@
         </field>
     </record>-->
 
-    crm_lead_product.crm_case_form_view_leads
-
     <record id="crm_case_form_view_oppor_modify" model="ir.ui.view">
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm_lead_product.crm_case_form_view_oppor"/>
