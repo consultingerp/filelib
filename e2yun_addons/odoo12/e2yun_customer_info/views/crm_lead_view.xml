@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='team_id']" position="after">
                     <field name="parent_team_id" />
+                    <field name="sf_no" />
                 </xpath>
 
               <!--   <xpath expr="//field[@name='partner_is_blacklisted']" position="after">
