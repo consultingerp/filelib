@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing tailsde.
 from odoo import models,fields,api
 from odoo.exceptions import ValidationError
+from odoo.tools.translate import _
 
 class ResPartner(models.Model):
     _name = 'res.partner'
@@ -31,10 +32,10 @@ class ResPartner(models.Model):
         count = self.env['e2yun.customer.info'].search_count([('name','=',name)])
         if count > 0:
             self.name = False
-            msg = "The name you entered already exists for potential customers."
+            msg = _("The name you entered already exists for potential customers.")
             return {
                 'warning': {
-                    'title': 'Tips',
+                    'title': _('Tips'),
                     'message': msg
                 }
             }
@@ -46,10 +47,10 @@ class ResPartner(models.Model):
             count = self.env['e2yun.customer.info'].search_count([('vat', '=', vat)])
             if count > 0:
                 self.vat = False
-                msg = "The Duty paragraph you entered already exists for potential customers."
+                msg = _("The Duty paragraph you entered already exists for potential customers.")
                 return {
                     'warning': {
-                        'title': 'Tips',
+                        'title': _('Tips'),
                         'message': msg
                     }
                 }

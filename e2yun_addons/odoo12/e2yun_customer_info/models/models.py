@@ -5,6 +5,7 @@ import datetime
 import pytz
 import logging
 from odoo.exceptions import UserError
+from odoo.tools.translate import _
 
 from email.utils import formataddr
 
@@ -194,10 +195,10 @@ class e2yun_customer_info(models.Model):
         count = self.env['res.partner'].search_count([('name', '=', name)])
         if count > 0:
             self.name = False
-            msg = "The name you entered already exists for customers."
+            msg = _("The name you entered already exists for customers.")
             return {
                 'warning': {
-                    'title': 'Tips',
+                    'title': _('Tips'),
                     'message': msg
                 }
             }
@@ -209,10 +210,10 @@ class e2yun_customer_info(models.Model):
             count = self.env['res.partner'].search_count([('vat', '=', vat)])
             if count > 0:
                 self.vat = False
-                msg = "The Duty paragraph you entered already exists for customers."
+                msg = _("The Duty paragraph you entered already exists for customers.")
                 return {
                     'warning': {
-                        'title': 'Tips',
+                        'title': _('Tips'),
                         'message': msg
                     }
                 }

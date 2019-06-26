@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-25 09:53+0000\n"
-"PO-Revision-Date: 2019-06-25 09:53+0000\n"
+"POT-Creation-Date: 2019-06-26 16:33+0000\n"
+"PO-Revision-Date: 2019-06-26 16:33+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -56,7 +56,7 @@ msgstr "客户区域"
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__x_studio_account_source
 msgid "Account Source"
-msgstr "客户来源"
+msgstr "科目来源"
 
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__x_studio_account_type
@@ -332,30 +332,12 @@ msgstr "交货"
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_crm_lead__payment_team_id
 msgid "Delivery team"
-msgstr "交付团队"
+msgstr "支付团队"
 
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_crm_lead__parent_payment_team_id
 msgid "Delivery team L1"
-msgstr "交付团队L1"
-
-#. module: e2yun_customer_info
-#: model:ir.model.fields,field_description:e2yun_customer_info.field_crm_lead__contract_number
-msgid "Contract Number"
-msgstr "合同号"
-
-
-#. module: e2yun_customer_info
-#: model:ir.model.fields,field_description:e2yun_customer_info.field_crm_lead__pid
-msgid "PID"
-msgstr "PID"
-
-
-
-#. module: e2yun_customer_info
-#: model:ir.model.fields,field_description:e2yun_customer_info.field_crm_lead__cgm
-msgid "CGM%"
-msgstr "CGM%"
+msgstr "支付团队L1"
 
 #. module: e2yun_customer_info
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_mail_activity_form
@@ -631,6 +613,11 @@ msgid "Name_En"
 msgstr "英文名"
 
 #. module: e2yun_customer_info
+#: model_terms:ir.ui.view,arch_db:e2yun_customer_info.crm_case_form_view_oppor_modify
+msgid "New Quotation"
+msgstr "新报价单"
+
+#. module: e2yun_customer_info
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_mail_activity_tree
 msgid "Next Activities"
 msgstr "下一步活动"
@@ -658,7 +645,7 @@ msgstr "员工数"
 #. module: e2yun_customer_info
 #: model_terms:ir.actions.act_window,help:e2yun_customer_info.action_partner_customer_form
 msgid "Odoo helps you easily track all activities related to a customer."
-msgstr "Odoo 帮助您轻松跟进与客户相关的所有活动。"
+msgstr "Pactera 帮助您轻松跟进与客户相关的所有活动。"
 
 #. module: e2yun_customer_info
 #: selection:e2yun.customer.info,x_studio_account_source:0
@@ -830,6 +817,11 @@ msgid "State"
 msgstr "省/ 州"
 
 #. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__state
+msgid "Status"
+msgstr "状态"
+
+#. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__x_studio_stock_code
 msgid "Stock Code"
 msgstr "股票代码"
@@ -901,6 +893,18 @@ msgid "Team"
 msgstr "团队"
 
 #. module: e2yun_customer_info
+#: sql_constraint:e2yun.customer.info:0
+msgid "The Duty paragraph you entered already exists"
+msgstr "该注册号/统一信用代码已经存在，请检查！"
+
+#. module: e2yun_customer_info
+#: code:addons/e2yun_customer_info/models/models.py:213
+#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_info/models/models.py:213
+#, python-format
+msgid "The Duty paragraph you entered already exists for customers."
+msgstr "您输入的注册号/统一信用代码已存在于客户中"
+
+#. module: e2yun_customer_info
 #: model:ir.model.fields,help:e2yun_customer_info.field_e2yun_customer_info__vat
 msgid "The Tax Identification Number. Complete it if the contact is subjected to government taxes. Used in some legal statements."
 msgstr "税号。 如果联系人需缴纳税款，请填写。 用于某些法律声明。"
@@ -916,9 +920,11 @@ msgid "The name you entered already exists"
 msgstr "该名字已经存在，请检查！"
 
 #. module: e2yun_customer_info
-#: sql_constraint:e2yun.customer.info:0
-msgid "The Duty paragraph you entered already exists"
-msgstr "该税号已经存在，请检查！"
+#: code:addons/e2yun_customer_info/models/models.py:198
+#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_info/models/models.py:198
+#, python-format
+msgid "The name you entered already exists for customers."
+msgstr "您输入的名称已经存在于客户"
 
 #. module: e2yun_customer_info
 #: model:ir.model.fields,help:e2yun_customer_info.field_e2yun_customer_info__tz
@@ -944,6 +950,15 @@ msgstr "时区"
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__tz_offset
 msgid "Timezone offset"
 msgstr "时区偏移"
+
+#. module: e2yun_customer_info
+#: code:addons/e2yun_customer_info/models/models.py:201
+#: code:addons/e2yun_customer_info/models/models.py:216
+#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_info/models/models.py:201
+#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_info/models/models.py:216
+#, python-format
+msgid "Tips"
+msgstr "提示"
 
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__title
@@ -991,6 +1006,21 @@ msgid "YES"
 msgstr ""
 
 #. module: e2yun_customer_info
+#: model:res.groups,name:e2yun_customer_info.groups_lead_stage_id_update
+msgid "ZCRM-线索状态更新权限组"
+msgstr ""
+
+#. module: e2yun_customer_info
+#: model:res.groups,name:e2yun_customer_info.group_crm_sale
+msgid "ZCRM销售组"
+msgstr ""
+
+#. module: e2yun_customer_info
+#: model:res.groups,name:e2yun_customer_info.group_crm_sale_lead
+msgid "ZCRM领导组"
+msgstr ""
+
+#. module: e2yun_customer_info
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.res_partner_view_form_private
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_partner_address_form
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_partner_form
@@ -1034,7 +1064,7 @@ msgstr "例如：销售总监"
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_partner_address_form
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_partner_form
 msgid "e.g. www.odoo.com"
-msgstr "例如：www.odoo.com"
+msgstr "例如：www.www.pactera.com"
 
 #. module: e2yun_customer_info
 #: model:ir.model,name:e2yun_customer_info.model_e2yun_customer_info
@@ -1082,6 +1112,31 @@ msgid "华南"
 msgstr ""
 
 #. module: e2yun_customer_info
+#: selection:e2yun.customer.info,state:0
+msgid "完成"
+msgstr ""
+
+#. module: e2yun_customer_info
+#: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_res_partner_filter
+msgid "待审批"
+msgstr ""
+
+#. module: e2yun_customer_info
+#: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_res_partner_filter
+msgid "待确认"
+msgstr ""
+
+#. module: e2yun_customer_info
+#: selection:e2yun.customer.info,state:0
+msgid "新建"
+msgstr ""
+
+#. module: e2yun_customer_info
+#: model:res.groups,name:e2yun_customer_info.groups_the_new_quotation
+msgid "新报价单按钮组"
+msgstr ""
+
+#. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__parent_account
 msgid "母公司"
 msgstr ""
@@ -1106,7 +1161,3 @@ msgstr ""
 msgid "转正式客户"
 msgstr ""
 
-#. module: e2yun_customer_info
-#: model_terms:ir.ui.view,arch_db:e2yun_customer_info.crm_case_form_view_oppor_modify
-msgid "New Quotation"
-msgstr "新报价单"
