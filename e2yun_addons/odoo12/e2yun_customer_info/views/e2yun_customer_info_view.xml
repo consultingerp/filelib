@@ -541,6 +541,7 @@
                             domain="[('user_id','=',uid)]"/>
                     <filter string="待确认" name="wait_comfirm" domain="[('state','=','Submitted for Checking')]"/>
                     <filter string="待审批" name="wait_approve" domain="[('state','=','Waiting for Approval')]"/>
+                    <filter string="待转正" name="wait_transfer" domain="[('state','=','Approved')]"/>
                     <separator/>
                     <filter string="Individuals" name="type_person" domain="[('is_company','=',False)]"/>
                     <filter string="Companies" name="type_company" domain="[('is_company','=',True)]"/>
