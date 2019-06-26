@@ -180,6 +180,7 @@ class e2yun_customer_info(models.Model):
         ('check_name', "CHECK( (type='contact' AND name IS NOT NULL) or (type!='contact') )",
          'Contacts require a name.'),
         ('name_unique', 'unique(name)', "The name you entered already exists"),
+        ('vat_unique', 'unique(vat)', "The Duty paragraph you entered already exists"),
     ]
 
     @api.onchange('name')
@@ -195,6 +196,21 @@ class e2yun_customer_info(models.Model):
                     'message': msg
                 }
             }
+
+    @api.onchange('vat')
+    def onchange_vat(self):
+        vat = self.vat
+        if vat:
+            count = self.env['res.partner'].search_count([('vat', '=', vat)])
+            if count > 0:
+                self.vat = False
+                msg = "The Duty paragraph you entered already exists for customers."
+                return {
+                    'warning': {
+                        'title': 'Tips',
+                        'message': msg
+                    }
+                }
 
     @api.depends('is_company')
     def _compute_company_type(self):

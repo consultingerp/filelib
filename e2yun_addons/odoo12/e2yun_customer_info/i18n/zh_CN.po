@@ -916,6 +916,11 @@ msgid "The name you entered already exists"
 msgstr "该名字已经存在，请检查！"
 
 #. module: e2yun_customer_info
+#: sql_constraint:e2yun.customer.info:0
+msgid "The Duty paragraph you entered already exists"
+msgstr "该税号已经存在，请检查！"
+
+#. module: e2yun_customer_info
 #: model:ir.model.fields,help:e2yun_customer_info.field_e2yun_customer_info__tz
 msgid "The partner's timezone, used to output proper date and time values inside printed reports. It is important to set a value for this field. You should use the same timezone that is otherwise used to pick and render date and time values: your computer's timezone."
 msgstr "业务伙伴的时区，用来在打印的报表上面输出适当的日期和事件。设置这个字段非常重要. 选择和使用日期和时间 你将用和你电脑相同的时区。"
