@@ -192,7 +192,7 @@ class e2yun_customer_info(models.Model):
     @api.onchange('name')
     def onchange_name(self):
         name = self.name
-        count = self.env['res.partner'].search_count([('name', '=', name)])
+        count = self.env['res.partner'].sudo().search_count([('name', '=', name)])
         if count > 0:
             self.name = False
             msg = _("The name you entered already exists for customers.")
@@ -207,7 +207,7 @@ class e2yun_customer_info(models.Model):
     def onchange_vat(self):
         vat = self.vat
         if vat:
-            count = self.env['res.partner'].search_count([('vat', '=', vat)])
+            count = self.env['res.partner'].sudo().search_count([('vat', '=', vat)])
             if count > 0:
                 self.vat = False
                 msg = _("The Duty paragraph you entered already exists for customers.")
