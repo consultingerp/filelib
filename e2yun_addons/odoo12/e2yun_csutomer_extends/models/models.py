@@ -8,7 +8,7 @@ class E2yunCsutomerExtends(models.Model):
     app_code = fields.Char(string='', copy=False, readonly=True, default=lambda self: _('New'))
     shop_code = fields.Char(string='')
     shop_name = fields.Char(string='')
-    referrer = fields.Many2one('res.user', string='')
+    referrer = fields.Many2one('res.users', string='')
     occupation = fields.Char(string='')
     car_brand = fields.Char(string='')
     user_nick_name = fields.Char(string='')
