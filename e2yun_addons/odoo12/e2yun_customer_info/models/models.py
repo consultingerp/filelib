@@ -141,7 +141,7 @@ class e2yun_customer_info(models.Model):
     parent_team_id = fields.Many2one(comodel_name='crm.team', compute='_compute_parent_team_id', store=True)
 
     # 新增客户中的字段
-    customer_id = fields.Char('	Customer Id', required=True)
+    customer_id = fields.Char('	Customer Id')
     x_studio_name_en_1 = fields.Char('Name_En')
     x_studio_account_group = fields.Char('Account Group')
     parent_account = fields.Many2one('res.partner', company_dependent=True, string='母公司')
@@ -175,6 +175,11 @@ class e2yun_customer_info(models.Model):
     x_studio_stock_code = fields.Char('Stock Code')
     x_studio_annual_profitusdk = fields.Float('Annual Profit（USDK）')
     x_studio_market_value = fields.Float('Market Value')
+
+    state = fields.Selection([
+        ('Draft', '新建'),
+        ('done', '完成')
+    ], string='Status', readonly=True, required=True, track_visibility='always', copy=False, default='Draft')
 
     _sql_constraints = [
         ('check_name', "CHECK( (type='contact' AND name IS NOT NULL) or (type!='contact') )",
@@ -413,7 +418,7 @@ class e2yun_customer_info(models.Model):
             for child_data in child_datas:
                 child_data['parent_id'] = id.id
                 self.env['res.partner'].create(child_data)
-        self.customer_id = id
+        self.partner_id = id
         # try:
         self.state = 'done'
         # except Exception as e:
