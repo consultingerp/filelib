@@ -141,7 +141,7 @@ class e2yun_customer_info(models.Model):
     parent_team_id = fields.Many2one(comodel_name='crm.team', compute='_compute_parent_team_id', store=True)
 
     # 新增客户中的字段
-    customer_id = fields.Char('	Customer Id', required=True)
+    customer_id = fields.Char('	Customer Id')
     x_studio_name_en_1 = fields.Char('Name_En')
     x_studio_account_group = fields.Char('Account Group')
     parent_account = fields.Many2one('res.partner', company_dependent=True, string='母公司')
