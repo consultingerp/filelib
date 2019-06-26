@@ -1,5 +1,6 @@
 # coding=utf-8
 import logging
+import base64
 from .. import client
 from odoo import fields
 import datetime
@@ -9,6 +10,21 @@ _logger = logging.getLogger(__name__)
 
 
 def main(robot):
+    def get_img_data(pic_url):
+        import requests
+        headers = {
+            'Accept': 'textml,application/xhtml+xml,application/xml;q=0.9,image/webp,/;q=0.8',
+            'Accept-Encoding': 'gzip, deflate',
+            'Accept-Language': 'zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4',
+            'Cache-Control': 'no-cache',
+            'Host': 'mmbiz.qpic.cn',
+            'Pragma': 'no-cache',
+            'Connection': 'keep-alive',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
+        }
+        r = requests.get(pic_url, headers=headers, timeout=50)
+        return r.content
+
     @robot.subscribe
     def subscribe(message):
         from .. import client
@@ -45,7 +61,7 @@ def main(robot):
                     ret_msg = entry.subscribe_auto_msg
                 else:
                     ret_msg = "您终于来了！欢迎关注"
-
+            _data = get_img_data(str(info['headimgurl']))
             if not resuser.exists():
                 resuser = env['res.users'].sudo().create({
                     "login": info['openid'],
@@ -53,14 +69,16 @@ def main(robot):
                     "name": info['nickname'],
                     "groups_id": request.env.ref('base.group_user'),  # base.group_public，base.group_portal
                     "wx_user_id": wxuserinfo.id,
-                    "login_date": datetime.datetime.now()
+                    "login_date": datetime.datetime.now(),
+                    "image": base64.b64encode(_data)
 
                 })
                 resuser.partner_id.write({
                     'supplier': True,
                     'customer': True,
                     "wx_user_id": wxuserinfo.id,
-                    "user_id": user_id
+                    "user_id": user_id,
+                    "image": base64.b64encode(_data)
                 })
                 odoo_user = env['wx.user.odoouser'].sudo().search([('openid', '=', openid)])
                 if not odoo_user.exists():
