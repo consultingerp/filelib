@@ -53,7 +53,7 @@ def main(robot):
             _filename = datetime.datetime.now().strftime("%m%d%H%M%S") + os.path.basename(pic_url)
             attachment = request.env['ir.attachment'].sudo().create({
                 'name': '__wx_image|%s' % media_id,
-                'datas': base64.encodestring(_data),
+                'datas': base64.b64encode(_data),
                 'datas_fname': _filename,
                 'res_model': 'mail.compose.message',
                 'res_id': int(0)
@@ -67,7 +67,7 @@ def main(robot):
             _data = r.content
             attachment = request.env['ir.attachment'].sudo().create({
                 'name': '__wx_voice|%s' % message.media_id,
-                'datas': base64.encodestring(_data),
+                'datas': base64.b64encode(_data),
                 'datas_fname': _filename,
                 'res_model': 'mail.compose.message',
                 'res_id': int(0)
