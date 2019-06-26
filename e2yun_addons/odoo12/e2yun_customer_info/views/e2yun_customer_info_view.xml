@@ -457,16 +457,21 @@
                                 </group>
                             </page>
                             <page string="Other Information">
-                                 <group name="container_row_2">
+                                <group name="container_row_2">
                                     <group priority="1">
-                                        <field name="x_studio_is_a_public_company" attrs="{'invisible': [('customer', '=', False)]}"/>
-                                        <field name="x_studio_annual_revenue" attrs="{'invisible': [('customer', '=', False)]}"/>
-                                        <field name="x_studio_stock_code" attrs="{'invisible': [('customer', '=', False)]}"/>
+                                        <field name="x_studio_is_a_public_company"
+                                               attrs="{'invisible': [('customer', '=', False)]}"/>
+                                        <field name="x_studio_annual_revenue"
+                                               attrs="{'invisible': [('customer', '=', False)]}"/>
+                                        <field name="x_studio_stock_code"
+                                               attrs="{'invisible': [('customer', '=', False)]}"/>
                                     </group>
-                                     <group priority="2">
-                                         <field name="x_studio_annual_profitusdk" attrs="{'invisible': [('customer', '=', False)]}"/>
-                                         <field name="x_studio_market_value" attrs="{'invisible': [('customer', '=', False)]}"/>
-                                     </group>
+                                    <group priority="2">
+                                        <field name="x_studio_annual_profitusdk"
+                                               attrs="{'invisible': [('customer', '=', False)]}"/>
+                                        <field name="x_studio_market_value"
+                                               attrs="{'invisible': [('customer', '=', False)]}"/>
+                                    </group>
                                 </group>
 
                             </page>
@@ -534,6 +539,8 @@
                     <field name="parent_id" domain="[('is_company','=',True)]" operator="child_of"/>
                     <filter name="filter_my_partners" help="My Contacts"
                             domain="[('user_id','=',uid)]"/>
+                    <filter string="待确认" name="wait_comfirm" domain="[('state','=','Submitted for Checking')]"/>
+                    <filter string="待审批" name="wait_approve" domain="[('state','=','Waiting for Approval')]"/>
                     <separator/>
                     <filter string="Individuals" name="type_person" domain="[('is_company','=',False)]"/>
                     <filter string="Companies" name="type_company" domain="[('is_company','=',True)]"/>
