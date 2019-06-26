@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Sequences for sale.order -->
+        <record id="seq_customer_app_code" model="ir.sequence">
+            <field name="name">Customer App-Code</field>
+            <field name="code">app.code</field>
+            <field name="prefix">APP</field>
+            <field name="padding">5</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>
