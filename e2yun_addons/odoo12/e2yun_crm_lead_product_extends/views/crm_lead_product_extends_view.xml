@@ -46,7 +46,7 @@
         <field name="inherit_id" ref="crm_lead_product.crm_case_form_view_oppor"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='lead_line_ids']" position="replace">
-                <!-- <field name="lead_line_ids">
+                <field name="lead_line_ids">
                      <tree string="Products" editable="bottom">
                          <field name="product_id"/>
                          <field name="name" widget="section_and_note_text"/>
@@ -57,7 +57,7 @@
                          <field name="tax_id" widget="many2many_tags"/>
                          <field name="price_subtotal"/>
                      </tree>
-                 </field>-->
+                 </field>
             </xpath>
         </field>
     </record>
