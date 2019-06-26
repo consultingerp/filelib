@@ -113,7 +113,7 @@ class wx_menu(models.Model):
                 'sub_button': child_list
             }
         else:
-            return self._get_menu_action(name, action)
+            return self._get_menu_action(name, action, entry)
 
     @api.one
     def do_active(self):
