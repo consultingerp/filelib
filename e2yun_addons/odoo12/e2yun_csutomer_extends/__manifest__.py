@@ -25,10 +25,14 @@
     'data': [
         # 'security/ir.model.access.csv',
         'views/views.xml',
+        'data/ir_sequence_data.xml',
+        'pre_install.xml',
         # 'views/templates.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
         # 'demo/demo.xml',
     ],
+    'installable': True,
+    'auto_install': False,
 }
