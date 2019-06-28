@@ -12,7 +12,7 @@ class CrmLead(models.Model):
     property_product_pricelist = fields.Many2one('product.pricelist',string='Pricelist',required=True)
     amount = fields.Float(string='Amount',digits=dp.get_precision('Product Price'),required=True)
     amount_usd = fields.Float(string='Amount USD',digits=dp.get_precision('Product Price'))
-    customer_owner= fields.Many2one( 'res.users',string='Customer Owner',groups="base.group_user",readonly=True)
+    customer_owner= fields.Many2one( 'res.users',string='Customer Owner',compute='onchange_partner_id',groups="base.group_user",readonly=True)
 
     # _sql_constraints = [
     #     ('amount_gt_zero','CHECK (amount > 0)','The amount of opportunity must be greater than 0')
