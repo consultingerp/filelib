@@ -1,0 +1,57 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* e2yun_crm_lead_product_extends
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e-20190424\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-26 08:25+0000\n"
+"PO-Revision-Date: 2019-06-26 08:25+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: e2yun_crm_lead_product_extends
+#: model:ir.model.fields,field_description:e2yun_crm_lead_product_extends.field_crm_lead_line__cgm
+msgid "CGM%"
+msgstr ""
+
+#. module: e2yun_crm_lead_product_extends
+#: model:ir.model.fields,field_description:e2yun_crm_lead_product_extends.field_crm_lead_line__contract_number
+msgid "Contract Number"
+msgstr "合同号"
+
+#. module: e2yun_crm_lead_product_extends
+#: model:ir.model,name:e2yun_crm_lead_product_extends.model_crm_lead_line
+msgid "Line in CRM Lead"
+msgstr "行项目"
+
+#. module: e2yun_crm_lead_product_extends
+#: model:ir.model.fields,field_description:e2yun_crm_lead_product_extends.field_crm_lead_line__pid
+msgid "PID"
+msgstr ""
+
+#. module: e2yun_crm_lead_product_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_crm_lead_product_extends.crm_case_form_view_oppor_modify
+msgid "Products"
+msgstr "产品"
+
+#. module: e2yun_crm_lead_product_extends
+#: model:ir.model.fields,field_description:e2yun_crm_lead_product_extends.field_crm_lead_line__price_subtotal
+msgid "Subtotal"
+msgstr "小计"
+
+#. module: e2yun_crm_lead_product_extends
+#: model:ir.model.fields,field_description:e2yun_crm_lead_product_extends.field_crm_lead_line__tax_id
+msgid "Taxes"
+msgstr "税率设置"
+
+#. module: e2yun_crm_lead_product_extends
+#: model:ir.model.fields,field_description:e2yun_crm_lead_product_extends.field_crm_lead_line__price_tax
+msgid "Total Tax"
+msgstr "税额总计"
+
