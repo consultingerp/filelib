@@ -13,7 +13,7 @@
         "views/shop_information_fields.xml",
     ],
     "depends": [
-        "sales_team",
+        "sales_team", "base"
     ],
     "installable": True
 }
