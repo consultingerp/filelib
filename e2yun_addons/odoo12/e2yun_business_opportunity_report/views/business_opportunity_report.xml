@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+      <record id="crm_business_opportunity_report_view_tree" model="ir.ui.view">
+            <field name="name">crm.business.opportunity.report.tree</field>
+            <field name="model">crm.business.opportunity.report</field>
+            <field name="arch" type="xml">
+                <tree delete="false" create="false">
+                    <field name="code"/>
+                    <field name="sf_no"/>
+                    <field name="name_title"/>
+                    <field name="user_id"/>
+                    <field name="partner_id"/>
+                    <field name="customer_owner"/>
+                    <field name="tag_ids"/>
+                    <field name="create_date_lead"/>
+                    <field name="x_studio_service_product"/>
+                    <field name="rec_rev"/>
+                    <field name="stage_id"/>
+                    <field name="date_closed"/>
+                    <field name="property_product_pricelist"/>
+                    <field name="amount"/>
+                    <field name="source_id"/>
+                    <field name="x_studio_role"/>
+                    <field name="x_studio_offshore_effort_"/>
+                    <field name="x_studio_project_start_date"/>
+                    <field name="x_studio_project_end_date"/>
+                    <field name="x_studio_digital_code"/>
+                    <field name="cooperate_with_partner"/>
+                    <field name="product_id"/>
+                    <field name="name"/>
+                    <field name="pid"/>
+                    <field name="contract_number"/>
+                    <field name="cgm"/>
+                    <field name="price_tax"/>
+                    <field name="price_subtotal"/>
+                    <field name="tax_id" />
+
+                </tree>
+
+            </field>
+        </record>
+
+
+      <record model="ir.actions.act_window" id="action_report_crm_business_opportunity">
+         <field name="name">Opportunity contract statement</field>
+         <field name="res_model">crm.business.opportunity.report</field>
+         <field name="view_type">form</field>
+         <field name="view_mode">tree,kanban,pivot,graph,activity</field>
+         <field name="domain">[]</field>
+         <field name="context">{}</field>
+     </record>
+
+       <menuitem name="OpportunityContractStatement" id="menu_report_crm_business_opportunity_tree"
+           parent="crm.crm_menu_report" action="action_report_crm_business_opportunity" sequence="6"/>
+
+
+
+</odoo>

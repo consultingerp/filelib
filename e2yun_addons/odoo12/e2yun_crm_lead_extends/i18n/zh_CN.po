@@ -243,3 +243,16 @@ msgstr ""
 msgid "WL-Workload"
 msgstr ""
 
+
+#. module: e2yun_crm_lead_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_crm_lead_extends.crm_case_form_view_oppor_extends
+msgid "Opportunity owner"
+msgstr "机会所有者"
+
+#. module: e2yun_crm_lead_extends
+#: model:ir.model.fields,field_description:e2yun_crm_lead_extends.field_crm_lead__customer_owner
+msgid "Customer Owner"
+msgstr "客户所有者"
+
+
+
