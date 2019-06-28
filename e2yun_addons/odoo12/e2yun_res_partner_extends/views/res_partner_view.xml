@@ -8,6 +8,12 @@
             <xpath expr="//field[@name='type']" position="after">
                 <field name="parent_account"/>
             </xpath>
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="register_no"/>
+            </xpath>
+            <xpath expr="//field[@name='vat']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
             <xpath expr="//field[@name='category_id']" position="after">
                 <field name="strategic_edit" invisible="1"/>
                 <field name="is_strategic" attrs="{'readonly': [('strategic_edit','=',False)]}"/>

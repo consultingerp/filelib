@@ -20,10 +20,14 @@ class ResPartner(models.Model):
     is_strategic = fields.Boolean(string='Is Strategic')
     strategic_edit = fields.Boolean(string='Strategic Edit',compute=_compute_strategic_edit)
 
+    customer = fields.Boolean(string='Is a Customer', default=False,
+                              help="Check this box if this contact is a customer. It can be selected in sales orders.")
+    register_no = fields.Char('Registration number')
+
 
     _sql_constraints = [
         ('name_unique', 'unique(name)', "The name you entered already exists"),
-        ('vat_unique', 'unique(vat)', "The Duty paragraph you entered already exists"),
+        ('register_no_unique', 'unique(register_no)', "The Duty paragraph you entered already exists"),
     ]
 
     @api.onchange('name')
@@ -40,13 +44,13 @@ class ResPartner(models.Model):
                 }
             }
 
-    @api.onchange('vat')
-    def onchange_vat(self):
-        vat = self.vat
-        if vat:
-            count = self.env['e2yun.customer.info'].sudo().search_count([('vat', '=', vat)])
+    @api.onchange('register_no')
+    def onchange_register_no(self):
+        register_no = self.register_no
+        if register_no:
+            count = self.env['e2yun.customer.info'].sudo().search_count([('register_no', '=', register_no)])
             if count > 0:
-                self.vat = False
+                self.register_no = False
                 msg = _("The Duty paragraph you entered already exists for potential customers.")
                 return {
                     'warning': {

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-26 16:33+0000\n"
-"PO-Revision-Date: 2019-06-26 16:33+0000\n"
+"POT-Creation-Date: 2019-06-28 09:41+0000\n"
+"PO-Revision-Date: 2019-06-28 09:41+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -727,6 +727,11 @@ msgid "Registration Address"
 msgstr "注册地址"
 
 #. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__register_no
+msgid "Registration number"
+msgstr "注册号/统一信用代码"
+
+#. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__parent_id
 msgid "Related Company"
 msgstr "关联公司"
@@ -740,6 +745,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__x_studio_revenue_forcast_for_future_4q
 msgid "Revenue forcast for future 4Q"
 msgstr "未来4Q预计收入"
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_crm_lead__sf_no
+msgid "SF机会编号"
+msgstr ""
 
 #. module: e2yun_customer_info
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_partner_form
@@ -895,14 +905,14 @@ msgstr "团队"
 #. module: e2yun_customer_info
 #: sql_constraint:e2yun.customer.info:0
 msgid "The Duty paragraph you entered already exists"
-msgstr "该注册号/统一信用代码已经存在，请检查！"
+msgstr "该税号已经存在，请检查！"
 
 #. module: e2yun_customer_info
-#: code:addons/e2yun_customer_info/models/models.py:213
-#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_info/models/models.py:213
+#: code:addons/e2yun_customer_info/models/models.py:215
+#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_info/models/models.py:215
 #, python-format
 msgid "The Duty paragraph you entered already exists for customers."
-msgstr "您输入的注册号/统一信用代码已存在于客户中"
+msgstr "您输入的税号已存在于客户中"
 
 #. module: e2yun_customer_info
 #: model:ir.model.fields,help:e2yun_customer_info.field_e2yun_customer_info__vat
@@ -920,8 +930,8 @@ msgid "The name you entered already exists"
 msgstr "该名字已经存在，请检查！"
 
 #. module: e2yun_customer_info
-#: code:addons/e2yun_customer_info/models/models.py:198
-#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_info/models/models.py:198
+#: code:addons/e2yun_customer_info/models/models.py:200
+#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_info/models/models.py:200
 #, python-format
 msgid "The name you entered already exists for customers."
 msgstr "您输入的名称已经存在于客户"
@@ -952,10 +962,10 @@ msgid "Timezone offset"
 msgstr "时区偏移"
 
 #. module: e2yun_customer_info
-#: code:addons/e2yun_customer_info/models/models.py:201
-#: code:addons/e2yun_customer_info/models/models.py:216
-#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_info/models/models.py:201
-#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_info/models/models.py:216
+#: code:addons/e2yun_customer_info/models/models.py:203
+#: code:addons/e2yun_customer_info/models/models.py:218
+#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_info/models/models.py:203
+#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_info/models/models.py:218
 #, python-format
 msgid "Tips"
 msgstr "提示"
@@ -1124,6 +1134,11 @@ msgstr ""
 #. module: e2yun_customer_info
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_res_partner_filter
 msgid "待确认"
+msgstr ""
+
+#. module: e2yun_customer_info
+#: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_res_partner_filter
+msgid "待转正"
 msgstr ""
 
 #. module: e2yun_customer_info
