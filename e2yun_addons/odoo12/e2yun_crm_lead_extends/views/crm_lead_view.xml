@@ -28,21 +28,37 @@
             <xpath expr="//field[@name='priority']" position="after">
                 <field name="rec_rev"/>
             </xpath>
+            <xpath expr="//field[@name='lost_reason']" position="replace">
+                <field name="lost_reason" attrs="{'invisible': [('active', '=', True)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='lost_reason']" position="after">
+                <field name="losssuspend_detail" attrs="{'invisible':[('active', '=', True)]}"/>
+            </xpath>
+            <xpath expr="//button[@name='action_set_won_rainbowman']" position="replace">
+                <button name="action_set_won_rainbowman" string="Mark Won"
+                type="object" class="oe_highlight"
+                groups="ZCRM.lead close"
+                attrs="{'invisible': ['|', ('active','=',False), ('probability', '=', 100)]}"/>
+            </xpath>
+
             <xpath expr="//button[@name='%(crm.crm_lead_lost_action)d']" position="replace">
                 <button name="%(crm.crm_lead_lost_action)d" string="Mark Lost"
-                                type="action" class="oe_highlight"
-                                context="{'default_lead_id': active_id,'lost_reason':lost_reason,'btn_type':'Closed Lost'}"
-                                attrs="{'invisible': [('active', '=', False),('probability', '&lt;', 100)]}"/>
+                type="action" class="oe_highlight"
+                groups="ZCRM.lead close"
+                context="{'default_lead_id': active_id,'lost_reason':lost_reason,'btn_type':'Closed Lost','losssuspend_detail':losssuspend_detail}"
+                attrs="{'invisible': [('active', '=', False),('probability', '&lt;', 100)]}"/>
             </xpath>
             <xpath expr="//button[@name='toggle_active']" position="before">
                 <button name="%(crm.crm_lead_lost_action)d" string="Dropout"
-                                type="action" class="oe_highlight"
-                                context="{'default_lead_id': active_id,'lost_reason':lost_reason,'btn_type':'Closed - DROPOUT'}"
-                                attrs="{'invisible': [('active', '=', False),('probability', '&lt;', 100)]}"/><!--,('stage_id','in',[8,9])-->
+                    type="action" class="oe_highlight"
+                    groups="ZCRM.lead close"
+                    context="{'default_lead_id': active_id,'lost_reason':lost_reason,'btn_type':'Closed - DROPOUT','losssuspend_detail':losssuspend_detail}"
+                    attrs="{'invisible': [('active', '=', False),('probability', '&lt;', 100)]}"/><!--,('stage_id','in',[8,9])-->
                 <button name="%(crm.crm_lead_lost_action)d" string="Suspended"
-                                type="action" class="oe_highlight"
-                                context="{'default_lead_id': active_id,'lost_reason':lost_reason,'btn_type':'Suspended'}"
-                                attrs="{'invisible': [('active', '=', False),('probability', '&lt;', 100)]}"/>
+                    type="action" class="oe_highlight"
+                    groups="ZCRM.lead close"
+                    context="{'default_lead_id': active_id,'lost_reason':lost_reason,'btn_type':'Suspended','losssuspend_detail':losssuspend_detail}"
+                    attrs="{'invisible': [('active', '=', False),('probability', '&lt;', 100)]}"/>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
                 <page name="alliance" string="Alliance Information">
@@ -61,13 +77,16 @@
                         <field name="product_name2"/>
                         <field name="product_name3"/>
                         <field name="product_name4"/>
-                        <field name="other_product"/>
+
                     </group>
                   </group>
                 </page>
               </xpath>
 
-
+            <xpath expr="//field[@name='user_id']" position="replace">
+                 <field name="user_id" string="Opportunity owner" context="{'default_groups_ref': ['base.group_user', 'base.group_partner_manager', 'sales_team.group_sale_salesman_all_leads'], 'team_id': team_id}" domain="[('share', '=', False)]"/>
+                 <field name="customer_owner"/>
+            </xpath>
 
         </field>
     </record>
@@ -88,6 +107,16 @@
         <field name="arch" type="xml">
             <xpath expr="//t[@t-name='kanban-box']//field[@name='tag_ids']" position="replace">
                 <field name="tag_ids"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm_lead_lost_view_form_extends" model="ir.ui.view">
+        <field name="model">crm.lead.lost</field>
+        <field name="inherit_id" ref="crm.crm_lead_lost_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lost_reason_id']" position="after">
+                <field name="losssuspend_detail"/>
             </xpath>
         </field>
     </record>

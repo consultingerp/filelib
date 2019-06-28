@@ -58,6 +58,11 @@ msgid "Dropout"
 msgstr "退出"
 
 #. module: e2yun_crm_lead_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_crm_lead_extends.crm_case_form_view_oppor_extends
+msgid "Mark Won"
+msgstr "标记赢得"
+
+#. module: e2yun_crm_lead_extends
 #: selection:crm.lead,rec_rev:0
 msgid "FP-Fixed price"
 msgstr ""
@@ -91,6 +96,12 @@ msgstr "线索/商机"
 #: model:ir.model.fields,field_description:e2yun_crm_lead_extends.field_crm_lead_lost__lost_reason_id
 msgid "Lost Reason"
 msgstr "失去原因"
+
+#. module: e2yun_crm_lead_extends
+#: model:ir.model.fields,field_description:e2yun_crm_lead_extends.field_crm_lead_lost__losssuspend_detail
+#: model:ir.model.fields,field_description:e2yun_crm_lead_extends.field_crm_lead__losssuspend_detail
+msgid "Loss/Suspend detail"
+msgstr "丢单/放弃/暂停 详细原因"
 
 #. module: e2yun_crm_lead_extends
 #: selection:crm.lead,rec_rev:0
@@ -231,4 +242,17 @@ msgstr ""
 #: selection:crm.lead,rec_rev:0
 msgid "WL-Workload"
 msgstr ""
+
+
+#. module: e2yun_crm_lead_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_crm_lead_extends.crm_case_form_view_oppor_extends
+msgid "Opportunity owner"
+msgstr "机会所有者"
+
+#. module: e2yun_crm_lead_extends
+#: model:ir.model.fields,field_description:e2yun_crm_lead_extends.field_crm_lead__customer_owner
+msgid "Customer Owner"
+msgstr "客户所有者"
+
+
 
