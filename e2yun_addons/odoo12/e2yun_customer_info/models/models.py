@@ -66,7 +66,7 @@ class e2yun_customer_info(models.Model):
     credit_limit = fields.Float(string='Credit Limit')
     barcode = fields.Char(oldname='ean13', help="Use a barcode to identify this contact from the Point of Sale.")
     active = fields.Boolean(default=True)
-    customer = fields.Boolean(string='Is a Customer', default=True,
+    customer = fields.Boolean(string='Is a Customer', default= False,
                               help="Check this box if this contact is a customer. It can be selected in sales orders.")
     supplier = fields.Boolean(string='Is a Vendor',
                               help="Check this box if this contact is a vendor. It can be selected in purchase orders.")
@@ -182,11 +182,13 @@ class e2yun_customer_info(models.Model):
         ('done', '完成')
     ], string='Status', readonly=True, required=True, track_visibility='always', copy=False, default='Draft')
 
+    register_no = fields.Char('Registration number')
+
     _sql_constraints = [
         ('check_name', "CHECK( (type='contact' AND name IS NOT NULL) or (type!='contact') )",
          'Contacts require a name.'),
         ('name_unique', 'unique(name)', "The name you entered already exists"),
-        ('vat_unique', 'unique(vat)', "The Duty paragraph you entered already exists"),
+        ('register_no_unique', 'unique(register_no)', "The Duty paragraph you entered already exists"),
     ]
 
     @api.onchange('name')
@@ -203,11 +205,11 @@ class e2yun_customer_info(models.Model):
                 }
             }
 
-    @api.onchange('vat')
-    def onchange_vat(self):
-        vat = self.vat
-        if vat:
-            count = self.env['res.partner'].sudo().search_count([('vat', '=', vat)])
+    @api.onchange('register_no')
+    def onchange_register_no(self):
+        register_no = self.register_no
+        if register_no:
+            count = self.env['res.partner'].sudo().search_count([('register_no', '=', register_no)])
             if count > 0:
                 self.vat = False
                 msg = _("The Duty paragraph you entered already exists for customers.")
