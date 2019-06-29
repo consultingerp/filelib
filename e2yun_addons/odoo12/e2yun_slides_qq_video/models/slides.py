@@ -59,7 +59,7 @@ class Slide(models.Model):
         if document_id:
             return ('qq', document_id)
 
-        return super(Slide, self)._find_document_data_from_url()
+        return super(Slide, self)._find_document_data_from_url(url)
 
     def _parse_qq_video_title(self, res):
         title = ""
