@@ -12,6 +12,9 @@
                 <xpath expr="//field[@name='email']" position="before">
                     <label for="email" class="oe_edit_only" string="Email"/>
                 </xpath>
+                <xpath expr="//label[@for='login']" position="replace">
+                    <label for="login" class="oe_edit_only" string="Login ID"/>
+                </xpath>
             </field>
         </record>
 
