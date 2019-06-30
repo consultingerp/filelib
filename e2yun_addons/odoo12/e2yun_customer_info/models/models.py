@@ -413,14 +413,16 @@ class e2yun_customer_info(models.Model):
                         many_cols.append(field)
                     else:
                         data[field] = self[field].id
-        id = self.env['res.partner'].create(data)
+        data['real_create_uid'] = self.user_id.id
+        id = self.env['res.partner'].sudo().create(data)
 
         for many_col in many_cols:
             id[many_col] = self[many_col]
         if child_datas:
             for child_data in child_datas:
+                child_data['real_create_uid'] = self.user_id.id
                 child_data['parent_id'] = id.id
-                self.env['res.partner'].create(child_data)
+                self.env['res.partner'].sudo().create(child_data)
         self.partner_id = id
         # try:
         self.state = 'done'
@@ -436,7 +438,7 @@ class e2yun_customer_info(models.Model):
         self._cr.execute(sql, (groups_id, self._uid,))
         groups_users = self._cr.fetchone()
 
-        #草稿状态货有商务组权限可更新数据
-        if self.state!= 'Draft' and not groups_users:
+        # 草稿状态货有商务组权限可更新数据
+        if self.state != 'Draft' and not groups_users:
             raise UserError('当前状态下无法操作更新，请联系管理员')
         res = super(e2yun_customer_info, self).write(values)
