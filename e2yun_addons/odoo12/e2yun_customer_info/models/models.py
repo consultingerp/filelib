@@ -413,14 +413,14 @@ class e2yun_customer_info(models.Model):
                         many_cols.append(field)
                     else:
                         data[field] = self[field].id
-        data['real_create_uid'] = self.user_id
+        data['real_create_uid'] = self.user_id.id
         id = self.env['res.partner'].sudo().create(data)
 
         for many_col in many_cols:
             id[many_col] = self[many_col]
         if child_datas:
             for child_data in child_datas:
-                child_data['real_create_uid'] = self.user_id
+                child_data['real_create_uid'] = self.user_id.id
                 child_data['parent_id'] = id.id
                 self.env['res.partner'].sudo().create(child_data)
         self.partner_id = id
