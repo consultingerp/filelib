@@ -16,11 +16,16 @@ class ResPartner(models.Model):
         for s in self:
             s.strategic_edit = is_edit
 
+    def _default_customer(self):
+        if self.env.context.get('search_default_customer',False):
+            return True
+        return False
+
     parent_account = fields.Many2one('res.partner',string='Parent Account',domain="[('customer','=',True)]")
     is_strategic = fields.Boolean(string='Is Strategic')
     strategic_edit = fields.Boolean(string='Strategic Edit',compute=_compute_strategic_edit)
 
-    customer = fields.Boolean(string='Is a Customer', default=False,
+    customer = fields.Boolean(string='Is a Customer', default=lambda self: self._default_customer(),
                               help="Check this box if this contact is a customer. It can be selected in sales orders.")
     register_no = fields.Char('Registration number')
 
