@@ -66,7 +66,7 @@
         <field name="inherit_id" ref="crm_lead_product.crm_case_form_view_oppor"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='lead_line_ids']" position="replace">
-                <field name="lead_line_ids" groups="ZCRM.contract info" attrs="{'readonly': [('stage_id', '!=', 4)]}">
+                <field name="lead_line_ids" attrs="{'readonly': [('stage_id', '!=', 4)]}">
                     <tree string="Products" editable="bottom">
                         <field name="product_id"/>
                         <field name="name" widget="section_and_note_text"/>

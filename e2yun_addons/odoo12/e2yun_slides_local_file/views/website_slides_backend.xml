@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- SLIDE.SLIDE -->
+        <record model="ir.ui.view" id="view_slide_slide_extend_form">
+            <field name="name">slide.slide.extend.form</field>
+            <field name="model">slide.slide</field>
+            <field name="inherit_id" ref="website_slides.view_slide_slide_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='image']" position="replace">
+                    <field name="image" widget="image" class="oe_avatar"
+                           options='{"preview_image": "image_thumb"}'
+                           attrs="{'readonly': [('url', '!=', False)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='url']" position="replace">
+                    <field name="url"
+                           attrs="{'required': [('image', '=', False),('datas', '=', False)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='slide_type']" position="replace">
+                    <field name="slide_type"
+                           attrs="{'readonly': [('url', '!=', False)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='mime_type']" position="replace">
+                    <field name="mime_type"
+                           attrs="{'readonly': [('url', '!=', False)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='document_id']" position="replace">
+                    <field name="document_id"
+                           attrs="{'readonly': [('url', '!=', False)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='datas']" position="replace">
+                    <field name="datas" filename = "datas_fname"
+                           readonly="0" attrs = "{'invisible':[('url','!=',False)]}"/>
+                    <field name = "datas_fname" invisible = "1"
+                           attrs = "{'invisible':[('url','!=',False)]}"
+                            class ="oe_inline oe_right" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
