@@ -66,7 +66,7 @@ class e2yun_customer_info(models.Model):
     credit_limit = fields.Float(string='Credit Limit')
     barcode = fields.Char(oldname='ean13', help="Use a barcode to identify this contact from the Point of Sale.")
     active = fields.Boolean(default=True)
-    customer = fields.Boolean(string='Is a Customer', default= False,
+    customer = fields.Boolean(string='Is a Customer', default= True,
                               help="Check this box if this contact is a customer. It can be selected in sales orders.")
     supplier = fields.Boolean(string='Is a Vendor',
                               help="Check this box if this contact is a vendor. It can be selected in purchase orders.")
@@ -167,7 +167,7 @@ class e2yun_customer_info(models.Model):
         domain="[('id', '!=', industry_id)]")
     x_studio__2 = fields.Integer('Number of employees')
     x_studio_revenue_forcast_for_future_4q = fields.Float('Revenue forcast for future 4Q')
-    property_product_pricelist = fields.Many2one('product.pricelist', string='Pricelist', required=True)
+    property_product_pricelist = fields.Many2one('product.pricelist', string='Pricelist', required=False)
     x_studio_is_new_logo = fields.Boolean('Is New LOGO')
     is_strategic = fields.Boolean(string='Is Strategic')
     x_studio_is_a_public_company = fields.Selection([["YES", "YES"]], string='Is Strategic')
@@ -413,14 +413,16 @@ class e2yun_customer_info(models.Model):
                         many_cols.append(field)
                     else:
                         data[field] = self[field].id
-        id = self.env['res.partner'].create(data)
+        data['real_create_uid'] = self.user_id.id
+        id = self.env['res.partner'].sudo().create(data)
 
         for many_col in many_cols:
             id[many_col] = self[many_col]
         if child_datas:
             for child_data in child_datas:
+                child_data['real_create_uid'] = self.user_id.id
                 child_data['parent_id'] = id.id
-                self.env['res.partner'].create(child_data)
+                self.env['res.partner'].sudo().create(child_data)
         self.partner_id = id
         # try:
         self.state = 'done'
@@ -436,7 +438,7 @@ class e2yun_customer_info(models.Model):
         self._cr.execute(sql, (groups_id, self._uid,))
         groups_users = self._cr.fetchone()
 
-        #草稿状态货有商务组权限可更新数据
-        if self.state!= 'Draft' and not groups_users:
+        # 草稿状态货有商务组权限可更新数据
+        if self.state != 'Draft' and not groups_users:
             raise UserError('当前状态下无法操作更新，请联系管理员')
         res = super(e2yun_customer_info, self).write(values)
