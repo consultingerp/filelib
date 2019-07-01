@@ -118,7 +118,7 @@ class CrmBusinessOpportunityReport(models.Model):
                     lead.property_product_pricelist as property_product_pricelist,
                     lead.amount as amount,
                     lead.amount_usd as amount_usd,
-                    lead.customer_owner as customer_owner,
+                    (select user_id from res_partner where id=lead.partner_id) as customer_owner,
                     lead.phone as phone,
                     lead.parent_team_id as parent_team_id,
                     lead.payment_team_id as payment_team_id,
