@@ -296,7 +296,7 @@
                                 <field name="x_studio__2"/>
                                 <field name="x_studio_revenue_forcast_for_future_4q"
                                        attrs="{'invisible': [('customer', '=', False)]}"/>
-                                <field name="property_product_pricelist"/>
+                                <field name="property_product_pricelist" attrs="{'required':[('customer','=',True)]}"/>
                                 <field name="x_studio_is_new_logo" attrs="{'invisible': [('customer', '=', False)]}"/>
                                 <field name="is_strategic" attrs="{'invisible': [('customer', '=', False)]}"/>
                                 <field name="category_id" widget="many2many_tags"

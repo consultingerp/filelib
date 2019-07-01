@@ -22,7 +22,7 @@ class CrmBusinessOpportunityReport(models.Model):
 
     team_id = fields.Many2one('crm.team', string='Sales Team' ,readonly=True )  #
 
-    tag_ids = fields.Many2many('crm.lead.tag', 'crm_lead_tag_rel', 'lead_id', 'tag_id', string='Tags' ,readonly=True  ) #
+    tag_ids = fields.Many2one('crm.lead.tag', string='Tags' ,readonly=True  ) #
 
     date_closed = fields.Datetime('Closed Date', readonly=True)
 
@@ -86,6 +86,8 @@ class CrmBusinessOpportunityReport(models.Model):
 
     product_id = fields.Many2one("product.product",
                                  string="Product",readonly=True,)
+
+    #tag_ids1 = fields.Many2one('crm.lead.tag', string='Tags1', readonly=True)  #
 
     def init(self):
         tools.drop_view_if_exists(self._cr, self._table)

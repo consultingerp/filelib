@@ -92,7 +92,7 @@ msgstr "客户所有者"
 #. module: e2yun_business_opportunity_report
 #: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__sf_no
 msgid "sf no"
-msgstr "机会编号"
+msgstr "SF机会编号"
 
 #. module: e2yun_business_opportunity_report
 #: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__cooperate_with_partner
