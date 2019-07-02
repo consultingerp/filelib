@@ -197,3 +197,17 @@ msgstr "相关导购"
 msgid "Related Partner"
 msgstr "相关客户"
 
+#. module: e2yun_customer_extends
+#: selection:res.partner,customer_source:0
+msgid "Team Barcode"
+msgstr "门店二维码"
+
+#. module: e2yun_customer_extends
+#: selection:res.partner,customer_source:0
+msgid "User Barcode"
+msgstr "用户二维码"
+
+#. module: e2yun_customer_extends
+#: selection:res.partner,customer_source:0
+msgid "Subscribe"
+msgstr "关注公众号"

@@ -27,7 +27,9 @@ class E2yunCsutomerExtends(models.Model):
         ('female', 'Female'),
         ], string='')
     customer_source = fields.Selection([
-        ('barcode', 'Barcode'),
+        ('qrscene_USERS', 'User Barcode'),
+        ('qrscene_TEAM', 'Team Barcode'),
+        ('subscribe', 'Subscribe'),
         ('manual', 'Manual'),
     ], string='', default='manual')
     pos_state = fields.Boolean(String='Sync Pos State',default=False)
