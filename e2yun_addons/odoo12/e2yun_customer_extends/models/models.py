@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
-from odoo import models, fields, api
 #import suds
 import suds.client
 
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, Warning
 
 
 class E2yunCsutomerExtends(models.Model):
@@ -27,6 +26,18 @@ class E2yunCsutomerExtends(models.Model):
         ('manual', 'Manual'),
     ], string='', default='manual')
     pos_state = fields.Boolean(String='Sync Pos State',default=False)
+    state = fields.Selection([
+        ('potential_customer', 'Potential Customer'),
+        ('intention_customer', 'Intention Customer'),
+        ('intention_customer_loss', 'Intention Customer Loss'),
+        ('target_customer', 'Target Customer'),
+        ('target_customer_loss', 'Target Customer Loss'),
+        ('contract_customers', 'Contract Customers')
+    ], string='', default='potential_customer', group_expand='_group_expand_stage_id')
+
+    @api.model
+    def _group_expand_stage_id(self, stages, domain, order):
+        return ['potential_customer', 'intention_customer', 'intention_customer_loss', 'target_customer', 'target_customer_loss', 'contract_customers']
 
 
     @api.model
@@ -41,6 +52,47 @@ class E2yunCsutomerExtends(models.Model):
         result = super(E2yunCsutomerExtends, self).create(vals)
         return result
 
+    @api.multi
+    def set_intention(self):
+        for record in self:
+            if not record.mobile or not record.street or not record.street2 or not record.city or not record.state_id or not record.zip or not record.country_id:
+                raise Warning(_("Please fill in partner's mobile and address!"))
+            record.state = 'intention_customer'
+
+    @api.multi
+    def set_intention_loss(self):
+        for record in self:
+            record.state = 'intention_customer_loss'
+
+    @api.multi
+    def set_target(self):
+        for record in self:
+            record.state = 'target_customer'
+
+    @api.multi
+    def set_target_loss(self):
+        for record in self:
+            record.state = 'target_customer_loss'
+
+    @api.multi
+    def set_contract(self):
+        for record in self:
+            record.state = 'contract_customers'
+
+    @api.multi
+    def write(self, values):
+        if 'state' in values:
+            previous_state = self.state
+            new_state = values.get('state')
+            # intention_customer_loss  target_customer_loss  contract_customers
+            if previous_state in ['potential_customer']:
+                if not self.mobile or not self.street or not self.street2 or not self.city or not self.state_id or not self.zip or not self.country_id:
+                    raise Warning(_("Please fill in partner's mobile and address!"))
+            if previous_state in ['intention_customer_loss', 'target_customer_loss']:
+                raise Warning(_("不能从流失客户转换到其他状态！"))
+            elif previous_state in ['contract_customers']:
+                raise Warning(_("不能从成交客户转换到其他状态！"))
+        return super(E2yunCsutomerExtends, self).write(values)
 #     name = fields.Char()
 #     value = fields.Integer()
 #     value2 = fields.Float(compute="_value_pc", store=True)
