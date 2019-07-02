@@ -1,0 +1,98 @@
+<odoo>
+    <data>
+        <record id="crm_partner_form_add_status_bar" model="ir.ui.view">
+            <field name="name">CRM Partner Form Add Status Bar</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <button name="set_intention" string="Set Intention" type="object"
+                                attrs="{'invisible': [('state','not in',['potential_customer'])]}"/>
+                        <button name="set_intention_loss" string="Set Intention Loss" type="object"
+                                attrs="{'invisible': [('state','not in',['intention_customer'])]}"/>
+                        <button name="set_target" string="Set Target" type="object"
+                                attrs="{'invisible': [('state','not in',['intention_customer'])]}"/>
+                        <button name="set_target_loss" string="Set Target Loss" type="object"
+                                attrs="{'invisible': [('state','not in',['target_customer'])]}"/>
+                        <button name="set_contract" string="Set Contract" type="object"
+                                attrs="{'invisible': [('state','not in',['target_customer'])]}"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="crm_partner_kanban_add_status_group" model="ir.ui.view">
+            <field name="name">CRM Partner Kanban Add Status Group</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//kanban" position="attributes">
+                    <attribute name="default_group_by">state</attribute>
+                    <attribute name="group_create" eval='True'/>
+                    <attribute name="group_delete" eval='True'/>
+                    <attribute name="group_edit" eval='True'/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="crm_partner_form_extend" model="ir.ui.view">
+            <field name="name">CRM Partner Form Extends</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="vat" position="before">
+                    <field name="app_code"/>
+                    <field name="shop_code"/>
+                    <field name="shop_name"/>
+                    <field name="referrer"/>
+                    <field name="occupation"/>
+                    <field name="car_brand"/>
+                    <field name="user_nick_name"/>
+                    <field name="gender"/>
+                    <field name="customer_source"/>
+                </field>
+            </field>
+        </record>
+
+        <!--<record model="ir.actions.server" id="action_sync_customer_pos">-->
+        <!--<field name="name">同步POS</field>-->
+        <!--<field name="model_id" ref="model_res_partner"/>-->
+        <!--<field name="binding_model_id" ref="model_res_partner" />-->
+        <!--<field name="state">code</field>-->
+        <!--<field name="code">-->
+        <!--if records:-->
+        <!--action = env['res.partner.extends.batch'].sync_customer_to_pos(records)-->
+        <!--</field>-->
+        <!--</record>-->
+
+        <record id="sync_customer_pos_view" model="ir.ui.view">
+            <field name="name">确定同步客户到POS系统？</field>
+            <field name="model">res.partner.extends.batch</field>
+            <field name="arch" type="xml">
+                <form string="确定同步客户到POS系统？">
+                    <footer>
+                        <button name="sync_customer_to_pos" string="确定" type="object" class="oe_highlight"/>
+                        or
+                        <button string="取消" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <act_window name="同步POS"
+                    res_model="res.partner.extends.batch"
+                    src_model="res.partner"
+                    key2="client_action_multi"
+                    view_mode="form"
+                    view_type="form"
+                    view_id="sync_customer_pos_view"
+                    target="new"
+                    id="sync_customer_pos_mulit"/>
+
+
+    </data>
+</odoo>

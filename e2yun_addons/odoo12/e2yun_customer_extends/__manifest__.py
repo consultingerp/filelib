@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "E2yun Csutomer Extends",
+    'name': "E2yun Customer Extends",
 
     'summary': """
         客户主数据扩充""",
@@ -33,6 +33,6 @@
     'demo': [
         # 'demo/demo.xml',
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
 }
