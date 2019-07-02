@@ -671,12 +671,22 @@
             </field>
         </record>
 
+        <record id="crm_customer_view_graph" model="ir.ui.view">
+            <field name="name">e2yun.customer.info.graph.view</field>
+            <field name="model">e2yun.customer.info</field>
+            <field name="arch" type="xml">
+                <graph string="Ineffective Customers">
+                    <field name="x_studio__1" type="row"/>
+                </graph>
+            </field>
+        </record>
+
         <record id="action_partner_customer_form" model="ir.actions.act_window">
             <field name="name">Ineffective Customers</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">e2yun.customer.info</field>
             <field name="view_type">form</field>
-            <field name="view_mode">kanban,tree,form,dashboard</field>
+            <field name="view_mode">kanban,tree,form,graph</field>
             <field name="domain">[]</field>
             <field name="context">{'default_customer':1, 'search_default_customer':1, 'default_is_company': True}
             </field>

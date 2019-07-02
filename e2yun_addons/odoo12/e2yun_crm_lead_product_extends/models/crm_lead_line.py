@@ -30,5 +30,17 @@ class CrmLeadLine(models.Model):
     def write(self, vals):
         super(CrmLeadLine,self).write(vals)
         taxes=self.price_tax / (self.tax_id.amount / 100 + 1)
-        vals['price_subtotal']=taxes
+        if not taxes:
+            taxes=self.price_tax
+        vals['price_subtotal'] = taxes
         super(CrmLeadLine, self).write(vals)
+
+    def create(self, vals_list):
+        crmlead=super(CrmLeadLine, self).create(vals_list)
+        for leadlin in crmlead:
+            taxes = leadlin.price_tax / (leadlin.tax_id.amount / 100 + 1)
+            if not taxes:
+                taxes = leadlin.price_tax
+            vals={}
+            vals['price_subtotal'] = taxes
+            super(CrmLeadLine, leadlin).write(vals)
