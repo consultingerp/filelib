@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import models, fields, api, exceptions, _
 import logging
 
 logger = logging.getLogger(__name__)
@@ -16,3 +16,11 @@ class res_partner(models.Model):
     @api.depends('team_id')
     def _compute_parent_team_id(self):
         self.parent_team_id = self.team_id.parent_id.id
+
+    @api.model
+    def create(self, vals):
+        if vals['customer'] and vals['parent_id'] is False and self.env.ref(
+                'e2yun_customer_info.group_crm_sale') in self.env.user.groups_id:
+            raise exceptions.Warning(_('You can not craete customer!'))
+        res = super(res_partner, self).create(vals)
+        return res
