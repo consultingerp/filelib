@@ -30,7 +30,7 @@ msgstr "通过二维码"
 #: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner__car_brand
 #: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__car_brand
 msgid "Car Brand"
-msgstr "汽车车品牌"
+msgstr "汽车品牌"
 
 #. module: e2yun_customer_extends
 #: selection:res.users,state:0
@@ -183,4 +183,17 @@ msgstr "准客户流失"
 #: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__user_nick_name
 msgid "User Nick Name"
 msgstr "用户昵称"
+
+#. module: e2yun_customer_extends
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner__related_guide
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__related_guide
+#: model_terms:ir.ui.view,arch_db:e2yun_customer_extends.crm_partner_form_add_related_guide
+msgid "Related Guide"
+msgstr "相关导购"
+
+#. module: e2yun_customer_extends
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__related_partner
+#: model_terms:ir.ui.view,arch_db:e2yun_customer_extends.crm_user_form_add_related_guide
+msgid "Related Partner"
+msgstr "相关客户"
 
