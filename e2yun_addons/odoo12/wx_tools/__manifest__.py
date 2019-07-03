@@ -39,11 +39,15 @@
         'views/wx_userodoouser.xml',
         'views/crm_team_views.xml',
         'views/wx_para_config.xml',
+        'views/wx_trace_log.xml',
+        'views/wx_trace_log_type.xml',
+
     ],
     'qweb': [
     ],
-    'depends': ['base', 'web', 'im_livechat'],
+    'depends': ['base', 'web', 'im_livechat', 'sale_management'],
     'installable': True,
+    'auto_install': True,
     'active': False,
     'web': True,
 }
