@@ -67,7 +67,7 @@ class WXMailThread(models.AbstractModel):
                                 'name': '__wx_attachment|%s' % message.attachment_ids.name,
                                 'datas': message.attachment_ids.datas,
                                 'datas_fname': message.attachment_ids.datas_fname,
-                                'res_model': 'mail.compose.message',
+                                'res_model': 'res.partner',
                                 'res_id': int(0)
                             })
                             wx_attachment_ids.append(attachment.id)
