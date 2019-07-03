@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-03 02:24+0000\n"
-"PO-Revision-Date: 2019-07-03 02:24+0000\n"
+"POT-Creation-Date: 2019-06-27 09:48+0000\n"
+"PO-Revision-Date: 2019-06-27 09:48+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -35,12 +35,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner__car_brand
 #: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__car_brand
 msgid "Car Brand"
-msgstr "汽车车品牌"
+msgstr "汽车品牌"
 
 #. module: e2yun_customer_extends
-#: model:ir.model,name:e2yun_customer_extends.model_res_config_settings
-msgid "Config Settings"
-msgstr "配置设定"
+#: selection:res.users,state:0
+msgid "Confirmed"
+msgstr "已确认"
 
 #. module: e2yun_customer_extends
 #: model:ir.model,name:e2yun_customer_extends.model_res_partner
@@ -53,25 +53,10 @@ msgid "Contract Customers"
 msgstr "成交客户"
 
 #. module: e2yun_customer_extends
-#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner_extends_batch__create_uid
-msgid "Created by"
-msgstr "创建人"
-
-#. module: e2yun_customer_extends
-#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner_extends_batch__create_date
-msgid "Created on"
-msgstr "创建时间"
-
-#. module: e2yun_customer_extends
 #: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner__customer_source
 #: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__customer_source
 msgid "Customer Source"
 msgstr "客户来源"
-
-#. module: e2yun_customer_extends
-#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner_extends_batch__display_name
-msgid "Display Name"
-msgstr "显示名称"
 
 #. module: e2yun_customer_extends
 #: selection:res.partner,gender:0
@@ -83,11 +68,6 @@ msgstr "女"
 #: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__gender
 msgid "Gender"
 msgstr "性别"
-
-#. module: e2yun_customer_extends
-#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner_extends_batch__id
-msgid "ID"
-msgstr ""
 
 #. module: e2yun_customer_extends
 #: selection:res.partner,state:0
@@ -133,17 +113,18 @@ msgid "Manual"
 msgstr "手工添加"
 
 #. module: e2yun_customer_extends
-#: code:addons/e2yun_customer_extends/models/models.py:13
-#: code:addons/e2yun_customer_extends/models/models.py:45
-#: code:addons/e2yun_customer_extends/models/models.py:48
-#: code:addons/e2yun_customer_extends/models/models.py:50
-#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_extends/models/models.py:13
-#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_extends/models/models.py:45
-#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_extends/models/models.py:48
-#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_extends/models/models.py:50
+#: selection:res.users,state:0
+msgid "Never Connected"
+msgstr "从未连接"
+
+#. module: e2yun_customer_extends
+#: code:addons/e2yun_customer_extends/models/models.py:10
+#: code:addons/e2yun_customer_extends/models/models.py:37
+#: code:addons/e2yun_customer_extends/models/models.py:40
+#: code:addons/e2yun_customer_extends/models/models.py:42
 #, python-format
 msgid "New"
-msgstr ""
+msgstr "新建"
 
 #. module: e2yun_customer_extends
 #: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner__occupation
@@ -159,12 +140,6 @@ msgstr "职业"
 #, python-format
 msgid "Please fill in partner's mobile and address!"
 msgstr "请填写客户的手机号码与完整地址！"
-
-#. module: e2yun_customer_extends
-#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner__pos_state
-#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__pos_state
-msgid "Pos State"
-msgstr ""
 
 #. module: e2yun_customer_extends
 #: selection:res.partner,state:0
@@ -225,9 +200,9 @@ msgid "State"
 msgstr "省/ 州"
 
 #. module: e2yun_customer_extends
-#: model:ir.model,name:e2yun_customer_extends.model_ir_config_parameter
-msgid "System Parameter"
-msgstr "系统参数"
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__state
+msgid "Status"
+msgstr "状态"
 
 #. module: e2yun_customer_extends
 #: selection:res.partner,state:0
@@ -254,46 +229,29 @@ msgid "User Nick Name"
 msgstr "用户昵称"
 
 #. module: e2yun_customer_extends
-#: model_terms:ir.ui.view,arch_db:e2yun_customer_extends.sync_customer_pos_view
-msgid "or"
-msgstr "或"
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner__related_guide
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__related_guide
+#: model_terms:ir.ui.view,arch_db:e2yun_customer_extends.crm_partner_form_add_related_guide
+msgid "Related Guide"
+msgstr "相关导购"
 
 #. module: e2yun_customer_extends
-#: model:ir.model,name:e2yun_customer_extends.model_res_partner_extends_batch
-msgid "res.partner.extends.batch"
-msgstr ""
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__related_partner
+#: model_terms:ir.ui.view,arch_db:e2yun_customer_extends.crm_user_form_add_related_guide
+msgid "Related Partner"
+msgstr "相关客户"
 
 #. module: e2yun_customer_extends
-#: code:addons/e2yun_customer_extends/models/models.py:94
-#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_extends/models/models.py:94
-#, python-format
-msgid "不能从成交客户转换到其他状态！"
-msgstr ""
+#: selection:res.partner,customer_source:0
+msgid "Team Barcode"
+msgstr "门店二维码"
 
 #. module: e2yun_customer_extends
-#: code:addons/e2yun_customer_extends/models/models.py:92
-#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_extends/models/models.py:92
-#, python-format
-msgid "不能从流失客户转换到其他状态！"
-msgstr ""
+#: selection:res.partner,customer_source:0
+msgid "User Barcode"
+msgstr "用户二维码"
 
 #. module: e2yun_customer_extends
-#: model_terms:ir.ui.view,arch_db:e2yun_customer_extends.sync_customer_pos_view
-msgid "取消"
-msgstr ""
-
-#. module: e2yun_customer_extends
-#: model:ir.actions.act_window,name:e2yun_customer_extends.sync_customer_pos_mulit
-msgid "同步POS"
-msgstr ""
-
-#. module: e2yun_customer_extends
-#: model_terms:ir.ui.view,arch_db:e2yun_customer_extends.sync_customer_pos_view
-msgid "确定"
-msgstr ""
-
-#. module: e2yun_customer_extends
-#: model_terms:ir.ui.view,arch_db:e2yun_customer_extends.sync_customer_pos_view
-msgid "确定同步客户到POS系统？"
-msgstr ""
-
+#: selection:res.partner,customer_source:0
+msgid "Subscribe"
+msgstr "关注公众号"

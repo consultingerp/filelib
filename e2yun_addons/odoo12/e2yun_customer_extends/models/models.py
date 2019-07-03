@@ -6,6 +6,11 @@ import suds.client
 
 from odoo.exceptions import ValidationError, Warning
 
+class E2yunUserAddPartnerRelated(models.Model):
+    _inherit = 'res.users'
+
+    related_partner = fields.Many2many('res.partner')
+
 
 class E2yunCsutomerExtends(models.Model):
     _inherit = 'res.partner'
@@ -22,7 +27,9 @@ class E2yunCsutomerExtends(models.Model):
         ('female', 'Female'),
         ], string='')
     customer_source = fields.Selection([
-        ('barcode', 'Barcode'),
+        ('qrscene_USERS', 'User Barcode'),
+        ('qrscene_TEAM', 'Team Barcode'),
+        ('subscribe', 'Subscribe'),
         ('manual', 'Manual'),
     ], string='', default='manual')
     pos_state = fields.Boolean(String='Sync Pos State',default=False)
@@ -34,6 +41,7 @@ class E2yunCsutomerExtends(models.Model):
         ('target_customer_loss', 'Target Customer Loss'),
         ('contract_customers', 'Contract Customers')
     ], string='', default='potential_customer', group_expand='_group_expand_stage_id')
+    related_guide = fields.Many2many('res.users')
 
     @api.model
     def _group_expand_stage_id(self, stages, domain, order):
