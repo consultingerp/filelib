@@ -55,7 +55,7 @@ def main(robot):
                 'name': '__wx_image|%s' % media_id,
                 'datas': base64.b64encode(_data),
                 'datas_fname': _filename,
-                'res_model': 'mail.compose.message',
+                'res_model': 'mail.channel',
                 'res_id': int(0)
             })
             attachment_ids.append(attachment.id)
