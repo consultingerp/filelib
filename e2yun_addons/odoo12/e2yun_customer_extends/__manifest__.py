@@ -19,13 +19,15 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base','crm'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
         'views/views.xml',
+        'views/res_config_settings_views.xml',
         'data/ir_sequence_data.xml',
+        'data/cron.xml',
         'pre_install.xml',
         # 'views/templates.xml',
     ],

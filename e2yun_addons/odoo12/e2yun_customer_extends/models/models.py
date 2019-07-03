@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _
+from odoo import models, fields, api, _,exceptions
 #import suds
 import suds.client
 
@@ -93,6 +93,68 @@ class E2yunCsutomerExtends(models.Model):
             elif previous_state in ['contract_customers']:
                 raise Warning(_("不能从成交客户转换到其他状态！"))
         return super(E2yunCsutomerExtends, self).write(values)
+
+
+    def run_send_wx_msg(self):
+        intention_customer_msg_day = self.env['res.config.settings']._get_intention_customer_msg_day()
+        target_customer_msg_day = self.env['res.config.settings']._get_target_customer_msg_day()
+
+        self.send_wx_msg(state='intention_customer',day_num=intention_customer_msg_day)
+        self.send_wx_msg(state='target_customer',day_num=target_customer_msg_day)
+
+    def send_wx_msg(self,state,day_num):
+        sql = """
+            select sum(type_code),user_id,p_id from (select user_id,id as p_id,1 as type_code from res_partner 
+                 where (CURRENT_TIMESTAMP - write_date) > interval '"""+day_num+""" day' 
+                 and customer = 't' 
+                 and active = 't' 
+                 and state = '"""+state+"""' 
+                 and user_id is not null
+                 
+                 union
+                 
+             select p.user_id,p.id as p_id,2 as type_code from crm_lead  l 
+                 left join res_partner p on l.partner_id = p.id 
+                 where p.customer = 't' 
+                 and p.active = 't' 
+                 and p.state = '"""+state+"""' 
+                 and p.user_id is not null
+                 group by p.user_id,p.id
+                 having (CURRENT_TIMESTAMP - max(l.write_date)) > interval '"""+day_num+""" day'
+                 
+                 union
+                 
+             select p.user_id,p.id as p_id,3 as type_code from mail_activity a 
+                 left join res_partner p on p.id = a.res_id
+                 where a.res_model = 'res.partner' 
+                 and p.customer = 't' 
+                 and p.active = 't' 
+                 and p.state = '"""+state+"""' 
+                 and p.user_id is not null
+                 group by p.user_id,p.id
+                 having (CURRENT_TIMESTAMP - max(a.write_date)) > interval '"""+day_num+""" day' 
+                 ) t group by user_id,p_id having sum(type_code) >= 6
+                 
+        """
+        self._cr.execute(sql)
+        users = self.env.cr.dictfetchall()
+        if users and len(users) > 0:
+            partner_obj = self.env['res.partner']
+            wx_user_obj = self.env['wx.user']
+            res_user_obj = self.env['res.users']
+
+            for u in users:
+                paerner = partner_obj.browse(u['p_id'])
+                msg = ''
+                if state == 'intention_customer':
+                    msg = '意向客户:' + paerner.name + ' 超过' + day_num + '天没有新的服务状态更新'
+                elif state == 'target_customer':
+                    msg = '准客户:' + paerner.name + ' 超过' + day_num + '天未邀约客户进行方案洽谈'
+
+                wx_user_obj.send_message(msg=msg,user=res_user_obj.browse(u['user_id']))
+
+
+
 #     name = fields.Char()
 #     value = fields.Integer()
 #     value2 = fields.Float(compute="_value_pc", store=True)
@@ -185,7 +247,7 @@ class resPartnerBatch(models.TransientModel):
                                                  r.create_uid.name)          #创建人
 
             if result != 'S':
-                raise ValidationError(result)
+                raise exceptions.Warning(result)
             else:
                 r.pos_state = True
 
