@@ -155,6 +155,7 @@
                                 <field name="lang"/>
                                 <field name="active"/>
                                 <field name="login_date"/>
+                                <field name="sale_team_id"/>
                                 <templates>
                                     <t t-name="kanban-box">
                                         <div t-attf-class="oe_kanban_global_click">
@@ -173,18 +174,14 @@
                                                         <i class="fa fa-circle" role="img" aria-label="Invalid"
                                                            title="Invalid"/>
                                                     </li>
-                                                    <li class="mb4">
+                                                    <li class="mb3">
                                                         <strong>
                                                             <field name="name"/>
                                                         </strong>
                                                     </li>
-                                                    <li class="badge badge-pill float-right mb4"
-                                                        t-if="record.lang.raw_value">
-                                                        <field name="lang"/>
-                                                    </li>
-                                                    <li class="mb4" t-if="record.login.raw_value" title="Login">
-                                                        <i class="fa fa-envelope" role="img" aria-label="Login"/>
-                                                        <field name="login"/>
+                                                    <br/>
+                                                    <li class="mb4">
+                                                        <field name="sale_team_id"/>
                                                     </li>
                                                 </ul>
                                             </div>
