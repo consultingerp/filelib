@@ -152,7 +152,7 @@ def main(robot):
                     message_type='comment', subtype='mail.mt_comment', content_subtype='plaintext',
                     weixin_id=localkwargs)
                 entry.create_uuid_for_openid(openid, uuid)
-                wxuserinfo.update_last_uuid(uuid, traceuser_id.id if traceuser_id else None, uuid_type)
+                wxuserinfo.update_last_uuid(uuid, traceuser_id.id if traceuser_id else None, uuid_type,wxuserinfo)
             active_id = session_info["id"]
             wxuserinfo.consultation_reminder(traceuser_id.partner_id,
                                              traceuser_id.user_id.wx_user_id.openid,
@@ -214,6 +214,7 @@ def main(robot):
                 tracelog_title = "扫描用户%s进入微信公众号，微信用户%s" % (eventkey[3], str(info['nickname']))
                 ret_msg = "您好！正在联系您的专属客户经理：%s\n" % (eventkey[3])
                 ismail_channel = True
+                user_id = eventkey[1]
                 users_ids.append(int(eventkey[1]))
                 uuid_type = 'USER'
             elif eventkey[0] == 'TEAM':
@@ -225,6 +226,7 @@ def main(robot):
                 traceuser_id = resuser
                 resuser.partner_id.write({
                     "customer_source": tracelog_type,
+                    "user_id": user_id,
                     'related_guide': [(6, 0, users_ids)]
                 })
 
@@ -253,7 +255,7 @@ def main(robot):
                     message_type='comment', subtype='mail.mt_comment', content_subtype='plaintext',
                     weixin_id=localkwargs)
                 entry.create_uuid_for_openid(openid, uuid)
-                wx_user.update_last_uuid(uuid, traceuser_id.id if traceuser_id else None, uuid_type)
+                wx_user.update_last_uuid(uuid, traceuser_id.id if traceuser_id else None, uuid_type,wx_user)
             active_id = session_info["id"]
             wx_user.consultation_reminder(traceuser_id.partner_id,
                                           traceuser_id.user_id.wx_user_id.openid,
