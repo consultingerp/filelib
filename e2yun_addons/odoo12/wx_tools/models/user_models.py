@@ -7,6 +7,10 @@ from ..controllers import client
 from odoo.http import request
 from odoo.exceptions import ValidationError, UserError
 from ..rpc import corp_client
+import datetime
+from datetime import timedelta
+import pytz
+
 
 _logger = logging.getLogger(__name__)
 
@@ -32,18 +36,20 @@ class wx_user(models.Model):
     user_id = fields.Many2one('res.users', '关联本系统用户')
     last_uuid_time = fields.Datetime('会话ID时间')
 
-    def update_last_uuid(self, uuid, partner_user_id, uuid_type):
+    def update_last_uuid(self, uuid, partner_user_id, uuid_type,wx_user):
         self.write({'last_uuid': uuid, 'last_uuid_time': fields.Datetime.now()})
         uuid_session = request.env['wx.user.uuid'].sudo().search(
-            [('uuid', '=', uuid), ('uuid_type', '=', uuid_type)], limit=1)
+            [('uuid', '=', uuid), ('uuid_type', '=', uuid_type),('wx_user_id', '=', wx_user.id)], limit=1)
         if not uuid_session.exists():
             self.env['wx.user.uuid'].sudo().create({
                 'openid': self.openid, 'uuid': uuid, 'last_uuid_time': fields.Datetime.now(),
-                'uuid_type': uuid_type, 'uuid_user_id': partner_user_id
+                'uuid_type': uuid_type, 'uuid_user_id': partner_user_id, 'wx_user_id': wx_user.id
             })
         else:
             uuid_session.write({
-                'last_uuid_time': fields.Datetime.now()})
+                'last_uuid_time': fields.Datetime.now(),
+                'uuid_type': uuid_type, 'uuid_user_id': partner_user_id
+            })
 
     @api.model
     def sync(self):
@@ -267,6 +273,59 @@ class wx_user(models.Model):
         if user_id:
             user_ = self.env['res.users'].sudo().browse(user_id)
             self.send_template_message(template_id, data, url, user=user_)
+
+    @api.multi
+    def consultation_reminder(self, partner, openid, message, active_id):
+        data = {
+            "first": {
+                "value": "客户咨询服务提醒",
+                "color": "#173177"
+            },
+            "keyword1": {
+                "value": partner.name
+            },
+            "keyword2": {
+                "value": '微信客户'
+            }, "keyword3": {
+                "value": '公众号'
+            }, "keyword4": {
+                "value": (datetime.datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
+            },
+            "remark": {
+                "value": "信息：" + message
+            }
+        }
+        discuss_menu_id = None
+        discuss_menu = self.env["wx.paraconfig"].sudo().search([('paraconfig_name', '=', 'Discuss_menu_id')])
+        if discuss_menu:
+            discuss_menu_id = discuss_menu[0].paraconfig_value
+        discuss_action_id = None
+        discuss_action = self.env["wx.paraconfig"].sudo().search([('paraconfig_name', '=', 'Discuss_action')])
+        if discuss_action:
+            discuss_action_id = discuss_action[0].paraconfig_value
+
+        template_id = ''
+        configer_para = self.env["wx.paraconfig"].sudo().search([('paraconfig_name', '=', '客户咨询提醒模板ID')])
+        if configer_para:
+            template_id = configer_para[0].paraconfig_value
+        # template_id = 'mZMBZn7KcAtNiRYMUYa0GTnO_zZBAdtb5aCJp8wVgqU'
+        url = client.wxenv(
+            self.env).server_url + '/web/login?usercode=message&codetype=wx&' \
+                                   'redirect=/web#action=%s&active_id=%s&menu_id=%s' % (
+                  discuss_action_id, active_id, discuss_menu_id)
+        client.send_template_message(self, openid, template_id, data, url, 'message')
+        return True
+
+    def get_location_time(self):
+        """
+        获取当前时区时间(带时区)
+        :return:
+        """
+        now_time = datetime.datetime.utcnow()
+        tz = self.env.user.tz or 'Asia/Shanghai'
+        return str(now_time.replace(tzinfo=pytz.timezone(tz)))
+
+
 
 
 class wx_user_group(models.Model):

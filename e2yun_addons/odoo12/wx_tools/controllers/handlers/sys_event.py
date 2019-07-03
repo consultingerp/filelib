@@ -4,6 +4,7 @@ import base64
 from .. import client
 from odoo import fields
 import datetime
+import odoo
 from odoo.http import request
 
 _logger = logging.getLogger(__name__)
@@ -34,13 +35,19 @@ def main(robot):
         _logger.info('>>> wx msg: %s' % message.__dict__)
         info = entry.wxclient.get_user_info(openid)
         info['group_id'] = str(info['groupid'])
+        tracelog_type = 'subscribe'
+        tracelog_title = '关注公众号'
+        traceuser_id = None
+        ismail_channel = False
+        uuid_type = None
         env = request.env()
         rs = env['wx.user'].sudo().search([('openid', '=', openid)])
-        if not rs.exists():
+        if not rs.exists():  # 不存在微信用户在
             wxuserinfo = env['wx.user'].sudo().create(info)  # 创建微信用户。
             resuser = env['res.users'].sudo().search([('login', '=', info['openid'])])
             user_id = None
             defpassword = '123456'
+            users_ids = []
             if message.EventKey:  # 如果关注的时候事有事件
                 if entry.subscribe_auto_msg:
                     ret_msg = entry.subscribe_auto_msg
@@ -50,19 +57,27 @@ def main(robot):
                 ret_msg = ''
                 eventkey = message.EventKey.split('|')
                 if eventkey[0] == 'qrscene_USERS':
+                    tracelog_type = 'qrscene_USERS'
                     _logger.info('USERS')
-                    ret_msg = "您的客户经理：%s\n 欢迎咨询[玫瑰][玫瑰][玫瑰]" % (eventkey[3])
+                    uuid_type = 'USER'
+                    tracelog_title = "扫描用户%s关注,微信用户%s" % (eventkey[3], str(info['nickname']))
+                    ret_msg = "正在联系您的专属客户经理%s。\n" \
+                              "请点击屏幕下方左侧小键盘打开对话框与您的客户经理联系。\n我们将竭诚为您服务，欢迎咨询！" % (eventkey[3])
                     user_id = eventkey[1]
+                    users_ids.append(user_id)
+                    ismail_channel = True
                 elif eventkey[0] == 'qrscene_TEAM':
+                    tracelog_type = 'qrscene_TEAM'
                     _logger.info('TEAM')
-                    ret_msg = "门店：%s \n 欢迎咨询" % (eventkey[2])
+                    tracelog_title = "扫描门店%s关注,微信用户" % (eventkey[2] , str(info['nickname']))
+                    ret_msg = "%s \n 欢迎您：我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
             else:
                 if entry.subscribe_auto_msg:
                     ret_msg = entry.subscribe_auto_msg
                 else:
                     ret_msg = "您终于来了！欢迎关注"
             _data = get_img_data(str(info['headimgurl']))
-            if not resuser.exists():
+            if not resuser.exists():  # 不存在odoo用户
                 resuser = env['res.users'].sudo().create({
                     "login": info['openid'],
                     "password": defpassword,
@@ -70,31 +85,86 @@ def main(robot):
                     "groups_id": request.env.ref('base.group_user'),  # base.group_public，base.group_portal
                     "wx_user_id": wxuserinfo.id,
                     "login_date": datetime.datetime.now(),
-                    "image": base64.b64encode(_data)
-
+                    "image": base64.b64encode(_data),
+                    "email": info['openid']
                 })
                 resuser.partner_id.write({
                     'supplier': True,
                     'customer': True,
                     "wx_user_id": wxuserinfo.id,
                     "user_id": user_id,
+                    "image": base64.b64encode(_data),
+                    "customer_source": tracelog_type,
+                    'related_guide': [(6, 0, users_ids)]
+                })
+                traceuser_id = resuser
+            else:  # 已存在odoo用户，关联用户到微信
+                traceuser_id = resuser  # 记录已存在有的ID
+                tracelog_title = tracelog_title + '已存在用户%s，重新关联微信用户%s' % (resuser.login, str(info['nickname']))
+                _logger.info('已存在用户，重新关联微信账号')
+                resuser.write({
+                    "wx_user_id": wxuserinfo.id,
                     "image": base64.b64encode(_data)
                 })
-                odoo_user = env['wx.user.odoouser'].sudo().search([('openid', '=', openid)])
-                if not odoo_user.exists():
-                    resuser = env['wx.user.odoouser'].sudo().create({
-                        "openid": info['openid'],
-                        "wx_user_id": wxuserinfo.id,
-                        "password": defpassword,
-                        "user_id": resuser.id,
-                        "codetype": 'wx'
-                    })
+                resuser.partner_id.write({
+                    'supplier': True,
+                    'customer': True,
+                    "wx_user_id": wxuserinfo.id,
+                    "user_id": user_id,
+                    "customer_source": tracelog_type,
+                    "image": base64.b64encode(_data),
+                    'related_guide': [(6, 0, users_ids)]
+                })
+            # 记录微信用户到 微信用户与odoo用户映射关系
+            odoo_user = env['wx.user.odoouser'].sudo().search([('openid', '=', openid)])
+            if not odoo_user.exists():
+                resuser = env['wx.user.odoouser'].sudo().create({
+                    "openid": info['openid'],
+                    "wx_user_id": wxuserinfo.id,
+                    "password": defpassword,
+                    "user_id": resuser.id,
+                    "codetype": 'wx'
+                })
+        else:  #
+            _logger.info('已存微信用户，重新进入')
+        tracetype = env['wx.tracelog.type'].sudo().search([('code', '=', tracelog_type)])
+        if tracetype.exists():
+            env['wx.tracelog'].sudo().create({
+                "tracelog_type": tracetype.id,
+                "title": tracelog_title,
+                "user_id": traceuser_id.id,
+            })
+        env.cr.commit()
+        if ismail_channel:  # 联系客户
+            _logger.info('发起客户会话')
+            uid = request.session.authenticate(request.session.db, traceuser_id.login, defpassword)
+            partners_to = [traceuser_id.partner_id.user_id.partner_id.id]  # 增加导购到会话
+            session_info = request.env["mail.channel"].channel_get(partners_to)
+            origin_content = '%s扫描二维码关注公众号，点击连接直接发起会话。'% (str(info['nickname']))
+            if session_info:
+                localkwargs = {'weixin_id': openid, 'wx_type': 'wx'}
+                uuid = session_info['uuid']
+                request_uid = request.session.uid or odoo.SUPERUSER_ID
+                message_content = '您好，%s通过扫描关注了公众号。'% (str(info['nickname']))
+                mail_channel = request.env["mail.channel"].sudo(request_uid).search([('uuid', '=', uuid)], limit=1)
+                msg = mail_channel.sudo(request_uid).with_context(mail_create_nosubscribe=True).message_post(
+                    author_id=traceuser_id.partner_id.id, email_from=mail_channel.anonymous_name, body=message_content,
+                    message_type='comment', subtype='mail.mt_comment', content_subtype='plaintext',
+                    weixin_id=localkwargs)
+                entry.create_uuid_for_openid(openid, uuid)
+                wxuserinfo.update_last_uuid(uuid, traceuser_id.id if traceuser_id else None, uuid_type)
+            active_id = session_info["id"]
+            wxuserinfo.consultation_reminder(traceuser_id.partner_id,
+                                             traceuser_id.user_id.wx_user_id.openid,
+                                             origin_content,
+                                             active_id)
 
         return ret_msg
 
     @robot.unsubscribe
     def unsubscribe(message):
-
+        tracelog_type = 'unsubscribe'
+        tracelog_title = '取消关注公众号'
         serviceid = message.target
         openid = message.source
         env = request.env()
@@ -103,11 +173,17 @@ def main(robot):
             rs.unlink()
         odoouser = env['wx.user.odoouser'].sudo().search([('openid', '=', openid)])
         if odoouser.exists():
+            tracetype = env['wx.tracelog.type'].sudo().search([('code', '=', tracelog_type)])
+            if tracetype.exists():
+                env['wx.tracelog'].sudo().create({
+                    "tracelog_type": tracetype.id,
+                    "title": tracelog_title,
+                    "user_id": odoouser.user_id.id,
+                })
             odoouser.unlink()
         uuid = request.env['wx.user.uuid'].sudo().search([('openid', '=', openid)])
         if uuid.exists():
             uuid.unlink()
-
         return ""
 
     @robot.scan
@@ -119,15 +195,71 @@ def main(robot):
         mtype = message.type
         _logger.info('>>> wx msg: %s' % message.__dict__)
         env = request.env()
+        info = entry.wxclient.get_user_info(openid)
+        tracelog_type = 'subscribe'
+        tracelog_title = '扫描进入公众号'
+        traceuser_id = None
+        ismail_channel = False
+        uuid_type = None
+        defpassword = "123456"
         rs = env['wx.user'].sudo().search([('openid', '=', openid)])
         if rs.exists():
+            wx_user = rs[0]
             eventkey = message.EventKey.split('|')
+            resuser = env['res.users'].sudo().search([('login', '=', info['openid'])])
+            users_ids = resuser.partner_id.related_guide.ids
             if eventkey[0] == 'USERS':
                 _logger.info('USERS')
-                ret_msg = "您的客户经理：%s\n 欢迎咨询[玫瑰][玫瑰][玫瑰]" % (eventkey[3])
+                tracelog_type = 'qrscene_USERS'
+                tracelog_title = "扫描用户%s进入微信公众号，微信用户%s" % (eventkey[3], str(info['nickname']))
+                ret_msg = "您好！正在联系您的专属客户经理：%s\n" % (eventkey[3])
+                ismail_channel = True
+                users_ids.append(int(eventkey[1]))
+                uuid_type = 'USER'
             elif eventkey[0] == 'TEAM':
+                tracelog_type = 'qrscene_TEAM'
+                tracelog_title = "扫描门店%s进入公众号,微信用户" % (eventkey[2], str(info['nickname']))
                 _logger.info('TEAM')
-                ret_msg = "门店：%s \n 欢迎咨询" % (eventkey[2])
+                ret_msg = "：%s 欢迎您：\n 我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
+            if resuser.exists():
+                traceuser_id = resuser
+                resuser.partner_id.write({
+                    "customer_source": tracelog_type,
+                    'related_guide': [(6, 0, users_ids)]
+                })
+
+        tracetype = env['wx.tracelog.type'].sudo().search([('code', '=', tracelog_type)])
+        if tracetype.exists():
+            env['wx.tracelog'].sudo().create({
+                "tracelog_type": tracetype.id,
+                "title": tracelog_title,
+                "user_id": traceuser_id.id,
+            })
+
+        if ismail_channel:  # 联系客户
+            _logger.info('发起客户会话')
+            uid = request.session.authenticate(request.session.db, traceuser_id.login, defpassword)
+            partners_to = [traceuser_id.partner_id.user_id.partner_id.id]  # 增加导购到会话
+            session_info = request.env["mail.channel"].channel_get(partners_to)
+            origin_content = '%s扫描二维码关注公众号，点击连接直接发起会话。' % (str(info['nickname']))
+            if session_info:
+                uuid = session_info['uuid']
+                localkwargs = {'weixin_id': openid, 'wx_type': 'wx'}
+                request_uid = request.session.uid or odoo.SUPERUSER_ID
+                message_content = '您好，%s通过扫描关注了公众号。'% (str(info['nickname']))
+                mail_channel = request.env["mail.channel"].sudo(request_uid).search([('uuid', '=', uuid)], limit=1)
+                msg = mail_channel.sudo(request_uid).with_context(mail_create_nosubscribe=True).message_post(
+                    author_id=traceuser_id.partner_id.id, email_from=mail_channel.anonymous_name, body=message_content,
+                    message_type='comment', subtype='mail.mt_comment', content_subtype='plaintext',
+                    weixin_id=localkwargs)
+                entry.create_uuid_for_openid(openid, uuid)
+                wx_user.update_last_uuid(uuid, traceuser_id.id if traceuser_id else None, uuid_type)
+            active_id = session_info["id"]
+            wx_user.consultation_reminder(traceuser_id.partner_id,
+                                          traceuser_id.user_id.wx_user_id.openid,
+                                          origin_content,
+                                          active_id)
+
         return ret_msg
 
     @robot.scancode_push
