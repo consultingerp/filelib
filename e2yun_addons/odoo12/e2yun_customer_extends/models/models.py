@@ -61,32 +61,32 @@ class E2yunCsutomerExtends(models.Model):
         result = super(E2yunCsutomerExtends, self).create(vals)
         return result
 
-    @api.multi
-    def set_intention(self):
-        for record in self:
-            if not record.mobile or not record.street or not record.city or not record.state_id:
-                raise Warning(_("Please fill in partner's mobile and address!"))
-            record.state = 'intention_customer'
-
-    @api.multi
-    def set_intention_loss(self):
-        for record in self:
-            record.state = 'intention_customer_loss'
-
-    @api.multi
-    def set_target(self):
-        for record in self:
-            record.state = 'target_customer'
-
-    @api.multi
-    def set_target_loss(self):
-        for record in self:
-            record.state = 'target_customer_loss'
-
-    @api.multi
-    def set_contract(self):
-        for record in self:
-            record.state = 'contract_customers'
+    # @api.multi
+    # def set_intention(self):
+    #     for record in self:
+    #         if not record.mobile or not record.street or not record.city or not record.state_id:
+    #             raise Warning(_("Please fill in partner's mobile and address!"))
+    #         record.state = 'intention_customer'
+    #
+    # @api.multi
+    # def set_intention_loss(self):
+    #     for record in self:
+    #         record.state = 'intention_customer_loss'
+    #
+    # @api.multi
+    # def set_target(self):
+    #     for record in self:
+    #         record.state = 'target_customer'
+    #
+    # @api.multi
+    # def set_target_loss(self):
+    #     for record in self:
+    #         record.state = 'target_customer_loss'
+    #
+    # @api.multi
+    # def set_contract(self):
+    #     for record in self:
+    #         record.state = 'contract_customers'
 
     @api.multi
     def write(self, values):
@@ -97,10 +97,10 @@ class E2yunCsutomerExtends(models.Model):
             if previous_state in ['potential_customer']:
                 if not self.mobile or not self.street or not self.city or not self.state_id:
                     raise Warning(_("Please fill in partner's mobile and address!"))
-            if previous_state in ['intention_customer_loss', 'target_customer_loss']:
-                raise Warning(_("不能从流失客户转换到其他状态！"))
-            elif previous_state in ['contract_customers']:
-                raise Warning(_("不能从成交客户转换到其他状态！"))
+            # if previous_state in ['intention_customer_loss', 'target_customer_loss']:
+            #     raise Warning(_("不能从流失客户转换到其他状态！"))
+            # elif previous_state in ['contract_customers']:
+            #     raise Warning(_("不能从成交客户转换到其他状态！"))
         # 对修改后的手机号进行验证
         if 'mobile' in values:
             mobile = values.get('mobile')

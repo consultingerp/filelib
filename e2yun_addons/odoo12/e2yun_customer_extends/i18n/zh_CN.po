@@ -233,7 +233,7 @@ msgstr "用户昵称"
 #: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__related_guide
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_extends.crm_partner_form_add_related_guide
 msgid "Related Guide"
-msgstr "相关导购"
+msgstr "门店与导购"
 
 #. module: e2yun_customer_extends
 #: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__related_partner
