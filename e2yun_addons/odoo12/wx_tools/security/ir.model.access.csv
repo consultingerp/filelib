@@ -34,3 +34,5 @@ access_wx_config_group_wx_op,wx_config.group_wx_op,model_wx_config,group_wx_op,1
 access_wx_config_group_wx_conf,wx_config.group_wx_conf,model_wx_config,group_wx_conf,1,1,0,0
 access_wx_user_odoouser_group_wx_conf,wx_user_odoouser.group_wx_conf,model_wx_user_odoouser,group_wx_conf,1,1,1,1
 access_wx_paraconfig_group_wx_conf,wx_paraconfig.group_wx_conf,model_wx_paraconfig,group_wx_conf,1,1,1,1
+access_wx_tracelog_type_wx_conf,wx_tracelog_type.group_wx_conf,model_wx_tracelog_type,group_wx_conf,1,1,1,1
+access_wx_tracelog_group_wx_conf,wx_tracelog.group_wx_conf,model_wx_tracelog,group_wx_conf,1,1,1,1
