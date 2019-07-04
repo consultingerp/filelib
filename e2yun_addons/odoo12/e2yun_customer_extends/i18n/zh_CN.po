@@ -248,6 +248,11 @@ msgstr "门店二维码"
 
 #. module: e2yun_customer_extends
 #: selection:res.partner,customer_source:0
+msgid "QR Scan Company"
+msgstr "公司二维码"
+
+#. module: e2yun_customer_extends
+#: selection:res.partner,customer_source:0
 msgid "User Barcode"
 msgstr "用户二维码"
 
