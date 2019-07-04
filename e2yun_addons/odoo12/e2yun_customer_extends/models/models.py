@@ -31,6 +31,7 @@ class E2yunCsutomerExtends(models.Model):
         ('qrscene_USERS', 'User Barcode'),
         ('qrscene_TEAM', 'Team Barcode'),
         ('subscribe', 'Subscribe'),
+        ('qrscene_COMPANY', 'QR Scan Company'),
         ('manual', 'Manual'),
     ], string='', default='manual')
     pos_state = fields.Boolean(String='Sync Pos State',default=False)
