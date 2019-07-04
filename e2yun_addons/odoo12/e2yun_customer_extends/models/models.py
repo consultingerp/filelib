@@ -3,6 +3,7 @@
 from odoo import models, fields, api, _,exceptions
 #import suds
 import suds.client
+import re
 
 from odoo.exceptions import ValidationError, Warning
 
@@ -63,7 +64,7 @@ class E2yunCsutomerExtends(models.Model):
     @api.multi
     def set_intention(self):
         for record in self:
-            if not record.mobile or not record.street or not record.street2 or not record.city or not record.state_id or not record.zip or not record.country_id:
+            if not record.mobile or not record.street or not record.city or not record.state_id:
                 raise Warning(_("Please fill in partner's mobile and address!"))
             record.state = 'intention_customer'
 
@@ -94,12 +95,18 @@ class E2yunCsutomerExtends(models.Model):
             new_state = values.get('state')
             # intention_customer_loss  target_customer_loss  contract_customers
             if previous_state in ['potential_customer']:
-                if not self.mobile or not self.street or not self.street2 or not self.city or not self.state_id or not self.zip or not self.country_id:
+                if not self.mobile or not self.street or not self.city or not self.state_id:
                     raise Warning(_("Please fill in partner's mobile and address!"))
             if previous_state in ['intention_customer_loss', 'target_customer_loss']:
                 raise Warning(_("不能从流失客户转换到其他状态！"))
             elif previous_state in ['contract_customers']:
                 raise Warning(_("不能从成交客户转换到其他状态！"))
+        # 对修改后的手机号进行验证
+        if 'mobile' in values:
+            mobile = values.get('mobile')
+            ret = re.match(r"^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$", mobile)
+            if not ret:
+                raise Warning(_("请输入合法手机号码！"))
         return super(E2yunCsutomerExtends, self).write(values)
 
 
