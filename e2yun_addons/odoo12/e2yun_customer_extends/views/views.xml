@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data>
         <record id="crm_user_form_add_related_guide" model="ir.ui.view">
@@ -301,7 +302,7 @@
                     target="new"
                     id="sync_customer_pos_mulit"/>
 
-        <record id="crm_partner_kanban_add_status_group" model="ir.ui.view">
+        <record id="crm_partner_kanban_add_status_group2" model="ir.ui.view">
             <field name="name">CRM Partner Kanban Add Status Group</field>
             <field name="model">res.partner</field>
             <field name="arch" type="xml">
@@ -436,7 +437,7 @@
             <field name="context">{"search_default_customer":1}</field>
             <field name="search_view_id" ref="base.view_res_partner_filter"/>
             <field name="view_ids" eval="[(5, 0, 0),
-                (0, 0, {'sequence': '2', 'view_mode': 'kanban', 'view_id': ref('crm_partner_kanban_add_status_group')})
+                (0, 0, {'sequence': '2', 'view_mode': 'kanban', 'view_id': ref('crm_partner_kanban_add_status_group2')})
                 ]"/>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
