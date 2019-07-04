@@ -41,6 +41,7 @@
         'views/wx_para_config.xml',
         'views/wx_trace_log.xml',
         'views/wx_trace_log_type.xml',
+        'views/res_company_views.xml',
 
     ],
     'qweb': [

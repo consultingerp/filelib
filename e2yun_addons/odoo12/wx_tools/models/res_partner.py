@@ -38,3 +38,9 @@ class WXResPartner(models.Model):
     def get_wx_key(self):
         if self.wx_user_id:
             return self.wx_user_id.openid
+
+    @api.multi
+    def write(self, vals):
+        if vals.get('wx_user_id'):
+            self.user_ids.wx_user_id = vals.get('wx_user_id')
+        return super(WXResPartner, self).write(vals)
