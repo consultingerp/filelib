@@ -124,17 +124,17 @@
             <field name="arch" type="xml">
                 <xpath expr="//sheet" position="before">
                     <header>
-                        <button name="set_intention" string="Set Intention" type="object"
-                                attrs="{'invisible': [('state','not in',['potential_customer'])]}"/>
-                        <button name="set_intention_loss" string="Set Intention Loss" type="object"
-                                attrs="{'invisible': [('state','not in',['intention_customer'])]}"/>
-                        <button name="set_target" string="Set Target" type="object"
-                                attrs="{'invisible': [('state','not in',['intention_customer'])]}"/>
-                        <button name="set_target_loss" string="Set Target Loss" type="object"
-                                attrs="{'invisible': [('state','not in',['target_customer'])]}"/>
-                        <button name="set_contract" string="Set Contract" type="object"
-                                attrs="{'invisible': [('state','not in',['target_customer'])]}"/>
-                        <field name="state" widget="statusbar"/>
+<!--                        <button name="set_intention" string="Set Intention" type="object"-->
+<!--                                attrs="{'invisible': [('state','not in',['potential_customer'])]}"/>-->
+<!--                        <button name="set_intention_loss" string="Set Intention Loss" type="object"-->
+<!--                                attrs="{'invisible': [('state','not in',['intention_customer'])]}"/>-->
+<!--                        <button name="set_target" string="Set Target" type="object"-->
+<!--                                attrs="{'invisible': [('state','not in',['intention_customer'])]}"/>-->
+<!--                        <button name="set_target_loss" string="Set Target Loss" type="object"-->
+<!--                                attrs="{'invisible': [('state','not in',['target_customer'])]}"/>-->
+<!--                        <button name="set_contract" string="Set Contract" type="object"-->
+<!--                                attrs="{'invisible': [('state','not in',['target_customer'])]}"/>-->
+                        <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
                     </header>
                 </xpath>
             </field>
