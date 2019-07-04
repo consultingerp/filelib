@@ -55,7 +55,7 @@ def main(robot):
                 'name': '__wx_image|%s' % media_id,
                 'datas': base64.b64encode(_data),
                 'datas_fname': _filename,
-                'res_model': 'mail.compose.message',
+                'res_model': 'mail.channel',
                 'res_id': int(0)
             })
             attachment_ids.append(attachment.id)
@@ -73,6 +73,21 @@ def main(robot):
                 'res_id': int(0)
             })
             attachment_ids.append(attachment.id)
+        elif mtype in ['video']:
+            media_id = message.media_id
+            media_format = 'mp4'
+            r = client.wxclient.download_media(media_id)
+            _filename = '%s.%s' % (media_id, media_format)
+            _data = r.content
+            attachment = request.env['ir.attachment'].sudo().create({
+                'name': '__wx_video|%s' % message.media_id,
+                'datas': base64.b64encode(_data),
+                'datas_fname': _filename,
+                'res_model': 'mail.compose.message',
+                'res_id': int(0)
+            })
+            attachment_ids.append(attachment.id)
+
         elif mtype == 'location':
             origin_content = '对方发送位置: %s 纬度为：%s 经度为：%s' % (message.label, message.location[0], message.location[1])
         elif mtype == 'text':
@@ -101,7 +116,7 @@ def main(robot):
 
         partner = request.env['res.partner'].sudo().search([('wx_user_id.openid', '=', openid)])
         partner_user_id = None
-        if partner.exists():
+        if partner.exists():  # 查询微信关联的客户
             if partner[0].user_id:  # 存在导购
                 partner_user_id = partner[0].user_id  # 联系当前导购
 
@@ -130,16 +145,30 @@ def main(robot):
             # 查询上次会话是否是用户类型
             uuid_type = 'USER'
             uuid_session = request.env['wx.user.uuid'].sudo().search(
-                [('uuid', '=', uuid), ('uuid_type', '=', uuid_type)], limit=1)
+                [('uuid', '=', uuid), ('uuid_type', '=', uuid_type),('uuid_user_id','=', partner_user_id.id)], limit=1)
             if uuid_session.exists():
                 _now = fields.datetime.now()
                 if _now - uuid_session.last_uuid_time >= datetime.timedelta(seconds=30 * 60):
-                    entry.send_text(openid, "正在联系你的专属客户经理%s，请稍等[咖啡][咖啡] " % (partner_user_id.name))
+                    entry.send_text(openid, "正在联系您的专属客户经理%s，我们将竭诚为您服务，欢迎咨询！ " % (partner_user_id.name))
             else:  # 如果不满足条件重新选择发起会话
                 uuid = None
+        elif not partner_user_id and uuid:  # 如果是联系客服 如果有UUID
+            uuid_type = 'service'
+            uuid_session = request.env['wx.user.uuid'].sudo().search(
+                [('uuid', '=', uuid), ('uuid_type', '=', uuid_type)],
+                limit=1)  # 如果会话是服务类型
+            if not uuid_session.exists():  # 会话不是服务类型
+                uuid_session = request.env['wx.user.uuid'].sudo().search(
+                    [('wx_user_id', '=', wx_user.id), ('uuid_type', '=', uuid_type)],
+                    limit=1)   # 选择一个服务类型的会话
+                if uuid_session.exists():
+                    uuid = uuid_session.uuid
+                else:
+                    uuid = None
         if partner_user_id and not uuid:
             _logger.info('需要联系客服要 没有会话')
-            entry.send_text(openid, "正在联系你的专属客户经理%s，请稍等[咖啡][咖啡] " % (partner_user_id.name))
+            entry.send_text(openid, "正在联系您的专属客户经理%s，我们将竭诚为您服务，欢迎咨询！ " % (partner_user_id.name))
+
         if not uuid:  # 没有会话创建会话
             anonymous_name = wx_user.nickname
             if not partner_user_id:  # 联系在线客户
@@ -155,7 +184,7 @@ def main(robot):
                 obj = request.env['wx.user.odoouser'].sudo().search([('openid', '=', openid)])
                 uid = request.session.authenticate(request.session.db, obj.user_id.login, obj.password)
                 # partners_to = [partner_user_id.partner_id.id, partner.id]
-                partners_to = [partner_user_id.partner_id.id]
+                partners_to = [partner_user_id.partner_id.id]  # 增加导购到会话
                 # session_info = request.env["mail.channel"].create_user(partners_to);
                 session_info = request.env["mail.channel"].channel_get(partners_to)
                 active_id = session_info["id"]
@@ -164,16 +193,16 @@ def main(robot):
                 uuid = session_info['uuid']
                 entry.create_uuid_for_openid(openid, uuid)
                 # if not record_uuid:
-                wx_user.update_last_uuid(uuid, partner_user_id.id if partner_user_id else None, uuid_type)
+                wx_user.update_last_uuid(uuid, partner_user_id.id if partner_user_id else None, uuid_type,wx_user)
 
         if uuid:
             if partner_user_id:
                 # 发送信息到导购
                 if partner_user_id.partner_id.im_status == 'offline':
-                    consultation_reminder(request, partner, partner_user_id.partner_id.wx_user_id.openid,
-                                          origin_content,
-                                          active_id)
-            wx_user.update_last_uuid(uuid, partner_user_id.id if partner_user_id else None, uuid_type)
+                    wx_user.consultation_reminder(partner, partner_user_id.partner_id.wx_user_id.openid,
+                                                  origin_content,
+                                                  active_id)
+            wx_user.update_last_uuid(uuid, partner_user_id.id if partner_user_id else None, uuid_type,wx_user)
             localkwargs = {'weixin_id': openid, 'wx_type': 'wx'}
             message_type = "message"
             message_content = origin_content
@@ -194,51 +223,12 @@ def main(robot):
                 author_id=author_id, email_from=mail_channel.anonymous_name, body=message_content,
                 message_type='comment', subtype='mail.mt_comment', content_subtype='plaintext',
                 attachment_ids=attachment_ids, weixin_id=localkwargs)
+            partner.message_post(body=message_content, author_id=author_id, attachment_ids=attachment_ids)
         if ret_msg:
             return ret_msg
-
-    def consultation_reminder(self, partner, openid, message, active_id):
-        data = {
-            "first": {
-                "value": "客户咨询服务提醒",
-                "color": "#173177"
-            },
-            "keyword1": {
-                "value": partner.name
-            },
-            "keyword2": {
-                "value": '微信客户'
-            }, "keyword3": {
-                "value": '公众号'
-            }, "keyword4": {
-                "value": datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            },
-            "remark": {
-                "value": "信息：" + message
-            }
-        }
-        discuss_menu_id = None
-        discuss_menu = self.env["wx.paraconfig"].sudo().search([('paraconfig_name', '=', 'Discuss_menu_id')])
-        if discuss_menu:
-            discuss_menu_id = discuss_menu[0].paraconfig_value
-        discuss_action_id = None
-        discuss_action = self.env["wx.paraconfig"].sudo().search([('paraconfig_name', '=', 'Discuss_action')])
-        if discuss_action:
-            discuss_action_id = discuss_action[0].paraconfig_value
-
-        template_id = ''
-        configer_para = self.env["wx.paraconfig"].sudo().search([('paraconfig_name', '=', '客户咨询提醒模板ID')])
-        if configer_para:
-            template_id = configer_para[0].paraconfig_value
-        # template_id = 'mZMBZn7KcAtNiRYMUYa0GTnO_zZBAdtb5aCJp8wVgqU'
-        url = client.wxenv(
-            self.env).server_url + '/web/login?usercode=message&codetype=wx&' \
-                                   'redirect=/web#action=%s&active_id=%s&menu_id=%s' % (
-                  discuss_action_id, active_id, discuss_menu_id)
-        client.send_template_message(self, openid, template_id, data, url, 'message')
-        return True
 
     robot.add_handler(input_handle, type='text')
     robot.add_handler(input_handle, type='image')
     robot.add_handler(input_handle, type='voice')
+    robot.add_handler(input_handle, type='video')
     robot.add_handler(input_handle, type='location')

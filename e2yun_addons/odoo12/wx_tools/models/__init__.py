@@ -20,3 +20,6 @@ from . import crm_team
 from . import mail_channel
 from . import wx_config
 from . import wx_par_config
+from . import wx_tracelog
+from . import wx_sale_order
+from . import sale_make_invoice_advance
