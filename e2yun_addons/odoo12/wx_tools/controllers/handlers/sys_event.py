@@ -41,12 +41,19 @@ def main(robot):
         ismail_channel = False
         uuid_type = None
         env = request.env()
+        # FromUserName + CreateTime
+        messag_info = message.CreateTime + "" + message.FromUserName
+        if messag_info == entry.OPENID_LAST.get(openid):
+            _logger.info('>>> 重复的微信消息')
+            return ''
+        entry.OPENID_LAST[openid] = messag_info
         rs = env['wx.user'].sudo().search([('openid', '=', openid)])
         if not rs.exists():  # 不存在微信用户在
             wxuserinfo = env['wx.user'].sudo().create(info)  # 创建微信用户。
             resuser = env['res.users'].sudo().search([('login', '=', info['openid'])])
             user_id = None
             defpassword = '123456'
+            iscompanyuser = False
             users_ids = []
             if message.EventKey:  # 如果关注的时候事有事件
                 if entry.subscribe_auto_msg:
@@ -69,7 +76,13 @@ def main(robot):
                 elif eventkey[0] == 'qrscene_TEAM':
                     tracelog_type = 'qrscene_TEAM'
                     _logger.info('TEAM')
-                    tracelog_title = "扫描门店%s关注,微信用户" % (eventkey[2] , str(info['nickname']))
+                    tracelog_title = "扫描门店%s关注,微信用户%s" % (eventkey[2] , str(info['nickname']))
+                    ret_msg = "%s \n 欢迎您：我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
+                elif eventkey[0] == 'qrscene_COMPANY':
+                    tracelog_type = 'qrscene_COMPANY'
+                    _logger.info('公司二维码进入')
+                    iscompanyuser = True
+                    tracelog_title = "扫描公司%s关注,微信用户%s" % (eventkey[2] , str(info['nickname']))
                     ret_msg = "%s \n 欢迎您：我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
             else:
                 if entry.subscribe_auto_msg:
@@ -77,62 +90,64 @@ def main(robot):
                 else:
                     ret_msg = "您终于来了！欢迎关注"
             _data = get_img_data(str(info['headimgurl']))
-            if not resuser.exists():  # 不存在odoo用户
-                resuser = env['res.users'].sudo().create({
-                    "login": info['openid'],
-                    "password": defpassword,
-                    "name": info['nickname'],
-                    "groups_id": request.env.ref('base.group_user'),  # base.group_public，base.group_portal
-                    "wx_user_id": wxuserinfo.id,
-                    "login_date": datetime.datetime.now(),
-                    "image": base64.b64encode(_data),
-                    "email": info['openid']
-                })
-                resuser.partner_id.write({
-                    'supplier': True,
-                    'customer': True,
-                    "wx_user_id": wxuserinfo.id,
-                    "user_id": user_id,
-                    "image": base64.b64encode(_data),
-                    "customer_source": tracelog_type,
-                    'related_guide': [(6, 0, users_ids)]
-                })
-                traceuser_id = resuser
-            else:  # 已存在odoo用户，关联用户到微信
-                traceuser_id = resuser  # 记录已存在有的ID
-                tracelog_title = tracelog_title + '已存在用户%s，重新关联微信用户%s' % (resuser.login, str(info['nickname']))
-                _logger.info('已存在用户，重新关联微信账号')
-                resuser.write({
-                    "wx_user_id": wxuserinfo.id,
-                    "image": base64.b64encode(_data)
-                })
-                resuser.partner_id.write({
-                    'supplier': True,
-                    'customer': True,
-                    "wx_user_id": wxuserinfo.id,
-                    "user_id": user_id,
-                    "customer_source": tracelog_type,
-                    "image": base64.b64encode(_data),
-                    'related_guide': [(6, 0, users_ids)]
-                })
-            # 记录微信用户到 微信用户与odoo用户映射关系
-            odoo_user = env['wx.user.odoouser'].sudo().search([('openid', '=', openid)])
-            if not odoo_user.exists():
-                resuser = env['wx.user.odoouser'].sudo().create({
-                    "openid": info['openid'],
-                    "wx_user_id": wxuserinfo.id,
-                    "password": defpassword,
-                    "user_id": resuser.id,
-                    "codetype": 'wx'
-                })
-        else:  #
+            if not iscompanyuser:
+                if not resuser.exists() :  # 不存在odoo用户 而且不是扫描公司二给码进入的，公司二维码进不不用创建用户
+                    resuser = env['res.users'].sudo().create({
+                        "login": info['openid'],
+                        "password": defpassword,
+                        "name": info['nickname'],
+                        "groups_id": request.env.ref('base.group_user'),  # base.group_public，base.group_portal
+                        "wx_user_id": wxuserinfo.id,
+                        "login_date": datetime.datetime.now(),
+                        "image": base64.b64encode(_data),
+                        "email": info['openid']
+                    })
+                    resuser.partner_id.write({
+                        'supplier': True,
+                        'customer': True,
+                        "wx_user_id": wxuserinfo.id,
+                        "user_id": user_id,
+                        "image": base64.b64encode(_data),
+                        "customer_source": tracelog_type,
+                        'related_guide': [(6, 0, users_ids)]
+                    })
+                    traceuser_id = resuser
+                else:  # 已存在odoo用户，关联用户到微信
+                    traceuser_id = resuser  # 记录已存在有的ID
+                    tracelog_title = tracelog_title + '已存在用户%s，重新关联微信用户%s' % (resuser.login, str(info['nickname']))
+                    _logger.info('已存在用户，重新关联微信账号')
+                    resuser.write({
+                        "wx_user_id": wxuserinfo.id,
+                        "image": base64.b64encode(_data)
+                    })
+                    resuser.partner_id.write({
+                        'supplier': True,
+                        'customer': True,
+                        "wx_user_id": wxuserinfo.id,
+                        "user_id": user_id,
+                        "customer_source": tracelog_type,
+                        "image": base64.b64encode(_data),
+                        'related_guide': [(6, 0, users_ids)]
+                    })
+                    # 记录微信用户到 微信用户与odoo用户映射关系
+                    odoo_user = env['wx.user.odoouser'].sudo().search([('openid', '=', openid)])
+                    if not odoo_user.exists():
+                        resuser = env['wx.user.odoouser'].sudo().create({
+                            "openid": info['openid'],
+                            "wx_user_id": wxuserinfo.id,
+                            "password": defpassword,
+                            "user_id": resuser.id,
+                            "codetype": 'wx'
+                        })
+        else:  # '已存微信用户，重新进入'
             _logger.info('已存微信用户，重新进入')
         tracetype = env['wx.tracelog.type'].sudo().search([('code', '=', tracelog_type)])
         if tracetype.exists():
             env['wx.tracelog'].sudo().create({
                 "tracelog_type": tracetype.id,
                 "title": tracelog_title,
-                "user_id": traceuser_id.id,
+                "user_id": traceuser_id.id if traceuser_id else None,
+                "wx_user_id": wxuserinfo.id if wxuserinfo else None
             })
         env.cr.commit()
         if ismail_channel:  # 联系客户
@@ -165,9 +180,12 @@ def main(robot):
     def unsubscribe(message):
         tracelog_type = 'unsubscribe'
         tracelog_title = '取消关注公众号'
+        entry = client.wxenv(request.env)
         serviceid = message.target
         openid = message.source
         env = request.env()
+        info = entry.wxclient.get_user_info(openid)
+        user = env['res.users'].sudo().search([('wx_user_id.openid', '=', openid)])
         rs = env['wx.user'].sudo().search([('openid', '=', openid)])
         if rs.exists():
             rs.unlink()
@@ -178,7 +196,7 @@ def main(robot):
                 env['wx.tracelog'].sudo().create({
                     "tracelog_type": tracetype.id,
                     "title": tracelog_title,
-                    "user_id": odoouser.user_id.id,
+                    "user_id": user.id,
                 })
             odoouser.unlink()
         uuid = request.env['wx.user.uuid'].sudo().search([('openid', '=', openid)])
@@ -196,6 +214,12 @@ def main(robot):
         _logger.info('>>> wx msg: %s' % message.__dict__)
         env = request.env()
         info = entry.wxclient.get_user_info(openid)
+        messag_info = message.CreateTime + "" + message.FromUserName
+        if messag_info == entry.OPENID_LAST.get(openid):
+            _logger.info('>>> 重复的微信消息')
+            return ''
+        entry.OPENID_LAST[openid] = messag_info
+
         tracelog_type = 'subscribe'
         tracelog_title = '扫描进入公众号'
         traceuser_id = None
@@ -217,25 +241,41 @@ def main(robot):
                 user_id = eventkey[1]
                 users_ids.append(int(eventkey[1]))
                 uuid_type = 'USER'
+                if resuser.exists():
+                    traceuser_id = resuser
+                    resuser.partner_id.write({
+                        "customer_source": tracelog_type,
+                        "user_id": user_id,
+                        'related_guide': [(6, 0, users_ids)]
+                    })
             elif eventkey[0] == 'TEAM':
                 tracelog_type = 'qrscene_TEAM'
-                tracelog_title = "扫描门店%s进入公众号,微信用户" % (eventkey[2], str(info['nickname']))
+                tracelog_title = "扫描门店%s进入公众号,微信用户%s" % (eventkey[2], str(info['nickname']))
                 _logger.info('TEAM')
-                ret_msg = "：%s 欢迎您：\n 我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
-            if resuser.exists():
-                traceuser_id = resuser
-                resuser.partner_id.write({
-                    "customer_source": tracelog_type,
-                    "user_id": user_id,
-                    'related_guide': [(6, 0, users_ids)]
-                })
+                ret_msg = "%s 欢迎您：\n 我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
+                if resuser.exists():
+                    traceuser_id = resuser
+                    resuser.partner_id.write({
+                        "customer_source": tracelog_type,
+                    })
+            elif eventkey[0] == 'COMPANY':
+                tracelog_type = 'qrscene_COMPANY'
+                tracelog_title = "扫描公司%s二维码进入公众号,微信用户%s" % (eventkey[2], str(info['nickname']))
+                _logger.info('TEAM')
+                ret_msg = "%s欢迎您：\n 我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
+                if resuser.exists():
+                    traceuser_id = resuser
+                    resuser.partner_id.write({
+                        "customer_source": tracelog_type,
+                    })
 
         tracetype = env['wx.tracelog.type'].sudo().search([('code', '=', tracelog_type)])
         if tracetype.exists():
             env['wx.tracelog'].sudo().create({
                 "tracelog_type": tracetype.id,
                 "title": tracelog_title,
-                "user_id": traceuser_id.id,
+                "user_id": traceuser_id.id if traceuser_id else None,
+                "wx_user_id": wx_user.id if wx_user else None
             })
 
         if ismail_channel:  # 联系客户
