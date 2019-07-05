@@ -62,6 +62,14 @@ class LoginHome(Home):
                 kw['password'] = obj.password
                 request.params['login'] = obj.user_id.login
                 request.params['password'] = obj.password
+                tracetype = request.env['wx.tracelog.type'].sudo().search([('code', '=', provider_id)])
+                if tracetype.exists():
+                    request.env['wx.tracelog'].sudo().create({
+                        "tracelog_type": tracetype.id,
+                        "title": '菜单访问%s' % tracetype.name,
+                        "user_id": obj.user_id.id if obj.user_id else None,
+                        "wx_user_id": obj.wx_user_id.id if obj.wx_user_id else None
+                    })
                 uid = request.session.authenticate(request.session.db, obj.user_id.login, obj.password)
                 if redirect:
                     return http.local_redirect(redirect)
@@ -72,6 +80,8 @@ class LoginHome(Home):
                 # uid = request.session.authenticate(request.session.db, obj.user_id.login, '')
                 return super(LoginHome, self).web_login(redirect, **kw)
         elif request.session.wx_user_info:  # 存在微信登录访问
+            if not request.params['login'] or not request.params['password']:
+                return super(LoginHome, self).web_login(redirect, **kw)
             uid = request.session.authenticate(request.session.db, request.params['login'], request.params['password'])
             if uid is not False:
                 wx_user_info = request.session.wx_user_info
@@ -81,7 +91,7 @@ class LoginHome(Home):
                 request.session.wx_user_info = wx_user_info
                 userinfo = request.env['wx.user.odoouser'].sudo().search([('openid', '=', wx_user_info['UserId'])])
                 if userinfo:
-                    wxuserinfo = request.env['wx.user'].sudo().search([('openid', '=',  wx_user_info['UserId'])])
+                    wxuserinfo = request.env['wx.user'].sudo().search([('openid', '=', wx_user_info['UserId'])])
                     wx_user_info['wx_user_id'] = wxuserinfo.id
                     request.env['wx.user.odoouser'].sudo().write(wx_user_info)
                 else:

@@ -7,9 +7,10 @@
             <field name="model">wx.tracelog</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="微信跟踪记录">
+                <tree string="微信跟踪记录"  default_order="create_date desc">
                     <field name="id"/>
                     <field name="user_id"/>
+                     <field name="wx_user_id"/>
                     <field name="create_date" string="时间"/>
                     <field name="tracelog_type"/>
                     <field name="title"/>
@@ -27,6 +28,7 @@
                         <group>
                             <field name="id" invisible="1"/>
                             <field name="user_id"/>
+                             <field name="wx_user_id"/>
                             <field name="tracelog_type"/>
                             <field name="title"/>
                         </group>

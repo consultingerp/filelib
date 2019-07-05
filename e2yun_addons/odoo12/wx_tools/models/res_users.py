@@ -18,6 +18,13 @@ class WxResUsers(models.Model):
     # def _compute_im_status(self):
     #     super(WxResUsers, self)._compute_im_status()
 
+    @api.multi
+    def write(self, vals):
+        partner = super(WxResUsers, self).write(vals)
+        if vals.get('wx_user_id') and self.partner_id.wx_user_id.id != vals.get('wx_user_id'):
+                self.partner_id.wx_user_id = vals.get('wx_user_id')
+        return partner
+
     @api.one
     def _get_qrcodeimg(self):
         if not self.qrcode_ticket:
