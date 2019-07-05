@@ -198,7 +198,7 @@ def main(robot):
         if uuid:
             if partner_user_id:
                 # 发送信息到导购
-                if partner_user_id.partner_id.im_status == 'offline':
+                if partner_user_id.partner_id.im_status == 'offline' and partner_user_id.partner_id.wx_user_id:
                     wx_user.consultation_reminder(partner, partner_user_id.partner_id.wx_user_id.openid,
                                                   origin_content,
                                                   active_id)
