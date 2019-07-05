@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-28 09:41+0000\n"
-"PO-Revision-Date: 2019-06-28 09:41+0000\n"
+"POT-Creation-Date: 2019-07-02 03:17+0000\n"
+"PO-Revision-Date: 2019-07-02 03:17+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -56,12 +56,17 @@ msgstr "客户区域"
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__x_studio_account_source
 msgid "Account Source"
-msgstr "科目来源"
+msgstr "客户来源"
 
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__x_studio_account_type
 msgid "Account type"
 msgstr "客户类型"
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__message_needaction
+msgid "Action Needed"
+msgstr "前置操作"
 
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__active
@@ -72,6 +77,11 @@ msgstr "有效"
 #: selection:e2yun.customer.info,x_studio_account_type:0
 msgid "Active Client"
 msgstr ""
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__activity_ids
+msgid "Activities"
+msgstr "活动"
 
 #. module: e2yun_customer_info
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_mail_activity_form
@@ -85,6 +95,11 @@ msgstr "活动"
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.mail_activity_view_pivot
 msgid "Activity Info"
 msgstr "活动"
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__activity_state
+msgid "Activity State"
+msgstr "活动状态"
 
 #. module: e2yun_customer_info
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.res_partner_view_form_private
@@ -123,6 +138,11 @@ msgstr "已归档"
 #: selection:e2yun.customer.info,x_studio__1:0
 msgid "Asia Pacific"
 msgstr ""
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__message_attachment_count
+msgid "Attachment Count"
+msgstr "附件数量"
 
 #. module: e2yun_customer_info
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.res_partner_kanban_view
@@ -332,12 +352,12 @@ msgstr "交货"
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_crm_lead__payment_team_id
 msgid "Delivery team"
-msgstr "支付团队"
+msgstr "交付团队"
 
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_crm_lead__parent_payment_team_id
 msgid "Delivery team L1"
-msgstr "支付团队L1"
+msgstr "交付团队L1"
 
 #. module: e2yun_customer_info
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_mail_activity_form
@@ -390,6 +410,21 @@ msgid "FP by Milestone billing"
 msgstr ""
 
 #. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__message_follower_ids
+msgid "Followers"
+msgstr "关注者"
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "关注者(渠道)"
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "关注者(业务伙伴)"
+
+#. module: e2yun_customer_info
 #: model:ir.model.fields,help:e2yun_customer_info.field_e2yun_customer_info__email_formatted
 msgid "Format email address \"Name <email@domain>\""
 msgstr "邮箱格式“名称<email@domain>”"
@@ -418,6 +453,21 @@ msgstr ""
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__x_studio_ipo_location
 msgid "IPO Location"
 msgstr "上市地点"
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,help:e2yun_customer_info.field_e2yun_customer_info__message_unread
+msgid "If checked new messages require your attention."
+msgstr "查看是否有需要留意的新消息。"
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,help:e2yun_customer_info.field_e2yun_customer_info__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "确认后, 出现提示消息."
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,help:e2yun_customer_info.field_e2yun_customer_info__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "如果勾选此项， 某些消息将会产生传递错误。"
 
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__image
@@ -470,6 +520,11 @@ msgstr "发票"
 #: selection:e2yun.customer.info,type:0
 msgid "Invoice address"
 msgstr "发票地址"
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__message_is_follower
+msgid "Is Follower"
+msgstr "关注者"
 
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__x_studio_is_new_logo
@@ -554,6 +609,11 @@ msgid "Logo"
 msgstr "徽标"
 
 #. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "附件"
+
+#. module: e2yun_customer_info
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_mail_activity_form
 msgid "Mark as Done"
 msgstr "标记为完成"
@@ -572,6 +632,16 @@ msgstr "中等尺寸图像"
 #: model:ir.model.fields,help:e2yun_customer_info.field_e2yun_customer_info__image_medium
 msgid "Medium-sized image of this contact. It is automatically resized as a 128x128px image, with aspect ratio preserved. Use this field in form views or some kanban views."
 msgstr "该联系人的中等尺寸照片，它自动缩放为128x128px的图片，保存纵横比。在表单视图和一些看板视图中使用此字段"
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__message_has_error
+msgid "Message Delivery error"
+msgstr "消息递送错误"
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__message_ids
+msgid "Messages"
+msgstr "消息"
 
 #. module: e2yun_customer_info
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_partner_form
@@ -623,6 +693,21 @@ msgid "Next Activities"
 msgstr "下一步活动"
 
 #. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "下一活动截止日期"
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__activity_summary
+msgid "Next Activity Summary"
+msgstr "下一个活动摘要"
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__activity_type_id
+msgid "Next Activity Type"
+msgstr "下一活动类型"
+
+#. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__partner_id
 msgid "Normal Customer"
 msgstr "正式客户"
@@ -638,9 +723,34 @@ msgid "Notes"
 msgstr "备注"
 
 #. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__message_needaction_counter
+msgid "Number of Actions"
+msgstr "操作次数"
+
+#. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__x_studio__2
 msgid "Number of employees"
 msgstr "员工数"
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__message_has_error_counter
+msgid "Number of error"
+msgstr "错误个数"
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,help:e2yun_customer_info.field_e2yun_customer_info__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "需要操作消息数量"
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,help:e2yun_customer_info.field_e2yun_customer_info__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "递送错误消息数量"
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,help:e2yun_customer_info.field_e2yun_customer_info__message_unread_counter
+msgid "Number of unread messages"
+msgstr "未读消息数量"
 
 #. module: e2yun_customer_info
 #: model_terms:ir.actions.act_window,help:e2yun_customer_info.action_partner_customer_form
@@ -663,6 +773,11 @@ msgid "Other address"
 msgstr "其他地址"
 
 #. module: e2yun_customer_info
+#: selection:e2yun.customer.info,activity_state:0
+msgid "Overdue"
+msgstr ""
+
+#. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_crm_team__parent_id
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__parent_team_id
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_res_partner__parent_team_id
@@ -673,7 +788,7 @@ msgstr "上级团队"
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_crm_lead__parent_team_id
 msgid "Parent Team id"
-msgstr "上级销售团队"
+msgstr "上级团队"
 
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__parent_name
@@ -702,6 +817,11 @@ msgid "Phone:"
 msgstr "电话:"
 
 #. module: e2yun_customer_info
+#: selection:e2yun.customer.info,activity_state:0
+msgid "Planned"
+msgstr ""
+
+#. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__property_product_pricelist
 msgid "Pricelist"
 msgstr "价格表"
@@ -720,6 +840,18 @@ msgstr "私人地址表单"
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_partner_form
 msgid "Purchase"
 msgstr "采购"
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_res_partner__real_create_uid
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_res_users__real_create_uid
+msgid "Real Create User"
+msgstr ""
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,help:e2yun_customer_info.field_res_partner__real_create_uid
+#: model:ir.model.fields,help:e2yun_customer_info.field_res_users__real_create_uid
+msgid "Real Create User Info."
+msgstr ""
 
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__x_studio_registration_address
@@ -815,7 +947,7 @@ msgstr "小尺寸图像"
 #. module: e2yun_customer_info
 #: model:ir.model.fields,help:e2yun_customer_info.field_e2yun_customer_info__image_small
 msgid "Small-sized image of this contact. It is automatically resized as a 64x64px image, with aspect ratio preserved. Use this field anywhere a small image is required."
-msgstr "联系人小尺寸图像。自动缩放为64x64px ，保留纵横比。此字段用于任何需要小图像的场合."
+msgstr "联系人小尺寸图像。自动缩放为64x64px ，保留纵横比。此字段用于任何需要小图像的场合"
 
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__state_id
@@ -830,6 +962,17 @@ msgstr "省/ 州"
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__state
 msgid "Status"
 msgstr "状态"
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,help:e2yun_customer_info.field_e2yun_customer_info__activity_state
+msgid "Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr "基于活动的状态 \n"
+" 逾期：已经超过截止日期 \n"
+" 现今：活动日期是当天 \n"
+" 计划：未来的活动。"
 
 #. module: e2yun_customer_info
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__x_studio_stock_code
@@ -905,14 +1048,13 @@ msgstr "团队"
 #. module: e2yun_customer_info
 #: sql_constraint:e2yun.customer.info:0
 msgid "The Duty paragraph you entered already exists"
-msgstr "该税号已经存在，请检查！"
+msgstr "您输入的注册号/统一信用代码已经存在"
 
 #. module: e2yun_customer_info
 #: code:addons/e2yun_customer_info/models/models.py:215
-#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_info/models/models.py:215
 #, python-format
 msgid "The Duty paragraph you entered already exists for customers."
-msgstr "您输入的税号已存在于客户中"
+msgstr "您输入的注册号/统一信用代码已存在于客户中"
 
 #. module: e2yun_customer_info
 #: model:ir.model.fields,help:e2yun_customer_info.field_e2yun_customer_info__vat
@@ -931,7 +1073,6 @@ msgstr "该名字已经存在，请检查！"
 
 #. module: e2yun_customer_info
 #: code:addons/e2yun_customer_info/models/models.py:200
-#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_info/models/models.py:200
 #, python-format
 msgid "The name you entered already exists for customers."
 msgstr "您输入的名称已经存在于客户"
@@ -964,8 +1105,6 @@ msgstr "时区偏移"
 #. module: e2yun_customer_info
 #: code:addons/e2yun_customer_info/models/models.py:203
 #: code:addons/e2yun_customer_info/models/models.py:218
-#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_info/models/models.py:203
-#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_info/models/models.py:218
 #, python-format
 msgid "Tips"
 msgstr "提示"
@@ -974,6 +1113,21 @@ msgstr "提示"
 #: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__title
 msgid "Title"
 msgstr "称谓"
+
+#. module: e2yun_customer_info
+#: selection:e2yun.customer.info,activity_state:0
+msgid "Today"
+msgstr ""
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__message_unread
+msgid "Unread Messages"
+msgstr "未读消息"
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "未读消息计数器"
 
 #. module: e2yun_customer_info
 #: model:ir.model.fields,help:e2yun_customer_info.field_e2yun_customer_info__barcode
@@ -1006,6 +1160,16 @@ msgid "Website"
 msgstr "网站"
 
 #. module: e2yun_customer_info
+#: model:ir.model.fields,field_description:e2yun_customer_info.field_e2yun_customer_info__website_message_ids
+msgid "Website Messages"
+msgstr "网站消息"
+
+#. module: e2yun_customer_info
+#: model:ir.model.fields,help:e2yun_customer_info.field_e2yun_customer_info__website_message_ids
+msgid "Website communication history"
+msgstr "网站沟通记录"
+
+#. module: e2yun_customer_info
 #: model:ir.model.fields,help:e2yun_customer_info.field_crm_lead__payment_team_id
 msgid "When sending mails, the default email address is taken from the Sales Team."
 msgstr "发送邮件的时候，默认的邮件地址取自销售团队。"
@@ -1014,6 +1178,12 @@ msgstr "发送邮件的时候，默认的邮件地址取自销售团队。"
 #: selection:e2yun.customer.info,x_studio_is_a_public_company:0
 msgid "YES"
 msgstr ""
+
+#. module: e2yun_customer_info
+#: code:addons/e2yun_customer_info/models/res_partner.py:24
+#, python-format
+msgid "You can not craete customer!"
+msgstr "没有权限创建客户！"
 
 #. module: e2yun_customer_info
 #: model:res.groups,name:e2yun_customer_info.groups_lead_stage_id_update
@@ -1074,7 +1244,7 @@ msgstr "例如：销售总监"
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_partner_address_form
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_partner_form
 msgid "e.g. www.odoo.com"
-msgstr "例如：www.www.pactera.com"
+msgstr "例如：www.Pactera.com"
 
 #. module: e2yun_customer_info
 #: model:ir.model,name:e2yun_customer_info.model_e2yun_customer_info
@@ -1122,11 +1292,6 @@ msgid "华南"
 msgstr ""
 
 #. module: e2yun_customer_info
-#: selection:e2yun.customer.info,state:0
-msgid "完成"
-msgstr ""
-
-#. module: e2yun_customer_info
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_res_partner_filter
 msgid "待审批"
 msgstr ""
@@ -1139,11 +1304,6 @@ msgstr ""
 #. module: e2yun_customer_info
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_res_partner_filter
 msgid "待转正"
-msgstr ""
-
-#. module: e2yun_customer_info
-#: selection:e2yun.customer.info,state:0
-msgid "新建"
 msgstr ""
 
 #. module: e2yun_customer_info
@@ -1175,4 +1335,3 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_partner_form
 msgid "转正式客户"
 msgstr ""
-

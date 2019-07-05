@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="wx_tracelog_type" model="ir.ui.view">
+            <field name="name">wx.tracelog.type.view_tree</field>
+            <field name="model">wx.tracelog.type</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="跟踪类型">
+                    <field name="id"/>
+                    <field name="code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="wx_tracelog_type_view_form" model="ir.ui.view">
+            <field name="name">wx.tracelog.type.view_form</field>
+            <field name="model">wx.tracelog.type</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="跟踪类型">
+                    <sheet>
+                        <group>
+                            <field name="id" invisible="1"/>
+                             <field name="code"/>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="wx_tracelog_type_action" model="ir.actions.act_window">
+            <field name="name">跟踪类型</field>
+            <field name="res_model">wx.tracelog.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+        </record>
+
+        <menuitem action="wx_tracelog_type_action" id="wx_tracelog_type_action_menuitem" name="跟踪类型" parent="parent_menu_123"
+                  sequence="14" groups="wx_tools.group_wx_conf"/>
+
+
+    </data>
+</odoo>

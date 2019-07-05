@@ -53,7 +53,20 @@ class WxEntry(EntryBase):
         try:
             return self.wxclient.upload_media(media_type, media_file)
         except ClientException as e:
-            raise exceptions.UserError(u'image上传失败 %s' % e)
+            if str(e).find('40004') >= 0:
+                raise exceptions.UserError('不合法的媒体文件类型，支持PNG,JPEG,JPG,GIF,AMR,MP3,MP4')
+            elif str(e).find('40005') >= 0:
+                raise exceptions.UserError('不合法的文件类型，支持PNG,JPEG,JPG,GIF,AMR,MP3,MP4')
+            elif str(e).find('40006') >= 0:
+                raise exceptions.UserError('不合法的文件大小2M以内')
+            elif str(e).find('40009') >= 0:
+                raise exceptions.UserError('不合法的图片文件大小2M以内')
+            elif str(e).find('40010') >= 0:
+                raise exceptions.UserError('不合法的语音文件大小2M以内')
+            elif str(e).find('40011') >= 0:
+                raise exceptions.UserError('不合法的视频文件大小10M以内')
+            else:
+                raise exceptions.UserError(u'image上传失败 %s' % e)
 
     def send_image_message(self, openid, media_id):
         try:

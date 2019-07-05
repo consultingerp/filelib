@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="wx_tracelog" model="ir.ui.view">
+            <field name="name">wx.tracelog.view_tree</field>
+            <field name="model">wx.tracelog</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="微信跟踪记录"  default_order="create_date desc">
+                    <field name="id"/>
+                    <field name="user_id"/>
+                     <field name="wx_user_id"/>
+                    <field name="create_date" string="时间"/>
+                    <field name="tracelog_type"/>
+                    <field name="title"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="wx_tracelog_view_form" model="ir.ui.view">
+            <field name="name">wx.tracelog.view_form</field>
+            <field name="model">wx.tracelog</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="微信跟踪记录">
+                    <sheet>
+                        <group>
+                            <field name="id" invisible="1"/>
+                            <field name="user_id"/>
+                             <field name="wx_user_id"/>
+                            <field name="tracelog_type"/>
+                            <field name="title"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="wx_tracelog_action" model="ir.actions.act_window">
+            <field name="name">微信跟踪记录</field>
+            <field name="res_model">wx.tracelog</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+        </record>
+
+        <menuitem action="wx_tracelog_action" id="wx_tracelog_action_menuitem" name="微信跟踪记录"
+                  parent="parent_menu_123"
+                  sequence="15" groups="wx_tools.group_wx_conf"/>
+
+
+    </data>
+</odoo>
