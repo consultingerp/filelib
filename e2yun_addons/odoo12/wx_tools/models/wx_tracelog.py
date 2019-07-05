@@ -18,3 +18,5 @@ class WXTracelog(models.Model):
     tracelog_type = fields.Many2one('wx.tracelog.type', '跟踪类型')
     title = fields.Char(string='记录', store=True)
     user_id = fields.Many2one('res.users', string='用户', readonly=False)  # 用户ID
+    wx_user_id = fields.Many2one('wx.user', '微信公众用户')
+
