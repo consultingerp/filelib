@@ -5,6 +5,8 @@ from odoo.tools.translate import _
 
 PARAMS = [
     ('e2yun.sync_pos_member_webservice_url', 'http://127.0.0.1:8080/lhjc/esb/webservice/SyncMember?wsdl'),
+    ('crm.intention_customer_msg_day', 1),
+    ('crm.target_customer_msg_day', 2),
 ]
 
 

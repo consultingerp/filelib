@@ -1,0 +1,262 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* e2yun_customer_extends
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-27 09:48+0000\n"
+"PO-Revision-Date: 2019-06-27 09:48+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: e2yun_customer_extends
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner__app_code
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__app_code
+msgid "App Code"
+msgstr "APP编码"
+
+#. module: e2yun_customer_extends
+#: selection:res.partner,customer_source:0
+msgid "Barcode"
+msgstr "通过二维码"
+
+#. module: e2yun_customer_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_customer_extends.res_config_settings_view_form
+msgid "CRM Message Setting"
+msgstr ""
+
+#. module: e2yun_customer_extends
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner__car_brand
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__car_brand
+msgid "Car Brand"
+msgstr "汽车品牌"
+
+#. module: e2yun_customer_extends
+#: selection:res.users,state:0
+msgid "Confirmed"
+msgstr "已确认"
+
+#. module: e2yun_customer_extends
+#: model:ir.model,name:e2yun_customer_extends.model_res_partner
+msgid "Contact"
+msgstr "联系人"
+
+#. module: e2yun_customer_extends
+#: selection:res.partner,state:0
+msgid "Contract Customers"
+msgstr "成交客户"
+
+#. module: e2yun_customer_extends
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner__customer_source
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__customer_source
+msgid "Customer Source"
+msgstr "客户来源"
+
+#. module: e2yun_customer_extends
+#: selection:res.partner,gender:0
+msgid "Female"
+msgstr "女"
+
+#. module: e2yun_customer_extends
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner__gender
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__gender
+msgid "Gender"
+msgstr "性别"
+
+#. module: e2yun_customer_extends
+#: selection:res.partner,state:0
+msgid "Intention Customer"
+msgstr "意向客户"
+
+#. module: e2yun_customer_extends
+#: selection:res.partner,state:0
+msgid "Intention Customer Loss"
+msgstr "意向客户流失"
+
+#. module: e2yun_customer_extends
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_config_settings__intention_customer_msg_day
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_test_config_settings__intention_customer_msg_day
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_wx_config_corpsettings__intention_customer_msg_day
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_wx_config_settings__intention_customer_msg_day
+msgid "Intention Customer Message Day"
+msgstr "意向客户提醒天数"
+
+#. module: e2yun_customer_extends
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner_extends_batch____last_update
+msgid "Last Modified on"
+msgstr "最后修改日"
+
+#. module: e2yun_customer_extends
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner_extends_batch__write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: e2yun_customer_extends
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner_extends_batch__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: e2yun_customer_extends
+#: selection:res.partner,gender:0
+msgid "Male"
+msgstr "男"
+
+#. module: e2yun_customer_extends
+#: selection:res.partner,customer_source:0
+msgid "Manual"
+msgstr "手工添加"
+
+#. module: e2yun_customer_extends
+#: selection:res.users,state:0
+msgid "Never Connected"
+msgstr "从未连接"
+
+#. module: e2yun_customer_extends
+#: code:addons/e2yun_customer_extends/models/models.py:10
+#: code:addons/e2yun_customer_extends/models/models.py:37
+#: code:addons/e2yun_customer_extends/models/models.py:40
+#: code:addons/e2yun_customer_extends/models/models.py:42
+#, python-format
+msgid "New"
+msgstr "新建"
+
+#. module: e2yun_customer_extends
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner__occupation
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__occupation
+msgid "Occupation"
+msgstr "职业"
+
+#. module: e2yun_customer_extends
+#: code:addons/e2yun_customer_extends/models/models.py:59
+#: code:addons/e2yun_customer_extends/models/models.py:90
+#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_extends/models/models.py:59
+#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_extends/models/models.py:90
+#, python-format
+msgid "Please fill in partner's mobile and address!"
+msgstr "请填写客户的手机号码与完整地址！"
+
+#. module: e2yun_customer_extends
+#: selection:res.partner,state:0
+msgid "Potential Customer"
+msgstr "潜在客户"
+
+#. module: e2yun_customer_extends
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner__referrer
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__referrer
+msgid "Referrer"
+msgstr "推荐人员"
+
+#. module: e2yun_customer_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_customer_extends.crm_partner_form_add_status_bar
+msgid "Set Contract"
+msgstr "设为成交客户"
+
+#. module: e2yun_customer_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_customer_extends.crm_partner_form_add_status_bar
+msgid "Set Intention"
+msgstr "设为意向客户"
+
+#. module: e2yun_customer_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_customer_extends.crm_partner_form_add_status_bar
+msgid "Set Intention Loss"
+msgstr "设为流失"
+
+#. module: e2yun_customer_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_customer_extends.crm_partner_form_add_status_bar
+msgid "Set Target"
+msgstr "设为准客户"
+
+#. module: e2yun_customer_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_customer_extends.crm_partner_form_add_status_bar
+msgid "Set Target Loss"
+msgstr "设为流失"
+
+#. module: e2yun_customer_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_customer_extends.res_config_settings_view_form
+msgid "Setting the number of days to remind customers of changes in information"
+msgstr "设置客户信息变更提醒天数"
+
+#. module: e2yun_customer_extends
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner__shop_code
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__shop_code
+msgid "Shop Code"
+msgstr "门店代码"
+
+#. module: e2yun_customer_extends
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner__shop_name
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__shop_name
+msgid "Shop Name"
+msgstr "门店名称"
+
+#. module: e2yun_customer_extends
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner__state
+msgid "State"
+msgstr "省/ 州"
+
+#. module: e2yun_customer_extends
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__state
+msgid "Status"
+msgstr "状态"
+
+#. module: e2yun_customer_extends
+#: selection:res.partner,state:0
+msgid "Target Customer"
+msgstr "准客户"
+
+#. module: e2yun_customer_extends
+#: selection:res.partner,state:0
+msgid "Target Customer Loss"
+msgstr "准客户流失"
+
+#. module: e2yun_customer_extends
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_config_settings__target_customer_msg_day
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_test_config_settings__target_customer_msg_day
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_wx_config_corpsettings__target_customer_msg_day
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_wx_config_settings__target_customer_msg_day
+msgid "Target Customer Message Day"
+msgstr "准客户提醒天数"
+
+#. module: e2yun_customer_extends
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner__user_nick_name
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__user_nick_name
+msgid "User Nick Name"
+msgstr "用户昵称"
+
+#. module: e2yun_customer_extends
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner__related_guide
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__related_guide
+#: model_terms:ir.ui.view,arch_db:e2yun_customer_extends.crm_partner_form_add_related_guide
+msgid "Related Guide"
+msgstr "门店与导购"
+
+#. module: e2yun_customer_extends
+#: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__related_partner
+#: model_terms:ir.ui.view,arch_db:e2yun_customer_extends.crm_user_form_add_related_guide
+msgid "Related Partner"
+msgstr "相关客户"
+
+#. module: e2yun_customer_extends
+#: selection:res.partner,customer_source:0
+msgid "Team Barcode"
+msgstr "门店二维码"
+
+#. module: e2yun_customer_extends
+#: selection:res.partner,customer_source:0
+msgid "QR Scan Company"
+msgstr "公司二维码"
+
+#. module: e2yun_customer_extends
+#: selection:res.partner,customer_source:0
+msgid "User Barcode"
+msgstr "用户二维码"
+
+#. module: e2yun_customer_extends
+#: selection:res.partner,customer_source:0
+msgid "Subscribe"
+msgstr "关注公众号"

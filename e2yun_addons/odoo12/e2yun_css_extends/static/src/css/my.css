@@ -1,0 +1,6 @@
+.o_content > div > .table-responsive > .o_list_view.table:not(.o_list_view_grouped) > thead > tr > th {
+    white-space: nowrap;
+}
+.o_content > div > .table-responsive > .o_list_view.table:not(.o_list_view_grouped) > tbody > tr > td {
+    white-space: nowrap;
+}
