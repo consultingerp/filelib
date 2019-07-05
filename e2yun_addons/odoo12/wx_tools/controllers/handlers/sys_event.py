@@ -129,16 +129,16 @@ def main(robot):
                         "image": base64.b64encode(_data),
                         'related_guide': [(6, 0, users_ids)]
                     })
-                    # 记录微信用户到 微信用户与odoo用户映射关系
-                    odoo_user = env['wx.user.odoouser'].sudo().search([('openid', '=', openid)])
-                    if not odoo_user.exists():
-                        resuser = env['wx.user.odoouser'].sudo().create({
-                            "openid": info['openid'],
-                            "wx_user_id": wxuserinfo.id,
-                            "password": defpassword,
-                            "user_id": resuser.id,
-                            "codetype": 'wx'
-                        })
+                # 记录微信用户到 微信用户与odoo用户映射关系
+                odoo_user = env['wx.user.odoouser'].sudo().search([('openid', '=', openid)])
+                if not odoo_user.exists():
+                    resuser = env['wx.user.odoouser'].sudo().create({
+                        "openid": info['openid'],
+                        "wx_user_id": wxuserinfo.id,
+                        "password": defpassword,
+                        "user_id": resuser.id,
+                        "codetype": 'wx'
+                    })
         else:  # '已存微信用户，重新进入'
             _logger.info('已存微信用户，重新进入')
         tracetype = env['wx.tracelog.type'].sudo().search([('code', '=', tracelog_type)])
@@ -169,10 +169,11 @@ def main(robot):
                 entry.create_uuid_for_openid(openid, uuid)
                 wxuserinfo.update_last_uuid(uuid, traceuser_id.id if traceuser_id else None, uuid_type,wxuserinfo)
             active_id = session_info["id"]
-            wxuserinfo.consultation_reminder(traceuser_id.partner_id,
-                                             traceuser_id.user_id.wx_user_id.openid,
-                                             origin_content,
-                                             active_id)
+            if traceuser_id.user_id.wx_user_id:  # 导购存在二维码
+                wxuserinfo.consultation_reminder(traceuser_id.partner_id,
+                                                 traceuser_id.user_id.wx_user_id.openid,
+                                                 origin_content,
+                                                 active_id)
 
         return ret_msg
 
@@ -280,7 +281,8 @@ def main(robot):
 
         if ismail_channel:  # 联系客户
             _logger.info('发起客户会话')
-            uid = request.session.authenticate(request.session.db, traceuser_id.login, defpassword)
+            oduserinfo = request.env['wx.user.odoouser'].sudo().search([('user_id', '=', traceuser_id.id)])
+            uid = request.session.authenticate(request.session.db, traceuser_id.login, oduserinfo.password)
             partners_to = [traceuser_id.partner_id.user_id.partner_id.id]  # 增加导购到会话
             session_info = request.env["mail.channel"].channel_get(partners_to)
             origin_content = '%s扫描二维码关注公众号，点击连接直接发起会话。' % (str(info['nickname']))
@@ -297,10 +299,11 @@ def main(robot):
                 entry.create_uuid_for_openid(openid, uuid)
                 wx_user.update_last_uuid(uuid, traceuser_id.id if traceuser_id else None, uuid_type,wx_user)
             active_id = session_info["id"]
-            wx_user.consultation_reminder(traceuser_id.partner_id,
-                                          traceuser_id.user_id.wx_user_id.openid,
-                                          origin_content,
-                                          active_id)
+            if traceuser_id.user_id.wx_user_id:  # 导购存在二维码
+                wx_user.consultation_reminder(traceuser_id.partner_id,
+                                              traceuser_id.user_id.wx_user_id.openid,
+                                              origin_content,
+                                              active_id)
 
         return ret_msg
 
