@@ -16,4 +16,5 @@ class Users(models.Model):
             self._cr.execute(sql, (values['transfer_user'], self.id))
 
         res = super(Users, self).write(values)
+        return res
 
