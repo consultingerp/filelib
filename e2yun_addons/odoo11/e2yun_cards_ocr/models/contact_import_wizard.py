@@ -280,12 +280,20 @@ class ImportContactImportWizard(models.TransientModel):
                         parent_partner = self.env['res.partner'].search(
                             [('name', 'ilike', company_name), ('is_company', '=', True)], limit=1)
                 if not parent_partner and (company != '' or company_name):
-                    parent_partner = self.env['res.partner'].create({
-                        'name': company if company != '' else company_name,
-                        'is_company': True,
-                        'image': logo_image,
-                        'street': contact_value.get('street',''),
-                        'website': contact_value.get('website','')})
+                    if logo_image:
+                        logo_datas = cv2.imencode('.jpg', logo_image)[1].tostring()
+                        parent_partner = self.env['res.partner'].create({
+                            'name': company if company != '' else company_name,
+                            'is_company': True,
+                            'image': base64.b64encode(logo_datas),
+                            'street': contact_value.get('street',''),
+                            'website': contact_value.get('website','')})
+                    else:
+                        parent_partner = self.env['res.partner'].create({
+                            'name': company if company != '' else company_name,
+                            'is_company': True,
+                            'street': contact_value.get('street', ''),
+                            'website': contact_value.get('website', '')})
                 if parent_partner:
                     if not parent_partner.image and logo_image:
                         logo_datas = cv2.imencode('.jpg', logo_image)[1].tostring()
