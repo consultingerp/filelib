@@ -1,0 +1,116 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* e2yun_cards_ocr
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-07-06 02:11+0000\n"
+"PO-Revision-Date: 2019-07-06 10:28+0800\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+"X-Generator: Poedit 1.8.12\n"
+
+#. module: e2yun_cards_ocr
+#: model:ir.ui.view,arch_db:e2yun_cards_ocr.contact_import_wizard_form_view
+msgid "Cancel"
+msgstr "取消"
+
+#. module: e2yun_cards_ocr
+#: code:addons/e2yun_cards_ocr/models/contact_import_wizard.py:47
+#: model:ir.model.fields,field_description:e2yun_cards_ocr.field_contact_import_wizard_attachment_ids
+#, python-format
+msgid "Cards Files"
+msgstr "名片文件"
+
+#. module: e2yun_cards_ocr
+#: code:addons/e2yun_cards_ocr/models/contact_import_wizard.py:465
+#, python-format
+msgid "Contacts"
+msgstr "联系人"
+
+#. module: e2yun_cards_ocr
+#: model:ir.model.fields,field_description:e2yun_cards_ocr.field_contact_import_wizard_create_uid
+msgid "Created by"
+msgstr "创建人"
+
+#. module: e2yun_cards_ocr
+#: model:ir.model.fields,field_description:e2yun_cards_ocr.field_contact_import_wizard_create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: e2yun_cards_ocr
+#: model:ir.model.fields,field_description:e2yun_cards_ocr.field_contact_import_wizard_display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: e2yun_cards_ocr
+#: model:ir.model.fields,field_description:e2yun_cards_ocr.field_contact_import_wizard_id
+msgid "ID"
+msgstr "ID"
+
+#. module: e2yun_cards_ocr
+#: model:ir.ui.view,arch_db:e2yun_cards_ocr.contact_import_wizard_form_view
+msgid "Import"
+msgstr "开始识别"
+
+#. module: e2yun_cards_ocr
+#: model:ir.actions.act_window,name:e2yun_cards_ocr.contact_import_wizard_action
+#: model:ir.ui.menu,name:e2yun_cards_ocr.contact_import
+msgid "Import Business Cards"
+msgstr "名片识别"
+
+#. module: e2yun_cards_ocr
+#: code:addons/e2yun_cards_ocr/models/contact_import_wizard.py:45
+#: model:ir.model,name:e2yun_cards_ocr.model_contact_import_wizard
+#, python-format
+msgid "Import Your Contacts from Files.."
+msgstr "从照片中识别联系人"
+
+#. module: e2yun_cards_ocr
+#: model:ir.model.fields,field_description:e2yun_cards_ocr.field_contact_import_wizard___last_update
+msgid "Last Modified on"
+msgstr "最后修改时间"
+
+#. module: e2yun_cards_ocr
+#: model:ir.model.fields,field_description:e2yun_cards_ocr.field_contact_import_wizard_write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: e2yun_cards_ocr
+#: model:ir.model.fields,field_description:e2yun_cards_ocr.field_contact_import_wizard_write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: e2yun_cards_ocr
+#: code:addons/e2yun_cards_ocr/models/contact_import_wizard.py:84
+#: code:addons/e2yun_cards_ocr/models/contact_import_wizard.py:85
+#: code:addons/e2yun_cards_ocr/models/contact_import_wizard.py:108
+#: code:addons/e2yun_cards_ocr/models/contact_import_wizard.py:109
+#, python-format
+msgid "Odoo module e2yun_cards_ocr depends on the baidu-aip python module."
+msgstr "模块 e2yun_cards_ocr 依赖于  baidu-aip python 模块."
+
+#. module: e2yun_cards_ocr
+#: code:addons/e2yun_cards_ocr/models/imgenhance.py:12
+#: code:addons/e2yun_cards_ocr/models/transform.py:10
+#, python-format
+msgid "Odoo module e2yun_cards_ocr depends on the opencv-python python module."
+msgstr "模块e2yun_cards_ocr依赖于opencv-python python模块。"
+
+#. module: e2yun_cards_ocr
+#. openerp-web
+#: code:addons/e2yun_cards_ocr/static/src/xml/e2yun_cards_ocr.xml:5
+#, python-format
+msgid "Upload"
+msgstr "上载"
+
+#. module: e2yun_cards_ocr
+#: model:ir.ui.view,arch_db:e2yun_cards_ocr.contact_import_wizard_form_view
+msgid "Upload Files"
+msgstr "上载图片"
