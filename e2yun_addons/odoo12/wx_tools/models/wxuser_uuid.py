@@ -12,4 +12,5 @@ class WxUserUUID(models.Model):
     uuid_type = fields.Char('会话类型')
     last_uuid_time = fields.Datetime('会话ID时间')
     uuid_user_id = fields.Many2one('res.users', readonly=False)  # 用户ID
+    wx_user_id = fields.Many2one('wx.user', '微信公众用户')
 

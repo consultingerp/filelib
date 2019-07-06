@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "E2yun Csutomer Extends",
+    'name': "E2yun Customer Extends",
 
     'summary': """
         客户主数据扩充""",
@@ -19,13 +19,15 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'crm', 'sales_team', 'sale', 'base_setup'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
         'views/views.xml',
+        'views/res_config_settings_views.xml',
         'data/ir_sequence_data.xml',
+        'data/cron.xml',
         'pre_install.xml',
         # 'views/templates.xml',
     ],
