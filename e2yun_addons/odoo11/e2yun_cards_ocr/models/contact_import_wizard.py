@@ -280,7 +280,7 @@ class ImportContactImportWizard(models.TransientModel):
                         parent_partner = self.env['res.partner'].search(
                             [('name', 'ilike', company_name), ('is_company', '=', True)], limit=1)
                 if not parent_partner and (company != '' or company_name):
-                    if logo_image != False:
+                    if company_name:
                         logo_datas = cv2.imencode('.jpg', logo_image)[1].tostring()
                         parent_partner = self.env['res.partner'].create({
                             'name': company if company != '' else company_name,
