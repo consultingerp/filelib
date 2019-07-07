@@ -3,7 +3,7 @@
 {
     "name": "E2yun Cards OCR",
     "summary": "using baidu aip OCR to identify business Cards",
-    "version": "12.0.1.0.0",
+    "version": "11.0.1.0.0",
     "category": "Customer Relationship Management",
     "website": "http://e2yun.com",
     "author": "Joytao, "
