@@ -4,7 +4,7 @@ from .transform import four_point_transform
 import cv2
 import numpy
 import imutils
-import json
+from PIL import Image
 from . import imgenhance
 import base64
 from odoo import api, fields, models, _
@@ -143,6 +143,7 @@ class ImportContactImportWizard(models.TransientModel):
         contact_obj = self.env['res.partner']
         contact_value = {}
         company = ''
+        direction = 0 # - -1:未定义，- 0:正向，- 1: 逆时针90度，- 2:逆时针180度，- 3:逆时针270度
         imagedata = base64.b64decode(attachment.datas)
         image_tmp = cv2.imdecode(numpy.fromstring(imagedata, numpy.uint8), cv2.IMREAD_COLOR)
         image = self._correct_image(image_tmp)
@@ -252,6 +253,15 @@ class ImportContactImportWizard(models.TransientModel):
                     i += 1
             if res != '':
                 contact_value['comment'] = res
+        if 'direction' in result1 :
+            direction = result1['direction']
+
+            if direction > 0 :
+                tmp_image = cv2.imdecode(numpy.fromstring(imagedata, numpy.uint8), cv2.IMREAD_COLOR)
+                for i in range(1,4-direction+1):
+                    tmp_image = numpy.rot90(tmp_image)
+                imagedata=numpy.array(cv2.imencode('.jpeg', tmp_image)[1]).tostring()
+                attachment.datas = base64.b64encode(imagedata)
         if contact_value.get('name',False):
             # company = contact_value.get('company',False)
             name = contact_value.get('name',False)
