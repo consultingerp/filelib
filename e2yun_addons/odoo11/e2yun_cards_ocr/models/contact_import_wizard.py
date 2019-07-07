@@ -60,10 +60,12 @@ class ImportContactImportWizard(models.TransientModel):
     @api.multi
     def _get_logo_image(self, image):
         result = self._get_contact_from_aipimageclassify(image)
+        name = False
+        logo_image = False
         if 'error_code' in result:
-            return False,{}
+            return name,logo_image
         if 'result_num' in result and result['result_num'] > 0:
-            area = 0
+            area = 100
             for item in result['result']:
                 if round(item['probability']) == 1:
                     if item['location']['width'] * item['location']['height'] > area:
@@ -73,9 +75,11 @@ class ImportContactImportWizard(models.TransientModel):
                         right = item['location']['left'] + item['location']['width']
                         buttom = item['location']['top'] + item['location']['height']
                         name = item['name']
-                    if area > 0:
-                        return name, cv2.imdecode(numpy.fromstring(image, numpy.uint8), cv2.IMREAD_COLOR)[top:buttom, left:right]
-        return False, {}
+
+            if area > 100:
+                logo_ndarray = cv2.imdecode(numpy.fromstring(image, numpy.uint8), cv2.IMREAD_COLOR)[top:buttom, left:right]
+                logo_image = base64.b64encode(cv2.imencode('.jpg', logo_ndarray)[1].tostring())
+        return name, logo_image
 
     @api.multi
     def _get_contact_from_aipimageclassify(self, image):
@@ -240,8 +244,9 @@ class ImportContactImportWizard(models.TransientModel):
             info = result1['words_result']
             res= ''
             i = 0
+
             for item in info:
-                if item['words'] and item['probability']['average'] > 0.8:
+                if item['words'] and round(item['probability']['average']) == 1:
                     if not contact_value.get('name' ,False):
                         contact_value['name'] = item['words']
 
@@ -286,16 +291,16 @@ class ImportContactImportWizard(models.TransientModel):
                         [('name', 'ilike', company), ('is_company', '=', True)], limit=1)
                 if not parent_partner :
                     company_name, logo_image = self._get_logo_image(imagedata)
-                    if company_name and logo_image.any():
+                    if company_name and logo_image :
                         parent_partner = self.env['res.partner'].search(
                             [('name', 'ilike', company_name), ('is_company', '=', True)], limit=1)
                 if not parent_partner and (company != '' or company_name):
-                    if company_name:
-                        logo_datas = cv2.imencode('.jpg', logo_image)[1].tostring()
+                    if logo_image  :
+
                         parent_partner = self.env['res.partner'].create({
                             'name': company if company != '' else company_name,
                             'is_company': True,
-                            'image': base64.b64encode(logo_datas),
+                            'image': logo_image,
                             'street': contact_value.get('street',''),
                             'website': contact_value.get('website','')})
                     else:
@@ -306,8 +311,7 @@ class ImportContactImportWizard(models.TransientModel):
                             'website': contact_value.get('website', '')})
                 if parent_partner:
                     if not parent_partner.image and logo_image:
-                        logo_datas = cv2.imencode('.jpg', logo_image)[1].tostring()
-                        parent_partner.image = base64.b64encode(logo_datas)
+                        parent_partner.image = logo_image
 
                     contact_value['parent_id'] = parent_partner.id
 
@@ -334,157 +338,6 @@ class ImportContactImportWizard(models.TransientModel):
                 partner.message_post(attachment_ids=[attachment.id])
             return partner
         return {}
-
-    # @api.multi
-    # def _create_contact_from_file(self, attachment):
-    #
-    #     contact_form = Form(self.env['res.partner'], view='crm.view_partners_form_crm1')
-    #     imagedata = base64.b64decode(attachment.datas)
-    #     image_tmp = cv2.imdecode(numpy.fromstring(imagedata, numpy.uint8), cv2.IMREAD_COLOR)
-    #     image = self._correct_image(image_tmp)
-    #     if len(image) > 0:
-    #         img_encode = cv2.imencode('.jpeg', image)[1]
-    #         imagedata = numpy.array(img_encode).tostring()
-    #         attachment.datas = base64.b64encode(imagedata)
-    #     result = self._get_contact_from_aipocr(imagedata)
-    #     if 'error_code' in result:
-    #         attachment.write({'name': 'Business Card: test',
-    #                           'datas_fname':  'test.jpeg',
-    #                           'description': 'test',
-    #                           })
-    #         return {}
-    #     if 'words_result_num' in result and result['words_result_num'] > 0:
-    #         contact = result['words_result']
-    #         if ((contact['NAME'] and contact['NAME'] != [''])
-    #                 or (contact['MOBILE']and contact['MOBILE'] != [''])):
-    #             name = ''
-    #             i = 0
-    #             for item in contact['NAME']:
-    #                 if i == 0:
-    #                     name += item
-    #                     i += 1
-    #                 else:
-    #                     name += ',' + item
-    #             contact_form.name = name
-    #             [name] = contact['NAME']
-    #             mobile = ''
-    #             i = 0
-    #             for item in contact['MOBILE']:
-    #                 if i == 0:
-    #                     mobile += item
-    #                     i += 1
-    #                 else:
-    #                     mobile += ',' + item
-    #             contact_form.mobile = mobile
-    #             company = False
-    #             partner = False
-    #             if contact['COMPANY'] and contact['COMPANY'] != ['']:
-    #
-    #                 [company] = contact['COMPANY']
-    #                 partner = self.env['res.partner'].search(
-    #                     [('name', 'ilike', name),
-    #                     ('parent_name', 'ilike', company)], limit=1)
-    #             elif contact['EMAIL'] and contact['EMAIL'] != ['']:
-    #                 [email] = contact['EMAIL']
-    #                 partner = self.env['res.partner'].search(
-    #                     [('name', 'ilike', name),
-    #                      ('email', '=', email)], limit=1)
-    #             if not partner: #如果不存在，新建联系人
-    #                 #contact['FAX']
-    #
-    #                 if contact['TEL'] and contact['TEL'] != ['']:
-    #                     phone = ''
-    #                     i = 0
-    #                     for item in contact['TEL']:
-    #                         if i==0:
-    #                             phone +=  item
-    #                             i += 1
-    #                         else:
-    #                             phone += ',' + item
-    #                     contact_form.phone = phone
-    #
-    #
-    #
-    #                 if contact['TITLE'] and contact['TITLE']!=['']:
-    #                     title =''
-    #                     i = 0
-    #                     for item in contact['TITLE']:
-    #                         if i == 0:
-    #                             title += item
-    #                             i += 1
-    #                         else:
-    #                             title += ',' + item
-    #                     contact_form.title = title
-    #
-    #                 if contact['EMAIL'] and contact['EMAIL'] != ['']:
-    #                     [contact_form.email] = contact['EMAIL']
-    #                 #contact['PC']
-    #                 if contact['URL'] and contact['URL'] != ['']:
-    #                     [contact_form.website] = contact['URL']
-    #                 if contact['ADDR'] and contact['ADDR'] != ['']:
-    #                     street = ''
-    #                     for item in contact['ADDR']:
-    #                         street += item
-    #                     contact_form.street = street
-    #                 parent_partner = False
-    #
-    #                 if company:
-    #                     parent_partner = self.env['res.partner'].search([('name', 'ilike', company),('is_company','=',True)], limit=1)
-    #                 if not parent_partner:
-    #
-    #                     company_name,logo_image = self._get_logo_image(imagedata)
-    #
-    #                     parent_partner = self.env['res.partner'].create({'name': company if company else company_name,
-    #                                                               'is_company': True,
-    #                                                               'street': contact_form.street,
-    #                                                               'website': contact_form.website})
-    #                     if company_name and logo_image.any():
-    #                         logo_datas = cv2.imencode('.jpg', logo_image)[1].tostring()
-    #                         parent_partner.image = base64.b64encode(logo_datas)
-    #
-    #                 contact_form.parent_id = parent_partner
-    #                 contact_form.image = attachment.datas
-    #                 partner = contact_form.save()
-    #                 attachment.write({'name': 'Business Card: '+partner.name,
-    #                                   'res_id': partner.id,
-    #                                   'res_model': 'res.partner',
-    #                                   'datas_fname': partner.name + '.jpeg',
-    #                                   'description': partner.name + partner.phone if partner.phone else '' +
-    #                                                  partner.email if partner.email else '',
-    #                                   })
-    #                 partner.message_post(attachment_ids=[attachment.id])
-    #                 return partner
-    #             else: #修改现有联系人信息
-    #                 modify={}
-    #                 if contact['TEL'] and contact['TEL'] != [''] and [partner.phone] != contact['TEL']:
-    #                     [modify['phone']] = contact['TEL']
-    #                 if contact['TITLE'] and contact['TITLE'] != [''] and [partner.title] != contact['TITLE']:
-    #                     [modify['title']] = contact['TITLE']
-    #                 # if contact['MOBILE'] and contact['MOBILE'] != [''] and [partner.mobile] != contact['MOBILE']:
-    #                 #     [modify['mobile']] = contact['MOBILE']
-    #                 if contact['EMAIL'] and contact['EMAIL'] != [''] and [partner.email] != contact['EMAIL']:
-    #                     [modify['email']] = contact['EMAIL']
-    #                 if contact['URL'] and contact['URL'] != [''] and [partner.website] != contact['URL']:
-    #                     [modify['website']] = contact['URL']
-    #                 street = ''
-    #                 if contact['ADDR'] and contact['ADDR'] != ['']:
-    #                     for item in contact['ADDR']:
-    #                         street += item
-    #                 if street != '' and partner.street != street:
-    #                     modify['street'] = street
-    #                 if modify:
-    #                     modify['image'] = attachment.datas
-    #                     partner.write(modify)
-    #                     attachment.write({'name': 'Business Card: ' + partner.name,
-    #                                       'res_id': partner.id,
-    #                                       'res_model': 'res.partner',
-    #                                       'datas_fname': partner.name + '.jpeg',
-    #                                       'description': partner.name + partner.phone if partner.phone else '' +
-    #                                                  partner.email if partner.email else '',
-    #                                       })
-    #                     partner.message_post(attachment_ids=[attachment.id])
-    #                     return partner
-    #     return {}
 
     @api.multi
     def create_contacts(self):
