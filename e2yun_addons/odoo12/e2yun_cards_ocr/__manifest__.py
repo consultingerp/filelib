@@ -12,7 +12,7 @@
     "data": [
         "views/assets.xml",
         "views/contact_view.xml",
-        "views/contact_import_wizard_view.xml"
+        "views/contact_import_wizard_view.xml",
     ],
     "depends": [
         "web","contacts"

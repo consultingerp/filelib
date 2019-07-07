@@ -22,6 +22,8 @@ odoo.define('e2yun_business_card.contact.kanban', function (require) {
                 this.$buttons.on('click', '.o_button_upload_contact', function () {
                     var state = self.model.get(self.handle, {raw: true});
                     self.do_action({
+                        title: _t("Business Card OCR"),
+                        name: 'Business Card OCR',
                         type: 'ir.actions.act_window',
                         res_model: 'contact.import.wizard',
                         target: 'new',

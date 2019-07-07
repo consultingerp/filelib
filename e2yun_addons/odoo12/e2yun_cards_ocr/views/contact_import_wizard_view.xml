@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+
+
         <record id="contact_import_wizard_form_view" model="ir.ui.view">
             <field name="name">contact.import.wizard.form</field>
             <field name="model">contact.import.wizard</field>
@@ -24,5 +26,7 @@
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
+        <menuitem id="contact_import" name="Import Business Cards" parent="contacts.menu_contacts"
+              action="contact_import_wizard_action"/>
     </data>
 </odoo>
