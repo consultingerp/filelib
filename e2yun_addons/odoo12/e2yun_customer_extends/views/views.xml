@@ -308,7 +308,7 @@
             <field name="name">CRM Partner Kanban Add Status Group</field>
             <field name="model">res.partner</field>
             <field name="arch" type="xml">
-                <kanban class="o_res_partner_kanban"  default_group_by="state">
+                <kanban class="o_res_partner_kanban">
                     <field name="id"/>
                     <field name="color"/>
                     <field name="display_name"/>
