@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _, exceptions
-# import suds
+from odoo import models, fields, api, _,exceptions
+#import suds
 import suds.client
+import re
 
 from odoo.exceptions import ValidationError, Warning
-
 
 class E2yunUserAddPartnerRelated(models.Model):
     _inherit = 'res.users'
@@ -26,14 +26,15 @@ class E2yunCsutomerExtends(models.Model):
     gender = fields.Selection([
         ('male', 'Male'),
         ('female', 'Female'),
-    ], string='')
+        ], string='')
     customer_source = fields.Selection([
         ('qrscene_USERS', 'User Barcode'),
         ('qrscene_TEAM', 'Team Barcode'),
         ('subscribe', 'Subscribe'),
+        ('qrscene_COMPANY', 'QR Scan Company'),
         ('manual', 'Manual'),
     ], string='', default='manual')
-    pos_state = fields.Boolean(String='Sync Pos State', default=False)
+    pos_state = fields.Boolean(String='Sync Pos State',default=False)
     state = fields.Selection([
         ('potential_customer', 'Potential Customer'),
         ('intention_customer', 'Intention Customer'),
@@ -46,47 +47,47 @@ class E2yunCsutomerExtends(models.Model):
 
     @api.model
     def _group_expand_stage_id(self, stages, domain, order):
-        return ['potential_customer', 'intention_customer', 'intention_customer_loss', 'target_customer',
-                'target_customer_loss', 'contract_customers']
+        return ['potential_customer', 'intention_customer', 'intention_customer_loss', 'target_customer', 'target_customer_loss', 'contract_customers']
+
 
     @api.model
     def create(self, vals):
         if vals.get('app_code', _('New')) == _('New'):
             if 'company_id' in vals:
-                vals['app_code'] = self.env['ir.sequence'].with_context(force_company=vals['company_id']) \
-                                       .next_by_code('app.code') or _('New')
+                vals['app_code'] = self.env['ir.sequence'].with_context(force_company=vals['company_id'])\
+                                   .next_by_code('app.code') or _('New')
             else:
                 vals['app_code'] = self.env['ir.sequence'].next_by_code('app.code') or _('New')
 
         result = super(E2yunCsutomerExtends, self).create(vals)
         return result
 
-    @api.multi
-    def set_intention(self):
-        for record in self:
-            if not record.mobile or not record.street or not record.street2 or not record.city or not record.state_id or not record.zip or not record.country_id:
-                raise Warning(_("Please fill in partner's mobile and address!"))
-            record.state = 'intention_customer'
-
-    @api.multi
-    def set_intention_loss(self):
-        for record in self:
-            record.state = 'intention_customer_loss'
-
-    @api.multi
-    def set_target(self):
-        for record in self:
-            record.state = 'target_customer'
-
-    @api.multi
-    def set_target_loss(self):
-        for record in self:
-            record.state = 'target_customer_loss'
-
-    @api.multi
-    def set_contract(self):
-        for record in self:
-            record.state = 'contract_customers'
+    # @api.multi
+    # def set_intention(self):
+    #     for record in self:
+    #         if not record.mobile or not record.street or not record.city or not record.state_id:
+    #             raise Warning(_("Please fill in partner's mobile and address!"))
+    #         record.state = 'intention_customer'
+    #
+    # @api.multi
+    # def set_intention_loss(self):
+    #     for record in self:
+    #         record.state = 'intention_customer_loss'
+    #
+    # @api.multi
+    # def set_target(self):
+    #     for record in self:
+    #         record.state = 'target_customer'
+    #
+    # @api.multi
+    # def set_target_loss(self):
+    #     for record in self:
+    #         record.state = 'target_customer_loss'
+    #
+    # @api.multi
+    # def set_contract(self):
+    #     for record in self:
+    #         record.state = 'contract_customers'
 
     @api.multi
     def write(self, values):
@@ -95,22 +96,29 @@ class E2yunCsutomerExtends(models.Model):
             new_state = values.get('state')
             # intention_customer_loss  target_customer_loss  contract_customers
             if previous_state in ['potential_customer']:
-                if not self.mobile or not self.street or not self.street2 or not self.city or not self.state_id or not self.zip or not self.country_id:
+                if not self.mobile or not self.street or not self.city or not self.state_id:
                     raise Warning(_("Please fill in partner's mobile and address!"))
-            if previous_state in ['intention_customer_loss', 'target_customer_loss']:
-                raise Warning(_("不能从流失客户转换到其他状态！"))
-            elif previous_state in ['contract_customers']:
-                raise Warning(_("不能从成交客户转换到其他状态！"))
+            # if previous_state in ['intention_customer_loss', 'target_customer_loss']:
+            #     raise Warning(_("不能从流失客户转换到其他状态！"))
+            # elif previous_state in ['contract_customers']:
+            #     raise Warning(_("不能从成交客户转换到其他状态！"))
+        # 对修改后的手机号进行验证
+        if 'mobile' in values:
+            mobile = values.get('mobile')
+            ret = re.match(r"^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$", mobile)
+            if not ret:
+                raise Warning(_("请输入合法手机号码！"))
         return super(E2yunCsutomerExtends, self).write(values)
+
 
     def run_send_wx_msg(self):
         intention_customer_msg_day = self.env['res.config.settings']._get_intention_customer_msg_day()
         target_customer_msg_day = self.env['res.config.settings']._get_target_customer_msg_day()
 
-        self.send_wx_msg(state='intention_customer', day_num=intention_customer_msg_day)
-        self.send_wx_msg(state='target_customer', day_num=target_customer_msg_day)
+        self.send_wx_msg(state='intention_customer',day_num=intention_customer_msg_day)
+        self.send_wx_msg(state='target_customer',day_num=target_customer_msg_day)
 
-    def send_wx_msg(self, state, day_num):
+    def send_wx_msg(self,state,day_num):
         sql = """
             select rel.res_users_id as user_id,t.* from (select sum(type_code),p_id from (
               select distinct id as p_id,1 as type_code from res_partner p 
