@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _,exceptions
-#import suds
+from odoo import models, fields, api, _, exceptions
+# import suds
 import suds.client
-import re
 
 from odoo.exceptions import ValidationError, Warning
+
 
 class E2yunUserAddPartnerRelated(models.Model):
     _inherit = 'res.users'
@@ -26,15 +26,14 @@ class E2yunCsutomerExtends(models.Model):
     gender = fields.Selection([
         ('male', 'Male'),
         ('female', 'Female'),
-        ], string='')
+    ], string='')
     customer_source = fields.Selection([
         ('qrscene_USERS', 'User Barcode'),
         ('qrscene_TEAM', 'Team Barcode'),
         ('subscribe', 'Subscribe'),
-        ('qrscene_COMPANY', 'QR Scan Company'),
         ('manual', 'Manual'),
     ], string='', default='manual')
-    pos_state = fields.Boolean(String='Sync Pos State',default=False)
+    pos_state = fields.Boolean(String='Sync Pos State', default=False)
     state = fields.Selection([
         ('potential_customer', 'Potential Customer'),
         ('intention_customer', 'Intention Customer'),
@@ -47,47 +46,47 @@ class E2yunCsutomerExtends(models.Model):
 
     @api.model
     def _group_expand_stage_id(self, stages, domain, order):
-        return ['potential_customer', 'intention_customer', 'intention_customer_loss', 'target_customer', 'target_customer_loss', 'contract_customers']
-
+        return ['potential_customer', 'intention_customer', 'intention_customer_loss', 'target_customer',
+                'target_customer_loss', 'contract_customers']
 
     @api.model
     def create(self, vals):
         if vals.get('app_code', _('New')) == _('New'):
             if 'company_id' in vals:
-                vals['app_code'] = self.env['ir.sequence'].with_context(force_company=vals['company_id'])\
-                                   .next_by_code('app.code') or _('New')
+                vals['app_code'] = self.env['ir.sequence'].with_context(force_company=vals['company_id']) \
+                                       .next_by_code('app.code') or _('New')
             else:
                 vals['app_code'] = self.env['ir.sequence'].next_by_code('app.code') or _('New')
 
         result = super(E2yunCsutomerExtends, self).create(vals)
         return result
 
-    # @api.multi
-    # def set_intention(self):
-    #     for record in self:
-    #         if not record.mobile or not record.street or not record.city or not record.state_id:
-    #             raise Warning(_("Please fill in partner's mobile and address!"))
-    #         record.state = 'intention_customer'
-    #
-    # @api.multi
-    # def set_intention_loss(self):
-    #     for record in self:
-    #         record.state = 'intention_customer_loss'
-    #
-    # @api.multi
-    # def set_target(self):
-    #     for record in self:
-    #         record.state = 'target_customer'
-    #
-    # @api.multi
-    # def set_target_loss(self):
-    #     for record in self:
-    #         record.state = 'target_customer_loss'
-    #
-    # @api.multi
-    # def set_contract(self):
-    #     for record in self:
-    #         record.state = 'contract_customers'
+    @api.multi
+    def set_intention(self):
+        for record in self:
+            if not record.mobile or not record.street or not record.street2 or not record.city or not record.state_id or not record.zip or not record.country_id:
+                raise Warning(_("Please fill in partner's mobile and address!"))
+            record.state = 'intention_customer'
+
+    @api.multi
+    def set_intention_loss(self):
+        for record in self:
+            record.state = 'intention_customer_loss'
+
+    @api.multi
+    def set_target(self):
+        for record in self:
+            record.state = 'target_customer'
+
+    @api.multi
+    def set_target_loss(self):
+        for record in self:
+            record.state = 'target_customer_loss'
+
+    @api.multi
+    def set_contract(self):
+        for record in self:
+            record.state = 'contract_customers'
 
     @api.multi
     def write(self, values):
@@ -96,61 +95,53 @@ class E2yunCsutomerExtends(models.Model):
             new_state = values.get('state')
             # intention_customer_loss  target_customer_loss  contract_customers
             if previous_state in ['potential_customer']:
-                if not self.mobile or not self.street or not self.city or not self.state_id:
+                if not self.mobile or not self.street or not self.street2 or not self.city or not self.state_id or not self.zip or not self.country_id:
                     raise Warning(_("Please fill in partner's mobile and address!"))
-            # if previous_state in ['intention_customer_loss', 'target_customer_loss']:
-            #     raise Warning(_("不能从流失客户转换到其他状态！"))
-            # elif previous_state in ['contract_customers']:
-            #     raise Warning(_("不能从成交客户转换到其他状态！"))
-        # 对修改后的手机号进行验证
-        if 'mobile' in values:
-            mobile = values.get('mobile')
-            ret = re.match(r"^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$", mobile)
-            if not ret:
-                raise Warning(_("请输入合法手机号码！"))
+            if previous_state in ['intention_customer_loss', 'target_customer_loss']:
+                raise Warning(_("不能从流失客户转换到其他状态！"))
+            elif previous_state in ['contract_customers']:
+                raise Warning(_("不能从成交客户转换到其他状态！"))
         return super(E2yunCsutomerExtends, self).write(values)
-
 
     def run_send_wx_msg(self):
         intention_customer_msg_day = self.env['res.config.settings']._get_intention_customer_msg_day()
         target_customer_msg_day = self.env['res.config.settings']._get_target_customer_msg_day()
 
-        self.send_wx_msg(state='intention_customer',day_num=intention_customer_msg_day)
-        self.send_wx_msg(state='target_customer',day_num=target_customer_msg_day)
+        self.send_wx_msg(state='intention_customer', day_num=intention_customer_msg_day)
+        self.send_wx_msg(state='target_customer', day_num=target_customer_msg_day)
 
-    def send_wx_msg(self,state,day_num):
+    def send_wx_msg(self, state, day_num):
         sql = """
-            select sum(type_code),user_id,p_id from (select user_id,id as p_id,1 as type_code from res_partner 
-                 where (CURRENT_TIMESTAMP - write_date) > interval '"""+day_num+""" day' 
-                 and customer = 't' 
-                 and active = 't' 
-                 and state = '"""+state+"""' 
-                 and user_id is not null
-                 
-                 union
-                 
-             select p.user_id,p.id as p_id,2 as type_code from crm_lead  l 
+            select rel.res_users_id as user_id,t.* from (select sum(type_code),p_id from (
+              select distinct id as p_id,1 as type_code from res_partner p 
+                 where (CURRENT_TIMESTAMP - write_date) > interval '""" + day_num + """ day' 
+                 and p.customer = 't' 
+                 and p.active = 't' 
+                 and p.state = '""" + state + """' 
+
+             union
+
+                select p.id as p_id,2 as type_code from crm_lead  l 
                  left join res_partner p on l.partner_id = p.id 
                  where p.customer = 't' 
                  and p.active = 't' 
-                 and p.state = '"""+state+"""' 
-                 and p.user_id is not null
-                 group by p.user_id,p.id
-                 having (CURRENT_TIMESTAMP - max(l.write_date)) > interval '"""+day_num+""" day'
-                 
-                 union
-                 
-             select p.user_id,p.id as p_id,3 as type_code from mail_activity a 
+                 and p.state = '""" + state + """' 
+                 group by p.id
+                 having (CURRENT_TIMESTAMP - max(l.write_date)) > interval '""" + day_num + """ day' 
+
+             union
+
+                select p.id as p_id,3 as type_code from mail_activity a 
                  left join res_partner p on p.id = a.res_id
                  where a.res_model = 'res.partner' 
                  and p.customer = 't' 
                  and p.active = 't' 
-                 and p.state = '"""+state+"""' 
-                 and p.user_id is not null
-                 group by p.user_id,p.id
-                 having (CURRENT_TIMESTAMP - max(a.write_date)) > interval '"""+day_num+""" day' 
-                 ) t group by user_id,p_id having sum(type_code) >= 6
-                 
+                 and p.state = '""" + state + """' 
+                 group by p.id
+                 having (CURRENT_TIMESTAMP - max(a.write_date)) > interval '""" + day_num + """ day' 
+                 ) t group by p_id having sum(type_code) >= 6) t 
+                 inner join res_partner_res_users_rel rel on rel.res_partner_id = t.p_id
+
         """
         self._cr.execute(sql)
         users = self.env.cr.dictfetchall()
@@ -167,8 +158,36 @@ class E2yunCsutomerExtends(models.Model):
                 elif state == 'target_customer':
                     msg = '准客户:' + paerner.name + ' 超过' + day_num + '天未邀约客户进行方案洽谈'
 
-                wx_user_obj.send_message(msg=msg,user=res_user_obj.browse(u['user_id']))
+                wx_user_obj.send_message(msg=msg, user=res_user_obj.browse(u['user_id']))
 
+    def sync_customer_to_pos(self):
+        for r in self:
+            ICPSudo = self.env['ir.config_parameter'].sudo()
+
+            url = ICPSudo.get_param('e2yun.sync_pos_member_webservice_url')  # webservice调用地址
+            client = suds.client.Client(url)
+
+            result = client.service.createMember(r.state_id.name or '',  # 省
+                                                 r.city or '',  # 城市
+                                                 r.street or '',  # 县区
+                                                 r.street2 or '',  # 地址
+                                                 r.name or '',  # 名称
+                                                 r.user_nick_name or '',  # 昵称
+                                                 r.shop_code or '',  # 门店编码
+                                                 r.mobile or '',  # 手机号码
+                                                 r.phone or '',  # 电话号码
+                                                 r.email or '',  # 邮箱
+                                                 r.shop_name or '',  # 门店名称
+                                                 r.occupation or '',  # 职业
+                                                 r.app_code or '',  # app编码
+                                                 r.create_uid.name)  # 创建人
+
+            if result != 'S':
+                raise exceptions.Warning(result)
+            else:
+                r.pos_state = True
+
+        return True
 
 
 #     name = fields.Char()
@@ -237,7 +256,7 @@ class resPartnerBatch(models.TransientModel):
     def sync_customer_to_pos(self):
         ctx = self._context.copy()
 
-        #active_model = ctx.get('active_model')
+        # active_model = ctx.get('active_model')
         active_ids = ctx.get('active_ids', [])
 
         rep = self.env['res.partner'].browse(active_ids)
@@ -247,29 +266,24 @@ class resPartnerBatch(models.TransientModel):
             url = ICPSudo.get_param('e2yun.sync_pos_member_webservice_url')  # webservice调用地址
             client = suds.client.Client(url)
 
-            result = client.service.createMember(r.state_id.name or '',     #省
-                                                 r.city or '',              #城市
-                                                 r.street or '',            #县区
-                                                 r.street2 or '',           #地址
-                                                 r.name or '',              #名称
-                                                 r.user_nick_name or '',    #昵称
-                                                 r.shop_code or '',         #门店编码
-                                                 r.mobile or '',             #手机号码
-                                                 r.phone or '',             #电话号码
-                                                 r.email or '',             #邮箱
-                                                 r.shop_name or '',         #门店名称
-                                                 r.occupation or '',        #职业
-                                                 r.app_code or '',          #app编码
-                                                 r.create_uid.name)          #创建人
+            result = client.service.createMember(r.state_id.name or '',  # 省
+                                                 r.city or '',  # 城市
+                                                 r.street or '',  # 县区
+                                                 r.street2 or '',  # 地址
+                                                 r.name or '',  # 名称
+                                                 r.user_nick_name or '',  # 昵称
+                                                 r.shop_code or '',  # 门店编码
+                                                 r.mobile or '',  # 手机号码
+                                                 r.phone or '',  # 电话号码
+                                                 r.email or '',  # 邮箱
+                                                 r.shop_name or '',  # 门店名称
+                                                 r.occupation or '',  # 职业
+                                                 r.app_code or '',  # app编码
+                                                 r.create_uid.name)  # 创建人
 
             if result != 'S':
                 raise exceptions.Warning(result)
             else:
                 r.pos_state = True
 
-        return {
-            'warning': {
-                'title': 'Tips',
-                'message': '同步成功'
-            }
-        }
+        return True
