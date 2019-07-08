@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing tailsde.
-from odoo import models,fields,api
+from odoo import models,fields,api,exceptions
 from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
 
@@ -41,6 +41,9 @@ class ResPartner(models.Model):
         count = self.env['e2yun.customer.info'].sudo().search_count([('name','=',name)])
         if count > 0:
             self.name = False
+            if self.company_type == 'person':
+                self.lastname = False
+                self.firstname = False
             msg = _("The name you entered already exists for potential customers.")
             return {
                 'warning': {
@@ -48,9 +51,16 @@ class ResPartner(models.Model):
                     'message': msg
                 }
             }
-        count = self.env['res.partner'].sudo().search_count([('name', '=', name)])
+        count = 0
+        if self._origin and self._origin.id:
+            count = self.env['res.partner'].sudo().search_count([('name', '=', name),('id', '!=', self._origin.id)])
+        else:
+            count = self.env['res.partner'].sudo().search_count([('name', '=', name)])
         if count > 0:
             self.name = False
+            if self.company_type == 'person':
+                self.lastname = False
+                self.firstname = False
             msg = _("The name you entered already exists.")
             return {
                 'warning': {
@@ -74,3 +84,35 @@ class ResPartner(models.Model):
                         'message': msg
                     }
                 }
+
+    @api.model
+    def create(self, vals):
+        name = self.name
+        if name:
+            count = self.env['res.partner'].sudo().search_count([('name', '=', name)])
+            if count > 0:
+                msg = _("The name you entered already exists.")
+                raise exceptions.Warning(msg)
+
+            count = self.env['e2yun.customer.info'].sudo().search_count([('name', '=', name)])
+            if count > 0:
+                msg = _("The name you entered already exists for potential customers.")
+                raise exceptions.Warning(msg)
+
+        return super(ResPartner, self).create(vals)
+
+    @api.multi
+    def write(self, vals):
+        name = vals.get('name', False)
+        if name:
+            count = self.env['res.partner'].sudo().search_count([('name', '=', name), ('id', '!=', self.id)])
+            if count > 0:
+                msg = _("The name you entered already exists.")
+                raise exceptions.Warning(msg)
+
+            count = self.env['e2yun.customer.info'].sudo().search_count([('name', '=', name)])
+            if count > 0:
+                msg = _("The name you entered already exists for potential customers.")
+                raise exceptions.Warning(msg)
+
+        return super(ResPartner, self).write(vals)
