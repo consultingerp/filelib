@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_role_relation_tree" model="ir.ui.view">
+        <field name="name">crm.pos.role.relation.tree</field>
+        <field name="model">crm.pos.role.relation</field>
+        <field name="arch" type="xml">
+            <tree string="Role Relation">
+                <field name="company_id" options="{'no_create': True}" />
+                <field name="crm_role"/>
+                <field name="pos_role"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--<record id="crm_lead_lost_view_form" model="ir.ui.view">-->
+        <!--<field name="name">crm.pos.role.relation.form</field>-->
+        <!--<field name="model">crm.pos.role.relation</field>-->
+        <!--<field name="arch" type="xml">-->
+            <!--<form string="Role Relation">-->
+                <!--<group class="oe_title">-->
+                    <!--<field name="company_id" options="{'no_create': True}" />-->
+                    <!--<field name="crm_role"/>-->
+                <!--<field name="pos_role"/>-->
+                <!--</group>-->
+            <!--</form>-->
+        <!--</field>-->
+    <!--</record>-->
+
+
+
+    <record id="view_role_relation_search" model="ir.ui.view">
+        <field name="name">crm.pos.role.relation.search</field>
+        <field name="model">crm.pos.role.relation</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="crm_role" string="CRM Role"/>
+                <field name="pos_role" string="POS Role"/>
+                <field name="company_id" string="Company"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_role_relation_tree" model="ir.actions.act_window">
+        <field name="name">Role Relation</field>
+        <field name="res_model">crm.pos.role.relation</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_role_relation_search"/>
+        <field name="view_id" ref="view_role_relation_tree"/>
+    </record>
+
+    <menuitem action="action_role_relation_tree" id="menu_role_relation" parent="crm.crm_menu_config" sequence="10"/>
+
+</odoo>
