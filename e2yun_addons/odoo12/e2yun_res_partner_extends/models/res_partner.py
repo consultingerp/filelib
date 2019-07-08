@@ -48,6 +48,17 @@ class ResPartner(models.Model):
                     'message': msg
                 }
             }
+        count = self.env['res.partner'].sudo().search_count([('name', '=', name)])
+        if count > 0:
+            self.name = False
+            msg = _("The name you entered already exists.")
+            return {
+                'warning': {
+                    'title': _('Tips'),
+                    'message': msg
+                }
+            }
+
 
     @api.onchange('register_no')
     def onchange_register_no(self):

@@ -204,6 +204,16 @@ class e2yun_customer_info(models.Model):
                     'message': msg
                 }
             }
+        count = self.env['e2yun.customer.info'].sudo().search_count([('name', '=', name)])
+        if count > 0:
+            self.name = False
+            msg = _("The name you entered already exists.")
+            return {
+                'warning': {
+                    'title': _('Tips'),
+                    'message': msg
+                }
+            }
 
     @api.onchange('register_no')
     def onchange_register_no(self):

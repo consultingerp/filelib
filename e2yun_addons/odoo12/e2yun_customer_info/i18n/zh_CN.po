@@ -1335,3 +1335,10 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:e2yun_customer_info.view_partner_form
 msgid "转正式客户"
 msgstr ""
+
+#. module: e2yun_customer_info
+#: code:addons/e2yun_customer_info/models/models.py:210
+#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_info/models/models.py:210
+#, python-format
+msgid "The name you entered already exists."
+msgstr "该名字已经存在，请检查！"
