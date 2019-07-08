@@ -25,30 +25,23 @@
 
                     <templates>
                         <t t-name="kanban-box">
-                            <div t-attf-class="#{kanban_color(record.color.raw_value)}
-                        oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban oe_kanban_card" style="height: 150px">
-
-                                <img class="o_kanban_image_inner_pic" t-att-src="kanban_image('crm.team', 'image_medium', record.id.raw_value)"/>
-
+                            <div t-attf-class="oe_kanban_global_click" style="height: 120px">
+                                <div class="o_kanban_image">
+                                    <img class="o_kanban_image_inner_pic" t-att-src="kanban_image('crm.team', 'image_medium', record.id.raw_value)"
+                                    width="120px"/>
+                                </div>
                                 <div class="oe_kanban_details">
-                                    <strong class="o_kanban_record_title oe_partner_heading"><field name="name"/></strong>
+                                    <strong class="o_kanban_record_title"><field name="name"/></strong>
+
                                     <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
                                     <ul>
                                         <li ><field name="street"/></li>
                                         <li ><field name="address"/></li>
                                         <li ><field name="tel"/></li>
                                     </ul>
-
-                                    <div class="oe_kanban_bottom">
-                                        <div class="oe_kanban_bottom_left">
-                                            <!-- Left hand footer... -->
-                                        </div>
-                                        <div class="oe_kanban_bottom_right">
-                                            <!-- Right hand footer... -->
-                                            <!--<field name="user_id" widget="label_selection"/>-->
-                                        </div>
-                                    </div>
-
+                                </div>
+                                <div class="float-right">
+                                        <button name="button_navigation" type="object" class="btn btn-primary">Go</button>
                                 </div>
 
                             </div>

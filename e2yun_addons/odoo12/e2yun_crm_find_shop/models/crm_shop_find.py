@@ -9,3 +9,11 @@ class CrmTeamADDinformation(models.Model):
     color = fields.Integer('Color Index')
 
     shop_adr_photo = fields.Binary('门店照片')
+
+    def button_navigation(self):
+
+        return
+        {
+    "type": "ir.actions.act_url",
+    "url": "http://www.baidu.com",
+}
