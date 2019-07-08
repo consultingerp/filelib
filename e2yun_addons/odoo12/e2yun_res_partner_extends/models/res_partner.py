@@ -41,6 +41,9 @@ class ResPartner(models.Model):
         count = self.env['e2yun.customer.info'].sudo().search_count([('name','=',name)])
         if count > 0:
             self.name = False
+            if self.company_type == 'person':
+                self.lastname = False
+                self.firstname = False
             msg = _("The name you entered already exists for potential customers.")
             return {
                 'warning': {
@@ -48,9 +51,16 @@ class ResPartner(models.Model):
                     'message': msg
                 }
             }
-        count = self.env['res.partner'].sudo().search_count([('name', '=', name)])
+        count = 0
+        if self._origin and self._origin.id:
+            count = self.env['res.partner'].sudo().search_count([('name', '=', name),('id', '!=', self._origin.id)])
+        else:
+            count = self.env['res.partner'].sudo().search_count([('name', '=', name)])
         if count > 0:
             self.name = False
+            if self.company_type == 'person':
+                self.lastname = False
+                self.firstname = False
             msg = _("The name you entered already exists.")
             return {
                 'warning': {
