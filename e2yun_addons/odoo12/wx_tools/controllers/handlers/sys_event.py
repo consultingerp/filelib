@@ -91,6 +91,8 @@ def main(robot):
                     ret_msg = "您终于来了！欢迎关注"
             _data = get_img_data(str(info['headimgurl']))
             if not iscompanyuser:
+                # if not resuser.exists():  # 如果用户不存在查询绑定的微信
+                #     resuser = env['res.users'].sudo().search([('wx_user_id.openid', '=', info['openid'])], limit=1)
                 if not resuser.exists() :  # 不存在odoo用户 而且不是扫描公司二给码进入的，公司二维码进不不用创建用户
                     resuser = env['res.users'].sudo().create({
                         "login": info['openid'],
@@ -100,7 +102,8 @@ def main(robot):
                         "wx_user_id": wxuserinfo.id,
                         "login_date": datetime.datetime.now(),
                         "image": base64.b64encode(_data),
-                        "email": info['openid']
+                        "email": info['openid'],
+                        "wx_id": info['openid']
                     })
                     resuser.partner_id.write({
                         'supplier': True,
@@ -231,7 +234,9 @@ def main(robot):
         if rs.exists():
             wx_user = rs[0]
             eventkey = message.EventKey.split('|')
-            resuser = env['res.users'].sudo().search([('login', '=', info['openid'])])
+            resuser = env['res.users'].sudo().search([('login', '=', info['openid'])], limit=1)
+            if not resuser.exists():  # 如果用户不存在查询绑定的微信
+                resuser = env['res.users'].sudo().search([('wx_user_id.openid', '=', info['openid'])], limit=1)
             users_ids = resuser.partner_id.related_guide.ids
             if eventkey[0] == 'USERS':
                 _logger.info('USERS')
@@ -269,7 +274,13 @@ def main(robot):
                     resuser.partner_id.write({
                         "customer_source": tracelog_type,
                     })
-
+            elif eventkey[0] == 'RESPASSWORD':
+                tracelog_type = 'qrscene_RESPASSWORD'
+                tracelog_title = "扫描二维码找回密码,微信用户%s" % ( str(info['nickname']))
+                _logger.info('qrscene_RESPASSWORD')
+                traceuser_id = resuser
+                resuser.action_wx_user_reset_password()
+                ret_msg = ""
         tracetype = env['wx.tracelog.type'].sudo().search([('code', '=', tracelog_type)])
         if tracetype.exists():
             env['wx.tracelog'].sudo().create({
@@ -324,6 +335,17 @@ def main(robot):
         env = request.env()
         rs = env['wx.user'].sudo().search([('openid', '=', openid)])
         return ""
+
+    @robot.location_event
+    def location_event(message):
+        _logger.info('>>>location_event wx msg: %s' % message.__dict__)
+        serviceid = message.target
+        openid = message.source
+        env = request.env()
+        rs = env['wx.user'].sudo().search([('openid', '=', openid)])
+        return ""
+
+
 
     @robot.view
     def url_view(message):

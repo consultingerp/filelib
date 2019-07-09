@@ -24,3 +24,4 @@ from . import wx_tracelog
 from . import wx_sale_order
 from . import sale_make_invoice_advance
 from . import res_company
+from . import res_config_settings
