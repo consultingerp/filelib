@@ -105,9 +105,10 @@ class LoginHome(Home):
                 else:
                     obj = request.env['wx.user.odoouser'].sudo().create(wx_user_info)
         else:
-            userinfo = request.env['wx.user.odoouser'].sudo().search([('user_id.login', '=', kw['login'])])
-            if userinfo.exists():
-                userinfo.write({'password': kw['password']})
+            if kw.get('login') and kw.get('password'):
+                userinfo = request.env['wx.user.odoouser'].sudo().search([('user_id.login', '=', kw['login'])])
+                if userinfo.exists():
+                    userinfo.write({'password': kw['password']})
 
         return super(LoginHome, self).web_login(redirect, **kw)
 
