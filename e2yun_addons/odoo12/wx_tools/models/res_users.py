@@ -103,7 +103,8 @@ class WxResUsers(models.Model):
                         "value": (datetime.datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
                     },
                     "remark": {
-                        "value": "点击此信息重置密码"
+                        "value": "点击此信息重置密码",
+                        "color": "#FF0000"
                     }
                 }
                 url = '/web/reset_password?token=%s' % self.signup_token
