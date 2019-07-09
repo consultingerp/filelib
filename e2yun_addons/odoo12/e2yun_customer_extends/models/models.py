@@ -4,6 +4,8 @@ from odoo import models, fields, api, _,exceptions
 #import suds
 import suds.client
 import re
+import datetime
+from datetime import timedelta
 
 from odoo.exceptions import ValidationError, Warning
 
@@ -153,6 +155,10 @@ class E2yunCsutomerExtends(models.Model):
         """
         self._cr.execute(sql)
         users = self.env.cr.dictfetchall()
+        template_id = ''
+        configer_para = self.env["wx.paraconfig"].sudo().search([('paraconfig_name', '=', '计划事件提醒')])
+        if configer_para:
+            template_id = configer_para[0].paraconfig_value
         if users and len(users) > 0:
             partner_obj = self.env['res.partner']
             wx_user_obj = self.env['wx.user']
@@ -166,7 +172,23 @@ class E2yunCsutomerExtends(models.Model):
                 elif state == 'target_customer':
                     msg = '准客户:' + paerner.name + ' 超过' + day_num + '天未邀约客户进行方案洽谈'
 
-                wx_user_obj.send_message(msg=msg, user=res_user_obj.browse(u['user_id']))
+                data = {
+                    "first":{
+                        "value":"客户跟踪提醒"
+                    },
+                    "keyword1":{
+                        "value":paerner.name
+                    },
+                    "keyword1": {
+                        "value": (datetime.datetime.now()+timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
+                    },
+                    "remark":{
+                        "value":msg
+                    }
+
+                }
+
+                wx_user_obj.send_template_message(template_id,data,user=res_user_obj.browse(u['user_id']))
 
     def sync_customer_to_pos(self):
         for r in self:
