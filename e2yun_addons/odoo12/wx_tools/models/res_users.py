@@ -97,7 +97,7 @@ class WxResUsers(models.Model):
                         "color": "#173177"
                     },
                     "keyword1": {
-                        "value": user.login
+                        "value": user.display_name
                     },
                     "keyword2": {
                         "value": (datetime.datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
