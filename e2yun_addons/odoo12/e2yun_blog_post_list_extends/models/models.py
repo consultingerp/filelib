@@ -130,9 +130,9 @@ class BlogPostBatch(models.TransientModel):
                     try:
                         urlretrieve(url, '%s/news.jpg' % wx_file_path)
                         import imghdr
-                        imgType = imghdr.what( '%s/news.jpg' % wx_file_path)
+                        imgType = imghdr.what('%s/news.jpg' % wx_file_path)
                         if imgType:
-                            news_media_upload = wx_media.upload_news_picture( '%s/news.jpg' % wx_file_path)
+                            news_media_upload = wx_media.upload_news_picture('%s/news.jpg' % wx_file_path)
                             wx_content = wx_content.replace(url, news_media_upload['url'])
                     except:
                         continue
@@ -141,8 +141,8 @@ class BlogPostBatch(models.TransientModel):
                 blog.thumb_media_id = thumb_media_id
                 blog.transfer_to_wx_flag = True
                 try:
-                    os.remove( '%s/thumb.gif' % wx_file_path)
-                    os.remove( '%s/news.jpg' % wx_file_path)
+                    os.remove('%s/thumb.gif' % wx_file_path)
+                    os.remove('%s/news.jpg' % wx_file_path)
                 except:
                     pass
             blog_url = server_url + blog.website_url
