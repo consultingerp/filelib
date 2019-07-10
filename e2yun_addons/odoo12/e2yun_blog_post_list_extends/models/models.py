@@ -32,16 +32,16 @@ class BlogPostBatch(models.TransientModel):
         articless = []
         for blog in blogs:
             thumb_media_id = False
-            # wx_file_path = get_module_resource('wx_tools', 'static/wx')
+            wx_file_path = get_module_resource('e2yun_blog_post_list_extends', 'static/wx')
             # file_image = blog.main_image
             if not blog.transfer_to_wx_flag:
                 if blog.main_image:
                     img = base64.b64decode(blog.main_image)
-                    file = open('./thumb.gif', 'wb')
+                    file = open('%s/thumb.gif' % wx_file_path, 'wb')
                     file.write(img)
                     file.close()
 
-                    thumb_media_upload = wx_media.upload_image('./thumb.gif')
+                    thumb_media_upload = wx_media.upload_image('%s/thumb.gif' % wx_file_path)
                     thumb_media_id = thumb_media_upload['thumb_media_id']
 
                 extractor = URLExtract()
@@ -49,11 +49,11 @@ class BlogPostBatch(models.TransientModel):
                 wx_content = blog.content
                 for url in urls:
                     try:
-                        urlretrieve(url, './news.jpg')
+                        urlretrieve(url, '%s/news.jpg' % wx_file_path)
                         import imghdr
-                        imgType = imghdr.what('./news.jpg')
+                        imgType = imghdr.what('%s/news.jpg' % wx_file_path)
                         if imgType:
-                            news_media_upload = wx_media.upload_news_picture('./news.jpg')
+                            news_media_upload = wx_media.upload_news_picture('%s/news.jpg' % wx_file_path)
                             wx_content = wx_content.replace(url, news_media_upload['url'])
                     except:
                         continue
@@ -62,8 +62,8 @@ class BlogPostBatch(models.TransientModel):
                 blog.thumb_media_id = thumb_media_id
                 blog.transfer_to_wx_flag = True
                 try:
-                    os.remove('./thumb.gif')
-                    os.remove('./news.jpg')
+                    os.remove('%s/thumb.gif' % wx_file_path)
+                    os.remove('%s/news.jpg' % wx_file_path)
                 except:
                     pass
             blog_url = server_url + blog.website_url
@@ -141,7 +141,7 @@ class BlogPostBatch(models.TransientModel):
                 blog.thumb_media_id = thumb_media_id
                 blog.transfer_to_wx_flag = True
                 try:
-                    os.remove( '%s/news.jpg' % wx_file_path)
+                    os.remove( '%s/thumb.gif' % wx_file_path)
                     os.remove( '%s/news.jpg' % wx_file_path)
                 except:
                     pass
