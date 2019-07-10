@@ -44,4 +44,5 @@ class WXResPartner(models.Model):
         resusers = super(WXResPartner, self).write(vals)
         if vals.get('wx_user_id') and self.user_ids.wx_user_id.id != vals.get('wx_user_id'):
             self.user_ids.wx_user_id = vals.get('wx_user_id')
+            self.user_ids.wx_id = self.user_ids.wx_user_id.openid
         return resusers

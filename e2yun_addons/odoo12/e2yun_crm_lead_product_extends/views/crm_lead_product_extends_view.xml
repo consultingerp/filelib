@@ -73,9 +73,9 @@
                         <field name="contract_number"/>
                         <field name="pid"/>
                         <field name="cgm"/>
-                        <field name="price_tax" />
+                        <!--<field name="price_tax" />
                         <field name="tax_id" widget="many2many_tags" domain="[('type_tax_use','=','sale'),('active', '=', True)]"/>
-                        <field name="price_subtotal"/>
+                        <field name="price_subtotal"/>-->
                     </tree>
                 </field>
             </xpath>
