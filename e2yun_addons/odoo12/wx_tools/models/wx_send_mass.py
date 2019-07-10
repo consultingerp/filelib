@@ -1,8 +1,10 @@
 # coding=utf-8
 import logging
 
-from odoo import models, fields, api
 from wechatpy.client import WeChatClient
+
+from odoo import models, fields, api
+
 _logger = logging.getLogger(__name__)
 
 class WxSendMass(models.Model):
@@ -22,8 +24,10 @@ class WxSendMass(models.Model):
 
     @api.multi
     def mass_send(self):
-        from ..rpc import wx_client
-        entry = wx_client.WxEntry()
+        from ..controllers import client
+        entry = client.wxenv(self.env)
+        wxclient = entry.wxclient
+        wx_client = WeChatClient(wxclient.appid, wxclient.appsecret, access_token=wxclient.token)
         entry.init(self.env)
         for obj in self:
             res = entry.client.message.send_mass_article(

@@ -17,13 +17,14 @@ class WxMedia(models.Model):
     _order = 'id desc'
 
     media_id = fields.Char('素材ID')
-    media_type = fields.Selection([("image", '图片'), ("video", '视频'), ("voice", '语音'), ("news", '图文'), ("thumb", '缩略图')],
-                                  string=u'类型')
+    media_type = fields.Selection(
+        [("image", '图片'), ("newsimage", '图文图片'), ("video", '视频'), ("voice", '语音'), ("news", '图文'), ("thumb", '缩略图')],
+        string=u'类型')
     name = fields.Char('名称')
     update_time = fields.Char('更新时间')
     url = fields.Char('Url')
     news_item = fields.Text('内容')
-    source_type = fields.Selection([("ADD", '增加'),("ARTICLE", '文章'), ("SYN", '同步')], string=u'来源')
+    source_type = fields.Selection([("ADD", '增加'), ("ARTICLE", '文章'), ("SYN", '同步')], string=u'来源')
     article_ids = fields.Many2many('wx.media.article', string='图文')
     # image: all image fields are base64 encoded and PIL-supported
     image = fields.Binary("Image", attachment=True,
@@ -83,7 +84,12 @@ class WxMedia(models.Model):
                 "only_fans_can_comment": 1
             }
         ]
-        self.upload_articles(articless, '我的测试_1007')
+        # self.upload_articles(articless, '我的测试_1007')
+
+        self.upload_image("/develop/odoo/odoo-12.0/filelib/e2yun_addons/odoo12/wx_tools/static/wx/c.jpg",
+                          name='upload_imagetest')
+        self.upload_news_picture('/develop/odoo/odoo-12.0/filelib/e2yun_addons/odoo12/wx_tools/static/wx/b.jpeg',
+                                 name='upload_news_picture_texxt')
 
     @api.model
     def upload_articles(self, articless, name):
@@ -101,26 +107,34 @@ class WxMedia(models.Model):
             self.create(news_up)
         return news_up
 
-    def upload_image(self):
-        wx_file_path = get_module_resource('wx_tools', 'static/wx')
-        # wx_pic = os.path.join(wx_file_path, str(uuid.uuid4()) + message.attachment_ids.name)
-        # with open(wx_pic, 'wb') as str2datas:
-        #     str2datas.write(base64.b64decode(message.attachment_ids.datas))
-        # mimetype = message.attachment_ids.mimetype
-        # if mimetype in ('image/jpeg', 'image/png', 'image/gif'):
-        #     with open(wx_pic, 'rb') as f:
-        #         r = entry.upload_media('image', f)
-        #         entry.send_image_message(objs.openid, r['media_id'])
-
+    def upload_image(self, file_path, media_type='thumb', name=''):
+        # 上传临时多媒体文件。
         from ..controllers import client
         entry = client.wxenv(self.env)
         wxclient = entry.wxclient
-        wx_client = WeChatClient(wxclient.appid, wxclient.appsecret, access_token=wxclient.token)
-        with open(os.path.join(wx_file_path, 'c.jpg'), 'rb') as f:
-            # upload = wx_client.media.upload_image(f)
-            upload = wxclient.upload_media('thumb', f)
-            # upload =wxclient.upload_permanent_media('thumb', f)
-        return upload
+        with open(file_path, 'rb') as wxfile:
+            media_upload = wxclient.upload_media(media_type, wxfile)
+            media_upload['update_time'] = media_upload["created_at"]
+            media_upload['name'] = name
+            media_upload['media_type'] = media_type
+            media_upload['source_type'] = 'ARTICLE'
+            if media_type == 'thumb':
+                media_upload['media_id'] = media_upload["thumb_media_id"]
+            self.create(media_upload)
+        return media_upload
+
+    def upload_news_picture(self, file_path, name=''):
+        # 上传图文消息内的图片获取URL【订阅号与服务号认证后均可用】
+        from ..controllers import client
+        entry = client.wxenv(self.env)
+        wxclient = entry.wxclient
+        with open(file_path, 'rb') as wxfile:
+            media_upload = wxclient.upload_news_picture(wxfile)
+            media_upload['name'] = name
+            media_upload['media_type'] = 'newsimage'
+            media_upload['source_type'] = 'ARTICLE'
+            self.create(media_upload)
+        return media_upload
 
     @api.model
     def sync_type(self, media_type):
