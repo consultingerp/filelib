@@ -115,7 +115,7 @@ def main(robot):
                     return ret_msg
 
         partner = request.env['res.partner'].sudo().search([('wx_user_id.openid', '=', openid)])
-        partner_user_id = None
+        partner_user_id = None  # 导购
         if partner.exists():  # 查询微信关联的客户
             if partner[0].user_id:  # 存在导购
                 partner_user_id = partner[0].user_id  # 联系当前导购

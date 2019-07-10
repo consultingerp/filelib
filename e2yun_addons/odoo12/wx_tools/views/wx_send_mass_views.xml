@@ -9,11 +9,11 @@
             <field name="priority">999</field>
             <field name="arch" type="xml">
                 <tree string="群发">
-               <field name="wx_media_id"/>
-               <field name="is_to_all"/>
-               <field name="preview_user_id"/>
-               <field name="msg_id"/>
-               <field name="create_date"/>
+                    <field name="wx_media_id"/>
+                    <field name="is_to_all"/>
+                    <field name="preview_user_id"/>
+                    <field name="msg_id"/>
+                    <field name="create_date"/>
                 </tree>
             </field>
         </record>
@@ -24,20 +24,23 @@
             <field name="priority">999</field>
             <field name="arch" type="xml">
                 <form string="群发" version="7.0">
-                <header>
-                    <button name="preview_send" string="发送预览" type="object"/>
-                    <button name="preview_send" string="群发" type="object" attrs="{'invisible': [('msg_id', '!=', False)]}"/>
-		</header>
+                    <header>
+                        <button name="preview_send" string="发送预览" type="object"/>
+                        <button name="preview_send" string="群发" type="object"
+                                attrs="{'invisible': [('msg_id', '!=', False)]}"/>
+                    </header>
                     <sheet>
-                    <group>
-               <field name="id" invisible="1"/>
-               <field name="wx_media_id" options="{'no_create': True}"/>
-               <field name="is_to_all" readonly="1"/>
-               <field name="group_ids" widget="many2many_tags" attrs="{'invisible': [('is_to_all', '=', True)]}"/>
-               <field name="user_ids" widget="many2many_tags" attrs="{'invisible': [('is_to_all', '=', True)]}"/>
-               <field name="preview_user_id"/>
-               <field name="msg_id" readonly="1"/>
-                    </group>
+                        <group>
+                            <field name="id" invisible="1"/>
+                            <field name="wx_media_id" options="{'no_create': True}"/>
+                            <field name="is_to_all" readonly="1"/>
+                            <field name="group_ids" widget="many2many_tags"
+                                   attrs="{'invisible': [('is_to_all', '=', True)]}"/>
+                            <field name="user_ids" widget="many2many_tags"
+                                   attrs="{'invisible': [('is_to_all', '=', True)]}"/>
+                            <field name="preview_user_id"/>
+                            <field name="msg_id" readonly="1"/>
+                        </group>
                     </sheet>
                 </form>
             </field>
@@ -54,7 +57,8 @@
                           (0, 0, {'view_mode': 'form', 'view_id': ref('wx_send_mass_view_form_1378')}),
                     ]"/>
         </record>
-        <menuitem action="wx_send_mass_action_458" id="wx_send_mass_menuitem_313_1552142855" name="群发" parent="parent_menu_126_1542014737" sequence="10"/>
+        <menuitem action="wx_send_mass_action_458" id="wx_send_mass_menuitem_313_1552142855" name="群发"
+                  parent="parent_menu_126_1542014737" sequence="10"/>
 
     </data>
 </openerp>

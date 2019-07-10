@@ -47,10 +47,10 @@ def main(robot):
             _logger.info('>>> 重复的微信消息')
             return ''
         entry.OPENID_LAST[openid] = messag_info
-        rs = env['wx.user'].sudo().search([('openid', '=', openid)])
+        rs = env['wx.user'].sudo().search([('openid', '=', openid)], limit=1)
         if not rs.exists():  # 不存在微信用户在
             wxuserinfo = env['wx.user'].sudo().create(info)  # 创建微信用户。
-            resuser = env['res.users'].sudo().search([('login', '=', info['openid'])])
+            resuser = env['res.users'].sudo().search([('login', '=', info['openid'])], limit=1)  # 查询登录名与微信名一样的
             user_id = None
             defpassword = '123456'
             iscompanyuser = False
@@ -91,8 +91,8 @@ def main(robot):
                     ret_msg = "您终于来了！欢迎关注"
             _data = get_img_data(str(info['headimgurl']))
             if not iscompanyuser:
-                # if not resuser.exists():  # 如果用户不存在查询绑定的微信
-                #     resuser = env['res.users'].sudo().search([('wx_user_id.openid', '=', info['openid'])], limit=1)
+                if not resuser.exists():  # 如果用户不存在查询用户的微信字段以前有没有用，是不是从门店同步过来的
+                    resuser = env['res.users'].sudo().search([('wx_id', '=', info['openid'])], limit=1)
                 if not resuser.exists():  # 不存在odoo用户 而且不是扫描公司二给码进入的，公司二维码进不不用创建用户
                     resuser = env['res.users'].sudo().create({
                         "login": info['openid'],
@@ -133,7 +133,7 @@ def main(robot):
                         'related_guide': [(6, 0, users_ids)]
                     })
                 # 记录微信用户到 微信用户与odoo用户映射关系
-                odoo_user = env['wx.user.odoouser'].sudo().search([('openid', '=', openid)])
+                odoo_user = env['wx.user.odoouser'].sudo().search([('openid', '=', openid)], limit=1)
                 if not odoo_user.exists():
                     resuser = env['wx.user.odoouser'].sudo().create({
                         "openid": info['openid'],
@@ -148,6 +148,14 @@ def main(robot):
                         "wx_user_id": wxuserinfo.id,
                         "image": base64.b64encode(_data)
                     })
+                else:
+                    # 查询从门店同步过来的用户是否存在，存在自动绑定微信
+                    resuser = env['res.users'].sudo().search([('wx_id', '=', info['openid'])], limit=1)
+                    if resuser.exists():  # 如果是公司用户，找到同名微信用户也绑定用户。
+                        resuser.write({
+                            "wx_user_id": wxuserinfo.id,
+                            "image": base64.b64encode(_data)
+                        })
 
         else:  # '已存微信用户，重新进入'
             _logger.info('已存微信用户，重新进入')
