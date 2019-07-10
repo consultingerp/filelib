@@ -23,7 +23,7 @@ class WxMedia(models.Model):
     update_time = fields.Char('更新时间')
     url = fields.Char('Url')
     news_item = fields.Text('内容')
-    source_type = fields.Selection([("ADD", '增加'), ("SYN", '同步')], string=u'来源')
+    source_type = fields.Selection([("ADD", '增加'),("ARTICLE", '文章'), ("SYN", '同步')], string=u'来源')
     article_ids = fields.Many2many('wx.media.article', string='图文')
     # image: all image fields are base64 encoded and PIL-supported
     image = fields.Binary("Image", attachment=True,
@@ -45,40 +45,37 @@ class WxMedia(models.Model):
                 wx_upload = wxclient.upload_media('thumb', f)
                 values['media_id'] = wx_upload["thumb_media_id"]
                 values['update_time'] = wx_upload["created_at"]
-        if values.get('media_type') == 'news':
+        if values.get('media_type') == 'news' and values.get('source_type') == 'ADD':
             news = self.upload_articles()
             values['media_id'] = news["media_id"]
             values['update_time'] = news["created_at"]
 
         return super(WxMedia, self).create(values)
 
-    @api.model
-    def upload_articles(self, articles=None):
-        from ..controllers import client
-        entry = client.wxenv(self.env)
-        wxclient = entry.wxclient
-        wx_client = WeChatClient(wxclient.appid, wxclient.appsecret, access_token=wxclient.token)
+    @api.multi
+    def test(self):
         wx_file_path = get_module_resource('wx_tools', 'static/wx')
         content = ''
         with open(os.path.join(wx_file_path, 'content.txt'), 'rb') as f:
             content = f.read()
-        #image = self.upload_image();
-        articles = [{
-            "thumb_media_id": 'atZ7s5YOa3DqE1dmMsAH7YZGUHy4ymwZb3jYqAFf07B-dsuKW1si4Nlufehm2SN7',
-            "author": "xxx",
-            "title": "Happy Day",
-            "content_source_url": "http://hhjc-crm-dev.e12.e2yun.com/webhome",
-            "content": '%s' %content,
-            "digest": "digest",
-            "show_cover_pic": 1,
-            "need_open_comment": 1,
-            "only_fans_can_comment": 1
-        },
+        content = str(content, 'utf-8')
+        articless = [
+            {
+                "thumb_media_id": 'atZ7s5YOa3DqE1dmMsAH7YZGUHy4ymwZb3jYqAFf07B-dsuKW1si4Nlufehm2SN7',
+                "author": "xxx",
+                "title": "Happy Day",
+                "content_source_url": "http://hhjc-crm-dev.e12.e2yun.com/blog/1/post/2",
+                "content": '%s' % content,
+                "digest": "digest",
+                "show_cover_pic": 1,
+                "need_open_comment": 1,
+                "only_fans_can_comment": 1
+            },
             {
                 "thumb_media_id": 'kEyLtRe2IkV3vAuRWZkF401Hamn6vsY1GQMi5SojPjJiEb2jD2-tc5L0JlosodFV',
                 "author": "xxx",
                 "title": "Happy Day",
-                "content_source_url": "http://hhjc-crm-dev.e12.e2yun.com/webhome",
+                "content_source_url": "http://hhjc-crm-dev.e12.e2yun.com/blog/1/post/6",
                 "content": "content",
                 "digest": "digest",
                 "show_cover_pic": 0,
@@ -86,7 +83,23 @@ class WxMedia(models.Model):
                 "only_fans_can_comment": 1
             }
         ]
-        return wx_client.media.upload_articles(articles)
+        self.upload_articles(articless, '我的测试_1007')
+
+    @api.model
+    def upload_articles(self, articless, name):
+        from ..controllers import client
+        entry = client.wxenv(self.env)
+        wxclient = entry.wxclient
+        wx_client = WeChatClient(wxclient.appid, wxclient.appsecret, access_token=wxclient.token)
+        wx_file_path = get_module_resource('wx_tools', 'static/wx')
+        news_up = wx_client.media.upload_articles(articless)
+        if news_up:
+            news_up['update_time'] = news_up["created_at"]
+            news_up['name'] = name
+            news_up['media_type'] = 'news'
+            news_up['source_type'] = 'ARTICLE'
+            self.create(news_up)
+        return articless
 
     def upload_image(self):
         wx_file_path = get_module_resource('wx_tools', 'static/wx')
@@ -137,6 +150,7 @@ class WxMedia(models.Model):
                         pass
                     else:
                         item["media_type"] = media_type
+                        item["source_type"] = 'SYN'
                         # if item.get('name'):
                         #     item['name'] = item['name'].encode('latin1').decode('utf8')
                         media = self.create(item)
