@@ -99,7 +99,7 @@ class WxMedia(models.Model):
             news_up['media_type'] = 'news'
             news_up['source_type'] = 'ARTICLE'
             self.create(news_up)
-        return articless
+        return news_up
 
     def upload_image(self):
         wx_file_path = get_module_resource('wx_tools', 'static/wx')
