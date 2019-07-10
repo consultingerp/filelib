@@ -58,13 +58,17 @@ class WxMedia(models.Model):
         entry = client.wxenv(self.env)
         wxclient = entry.wxclient
         wx_client = WeChatClient(wxclient.appid, wxclient.appsecret, access_token=wxclient.token)
+        wx_file_path = get_module_resource('wx_tools', 'static/wx')
+        content = ''
+        with open(os.path.join(wx_file_path, 'content.txt'), 'rb') as f:
+            content = f.read()
         #image = self.upload_image();
         articles = [{
             "thumb_media_id": 'atZ7s5YOa3DqE1dmMsAH7YZGUHy4ymwZb3jYqAFf07B-dsuKW1si4Nlufehm2SN7',
             "author": "xxx",
             "title": "Happy Day",
             "content_source_url": "http://hhjc-crm-dev.e12.e2yun.com/webhome",
-            "content": "<p>海以其博大，纳百川而成其浩瀚；山以其厚重，历沧桑而为之雄浑。我们正以山的浑厚、海的广博，诚信、务实的品质，敬业、创新的作风，追求卓越、实现跨越式发展的精神，为实现“打造百年企业”的企业目标，产品走向祖国的长城内外、大江南北，去搏击市场，去拥抱美好灿烂的明天。 <img src='http://mmbiz.qpic.cn/mmbiz_jpg/b8RO0Ld4xPsUeFiawoIyHomiaZ6evkiavR8xia9KesK9sh5dtqQNmVhSvcUopOvYSYVYVVona41ErwAE2JSlgBYrHQ/0?wx_fmt=jpeg'> &nbsp;</p>",
+            "content": '%s' %content,
             "digest": "digest",
             "show_cover_pic": 1,
             "need_open_comment": 1,

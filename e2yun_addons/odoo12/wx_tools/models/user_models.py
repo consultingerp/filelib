@@ -255,14 +255,20 @@ class wx_user(models.Model):
     # ------------------------------------------------------
     @api.multi
     def send_template_message(self, data, template_id=None, template_name=None, url='', usercode='', partner=None,
-                              user=None, partner_id=None, user_id=None):
+                              user=None, partner_id=None, user_id=None, url_type='in', openid=None):
         if not template_id:
             configer_para = self.env["wx.paraconfig"].sudo().search([('paraconfig_name', '=', template_name)])
             if configer_para:
                 template_id = configer_para[0].paraconfig_value
         from ..controllers import client
-        url = client.wxenv(
-            self.env).server_url + '/web/login?usercode='+usercode+'&codetype=wx&redirect=' + url
+        if url_type == 'in':
+            url = client.wxenv(
+                self.env).server_url + '/web/login?usercode='+usercode+'&codetype=wx&redirect=' + url
+        else:
+            url = client.wxenv(
+                self.env).server_url + url
+        if openid:
+            client.send_template_message(self, openid, template_id, data, url)
         if partner:
             if partner.wx_user_id.openid:
                 client.send_template_message(self, partner.wx_user_id.openid, template_id, data, url)

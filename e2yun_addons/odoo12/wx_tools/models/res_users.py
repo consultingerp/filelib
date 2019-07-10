@@ -91,27 +91,41 @@ class WxResUsers(models.Model):
                 if not user.wx_user_id:
                     raise UserError("用户没有绑定微信，不能发送微信重置密码")
                 logging.info("密码重置OK.")
-                data = {
-                    "first": {
-                        "value": "用户密码重置",
-                        "color": "#173177"
-                    },
-                    "keyword1": {
-                        "value": user.display_name
-                    },
-                    "keyword2": {
-                        "value": (datetime.datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
-                    },
-                    "remark": {
-                        "value": "点击此信息重置密码",
-                        "color": "#FF0000"
-                    }
-                }
-                url = '/web/reset_password?token=%s' % self.signup_token
-                self.env['wx.user'].send_template_message(data, user=user, template_name='密码重置提醒', url=url,
-                                                          usercode='RESPASSWORD')
+                self.wx_reset_password(user)
                 #template.with_context(lang=user.lang).send_mail(user.id, force_send=True, raise_exception=True)
             _logger.info("Password reset email sent for user <%s> to <%s>", user.login, user.email)
+
+    @api.model
+    def wx_reset_password(self, user=None, openid=None,nickname=None):
+        if not user:
+            first = "查询微信未绑定内部用户，不能重置密码。"
+            keyword1 = nickname
+            remark = "查询微信未绑定内部用户，不能重置密码，可以点击连接直接登录，"
+            url = '/web/login'
+        else:
+            first = "用户密码重置"
+            keyword1 = user.display_name
+            remark = "点击此信息重置密码"
+            url = '/web/reset_password?token=%s' % self.signup_token
+        data = {
+            "first": {
+                "value": first,
+                "color": "#173177"
+            },
+            "keyword1": {
+                "value": keyword1
+            },
+            "keyword2": {
+                "value": (datetime.datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
+            },
+            "remark": {
+                "value": remark,
+                "color": "#FF0000"
+            }
+        }
+
+        self.env['wx.user'].send_template_message(data, user=user, template_name='密码重置提醒', url=url,
+                                                  usercode='RESPASSWORD', url_type='out', openid=openid)
 
 
 class ChangePasswordUser(models.TransientModel):
