@@ -195,6 +195,8 @@ class e2yun_customer_info(models.Model):
     def onchange_name(self):
         name = self.name
         count = self.env['res.partner'].sudo().search_count([('name', '=', name)])
+        if count == 0:
+            count = self.env['res.partner'].sudo().search_count([('name', '=', name),('active','=',False)])
         if count > 0:
             self.name = False
             msg = _("The name you entered already exists for customers.")
@@ -205,6 +207,8 @@ class e2yun_customer_info(models.Model):
                 }
             }
         count = self.env['e2yun.customer.info'].sudo().search_count([('name', '=', name)])
+        if count == 0:
+            count = self.env['e2yun.customer.info'].sudo().search_count([('name', '=', name),('active','=',False)])
         if count > 0:
             self.name = False
             msg = _("The name you entered already exists.")
@@ -220,6 +224,8 @@ class e2yun_customer_info(models.Model):
         register_no = self.register_no
         if register_no:
             count = self.env['res.partner'].sudo().search_count([('register_no', '=', register_no)])
+            if count == 0:
+                count = self.env['res.partner'].sudo().search_count([('register_no', '=', register_no),('active','=',False)])
             if count > 0:
                 self.vat = False
                 msg = _("The Duty paragraph you entered already exists for customers.")
@@ -442,7 +448,7 @@ class e2yun_customer_info(models.Model):
 
     @api.multi
     def write(self, values):
-        # 读取按钮权限组s
+        #读取按钮权限组s
         groups_id = self.env.ref('ZCRM.Business_group').id
         sql = 'SELECT * from res_groups_users_rel where gid=%s and uid=%s'
         self._cr.execute(sql, (groups_id, self._uid,))

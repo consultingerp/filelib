@@ -11,7 +11,7 @@
                     <field name="id"/>
                     <field name="user_id"/>
                      <field name="wx_user_id"/>
-                    <field name="create_date" string="时间"/>
+                    <field name="create_date" string="记录访问时间"/>
                     <field name="tracelog_type"/>
                     <field name="title"/>
                 </tree>
