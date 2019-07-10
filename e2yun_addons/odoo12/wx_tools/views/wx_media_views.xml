@@ -22,16 +22,20 @@
             <field name="type">form</field>
             <field name="priority">999</field>
             <field name="arch" type="xml">
-                <form string="微信素材" version="7.0" >
+                <form string="微信素材" version="7.0">
+                       <header>
+                    <button name="test" type="object" class="oe_link" string="测试创建"/>
+                       </header>
                     <sheet>
                         <group>
                             <field name="media_id" readonly="1"/>
                             <field name="source_type"/>
                             <field name="media_type" attrs="{'readonly': [('media_id', '!=', False)]}"/>
                             <field name="name"/>
-                            <field name="image" widget='image'  options='{"preview_image": "image_medium", "size": [100, 100]}'
-                                   attrs="{'invisible': ('media_type', 'not in', ['image', 'thumb']) }"
-                             />
+                            <field name="image" widget='image'
+                                   options='{"preview_image": "image_medium", "size": [100, 100]}'
+                                   attrs="{'invisible': [('media_type', 'not in', ['image', '', 'thumb'])]}"
+                            />
                             <field name="article_ids"
                                    attrs="{'invisible': [('media_type', '!=', 'news')], 'readonly': [('media_id', '!=', False)]}"/>
                             <field name="update_time" readonly="1"/>
