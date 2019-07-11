@@ -42,7 +42,7 @@
         'views/wx_trace_log.xml',
         'views/wx_trace_log_type.xml',
         'views/res_company_views.xml',
-
+        'views/res_config_settings_views.xml',
     ],
     'qweb': [
     ],

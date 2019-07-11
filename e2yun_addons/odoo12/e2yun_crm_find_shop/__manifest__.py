@@ -11,9 +11,11 @@
     "license": "LGPL-3",
     "data": [
         "views/crm_find_shop.xml",
+        "views/gaode_template.xml"
+
     ],
     "depends": [
-        "crm", "base", "e2yun_crm_shop_maintain", "sales_team"
+        "crm", "base", "e2yun_crm_shop_maintain", "sales_team",
     ],
     "installable": True
 }

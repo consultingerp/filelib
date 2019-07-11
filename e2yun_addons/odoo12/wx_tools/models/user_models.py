@@ -219,7 +219,6 @@ class wx_user(models.Model):
 
     # ------------------------------------------------------
     # 发送微信公众号模板信息
-    # template_id :模板ID，可以在公众号模板中查询   如:nVJP4GzyfDtHp1pssoW1hq8ajY975xi8qFGoOdaEVbw
     # data:模板数据Jsono类型  如下格式:
     #      模板格式：https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277
     #            {{first.DATA}}
@@ -245,16 +244,31 @@ class wx_user(models.Model):
     #                 "value": "联系:hepeng1@163.com"
     #             }
     #         }
-    # url:模板连接到的URL 如：http://weixintools.pub.heyanze.com/web/login?usercode=saleorder&codetype=wx&redirect=/my/orders/24
-    #     URL解析： usercode:访问URL类型用户于定义是那个业务单元  codetype:(wx=微信公众号 crop=企业号)  redirect:转向内部URL
+    # template_id: 模板ID，可以在公众号模板中查询 如: nVJP4GzyfDtHp1pssoW1hq8ajY975xi8qFGoOdaEVbw
+    # template_name :模板名称，从wx.paraconfig 配置表中查找到相应的模板ID
+    # url:模板连接到的URL  内部的URL: /my/orders/24
+    # usercode:访问URL类型用户于定义是那个业务单元
     # partner: 供应商对象，如果传入供应商换到供应商对象的openid发送
     # user：用户对象 如果传入用户1：找到用户的微信关联账号发送，2：如果没找到1，找到供应商关联的合作伙伴的微信发送
     # partner_id：供应商ID 根据ID找到供应商的微信
     # user_id：用户ID，根据用户ID查找用户 1：找到用户的微信关联账号发送，2：如果没找到1，找到供应商关联的合作伙伴的微信发送
     # ------------------------------------------------------
     @api.multi
-    def send_template_message(self, template_id, data, url='', partner=None, user=None, partner_id=None, user_id=None):
+    def send_template_message(self, data, template_id=None, template_name=None, url='', usercode='', partner=None,
+                              user=None, partner_id=None, user_id=None, url_type='in', openid=None):
+        if not template_id:
+            configer_para = self.env["wx.paraconfig"].sudo().search([('paraconfig_name', '=', template_name)])
+            if configer_para:
+                template_id = configer_para[0].paraconfig_value
         from ..controllers import client
+        if url_type == 'in':
+            url = client.wxenv(
+                self.env).server_url + '/web/login?usercode='+usercode+'&codetype=wx&redirect=' + url
+        else:
+            url = client.wxenv(
+                self.env).server_url + url
+        if openid:
+            client.send_template_message(self, openid, template_id, data, url)
         if partner:
             if partner.wx_user_id.openid:
                 client.send_template_message(self, partner.wx_user_id.openid, template_id, data, url)
