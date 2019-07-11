@@ -85,7 +85,7 @@ var customer_loss_funnel = AbstractAction.extend({
                             //     position: 'inside'
                             // },
                             labelLine: {
-                                length: 50,
+                                length: 40,
                                 lineStyle: {
                                     width: 1,
                                     type: 'solid'
