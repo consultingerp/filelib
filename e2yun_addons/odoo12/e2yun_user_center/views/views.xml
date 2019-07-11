@@ -1,0 +1,25 @@
+<odoo>
+    <data>
+        <!--    通过动作打开网页-->
+        <record id="url_action_user_center" model="ir.actions.act_url">
+            <field name="name">User Center</field>
+            <field name="url">/user-center</field>
+            <field name="target">new</field>
+        </record>
+
+        <!--添加菜单项-->
+        <menuitem
+                id="base.user_center_menu"
+                name="User Center"
+                parent="base.menu_administration"
+                sequence="1"
+                groups="base.group_system"/>
+        <menuitem
+                id="menu_user_center"
+                name="User Center"
+                parent="base.user_center_menu"
+                sequence="1"
+                action="url_action_user_center"
+                groups="base.group_system"/>
+    </data>
+</odoo>
