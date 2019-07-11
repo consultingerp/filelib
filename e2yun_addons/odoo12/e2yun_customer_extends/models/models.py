@@ -132,23 +132,23 @@ class E2yunCsutomerExtends(models.Model):
              union
 
                 select p.id as p_id,2 as type_code from crm_lead  l 
-                 left join res_partner p on l.partner_id = p.id 
+                 right join res_partner p on l.partner_id = p.id 
                  where p.customer = 't' 
                  and p.active = 't' 
                  and p.state = '""" + state + """' 
                  group by p.id
-                 having (CURRENT_TIMESTAMP - max(l.write_date)) > interval '""" + day_num + """ day' 
+                 having (((CURRENT_TIMESTAMP - max(l.write_date)) > interval '""" + day_num + """ day' ) or max(l.write_date) is null)
 
              union
 
                 select p.id as p_id,3 as type_code from mail_activity a 
-                 left join res_partner p on p.id = a.res_id
+                 right join res_partner p on p.id = a.res_id
                  where a.res_model = 'res.partner' 
                  and p.customer = 't' 
                  and p.active = 't' 
                  and p.state = '""" + state + """' 
                  group by p.id
-                 having (CURRENT_TIMESTAMP - max(a.write_date)) > interval '""" + day_num + """ day' 
+                 having (((CURRENT_TIMESTAMP - max(a.write_date)) > interval '""" + day_num + """ day' ) or max(a.write_date) is null)
                  ) t group by p_id having sum(type_code) >= 6) t 
                  inner join res_partner_res_users_rel rel on rel.res_partner_id = t.p_id
 
@@ -187,8 +187,10 @@ class E2yunCsutomerExtends(models.Model):
                     }
 
                 }
-
-                wx_user_obj.send_template_message(template_id,data,user=res_user_obj.browse(u['user_id']))
+                try:
+                    wx_user_obj.send_template_message(template_id,data,user=res_user_obj.browse(u['user_id']))
+                except:
+                    pass
 
     def sync_customer_to_pos(self):
         for r in self:
