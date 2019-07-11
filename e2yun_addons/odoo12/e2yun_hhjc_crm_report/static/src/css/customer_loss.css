@@ -2,8 +2,13 @@
     width:800px;
     height:500px;
 }
-@media screen and (max-width: 768px){
+@media screen and (max-width: 768px) and (min-width: 375px) {
         .funnel_div{
             width:375px;
+        }
+    }
+@media screen and (max-width: 375px){
+        .funnel_div{
+            width:320px;
         }
     }
