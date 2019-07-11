@@ -1,7 +1,10 @@
 # -*-coding:utf-8-*-
 import logging
-
+import datetime
+from datetime import timedelta
 from odoo import models, fields, api
+from odoo.exceptions import UserError
+from odoo.addons.auth_signup.models.res_partner import now
 
 _logger = logging.getLogger(__name__)
 
@@ -22,7 +25,8 @@ class WxResUsers(models.Model):
     def write(self, vals):
         partner = super(WxResUsers, self).write(vals)
         if vals.get('wx_user_id') and self.partner_id.wx_user_id.id != vals.get('wx_user_id'):
-                self.partner_id.wx_user_id = vals.get('wx_user_id')
+            self.partner_id.wx_user_id = vals.get('wx_user_id')
+            self.wx_id = self.partner_id.wx_user_id.openid
         return partner
 
     @api.one
@@ -49,7 +53,79 @@ class WxResUsers(models.Model):
             wxobj = self.env['wx.user.odoouser'].sudo().search([('user_id', '=', self.env.user.id)])
             if wxobj.exists():
                 wxobj.write({'password': new_passwd})
-        super(WxResUsers, self).change_password(old_passwd, new_passwd)
+        return super(WxResUsers, self).change_password(old_passwd, new_passwd)
+
+    @api.multi
+    def action_wx_user_reset_password(self):
+        """ create signup token for each user, and send their signup url by email """
+        # prepare reset password signup
+        create_mode = bool(self.env.context.get('create_user'))
+
+        # no time limit for initial invitation, only for reset password
+        expiration = False if create_mode else now(days=+1)
+
+        self.mapped('partner_id').signup_prepare(signup_type="reset", expiration=expiration)
+
+        # send email to users with their signup url
+        template = False
+        if create_mode:
+            try:
+                template = self.env.ref('auth_signup.set_password_email', raise_if_not_found=False)
+            except ValueError:
+                pass
+        if not template:
+            template = self.env.ref('auth_signup.reset_password_email')
+        assert template._name == 'mail.template'
+
+        template_values = {
+            'email_to': '${object.email|safe}',
+            'email_cc': False,
+            'auto_delete': True,
+            'partner_to': False,
+            'scheduled_date': False,
+        }
+        template.write(template_values)
+
+        for user in self:
+            with self.env.cr.savepoint():
+                if not user.wx_user_id:
+                    raise UserError("用户没有绑定微信，不能发送微信重置密码")
+                logging.info("密码重置OK.")
+                self.wx_reset_password(user)
+                #template.with_context(lang=user.lang).send_mail(user.id, force_send=True, raise_exception=True)
+            _logger.info("Password reset email sent for user <%s> to <%s>", user.login, user.email)
+
+    @api.model
+    def wx_reset_password(self, user=None, openid=None,nickname=None):
+        if not user:
+            first = "查询微信未绑定内部用户，不能重置密码。"
+            keyword1 = nickname
+            remark = "查询微信未绑定内部用户，不能重置密码，可以点击连接直接登录，"
+            url = '/web/login'
+        else:
+            first = "用户密码重置"
+            keyword1 = user.display_name
+            remark = "点击此信息重置密码"
+            url = '/web/reset_password?token=%s' % self.signup_token
+        data = {
+            "first": {
+                "value": first,
+                "color": "#173177"
+            },
+            "keyword1": {
+                "value": keyword1
+            },
+            "keyword2": {
+                "value": (datetime.datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
+            },
+            "remark": {
+                "value": remark,
+                "color": "#FF0000"
+            }
+        }
+
+        self.env['wx.user'].send_template_message(data, user=user, template_name='密码重置提醒', url=url,
+                                                  usercode='RESPASSWORD', url_type='out', openid=openid)
 
 
 class ChangePasswordUser(models.TransientModel):
@@ -61,4 +137,4 @@ class ChangePasswordUser(models.TransientModel):
             wxobj = self.env['wx.user.odoouser'].sudo().search([('user_id', '=', line.user_id.id)])
             if wxobj.exists():
                 wxobj.write({'password': line.new_passwd})
-        super(ChangePasswordUser, self).change_password_button()
+        return super(ChangePasswordUser, self).change_password_button()

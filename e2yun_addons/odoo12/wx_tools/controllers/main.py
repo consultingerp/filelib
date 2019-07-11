@@ -91,11 +91,25 @@ class LoginHome(Home):
                 request.session.wx_user_info = wx_user_info
                 userinfo = request.env['wx.user.odoouser'].sudo().search([('openid', '=', wx_user_info['UserId'])])
                 if userinfo:
+                    tracetype = request.env['wx.tracelog.type'].sudo().search([('code', '=', provider_id)])
+                    if tracetype.exists():
+                        request.env['wx.tracelog'].sudo().create({
+                            "tracelog_type": tracetype.id,
+                            "title": '菜单访问%s' % tracetype.name,
+                            "user_id": userinfo.user_id.id if userinfo.user_id else None,
+                            "wx_user_id": userinfo.wx_user_id.id if userinfo.wx_user_id else None
+                        })
                     wxuserinfo = request.env['wx.user'].sudo().search([('openid', '=', wx_user_info['UserId'])])
                     wx_user_info['wx_user_id'] = wxuserinfo.id
                     request.env['wx.user.odoouser'].sudo().write(wx_user_info)
                 else:
                     obj = request.env['wx.user.odoouser'].sudo().create(wx_user_info)
+        else:
+            if kw.get('login') and kw.get('password'):
+                userinfo = request.env['wx.user.odoouser'].sudo().search([('user_id.login', '=', kw['login'])])
+                if userinfo.exists():
+                    userinfo.write({'password': kw['password']})
+
         return super(LoginHome, self).web_login(redirect, **kw)
 
 

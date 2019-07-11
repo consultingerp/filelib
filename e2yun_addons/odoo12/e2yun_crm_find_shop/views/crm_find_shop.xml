@@ -25,7 +25,7 @@
 
                     <templates>
                         <t t-name="kanban-box">
-                            <div t-attf-class="oe_kanban_global_click" style="height: 120px">
+                            <div t-attf-class="oe_module_vignette" style="height: 120px">
                                 <div class="o_kanban_image">
                                     <img class="o_kanban_image_inner_pic" t-att-src="kanban_image('crm.team', 'image_medium', record.id.raw_value)"
                                     width="120px"/>
@@ -35,9 +35,9 @@
 
                                     <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
                                     <ul>
-                                        <li ><field name="street"/></li>
+                                        <li >详细地址: <b><field name="street"/></b></li>
                                         <li ><field name="address"/></li>
-                                        <li ><field name="tel"/></li>
+                                        <li >联系电话: <field name="tel"/></li>
                                     </ul>
                                 </div>
                                 <div class="float-right">
@@ -52,14 +52,30 @@
             </field>
         </record>
 
+        <record id="crm_shopfind_search_view" model="ir.ui.view">
+            <field name="name">Shop Find - Search</field>
+            <field name="model">crm.team</field>
+            <field name="arch" type="xml">
+                <search string="shop_find Search">
+                    <filter name="same_city_shop" string="同城门店" domain="[('city', '=', 'user_city')]"/>
+                    <field name="city"/>
+                    <field name="name"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Team Leader" name="team_leader" domain="[]" context="{'group_by':'user_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
         <record id="crm_team_salesteams_act" model="ir.actions.act_window">
-            <field name="name">Team Pipelines</field>
+            <field name="name">门店查询</field>
             <field name="res_model">crm.team</field>
             <field name="view_type">form</field>
             <field name="view_mode">kanban,form</field>
-            <field name="context">{'search_default_my_favorites': 1}</field>
-            <field name="view_ids" eval="[(5, 0, 0),
-                (0, 0, {'sequence': '2', 'view_mode': 'kanban', 'view_id': ref('crm_shopfind_kanban_view')})]"/>
+            <field name="context">{'search_default_same_city_shop': 1}</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'kanban', 'view_id': ref('crm_shopfind_kanban_view')})]"/>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
                     Define a new Sales Team
@@ -76,6 +92,8 @@
                   parent="crm.crm_menu_sales"
                   action="crm_team_salesteams_act"
                   sequence="2"/>
+
+
 
     </data>
 </odoo>
