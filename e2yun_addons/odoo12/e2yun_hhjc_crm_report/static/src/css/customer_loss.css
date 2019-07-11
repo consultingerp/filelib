@@ -1,0 +1,9 @@
+.funnel_div{
+    width:800px;
+    height:500px;
+}
+@media screen and (max-width: 768px){
+        .funnel_div{
+            width:400px;
+        }
+    }

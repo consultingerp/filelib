@@ -45,7 +45,7 @@ var customer_loss_funnel = AbstractAction.extend({
                 var option = {
                     title: {
                         text: '客户流失表',
-                        subtext: '漏斗视图'
+                        //subtext: '漏斗视图'
                     },
                     tooltip: {
                         trigger: 'item',
@@ -59,6 +59,7 @@ var customer_loss_funnel = AbstractAction.extend({
                         }
                     },
                     legend: {
+                        top:20,
                         data: ['潜在客户','意向客户','准客户','成交客户']
                     },
                     calculable: true,
@@ -66,8 +67,8 @@ var customer_loss_funnel = AbstractAction.extend({
                         {
                             name:'',
                             type:'funnel',
-                            left: '10%',
-                            top: 60,
+                            left: '6%',
+                            top: 70,
                             //x2: 80,
                             bottom: 60,
                             width: '80%',
@@ -84,7 +85,7 @@ var customer_loss_funnel = AbstractAction.extend({
                             //     position: 'inside'
                             // },
                             labelLine: {
-                                length: 80,
+                                length: 50,
                                 lineStyle: {
                                     width: 1,
                                     type: 'solid'

@@ -5,6 +5,7 @@
         <xpath expr="." position="inside">
             <script type="text/javascript" src="/e2yun_hhjc_crm_report/static/src/js/echarts.min.js"></script>
             <script type="text/javascript" src="/e2yun_hhjc_crm_report/static/src/js/customer_loss_view.js"></script>
+            <link rel="stylesheet" href="/e2yun_hhjc_crm_report/static/src/css/customer_loss.css"/>
         </xpath>
     </template>
 
