@@ -35,9 +35,9 @@
 
                                     <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
                                     <ul>
-                                        <li >详细地址: <b><field name="street"/></b></li>
+                                        <li ><b>详细地址: </b><field name="street"/></li>
                                         <li ><field name="address"/></li>
-                                        <li >联系电话: <field name="tel"/></li>
+                                        <li ><b>联系电话: </b><field name="tel"/></li>
                                     </ul>
                                 </div>
                                 <div class="float-right">
@@ -61,7 +61,7 @@
                     <field name="city"/>
                     <field name="name"/>
                     <group expand="0" string="Group By...">
-                        <filter string="Team Leader" name="team_leader" domain="[]" context="{'group_by':'user_id'}"/>
+                        <filter string="负责人" name="team_leader" domain="[]" context="{'group_by':'user_id'}"/>
                     </group>
                 </search>
             </field>
@@ -72,6 +72,7 @@
             <field name="res_model">crm.team</field>
             <field name="view_type">form</field>
             <field name="view_mode">kanban,form</field>
+            <field name="search_view_id" ref="crm_shopfind_search_view"/>
             <field name="context">{'search_default_same_city_shop': 1}</field>
             <field name="view_ids"
                    eval="[(5, 0, 0),

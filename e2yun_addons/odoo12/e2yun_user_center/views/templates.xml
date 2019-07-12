@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--    外部用户，个人中心首页-->
+    <template id="e2yun_user_center_index_customer_template" name="User Center">
+        <div id="wrap" class="container">
+            <h1>User Center</h1>
+            <span>用户：</span>
+            <a href="/user-center/my-info" t-field="current_user.name"/>
+            <br/>
+            <a href="/user-center/my-guide">客户经理</a>
+            <br/>
+            <a href="/user-center/nearby-shop">附近门店</a>
+            <br/>
+            <a href="/user-center">优惠活动</a>
+        </div>
+    </template>
+<!--内部用户，个人中心首页-->
+    <template id="e2yun_user_center_index_employee_template" name="User Center">
+        <div id="wrap2" class="container">
+            <h1>User Center</h1>
+            <span>用户：</span>
+            <a href="/user-center/my-info" t-field="current_user.name"/>
+            <br/>
+            <a href="/user-center/back-to-app-center">首页</a>
+        </div>
+    </template>
+<!--外部用户，个人中心，我的个人信息页面-->
+    <template id="e2yun_user_center_my_info_customer_template" name="User Center">
+        <div id="wrap3" class="container">
+            <h1>个人信息</h1>
+            <span>用户：</span>
+            <span t-field="current_user.name"/>
+            <br/>
+            <span>账号：</span>
+            <span t-field="current_user.login"/>
+            <br/>
+            <span>手机：</span>
+            <span t-field="current_user.partner_id.mobile"/>
+            <br/>
+            <div class="roe">
+                <span>地址：</span>
+                <span t-field="current_user.partner_id.country_id"/>,
+                <span t-field="current_user.partner_id.state_id"/>,
+                <span t-field="current_user.partner_id.city"/>,
+                <span t-field="current_user.partner_id.street"/>,
+                <span t-field="current_user.partner_id.street2"/>,
+                <span t-field="current_user.partner_id.zip"/>,
+            </div>
+            <span>性别：</span>
+            <span t-field="current_user.partner_id.gender"/>
+            <br/>
+            <a href="/user-center/my-settings">更改用户信息</a>
+            <br/>
+        </div>
+    </template>
+<!--内部用户，个人中心，我的个人信息页面-->
+    <template id="e2yun_user_center_my_info_employee_template" name="User Center">
+        <div id="wrap4" class="container">
+            <h1>个人信息</h1>
+            <span>用户：</span>
+            <span t-field="current_user.name"/>
+            <br/>
+            <span>二维码：</span>
+            <span t-field="current_user.qrcodeimg"/>
+            <br/>
+            <span>账号：</span>
+            <span t-field="current_user.login"/>
+            <br/>
+            <span>手机：</span>
+            <span t-field="current_user.partner_id.mobile"/>
+            <br/>
+            <div class="row">
+                <span>地址：</span>
+                <span t-field="current_user.partner_id.country_id"/>,
+                <span t-field="current_user.partner_id.state_id"/>,
+                <span t-field="current_user.partner_id.city"/>,
+                <span t-field="current_user.partner_id.street"/>,
+                <span t-field="current_user.partner_id.street2"/>,
+                <span t-field="current_user.partner_id.zip"/>,
+            </div>
+            <span>性别：</span>
+            <span t-field="current_user.partner_id.gender"/>
+            <br/>
+            <a href="/user-center/my-settings">更改用户信息</a>
+            <br/>
+        </div>
+    </template>
+<!--外部用户，个人中心，我的个人信息，我的导购页面-->
+    <template id="e2yun_user_center_my_guide_template" name="Related Guide">
+        <div id="wrap5" class="container">
+            <h1>相关导购</h1>
+            <t t-foreach="related_guides" t-as="related_guide">
+                <div class="row">
+                    <span>导购姓名：</span>
+                    <span t-field="related_guide.name"/>,
+                    <span>手机：</span>
+                    <span t-field="related_guide.partner_id.mobile"/>,
+                    <span>二维码：</span>
+                    <span t-field="related_guide.qrcodeimg"/>
+                    <span>门店：</span>
+                    <span t-field="related_guide.partner_id.shop_name"/>
+                </div>
+            </t>
+        </div>
+    </template>
+</odoo>
