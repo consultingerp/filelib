@@ -11,7 +11,24 @@ class ResUsers(models.Model):
 
     vacation_status = fields.Boolean(string='Vacation status')
     gender = fields.Selection([('male','Male'),('female','Female')])
-    function = fields.Char('Operating Post')
+    function = fields.Selection([
+        ('店长','店长'),
+        ('店员','店员'),
+        ('司机','司机'),
+        ('库工','库工'),
+        ('内勤','内勤'),
+        ('采购','采购'),
+        ('送货员','送货员'),
+        ('安装员','安装员'),
+        ('片区长','片区长'),
+        ('备用一','备用一'),
+        ('备用二','备用二'),
+        ('备用三','备用三'),
+        ('备用四','备用四'),
+        ('备用五','备用五'),
+        ('回访专员','回访专员'),
+        ('公司设计师','公司设计师')
+         ],'Operating Post')
     wx_id = fields.Char('WeChat ID')
 
     @api.model_create_multi

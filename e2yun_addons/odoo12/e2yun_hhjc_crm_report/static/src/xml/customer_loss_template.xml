@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <templates id="template" xml:space="preserve">
+        <t t-name='customer_loss_funnel_template'>
+            <div class="funnel_div" id="funnel_div"></div><!--  style="width:800px;height:500px;"-->
+        </t>
+    </templates>
