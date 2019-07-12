@@ -9,14 +9,17 @@ class CrmTeamADDinformation(models.Model):
 
     color = fields.Integer('Color Index')
 
-    user_city = fields.Char(compute='the_same_city')
+    # user_city = fields.Char(compute='the_same_city')
 
-    @api.one
-    def the_same_city(self):
-        user = self.env.user
-        partner_of_user = user.partner_id
-        city = partner_of_user.city
-        self.user_city = city
+
+
+    # @api.model
+    # def _get_the_user_city(self):
+    #     context = self._context.copy()
+    #     uid = context.get('uid')
+    #     user = self.env['res.users'].search([('uid', '=', uid)])
+    #     city = user.partner_id.city
+    #     self.env.context.update({"user_city": city})
 
     def button_navigation(self):
         # raise exceptions.Warning(_("hhhhhhhhhhh！"))
@@ -27,3 +30,14 @@ class CrmTeamADDinformation(models.Model):
             'target': 'self',
             'res_id': self.id,
         }
+
+    @api.model
+    def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
+        new_context = self.env.context.copy()
+        uid = new_context.get('uid')
+        user = self.env['res.users'].search([('id', '=', uid)])
+        city = user.partner_id.city
+
+        new_context.update({"user_city": city})
+        self.with_context(new_context)
+        return super(CrmTeamADDinformation, self).search_read(domain, fields, offset, limit, order)
