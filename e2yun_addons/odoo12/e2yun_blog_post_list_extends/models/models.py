@@ -35,7 +35,7 @@ class BlogPostBatch(models.TransientModel):
             thumb_media_id = False
             wx_file_path = get_module_resource('e2yun_blog_post_list_extends', 'static/wx')
             # file_image = blog.main_image
-            if not blog.transfer_to_wx_flag:
+            if True:
                 if blog.cover_properties:
                     cover_properties = eval(blog.cover_properties)
                     if 'background-image' in eval(blog.cover_properties):
