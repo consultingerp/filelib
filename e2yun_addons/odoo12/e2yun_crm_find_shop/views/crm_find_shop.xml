@@ -57,7 +57,7 @@
             <field name="model">crm.team</field>
             <field name="arch" type="xml">
                 <search string="shop_find Search">
-                    <filter name="same_city_shop" string="同城门店" domain="[('city', '=', 'user_city')]"/>
+                    <filter name="same_city_shop" string="同城门店" domain="[('city', 'ilike', context.get('user_city'))]"/>
                     <field name="city"/>
                     <field name="name"/>
                     <group expand="0" string="Group By...">
