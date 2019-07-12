@@ -25,7 +25,7 @@
     # always loaded
     'data': [
         'views/views.xml',
-        'views/blog_post_view.xml',
+        # 'views/blog_post_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
