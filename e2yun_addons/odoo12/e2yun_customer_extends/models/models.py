@@ -47,18 +47,17 @@ class E2yunCsutomerExtends(models.Model):
     ], string='', default='potential_customer', group_expand='_group_expand_stage_id')
     related_guide = fields.Many2many('res.users')
 
-    @api.onchange('shop_name')
+    @api.onchange('shop_code')
     def on_change_shop_name(self):
         self.shop_name = self.shop_code.name
 
-    @api.depends('shop_name')
+    @api.depends('shop_code')
     def _compute_shop_name(self):
         self.shop_name = self.shop_code.name
 
     @api.model
     def _group_expand_stage_id(self, stages, domain, order):
         return ['potential_customer', 'intention_customer', 'intention_customer_loss', 'target_customer', 'target_customer_loss', 'contract_customers']
-
 
     @api.model
     def create(self, vals):
@@ -327,3 +326,22 @@ class resPartnerBatch(models.TransientModel):
                 r.pos_state = True
 
         return True
+
+
+class E2yunCrmTeamNameExtends(models.Model):
+    _inherit = 'crm.team'
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        res = self.search([('shop_code', operator, name)])
+        # res = super(E2yunCrmTeamNameExtends, self).name_search(name, args, operator, limit)
+        return res.name_get()
+
+    @api.multi
+    def name_get(self):
+        res = []
+        for crm_team in self:
+            name = str(crm_team.shop_code) + ' ' + str(crm_team.name)
+            # name = str(crm_team.shop_code)
+            res.append((crm_team.id, name))
+        return res
