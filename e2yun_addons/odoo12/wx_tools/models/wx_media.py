@@ -104,7 +104,7 @@ class WxMedia(models.Model):
             news_up['name'] = name
             news_up['media_type'] = 'news'
             news_up['source_type'] = 'ARTICLE'
-            self.create(news_up)
+            obj = self.create(news_up)
         return news_up
 
     def upload_image(self, file_path, media_type='thumb', name=''):
@@ -133,6 +133,25 @@ class WxMedia(models.Model):
             media_upload['name'] = name
             media_upload['media_type'] = 'newsimage'
             media_upload['source_type'] = 'ARTICLE'
+            self.create(media_upload)
+        return media_upload
+
+    def upload_permanent_media(self, file_path, media_type, name=''):
+        # 上传其他类型永久素材。
+        # media_type: 媒体文件类型，分别有图片（image）、语音（voice）和缩略图（thumb）
+        # file_path：文件路径
+        # name：图片史名称
+        from ..controllers import client
+        entry = client.wxenv(self.env)
+        wxclient = entry.wxclient
+        with open(file_path, 'rb') as wxfile:
+            media_upload = wxclient.upload_permanent_media(media_type, wxfile)
+            media_upload['update_time'] = media_upload["created_at"]
+            media_upload['name'] = name
+            media_upload['media_type'] = media_type
+            media_upload['source_type'] = 'ARTICLE'
+            if media_type == 'thumb':
+                media_upload['media_id'] = media_upload["thumb_media_id"]
             self.create(media_upload)
         return media_upload
 
