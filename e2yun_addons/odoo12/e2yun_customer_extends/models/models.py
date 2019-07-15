@@ -188,7 +188,7 @@ class E2yunCsutomerExtends(models.Model):
 
                 }
                 try:
-                    wx_user_obj.send_template_message(template_id,data,user=res_user_obj.browse(u['user_id']))
+                    wx_user_obj.send_template_message(data,template_id,user=res_user_obj.browse(u['user_id']))
                 except:
                     pass
 
