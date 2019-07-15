@@ -146,7 +146,7 @@ class WxMedia(models.Model):
         wxclient = entry.wxclient
         with open(file_path, 'rb') as wxfile:
             media_upload = wxclient.upload_permanent_media(media_type, wxfile)
-            media_upload['update_time'] = media_upload["created_at"]
+            #media_upload['update_time'] = media_upload["created_at"]
             media_upload['name'] = name
             media_upload['media_type'] = media_type
             media_upload['source_type'] = 'ARTICLE'
