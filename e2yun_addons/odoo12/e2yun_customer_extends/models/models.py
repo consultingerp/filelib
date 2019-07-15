@@ -19,8 +19,8 @@ class E2yunCsutomerExtends(models.Model):
     _inherit = 'res.partner'
 
     app_code = fields.Char(string='', copy=False, readonly=True, default=lambda self: _('New'))
-    shop_code = fields.Char(string='')
-    shop_name = fields.Char(string='')
+    shop_code = fields.Many2one('crm.team', string='')
+    shop_name = fields.Char(string='', readonly=True, compute='_compute_shop_name', store=True)
     referrer = fields.Many2one('res.users', string='')
     occupation = fields.Char(string='')
     car_brand = fields.Char(string='')
@@ -46,6 +46,14 @@ class E2yunCsutomerExtends(models.Model):
         ('contract_customers', 'Contract Customers')
     ], string='', default='potential_customer', group_expand='_group_expand_stage_id')
     related_guide = fields.Many2many('res.users')
+
+    @api.onchange('shop_name')
+    def on_change_shop_name(self):
+        self.shop_name = self.shop_code.name
+
+    @api.depends('shop_name')
+    def _compute_shop_name(self):
+        self.shop_name = self.shop_code.name
 
     @api.model
     def _group_expand_stage_id(self, stages, domain, order):
