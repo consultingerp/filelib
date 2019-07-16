@@ -19,21 +19,23 @@ class UserCenter(http.Controller):
     def main_page(self, **kwargs):
         user = http.request.env.user
         # 通过res.partner模型下的customer属性，判断是否为内部用户，来跳转到不同样式的个人中心页面
-        is_customer = user.partner_id.customer
-        if is_customer:
-            return http.request.render('e2yun_user_center.e2yun_user_center_index_customer_template', {'current_user': user})
-        else:
+        # is_customer = user.partner_id.customer
+        function = user.function
+        if function:
             return http.request.render('e2yun_user_center.e2yun_user_center_index_employee_template', {'current_user': user})
+        else:
+            return http.request.render('e2yun_user_center.e2yun_user_center_index_customer_template', {'current_user': user})
 
     # 个人中心用户信息页面
     @http.route('/user-center/my-info', auth='user')
     def my_info(self, **kwargs):
         user = http.request.env.user
-        is_customer = user.partner_id.customer
-        if is_customer:
-            return http.request.render('e2yun_user_center.e2yun_user_center_my_info_customer_template', {'current_user': user})
-        else:
+        # is_customer = user.partner_id.customer
+        function = user.function
+        if function:
             return http.request.render('e2yun_user_center.e2yun_user_center_my_info_employee_template', {'current_user': user})
+        else:
+            return http.request.render('e2yun_user_center.e2yun_user_center_my_info_customer_template', {'current_user': user})
 
     # 个人中心跳转到系统内部“个人信息修改”页面
     @http.route('/user-center/my-settings', auth='user')
