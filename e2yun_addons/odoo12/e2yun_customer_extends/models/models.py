@@ -333,12 +333,18 @@ class E2yunCrmTeamNameExtends(models.Model):
 
     @api.model
     def name_search(self, name='', args=None, operator='ilike', limit=100):
-        res = self.search([('shop_code', operator, name)])
+        res = super(E2yunCrmTeamNameExtends, self).name_search(name, args, operator, limit)
+        if name:
+            teams = self.search(['|', ('shop_code', operator, name), ('name', operator, name)])
+            return teams.name_get()
+        # res = self.search([('shop_code', operator, name)])
         # res = super(E2yunCrmTeamNameExtends, self).name_search(name, args, operator, limit)
-        return res.name_get()
+        else:
+            return res
 
     @api.multi
     def name_get(self):
+        # return [(e.shop_code, e.name) for e in self]
         res = []
         for crm_team in self:
             name = str(crm_team.shop_code) + ' ' + str(crm_team.name)
