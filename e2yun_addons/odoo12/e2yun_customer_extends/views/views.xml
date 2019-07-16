@@ -140,8 +140,9 @@
                         <!--                                attrs="{'invisible': [('state','not in',['target_customer'])]}"/>-->
                         <!--                        <button name="set_contract" string="Set Contract" type="object"-->
                         <!--                                attrs="{'invisible': [('state','not in',['target_customer'])]}"/>-->
+                        <field name="pos_state" invisible="1"/>
                         <button name="sync_customer_to_pos" string="同步POS" type="object" confirm="确认同步客户到POS系统？"
-                                attrs="{'invisible': ['|',('state','=','potential_customer'),('customer','!=',True)]}"/>
+                                attrs="{'invisible': ['|','|',('state','=','potential_customer'),('customer','!=',True),('pos_state','=',True)]}"/>
                         <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
                     </header>
                 </xpath>
