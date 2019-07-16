@@ -201,25 +201,31 @@ class E2yunCsutomerExtends(models.Model):
 
     def sync_customer_to_pos(self):
         for r in self:
+            if r.pos_state:
+                raise exceptions.Warning("POS状态已传输，不能再同步哟！")
             ICPSudo = self.env['ir.config_parameter'].sudo()
 
             url = ICPSudo.get_param('e2yun.sync_pos_member_webservice_url')  # webservice调用地址
             client = suds.client.Client(url)
-
+            shop_code = ''
+            shop_name = ''
+            if r.shop_code:
+                shop_code = r.shop_code.shop_code
+                shop_name = r.shop_code.name
             result = client.service.createMember(r.state_id.name or '',  # 省
                                                  r.city or '',  # 城市
                                                  r.street or '',  # 县区
                                                  r.street2 or '',  # 地址
                                                  r.name or '',  # 名称
                                                  r.user_nick_name or '',  # 昵称
-                                                 r.shop_code or '',  # 门店编码
+                                                 shop_code or '',  # 门店编码
                                                  r.mobile or '',  # 手机号码
                                                  r.phone or '',  # 电话号码
                                                  r.email or '',  # 邮箱
-                                                 r.shop_name or '',  # 门店名称
+                                                 shop_name or '',  # 门店名称
                                                  r.occupation or '',  # 职业
                                                  r.app_code or '',  # app编码
-                                                 r.create_uid.name)  # 创建人
+                                                 self.env.user.name)  # 创建人
 
             if result != 'S':
                 raise exceptions.Warning(result)
@@ -300,10 +306,18 @@ class resPartnerBatch(models.TransientModel):
 
         rep = self.env['res.partner'].browse(active_ids)
         for r in rep:
+            if r.pos_state:
+                raise exceptions.Warning("POS状态已传输，不能再同步哟！")
             ICPSudo = self.env['ir.config_parameter'].sudo()
 
             url = ICPSudo.get_param('e2yun.sync_pos_member_webservice_url')  # webservice调用地址
             client = suds.client.Client(url)
+
+            shop_code = ''
+            shop_name = ''
+            if r.shop_code:
+                shop_code = r.shop_code.shop_code
+                shop_name = r.shop_code.name
 
             result = client.service.createMember(r.state_id.name or '',  # 省
                                                  r.city or '',  # 城市
@@ -311,14 +325,14 @@ class resPartnerBatch(models.TransientModel):
                                                  r.street2 or '',  # 地址
                                                  r.name or '',  # 名称
                                                  r.user_nick_name or '',  # 昵称
-                                                 r.shop_code or '',  # 门店编码
+                                                 shop_code or '',  # 门店编码
                                                  r.mobile or '',  # 手机号码
                                                  r.phone or '',  # 电话号码
                                                  r.email or '',  # 邮箱
-                                                 r.shop_name or '',  # 门店名称
+                                                 shop_name or '',  # 门店名称
                                                  r.occupation or '',  # 职业
                                                  r.app_code or '',  # app编码
-                                                 r.create_uid.name)  # 创建人
+                                                 self.env.user.name)  # 创建人
 
             if result != 'S':
                 raise exceptions.Warning(result)
