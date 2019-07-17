@@ -172,21 +172,21 @@ class E2yunCsutomerExtends(models.Model):
             res_user_obj = self.env['res.users']
 
             for u in users:
-                paerner = partner_obj.browse(u['p_id'])
+                partner = partner_obj.browse(u['p_id'])
                 msg = ''
                 if state == 'intention_customer':
-                    msg = '意向客户:' + paerner.name + ' 超过' + day_num + '天没有新的服务状态更新'
+                    msg = '意向客户:' + partner.name + ' 超过' + day_num + '天没有新的服务状态更新'
                 elif state == 'target_customer':
-                    msg = '准客户:' + paerner.name + ' 超过' + day_num + '天未邀约客户进行方案洽谈'
+                    msg = '准客户:' + partner.name + ' 超过' + day_num + '天未邀约客户进行方案洽谈'
 
                 data = {
                     "first":{
                         "value":"客户跟踪提醒"
                     },
-                    "keyword1":{
-                        "value":paerner.name
+                    "keyword2":{
+                        "value":partner.name
                     },
-                    "keyword1": {
+                    "keyword3": {
                         "value": (datetime.datetime.now()+timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
                     },
                     "remark":{
@@ -194,10 +194,11 @@ class E2yunCsutomerExtends(models.Model):
                     }
 
                 }
-                try:
-                    wx_user_obj.send_template_message(data,template_id,user=res_user_obj.browse(u['user_id']))
-                except:
-                    pass
+                wx_user_obj.send_template_message(data, template_id, user=res_user_obj.browse(u['user_id']))
+                # try:
+                #     wx_user_obj.send_template_message(data,template_id,user=res_user_obj.browse(u['user_id']))
+                # except:
+                #     pass
 
     def sync_customer_to_pos(self):
         for r in self:
