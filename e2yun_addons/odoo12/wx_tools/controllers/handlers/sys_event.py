@@ -53,6 +53,7 @@ def main(robot):
         max_goal_user = None  # 获取销售团队下面评分最高用户
         shop_code = None  # 门店
         rs = env['wx.user'].sudo().search([('openid', '=', openid)], limit=1)
+        wxuserinfo = None
         if not rs.exists():  # 不存在微信用户在
             wxuserinfo = env['wx.user'].sudo().create(info)  # 创建微信用户。
             resuser = env['res.users'].sudo().search([('login', '=', info['openid'])], limit=1)  # 查询登录名与微信名一样的
@@ -248,6 +249,7 @@ def main(robot):
 
     @robot.unsubscribe
     def unsubscribe(message):
+        defpassword = '123456'
         tracelog_type = 'unsubscribe'
         tracelog_title = '取消关注公众号'
         entry = client.wxenv(request.env)
@@ -256,6 +258,10 @@ def main(robot):
         env = request.env()
         info = entry.wxclient.get_user_info(openid)
         user = env['res.users'].sudo().search([('wx_user_id.openid', '=', openid)])
+        user.write({
+            "wx_id": None,
+            "password": defpassword
+        })
         rs = env['wx.user'].sudo().search([('openid', '=', openid)])
         if rs.exists():
             rs.unlink()
@@ -397,7 +403,8 @@ def main(robot):
                     vals = {'program_id': sale_coupon_program.id, 'partner_id': resuser.partner_id.id}
                     coupon_id = env['sale.coupon'].sudo().create(vals)
 
-                ret_msg = _("优惠券领取成功\n优惠券金额：%s\n优惠券编号：%s" % (coupon_id.program_id.discount_fixed_amount, coupon_id.code))
+                ret_msg = _(
+                    "优惠券领取成功\n优惠券金额：%s\n优惠券编号：%s" % (coupon_id.program_id.discount_fixed_amount, coupon_id.code))
         tracetype = env['wx.tracelog.type'].sudo().search([('code', '=', tracelog_type)])
         if tracetype.exists():
             env['wx.tracelog'].sudo().create({
