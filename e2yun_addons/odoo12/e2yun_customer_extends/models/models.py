@@ -213,9 +213,9 @@ class E2yunCsutomerExtends(models.Model):
                 shop_code = r.shop_code.shop_code
                 shop_name = r.shop_code.name
             result = client.service.createMember(r.state_id.name or '',  # 省
-                                                 r.city or '',  # 城市
-                                                 r.street or '',  # 县区
-                                                 r.street2 or '',  # 地址
+                                                 r.city_id.name or '',  # 城市
+                                                 r.area_id.name or '',  # 县区
+                                                 r.street or '',  # 地址
                                                  r.name or '',  # 名称
                                                  r.user_nick_name or '',  # 昵称
                                                  shop_code or '',  # 门店编码
@@ -320,9 +320,9 @@ class resPartnerBatch(models.TransientModel):
                 shop_name = r.shop_code.name
 
             result = client.service.createMember(r.state_id.name or '',  # 省
-                                                 r.city or '',  # 城市
-                                                 r.street or '',  # 县区
-                                                 r.street2 or '',  # 地址
+                                                 r.city_id.name or '',  # 城市
+                                                 r.area_id.name or '',  # 县区
+                                                 r.street or '',  # 地址
                                                  r.name or '',  # 名称
                                                  r.user_nick_name or '',  # 昵称
                                                  shop_code or '',  # 门店编码
