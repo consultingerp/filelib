@@ -140,7 +140,7 @@ class WxMedia(models.Model):
         # 上传其他类型永久素材。
         # media_type: 媒体文件类型，分别有图片（image）、语音（voice）和缩略图（thumb）
         # file_path：文件路径
-        # name：图片史名称
+        # name：图片名称
         from ..controllers import client
         entry = client.wxenv(self.env)
         wxclient = entry.wxclient

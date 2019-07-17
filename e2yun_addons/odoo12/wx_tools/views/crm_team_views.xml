@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-
     <record id="crm_team_qrcodeimg" model="ir.ui.view">
         <field name="name">crm.team.form.qrcodeimg</field>
         <field name="model">crm.team</field>
@@ -9,6 +8,26 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='alias_contact']" position="after">
                 <field name="qrcodeimg"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="view_crm_team_address_location" model="ir.ui.view">
+        <field name="name">crm.team.form.address_location</field>
+        <field name="model">crm.team</field>
+        <field name="priority">2</field>
+        <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='dashboard']" position="after">
+                <page string="门店坐标">
+                    <group name="address_location">
+                        <field name="longitude"/>
+                        <field name="latitude"/>
+                        <field name="location_write_date"/>
+                        <field name="address_location"/>
+                    </group>
+                </page>
             </xpath>
         </field>
     </record>
