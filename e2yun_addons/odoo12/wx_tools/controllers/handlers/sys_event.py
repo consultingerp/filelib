@@ -7,6 +7,7 @@ from odoo.fields import Datetime
 import datetime
 import odoo
 from odoo.http import request
+from odoo import _
 
 _logger = logging.getLogger(__name__)
 
@@ -386,6 +387,17 @@ def main(robot):
                 else:
                     env['res.users'].wx_reset_password(user=None, openid=openid, nickname=str(info['nickname']))
                 ret_msg = ""
+            elif eventkey[0] == 'COUPON':
+                tracelog_type = 'qrscene_COUPON'
+                tracelog_title = "扫描二维码领取优惠券,微信用户%s" % (str(info['nickname']))
+                _logger.info('qrscene_COUPON')
+                traceuser_id = resuser
+                if resuser.exists() and resuser.wx_user_id:
+                    sale_coupon_program = env['sale.coupon.program'].sudo().search([('id', '=', eventkey[1])], limit=1)
+                    vals = {'program_id': sale_coupon_program.id, 'partner_id': resuser.partner_id.id}
+                    coupon_id = env['sale.coupon'].sudo().create(vals)
+
+                ret_msg = _("优惠券领取成功\n优惠券金额：%s\n优惠券编号：%s" % (coupon_id.program_id.discount_fixed_amount, coupon_id.code))
         tracetype = env['wx.tracelog.type'].sudo().search([('code', '=', tracelog_type)])
         if tracetype.exists():
             env['wx.tracelog'].sudo().create({
