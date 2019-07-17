@@ -54,6 +54,7 @@ def main(robot):
         shop_code = None  # 门店
         rs = env['wx.user'].sudo().search([('openid', '=', openid)], limit=1)
         wxuserinfo = None
+        guide = ["店长", "店员"]
         if not rs.exists():  # 不存在微信用户在
             wxuserinfo = env['wx.user'].sudo().create(info)  # 创建微信用户。
             resuser = env['res.users'].sudo().search([('login', '=', info['openid'])], limit=1)  # 查询登录名与微信名一样的
@@ -129,7 +130,6 @@ def main(robot):
                         "email": 'lh',
                         "wx_id": info['openid']
                     })
-                    guide = ["店长", "店员"]
                     res_guideorreferrer = env['res.users'].sudo().search([('id', '=', user_id)], limit=1)
                     if res_guideorreferrer.function in guide or max_goal_user:  # 导购 或者 排名导购
                         ismail_channel = True
@@ -166,15 +166,33 @@ def main(robot):
                         "wx_user_id": wxuserinfo.id,
                         "image": base64.b64encode(_data)
                     })
-                    resuser.partner_id.write({
-                        'supplier': True,
-                        'customer': True,
-                        "wx_user_id": wxuserinfo.id,
-                        "user_id": user_id,
-                        "customer_source": tracelog_type,
-                        "image": base64.b64encode(_data),
-                        'related_guide': [(6, 0, users_ids)]
-                    })
+                    res_guideorreferrer = env['res.users'].sudo().search([('id', '=', user_id)], limit=1)
+                    if res_guideorreferrer.function in guide or max_goal_user:  # 导购 或者 排名导购
+                        ismail_channel = True
+                        guideorreferrer = 'guide'
+                        resuser.partner_id.write({
+                            'supplier': True,
+                            'customer': True,
+                            "wx_user_id": wxuserinfo.id,
+                            "user_id": user_id,
+                            "customer_source": tracelog_type,
+                            "image": base64.b64encode(_data),
+                            'related_guide': [(6, 0, users_ids)]
+                        })
+                    else:  # 推荐人
+                        guideorreferrer = 'referrer'
+                        tracelog_title = "扫描推荐人%s关注,微信用户%s" % (eventkey[3], str(info['nickname']))
+                        ret_msg = "欢迎您%s：\n 我们将竭诚为您服务，欢迎咨询！" % str(info['nickname'])
+                        resuser.partner_id.write({
+                            'supplier': True,
+                            'customer': True,
+                            'shop_code': shop_code,
+                            "wx_user_id": wxuserinfo.id,
+                            "image": base64.b64encode(_data),
+                            "customer_source": tracelog_type,
+                            "referrer": user_id
+                        })
+
                 # 记录微信用户到 微信用户与odoo用户映射关系
                 odoo_user = env['wx.user.odoouser'].sudo().search([('openid', '=', openid)], limit=1)
                 if not odoo_user.exists():
