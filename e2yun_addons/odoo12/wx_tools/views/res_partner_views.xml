@@ -5,7 +5,7 @@
         <record id="res_partner_wx_ext" model="ir.ui.view">
             <field name="name">res.partner.view.form.wx</field>
             <field name="model">res.partner</field>
-            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='website']" position="after">
@@ -14,5 +14,26 @@
             </field>
         </record>
 
+
+        <record id="view_partner_wx_location_event" model="ir.ui.view">
+            <field name="name">res.partner.view.form.wxlocationevent</field>
+            <field name="model">res.partner</field>
+            <field name="priority">2</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='sales_purchases']" position="after">
+                    <page string="微信地址">
+                        <group name="wxlocationevent">
+                            <field name="wxlongitude"/>
+                            <field name="wxlatitude"/>
+                            <field name="wxprecision"/>
+                            <field name="wx_address"/>
+                             <field name="near_team"/>
+                            <field name="location_write_date"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>

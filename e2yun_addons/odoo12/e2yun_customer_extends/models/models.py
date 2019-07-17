@@ -19,8 +19,8 @@ class E2yunCsutomerExtends(models.Model):
     _inherit = 'res.partner'
 
     app_code = fields.Char(string='', copy=False, readonly=True, default=lambda self: _('New'))
-    shop_code = fields.Char(string='')
-    shop_name = fields.Char(string='')
+    shop_code = fields.Many2one('crm.team', string='')
+    shop_name = fields.Char(string='', readonly=True, compute='_compute_shop_name', store=True)
     referrer = fields.Many2one('res.users', string='')
     occupation = fields.Char(string='')
     car_brand = fields.Char(string='')
@@ -47,10 +47,17 @@ class E2yunCsutomerExtends(models.Model):
     ], string='', default='potential_customer', group_expand='_group_expand_stage_id')
     related_guide = fields.Many2many('res.users')
 
+    @api.onchange('shop_code')
+    def on_change_shop_name(self):
+        self.shop_name = self.shop_code.name
+
+    @api.depends('shop_code')
+    def _compute_shop_name(self):
+        self.shop_name = self.shop_code.name
+
     @api.model
     def _group_expand_stage_id(self, stages, domain, order):
         return ['potential_customer', 'intention_customer', 'intention_customer_loss', 'target_customer', 'target_customer_loss', 'contract_customers']
-
 
     @api.model
     def create(self, vals):
@@ -194,25 +201,31 @@ class E2yunCsutomerExtends(models.Model):
 
     def sync_customer_to_pos(self):
         for r in self:
+            if r.pos_state:
+                raise exceptions.Warning("POS状态已传输，不能再同步哟！")
             ICPSudo = self.env['ir.config_parameter'].sudo()
 
             url = ICPSudo.get_param('e2yun.sync_pos_member_webservice_url')  # webservice调用地址
             client = suds.client.Client(url)
-
+            shop_code = ''
+            shop_name = ''
+            if r.shop_code:
+                shop_code = r.shop_code.shop_code
+                shop_name = r.shop_code.name
             result = client.service.createMember(r.state_id.name or '',  # 省
-                                                 r.city or '',  # 城市
-                                                 r.street or '',  # 县区
-                                                 r.street2 or '',  # 地址
+                                                 r.city_id.name or '',  # 城市
+                                                 r.area_id.name or '',  # 县区
+                                                 r.street or '',  # 地址
                                                  r.name or '',  # 名称
                                                  r.user_nick_name or '',  # 昵称
-                                                 r.shop_code or '',  # 门店编码
+                                                 shop_code or '',  # 门店编码
                                                  r.mobile or '',  # 手机号码
                                                  r.phone or '',  # 电话号码
                                                  r.email or '',  # 邮箱
-                                                 r.shop_name or '',  # 门店名称
+                                                 shop_name or '',  # 门店名称
                                                  r.occupation or '',  # 职业
                                                  r.app_code or '',  # app编码
-                                                 r.create_uid.name)  # 创建人
+                                                 self.env.user.name)  # 创建人
 
             if result != 'S':
                 raise exceptions.Warning(result)
@@ -293,25 +306,33 @@ class resPartnerBatch(models.TransientModel):
 
         rep = self.env['res.partner'].browse(active_ids)
         for r in rep:
+            if r.pos_state:
+                raise exceptions.Warning("POS状态已传输，不能再同步哟！")
             ICPSudo = self.env['ir.config_parameter'].sudo()
 
             url = ICPSudo.get_param('e2yun.sync_pos_member_webservice_url')  # webservice调用地址
             client = suds.client.Client(url)
 
+            shop_code = ''
+            shop_name = ''
+            if r.shop_code:
+                shop_code = r.shop_code.shop_code
+                shop_name = r.shop_code.name
+
             result = client.service.createMember(r.state_id.name or '',  # 省
-                                                 r.city or '',  # 城市
-                                                 r.street or '',  # 县区
-                                                 r.street2 or '',  # 地址
+                                                 r.city_id.name or '',  # 城市
+                                                 r.area_id.name or '',  # 县区
+                                                 r.street or '',  # 地址
                                                  r.name or '',  # 名称
                                                  r.user_nick_name or '',  # 昵称
-                                                 r.shop_code or '',  # 门店编码
+                                                 shop_code or '',  # 门店编码
                                                  r.mobile or '',  # 手机号码
                                                  r.phone or '',  # 电话号码
                                                  r.email or '',  # 邮箱
-                                                 r.shop_name or '',  # 门店名称
+                                                 shop_name or '',  # 门店名称
                                                  r.occupation or '',  # 职业
                                                  r.app_code or '',  # app编码
-                                                 r.create_uid.name)  # 创建人
+                                                 self.env.user.name)  # 创建人
 
             if result != 'S':
                 raise exceptions.Warning(result)
@@ -319,3 +340,28 @@ class resPartnerBatch(models.TransientModel):
                 r.pos_state = True
 
         return True
+
+
+class E2yunCrmTeamNameExtends(models.Model):
+    _inherit = 'crm.team'
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        res = super(E2yunCrmTeamNameExtends, self).name_search(name, args, operator, limit)
+        if name:
+            teams = self.search(['|', ('shop_code', operator, name), ('name', operator, name)])
+            return teams.name_get()
+        # res = self.search([('shop_code', operator, name)])
+        # res = super(E2yunCrmTeamNameExtends, self).name_search(name, args, operator, limit)
+        else:
+            return res
+
+    @api.multi
+    def name_get(self):
+        # return [(e.shop_code, e.name) for e in self]
+        res = []
+        for crm_team in self:
+            name = str(crm_team.shop_code) + ' ' + str(crm_team.name)
+            # name = str(crm_team.shop_code)
+            res.append((crm_team.id, name))
+        return res

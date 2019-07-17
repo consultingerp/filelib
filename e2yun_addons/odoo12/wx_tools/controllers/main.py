@@ -36,7 +36,7 @@ class LoginHome(Home):
         wxcode = wx_client_code.WX_CODE
         if not wxcode:
             wxcode = {}
-        logging.info(wxcode)
+        #logging.info(wxcode)
         if code is False:
             return super(LoginHome, self).web_login(redirect, **kw)
         if code:  # code换取token
@@ -80,7 +80,8 @@ class LoginHome(Home):
                 # uid = request.session.authenticate(request.session.db, obj.user_id.login, '')
                 return super(LoginHome, self).web_login(redirect, **kw)
         elif request.session.wx_user_info:  # 存在微信登录访问
-            if not request.params['login'] or not request.params['password']:
+            if not request.params['login'] \
+                    or not request.params['password']:
                 return super(LoginHome, self).web_login(redirect, **kw)
             uid = request.session.authenticate(request.session.db, request.params['login'], request.params['password'])
             if uid is not False:
@@ -103,7 +104,16 @@ class LoginHome(Home):
                     wx_user_info['wx_user_id'] = wxuserinfo.id
                     request.env['wx.user.odoouser'].sudo().write(wx_user_info)
                 else:
+                    wxuserinfo = request.env['wx.user'].sudo().search([('openid', '=', wx_user_info['UserId'])])
+                    wx_user_info['wx_user_id'] = wxuserinfo.id
                     obj = request.env['wx.user.odoouser'].sudo().create(wx_user_info)
+                    resuser = request.env['res.users'].sudo().search([('id', '=', uid)], limit=1)
+                    if not resuser.wx_user_id:
+                        resuser.write({
+                            "wx_user_id": wxuserinfo.id,
+                        })
+
+
         else:
             if kw.get('login') and kw.get('password'):
                 userinfo = request.env['wx.user.odoouser'].sudo().search([('user_id.login', '=', kw['login'])])
