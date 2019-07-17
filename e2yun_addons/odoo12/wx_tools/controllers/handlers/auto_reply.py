@@ -140,34 +140,52 @@ def main(robot):
                 uuid = wxuseruuid.last_uuid
                 active_id = channel.id
         uuid_type = None
-        if partner_user_id and uuid:  # 需要联系客服要 存在上次会话
-            _logger.info('需要联系客服要 存在上次会话')
-            # 查询上次会话是否是用户类型
-            uuid_type = 'USER'
-            uuid_session = request.env['wx.user.uuid'].sudo().search(
-                [('uuid', '=', uuid), ('uuid_type', '=', uuid_type),('uuid_user_id','=', partner_user_id.id)], limit=1)
-            if uuid_session.exists():
-                _now = fields.datetime.now()
-                if _now - uuid_session.last_uuid_time >= datetime.timedelta(seconds=30 * 60):
-                    entry.send_text(openid, "正在联系您的专属客户经理%s，我们将竭诚为您服务，欢迎咨询！ " % (partner_user_id.name))
-            else:  # 如果不满足条件重新选择发起会话
-                uuid = None
-        elif not partner_user_id and uuid:  # 如果是联系客服 如果有UUID
-            uuid_type = 'service'
-            uuid_session = request.env['wx.user.uuid'].sudo().search(
-                [('uuid', '=', uuid), ('uuid_type', '=', uuid_type)],
-                limit=1)  # 如果会话是服务类型
-            if not uuid_session.exists():  # 会话不是服务类型
+
+        if not partner_user_id.vacation_status:  # 上班
+            if partner_user_id and uuid :  # 需要联系客服要 and  存在上次会话
+                _logger.info('需要联系客服要 存在上次会话')
+                # 查询上次会话是否是用户类型
+                uuid_type = 'USER'
                 uuid_session = request.env['wx.user.uuid'].sudo().search(
-                    [('wx_user_id', '=', wx_user.id), ('uuid_type', '=', uuid_type)],
-                    limit=1)   # 选择一个服务类型的会话
-                if uuid_session.exists():
-                    uuid = uuid_session.uuid
-                else:
+                    [('uuid', '=', uuid), ('uuid_type', '=', uuid_type), ('uuid_user_id', '=', partner_user_id.id)],
+                    limit=1)
+                if uuid_session.exists():  # 是导购 UUID是用户类型
+                    _now = fields.datetime.now()
+                    if _now - uuid_session.last_uuid_time >= datetime.timedelta(seconds=30 * 60):
+                        entry.send_text(openid, "正在联系您的专属客户经理%s，我们将竭诚为您服务，欢迎咨询！ " % (partner_user_id.name))
+                else:  # 如果不满足条件重新选择发起会话
                     uuid = None
-        if partner_user_id and not uuid:
-            _logger.info('需要联系客服要 没有会话')
-            entry.send_text(openid, "正在联系您的专属客户经理%s，我们将竭诚为您服务，欢迎咨询！ " % (partner_user_id.name))
+            elif not partner_user_id and uuid:  # 如果是联系客服 如果有UUID
+                uuid_type = 'service'
+                uuid_session = request.env['wx.user.uuid'].sudo().search(
+                    [('uuid', '=', uuid), ('uuid_type', '=', uuid_type)],
+                    limit=1)  # 如果会话是服务类型
+                if not uuid_session.exists():  # 会话不是服务类型
+                    uuid_session = request.env['wx.user.uuid'].sudo().search(
+                        [('wx_user_id', '=', wx_user.id), ('uuid_type', '=', uuid_type)],
+                        limit=1)   # 选择一个服务类型的会话
+                    if uuid_session.exists():
+                        uuid = uuid_session.uuid
+                    else:
+                        uuid = None
+            if partner_user_id and not uuid:
+                _logger.info('需要联系客服要 没有会话')
+                entry.send_text(openid, "正在联系您的专属客户经理%s，我们将竭诚为您服务，欢迎咨询！ " % (partner_user_id.name))
+        else:  # 休假
+            _logger.info('休假状态，联系客户。')
+            partner_user_id = None  #
+            if uuid:
+                uuid_type = 'service'
+                uuid_session = request.env['wx.user.uuid'].sudo().search([('uuid', '=', uuid),
+                                                                          ('uuid_type', '=', uuid_type)],
+                                                                         limit=1)  # 如果会话是服务类型
+                if not uuid_session.exists():  # 会话不是服务类型
+                    uuid_session = request.env['wx.user.uuid'].sudo().search(
+                        [('wx_user_id', '=', wx_user.id), ('uuid_type', '=', uuid_type)], limit=1)  # 选择一个服务类型的会话
+                    if uuid_session.exists():
+                        uuid = uuid_session.uuid
+                    else:
+                        uuid = None
 
         if not uuid:  # 没有会话创建会话
             anonymous_name = wx_user.nickname
