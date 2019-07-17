@@ -105,7 +105,7 @@ class E2yunCsutomerExtends(models.Model):
             new_state = values.get('state')
             # intention_customer_loss  target_customer_loss  contract_customers
             if previous_state in ['potential_customer']:
-                if not self.mobile or not self.street or not self.city or not self.state_id:
+                if not self.mobile or not self.state_id or not self.city_id or not self.area_id or not self.street:
                     raise Warning(_("Please fill in partner's mobile and address!"))
             # if previous_state in ['intention_customer_loss', 'target_customer_loss']:
             #     raise Warning(_("不能从流失客户转换到其他状态！"))
