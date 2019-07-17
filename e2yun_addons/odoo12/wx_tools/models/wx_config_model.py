@@ -17,6 +17,8 @@ class wx_config_settings(models.TransientModel):
     wx_token = fields.Char('Token', default='K5Dtswpte')
 
     server_url = fields.Char('应用URL')
+    amapkey = fields.Char('地图KEY')
+
 
     #_defaults = {
     #}
@@ -49,6 +51,7 @@ class wx_config_settings(models.TransientModel):
                 'wx_AppSecret': Param.get_param('wx_AppSecret', default=''),
                 'wx_token': Param.get_param('wx_token', default='K5Dtswpte'),
                 'server_url': Param.get_param('server_url', default=''),
+                'amapkey': Param.get_param('amapkey', default=''),
                 }
 
     @api.multi
@@ -61,6 +64,7 @@ class wx_config_settings(models.TransientModel):
         Param.set_param('wx_AppSecret', config.wx_AppSecret )
         Param.set_param('wx_token', config.wx_token )
         Param.set_param('server_url', config.server_url)
+        Param.set_param('amapkey', config.amapkey)
 
     @api.multi
     def set_values(self):
@@ -76,6 +80,7 @@ class wx_config_settings(models.TransientModel):
         Param.set_param('wx_AppSecret', config.wx_AppSecret )
         Param.set_param('wx_token', config.wx_token )
         Param.set_param('server_url', config.server_url)
+        Param.set_param('amapkey', config.amapkey)
 
     @api.model
     def get_values(self):
@@ -92,7 +97,8 @@ class wx_config_settings(models.TransientModel):
             wx_token = Param.get_param('wx_token', default=''),
             wx_AccessToken = client.wxclient._token or '',
             wx_url = '%s/wx_handler'%Param.get_param('web.base.url'),
-            server_url = Param.get_param('server_url', default='')
+            server_url = Param.get_param('server_url', default=''),
+            amapkey=Param.get_param('amapkey', default='')
         )
         return res
 

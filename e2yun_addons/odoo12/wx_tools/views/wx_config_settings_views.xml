@@ -35,6 +35,7 @@
                                     <field name="wx_url" class="oe_inline"/>
                                     <field name="wx_token" class="oe_inline"/>
                                     <field name="server_url" class="oe_inline"/>
+                                    <field name="amapkey" class="oe_inline"/>
                                 </group>
                             </div>
                         </div>
