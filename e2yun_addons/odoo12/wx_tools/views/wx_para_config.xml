@@ -44,7 +44,7 @@
         </record>
 
         <menuitem action="wx_paraconfig_action" id="wx_paraconfig_action_menuitem" name="参数配置" parent="parent_menu_123"
-                  sequence="13"  groups="wx_tools.group_wx_conf"/>
+                  sequence="13" groups="wx_tools.group_wx_conf"/>
 
 
     </data>

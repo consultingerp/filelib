@@ -8,6 +8,7 @@
              <field name="arch" type="xml">
                 <xpath expr="//field[@name='social_twitter']" position="before">
                     <field name="qrcodeimg"/>
+                    <field name="qrcodeimg_external"/>
                 </xpath>
             </field>
         </record>
