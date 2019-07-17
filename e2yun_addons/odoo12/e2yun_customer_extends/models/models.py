@@ -194,11 +194,11 @@ class E2yunCsutomerExtends(models.Model):
                     }
 
                 }
-                wx_user_obj.send_template_message(data, template_id, user=res_user_obj.browse(u['user_id']))
-                # try:
-                #     wx_user_obj.send_template_message(data,template_id,user=res_user_obj.browse(u['user_id']))
-                # except:
-                #     pass
+                #wx_user_obj.send_template_message(data, template_id, user=res_user_obj.browse(u['user_id']))
+                try:
+                    wx_user_obj.send_template_message(data,template_id,user=res_user_obj.browse(u['user_id']))
+                except:
+                    pass
 
     def sync_customer_to_pos(self):
         for r in self:
