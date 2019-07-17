@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="gaode_map_template" name="Gaode Map">
+        <!--DOCTYPE html-->
+        <html>
+            <head lang="en">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+                <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width"/>
+                <title>路线规划</title>
+                <style>
+                    body,#mapContainer{
+                        margin:0;
+                        height:100%;
+                        width:100%;
+                        text-align: center;
+                        font-size:12px;
+                    }
+                    .panel{
+                        position: absolute;
+                        top:15px;
+                        right: 15px;
+                    }
+                    .qrcodetxt{
+                        background-color: #0D9BF2;
+                        padding: 6px;
+                        color: white;
+                    }
+                    .center{
+                        position: absolute;
+                        width: 100%;
+                        bottom: 24px;
+                    }
+                    .btmtip {
+                        cursor: pointer;
+                        border-radius: 5px;
+                        background-color: #0D9BF2;
+                        padding: 6px;
+                        width: 160px;
+                        color: white;
+                        margin: 0 auto;
+                    }
+                </style>
+                <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main.css?v=1.0?v=1.0"/>
+                <script type="text/javascript" src="/web/static/lib/jquery/jquery.js"></script>
+                <script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp&amp;libraries=convertor"></script>
+                <script type="text/javascript" src="/static/map.js"></script>
+                <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+                <script >
+                    //全局变量
+                    var map = null;
+                    //驾驶服务
+                    var drivingService = null;
+                    //信息窗口
+                    var infoWindow = null;
+                    //驾驶策略
+                    var policys = ["LEAST_TIME","LEAST_DISTANCE","AVOID_HIGHWAYS","REAL_TRAFFIC"];
+                    //当前位置的marker
+                    var curr_marker = null;
+                    //当前位置坐标
+                    var curr = null;
+                    //微信配置参数
+                    var APPID = null
+                    var nonceStr = null
+                    var timestamp = null
+                    var signature = null
+
+
+                    $(function(){
+
+                        //获取微信参数
+                        $.ajax({
+                            url:'/map',
+                            type:'get',
+                            dataType:'xml',
+                            success:function(dat){
+                                var APPID = wx.wx_appid
+                                var nonceStr = wx.wx_nonceStr
+                                var timestamp = wx.wx_timestamp
+                                var signature = wx.wx_signature
+                            },
+                        });
+
+                        //初始化地图
+                        init()
+
+                    });
+
+                    function init(){
+                        initNavWindow();
+                        //加载腾讯地图
+                        initMap();
+                        //获取用户当前状态
+                        getUserChargeStatus();
+                        //初始化导航按钮
+                        initNavClick();
+                        //初始化微信定位接口
+                        initWxLocation();
+                    }
+
+                    function initWxLocation(){
+                        //配置微信定位功能
+                        wx.config({
+                            debug: false,
+                            appId: 'APPID',
+                            timestamp:'timestamp',
+                            nonceStr:'nonceStr',
+                            signature:'signature',
+                            jsApiList : [ 'checkJsApi', 'openLocation', 'getLocation' ]
+                        });
+
+                        wx.error(function(res) {
+                            alert("出错了：" + res.errMsg);
+                        });
+
+                        wx.ready(function() {
+                            //判断当前客户端版本是否支持指定JS接口
+                            wx.checkJsApi({
+                                jsApiList : ['getLocation'],
+                                success : function(res) {}
+                        });
+
+                        //获取位置信息
+                        wx.getLocation({
+                            type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                            success: function (res) {
+                                var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                                var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                                var speed = res.speed; // 速度，以米/每秒计
+                                var accuracy = res.accuracy; // 位置精度
+                                //alert("纬度:" + latitude + ", 经度:" + longitude);
+                                //循环定位，每隔一段时间会自动定位一次
+                                //转换gps坐标为腾讯坐标
+                                //curr = new qq.maps.LatLng(latitude, longitude);
+                                qq.maps.convertor.translate(new qq.maps.LatLng(latitude, longitude), 1, function(res){
+                                    curr = res[0];
+                                    if(curr_marker == null){
+                                        panPointAndGetPlants();
+                                    }else{
+                                        curr_marker.setPosition(curr);
+                                    }
+                                });
+                            },
+                            cancel: function (res) {
+                                alert('用户拒绝授权，获取地理位置失败');
+                            },
+                            fail: function(error) {
+                                alert('获取地理位置失败，请确保开启GPS且允许微信获取您的地理位置！');
+                            }
+                        });
+                    })
+
+                    //平移中心点，获取列表
+                    function panPointAndGetPlants(){
+                        //平移中心点到定位位置
+                        panToPoint(curr);
+                        //获取附近的列表
+                        getPlants();
+                    }
+
+
+                    //初始化地图
+                    function initMap(){
+                        //设置c_map高度
+                        $("#c_map").height($(window).height() - 55);
+                        //初始位置天安门
+                        var center = new qq.maps.LatLng(39.908860, 116.397390);
+                        map = new qq.maps.Map(document.getElementById("c_map"), {
+                            center: center,
+                            zoom: 10,
+                            //启用比例尺
+                            scaleControl: true,
+                            scaleControlOptions: {
+                                //设置控件位置相对右下角对齐，向左排列
+                                position: qq.maps.ControlPosition.BOTTOM_RIGHT
+                            },
+                            //启用缩放控件
+                            zoomControl: true,
+                            //设置缩放控件的位置和样式
+                            zoomControlOptions: {
+                                //设置缩放控件的位置为相对左方中间位置对齐.
+                                position: qq.maps.ControlPosition.LEFT_TOP,
+                                //设置缩放控件样式为仅包含放大缩小两个按钮
+                                style: qq.maps.ZoomControlStyle.SMALL
+                            }
+                        });
+                    }
+
+
+                    //平移地图中心点，定位位置
+                    function panToPoint(point){
+                        if(map != null){
+                            //panTo()将地图中心移动到指定的经纬度坐标。
+                            map.panTo(point);
+                            //zoomTo()将地图缩放到指定的级别。
+                            map.zoomTo(13);
+                            //绘制当前位置marker
+                            curr_marker = new qq.maps.Marker({
+                                //设置Marker的位置坐标
+                                position: point,
+                                //设置Marker被添加到Map上时的动画效果为落下
+                                animation: qq.maps.MarkerAnimation.DOWN,
+                                //设置显示Marker的地图
+                                map: map,
+                                <!-- //自定义Marker图标为大头针样式
+                                icon: new qq.maps.MarkerImage("images/zb_curr.png") -->
+                            });
+                        }
+                    }
+
+                    function getPlants(){
+                        if(curr == null){
+                            return;
+                        }
+                        ajaxSyncRequest('${pageContext.request.contextPath}/wx/pileList',{"latitude":curr.getLat(),"longitude":curr.getLng()},function(res){
+                            if(res.success){
+                                //将JSON字符串转换为JavaScript对象
+                                drawerMarker($.parseJSON(res.datas));
+                            }else{
+                                alert(res.msg);
+                            }
+                        });
+                    }
+
+                    //获取用户当前状态
+                    function getUserChargeStatus(){
+                        ajaxSyncRequest('${pageContext.request.contextPath}/wx/getUserInfo',{},function(data){
+                        if(data.success){
+                            if(data.user.useStatus == 1){
+                                window.location.href="show";
+                                return;
+                            }
+                            if(data.user.billNotified == 1){
+                                //notifybill接口被调用,数据没复位
+                                window.location.href="show";
+                                return;
+                            }
+                        }
+                        });
+                    }
+
+                    //绘制附近的marker
+                    function drawerMarker(datas){
+                        $.each(datas, function(i, data){
+                            //转换百度坐标为腾讯坐标
+                            qq.maps.convertor.translate(new qq.maps.LatLng(data.latitude, data.longitude), 3, function(res){
+                                var point = res[0];
+                                //创建一个Marker
+                                var marker = new qq.maps.Marker({
+                                    //设置Marker的位置坐标
+                                    position: point,
+                                    //设置Marker被添加到Map上时的动画效果为从天而降
+                                    animation:qq.maps.MarkerAnimation.DROP,
+                                    //设置显示Marker的地图
+                                    map: map,
+                                    <!-- //自定义Marker图标为大头针样式 -->
+                                    <!-- icon: new qq.maps.MarkerImage("images/zb.png") -->
+                                });
+                                //添加信息窗口
+                                getInfoWindow();
+                                //info窗口内容
+                                    var html = '<div class="app_infowindow">';
+                                    html = html + '<ul><li>';
+                                    html = html + '<p><font class="app_infowindow_name">';
+                                    html = html + data.plantName;
+                                    html = html + '</font><i><font class="col_or">';
+                                    html = html + data.num;
+                                    html = html + '</font>可用</i></p><p>';
+                                    html = html + data.address;
+                                    html = html + '</p></li></ul></div>';
+                                    html = html + '<div class="app_infoicon" οnclick="routeplan(';
+                                    html = html + point.getLat() + "," + point.getLng() + ",'" + data.address + '\')">';
+                                    html = html + '<img src="images/arrow.png"><br/>';
+                                    html = html + '<a href="#">去这里<a/>';
+                                    html = html + '</div>';
+                                //标记Marker点击事件
+                                qq.maps.event.addListener(marker, 'click', function(){
+                                    infoWindow.open();
+                                    infoWindow.setContent(html);
+                                    infoWindow.setPosition(marker.getPosition());
+                                });
+                            });
+                        });
+                    }
+
+                    //路线规划
+                    function routeplan(lat, lng, addr){
+                        //保存数据，切换策略时用
+                        $("#to_lat").val(lat);
+                        $("#to_lng").val(lng);
+                        $("#to_addr").val(addr);
+                        //起始位置
+                        var from = curr;
+                        //目的地
+                        var to = new qq.maps.LatLng(lat, lng);
+                        //驾驶策略
+                        var policy = policys[parseInt($("#to_policy").val())];
+                        //设置获取驾车线路方案的服务
+                        getDrivingService();
+                        //清空当前结果在map和panel中的展现。
+                        drivingService.clear();
+                        //设置驾车方案
+                        drivingService.setPolicy(qq.maps.DrivingPolicy[policy]);
+                        //设置驾车的区域范围
+                        //drivingService.setLocation("北京");
+                        //设置回调函数
+                        drivingService.setComplete(function(result) {
+                            if (result.type == qq.maps.ServiceResultType.MULTI_DESTINATION) {
+                                //起终点不唯一
+                                var d = result.detail;
+                                drivingService.search(d.start[0], d.end[0]);
+                            }else{
+                                $(".tab_title").text(addr);
+                                var dis = parseFloat(result.detail.distance) / 1000;
+                                $("#dist").text(dis.toFixed(1));
+                                $("#dur").text(result.detail.duration);
+                            }
+                        });
+                        //设置检索失败回调函数
+                        drivingService.setError(function(data) {
+                            alert(data);
+                        });
+                        //设置驾驶路线的起点和终点
+                        drivingService.search(from, to);
+                        //关闭infowindow
+                        infoWindow.close();
+                        //弹出导航窗口
+                        if($("#info").is(":hidden")){
+                            $("#info").slideToggle(300);
+                        }
+                    }
+
+                    //获取驾驶服务
+                    function getDrivingService(){
+                        if(drivingService == null){
+                            drivingService = new qq.maps.DrivingService({
+                                map: map,
+                                //展现结果，自定义
+                                //panel: document.getElementById('info')
+                            });
+                        }
+                    }
+
+                    //获取info window
+                    function getInfoWindow(){
+                        if(infoWindow == null){
+                            infoWindow = new qq.maps.InfoWindow({
+                                map: map
+                            });
+                        }
+                    }
+
+                    //初始化导航窗口
+                    function initNavWindow(){
+                        //初始化导航窗口为隐藏状态
+                        $("#info").hide();
+                        //初始化导航tab
+                        $(".tab_bar ul li").click(function(){
+                            $(".tab_bar ul li").removeClass("tab_bar_curr");
+                            $(this).addClass("tab_bar_curr");
+                            $("#to_policy").val($(this).index());
+                            var lat = $("#to_lat").val();
+                            var lng = $("#to_lng").val();
+                            var addr = $("#to_addr").val();
+                            routeplan(lat, lng, addr);
+                        });
+                    }
+
+                    //初始化导航按钮
+                    function initNavClick(){
+                        $(".tab_right").click(function(){
+                            var lat = $("#to_lat").val();
+                            var lng = $("#to_lng").val();
+                            var addr = $("#to_addr").val();
+                            openMapApp(lat, lng, addr);
+                        });
+                    }
+                </script>
+                <style type="text/css">
+                    .app_infowindow{ float:left; margin:0px 10px 0px 0px}
+                    .app_infowindow li p{ line-height:16px; font-size:8px; color:#999;}
+                    .app_infowindow li p i{ padding:0 5px; border-radius:5px; background:#eee;}
+                    .app_infowindow_name{ font-weight:bold; font-size:12px; color:#333;}
+                    .app_infoicon{ float:left; padding:0px 0px 0px 10px; height:100%; border-left:1px #eee solid }
+                    .app_infoicon img{ width:28px; height:28px;}
+                    .app_infoicon a{font-size:12px; color:#67bcf2;}
+                    .app_panel{width:100%; height:100px; background:#edebe8; bottom:55px; position:fixed;}
+                    .tab_bar{width:100%; height:30px; background:#fff; bottom:135px; position:fixed;}
+                    .tab_bar ul{padding-top:6px;}
+                    .tab_bar_li{width:25%; float:left; text-align:center; font-size:12px; position:relative; color:#b5b5b5}
+                    .tab_bar_curr{color:#068cfb;}
+                    .tab_context{width:100%; height:70px; bottom:55px; position:fixed; padding:0px 0px 0px 10px;}
+                    .tab_context .tab_left{width:80%; float:left; position:relative;}
+                    .tab_context .tab_right{width:20%; float:left; position:relative;}
+                    .tab_left p{line-height:28px;}
+                    .tab_title{ font-weight:bold; font-size:16px; color:#333;}
+                    .tab_text{ font-size:14px; color:#999;}
+                    .ico_nav{ width:32px; height:32px; text-align:center;}
+                    .nav_text{ font-size:14px; color:#068cfb;}
+                    .app_map{height:650px}
+                </style>
+            </head>
+            <body>
+                <div class="w_all app_main">
+                    <!-- 存储数据 -->
+                    <input type="hidden" id="to_lat" value=""/>
+                    <input type="hidden" id="to_lng" value=""/>
+                    <input type="hidden" id="to_addr" value=""/>
+                    <input type="hidden" id="to_policy" value="0"/>
+                    <!-- map -->
+                    <div class="app_map" id="c_map"></div>
+                    <div class="app_panel" id="info">
+                        <div class="tab_bar">
+                            <ul>
+                                <li class="tab_bar_li tab_bar_curr">最少时间</li>
+                                <li class="tab_bar_li">最短距离</li>
+                                <li class="tab_bar_li">不走高速</li>
+                                <li class="tab_bar_li">躲避拥堵</li>
+                            </ul>
+                        </div>
+                        <div class="tab_context">
+                            <div class="tab_left">
+                                <p class="tab_title">北京</p>
+                                <p class="tab_text"><span id="dist">2.0</span>公里 | <span id="dur">12</span>分钟</p>
+                            </div>
+                            <div class="tab_right">
+                                <img src="images/navigation.png" class="ico_nav"/>
+                                <p class="nav_text">导航</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app_menu">
+                    </div>
+                </div>
+            </body>
+        </html>
+    </template>
+</odoo>
