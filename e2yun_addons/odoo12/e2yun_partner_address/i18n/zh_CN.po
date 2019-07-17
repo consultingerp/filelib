@@ -1,0 +1,147 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* e2yun_partner_address
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-07-17 06:15+0000\n"
+"PO-Revision-Date: 2019-07-17 06:15+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: e2yun_partner_address
+#: model_terms:ir.ui.view,arch_db:e2yun_partner_address.crm_partner_form_address_sequence_change
+msgid "<b>Company Address:</b>"
+msgstr "<b> 公司地址: </b>"
+
+#. module: e2yun_partner_address
+#: model:ir.model,name:e2yun_partner_address.model_res_city_area
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_city_area__name
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_partner__area_id
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_state_city__area_ids
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_users__area_id
+msgid "Area"
+msgstr "区/县"
+
+#. module: e2yun_partner_address
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_city_area__code
+msgid "Area Code"
+msgstr "区/县代码"
+
+#. module: e2yun_partner_address
+#: model:ir.model,name:e2yun_partner_address.model_res_state_city
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_city_area__city_id
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_country_state__city_ids
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_partner__city_id
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_state_city__name
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_users__city_id
+msgid "City"
+msgstr "城市"
+
+#. module: e2yun_partner_address
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_state_city__code
+msgid "City Code"
+msgstr "城市代码"
+
+#. module: e2yun_partner_address
+#: model:ir.model,name:e2yun_partner_address.model_res_partner
+msgid "Contact"
+msgstr "联系人"
+
+#. module: e2yun_partner_address
+#: model:ir.model,name:e2yun_partner_address.model_res_country_state
+msgid "Country state"
+msgstr "国家/地区州/省"
+
+#. module: e2yun_partner_address
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_city_area__create_uid
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_state_city__create_uid
+msgid "Created by"
+msgstr "创建人"
+
+#. module: e2yun_partner_address
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_city_area__create_date
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_state_city__create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: e2yun_partner_address
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_city_area__display_name
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_state_city__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: e2yun_partner_address
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_city_area__id
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_state_city__id
+msgid "ID"
+msgstr ""
+
+#. module: e2yun_partner_address
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_city_area____last_update
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_state_city____last_update
+msgid "Last Modified on"
+msgstr "最后修改日"
+
+#. module: e2yun_partner_address
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_city_area__write_uid
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_state_city__write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: e2yun_partner_address
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_city_area__write_date
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_state_city__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: e2yun_partner_address
+#: model:ir.model.fields,field_description:e2yun_partner_address.field_res_state_city__state_id
+msgid "State"
+msgstr "省/ 州"
+
+#. module: e2yun_partner_address
+#: model:ir.actions.act_window,name:e2yun_partner_address.action_res_city_area
+#: model:ir.ui.menu,name:e2yun_partner_address.menu_res_city_area
+#: model_terms:ir.ui.view,arch_db:e2yun_partner_address.crm_partner_form_address_sequence_change
+msgid "县/区"
+msgstr ""
+
+#. module: e2yun_partner_address
+#: model_terms:ir.ui.view,arch_db:e2yun_partner_address.crm_partner_form_address_sequence_change
+msgid "国家"
+msgstr ""
+
+#. module: e2yun_partner_address
+#: model_terms:ir.ui.view,arch_db:e2yun_partner_address.crm_partner_form_address_sequence_change
+msgid "地址..."
+msgstr ""
+
+#. module: e2yun_partner_address
+#: model_terms:ir.ui.view,arch_db:e2yun_partner_address.crm_partner_form_address_sequence_change
+msgid "地址2..."
+msgstr ""
+
+#. module: e2yun_partner_address
+#: model:ir.actions.act_window,name:e2yun_partner_address.action_res_state_city
+#: model:ir.ui.menu,name:e2yun_partner_address.menu_res_state_city
+#: model_terms:ir.ui.view,arch_db:e2yun_partner_address.crm_partner_form_address_sequence_change
+msgid "城市"
+msgstr ""
+
+#. module: e2yun_partner_address
+#: model_terms:ir.ui.view,arch_db:e2yun_partner_address.crm_partner_form_address_sequence_change
+msgid "省份"
+msgstr ""
+
+#. module: e2yun_partner_address
+#: model_terms:ir.ui.view,arch_db:e2yun_partner_address.crm_partner_form_address_sequence_change
+msgid "邮编"
+msgstr ""
+

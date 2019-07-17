@@ -172,21 +172,21 @@ class E2yunCsutomerExtends(models.Model):
             res_user_obj = self.env['res.users']
 
             for u in users:
-                paerner = partner_obj.browse(u['p_id'])
+                partner = partner_obj.browse(u['p_id'])
                 msg = ''
                 if state == 'intention_customer':
-                    msg = '意向客户:' + paerner.name + ' 超过' + day_num + '天没有新的服务状态更新'
+                    msg = '意向客户:' + partner.name + ' 超过' + day_num + '天没有新的服务状态更新'
                 elif state == 'target_customer':
-                    msg = '准客户:' + paerner.name + ' 超过' + day_num + '天未邀约客户进行方案洽谈'
+                    msg = '准客户:' + partner.name + ' 超过' + day_num + '天未邀约客户进行方案洽谈'
 
                 data = {
                     "first":{
                         "value":"客户跟踪提醒"
                     },
-                    "keyword1":{
-                        "value":paerner.name
+                    "keyword2":{
+                        "value":partner.name
                     },
-                    "keyword1": {
+                    "keyword3": {
                         "value": (datetime.datetime.now()+timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
                     },
                     "remark":{
@@ -194,6 +194,7 @@ class E2yunCsutomerExtends(models.Model):
                     }
 
                 }
+                #wx_user_obj.send_template_message(data, template_id, user=res_user_obj.browse(u['user_id']))
                 try:
                     wx_user_obj.send_template_message(data,template_id,user=res_user_obj.browse(u['user_id']))
                 except:
@@ -213,9 +214,9 @@ class E2yunCsutomerExtends(models.Model):
                 shop_code = r.shop_code.shop_code
                 shop_name = r.shop_code.name
             result = client.service.createMember(r.state_id.name or '',  # 省
-                                                 r.city or '',  # 城市
-                                                 r.street or '',  # 县区
-                                                 r.street2 or '',  # 地址
+                                                 r.city_id.name or '',  # 城市
+                                                 r.area_id.name or '',  # 县区
+                                                 r.street or '',  # 地址
                                                  r.name or '',  # 名称
                                                  r.user_nick_name or '',  # 昵称
                                                  shop_code or '',  # 门店编码
@@ -320,9 +321,9 @@ class resPartnerBatch(models.TransientModel):
                 shop_name = r.shop_code.name
 
             result = client.service.createMember(r.state_id.name or '',  # 省
-                                                 r.city or '',  # 城市
-                                                 r.street or '',  # 县区
-                                                 r.street2 or '',  # 地址
+                                                 r.city_id.name or '',  # 城市
+                                                 r.area_id.name or '',  # 县区
+                                                 r.street or '',  # 地址
                                                  r.name or '',  # 名称
                                                  r.user_nick_name or '',  # 昵称
                                                  shop_code or '',  # 门店编码
