@@ -19,7 +19,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'crm', 'sales_team', 'sale', 'base_setup'],
+    'depends': ['base', 'crm', 'sales_team', 'sale', 'base_setup', 'e2yun_partner_address'],
 
     # always loaded
     'data': [
