@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="gaode_map_template" name="Gaode Map">
+    <template id="map_template" name="Gaode Map">
         <!--DOCTYPE html-->
         <html>
             <head lang="en">
@@ -58,28 +58,8 @@
                     var curr_marker = null;
                     //当前位置坐标
                     var curr = null;
-                    //微信配置参数
-                    var APPID = null
-                    var nonceStr = null
-                    var timestamp = null
-                    var signature = null
-
 
                     $(function(){
-
-                        //获取微信参数
-                        $.ajax({
-                            url:'/map',
-                            type:'get',
-                            dataType:'xml',
-                            success:function(dat){
-                                var APPID = wx.wx_appid
-                                var nonceStr = wx.wx_nonceStr
-                                var timestamp = wx.wx_timestamp
-                                var signature = wx.wx_signature
-                            },
-                        });
-
                         //初始化地图
                         init()
 
@@ -99,24 +79,37 @@
 
                     function initWxLocation(){
                         //配置微信定位功能
-                        wx.config({
-                            debug: false,
-                            appId: 'APPID',
-                            timestamp:'timestamp',
-                            nonceStr:'nonceStr',
-                            signature:'signature',
-                            jsApiList : [ 'checkJsApi', 'openLocation', 'getLocation' ]
-                        });
+                        $.ajax({
+                            url: '/map',
+                            type: 'POST',
+                            contentType: "application/json",
+                            // dataType: 'jsonp',//这里要用jsonp的方式不然会报错
+                            success: function(r) {
+                                var data = {};
+                                data.timestamp = r.signPackage.timestamp;
+                                data.nonceStr = r.signPackage.nonceStr;
+                                data.signature = r.signPackage.signature;
+                                data.appId = r.signPackage.appId;
+                                wx.config({
+                                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                                    appId: data.appId, // 必填，公众号的唯一标识
+                                    timestamp:data.timestamp, // 必填，生成签名的时间戳
+                                    nonceStr: data.nonceStr, // 必填，生成签名的随机串
+                                    signature: data.signature,// 必填，签名
+                                                jsApiList : [ 'checkJsApi', 'openLocation', 'getLocation' ]
+                                });
 
-                        wx.error(function(res) {
-                            alert("出错了：" + res.errMsg);
-                        });
+                                wx.error(function(res) {
+                                    alert("出错了：" + res.errMsg);
+                                });
 
-                        wx.ready(function() {
-                            //判断当前客户端版本是否支持指定JS接口
-                            wx.checkJsApi({
-                                jsApiList : ['getLocation'],
-                                success : function(res) {}
+                                wx.ready(function() {
+                                    //判断当前客户端版本是否支持指定JS接口
+                                    wx.checkJsApi({
+                                        jsApiList : ['getLocation'],
+                                        success : function(res) {}
+                                });
+                            }
                         });
 
                         //获取位置信息
@@ -147,7 +140,7 @@
                                 alert('获取地理位置失败，请确保开启GPS且允许微信获取您的地理位置！');
                             }
                         });
-                    })
+                    }
 
                     //平移中心点，获取列表
                     function panPointAndGetPlants(){
@@ -258,20 +251,35 @@
                                 //添加信息窗口
                                 getInfoWindow();
                                 //info窗口内容
-                                    var html = '<div class="app_infowindow">';
-                                    html = html + '<ul><li>';
-                                    html = html + '<p><font class="app_infowindow_name">';
-                                    html = html + data.plantName;
-                                    html = html + '</font><i><font class="col_or">';
-                                    html = html + data.num;
-                                    html = html + '</font>可用</i></p><p>';
-                                    html = html + data.address;
-                                    html = html + '</p></li></ul></div>';
-                                    html = html + '<div class="app_infoicon" οnclick="routeplan(';
-                                    html = html + point.getLat() + "," + point.getLng() + ",'" + data.address + '\')">';
-                                    html = html + '<img src="images/arrow.png"><br/>';
-                                    html = html + '<a href="#">去这里<a/>';
-                                    html = html + '</div>';
+<!--                                    var html = '<div class="app_infowindow">';-->
+<!--                                    html = html + '<ul><li>';-->
+<!--                                    html = html + '<p><font class="app_infowindow_name">';-->
+<!--                                    html = html + data.plantName;-->
+<!--                                    html = html + '</font><i><font class="col_or">';-->
+<!--                                    html = html + data.num;-->
+<!--                                    html = html + '</font>可用</i></p><p>';-->
+<!--                                    html = html + data.address;-->
+<!--                                    html = html + '</p></li></ul></div>';-->
+<!--                                    html = html + '<div class="app_infoicon" οnclick="routeplan(';-->
+<!--                                    html = html + point.getLat() + "," + point.getLng() + ",'" + data.address + '\')">';-->
+<!--                                    html = html + '<img src="images/arrow.png"><br/>';-->
+<!--                                    html = html + '<a href="#">去这里<a/>';-->
+<!--                                    html = html + '</div>';-->
+                                        var html = '<div class="app_infowindow">
+                                        <ul>
+                                            <li>
+                                                <p>
+                                                    <font class="app_infowindow_name">data.plantName<font>
+                                                    <i><font class="col_or">data.num</font>可用</i>
+                                                </p>
+                                                <p>data.address</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="app_infoicon" onclick="routeplan(point.getLat(), point.getLng(),\'data.address\') ">
+                                        <img src="images/arrow.png"><br/>
+                                        <a href="#">去这里</a>
+                                    </div>';
                                 //标记Marker点击事件
                                 qq.maps.event.addListener(marker, 'click', function(){
                                     infoWindow.open();
