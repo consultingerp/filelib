@@ -22,8 +22,7 @@ class Map(http.Controller):
 
     @http.route('/map', auth='public')
     def gaode_map(self, *args, **kwargs):
-        WX = http.request.env['wx.config.settings']
-        wx = WX.search([])
+
         return http.request.render(
-            'e2yun_crm_find_shop.map_template', {'wx': wx}
+            'e2yun_crm_find_shop.map_template', {}
         )
