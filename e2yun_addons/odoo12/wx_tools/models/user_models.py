@@ -283,10 +283,10 @@ class wx_user(models.Model):
                 raise UserError(u'发送失败,客户没有绑定微信')
         if partner_id:
             partner_ = self.env['res.partner'].sudo().browse(partner_id)
-            self.send_template_message(template_id, data, url, partner=partner_)
+            self.send_template_message(data,template_id, url, partner=partner_)
         if user_id:
             user_ = self.env['res.users'].sudo().browse(user_id)
-            self.send_template_message(template_id, data, url, user=user_)
+            self.send_template_message(data,template_id, url, user=user_)
 
     @api.multi
     def consultation_reminder(self, partner, openid, message, active_id):

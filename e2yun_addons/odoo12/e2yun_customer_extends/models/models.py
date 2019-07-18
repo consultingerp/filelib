@@ -105,7 +105,7 @@ class E2yunCsutomerExtends(models.Model):
             new_state = values.get('state')
             # intention_customer_loss  target_customer_loss  contract_customers
             if previous_state in ['potential_customer']:
-                if not self.mobile or not self.street or not self.city or not self.state_id:
+                if not self.mobile or not self.state_id or not self.city_id or not self.area_id or not self.street:
                     raise Warning(_("Please fill in partner's mobile and address!"))
             # if previous_state in ['intention_customer_loss', 'target_customer_loss']:
             #     raise Warning(_("不能从流失客户转换到其他状态！"))
@@ -172,21 +172,21 @@ class E2yunCsutomerExtends(models.Model):
             res_user_obj = self.env['res.users']
 
             for u in users:
-                paerner = partner_obj.browse(u['p_id'])
+                partner = partner_obj.browse(u['p_id'])
                 msg = ''
                 if state == 'intention_customer':
-                    msg = '意向客户:' + paerner.name + ' 超过' + day_num + '天没有新的服务状态更新'
+                    msg = '意向客户:' + partner.name + ' 超过' + day_num + '天没有新的服务状态更新'
                 elif state == 'target_customer':
-                    msg = '准客户:' + paerner.name + ' 超过' + day_num + '天未邀约客户进行方案洽谈'
+                    msg = '准客户:' + partner.name + ' 超过' + day_num + '天未邀约客户进行方案洽谈'
 
                 data = {
                     "first":{
                         "value":"客户跟踪提醒"
                     },
-                    "keyword1":{
-                        "value":paerner.name
+                    "keyword2":{
+                        "value":partner.name
                     },
-                    "keyword1": {
+                    "keyword3": {
                         "value": (datetime.datetime.now()+timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
                     },
                     "remark":{
@@ -194,6 +194,7 @@ class E2yunCsutomerExtends(models.Model):
                     }
 
                 }
+                #wx_user_obj.send_template_message(data, template_id, user=res_user_obj.browse(u['user_id']))
                 try:
                     wx_user_obj.send_template_message(data,template_id,user=res_user_obj.browse(u['user_id']))
                 except:
