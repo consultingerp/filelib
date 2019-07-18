@@ -18,7 +18,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'e2yun_crm_shop_maintain', 'e2yun_crm_find_shop', 'e2yun_customer_extends', 'wx_tools'],
+    'depends': ['base', 'e2yun_customer_extends', 'wx_tools'],
 
     # always loaded
     'data': [
