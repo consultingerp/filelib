@@ -3,6 +3,7 @@
 from odoo import models, fields, api, http
 import werkzeug.utils
 
+
 class UserCenter(http.Controller):
 
     # @api.one
@@ -22,9 +23,11 @@ class UserCenter(http.Controller):
         # is_customer = user.partner_id.customer
         function = user.function
         if function:
-            return http.request.render('e2yun_user_center.e2yun_user_center_index_employee_template', {'current_user': user})
+            return http.request.render('e2yun_user_center.e2yun_user_center_index_employee_template',
+                                       {'current_user': user})
         else:
-            return http.request.render('e2yun_user_center.e2yun_user_center_index_customer_template', {'current_user': user})
+            return http.request.render('e2yun_user_center.e2yun_user_center_index_customer_template',
+                                       {'current_user': user})
 
     # 个人中心用户信息页面
     @http.route('/user-center/my-info', auth='user')
@@ -33,9 +36,11 @@ class UserCenter(http.Controller):
         # is_customer = user.partner_id.customer
         function = user.function
         if function:
-            return http.request.render('e2yun_user_center.e2yun_user_center_my_info_employee_template', {'current_user': user})
+            return http.request.render('e2yun_user_center.e2yun_user_center_my_info_employee_template',
+                                       {'current_user': user})
         else:
-            return http.request.render('e2yun_user_center.e2yun_user_center_my_info_customer_template', {'current_user': user})
+            return http.request.render('e2yun_user_center.e2yun_user_center_my_info_customer_template',
+                                       {'current_user': user})
 
     # 个人中心跳转到系统内部“个人信息修改”页面
     @http.route('/user-center/my-settings', auth='user')
@@ -55,9 +60,25 @@ class UserCenter(http.Controller):
     def nearby_shop(self):
         return werkzeug.utils.redirect('/web#action=604&model=crm.team&view_type=kanban&menu_id=111')
 
+    # 个人中心跳转到CRM页面
+    @http.route('/user-center/jump-to-crm', auth='user')
+    def jump_to_crm(self, **kwargs):
+        return werkzeug.utils.redirect('/web#action=51&model=res.partner&view_type=kanban&menu_id=111')
+
+    # 个人中心跳转到日历页面
+    @http.route('/user-center/jump-to-discussion', auth='user')
+    def jump_to_discussion(self, **kwargs):
+        return werkzeug.utils.redirect('/web#action=101&active_id=mailbox_inbox&menu_id=83')
+
+    # 个人中心跳转到日历页面
+    @http.route('/user-center/jump-to-calendar', auth='user')
+    def jump_to_calendar(self, **kwargs):
+        return werkzeug.utils.redirect('/web#action=116&model=calendar.event&view_type=calendar&menu_id=90')
+
     # 个人中心跳转到我的导购页面
     @http.route('/user-center/my-guide', auth='user')
     def my_sales_manager(self, **kwargs):
         user = http.request.env.user
         related_guides = user.related_guide
-        return http.request.render('e2yun_user_center.e2yun_user_center_my_guide_template', {'related_guides': related_guides})
+        return http.request.render('e2yun_user_center.e2yun_user_center_my_guide_template',
+                                   {'related_guides': related_guides})
