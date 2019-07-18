@@ -51,9 +51,11 @@ class E2yunCsutomerExtends(models.Model):
     def on_change_shop_name(self):
         self.shop_name = self.shop_code.name
 
+    @api.multi
     @api.depends('shop_code')
     def _compute_shop_name(self):
-        self.shop_name = self.shop_code.name
+        for record in self:
+            record.shop_name = record.shop_code.name
 
     @api.model
     def _group_expand_stage_id(self, stages, domain, order):
