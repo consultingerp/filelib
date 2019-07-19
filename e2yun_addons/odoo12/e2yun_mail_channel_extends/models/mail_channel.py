@@ -45,7 +45,7 @@ class MailChannelExtends(models.Model):
     @api.multi
     def channel_fetch_message(self, last_id=False, limit=20):
         info = super(MailChannelExtends, self).channel_fetch_message(last_id=last_id, limit=limit)
-        req = request.httprequest
-        print('=============================================================%s' % req.user_agent)
-        print('+++++++++++++++++++++++++++++++++++++++++++++++++++%s' % (str(self._context)))
+        # req = request.httprequest
+        # print('=============================================================%s' % req.user_agent)
+        # print('+++++++++++++++++++++++++++++++++++++++++++++++++++%s' % (str(self._context)))
         return False
