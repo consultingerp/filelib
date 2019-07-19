@@ -108,8 +108,7 @@ def main(robot):
                     _logger.info('公司外部二维码进入')
                     tracelog_title = "扫描公司%s外部二维码关注,微信用户%s" % (eventkey[2], str(info['nickname']))
                     ret_msg = "%s \n 欢迎您：我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
-
-            else:
+            else:  # 没有带参数进入公众号
                 if entry.subscribe_auto_msg:
                     ret_msg = entry.subscribe_auto_msg
                 else:
@@ -144,7 +143,7 @@ def main(robot):
                             "customer_source": tracelog_type,
                             'related_guide': [(6, 0, users_ids)]
                         })
-                    else:  # 推荐人
+                    elif tracelog_type == 'qrscene_USERS':  # 推荐人
                         guideorreferrer = 'referrer'
                         tracelog_title = "扫描推荐人%s关注,微信用户%s" % (eventkey[3], str(info['nickname']))
                         ret_msg = "欢迎您%s：\n 我们将竭诚为您服务，欢迎咨询！" % str(info['nickname'])
@@ -156,6 +155,17 @@ def main(robot):
                             "image": base64.b64encode(_data),
                             "customer_source": tracelog_type,
                             "referrer": user_id
+                        })
+                    else:
+                        tracelog_title = "关注了公众号,微信用户%s" % (str(info['nickname']))
+                        ret_msg = "欢迎您%s：\n 我们将竭诚为您服务，欢迎咨询！" % str(info['nickname'])
+                        resuser.partner_id.write({
+                            'supplier': True,
+                            'customer': True,
+                            'shop_code': shop_code,
+                            "wx_user_id": wxuserinfo.id,
+                            "image": base64.b64encode(_data),
+                            "customer_source": tracelog_type,
                         })
                     traceuser_id = resuser
                 else:  # 已存在odoo用户，关联用户到微信
@@ -179,7 +189,7 @@ def main(robot):
                             "image": base64.b64encode(_data),
                             'related_guide': [(6, 0, users_ids)]
                         })
-                    else:  # 推荐人
+                    elif tracelog_type == 'qrscene_USERS':  # 推荐人
                         guideorreferrer = 'referrer'
                         tracelog_title = "扫描推荐人%s关注,微信用户%s" % (eventkey[3], str(info['nickname']))
                         ret_msg = "欢迎您%s：\n 我们将竭诚为您服务，欢迎咨询！" % str(info['nickname'])
@@ -192,7 +202,17 @@ def main(robot):
                             "customer_source": tracelog_type,
                             "referrer": user_id
                         })
-
+                    else:
+                        tracelog_title = "关注了公众号,微信用户%s" % (str(info['nickname']))
+                        ret_msg = "欢迎您%s：\n 我们将竭诚为您服务，欢迎咨询！" % str(info['nickname'])
+                        resuser.partner_id.write({
+                            'supplier': True,
+                            'customer': True,
+                            'shop_code': shop_code,
+                            "wx_user_id": wxuserinfo.id,
+                            "image": base64.b64encode(_data),
+                            "customer_source": tracelog_type,
+                        })
                 # 记录微信用户到 微信用户与odoo用户映射关系
                 odoo_user = env['wx.user.odoouser'].sudo().search([('openid', '=', openid)], limit=1)
                 if not odoo_user.exists():
