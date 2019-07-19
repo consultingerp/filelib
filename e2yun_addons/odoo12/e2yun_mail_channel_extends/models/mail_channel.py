@@ -41,3 +41,10 @@ class MailChannelExtends(models.Model):
                 channel['is_minimized'] = False
 
         return channel_infos
+
+    @api.multi
+    def channel_fetch_message(self, last_id=False, limit=20):
+        info = super(MailChannelExtends, self).channel_info(last_id=last_id, limit=limit)
+        req = request.httprequest
+        print('=============================================================%s' % req.full_path)
+        return info
