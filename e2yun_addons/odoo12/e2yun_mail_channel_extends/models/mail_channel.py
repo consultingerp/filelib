@@ -29,7 +29,7 @@ class MailChannelExtends(models.Model):
     @api.multi
     def channel_info(self, extra_info=False):
         channel_infos = super(MailChannelExtends, self).channel_info(extra_info=extra_info)
-        print('+++++++++++++++++++++++++++++++++++++++++++++++++++%s' % (str(self._context)))
+        print('+++++++++++++++++++++++++++++++++++++++++++++++++++%s+%s' % (str(self), extra_info))
         if 'isMobile' in self._context and self._context['isMobile']:
             for channel in channel_infos:
                 channel['is_minimized'] = False
