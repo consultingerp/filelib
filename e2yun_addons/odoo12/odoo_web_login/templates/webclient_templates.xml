@@ -15,7 +15,11 @@
    		<xpath expr="//div[hasclass('container')]" position="attributes">
    			<attribute name="class">body_login</attribute>
    		</xpath>
-   		
+
+		<xpath expr="//a[@href='https://www.odoo.com?utm_source=db&amp;utm_medium=auth']" position="attributes">
+			<attribute name="href">http://www.e2yun.cn</attribute>
+   		</xpath>
+
    		<xpath expr="//div[@t-attf-class='card border-0 mx-auto mt-5 bg-100 {{login_card_classes}} o_database_list']" position="before">
    			<div id="background-wrapper" t-attf-style="background-image: url('#{background_src}');"></div>
    		</xpath>
