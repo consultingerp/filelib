@@ -48,5 +48,4 @@ class MailChannelExtends(models.Model):
         req = request.httprequest
         print('=============================================================%s' % req.user_agent)
         print('+++++++++++++++++++++++++++++++++++++++++++++++++++%s' % (str(self._context)))
-
-        return []
+        return False
