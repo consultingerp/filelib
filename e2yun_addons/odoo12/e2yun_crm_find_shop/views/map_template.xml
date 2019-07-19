@@ -265,21 +265,21 @@
 <!--                                    html = html + '<img src="images/arrow.png"><br/>';-->
 <!--                                    html = html + '<a href="#">去这里<a/>';-->
 <!--                                    html = html + '</div>';-->
-                                        var html = '<div class="app_infowindow">
-                                        <ul>
-                                            <li>
-                                                <p>
-                                                    <font class="app_infowindow_name">data.plantName<font>
-                                                    <i><font class="col_or">data.num</font>可用</i>
-                                                </p>
-                                                <p>data.address</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="app_infoicon" onclick="routeplan(point.getLat(), point.getLng(),\'data.address\') ">
-                                        <img src="images/arrow.png"><br/>
-                                        <a href="#">去这里</a>
-                                    </div>';
+<!--                                        var html = '<div class="app_infowindow">-->
+<!--                                        <ul>-->
+<!--                                            <li>-->
+<!--                                                <p>-->
+<!--                                                    <font class="app_infowindow_name">data.plantName<font>-->
+<!--                                                    <i><font class="col_or">data.num</font>可用</i>-->
+<!--                                                </p>-->
+<!--                                                <p>data.address</p>-->
+<!--                                            </li>-->
+<!--                                        </ul>-->
+<!--                                    </div>-->
+<!--                                    <div class="app_infoicon" onclick="routeplan(point.getLat(), point.getLng(),\'data.address\') ">-->
+<!--                                        <img src="images/arrow.png"><br/>-->
+<!--                                        <a href="#">去这里</a>-->
+<!--                                    </div>';-->
                                 //标记Marker点击事件
                                 qq.maps.event.addListener(marker, 'click', function(){
                                     infoWindow.open();
