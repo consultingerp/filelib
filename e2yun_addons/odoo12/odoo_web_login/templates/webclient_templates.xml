@@ -36,7 +36,7 @@
 		<xpath expr="//label[@for='password']" position="replace" />
 		
 		<xpath expr="//input[@name='login']" position="attributes">
-			<attribute name="placeholder">Email ...</attribute>
+			<attribute name="placeholder">UserName ...</attribute>
 			<attribute name="autocomplete">off</attribute>
 			<attribute name="autocorrect">off</attribute>
 		</xpath>
