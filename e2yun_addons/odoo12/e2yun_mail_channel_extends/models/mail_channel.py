@@ -47,4 +47,6 @@ class MailChannelExtends(models.Model):
         info = super(MailChannelExtends, self).channel_fetch_message(last_id=last_id, limit=limit)
         req = request.httprequest
         print('=============================================================%s' % req.full_path)
+        print('+++++++++++++++++++++++++++++++++++++++++++++++++++%s' % (str(self._context)))
+
         return info
