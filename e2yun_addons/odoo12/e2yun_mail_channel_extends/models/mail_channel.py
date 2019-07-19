@@ -31,7 +31,7 @@ class MailChannelExtends(models.Model):
     def channel_info(self, extra_info=False):
         channel_infos = super(MailChannelExtends, self).channel_info(extra_info=extra_info)
         req = request.httprequest
-        print('=============================================================%s' % req.full_path)
+        # print('=============================================================%s' % req.full_path)
         if 'isMobile' in self._context:
             if self._context['isMobile']:
                 for channel in channel_infos:
