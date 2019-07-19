@@ -21,6 +21,7 @@
 #
 ##############################################################################
 from odoo import models, api
+from odoo.http import request
 
 
 class MailChannelExtends(models.Model):
@@ -29,8 +30,13 @@ class MailChannelExtends(models.Model):
     @api.multi
     def channel_info(self, extra_info=False):
         channel_infos = super(MailChannelExtends, self).channel_info(extra_info=extra_info)
-        print('+++++++++++++++++++++++++++++++++++++++++++++++++++%s+%s' % (str(self), extra_info))
-        if 'isMobile' in self._context and self._context['isMobile']:
+        req = request.httprequest
+        if 'isMobile' in self._context:
+            if self._context['isMobile']:
+                for channel in channel_infos:
+                    channel['is_minimized'] = False
+        elif '/mail/init_messaging' in req.full_path:
             for channel in channel_infos:
                 channel['is_minimized'] = False
+
         return channel_infos
