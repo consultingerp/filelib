@@ -4,6 +4,12 @@ from odoo import models, fields, api, http
 import werkzeug.utils
 
 
+# class CurrentUserInfoModify(models.Model):
+#     _inherit = 'res.partner'
+
+
+
+
 class UserCenter(http.Controller):
 
     # @api.one
@@ -82,3 +88,11 @@ class UserCenter(http.Controller):
         related_guides = user.related_guide
         return http.request.render('e2yun_user_center.e2yun_user_center_my_guide_template',
                                    {'related_guides': related_guides})
+
+    # 个人中心跳转的到更改用户信息页面
+    @http.route('/user-center/user-info-modify', auth='user')
+    def user_info_modify(self, **kwargs):
+        user = http.request.env.user
+        user_id = user.id
+        url = '/web#id=' + str(user_id) + '&model=res.users&view_type=form&view_id=2067'
+        return werkzeug.utils.redirect(url)
