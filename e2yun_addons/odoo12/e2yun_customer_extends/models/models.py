@@ -45,7 +45,7 @@ class E2yunCsutomerExtends(models.Model):
         ('target_customer_loss', 'Target Customer Loss'),
         ('contract_customers', 'Contract Customers')
     ], string='', default='potential_customer', group_expand='_group_expand_stage_id')
-    related_guide = fields.Many2many('res.users')
+    related_guide = fields.Many2many('res.users',  domain="[('function', '!=', False)]")
 
     @api.onchange('shop_code')
     def on_change_shop_name(self):
