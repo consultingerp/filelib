@@ -48,13 +48,13 @@ class UserCenter(http.Controller):
             return http.request.render('e2yun_user_center.e2yun_user_center_my_info_customer_template',
                                        {'current_user': user})
 
-    # 个人中心跳转到系统内部“个人信息修改”页面
-    @http.route('/user-center/my-settings', auth='user')
-    def my_settings(self, **kwargs):
-        user = http.request.env.user
-        partner_id = user.partner_id.id
-        url = "/web?#id=" + str(partner_id) + "&action=51&model=res.partner&view_type=form&menu_id=111"
-        return werkzeug.utils.redirect(url)
+    # # 个人中心跳转到系统内部“个人信息修改”页面
+    # @http.route('/user-center/my-settings', auth='user')
+    # def my_settings(self, **kwargs):
+    #     user = http.request.env.user
+    #     partner_id = user.partner_id.id
+    #     url = "/web?#id=" + str(partner_id) + "&action=51&model=res.partner&view_type=form&menu_id=111"
+    #     return werkzeug.utils.redirect(url)
 
     # 个人中心跳转到Odoo应用中心首页
     @http.route('/user-center/back-to-app-center', auth='user')
@@ -94,5 +94,8 @@ class UserCenter(http.Controller):
     def user_info_modify(self, **kwargs):
         user = http.request.env.user
         user_id = user.id
-        url = '/web#id=' + str(user_id) + '&model=res.users&view_type=form&view_id=2067'
+        view_pool = http.request.env['ir.ui.view']
+        view_name = 'Current User Info'
+        view_id = view_pool.search([('name', 'like', view_name)]).id
+        url = '/web#id=' + str(user_id) + '&model=res.users&view_type=form&view_id=' + str(view_id)
         return werkzeug.utils.redirect(url)
