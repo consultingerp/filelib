@@ -129,7 +129,9 @@ class LoginHome(Home):
         from ..controllers import client
         entry = client.wxenv(request.env)
         try:
-            _logger.info("jsapi_ticket_url:%s" % request.httprequest.url)
+            #_logger.info("jsapi_ticket_url:%s" % request.httprequest.url)
+            url = request.httprequest.url;
+            url.replace(":80", "")
             wx_appid, timestamp, noncestr, signature = entry.get_jsapi_ticket(request.httprequest.url)
             web_.qcontext.update({
                 'wx_appid': wx_appid,
