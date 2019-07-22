@@ -13,7 +13,7 @@
 				var formatted_address = "";
                 var obtain_location = '<t t-esc="request.env['ir.config_parameter'].sudo().get_param('base_setup.obtain_location')"/>';
                 wx.config({
-                    debug: false,
+                    debug: true,
                     appId: '<t t-raw="wx_appid"/>',
                     timestamp: <t t-raw="timestamp"/>,
                     nonceStr: '<t t-raw="noncestr"/>',
