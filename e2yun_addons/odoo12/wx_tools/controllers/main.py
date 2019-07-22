@@ -8,6 +8,7 @@ import ast
 from odoo.addons.web.controllers.main import Home
 from odoo.addons.web.controllers.main import Session
 from odoo.addons.web.controllers.main import DataSet
+from urllib.parse import urljoin
 import pytz
 import datetime
 import logging
@@ -129,7 +130,8 @@ class LoginHome(Home):
         from ..controllers import client
         entry = client.wxenv(request.env)
         try:
-            url = request.httprequest.url;
+            # url = request.httprequest.url;
+            url = urljoin(request.httprequest.base_url, request.httprequest.full_path)
             url = url.replace(":80", "")
             _logger.info("jsapi_ticket_url:%s" % url)
             wx_appid, timestamp, noncestr, signature = entry.get_jsapi_ticket(url)
