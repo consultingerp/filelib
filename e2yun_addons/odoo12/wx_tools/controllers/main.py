@@ -7,6 +7,7 @@
 import ast
 from odoo.addons.web.controllers.main import Home
 from odoo.addons.web.controllers.main import Session
+from odoo.addons.web.controllers.main import DataSet
 import pytz
 import datetime
 import logging
@@ -36,7 +37,7 @@ class LoginHome(Home):
         wxcode = wx_client_code.WX_CODE
         if not wxcode:
             wxcode = {}
-        #logging.info(wxcode)
+        # logging.info(wxcode)
         if code is False:
             return super(LoginHome, self).web_login(redirect, **kw)
         if code:  # code换取token
@@ -122,6 +123,24 @@ class LoginHome(Home):
 
         return super(LoginHome, self).web_login(redirect, **kw)
 
+    @http.route('/web', type='http', auth="none")
+    def web_client(self, s_action=None, **kw):
+        web_ = super(LoginHome, self).web_client(s_action, **kw)
+        from ..controllers import client
+        entry = client.wxenv(request.env)
+        try:
+            wx_appid, timestamp, noncestr, signature = entry.get_jsapi_ticket(request.httprequest.url)
+            web_.qcontext.update({
+                'wx_appid': wx_appid,
+                'timestamp': timestamp,
+                'noncestr': noncestr,
+                'signature': signature
+            })
+        except Exception as e:
+            print(e)
+            _logger.error("加载微信jsapi_ticket错误。")
+        return web_
+
 
 class WxSession(Session):
     @http.route('/web/session/logout', type='http', auth="none")
@@ -134,6 +153,13 @@ class WxSession(Session):
                 [('user_id', '=', uid), ('codetype', '=', wx_user_info['codetype'])])
             userinfo.unlink()
         return ret
+
+
+class DataSet(DataSet):
+    @http.route(['/web/dataset/call_kw', '/web/dataset/call_kw/<path:path>'], type='json', auth="user")
+    def call_kw(self, model, method, args, kwargs, path=None):
+        kw = super(DataSet, self).call_kw(model, method, args, kwargs, path)
+        return kw
 
 
 class WxMp(http.Controller):

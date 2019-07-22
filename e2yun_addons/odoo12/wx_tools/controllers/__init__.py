@@ -8,3 +8,4 @@ from . import app
 from . import wx_mail_thread
 from . import wxresetpassword
 from . import amapapi
+from . import amapcontroller
