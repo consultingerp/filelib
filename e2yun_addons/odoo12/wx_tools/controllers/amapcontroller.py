@@ -20,13 +20,15 @@ class AmapAip(http.Controller):
             formatted_address = amapapi.geocoderegeo(request, convert_location)
             location = convert_location.split(',')  # 用户真实位置
             user = request.env['res.users'].sudo().search([('id', '=', request.uid)], limit=1)
-            if user.exists():
-                user.partner_id.write({
-                    'wxlatitude': location[1],
-                    'wxlongitude': location[0],
-                    'wxprecision': '-1',
-                    'location_write_date': Datetime.now()
-                })
+            collect_user_location = request.env['ir.config_parameter'].sudo().get_param('base_setup.collect_user_location')
+            if collect_user_location:
+                if user.exists():
+                    user.partner_id.write({
+                        'wxlatitude': location[1],
+                        'wxlongitude': location[0],
+                        'wxprecision': '-1',
+                        'location_write_date': Datetime.now()
+                    })
         except Exception as e:
             return ''
         data = {"locations": convert_location, 'formatted_address': formatted_address}
