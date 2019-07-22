@@ -3,10 +3,15 @@ import logging
 
 from werobot.client import ClientException
 from werobot.robot import BaseRoBot
-from .memorystorage import MemoryStorage
+#from .memorystorage import MemoryStorage
+from wechatpy.session.memorystorage import MemoryStorage
 from werobot.logger import enable_pretty_logging
 from wechatpy.oauth import WeChatOAuth
 from wechatpy.component import ComponentOAuth
+from wechatpy.client.api.jsapi import WeChatJSAPI
+from wechatpy.client import WeChatClient
+from wechatpy.utils import WeChatSigner, random_string
+import time
 
 from odoo import exceptions
 from odoo import fields
@@ -32,7 +37,7 @@ class WxEntry(EntryBase):
         robot.config["APP_ID"] = ""
         robot.config["APP_SECRET"] = ""
         self.wxclient = robot.client
-
+        self.wechatpy_client = None
         self.robot = None
         self.subscribe_auto_msg = None
 
@@ -87,6 +92,15 @@ class WxEntry(EntryBase):
             except ClientException as e:
                 raise exceptions.UserError(u'发送voice失败 %s' % e)
 
+    def get_jsapi_ticket(self, url):
+        us_client = self.wechatpy_client
+        jsapi = WeChatJSAPI(us_client)
+        tick = jsapi.get_jsapi_ticket()
+        noncestr = random_string()
+        timestamp = str(int(time.time()))
+        signature = jsapi.get_jsapi_signature(noncestr, tick, timestamp, url)
+        return self.wx_appid, timestamp, noncestr, signature
+
     def init(self, env):
         dbname = env.cr.dbname
         global WxEnvDict
@@ -119,7 +133,8 @@ class WxEntry(EntryBase):
             # 刷新 AccessToken
             self.wxclient._token = None
             _ = self.wxclient.token
-        except:
+        except Exception as e:
+            print(e)
             import traceback;
             traceback.print_exc()
             _logger.error(u'初始化微信客户端token失败，请在微信对接配置中填写好相关信息！')
@@ -128,6 +143,15 @@ class WxEntry(EntryBase):
         robot = WeRoBot(token=self.wx_token, enable_session=True, logger=_logger, session_storage=session_storage)
         enable_pretty_logging(robot.logger)
         self.robot = robot
+
+        wechatpy_session = MemoryStorage()
+        try:
+            wechatpy_client = WeChatClient(self.wx_appid, self.wx_AppSecret, access_token=self.wxclient.token,
+                                           session=wechatpy_session)
+            self.wechatpy_client = wechatpy_client
+        except Exception as e:
+            print(e)
+            _logger.error("加载微信token错误。")
 
         try:
             users = env['wx.user'].sudo().search([('last_uuid', '!=', None)])

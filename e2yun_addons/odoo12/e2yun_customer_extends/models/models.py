@@ -215,8 +215,8 @@ class E2yunCsutomerExtends(models.Model):
 
     def sync_customer_to_pos(self):
         for r in self:
-            if r.pos_state:
-                raise exceptions.Warning("POS状态已传输，不能再同步哟！")
+            # if r.pos_state:
+            #     raise exceptions.Warning("POS状态已传输，不能再同步哟！")
             ICPSudo = self.env['ir.config_parameter'].sudo()
 
             url = ICPSudo.get_param('e2yun.sync_pos_member_webservice_url')  # webservice调用地址
@@ -320,8 +320,8 @@ class resPartnerBatch(models.TransientModel):
 
         rep = self.env['res.partner'].browse(active_ids)
         for r in rep:
-            if r.pos_state:
-                raise exceptions.Warning("POS状态已传输，不能再同步哟！")
+            # if r.pos_state:
+            #     raise exceptions.Warning("POS状态已传输，不能再同步哟！")
             ICPSudo = self.env['ir.config_parameter'].sudo()
 
             url = ICPSudo.get_param('e2yun.sync_pos_member_webservice_url')  # webservice调用地址
