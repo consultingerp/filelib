@@ -27,10 +27,15 @@
                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
                         <field name="street" placeholder="地址..." class="o_address_street"
                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                        <field name="zip" placeholder="邮编" class="o_address_city"
-                               attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                        <field name="zip" placeholder="邮编" class="o_address_city" invisible="1"/>
                         <field name="street2" placeholder="地址2..." class="o_address_street" invisible="1"/>
                     </div>
+                </xpath>
+                <xpath expr="//field[@name='website']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='lang']" position="attributes">
+                    <attribute name="invisible">1</attribute>
                 </xpath>
             </field>
         </record>

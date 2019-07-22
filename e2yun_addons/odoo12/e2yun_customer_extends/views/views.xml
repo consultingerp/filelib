@@ -123,6 +123,7 @@
             </field>
         </record>
 
+
         <record id="crm_partner_form_add_status_bar" model="ir.ui.view">
             <field name="name">CRM Partner Form Add Status Bar</field>
             <field name="model">res.partner</field>
@@ -400,6 +401,18 @@
             </field>
         </record>
 
+        <record id="res_partner_view_search_inherit" model="ir.ui.view">
+            <field name="name">res.partner.view.search.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="state" string="客户状态"/>
+                    <filter name="group_state" string="客户状态" context="{'group_by' : 'state'}"/>
+                </field>
+            </field>
+        </record>
+
         <record id="base.action_partner_form" model="ir.actions.act_window">
             <field name="name">Customers</field>
             <field name="type">ir.actions.act_window</field>
@@ -420,6 +433,8 @@
                 </p>
             </field>
         </record>
+
+
 
 
         <!--        <record id="action_crm_partner_kanban_add_status_group2" model="ir.actions.act_window.view">-->
