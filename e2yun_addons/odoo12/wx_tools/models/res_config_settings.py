@@ -14,13 +14,15 @@ class ResConfigSettings(models.TransientModel):
     auth_signup_reset_password_qrcode_ticket = fields.Char(u'二维码ticket')
     auth_signup_reset_password_qrcode_url = fields.Char(u'二维码url')
     auth_signup_reset_password_qrcodeimg = fields.Html(compute='_get_qrcodeimg', string=u'二维码')
+    obtain_location = fields.Boolean(string="获取用户位置", config_parameter='base_setup.obtain_location')
 
     @api.model
     def get_values(self):
         res = super(ResConfigSettings, self).get_values()
         params = self.env['ir.config_parameter'].sudo()
         res.update({
-            'auth_signup_reset_password_qrcodeimg': '%s' % params.get_param('auth_signup_reset_password_qrcodeimg'),
+            'auth_signup_reset_password_qrcodeimg': '%s' % params.get_param('auth_signup_reset_password_qrcodeimg')
+
         })
         return res
 
