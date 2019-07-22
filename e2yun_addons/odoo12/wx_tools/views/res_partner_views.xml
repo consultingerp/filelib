@@ -28,8 +28,14 @@
                             <field name="wxlatitude"/>
                             <field name="wxprecision"/>
                             <field name="wx_address"/>
-                             <field name="near_team"/>
+                            <field name="near_team"/>
                             <field name="location_write_date"/>
+                            <script type="text/javascript">
+                                $("[name='wx_address']").addClass("o_form_uri o_field_widget");
+                                $("[name='wx_address']").bind("click",function(){
+                                   openLocation($("[name='wxlatitude']").text(),$("[name='wxlongitude']").text(),$("[name='wx_address']").text(),$("[name='wx_address']").text())
+                                });
+                            </script>
                         </group>
                     </page>
                 </xpath>
