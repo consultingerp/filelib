@@ -15,6 +15,7 @@ class ResConfigSettings(models.TransientModel):
     auth_signup_reset_password_qrcode_url = fields.Char(u'二维码url')
     auth_signup_reset_password_qrcodeimg = fields.Html(compute='_get_qrcodeimg', string=u'二维码')
     obtain_location = fields.Boolean(string="获取用户位置", config_parameter='base_setup.obtain_location')
+    collect_user_location = fields.Boolean(string="允许收集用户位置", config_parameter='base_setup.collect_user_location')
 
     @api.model
     def get_values(self):
