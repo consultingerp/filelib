@@ -4,6 +4,12 @@ from odoo import models, fields, api, http
 import werkzeug.utils
 
 
+# class CurrentUserInfoModify(models.Model):
+#     _inherit = 'res.partner'
+
+
+
+
 class UserCenter(http.Controller):
 
     # @api.one
@@ -42,13 +48,13 @@ class UserCenter(http.Controller):
             return http.request.render('e2yun_user_center.e2yun_user_center_my_info_customer_template',
                                        {'current_user': user})
 
-    # 个人中心跳转到系统内部“个人信息修改”页面
-    @http.route('/user-center/my-settings', auth='user')
-    def my_settings(self, **kwargs):
-        user = http.request.env.user
-        partner_id = user.partner_id.id
-        url = "/web?#id=" + str(partner_id) + "&action=51&model=res.partner&view_type=form&menu_id=111"
-        return werkzeug.utils.redirect(url)
+    # # 个人中心跳转到系统内部“个人信息修改”页面
+    # @http.route('/user-center/my-settings', auth='user')
+    # def my_settings(self, **kwargs):
+    #     user = http.request.env.user
+    #     partner_id = user.partner_id.id
+    #     url = "/web?#id=" + str(partner_id) + "&action=51&model=res.partner&view_type=form&menu_id=111"
+    #     return werkzeug.utils.redirect(url)
 
     # 个人中心跳转到Odoo应用中心首页
     @http.route('/user-center/back-to-app-center', auth='user')
@@ -58,7 +64,7 @@ class UserCenter(http.Controller):
     # 个人中心跳转到附近门店页面
     @http.route('/user-center/nearby-shop', auth='user')
     def nearby_shop(self):
-        return werkzeug.utils.redirect('/web#action=604&model=crm.team&view_type=kanban&menu_id=111')
+        return werkzeug.utils.redirect('/web#action=580&model=crm.team&view_type=kanban&menu_id=111')
 
     # 个人中心跳转到CRM页面
     @http.route('/user-center/jump-to-crm', auth='user')
@@ -82,3 +88,14 @@ class UserCenter(http.Controller):
         related_guides = user.related_guide
         return http.request.render('e2yun_user_center.e2yun_user_center_my_guide_template',
                                    {'related_guides': related_guides})
+
+    # 个人中心跳转的到更改用户信息页面
+    @http.route('/user-center/user-info-modify', auth='user')
+    def user_info_modify(self, **kwargs):
+        user = http.request.env.user
+        user_id = user.id
+        view_pool = http.request.env['ir.ui.view']
+        view_name = 'Current User Info'
+        view_id = view_pool.search([('name', 'like', view_name)]).id
+        url = '/web#id=' + str(user_id) + '&model=res.users&view_type=form&view_id=' + str(view_id)
+        return werkzeug.utils.redirect(url)
