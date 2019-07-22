@@ -131,7 +131,7 @@ class LoginHome(Home):
         try:
             #_logger.info("jsapi_ticket_url:%s" % request.httprequest.url)
             url = request.httprequest.url;
-            url.replace(":80", "")
+            url = url.replace(":80", "")
             wx_appid, timestamp, noncestr, signature = entry.get_jsapi_ticket(url)
             web_.qcontext.update({
                 'wx_appid': wx_appid,
