@@ -5,6 +5,7 @@
             <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"/>
             <script type="text/javascript" src="/wx_tools/static/src/js/wx_tools_wx.js"/>
             <script type="text/javascript">
+                console.log(location.href.split('#')[0]);
                 var latitude = 0.0
 				var longitude = 0.0
 				var actual_latitude = 0.0;
