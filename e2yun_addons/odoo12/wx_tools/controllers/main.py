@@ -140,8 +140,7 @@ class LoginHome(Home):
                 'signature': signature
             })
         except Exception as e:
-            print(e)
-            _logger.error("加载微信jsapi_ticket错误。")
+            _logger.error("加载微信jsapi_ticket错误。%s" % e)
         return web_
 
 
