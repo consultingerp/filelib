@@ -49,7 +49,7 @@
     ],
     'depends': ['base', 'web', 'im_livechat', 'sale_management'],
     'installable': True,
-    'auto_install': True,
+    'auto_install': False,
     'active': False,
     'web': True,
 }
