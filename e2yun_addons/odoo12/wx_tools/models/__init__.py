@@ -26,4 +26,3 @@ from . import sale_make_invoice_advance
 from . import res_company
 from . import res_config_settings
 from . import sale_coupon_program
-from . import wx_map
