@@ -80,4 +80,11 @@
         </xpath>
     </template>
 
+     <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr=".">
+            <script type="text/javascript"
+                    src="/wx_tools/static/src/js/wx_team_tree.js"/>
+        </xpath>
+    </template>
+
 </odoo>
