@@ -28,7 +28,7 @@ class EntryBase(object):
         return uuid, record_uuid
 
     def create_uuid_for_openid(self, uid, uuid):
-        _logger.info('>>> create_uuid_for_openid %s %s', uid, uuid)
+        # _logger.info('>>> create_uuid_for_openid %s %s', uid, uuid)
         _key = '%s' % uid
         if _key not in self.OPENID_UUID:
             self.OPENID_UUID[_key] = {}
@@ -37,7 +37,7 @@ class EntryBase(object):
         self.UUID_OPENID[uuid] = uid
 
     def recover_uuid(self, uid, uuid, lt):
-        _logger.info('>>> recover_uuid %s %s', uid, uuid)
+        # _logger.info('>>> recover_uuid %s %s', uid, uuid)
         _key = '%s' % uid
         if _key not in self.OPENID_UUID:
             self.OPENID_UUID[_key] = {}

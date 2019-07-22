@@ -126,7 +126,7 @@ def main(robot):
                         "wx_user_id": wxuserinfo.id,
                         "login_date": datetime.datetime.now(),
                         "image": base64.b64encode(_data),
-                        "email": 'lh',
+                        "email": 'HH',
                         "wx_id": info['openid']
                     })
                     res_guideorreferrer = env['res.users'].sudo().search([('id', '=', user_id)], limit=1)

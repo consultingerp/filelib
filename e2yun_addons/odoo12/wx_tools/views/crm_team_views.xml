@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
     <record id="crm_team_qrcodeimg" model="ir.ui.view">
         <field name="name">crm.team.form.qrcodeimg</field>
         <field name="model">crm.team</field>
@@ -26,6 +25,18 @@
                         <field name="latitude"/>
                         <field name="location_write_date"/>
                         <field name="address_location"/>
+                        <script type="text/javascript">
+                            getWXLocation() //获取当前微信地址，微信地址已转换为实际地址，可以直接使用。
+                            $("[name='address_location']").addClass("o_form_uri o_field_widget");
+                            $("[name='street']").addClass("o_form_uri o_field_widget");
+                            $("[name='address_location']").bind("click",function(){
+                               //打开地图，
+                               openLocation($("[name='latitude']").text(),$("[name='longitude']").text(),$("[name='address_location']").text(),$("[name='address_location']").text())
+                            });
+                            $("[name='street']").bind("click",function(){
+                               openLocation($("[name='latitude']").text(),$("[name='longitude']").text(),$("[name='address_location']").text(),$("[name='address_location']").text())
+                            });
+                        </script>
                     </group>
                 </page>
             </xpath>
