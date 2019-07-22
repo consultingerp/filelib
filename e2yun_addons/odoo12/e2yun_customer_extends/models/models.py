@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _,exceptions
+from odoo import models, fields, api, _,exceptions, http
 #import suds
 import suds.client
 import re
 import datetime
 from datetime import timedelta
-
+# import werkzeug
 from odoo.exceptions import ValidationError, Warning
 
 class E2yunUserAddPartnerRelated(models.Model):
@@ -45,15 +45,21 @@ class E2yunCsutomerExtends(models.Model):
         ('target_customer_loss', 'Target Customer Loss'),
         ('contract_customers', 'Contract Customers')
     ], string='', default='potential_customer', group_expand='_group_expand_stage_id')
-    related_guide = fields.Many2many('res.users')
+    related_guide = fields.Many2many('res.users',  domain="[('function', '!=', False)]")
 
     @api.onchange('shop_code')
     def on_change_shop_name(self):
+        # new_context = self.env.context.copy()
+        # new_context['show_custom_name'] = 2
+        # self.with_context(new_context).shop_code.name_get()
         self.shop_name = self.shop_code.name
 
+
+    @api.multi
     @api.depends('shop_code')
     def _compute_shop_name(self):
-        self.shop_name = self.shop_code.name
+        for record in self:
+            record.shop_name = record.shop_code.name
 
     @api.model
     def _group_expand_stage_id(self, stages, domain, order):
@@ -202,8 +208,8 @@ class E2yunCsutomerExtends(models.Model):
 
     def sync_customer_to_pos(self):
         for r in self:
-            if r.pos_state:
-                raise exceptions.Warning("POS状态已传输，不能再同步哟！")
+            # if r.pos_state:
+            #     raise exceptions.Warning("POS状态已传输，不能再同步哟！")
             ICPSudo = self.env['ir.config_parameter'].sudo()
 
             url = ICPSudo.get_param('e2yun.sync_pos_member_webservice_url')  # webservice调用地址
@@ -307,8 +313,8 @@ class resPartnerBatch(models.TransientModel):
 
         rep = self.env['res.partner'].browse(active_ids)
         for r in rep:
-            if r.pos_state:
-                raise exceptions.Warning("POS状态已传输，不能再同步哟！")
+            # if r.pos_state:
+            #     raise exceptions.Warning("POS状态已传输，不能再同步哟！")
             ICPSudo = self.env['ir.config_parameter'].sudo()
 
             url = ICPSudo.get_param('e2yun.sync_pos_member_webservice_url')  # webservice调用地址
@@ -348,21 +354,35 @@ class E2yunCrmTeamNameExtends(models.Model):
 
     @api.model
     def name_search(self, name='', args=None, operator='ilike', limit=100):
-        res = super(E2yunCrmTeamNameExtends, self).name_search(name, args, operator, limit)
         if name:
             teams = self.search(['|', ('shop_code', operator, name), ('name', operator, name)])
             return teams.name_get()
         # res = self.search([('shop_code', operator, name)])
         # res = super(E2yunCrmTeamNameExtends, self).name_search(name, args, operator, limit)
         else:
-            return res
+            return super(E2yunCrmTeamNameExtends, self).name_search(name, args, operator, limit)
 
     @api.multi
     def name_get(self):
+        flag = self.env.context.get('show_custom_name', False)
+        if flag == 1:
+            res = []
+            for crm_team in self:
+                name = str(crm_team.shop_code) + ' ' + str(crm_team.name)
+                res.append((crm_team.id, name))
+            return res
+        elif flag == 2:
+            res = []
+            for crm_team in self:
+                name = str(crm_team.shop_code)
+                res.append((crm_team.id, name))
+            return res
+        else:
+            return super(E2yunCrmTeamNameExtends, self).name_get()
         # return [(e.shop_code, e.name) for e in self]
-        res = []
-        for crm_team in self:
-            name = str(crm_team.shop_code) + ' ' + str(crm_team.name)
-            # name = str(crm_team.shop_code)
-            res.append((crm_team.id, name))
-        return res
+        # res = self.get_formview_id()
+        # for crm_team in self:
+        #     # name = str(crm_team.shop_code) + ' ' + str(crm_team.name)
+        #     name = str(crm_team.shop_code)
+        #     res.append((crm_team.id, name))
+        # return res
