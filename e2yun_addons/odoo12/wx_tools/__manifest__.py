@@ -44,9 +44,10 @@
         'views/res_company_views.xml',
         'views/res_config_settings_views.xml',
         'views/sale_coupon_program_views.xml',
+        'views/wx_tools_wx.xml'
     ],
-    'qweb': [
-    ],
+    'qweb': ["static/src/xml/wx_address_location.xml"
+             ],
     'depends': ['base', 'web', 'im_livechat', 'sale_management'],
     'installable': True,
     'auto_install': False,
