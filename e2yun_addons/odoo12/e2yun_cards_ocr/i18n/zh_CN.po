@@ -1,0 +1,128 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* e2yun_cards_ocr
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-07-07 07:35+0000\n"
+"PO-Revision-Date: 2019-07-07 15:39+0800\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"X-Generator: Poedit 1.8.12\n"
+
+#. module: e2yun_cards_ocr
+#: code:addons/e2yun_cards_ocr/models/contact_import_wizard.py:160
+#, python-format
+msgid "Business Card: OCR Fail"
+msgstr "名片识别失败"
+
+#. module: e2yun_cards_ocr
+#: model_terms:ir.ui.view,arch_db:e2yun_cards_ocr.contact_import_wizard_form_view
+msgid "Cancel"
+msgstr "取消"
+
+#. module: e2yun_cards_ocr
+#: code:addons/e2yun_cards_ocr/models/contact_import_wizard.py:48
+#: model:ir.model.fields,field_description:e2yun_cards_ocr.field_contact_import_wizard__attachment_ids
+#, python-format
+msgid "Cards Files"
+msgstr "名片文件"
+
+#. module: e2yun_cards_ocr
+#: code:addons/e2yun_cards_ocr/models/contact_import_wizard.py:357
+#, python-format
+msgid "Contacts"
+msgstr "联系人"
+
+#. module: e2yun_cards_ocr
+#: model:ir.model.fields,field_description:e2yun_cards_ocr.field_contact_import_wizard__create_uid
+msgid "Created by"
+msgstr "创建人"
+
+#. module: e2yun_cards_ocr
+#: model:ir.model.fields,field_description:e2yun_cards_ocr.field_contact_import_wizard__create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: e2yun_cards_ocr
+#: model:ir.model.fields,field_description:e2yun_cards_ocr.field_contact_import_wizard__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: e2yun_cards_ocr
+#: model:ir.model.fields,field_description:e2yun_cards_ocr.field_contact_import_wizard__id
+msgid "ID"
+msgstr ""
+
+#. module: e2yun_cards_ocr
+#: model_terms:ir.ui.view,arch_db:e2yun_cards_ocr.contact_import_wizard_form_view
+msgid "Import"
+msgstr "识别"
+
+#. module: e2yun_cards_ocr
+#: model:ir.actions.act_window,name:e2yun_cards_ocr.contact_import_wizard_action
+#: model:ir.ui.menu,name:e2yun_cards_ocr.contact_import
+msgid "Import Business Cards"
+msgstr "名片识别"
+
+#. module: e2yun_cards_ocr
+#: code:addons/e2yun_cards_ocr/models/contact_import_wizard.py:46
+#: model:ir.model,name:e2yun_cards_ocr.model_contact_import_wizard
+#, python-format
+msgid "Import Your Contacts from Files.."
+msgstr "从照片中识别联系人"
+
+#. module: e2yun_cards_ocr
+#: model:ir.model.fields,field_description:e2yun_cards_ocr.field_contact_import_wizard____last_update
+msgid "Last Modified on"
+msgstr "最后修改日"
+
+#. module: e2yun_cards_ocr
+#: model:ir.model.fields,field_description:e2yun_cards_ocr.field_contact_import_wizard__write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: e2yun_cards_ocr
+#: model:ir.model.fields,field_description:e2yun_cards_ocr.field_contact_import_wizard__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: e2yun_cards_ocr
+#: code:addons/e2yun_cards_ocr/models/contact_import_wizard.py:162
+#, python-format
+msgid "OCR Fail"
+msgstr "识别失败"
+
+#. module: e2yun_cards_ocr
+#: code:addons/e2yun_cards_ocr/models/contact_import_wizard.py:89
+#: code:addons/e2yun_cards_ocr/models/contact_import_wizard.py:90
+#: code:addons/e2yun_cards_ocr/models/contact_import_wizard.py:113
+#: code:addons/e2yun_cards_ocr/models/contact_import_wizard.py:114
+#, python-format
+msgid "Odoo module e2yun_cards_ocr depends on the baidu-aip python module."
+msgstr "模块 e2yun_cards_ocr 依赖于  baidu-aip python 模块."
+
+#. module: e2yun_cards_ocr
+#: code:addons/e2yun_cards_ocr/models/imgenhance.py:12
+#: code:addons/e2yun_cards_ocr/models/transform.py:10
+#, python-format
+msgid "Odoo module e2yun_cards_ocr depends on the opencv-python python module."
+msgstr "模块e2yun_cards_ocr依赖于opencv-python python模块。"
+
+#. module: e2yun_cards_ocr
+#. openerp-web
+#: code:addons/e2yun_cards_ocr/static/src/xml/e2yun_cards_ocr.xml:5
+#, python-format
+msgid "Upload"
+msgstr "识别名片"
+
+#. module: e2yun_cards_ocr
+#: model_terms:ir.ui.view,arch_db:e2yun_cards_ocr.contact_import_wizard_form_view
+msgid "Upload Files"
+msgstr "上传图片"
