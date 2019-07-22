@@ -15204,7 +15204,7 @@
                     </div>
                     <div class="weui-cells__title"></div>
                     <div class="weui-cells">
-                        <a class="weui-cell weui-cell_access" href="/user-center/my-settings">
+                        <a class="weui-cell weui-cell_access" href="/user-center/user-info-modify">
                             <div class="weui-cell__hd">
                                 <p>更改用户信息</p>
                             </div>
@@ -20274,7 +20274,7 @@
                     </div>
                     <div class="weui-cells__title"></div>
                     <div class="weui-cells">
-                        <a class="weui-cell weui-cell_access" href="/user-center/my-settings">
+                        <a class="weui-cell weui-cell_access" href="/user-center/user-info-modify">
                             <div class="weui-cell__hd">
                                 <p>更改用户信息</p>
                             </div>
