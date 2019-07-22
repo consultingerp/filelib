@@ -6,8 +6,42 @@
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
         <field name="arch" type="xml">
-           <xpath expr="//field[@name='auth_signup_reset_password']" position="after">
-                    <field name="auth_signup_reset_password_qrcodeimg"/>
+            <xpath expr="//field[@name='auth_signup_reset_password']" position="after">
+
+                <div class="o_setting_right_pane">
+                    <div class="content-group">
+                        <div class="row mt16">
+                            <field name="auth_signup_reset_password_qrcodeimg" class="oe_inline"/>
+                        </div>
+                    </div>
+
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="res_config_settings_wxlocation_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.wxlocation</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='multi_company']" position="before">
+                <h2>用户位置定位</h2>
+                <div class="row mt16 o_settings_container" id="wx_location_settings">
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="obtain_location"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="obtain_location"/>
+                            <div class="text-muted">
+                                获取用户位置定位，在任意页面
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </xpath>
         </field>
     </record>
