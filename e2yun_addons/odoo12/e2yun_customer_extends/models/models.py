@@ -18,8 +18,15 @@ class E2yunUserAddPartnerRelated(models.Model):
 class E2yunCsutomerExtends(models.Model):
     _inherit = 'res.partner'
 
+    def default_shop_code(self):
+        user_pool = self.env['res.users']
+        user_id = self.env.context.get('uid')
+        user = user_pool.search([('id', '=', user_id)])
+        shop = user.partner_id.shop_code
+        return shop
+
     app_code = fields.Char(string='', copy=False, readonly=True, default=lambda self: _('New'))
-    shop_code = fields.Many2one('crm.team', string='')
+    shop_code = fields.Many2one('crm.team', string='', default=default_shop_code)
     shop_name = fields.Char(string='', readonly=True, compute='_compute_shop_name', store=True)
     referrer = fields.Many2one('res.users', string='')
     occupation = fields.Char(string='')
