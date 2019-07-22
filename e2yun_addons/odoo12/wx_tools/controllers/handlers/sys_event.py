@@ -126,7 +126,7 @@ def main(robot):
                         "wx_user_id": wxuserinfo.id,
                         "login_date": datetime.datetime.now(),
                         "image": base64.b64encode(_data),
-                        "email": 'lh',
+                        "email": 'HH',
                         "wx_id": info['openid']
                     })
                     res_guideorreferrer = env['res.users'].sudo().search([('id', '=', user_id)], limit=1)
@@ -512,13 +512,15 @@ def main(robot):
         openid = message.source
         env = request.env()
         user = env['res.users'].sudo().search([('wx_user_id.openid', '=', openid)], limit=1)
-        if user.exists():
-            user.partner_id.write({
-                'wxlatitude': message.latitude,
-                'wxlongitude': message.longitude,
-                'wxprecision': message.precision,
-                'location_write_date': Datetime.now()
-            })
+        collect_user_location = env['ir.config_parameter'].sudo().get_param('base_setup.collect_user_location')
+        if collect_user_location:
+            if user.exists():
+                user.partner_id.write({
+                    'wxlatitude': message.latitude,
+                    'wxlongitude': message.longitude,
+                    'wxprecision': message.precision,
+                    'location_write_date': Datetime.now()
+                })
         return ""
 
     @robot.view

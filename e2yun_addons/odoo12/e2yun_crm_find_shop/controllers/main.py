@@ -13,16 +13,16 @@ class Map(http.Controller):
     #     # 使用http.request.render来返回模板并输出HTML,可通过字典给模板传值,模板是视图类型
 
 
-    # @http.route('/map', auth='public')
-    # def gaode_map(self, *args, **kwargs):
-    #
-    #     return http.request.render(
-    #         'e2yun_crm_find_shop.gaode_map_template', {}
-    #     )
-
     @http.route('/map', auth='public')
     def gaode_map(self, *args, **kwargs):
 
         return http.request.render(
-            'e2yun_crm_find_shop.map_template', {}
+            'e2yun_crm_find_shop.gaode_map_template', {}
         )
+
+    # @http.route('/map', auth='public')
+    # def gaode_map(self, *args, **kwargs):
+    #
+    #     return http.request.render(
+    #         'e2yun_crm_find_shop.map_template', {}
+    #     )
