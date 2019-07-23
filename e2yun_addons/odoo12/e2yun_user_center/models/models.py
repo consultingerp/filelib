@@ -7,7 +7,16 @@ import werkzeug.utils
 # class CurrentUserInfoModify(models.Model):
 #     _inherit = 'res.partner'
 
+class UserCenterUserExtends(models.Model):
+    _inherit = 'res.users'
 
+    def button_back_to_user_center(self):
+        return {
+                'type': 'ir.actions.act_url',
+                'url': '/user-center',
+                'target': 'self',
+                'res_id': self.id,
+            }
 
 
 class UserCenter(http.Controller):
