@@ -65,3 +65,10 @@ class WXCrmTeam(models.Model):
         max_goal_user = (max(gamification_goal, key=lambda x: x["current"]))
         _logger.info(max_goal_user)
         return max_goal_user
+
+    @api.multi
+    def convertteamaddres(self):
+        crm_team_pool = self.env['crm.team'].search([])
+        for crm_team in crm_team_pool:
+            crm_team._get_address_location()
+        return ""

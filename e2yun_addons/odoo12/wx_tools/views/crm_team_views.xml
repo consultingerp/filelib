@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+    <record model="ir.ui.view" id="view_sales_team_tree">
+        <field name="name">crm.team.tree.addresto.inherit</field>
+        <field name="model">crm.team</field>
+        <field name="inherit_id" ref="sales_team.crm_team_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="js_class">wx_tools_team_tree</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
     <record id="crm_team_qrcodeimg" model="ir.ui.view">
         <field name="name">crm.team.form.qrcodeimg</field>
         <field name="model">crm.team</field>
@@ -30,11 +43,11 @@
                             $("[name='address_location']").addClass("o_form_uri o_field_widget");
                             $("[name='street']").addClass("o_form_uri o_field_widget");
                             $("[name='address_location']").bind("click",function(){
-                               //打开地图，
-                               openLocation($("[name='latitude']").text(),$("[name='longitude']").text(),$("[name='address_location']").text(),$("[name='address_location']").text())
+                            //打开地图，
+                            openLocation($("[name='latitude']").text(),$("[name='longitude']").text(),$("[name='address_location']").text(),$("[name='address_location']").text())
                             });
                             $("[name='street']").bind("click",function(){
-                               openLocation($("[name='latitude']").text(),$("[name='longitude']").text(),$("[name='address_location']").text(),$("[name='address_location']").text())
+                            openLocation($("[name='latitude']").text(),$("[name='longitude']").text(),$("[name='address_location']").text(),$("[name='address_location']").text())
                             });
                         </script>
                     </group>
