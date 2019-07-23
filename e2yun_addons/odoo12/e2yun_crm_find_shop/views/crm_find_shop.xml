@@ -16,6 +16,8 @@
                     <field name="street2"/>
                     <field name="tel"/>
                     <field name="address"/>
+                    <field name="longitude"/>
+                    <field name="latitude"/>
 
                     <templates>
                         <t t-name="kanban-box">
@@ -35,14 +37,20 @@
                                     </ul></br>
                                 </div>
                                 <div class="float-right">
-                                        <p id="go"><a href="#">去这里</a></p>
+<!--                                        <button id="go" name="button_navigation" type="object" class="btn btn-primary">去这里</button>-->
+                                        <a href="#" id="go">
+                                            <img src="/web/static/src/img/marker.png" style="width:15px; height:15px;"/>
+                                            点击打开地图
+                                        </a>
+<!--                                        <img hrc="/static/marker190723.png"/>-->
+<!--                                        <p id="go">点击打开地图</p>-->
                                         <script type="text/javascript">
-                                            $('#go').bind("click",function(){
-                                               //打开地图，
-                                               openLocation($("[name='latitude']").text(),$("[name='longitude']").text(),$("[name='address_location']").text(),$("[name='address_location']").text())
+                                            $('#go').click(function(){
+                                                openLocation($("[name='latitude']").text(),$("[name='longitude']").text(),$("[name='address']").text(),$("[name='street']").text())
                                             });
-                                </script>
+                                        </script>
                                 </div>
+
                             </div>
 
                         </t>
