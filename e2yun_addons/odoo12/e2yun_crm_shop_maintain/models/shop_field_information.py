@@ -34,6 +34,10 @@ class CrmTeamADDinformation(models.Model):
                                 help="Small-sized image of this contact. It is automatically " \
                                      "resized as a 64x64px image, with aspect ratio preserved. " \
                                      "Use this field anywhere a small image is required.")
+
+    area_manager = fields.Many2one('res.users', string='片区长')
+    associate_member_ids = fields.Many2many('res.users', string='附属成员')
+
     @api.multi
     def write(self, vals):
         tools.image_resize_images(vals, sizes={'image': (1024, None)})
@@ -48,3 +52,5 @@ class ResUsers(models.Model):
         ('manager', '店长'),
         ('sales', '导购'),
         ('designer', '设计师')], string='成员类别', default='sales')
+
+    associate_team_ids = fields.Many2many('crm.team', string='附属门店')
