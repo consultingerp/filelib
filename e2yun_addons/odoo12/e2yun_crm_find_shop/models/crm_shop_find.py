@@ -11,15 +11,15 @@ class CrmTeamADDinformation(models.Model):
 
     # user_city = fields.Char(compute='the_same_city')
 
-    # def button_navigation(self):
-    #     # raise exceptions.Warning(_("hhhhhhhhhhh！"))
-    #     # return werkzeug.utils.redirect('/map')
-    #     return {
-    #         'type': 'ir.actions.act_url',
-    #         'url': '/map',
-    #         'target': 'self',
-    #         'res_id': self.id,
-    #     }
+    def button_navigation(self):
+        # raise exceptions.Warning(_("hhhhhhhhhhh！"))
+        # return werkzeug.utils.redirect('/map')
+        return {
+            'type': 'ir.actions.act_url',
+            'url': '/map',
+            'target': 'self',
+            'res_id': self.id,
+        }
 
     # @api.model
     # def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
