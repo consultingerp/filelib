@@ -22,7 +22,7 @@
 # Inspired by aek's Gist (<https://gist.github.com/aek/efb0f9dd8935471f9070>).
 
 
-import cPickle
+import pickle as cPickle
 import werkzeug.contrib.sessions
 
 from odoo import http, tools
