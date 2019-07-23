@@ -125,7 +125,7 @@ class E2yunCsutomerExtends(models.Model):
             # elif previous_state in ['contract_customers']:
             #     raise Warning(_("不能从成交客户转换到其他状态！"))
         # 对修改后的手机号进行验证
-        if 'mobile' in values:
+        if 'mobile' in values and values.get('mobile',False):
             mobile = values.get('mobile')
             ret = re.match(r"^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$", mobile)
             if not ret:
