@@ -32,6 +32,7 @@
                     <header>
                         <button name="preference_change_password" type="object" string="更改密码"
                                 class="oe_link"/>
+                        <button name="button_back_to_user_center" type="object" string="返回个人中心" class="oe_link"/>
                     </header>
                     <field name="image" readonly="0" widget='image' class="oe_right oe_avatar"
                            options='{"preview_image": "image_small"}'/>

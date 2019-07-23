@@ -39,6 +39,20 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="collect_user_location"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="collect_user_location"/>
+                            <div class="text-muted">
+                                允许收集用户位置信息
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
 
 

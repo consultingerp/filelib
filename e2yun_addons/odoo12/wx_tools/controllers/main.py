@@ -130,11 +130,14 @@ class LoginHome(Home):
         from ..controllers import client
         entry = client.wxenv(request.env)
         try:
-            # url = request.httprequest.url;
-            url = urljoin(request.httprequest.base_url, request.httprequest.full_path)
-            url = url.replace(":80", "")
-            _logger.info("jsapi_ticket_url:%s" % url)
-            wx_appid, timestamp, noncestr, signature = entry.get_jsapi_ticket(url)
+            url_ = request.httprequest.url;
+            #url_ = urljoin(request.httprequest.host_url, request.httprequest.full_path)
+            # 解决urljoin 把参数只有一个?号去掉的问题
+            #if request.httprequest.full_path.find("?") > 0 and url_.find("?") < 0:
+            #    url_ = url_ + "%s" % '?'
+            url_ = url_.replace(":80", "")
+            #_logger.info("jsapi_ticket_url:%s" % url_)
+            wx_appid, timestamp, noncestr, signature = entry.get_jsapi_ticket(url_)
             web_.qcontext.update({
                 'wx_appid': wx_appid,
                 'timestamp': timestamp,

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="baidu_webmaster_code" inherit_id="website.layout" name="Baidu Webmaster Code">
+            <xpath expr="//script[@id='tracking_code']" position="before">
+                <script t-if="website and website.baidu_analytics_key and not editable">
+                var _hmt = _hmt || [];
+                (function(){
+                    var hm = document.createElement("script");
+                    hm.src = "//hm.baidu.com/hm.js?<t t-esc="website.baidu_analytics_key"/>";
+                    var s = document.getElementsByTagName("script")[0]; 
+                    s.parentNode.insertBefore(hm, s);
+                })();
+                </script>
+                <script t-if="website and website.baidu_webmaster_push and not editable">
+                (function(){
+                    var bp = document.createElement('script');
+                    var curProtocol = window.location.protocol.split(':')[0];
+                    if(curProtocol === 'https'){
+                        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+                    }else{
+                        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                    }
+                    var s = document.getElementsByTagName("script")[0];
+                    s.parentNode.insertBefore(bp, s);
+                })();
+                </script>
+            </xpath>
+        </template>
+        <template id="china_icp_beian" inherit_id="website.layout" name="China ICP BeiAn">
+            <xpath expr="//script[@id='tracking_code']" position="after">
+                <script t-if="website and website.china_icp_beian_info and not editable">
+                (function(){
+                    var s = "http://www.miitbeian.gov.cn/";
+                    var a = $("<a/>").attr({
+                        "target" : "_blank",
+                        "href" : s
+                    }).text("<t t-esc="website.china_icp_beian_info"/>");
+                    $("footer .o_brand_promotion").append(a);
+                })();
+                </script>
+            </xpath>
+        </template>
+        <template id="footer_custom" inherit_id="website.footer_custom" name="Footer China Social">
+            <xpath expr="//div[@id='connect']/p" position="inside">
+                <a t-if="website.social_wechat" t-att-href="website.social_wechat" class="btn btn-sm btn-link"><i class="fa fa-2x fa-wechat"/></a>
+                <a t-if="website.social_qq" t-att-href="website.social_qq" class="btn btn-sm btn-link"><i class="fa fa-2x fa-qq"/></a>
+                <a t-if="website.social_weibo" t-att-href="website.social_weibo" class="btn btn-sm btn-link"><i class="fa fa-2x fa-weibo"/></a>
+                <a t-if="website.social_renren" t-att-href="website.social_renren" class="btn btn-sm btn-link"><i class="fa fa-2x fa-renren"/></a>
+            </xpath>
+        </template>
+        <template id="baidu_map_company_description" inherit_id="website.company_description" name="Baidu Map Company Description">
+            <xpath expr="//t[@t-if='not res_company.google_map_img()']" position="replace"></xpath>
+            <xpath expr="//t[@t-if='res_company.google_map_img()']" position="replace">
+                <a t-att-href="res_company.baidu_map_link()" target="_blank">
+                   <img class="thumbnail img-responsive" t-att-src="res_company.baidu_map_img()" />
+                </a>
+            </xpath>
+        </template>
+    </data>
+</odoo>
