@@ -11,7 +11,6 @@ odoo.define('website_blog.website_blog', function (require) {
                 method: 'click_good',
                 args:[{'blog_id':blog_id}]
             }).then(function(){
-                debugger;
                 var good_count = Number($('#good_count').html());
                 $('#good_count').html(good_count+1);
                 $('#o_click_good').attr("disabled",true).css("pointer-events","none");
