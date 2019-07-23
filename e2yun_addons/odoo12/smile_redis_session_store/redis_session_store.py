@@ -14,7 +14,7 @@ if sys.version_info > (3,):
     import _pickle as cPickle
     unicode = str
 else:
-    import cPickle
+    import pickle as cPickle
 
 SESSION_TIMEOUT = 60 * 60 * 24 * 7  # 1 weeks in seconds
 
