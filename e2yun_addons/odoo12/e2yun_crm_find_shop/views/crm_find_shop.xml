@@ -35,9 +35,14 @@
                                     </ul></br>
                                 </div>
                                 <div class="float-right">
-                                        <button name="button_navigation" type="object" class="btn btn-primary">去这里</button>
+                                        <p id="go"><a href="#">去这里</a></p>
+                                        <script type="text/javascript">
+                                            $('#go').bind("click",function(){
+                                               //打开地图，
+                                               openLocation($("[name='latitude']").text(),$("[name='longitude']").text(),$("[name='address_location']").text(),$("[name='address_location']").text())
+                                            });
+                                </script>
                                 </div>
-
                             </div>
 
                         </t>
