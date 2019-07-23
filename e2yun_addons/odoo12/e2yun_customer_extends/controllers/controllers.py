@@ -1,5 +1,17 @@
 # -*- coding: utf-8 -*-
 from odoo import http
+from odoo.addons.mail.controllers import main
+
+class MailController(main.MailController):
+    _cp_path = '/mail'
+
+    @http.route('/mail/init_messaging', type='json', auth='user')
+    def mail_init_messaging(self):
+        result = super(MailController, self).mail_init_messaging()
+        result['mail_failures'] = []
+
+        return result
+
 
 # class E2yunCsutomerExtends(http.Controller):
 #     @http.route('/e2yun_csutomer_extends/e2yun_csutomer_extends/', auth='public')
