@@ -28,7 +28,7 @@
 
                 <xpath expr="//t[@t-name='kanban-box']//strong[@class='o_kanban_record_title']" position="after">
                     <div class="o_kanban_record_medium">
-                        <field name="member_type"/>
+                        <field name="function"/>
                     </div>
                 </xpath>
 
