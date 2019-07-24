@@ -12,10 +12,11 @@
 				var actual_longitude = 0.0;
 				var formatted_address = "";
                 var obtain_location = '<t t-esc="request.env['ir.config_parameter'].sudo().get_param('base_setup.obtain_location')"/>';
+                var timestamp = '<t t-raw="timestamp"/>';
                 wx.config({
                     debug: false,
                     appId: '<t t-raw="wx_appid"/>',
-                    timestamp: <t t-raw="timestamp"/>,
+                    timestamp: '<t t-raw="timestamp"/>',
                     nonceStr: '<t t-raw="noncestr"/>',
                     signature: '<t t-raw="signature"/>',
                     jsApiList: ['openLocation', 'openLocation', 'onMenuShareAppMessage',
