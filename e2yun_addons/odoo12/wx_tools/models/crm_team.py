@@ -9,6 +9,7 @@ _logger = logging.getLogger(__name__)
 
 class WXCrmTeam(models.Model):
     _inherit = 'crm.team'
+    # _order = 'distance'
 
     qrcode_ticket = fields.Char(u'二维码ticket')
     qrcode_url = fields.Char(u'二维码url')
