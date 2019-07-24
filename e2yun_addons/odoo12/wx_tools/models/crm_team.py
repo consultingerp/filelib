@@ -3,6 +3,7 @@
 import logging
 from odoo import api, fields, models
 from odoo.fields import Datetime
+from geopy.distance import vincenty
 
 _logger = logging.getLogger(__name__)
 
@@ -63,7 +64,10 @@ class WXCrmTeam(models.Model):
         # for gamificatio in gamification_goal:
         #     _logger.info(gamificatio.user_id.id)
         #     _logger.info(gamificatio.current)
-        max_goal_user = (max(gamification_goal, key=lambda x: x["current"]))
+        if gamification_goal:
+            max_goal_user = (max(gamification_goal, key=lambda x: x["current"]))
+        else:
+            return None
         _logger.info(max_goal_user)
         return max_goal_user
 
@@ -73,3 +77,22 @@ class WXCrmTeam(models.Model):
         for crm_team in crm_team_pool:
             crm_team._get_address_location()
         return ""
+
+    @api.multi
+    def getrecenttearm(self, latitude, longitude):
+        newport_ri = (latitude, longitude)
+        crm_team_pool = self.env['crm.team'].search([])
+        search_read_new = []
+        for crm_team in crm_team_pool:
+            if crm_team.longitude != 0.0 or crm_team.longitude != 0.0:
+                cleveland_oh = (crm_team.latitude, crm_team.longitude)
+                pos_kilometers = vincenty(newport_ri, cleveland_oh).kilometers
+                crm_team.distance = pos_kilometers
+                search_read_new.append(crm_team)
+                _logger.info("门店与用户距离%s" % pos_kilometers)
+        if search_read_new:
+            min_distance = (min(search_read_new, key=lambda dict: dict['distance']))
+            self.near_team = '%s:距离%s公里' % (min_distance.street, min_distance.distance)
+            return min_distance
+        return None
+
