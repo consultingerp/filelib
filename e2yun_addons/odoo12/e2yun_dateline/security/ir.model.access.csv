@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_e2yun_dateline_e2yun_dateline,e2yun_dateline.e2yun_dateline,model_e2yun_dateline_e2yun_dateline,,1,0,0,0
