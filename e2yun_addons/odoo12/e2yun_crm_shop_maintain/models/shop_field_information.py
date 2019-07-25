@@ -48,9 +48,4 @@ class CrmTeamADDinformation(models.Model):
 class ResUsers(models.Model):
     _inherit = 'res.users'
 
-    member_type = fields.Selection([
-        ('manager', '店长'),
-        ('sales', '导购'),
-        ('designer', '设计师')], string='成员类别', default='sales')
-
     associate_team_ids = fields.Many2many('crm.team', string='附属门店')
