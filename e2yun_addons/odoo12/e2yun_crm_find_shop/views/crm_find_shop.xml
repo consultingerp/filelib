@@ -6,7 +6,7 @@
             <field name="name">shop.find.kanban</field>
             <field name="model">crm.team</field>
             <field name="arch" type="xml">
-                <kanban class="oe_background_grey o_salesteam_kanban" create="0">
+                <kanban class="oe_background_grey o_salesteam_kanban" create="0" default_order="distance desc">
                     <field name="id"/>
                     <field name="name"/>
                     <field name="user_id"/>
@@ -18,6 +18,8 @@
                     <field name="address"/>
                     <field name="longitude"/>
                     <field name="latitude"/>
+                    <field name="address_location"/>
+                    <field name="distance"/>
 
                     <templates>
                         <t t-name="kanban-box">
@@ -31,25 +33,34 @@
 
                                     <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
                                     <br><ul>
-                                        <li ><b>详细地址: </b><field name="street"/></li>
-                                        <li ><field name="address"/></li>
+                                        <li >
+                                            <a href="#" id="go">
+                                                <img src="/web/static/src/img/marker.png" style="width:15px; height:15px;"/>
+                                                <b>详细地址: </b><field name="address_location"/>
+                                            </a>
+                                        </li>
+<!--                                        <li ><field name="address"/></li>-->
                                         <li ><b>联系电话: </b><field name="tel"/></li>
                                     </ul></br>
-                                </div>
-                                <div class="float-right">
-<!--                                        <button id="go" name="button_navigation" type="object" class="btn btn-primary">去这里</button>-->
-                                        <a href="#" id="go">
-                                            <img src="/web/static/src/img/marker.png" style="width:15px; height:15px;"/>
-                                            点击打开地图
-                                        </a>
-<!--                                        <img hrc="/static/marker190723.png"/>-->
-<!--                                        <p id="go">点击打开地图</p>-->
-                                        <script type="text/javascript">
+                                    <script type="text/javascript">
+                                            getWXlocation()
                                             $('#go').click(function(){
-                                                openLocation($("[name='latitude']").text(),$("[name='longitude']").text(),$("[name='address']").text(),$("[name='street']").text())
+                                                openLocation($("[name='latitude']").text(),$("[name='longitude']").text(),$("[name='address_location']").text(),$("[name='address_location']").text())
                                             });
-                                        </script>
+                                    </script>
                                 </div>
+<!--                                <div class="float-right">-->
+<!--&lt;!&ndash;                                        <button id="go" name="button_navigation" type="object" class="btn btn-primary">去这里</button>&ndash;&gt;-->
+<!--                                        <a href="#" id="go">-->
+<!--                                            <img src="/web/static/src/img/marker.png" style="width:15px; height:15px;"/>-->
+<!--                                            点击打开地图-->
+<!--                                        </a>-->
+<!--                                        <script type="text/javascript">-->
+<!--                                            $('#go').click(function(){-->
+<!--                                                openLocation($("[name='latitude']").text(),$("[name='longitude']").text(),$("[name='address']").text(),$("[name='address']").text())-->
+<!--                                            });-->
+<!--                                        </script>-->
+<!--                                </div>-->
 
                             </div>
 
@@ -64,7 +75,7 @@
             <field name="model">crm.team</field>
             <field name="arch" type="xml">
                 <search string="shop_find Search">
-                    <filter name="same_city_shop" string="同城门店" domain="[('id', '!=', None)]"/>
+<!--                    <filter name="same_city_shop" string="同城门店" domain="[('id', '!=', None)]"/>-->
                     <field name="city"/>
                     <field name="name"/>
                     <group expand="0" string="Group By...">
