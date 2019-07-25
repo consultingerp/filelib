@@ -28,7 +28,7 @@
 
                 <xpath expr="//t[@t-name='kanban-box']//strong[@class='o_kanban_record_title']" position="after">
                     <div class="o_kanban_record_medium">
-                        <field name="member_type"/>
+                        <field name="function"/>
                     </div>
                 </xpath>
 
@@ -63,6 +63,7 @@
                             <kanban quick_create="false" create="true" delete="true">
                                 <field name="id"/>
                                 <field name="name"/>
+                                <field name="function"/>
                                 <templates>
                                     <t t-name="kanban-box">
                                         <div class="oe_kanban_global_click" style="max-width: 200px">
@@ -73,6 +74,8 @@
                                                 <div class="o_kanban_record_headings ml8">
                                                     <strong class="o_kanban_record_title">
                                                         <field name="name"/>
+                                                        <br />
+                                                        <field name="function"/>
                                                     </strong>
                                                 </div>
                                             </div>
