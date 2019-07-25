@@ -80,4 +80,5 @@ class SaleAdvancePaymentInv(models.TransientModel):
                     self.env).server_url + '/web/login?usercode=saleorderwx&codetype=wx&redirect=' + redirectur
                 client.send_template_message(self, order.user_id.wx_user_id.openid, template_id, data, url,
                                              'saleorder')
+
         return res
