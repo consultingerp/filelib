@@ -11,15 +11,15 @@ class CrmTeamADDinformation(models.Model):
 
     # user_city = fields.Char(compute='the_same_city')
 
-    def button_navigation(self):
-        # raise exceptions.Warning(_("hhhhhhhhhhh！"))
-        # return werkzeug.utils.redirect('/map')
-        return {
-            'type': 'ir.actions.act_url',
-            'url': '/map',
-            'target': 'self',
-            'res_id': self.id,
-        }
+    # def button_navigation(self):
+    #     # raise exceptions.Warning(_("hhhhhhhhhhh！"))
+    #     # return werkzeug.utils.redirect('/map')
+    #     return {
+    #         'type': 'ir.actions.act_url',
+    #         'url': '/map',
+    #         'target': 'self',
+    #         'res_id': self.id,
+    #     }
 
     # @api.model
     # def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
@@ -43,10 +43,11 @@ class CrmTeamADDinformation(models.Model):
 
     @api.model
     def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
-        if domain:
-            if ['id', '!=', None] in domain:
-                domain.remove(['id', '!=', None])
-                domain.append(('city', '=', self.env.user.partner_id.city))
+        # if domain:
+        limit = 8
+            # if ['id', '!=', None] in domain:
+            #     domain.remove(['id', '!=', None])
+            #     domain.append(('city', '=', self.env.user.partner_id.city))
         #     serach_read = super(CrmTeamADDinformation, self).search_read(domain, fields, offset, limit, order)
         #     user = self.env.user
         #     user_city = user.partner_id.city

@@ -1,13 +1,14 @@
 # coding=utf-8
-import logging
 import base64
-from .. import client
-from odoo import fields
-from odoo.fields import Datetime
 import datetime
+import logging
+
 import odoo
-from odoo.http import request
 from odoo import _
+from odoo.fields import Datetime
+from odoo.http import request
+from .. import client
+
 
 _logger = logging.getLogger(__name__)
 
@@ -94,7 +95,7 @@ def main(robot):
                         users_ids.append(int(max_goal_user.user_id.id))
                         tracelog_title = '%s扫描门店二维码关注公众号，将客户分配给%s,根据评分规则,的团队评分(%s)，' % (
                             str(info['nickname']), max_goal_user.user_id.name, max_goal_user.current)
-                        traceuser_id = max_goal_user.user_id
+                        #traceuser_id = max_goal_user.user_id
                         user_id = max_goal_user.user_id.id
                         ismail_channel = True
                 elif eventkey[0] == 'qrscene_COMPANY':
@@ -508,19 +509,32 @@ def main(robot):
     @robot.location_event
     def location_event(message):
         _logger.info('>>>location_event wx msg: %s' % message.__dict__)
+        entry = client.wxenv(request.env)
+        serviceid = message.target
+        openid = message.source
+        mtype = message.type
+        _logger.info('>>> wx msg: %s' % message.__dict__)
+        env = request.env()
+        info = entry.wxclient.get_user_info(openid)
+        messag_info = message.CreateTime + "" + message.FromUserName
+        if messag_info == entry.OPENID_LAST.get(openid):
+            _logger.info('>>> 重复的微信消息')
+            return ''
+        entry.OPENID_LAST[openid] = messag_info
         serviceid = message.target
         openid = message.source
         env = request.env()
         user = env['res.users'].sudo().search([('wx_user_id.openid', '=', openid)], limit=1)
         collect_user_location = env['ir.config_parameter'].sudo().get_param('base_setup.collect_user_location')
         if collect_user_location:
-            if user.exists():
+            if user.exists():  # 存在用户更新用户关联客户
                 user.partner_id.write({
                     'wxlatitude': message.latitude,
                     'wxlongitude': message.longitude,
                     'wxprecision': message.precision,
                     'location_write_date': Datetime.now()
                 })
+                user.setpartnerteamanduser(request,message.latitude,message.longitude)
         return ""
 
     @robot.view
