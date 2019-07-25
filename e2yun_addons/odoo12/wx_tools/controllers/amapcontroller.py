@@ -29,7 +29,9 @@ class AmapAip(http.Controller):
                         'wxprecision': '-1',
                         'location_write_date': Datetime.now()
                     })
+                    user.setpartnerteamanduser(request, location[1], location[0])
         except Exception as e:
+            print(e)
             return ''
         data = {"locations": convert_location, 'formatted_address': formatted_address}
         return json.dumps(data)
