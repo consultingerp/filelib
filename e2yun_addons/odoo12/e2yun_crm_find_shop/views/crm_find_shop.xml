@@ -44,9 +44,9 @@
                                     </ul></br>
                                     <script type="text/javascript">
                                             getWXLocation()
-                                            $('#go').unbind("click")
-                                            $('#go').click(function(){
-                                                $(this).openLocation($("[name='latitude']").text(),$("[name='longitude']").text(),$("[name='address_location']").text(),$("[name='address_location']").text())
+<!--                                            $('#go').unbind("click")-->
+                                            $(this).click(function(){
+                                                openLocation($("[name='latitude']").text(),$("[name='longitude']").text(),$("[name='address_location']").text(),$("[name='address_location']").text())
                                             });
                                     </script>
                                 </div>
