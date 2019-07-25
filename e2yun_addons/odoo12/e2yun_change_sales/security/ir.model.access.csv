@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+change_sales_view,change_sales_formview_user,model_change_sales,,1,1,1,1
