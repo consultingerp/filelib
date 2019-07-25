@@ -1,6 +1,7 @@
 # coding=utf-8
 
 import logging
+import json
 
 from odoo import models, fields, api
 from ..controllers import client
@@ -256,37 +257,42 @@ class wx_user(models.Model):
     @api.multi
     def send_template_message(self, data, template_id=None, template_name=None, url='', usercode='', partner=None,
                               user=None, partner_id=None, user_id=None, url_type='in', openid=None):
+        if isinstance(data, str):
+            data = json.loads(data)
         if not template_id:
             configer_para = self.env["wx.paraconfig"].sudo().search([('paraconfig_name', '=', template_name)])
             if configer_para:
                 template_id = configer_para[0].paraconfig_value
         from ..controllers import client
-        if url_type == 'in':
+        if url_type == 'in':  # 内部URL需要登验证
             url = client.wxenv(
                 self.env).server_url + '/web/login?usercode='+usercode+'&codetype=wx&redirect=' + url
-        else:
+        elif url_type == 'USER':  # 用户URL 直接 转到URL
+            url = url
+        else:   # 其它就用当前的服务器的URL +发送URL
             url = client.wxenv(
                 self.env).server_url + url
         if openid:
-            client.send_template_message(self, openid, template_id, data, url)
+            client.send_template_message(self, openid, template_id, data, url, url_type=url_type)
         if partner:
             if partner.wx_user_id.openid:
-                client.send_template_message(self, partner.wx_user_id.openid, template_id, data, url)
+                client.send_template_message(self, partner.wx_user_id.openid, template_id, data, url, url_type=url_type)
             else:
                 raise UserError(u'发送失败,客户没有绑定微信')
         if user:
             if user.wx_user_id.openid:
-                client.send_template_message(self, user.wx_user_id.openid, template_id, data, url)
+                client.send_template_message(self, user.wx_user_id.openid, template_id, data, url, url_type=url_type)
             elif user.partner_id.wx_user_id.openid:
-                client.send_template_message(self, user.partner_id.wx_user_id.openid, template_id, data, url)
+                client.send_template_message(self, user.partner_id.wx_user_id.openid, template_id, data, url, url_type=url_type)
             else:
                 raise UserError(u'发送失败,客户没有绑定微信')
         if partner_id:
             partner_ = self.env['res.partner'].sudo().browse(partner_id)
-            self.send_template_message(data,template_id, url, partner=partner_)
+            self.send_template_message(data,template_id, url, partner=partner_, url_type=url_type)
         if user_id:
             user_ = self.env['res.users'].sudo().browse(user_id)
-            self.send_template_message(data,template_id, url, user=user_)
+            self.send_template_message(data,template_id, url, user=user_, url_type=url_type)
+        return ""
 
     @api.multi
     def consultation_reminder(self, partner, openid, message, active_id):
