@@ -45,11 +45,25 @@
                                     <script type="text/javascript">
                                             getWXLocation()
                                             $('#go').click(function(){
-                                                openLocation($("[name='latitude']").text(),$("[name='longitude']").text(),$("[name='address_location']").text(),$("[name='address_location']").text())
+                                                $(this).openLocation($("[name='latitude']").text(),$("[name='longitude']").text(),$("[name='address_location']").text(),$("[name='address_location']").text())
                                             });
                                     </script>
                                 </div>
+<!--                                <div class="float-right">-->
+<!--&lt;!&ndash;                                        <button id="go" name="button_navigation" type="object" class="btn btn-primary">去这里</button>&ndash;&gt;-->
+<!--                                        <a href="#" id="go">-->
+<!--                                            <img src="/web/static/src/img/marker.png" style="width:15px; height:15px;"/>-->
+<!--                                            点击打开地图-->
+<!--                                        </a>-->
+<!--                                        <script type="text/javascript">-->
+<!--                                            $('#go').click(function(){-->
+<!--                                                openLocation($("[name='latitude']").text(),$("[name='longitude']").text(),$("[name='address']").text(),$("[name='address']").text())-->
+<!--                                            });-->
+<!--                                        </script>-->
+<!--                                </div>-->
+
                             </div>
+
                         </t>
                     </templates>
                 </kanban>
