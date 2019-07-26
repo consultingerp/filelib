@@ -43,8 +43,9 @@
                                         <li ><b>联系电话: </b><field name="tel"/></li>
                                     </ul></br>
                                     <script type="text/javascript">
-                                            getWXlocation()
-                                            $('#go').click(function(){
+                                            getWXLocation()
+<!--                                            $('#go').unbind("click")-->
+                                            $(this).click(function(){
                                                 openLocation($("[name='latitude']").text(),$("[name='longitude']").text(),$("[name='address_location']").text(),$("[name='address_location']").text())
                                             });
                                     </script>
