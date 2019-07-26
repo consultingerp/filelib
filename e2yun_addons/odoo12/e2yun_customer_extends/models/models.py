@@ -215,6 +215,10 @@ class E2yunCsutomerExtends(models.Model):
 
     def sync_customer_to_pos(self):
         for r in self:
+
+            if r.state == 'potential_customer':
+                raise exceptions.Warning('状态为潜在客户，不能同步到POS系统')
+
             # if r.pos_state:
             #     raise exceptions.Warning("POS状态已传输，不能再同步哟！")
             ICPSudo = self.env['ir.config_parameter'].sudo()
@@ -226,6 +230,9 @@ class E2yunCsutomerExtends(models.Model):
             if r.shop_code:
                 shop_code = r.shop_code.shop_code
                 shop_name = r.shop_code.name
+            openid = ''
+            if r.wx_user_id:
+                openid = r.wx_user_id.openid
             result = client.service.createMember(r.state_id.name or '',  # 省
                                                  r.city_id.name or '',  # 城市
                                                  r.area_id.name or '',  # 县区
@@ -239,7 +246,9 @@ class E2yunCsutomerExtends(models.Model):
                                                  shop_name or '',  # 门店名称
                                                  r.occupation or '',  # 职业
                                                  r.app_code or '',  # app编码
-                                                 self.env.user.name)  # 创建人
+                                                 self.env.user.name,# 创建人
+                                                 openid
+                                                 )
 
             if result != 'S':
                 raise exceptions.Warning(result)
@@ -322,6 +331,9 @@ class resPartnerBatch(models.TransientModel):
         for r in rep:
             # if r.pos_state:
             #     raise exceptions.Warning("POS状态已传输，不能再同步哟！")
+
+            if r.state == 'potential_customer':
+                raise exceptions.Warning('状态为潜在客户，不能同步到POS系统')
             ICPSudo = self.env['ir.config_parameter'].sudo()
 
             url = ICPSudo.get_param('e2yun.sync_pos_member_webservice_url')  # webservice调用地址
@@ -332,6 +344,9 @@ class resPartnerBatch(models.TransientModel):
             if r.shop_code:
                 shop_code = r.shop_code.shop_code
                 shop_name = r.shop_code.name
+            openid = ''
+            if r.wx_user_id:
+                openid = r.wx_user_id.openid
 
             result = client.service.createMember(r.state_id.name or '',  # 省
                                                  r.city_id.name or '',  # 城市
@@ -346,7 +361,7 @@ class resPartnerBatch(models.TransientModel):
                                                  shop_name or '',  # 门店名称
                                                  r.occupation or '',  # 职业
                                                  r.app_code or '',  # app编码
-                                                 self.env.user.name)  # 创建人
+                                                 self.env.user.name,openid)  # 创建人
 
             if result != 'S':
                 raise exceptions.Warning(result)
