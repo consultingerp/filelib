@@ -33,8 +33,28 @@ class E2yunCsutomerExtends(models.Model):
         if self.address_desc:
 
             adds = self.address_desc.split(' ')
-            if adds[0]:
+
+            desc = ''
+            name = ''
+            phone = ''
+
+            if adds and adds[0]:
                 desc = adds[0]
+            if len(adds) >= 2 and adds[1]:
+                name = adds[1]
+            if len(adds) >= 3 and adds[2]:
+                phone = adds[2]
+
+            if name and name.isdigit() :
+                d = desc
+                n = name
+                p = phone
+                name = d
+                phone = n
+                desc = p
+
+            if desc:
+
                 desc = desc.replace('省','').replace('市','').replace('区','').replace('县','')
                 state_id,state_idx = self.get_add(desc,0,2,'res.country.state','省')
                 city_id, city_idx = 0,0
@@ -52,10 +72,10 @@ class E2yunCsutomerExtends(models.Model):
                     street = desc[area_idx:len(desc)]
                     self.area_id = area_id
                     self.street = street
-            if len(adds) >= 2 and adds[1]:
-                self.name = adds[1]
-            if len(adds) >= 3 and adds[2]:
-                if len(adds[2]) == 11:
-                    self.mobile = adds[2]
+            if name:
+                self.name = name
+            if phone:
+                if len(phone) == 11:
+                    self.mobile = phone
                 else:
-                    self.phone = adds[2]
+                    self.phone = phone

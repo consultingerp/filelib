@@ -170,13 +170,17 @@ def wxenv(env):
     return WxEnvDict[env.cr.dbname]
 
 
-def send_template_message(self, user_id, template_id, data, url='', state=''):
+def send_template_message(self, user_id, template_id, data, url='', state='', url_type='in'):
     entry = wxenv(self.env)
     wxclient = entry.wxclient
-    wxoauth = ComponentOAuth(wxclient.appid, component_appid='', component_access_token=wxclient.token,
-                             redirect_uri=url, scope='snsapi_userinfo', state=state)
-    logging.info(wxoauth.authorize_url)
-    return wxclient.send_template_message(user_id, template_id, data, wxoauth.authorize_url)
+    if url_type == 'USER':  # 用户URL 直接 转到URL
+        url = url
+    else:
+        wxoauth = ComponentOAuth(wxclient.appid, component_appid='', component_access_token=wxclient.token,
+                                 redirect_uri=url, scope='snsapi_userinfo', state=state)
+        url = wxoauth.authorize_url
+        logging.info(wxoauth.authorize_url)
+    return wxclient.send_template_message(user_id, template_id, data, url)
 
 
 def get_user_info(self, code, state='login'):
