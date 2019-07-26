@@ -5,8 +5,8 @@
                                 <div>
                                     <span class="val">
                                         <t t-esc="widget.count"/>
-                                    </span>
-                                    <input name="wx_test" value="test"></input>
+                                    </span><input name="wx_test" value="test"></input>
+
                                 </div>
                             </t>
 

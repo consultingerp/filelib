@@ -44,7 +44,8 @@
         'views/res_company_views.xml',
         'views/res_config_settings_views.xml',
         'views/sale_coupon_program_views.xml',
-        'views/wx_tools_wx.xml'
+        'views/wx_tools_wx.xml',
+        'views/address_location.xml'
     ],
     'qweb': ["static/src/xml/wx_address_location.xml",
              "static/src/xml/wx_team.xml"
