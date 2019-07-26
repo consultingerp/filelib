@@ -256,7 +256,8 @@ class wx_user(models.Model):
     # ------------------------------------------------------
     @api.multi
     def send_template_message(self, data, template_id=None, template_name=None, url='', usercode='', partner=None,
-                              user=None, partner_id=None, user_id=None, url_type='in', openid=None):
+                              user=None, partner_id=None, user_id=None, url_type='in', openid=None,
+                              partner_appcode=None):
         if isinstance(data, str):
             data = json.loads(data)
         if not template_id:
@@ -286,6 +287,10 @@ class wx_user(models.Model):
                 client.send_template_message(self, user.partner_id.wx_user_id.openid, template_id, data, url, url_type=url_type)
             else:
                 raise UserError(u'发送失败,客户没有绑定微信')
+        if partner_appcode:
+            partner_ = self.env['res.partner'].sudo().search([('app_code', '=', partner_appcode)])
+            if partner_:
+                client.send_template_message(self, partner_.wx_user_id.openid, template_id, data, url, url_type=url_type)
         if partner_id:
             partner_ = self.env['res.partner'].sudo().browse(partner_id)
             self.send_template_message(data,template_id, url, partner=partner_, url_type=url_type)
