@@ -1,4 +1,4 @@
-odoo.define('website_blog.website_blog', function (require) {
+odoo.define('e2yun_website_blog.website_blog', function (require) {
 "use strict";
     $(document).ready(function() {
         $('.o_twitter, .o_facebook, .o_linkedin, .o_google, .o_twitter_complete, .o_facebook_complete, .o_linkedin_complete, .o_google_complete').hide();
