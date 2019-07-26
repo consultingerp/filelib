@@ -290,6 +290,7 @@ class wx_user(models.Model):
         if partner_appcode:
             partner_ = self.env['res.partner'].sudo().search([('app_code', '=', partner_appcode)])
             if partner_:
+                url = url + "&ss_wx_code=%s" % partner_.wx_user_id.openid
                 client.send_template_message(self, partner_.wx_user_id.openid, template_id, data, url, url_type=url_type)
         if partner_id:
             partner_ = self.env['res.partner'].sudo().browse(partner_id)
