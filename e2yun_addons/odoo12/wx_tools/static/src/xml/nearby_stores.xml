@@ -5,7 +5,7 @@
 
         <section class="aui-flexView">
             <div class="aui-navBar aui-navBar-fixed b-line">
-                <div class="aui-navBar-item" onclick="alert('aa')">
+                <div class="aui-navBar-item" style="font-size: 13px;" onclick="alert('aa')">
                     <i class="icon icon-return"></i>附近门店
                 </div>
                 <div class="aui-center">
@@ -22,13 +22,13 @@
     </t>
 
     <t t-name="store_head">
-        <div id="locationbejing" data-addresname="BJ">北京
+        <div id="locationbejing" data-addresname="BJ" style="font-size: 13px;">北京
             <i class="icon icon-san"></i>
         </div>
-        <div id="locationsz" data-addresname="SZ">深圳
+        <div id="locationsz" data-addresname="SZ" style="font-size: 13px;">深圳
             <i class="icon icon-san"></i>
         </div>
-        <div id="locationother" data-addresname="OTH">其它
+        <div id="locationother" data-addresname="OTH" style="font-size: 13px;">其它
             <i class="icon icon-san"></i>
         </div>
     </t>
@@ -61,6 +61,7 @@
                                     <i class="icon icon-add"></i>
                                     <t t-esc="store['distance']"/>千米
                                 </t>
+
                             </span>
                         </h2>
                         <p class="o_form_uri o_field_widget" t-att-data-latitude="store['latitude']"
@@ -73,13 +74,9 @@
                                 <t t-esc="store['street2']"/>
                             </t>
                         </p>
-
-
                         <a t-if="store['tel']" t-attf-href="tel:{{store['tel']}}">致电
                             <t t-esc="store['tel']"/>
                         </a>
-
-
                     </li>
                 </ul>
             </div>
