@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<templates id="template" xml:space="preserve">
+<templates>
     <t t-name="CrmTeamListView.location_button">
         <button type="button" class="btn btn-primary o_list_tender_button_location">
            转换地址
