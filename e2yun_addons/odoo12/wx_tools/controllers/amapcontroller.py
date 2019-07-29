@@ -73,7 +73,7 @@ class AmapAip(http.Controller):
                 _logger.info("门店与用户距离%s" % pos_kilometers)
         search_read_new = sorted(search_read_new, key=lambda dict: dict['distance'], reverse=False)
         crm_team_list = []
-        listsize = len(crm_team_list) if len(crm_team_list) <= 10 else 10
+        listsize = len(search_read_new) if len(search_read_new) <= 10 else 10
         for i in range(listsize):
             crm_team_list.append(search_read_new[i])
         return {
