@@ -39,7 +39,7 @@ class AmapAip(http.Controller):
         return json.dumps(data)
 
     @http.route(['/amap/nearby_stores'], type='json', auth='user')
-    def convert(self, location):
+    def nearby_stores(self, location):
         try:
             convert_location = amapapi.coordinateconvert(request, location)
             formatted_address = amapapi.geocoderegeo(request, convert_location)
@@ -76,6 +76,26 @@ class AmapAip(http.Controller):
         listsize = len(search_read_new) if len(search_read_new) <= 10 else 10
         for i in range(listsize):
             crm_team_list.append(search_read_new[i])
+        return {
+            'crm_team_list': crm_team_list
+        }
+
+    @http.route(['/amap/stores_list'], type='json', auth='user')
+    def stores_list(self, name):
+        if name == 'BJ':
+            domain = [
+                ('name', 'ilike',   "北京%")
+            ]
+        elif name == 'SZ':
+            domain = [
+                ('name', 'ilike', "深圳%")
+            ]
+        else:
+            domain = [
+                ('name', 'not ilike',  '北京%'),
+                ('name', 'not ilike', '深圳%')
+            ]
+        crm_team_list = request.env['crm.team'].search_read(domain, limit=50)
         return {
             'crm_team_list': crm_team_list
         }

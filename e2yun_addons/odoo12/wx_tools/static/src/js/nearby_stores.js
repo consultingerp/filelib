@@ -18,31 +18,37 @@ odoo.define('wx_tools.nearby_stores', function (require) {
             this._super(parent, action);
             var options = action.params || {};
             this.params = options;  // NOTE forwarded to embedded client action
-        }, nearby_stores_templates: function (locations, isMobile) {
+        }, nearby_stores_templates: function (locations, isLocation) {
             var self = this;
             self._rpc({
                 route: 'amap/nearby_stores',
                 params: {location: locations},
             }).then(function (result) {
                 var html = QWeb.render('store_list', {
-                    name_use_t: 'HPETEST',
-                    stores: result.crm_team_list
-
+                    stores: result.crm_team_list,
+                    isLocation: isLocation
                 });
                 self.$('#aui-store-head').empty();
                 self.$('#aui-store-head').append(html)
+
+                var headhtml = QWeb.render('store_head', {name: 'store_head'});
+                self.$('#aui-navBar-store').empty();
+                self.$('#aui-navBar-store').append(headhtml)
 
             });
 
         },
         start: function () {
             var self = this;
+
+
+            //this.$el.append(headhtml);
             var iswxstore = false;
             if (config.device.isMobile) {
                 this.isMobile = config.device.isMobile;
             } else {
                 this.isMobile = config.device.isMobile;
-                self.nearby_stores_templates('116.38,39.90', this.isMobile)
+                self.nearby_stores_templates('116.38,39.90', false)
             }
             wx.getLocation({
                 type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
@@ -55,17 +61,18 @@ odoo.define('wx_tools.nearby_stores', function (require) {
                     var locations = res.longitude + "," + res.latitude; //微信位置
                     self.nearby_stores_templates(locations, this.isMobile)
                 }, fail: function () {
-                    self.nearby_stores_templates('116.38,39.90', this.isMobile)
+                    self.nearby_stores_templates('116.38,39.90', false)
                 }
             }); // end getLocation
-
-
         },
         events: {
             'click p': '_onClick',
             'click h2': '_onClick',
-        },
-        _onClick: function (ev) {
+            'click .aui-store-addressgo': '_onClick',
+            'click #locationbejing': '_stores_list',
+            'click #locationsz': '_stores_list',
+            'click #locationother': '_stores_list',
+        }, _onClick: function (ev) {
             var self = this;
             var latitude = $(ev.currentTarget).attr('data-latitude')
             var longitude = $(ev.currentTarget).attr('data-longitude')
@@ -78,11 +85,24 @@ odoo.define('wx_tools.nearby_stores', function (require) {
                 scale: 14, // 地图缩放级别,整形值,范围从1~28。默认为最大
                 infoUrl: street  // 在查看位置界面底部显示的超链接,可点击跳转
             });
+        }, _stores_list(ev) {
+            var self = this;
+            var name = $(ev.currentTarget).attr('data-addresname')
+            self._rpc({
+                route: 'amap/stores_list',
+                params: {name: name,
+                },
+            }).then(function (result) {
+                var html = QWeb.render('store_list', {
+                    stores: result.crm_team_list,
+                    isLocation: false
+                });
+                self.$('#aui-store-head').empty();
+                self.$('#aui-store-head').append(html)
 
-
-        },
+            });
+        }
     });
-
     core.action_registry.add('wx_tools.nearby_stores', nearby_stores);
     return nearby_stores;
 
