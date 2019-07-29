@@ -9,6 +9,7 @@ class CrmTeamADDinformation(models.Model):
 
     color = fields.Integer('Color Index')
 
+
     # user_city = fields.Char(compute='the_same_city')
 
     # def button_navigation(self):
