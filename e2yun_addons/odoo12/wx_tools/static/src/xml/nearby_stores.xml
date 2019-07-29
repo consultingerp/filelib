@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+    <t t-name="nearby_stores">
+
+        <section class="aui-flexView">
+            <header class="aui-navBar aui-navBar-fixed b-line">
+                <a href="javascript:;" class="aui-navBar-item">
+                    <i class="icon icon-return"></i>附近门店
+                </a>
+                <div class="aui-center">
+                    <span class="aui-center-title"></span>
+                </div>
+                <a href="javascript:;" class="aui-navBar-item">
+                    北京
+                    <i class="icon icon-san"></i>
+                    深圳
+                    <i class="icon icon-san"></i>
+                </a>
+
+            </header>
+            <section class="aui-scrollView" id="aui-store-head">
+            </section>
+        </section>
+    </t>
+
+    <t t-name="store_list">
+
+        <t t-foreach="stores" t-as="store">
+            <div class="aui-store-head">
+
+
+                <t t-if="store['image']">
+                    <img t-attf-src="data:image/png;base64,#{store['image']}" alt="store['name']"
+                         style="max-height:300px;"/>
+                </t>
+                <t t-else="">
+                    <img src="/wx_tools/static/src/img/timg.jpeg"
+                         style="max-height:300px;"/>
+                </t>
+
+
+            </div>
+            <div class="aui-store-address">
+                <ul>
+                    <li class="b-line">
+                        <h2 t-att-data-latitude="store['latitude']"
+                           t-att-data-longitude="store['longitude']"
+                           t-att-data-street="store['street']">
+                            <t if="store['name']">
+                                <t t-esc="store['name']"/>
+                            </t>
+                            <span t-att-data-latitude="store['latitude']"
+                           t-att-data-longitude="store['longitude']"
+                           t-att-data-street="store['street']">
+                                <i class="icon icon-add"></i>
+                                <t t-esc="store['distance']"/>千米
+                            </span>
+                        </h2>
+                        <p class="o_form_uri o_field_widget" t-att-data-latitude="store['latitude']"
+                           t-att-data-longitude="store['longitude']"
+                           t-att-data-street="store['street']">
+                            <t t-if="store['street']">
+                                <t t-esc="store['street']"/>
+                            </t>
+                            <t t-else="">
+                                <t t-esc="store['street2']"/>
+                            </t>
+                        </p>
+                        <a t-if="store['tel']" t-attf-href="tel:{{store['tel']}}">致电
+                            <t t-esc="store['tel']"/>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </t>
+
+    </t>
+
+
+</templates>
