@@ -19,6 +19,7 @@ odoo.define('wx_tools.nearby_stores', function (require) {
             var options = action.params || {};
             this.params = options;  // NOTE forwarded to embedded client action
         }, nearby_stores_templates: function (locations, isLocation) {
+            alert(isLocation);
             var self = this;
             self._rpc({
                 route: 'amap/nearby_stores',

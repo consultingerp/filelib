@@ -57,12 +57,10 @@
                             <span t-att-data-latitude="store['latitude']"
                                   t-att-data-longitude="store['longitude']"
                                   t-att-data-street="store['street']">
-                                <i class="icon icon-add"></i>
-                                  <t t-esc="isLocation"/>
-                                <t if="isLocation">
+                                <t t-if="isLocation">
+                                    <i class="icon icon-add"></i>
                                     <t t-esc="store['distance']"/>千米
                                 </t>
-
                             </span>
                         </h2>
                         <p class="o_form_uri o_field_widget" t-att-data-latitude="store['latitude']"
@@ -75,14 +73,11 @@
                                 <t t-esc="store['street2']"/>
                             </t>
                         </p>
-                        <div>
-                            <a t-if="store['tel']" t-attf-href="tel:{{store['tel']}}">致电
-                                <t t-esc="store['tel']"/>
-                            </a>
-                             <span class="aui-store-addressgo"  t-att-data-latitude="store['latitude']"
-                                  t-att-data-longitude="store['longitude']"
-                                  t-att-data-street="store['street']">到这里去</span>
-                        </div>
+
+
+                        <a t-if="store['tel']" t-attf-href="tel:{{store['tel']}}">致电
+                            <t t-esc="store['tel']"/>
+                        </a>
 
 
                     </li>
