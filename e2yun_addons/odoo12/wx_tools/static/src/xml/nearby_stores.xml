@@ -4,32 +4,38 @@
     <t t-name="nearby_stores">
 
         <section class="aui-flexView">
-            <header class="aui-navBar aui-navBar-fixed b-line">
-                <a href="javascript:;" class="aui-navBar-item">
+            <div class="aui-navBar aui-navBar-fixed b-line">
+                <div class="aui-navBar-item" onclick="alert('aa')">
                     <i class="icon icon-return"></i>附近门店
-                </a>
+                </div>
                 <div class="aui-center">
                     <span class="aui-center-title"></span>
                 </div>
-                <a href="javascript:;" class="aui-navBar-item">
-                    北京
-                    <i class="icon icon-san"></i>
-                    深圳
-                    <i class="icon icon-san"></i>
-                </a>
+                <div class="aui-navBar-item" id="aui-navBar-store">
+                </div>
+            </div>
 
-            </header>
             <section class="aui-scrollView" id="aui-store-head">
             </section>
         </section>
+
+    </t>
+
+    <t t-name="store_head">
+        <div id="locationbejing" data-addresname="BJ">北京
+            <i class="icon icon-san"></i>
+        </div>
+        <div id="locationsz" data-addresname="SZ">深圳
+            <i class="icon icon-san"></i>
+        </div>
+        <div id="locationother" data-addresname="OTH">其它
+            <i class="icon icon-san"></i>
+        </div>
     </t>
 
     <t t-name="store_list">
-
         <t t-foreach="stores" t-as="store">
             <div class="aui-store-head">
-
-
                 <t t-if="store['image']">
                     <img t-attf-src="data:image/png;base64,#{store['image']}" alt="store['name']"
                          style="max-height:300px;"/>
@@ -38,23 +44,25 @@
                     <img src="/wx_tools/static/src/img/timg.jpeg"
                          style="max-height:300px;"/>
                 </t>
-
-
             </div>
             <div class="aui-store-address">
                 <ul>
                     <li class="b-line">
                         <h2 t-att-data-latitude="store['latitude']"
-                           t-att-data-longitude="store['longitude']"
-                           t-att-data-street="store['street']">
+                            t-att-data-longitude="store['longitude']"
+                            t-att-data-street="store['street']">
                             <t if="store['name']">
                                 <t t-esc="store['name']"/>
                             </t>
                             <span t-att-data-latitude="store['latitude']"
-                           t-att-data-longitude="store['longitude']"
-                           t-att-data-street="store['street']">
+                                  t-att-data-longitude="store['longitude']"
+                                  t-att-data-street="store['street']">
                                 <i class="icon icon-add"></i>
-                                <t t-esc="store['distance']"/>千米
+                                  <t t-esc="isLocation"/>
+                                <t if="isLocation">
+                                    <t t-esc="store['distance']"/>千米
+                                </t>
+
                             </span>
                         </h2>
                         <p class="o_form_uri o_field_widget" t-att-data-latitude="store['latitude']"
@@ -67,9 +75,16 @@
                                 <t t-esc="store['street2']"/>
                             </t>
                         </p>
-                        <a t-if="store['tel']" t-attf-href="tel:{{store['tel']}}">致电
-                            <t t-esc="store['tel']"/>
-                        </a>
+                        <div>
+                            <a t-if="store['tel']" t-attf-href="tel:{{store['tel']}}">致电
+                                <t t-esc="store['tel']"/>
+                            </a>
+                             <span class="aui-store-addressgo"  t-att-data-latitude="store['latitude']"
+                                  t-att-data-longitude="store['longitude']"
+                                  t-att-data-street="store['street']">到这里去</span>
+                        </div>
+
+
                     </li>
                 </ul>
             </div>
