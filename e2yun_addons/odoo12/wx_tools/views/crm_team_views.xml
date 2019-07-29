@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!--
     <record model="ir.ui.view" id="view_sales_team_tree">
         <field name="name">crm.team.tree.addresto.inherit</field>
         <field name="model">crm.team</field>
@@ -11,7 +12,7 @@
             </xpath>
         </field>
     </record>
-
+    -->
 
     <record id="crm_team_qrcodeimg" model="ir.ui.view">
         <field name="name">crm.team.form.qrcodeimg</field>
@@ -25,15 +26,15 @@
     </record>
 
 
-    <record id="view_crm_team_address_location" model="ir.ui.view">
-        <field name="name">crm.team.form.address_location</field>
+    <record id="view_crm_team_wx_address_location" model="ir.ui.view">
+        <field name="name">crm.team.form.wx_address_location</field>
         <field name="model">crm.team</field>
         <field name="priority">2</field>
         <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//page[@name='dashboard']" position="after">
                 <page string="门店坐标">
-                    <group name="address_location">
+                    <group name="group_address_location">
                         <field name="longitude"/>
                         <field name="latitude"/>
                         <field name="location_write_date"/>
