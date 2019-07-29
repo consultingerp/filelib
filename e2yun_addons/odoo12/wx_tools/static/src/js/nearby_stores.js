@@ -63,6 +63,7 @@ odoo.define('wx_tools.nearby_stores', function (require) {
         },
         events: {
             'click p': '_onClick',
+            'click h2': '_onClick',
         },
         _onClick: function (ev) {
             var self = this;

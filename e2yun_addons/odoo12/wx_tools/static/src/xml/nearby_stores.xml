@@ -44,11 +44,15 @@
             <div class="aui-store-address">
                 <ul>
                     <li class="b-line">
-                        <h2>
+                        <h2 t-att-data-latitude="store['latitude']"
+                           t-att-data-longitude="store['longitude']"
+                           t-att-data-street="store['street']">
                             <t if="store['name']">
                                 <t t-esc="store['name']"/>
                             </t>
-                            <span>
+                            <span t-att-data-latitude="store['latitude']"
+                           t-att-data-longitude="store['longitude']"
+                           t-att-data-street="store['street']">
                                 <i class="icon icon-add"></i>
                                 <t t-esc="store['distance']"/>千米
                             </span>
