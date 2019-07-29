@@ -30,17 +30,14 @@ odoo.define('wx_tools.nearby_stores', function (require) {
                 });
                 self.$('#aui-store-head').empty();
                 self.$('#aui-store-head').append(html)
-
-                var headhtml = QWeb.render('store_head', {name: 'store_head'});
-                self.$('#aui-navBar-store').empty();
-                self.$('#aui-navBar-store').append(headhtml)
-
             });
 
         },
         start: function () {
             var self = this;
-
+            var headhtml = QWeb.render('store_head', {name: 'store_head'});
+            self.$('#aui-navBar-store').empty();
+            self.$('#aui-navBar-store').append(headhtml)
 
             //this.$el.append(headhtml);
             var iswxstore = false;
@@ -59,7 +56,7 @@ odoo.define('wx_tools.nearby_stores', function (require) {
                     var speed = res.speed; // 速度，以米/每秒计
                     var accuracy = res.accuracy; // 位置精度
                     var locations = res.longitude + "," + res.latitude; //微信位置
-                    self.nearby_stores_templates(locations, this.isMobile)
+                    self.nearby_stores_templates(locations, true)
                 }, fail: function () {
                     self.nearby_stores_templates('116.38,39.90', false)
                 }
@@ -90,7 +87,8 @@ odoo.define('wx_tools.nearby_stores', function (require) {
             var name = $(ev.currentTarget).attr('data-addresname')
             self._rpc({
                 route: 'amap/stores_list',
-                params: {name: name,
+                params: {
+                    name: name,
                 },
             }).then(function (result) {
                 var html = QWeb.render('store_list', {
