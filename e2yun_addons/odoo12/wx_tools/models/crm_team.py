@@ -25,8 +25,8 @@ class WXCrmTeam(models.Model):
     @api.one
     def _get_address_location(self):
         from ..controllers import amapapi
-        if (self.longitude == 0.0 or self.longitude == 0.0) and self.street:
-            street_location = amapapi.geocodegeo(self, address=self.street)
+        if (self.longitude == 0.0 or self.longitude == 0.0) and (self.street or self.street2):
+            street_location = amapapi.geocodegeo(self, address=self.street if self.street else self.street2)
             if street_location:
                 location = street_location.split(',')
                 self.longitude = location[0]
