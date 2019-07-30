@@ -100,6 +100,7 @@ def main(robot):
                         user_id = max_goal_user.user_id.id
                         ismail_channel = True
                 elif eventkey[0] == 'qrscene_COMPANY':
+
                     tracelog_type = 'qrscene_COMPANY'
                     _logger.info('公司二维码进入')
                     iscompanyuser = True
