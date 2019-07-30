@@ -51,7 +51,7 @@ class WXCrmTeam(models.Model):
         if not self.qrcode_ticket:
             from ..controllers import client
             entry = client.wxenv(self.env)
-            qrcodedatastr = 'TEAM|%s|%s' % (self.id, self.name)
+            qrcodedatastr = 'TEAM|%s|%s' % (self.id, self.id)
             _logger.info("生成二维码%s" % qrcodedatastr)
             if len(qrcodedatastr) > 30:
                 qrcodedatastr = qrcodedatastr[:30]
