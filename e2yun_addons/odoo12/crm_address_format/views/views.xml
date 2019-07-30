@@ -13,10 +13,10 @@
             <field name="street2" placeholder="Street 2..." class="o_address_street" invisible="1"/>
             <field name="city" placeholder="City" class="o_address_city" invisible="1"/>
 
-            <field name="country_id" placeholder="中国" class="o_address_country" options='{"no_open": True, "no_create": True}' />
+            <field name="country_id" placeholder="中国" class="o_address_state" options='{&quot;no_open&quot;: True, &quot;no_create&quot;: True}' />
             <field name="state_id" class="o_address_state" placeholder="北京市" options='{"no_open": True}' />
             <field name="city_id" placeholder="昌平" class="o_address_city" />
-            <field name="area_id" placeholder="县/区" class="o_address_street" />
+            <field name="area_id" placeholder="县/区" class="o_address_city" />
             <field name="street" placeholder="街道" class="o_address_street" />
             <field name="zip" placeholder="邮编" class="o_address_zip" />
           </div>
