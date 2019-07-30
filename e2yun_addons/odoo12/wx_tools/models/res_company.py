@@ -21,7 +21,7 @@ class ResCompany(models.Model):
         if not self.qrcode_ticket:
             from ..controllers import client
             entry = client.wxenv(self.env)
-            qrcodedatastr = 'COMPANY|%s|%s' % (self.id, self.name)
+            qrcodedatastr = 'COMPANY|%s|%s' % (self.id, self.id)
             _logger.info("生成二维码%s" % qrcodedatastr)
             if len(qrcodedatastr) > 30:
                 qrcodedatastr = qrcodedatastr[:30]
