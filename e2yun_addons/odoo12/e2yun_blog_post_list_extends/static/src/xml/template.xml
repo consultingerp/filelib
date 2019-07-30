@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <template id="blog_post_short_inherit" name="Blog Posts" inherit_id="website_blog.blog_post_complete">
-            <xpath expr="//div[hasclass('o_blog_post_complete','o_sharing_links')]" position="inside">
-                <a class="fa fa-thumbs-up o_click_good" id="o_click_good" aria-label="感兴趣" title="感兴趣"></a>
-                <span id="good_count"><t t-esc="blog_post.good_count"/></span>
-			</xpath>
-		</template>
+    <template id="blog_post_complete_inherit" name="Blog Posts" inherit_id="website_blog.blog_post_complete">
+        <xpath expr="//div[hasclass('o_blog_post_complete','o_sharing_links')]" position="inside">
+            <a class="fa fa-thumbs-up o_click_good" id="o_click_good" aria-label="感兴趣" title="感兴趣"></a>
+            <span id="good_count"><t t-esc="blog_post.good_count"/></span>
+            <input type="hidden" name="blog_post_id" t-att-value="blog_post.id if blog_post else None"/>
+        </xpath>
+    </template>
+
+    <template id="blog_post_short_inherit" name="Blog Posts" inherit_id="website_blog.blog_post_short">
+        <xpath expr="//span[hasclass('fa', 'fa-tags')]" position="after">
+            <span t-if="blog_post.good_count &gt; 0">
+                &amp;mdash; <t t-esc="blog_post.good_count"/>感兴趣
+            </span>
+        </xpath>
+    </template>
 </odoo>

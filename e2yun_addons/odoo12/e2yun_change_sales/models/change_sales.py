@@ -2,20 +2,21 @@
 
 from odoo import api, fields, models, _
 
-class E2yuncChangeSales(models.Model):
-
+class E2yuncChangeSales(models.TransientModel):
     _name = 'change.sales'
 
-    originsale = fields.Many2one('res.users', string='离职导购')
     newsale = fields.Many2one('res.users', string='新导购')
 
-    @api.one
     def old_sale_has_gone(self):
-        ori = self.originsale.id
+
         new = self.newsale.id
-        need_change_customers = self.env['res.partner'].search([('user_id', '=', ori)])
+
+        active_model = self.env.context.get('active_model')
+        active_ids = self.env.context.get('active_ids')
+        will_change = self.env[active_model].browse(active_ids)
+
         try:
-            for need_change_cus in need_change_customers:
-                need_change_cus.update({'user_id': new})
+            for need_change_id in will_change:
+                need_change_id.update({'user_id': new})
         except Exception as e:
             raise e

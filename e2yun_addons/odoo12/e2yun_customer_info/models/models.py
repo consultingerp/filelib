@@ -457,4 +457,4 @@ class e2yun_customer_info(models.Model):
         # 草稿状态货有商务组权限可更新数据
         if self.state != 'Draft' and not groups_users:
             raise UserError('当前状态下无法操作更新，请联系管理员')
-        res = super(e2yun_customer_info, self).write(values)
+        return super(e2yun_customer_info, self).write(values)
