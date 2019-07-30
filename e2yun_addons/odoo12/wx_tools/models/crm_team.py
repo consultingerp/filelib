@@ -22,11 +22,17 @@ class WXCrmTeam(models.Model):
     location_write_date = fields.Datetime("更新时间", readonly=True)
     address_location = fields.Char(u'地址', compute='_get_address_location')
 
+    @api.model
+    def create(self, values):
+        result = super(WXCrmTeam, self).create(values)
+        self._get_address_location()
+        return result
+
     @api.one
     def _get_address_location(self):
         from ..controllers import amapapi
-        if (self.longitude == 0.0 or self.longitude == 0.0) and self.street:
-            street_location = amapapi.geocodegeo(self, address=self.street)
+        if (self.longitude == 0.0 or self.longitude == 0.0) and (self.street or self.street2):
+            street_location = amapapi.geocodegeo(self, address=self.street if self.street else self.street2)
             if street_location:
                 location = street_location.split(',')
                 self.longitude = location[0]
