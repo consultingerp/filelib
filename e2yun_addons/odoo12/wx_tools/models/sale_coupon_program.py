@@ -16,10 +16,10 @@ class SaleCouponProgram(models.Model):
     @api.one
     def _get_qrcodeimg(self):
         if not self.qrcode_ticket:
-            _logger.info("生成二维码%s" % self.name)
             from ..controllers import client
             entry = client.wxenv(self.env)
             qrcodedatastr = 'COUPON|%s|%s' % (self.id, self.name)
+            _logger.info("生成二维码%s" % qrcodedatastr)
             qrcodedata = {"action_name": "QR_LIMIT_STR_SCENE","action_info": {"scene": {"scene_str": qrcodedatastr}}}
             qrcodeinfo = entry.wxclient.create_qrcode(qrcodedata)
             self.write({'qrcode_ticket': qrcodeinfo['ticket'],

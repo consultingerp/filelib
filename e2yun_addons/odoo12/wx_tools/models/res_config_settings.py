@@ -77,10 +77,12 @@ class ResConfigSettings(models.TransientModel):
     @api.one
     def _get_qrcodeimg(self):
         if not self.auth_signup_reset_password_qrcode_ticket:
-            _logger.info("生成二维码%s" % self.company_id.name)
             from ..controllers import client
             entry = client.wxenv(self.env)
             qrcodedatastr = 'RESPASSWORD|%s|%s' % (self.company_id.id, self.company_id.name)
+            _logger.info("生成二维码%s" % qrcodedatastr)
+            if len(qrcodedatastr) > 30:
+                qrcodedatastr = qrcodedatastr[:30]
             qrcodedata = {"action_name": "QR_LIMIT_STR_SCENE","action_info": {"scene": {"scene_str": qrcodedatastr}}}
             qrcodeinfo = entry.wxclient.create_qrcode(qrcodedata)
             self.write({'auth_signup_reset_password_qrcode_ticket': qrcodeinfo['ticket'],

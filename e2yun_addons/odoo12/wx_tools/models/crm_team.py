@@ -53,8 +53,8 @@ class WXCrmTeam(models.Model):
             entry = client.wxenv(self.env)
             qrcodedatastr = 'TEAM|%s|%s' % (self.id, self.name)
             _logger.info("生成二维码%s" % qrcodedatastr)
-            if len(qrcodedatastr) > 60:
-                qrcodedatastr = qrcodedatastr[:60]
+            if len(qrcodedatastr) > 30:
+                qrcodedatastr = qrcodedatastr[:30]
             # "expire_seconds": 2592000,
             qrcodedata = {"action_name": "QR_LIMIT_STR_SCENE", "action_info": {"scene": {"scene_str": qrcodedatastr}}}
             qrcodeinfo = entry.wxclient.create_qrcode(qrcodedata)
