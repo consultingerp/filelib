@@ -17,5 +17,5 @@ class GeoVectorSymbol(models.Model):
     )
     img = fields.Char(
         help="URL of the image to use. You can put an image in your module "
-             "in static folder e.g. 'base_geoengine/static/img/map-marker.jpg'"
+             "in static folder e.g. 'base_geoengine/static/img/map-marker.png'"
     )
