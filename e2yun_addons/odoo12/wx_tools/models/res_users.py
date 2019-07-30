@@ -37,7 +37,8 @@ class WxResUsers(models.Model):
             from ..controllers import client
             entry = client.wxenv(self.env)
             qrcodedatastr = 'USERS|%s|%s|%s|' % (self.id, self.login, self.name)
-            qrcodedata = {"expire_seconds": 2592000, "action_name": "QR_STR_SCENE",
+            # "expire_seconds": 2592000,
+            qrcodedata = {"action_name": "QR_LIMIT_STR_SCENE",
                           "action_info": {"scene": {"scene_str": qrcodedatastr}}}
             qrcodeinfo = entry.wxclient.create_qrcode(qrcodedata)
             self.write({'qrcode_ticket': qrcodeinfo['ticket'],
