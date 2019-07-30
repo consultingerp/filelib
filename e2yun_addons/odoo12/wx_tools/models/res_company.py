@@ -23,7 +23,7 @@ class ResCompany(models.Model):
             from ..controllers import client
             entry = client.wxenv(self.env)
             qrcodedatastr = 'COMPANY|%s|%s' % (self.id, self.name)
-            qrcodedata = {"expire_seconds": 2592000, "action_name": "QR_STR_SCENE",
+            qrcodedata = {"action_name": "QR_LIMIT_STR_SCENE",
                           "action_info": {"scene": {"scene_str": qrcodedatastr}}}
             qrcodeinfo = entry.wxclient.create_qrcode(qrcodedata)
             self.write({'qrcode_ticket': qrcodeinfo['ticket'],
@@ -37,11 +37,12 @@ class ResCompany(models.Model):
     @api.one
     def _get_qrcodeimg_external(self):
         if not self.qrcode_ticket_external:
-            _logger.info("生成二维码")
+            _logger.info("生成二维码%s" % self.name)
             from ..controllers import client
             entry = client.wxenv(self.env)
             qrcodedatastr = 'COMPANYEXTERNAL|%s|%s' % (self.id, self.name)
-            qrcodedata = {"expire_seconds": 2592000, "action_name": "QR_STR_SCENE",
+            # "expire_seconds": 2592000,
+            qrcodedata = {"action_name": "QR_LIMIT_STR_SCENE",
                           "action_info": {"scene": {"scene_str": qrcodedatastr}}}
             qrcodeinfo = entry.wxclient.create_qrcode(qrcodedata)
             self.write({'qrcode_ticket_external': qrcodeinfo['ticket'],

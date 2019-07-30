@@ -27,14 +27,51 @@ class ResConfigSettings(models.TransientModel):
         })
         return res
 
+    def qrcode_rest(self):
+        crm_team_pool = self.env['crm.team'].search([])
+        for crm_team in crm_team_pool:
+            crm_team.write({
+                'longitude': 0.0,
+                'longitude': 0.0,
+                'qrcode_ticket': ''
+            });
+        crm_team_pool = self.env['crm.team'].search_read([])
+
+        res_users_pool = self.env['res.users'].search([])
+        for res_users in res_users_pool:
+            res_users.write({
+                'qrcode_ticket': '',
+            });
+        res_users_pool = self.env['res.users'].search_read([])
+
+        res_company_pool = self.env['res.company'].search([])
+        for res_company in res_company_pool:
+            res_company.write({
+                'qrcode_ticket': '',
+                'qrcode_ticket_external': '',
+            });
+        res_users_pool = self.env['res.company'].search_read([])
+
+        sale_coupon_pool = self.env['sale.coupon.program'].search([])
+        for sale_coupon in sale_coupon_pool:
+            sale_coupon.write({
+                'qrcode_ticket': ''
+            });
+        return {
+            'warning': {
+                'title': 'Tips',
+                'message': '更新成功'
+            }
+        }
+
     @api.one
     def _get_qrcodeimg(self):
         if not self.auth_signup_reset_password_qrcode_ticket:
-            _logger.info("生成二维码")
+            _logger.info("生成二维码%s" % self.company_id.name)
             from ..controllers import client
             entry = client.wxenv(self.env)
             qrcodedatastr = 'RESPASSWORD|%s|%s' % (self.company_id.id, self.company_id.name)
-            qrcodedata = {"expire_seconds": 2592000, "action_name": "QR_STR_SCENE",
+            qrcodedata = {"action_name": "QR_LIMIT_STR_SCENE",
                           "action_info": {"scene": {"scene_str": qrcodedatastr}}}
             qrcodeinfo = entry.wxclient.create_qrcode(qrcodedata)
             self.write({'auth_signup_reset_password_qrcode_ticket': qrcodeinfo['ticket'],

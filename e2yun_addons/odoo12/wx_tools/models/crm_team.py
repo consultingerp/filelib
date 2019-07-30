@@ -32,6 +32,7 @@ class WXCrmTeam(models.Model):
     def _get_address_location(self):
         from ..controllers import amapapi
         if (self.longitude == 0.0 or self.longitude == 0.0) and (self.street or self.street2):
+            _logger.info("生成地址%s" % self.street)
             street_location = amapapi.geocodegeo(self, address=self.street if self.street else self.street2)
             if street_location:
                 location = street_location.split(',')
@@ -48,11 +49,12 @@ class WXCrmTeam(models.Model):
     def _get_qrcodeimg(self):
         # 生成团队二维码
         if not self.qrcode_ticket:
-            _logger.info("生成二维码")
+            _logger.info("生成二维码%s" % self.name)
             from ..controllers import client
             entry = client.wxenv(self.env)
             qrcodedatastr = 'TEAM|%s|%s' % (self.id, self.name)
-            qrcodedata = {"expire_seconds": 2592000, "action_name": "QR_STR_SCENE",
+            # "expire_seconds": 2592000,
+            qrcodedata = {"action_name": "QR_LIMIT_STR_SCENE",
                           "action_info": {"scene": {"scene_str": qrcodedatastr}}}
             qrcodeinfo = entry.wxclient.create_qrcode(qrcodedata)
             self.write({'qrcode_ticket': qrcodeinfo['ticket'],
