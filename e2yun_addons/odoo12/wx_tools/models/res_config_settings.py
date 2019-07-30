@@ -64,6 +64,16 @@ class ResConfigSettings(models.TransientModel):
             }
         }
 
+    # 初始化门店位置
+    def addres_location_rest(self):
+        crm_team_pool = self.env['crm.team'].search([])
+        for crm_team in crm_team_pool:
+            crm_team.write({
+                'longitude': 0.0,
+                'longitude': 0.0,
+            });
+            crm_team._get_address_location()
+
     @api.one
     def _get_qrcodeimg(self):
         if not self.auth_signup_reset_password_qrcode_ticket:
@@ -71,8 +81,7 @@ class ResConfigSettings(models.TransientModel):
             from ..controllers import client
             entry = client.wxenv(self.env)
             qrcodedatastr = 'RESPASSWORD|%s|%s' % (self.company_id.id, self.company_id.name)
-            qrcodedata = {"action_name": "QR_LIMIT_STR_SCENE",
-                          "action_info": {"scene": {"scene_str": qrcodedatastr}}}
+            qrcodedata = {"action_name": "QR_LIMIT_STR_SCENE","action_info": {"scene": {"scene_str": qrcodedatastr}}}
             qrcodeinfo = entry.wxclient.create_qrcode(qrcodedata)
             self.write({'auth_signup_reset_password_qrcode_ticket': qrcodeinfo['ticket'],
                         'auth_signup_reset_password_qrcode_url': qrcodeinfo['url']})

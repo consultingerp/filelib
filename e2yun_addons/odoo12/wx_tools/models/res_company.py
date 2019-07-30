@@ -23,8 +23,7 @@ class ResCompany(models.Model):
             from ..controllers import client
             entry = client.wxenv(self.env)
             qrcodedatastr = 'COMPANY|%s|%s' % (self.id, self.name)
-            qrcodedata = {"action_name": "QR_LIMIT_STR_SCENE",
-                          "action_info": {"scene": {"scene_str": qrcodedatastr}}}
+            qrcodedata = {"action_name": "QR_LIMIT_STR_SCENE","action_info": {"scene": {"scene_str": qrcodedatastr}}}
             qrcodeinfo = entry.wxclient.create_qrcode(qrcodedata)
             self.write({'qrcode_ticket': qrcodeinfo['ticket'],
                         'qrcode_url': qrcodeinfo['url']})
@@ -42,8 +41,7 @@ class ResCompany(models.Model):
             entry = client.wxenv(self.env)
             qrcodedatastr = 'COMPANYEXTERNAL|%s|%s' % (self.id, self.name)
             # "expire_seconds": 2592000,
-            qrcodedata = {"action_name": "QR_LIMIT_STR_SCENE",
-                          "action_info": {"scene": {"scene_str": qrcodedatastr}}}
+            qrcodedata = {"action_name": "QR_LIMIT_STR_SCENE", "action_info": {"scene": {"scene_str": qrcodedatastr}}}
             qrcodeinfo = entry.wxclient.create_qrcode(qrcodedata)
             self.write({'qrcode_ticket_external': qrcodeinfo['ticket'],
                         'qrcode_url_external': qrcodeinfo['url']})
