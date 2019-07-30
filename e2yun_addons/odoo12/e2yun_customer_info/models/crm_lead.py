@@ -36,4 +36,4 @@ class crm_lead(models.Model):
        #状态 4 和 8 时 无法更新数据
        if self.stage_id.id==4 and not groups_users:
            raise UserError('当前状态下无法操作更新，请联系管理员')
-       res = super(crm_lead, self).write(values)
+       return super(crm_lead, self).write(values)

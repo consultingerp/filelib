@@ -19,7 +19,5 @@ class BlogPostBatch(models.Model):
         ctx = self._context.copy()
         blog_id = ctx.get('blog_id',False)
         if blog_id:
-            blog = self.browse(int(blog_id))
+            blog = self.sudo().browse(int(blog_id))
             blog.good_count = blog.good_count + 1
-
-

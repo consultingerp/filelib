@@ -13,7 +13,7 @@
         "views/change_sales.xml",
         'security/ir.model.access.csv'
     ],
-    "depends": [
+     "depends": [
         "base",
     ],
     "installable": True
