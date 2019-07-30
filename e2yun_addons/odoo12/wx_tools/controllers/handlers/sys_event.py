@@ -123,7 +123,7 @@ def main(robot):
                         "login": info['openid'],
                         "password": defpassword,
                         "name": info['nickname'],
-                        "groups_id": request.env.ref('base.group_user'),  # base.group_public，base.group_portal
+                        "groups_id": request.env.ref('base.group_customer'),  # base.group_public，base.group_portal
                         "wx_user_id": wxuserinfo.id,
                         "login_date": datetime.datetime.now(),
                         "image": base64.b64encode(_data),

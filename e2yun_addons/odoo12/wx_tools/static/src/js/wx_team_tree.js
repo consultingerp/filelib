@@ -1,5 +1,5 @@
 odoo.define('wx_tools.team.tree', function (require) {
-    "use strict";
+"use strict";
     var core = require('web.core');
     var ListController = require('web.ListController');
     var ListView = require('web.ListView');
@@ -7,8 +7,8 @@ odoo.define('wx_tools.team.tree', function (require) {
 
     var qweb = core.qweb;
 
-    var ContactListController = ListController.extend({
-        buttons_template: 'CrmTeamListView.buttons',
+    var BillsListController = ListController.extend({
+        buttons_template: 'BillsListView.buttons',
         /**
          * Extends the renderButtons function of ListView by adding an event listener
          * on the bill upload button.
@@ -19,27 +19,27 @@ odoo.define('wx_tools.team.tree', function (require) {
             this._super.apply(this, arguments); // Possibly sets this.$buttons
             if (this.$buttons) {
                 var self = this;
-                this.$buttons.on('click', '.o_list_tender_button_location', function () {
+                this.$buttons.on('click', '.o_button_upload_bill', function () {
                     var state = self.model.get(self.handle, {raw: true});
-                    self._rpc({
-                        model: 'crm.team',
-                        method: 'convertteamaddres',
-                        args: [self.res_id]
-                    }).then(function (result) {
-
+                    var context = state.getContext()
+                    context['type'] = 'in_invoice'
+                    self.do_action({
+                        type: 'ir.actions.act_window',
+                        res_model: 'account.invoice.import.wizard',
+                        target: 'new',
+                        views: [[false, 'form']],
+                        context: context,
                     });
-
-
                 });
             }
         }
     });
 
-    var ContactListView = ListView.extend({
+    var BillsListView = ListView.extend({
         config: _.extend({}, ListView.prototype.config, {
-            Controller: ContactListController,
+            Controller: BillsListController,
         }),
     });
 
-    viewRegistry.add('wx_tools_team_tree', ContactListView);
+    viewRegistry.add('wx_tools_team_tree', BillsListView);
 });
