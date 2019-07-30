@@ -12,6 +12,7 @@ class ResUsers(models.Model):
     vacation_status = fields.Boolean(string='Vacation status')
     gender = fields.Selection([('male','Male'),('female','Female')])
     function = fields.Selection([
+        ('通用','通用'),
         ('店长','店长'),
         ('店员','店员'),
         ('司机','司机'),
