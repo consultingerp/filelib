@@ -22,6 +22,12 @@ class WXCrmTeam(models.Model):
     location_write_date = fields.Datetime("更新时间", readonly=True)
     address_location = fields.Char(u'地址', compute='_get_address_location')
 
+    @api.model
+    def create(self, values):
+        result = super(WXCrmTeam, self).create(values)
+        self._get_address_location()
+        return result
+
     @api.one
     def _get_address_location(self):
         from ..controllers import amapapi

@@ -9,6 +9,7 @@ class CrmTeamADDinformation(models.Model):
 
     color = fields.Integer('Color Index')
 
+
     # user_city = fields.Char(compute='the_same_city')
 
     # def button_navigation(self):
@@ -44,7 +45,7 @@ class CrmTeamADDinformation(models.Model):
     @api.model
     def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
         # if domain:
-        limit = 8
+        # limit = 8
             # if ['id', '!=', None] in domain:
             #     domain.remove(['id', '!=', None])
             #     domain.append(('city', '=', self.env.user.partner_id.city))
