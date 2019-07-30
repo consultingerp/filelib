@@ -86,10 +86,11 @@ def main(robot):
                 elif eventkey[0] == 'qrscene_TEAM':
                     tracelog_type = 'qrscene_TEAM'
                     _logger.info('TEAM')
+                    crm_team = env['crm.team'].sudo().search([('id', '=', eventkey[1])], limit=1)
+                    eventkey[2] = crm_team.name
                     tracelog_title = "扫描门店%s关注,微信用户%s" % (eventkey[2], str(info['nickname']))
                     ret_msg = "%s \n 欢迎您：我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
                     shop_code = eventkey[1]
-                    crm_team = env['crm.team'].sudo().search([('id', '=', eventkey[1])], limit=1)
                     max_goal_user = crm_team.tearm_high_goal()  # 获取销售团队下面评分最高用户
                     if max_goal_user:  # 需要联系门店的导购
                         users_ids.append(int(max_goal_user.user_id.id))
@@ -383,9 +384,11 @@ def main(robot):
                         })
             elif eventkey[0] == 'TEAM':
                 tracelog_type = 'qrscene_TEAM'
+                crm_team = env['crm.team'].sudo().search([('id', '=', eventkey[1])], limit=1)
+                eventkey[2] = crm_team.name
                 tracelog_title = "扫描门店%s进入公众号,微信用户%s" % (eventkey[2], str(info['nickname']))
                 ret_msg = "%s 欢迎您：\n 我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
-                crm_team = env['crm.team'].sudo().search([('id', '=', eventkey[1])], limit=1)
+
                 max_goal_user = crm_team.tearm_high_goal()  # 获取销售团队下面评分最高用户
                 users_ids.append(int(max_goal_user.user_id.id))
                 if resuser.exists() and max_goal_user:

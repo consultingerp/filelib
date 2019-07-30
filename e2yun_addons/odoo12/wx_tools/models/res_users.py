@@ -33,11 +33,13 @@ class WxResUsers(models.Model):
     @api.one
     def _get_qrcodeimg(self):
         if not self.qrcode_ticket:
-            _logger.info("生成二维码")
             from ..controllers import client
             entry = client.wxenv(self.env)
             qrcodedatastr = 'USERS|%s|%s|%s|' % (self.id, self.login, self.name)
+            _logger.info("生成二维码%s" % qrcodedatastr)
             # "expire_seconds": 2592000,
+            if len(qrcodedatastr) > 30:
+                qrcodedatastr = qrcodedatastr[:30]
             qrcodedata = {"action_name": "QR_LIMIT_STR_SCENE","action_info": {"scene": {"scene_str": qrcodedatastr}}}
             qrcodeinfo = entry.wxclient.create_qrcode(qrcodedata)
             self.write({'qrcode_ticket': qrcodeinfo['ticket'],
