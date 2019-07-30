@@ -23,71 +23,27 @@
 
                     <templates>
                         <t t-name="kanban-box">
-                            <div t-attf-class="oe_module_vignette" >
-                                <div class="o_kanban_image">
-                                    <img class="o_kanban_image_inner_pic" t-att-src="kanban_image('crm.team', 'image_medium', record.id.raw_value)"
-                                    width="120px"/>
-                                </div>
+                            <div class="o_kanban_record_has_image_fill">
+                                <img class="o_kanban_image_inner_pic" t-att-src="kanban_image('crm.team', 'image_medium', record.id.raw_value)"
+                                width="120px"/>
                                 <div class="oe_kanban_details">
                                     <strong class="o_kanban_record_title"><b><field name="name"/></b></strong>
 
                                     <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
                                     <br><ul>
                                         <li>
-                                            <a href="#" id="go">
+                                            <a href="#">
                                                 <img src="/e2yun_crm_find_shop/static/marker.jpg" style="width:15px; height:15px;"/>
-                                                <b>详细地址: </b><field name="address_location" class="add"/>
-                                                <field invisible="1" name="latitude" class="lat"/>
-                                                <field invisible="1" name="longitude" class="lon"/>
+                                                <b>详细地址: </b><field name="address_location"/>
+                                                <field invisible="1" name="latitude"/>
+                                                <field invisible="1" name="longitude"/>
                                             </a>
                                         </li>
 <!--                                        <li ><field name="address"/></li>-->
                                         <li ><b>联系电话: </b><field name="tel"/></li>
                                     </ul></br>
-                                    <!--我是测试代码分割符-->
-<!--                                        <div id="go">-->
-<!--                                            <div id="add">-->
-<!--                                                <a href="#">-->
-<!--                                                    <img src="/e2yun_crm_find_shop/static/marker.jpg" style="width:15px; height:15px;"/>-->
-<!--                                                    <b>详细地址: </b><field name="address_location"/>-->
-<!--                                                </a>-->
-<!--                                            </div>-->
-<!--                                            <div id="lat"><field  name="latitude"/></div>-->
-<!--                                            <div id="lon"><field name="longitude"/></div>-->
-<!--                                        </div>-->
-                                    <!--我是测试代码分割符-->
-<!--                                    <script type="text/javascript">-->
-<!--                                            getWXLocation()-->
-<!--                                            $('#go').unbind("click")-->
-<!--                                            $('#go').click(function(){-->
-<!--&lt;!&ndash;                                                alert('我执行到这了')&ndash;&gt;-->
-<!--&lt;!&ndash;                                                alert(this)&ndash;&gt;-->
-<!--&lt;!&ndash;                                                alert($(".go"))&ndash;&gt;-->
-<!--&lt;!&ndash;                                                alert($(this).children(".add").html())&ndash;&gt;-->
-<!--&lt;!&ndash;                                                alert($(this).find(".lat").attr("name"))&ndash;&gt;-->
-<!--&lt;!&ndash;                                                alert('我挂了')&ndash;&gt;-->
-<!--&lt;!&ndash;                                                var current_latitude = $(this).find(".lat").attr("name")&ndash;&gt;-->
-<!--&lt;!&ndash;                                                var current_longitude = $(this).find(".lon").attr("name")&ndash;&gt;-->
-<!--&lt;!&ndash;                                                var current_address_location = $(this).find(".add").attr("name")&ndash;&gt;-->
-<!--&lt;!&ndash;                                                openLocation(current_latitude.text(),current_longitude.text(),current_address_location.text(),current_address_location.text())&ndash;&gt;-->
-<!--&lt;!&ndash;                                            });&ndash;&gt;-->
-<!--                                    </script>-->
                                 </div>
-<!--                                <div class="float-right">-->
-<!--&lt;!&ndash;                                        <button id="go" name="button_navigation" type="object" class="btn btn-primary">去这里</button>&ndash;&gt;-->
-<!--                                        <a href="#" id="go">-->
-<!--                                            <img src="/web/static/src/img/marker.jpg" style="width:15px; height:15px;"/>-->
-<!--                                            点击打开地图-->
-<!--                                        </a>-->
-<!--                                        <script type="text/javascript">-->
-<!--                                            $('#go').click(function(){-->
-<!--                                                openLocation($("[name='latitude']").text(),$("[name='longitude']").text(),$("[name='address']").text(),$("[name='address']").text())-->
-<!--                                            });-->
-<!--                                        </script>-->
-<!--                                </div>-->
-
                             </div>
-
                         </t>
                     </templates>
                 </kanban>
