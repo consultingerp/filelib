@@ -25,6 +25,14 @@
                         <field name="teams" widget="one2many" options="{'not_delete': True}">
                         </field>
                     </page>
+                    <page name="user_id_teams" string="担任店长的门店">
+                        <field name="user_id_teams" widget="one2many" options="{'not_delete': True}">
+                        </field>
+                    </page>
+                    <page name="area_manager_teams" string="担任片区长的门店">
+                        <field name="area_manager_teams" widget="one2many" options="{'not_delete': True}">
+                        </field>
+                    </page>
                 </xpath>
             </field>
         </record>
