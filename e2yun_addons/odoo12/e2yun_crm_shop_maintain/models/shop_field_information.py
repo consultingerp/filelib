@@ -41,7 +41,7 @@ class CrmTeamADDinformation(models.Model):
     @api.multi
     def write(self, vals):
         tools.image_resize_images(vals, sizes={'image': (1024, None)})
-        super(CrmTeamADDinformation, self).write(vals)
+        return super(CrmTeamADDinformation, self).write(vals)
 
 
 
