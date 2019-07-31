@@ -17,9 +17,11 @@ class E2yunCsutomerExtends(models.Model):
         for partner in self:
             res = self.env['crm.team']
             teams = self.env['crm.team'].search(
-                ['|', '|', '|', ('member_ids', 'in', partner.user_id.id),
-                 ('associate_member_ids', 'in', partner.user_id.id), ('member_ids', 'in', partner.related_guide.ids),
-                 ('associate_member_ids', 'in', partner.related_guide.ids)])
+                ['|', '|', '|', '|', '|', '|', '|', ('member_ids', 'in', partner.user_id.id),
+                 ('associate_member_ids', 'in', partner.user_id.id), ('user_id.id', '=', partner.user_id.id),
+                 ('area_manager.id', '=', partner.user_id.id), ('member_ids', 'in', partner.related_guide.ids),
+                 ('associate_member_ids', 'in', partner.related_guide.ids),
+                 ('user_id.id', 'in', partner.related_guide.ids), ('area_manager.id', 'in', partner.related_guide.ids)])
             for team in teams:
                 res += team
             partner.teams = res
