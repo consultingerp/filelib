@@ -4,18 +4,15 @@
 #    实现微信登录
 ##############################################################################
 
-import ast
+import logging
+
+from odoo.addons.web.controllers.main import DataSet
 from odoo.addons.web.controllers.main import Home
 from odoo.addons.web.controllers.main import Session
-from odoo.addons.web.controllers.main import DataSet
-from urllib.parse import urljoin
-import pytz
-import datetime
-import logging
-from ..rpc import corp_client
 
 from odoo import http
 from odoo.http import request
+from ..rpc import corp_client
 
 _logger = logging.getLogger(__name__)
 

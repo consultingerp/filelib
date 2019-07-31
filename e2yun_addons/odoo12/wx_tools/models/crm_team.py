@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import logging
+
+from geopy.distance import vincenty
+
 from odoo import api, fields, models
 from odoo.fields import Datetime
-from geopy.distance import vincenty
 
 _logger = logging.getLogger(__name__)
 
