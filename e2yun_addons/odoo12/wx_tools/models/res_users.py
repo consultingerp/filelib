@@ -1,11 +1,13 @@
 # -*-coding:utf-8-*-
-import logging
 import datetime
+import logging
 from datetime import timedelta
+
+from odoo.addons.auth_signup.models.res_partner import now
+
+import odoo
 from odoo import models, fields, api
 from odoo.exceptions import UserError
-import odoo
-from odoo.addons.auth_signup.models.res_partner import now
 
 _logger = logging.getLogger(__name__)
 

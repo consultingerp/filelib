@@ -1,14 +1,14 @@
 # -*-coding:utf-8-*-
 
+import json
 import logging
-from ..rpc import corp_client
+
+from geopy.distance import vincenty
 
 from odoo import http
+from odoo.fields import Datetime
 from odoo.http import request
 from ..controllers import amapapi
-from odoo.fields import Datetime
-from geopy.distance import vincenty
-import json
 
 _logger = logging.getLogger(__name__)
 
@@ -70,7 +70,7 @@ class AmapAip(http.Controller):
                 pos_kilometers = vincenty(newport_ri, cleveland_oh).kilometers
                 crm_team['distance'] = round(pos_kilometers, 2)
                 search_read_new.append(crm_team)
-                _logger.info("门店与用户距离%s" % pos_kilometers)
+                #_logger.info("门店与用户距离%s" % pos_kilometers)
         search_read_new = sorted(search_read_new, key=lambda dict: dict['distance'], reverse=False)
         crm_team_list = []
         listsize = len(search_read_new) if len(search_read_new) <= 10 else 10
