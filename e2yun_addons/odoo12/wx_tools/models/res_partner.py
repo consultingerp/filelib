@@ -1,8 +1,9 @@
 # coding=utf-8
 import logging
 
-from odoo import models, fields, api
 from geopy.distance import vincenty
+
+from odoo import models, fields, api
 
 _logger = logging.getLogger(__name__)
 
