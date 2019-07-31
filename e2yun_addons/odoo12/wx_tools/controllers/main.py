@@ -85,6 +85,9 @@ class LoginHome(Home):
             if not request.params['login'] \
                     or not request.params['password']:
                 return super(LoginHome, self).web_login(redirect, **kw)
+            login_as = super(LoginHome, self).web_login(redirect, **kw)
+            if 'error' in login_as.qcontext:
+                return login_as
             uid = request.session.authenticate(request.session.db, request.params['login'], request.params['password'])
             if uid is not False:
                 wx_user_info = request.session.wx_user_info
