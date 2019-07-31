@@ -1,8 +1,9 @@
 # coding=utf-8
 import logging
 
-from odoo import models, fields, api
 from geopy.distance import vincenty
+
+from odoo import models, fields, api
 
 _logger = logging.getLogger(__name__)
 
@@ -43,7 +44,7 @@ class WXResPartner(models.Model):
                     pos_kilometers = vincenty(newport_ri, cleveland_oh).kilometers
                     crm_team.distance = pos_kilometers
                     search_read_new.append(crm_team)
-                    _logger.info("门店与用户距离%s" % pos_kilometers)
+                    # _logger.info("门店与用户距离%s" % pos_kilometers)
             if search_read_new:
                 min_distance = (min(search_read_new, key=lambda dict: dict['distance']))
                 self.near_team = '%s:距离%s公里' % (min_distance.street, min_distance.distance)
