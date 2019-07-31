@@ -8,6 +8,16 @@ from odoo.exceptions import ValidationError, Warning
 class E2yunCsutomerExtends(models.Model):
     _inherit = 'res.partner'
 
+    @api.model
+    def default_get(self, fields):
+        result = super(E2yunCsutomerExtends, self).default_get(fields)
+        country = self.env['res.country'].sudo().search([('name','=','中国')])
+        if country and len(country) > 0:
+            result['country_id'] = country[0].id
+        return result
+
+
+    #country_id = fields.Many2one('res.country', string='Country', ondelete='restrict',default=_default_country)
     city_id = fields.Many2one('res.state.city',string='City',domain="[('state_id','=?',state_id)]")
     area_id = fields.Many2one('res.city.area',string='Area',domain="[('city_id','=?',city_id)]")
     address_desc = fields.Text(string='地址解析')

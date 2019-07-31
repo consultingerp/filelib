@@ -12,6 +12,10 @@
                         <button string="应用" type="object" name="execute" class="oe_highlight"/>
                         or
                         <button string="取消" type="object" name="cancel" class="oe_link"/>
+                        or
+                        <button string="初始化二维码" type="object" name="qrcode_rest"/>
+                        or
+                        <button string="初始化门店位置" type="object" name="addres_location_rest"/>
                     </header>
                     <separator string="微信配置"/>
                     <group>

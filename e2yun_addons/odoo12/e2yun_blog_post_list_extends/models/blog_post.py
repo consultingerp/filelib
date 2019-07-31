@@ -18,6 +18,31 @@ class BlogPostBatch(models.Model):
     def click_good(self):
         ctx = self._context.copy()
         blog_id = ctx.get('blog_id',False)
+        operation_type = ''
         if blog_id:
             blog = self.sudo().browse(int(blog_id))
-            blog.good_count = blog.good_count + 1
+            user_id = self.env.uid
+            log = self.env['good.log'].sudo().search([('blog_post_id','=',blog.id),('user_id','=',user_id)])
+            if log and len(log) > 0:
+                blog.good_count = blog.good_count - 1
+                log.unlink()
+                operation_type = 'subtract'
+            else:
+                blog.good_count = blog.good_count + 1
+                self.env['good.log'].sudo().create({'blog_post_id':blog.id,'user_id':user_id})
+                operation_type = 'add'
+
+        return operation_type
+
+    @api.model
+    def is_good(self):
+        ctx = self._context.copy()
+        blog_id = ctx.get('blog_id', False)
+        is_good = False
+        if blog_id:
+            blog = self.sudo().browse(int(blog_id))
+            user_id = self.env.uid
+            log = self.env['good.log'].sudo().search([('blog_post_id', '=', blog.id), ('user_id', '=', user_id)])
+            if log and len(log) > 0:
+                is_good = True
+        return is_good

@@ -12,7 +12,7 @@
     'version': '0.1',
     'depends': ['base', 'e2yun_customer_extends'],
     'data': [
-        'security/access_restricted_security.xml',
+        # 'security/access_restricted_security.xml',
         'views/views.xml',
     ],
     'demo': [

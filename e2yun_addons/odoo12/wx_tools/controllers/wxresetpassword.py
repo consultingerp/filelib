@@ -1,6 +1,7 @@
 # -*-coding:utf-8-*-
 
 from odoo.addons.auth_signup.controllers.main import AuthSignupHome as Home
+
 from odoo import http
 from odoo.http import request
 

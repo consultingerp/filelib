@@ -1,8 +1,9 @@
 # coding=utf-8
-import logging
 import datetime
+import logging
 
 from wechatpy.enterprise import WeChatClient
+
 from odoo import fields
 from ..basewechat.base import EntryBase
 
