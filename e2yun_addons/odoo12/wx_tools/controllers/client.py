@@ -1,17 +1,17 @@
 # coding=utf-8
 import logging
-
-from werobot.client import ClientException
-from werobot.robot import BaseRoBot
-#from .memorystorage import MemoryStorage
-from wechatpy.session.memorystorage import MemoryStorage
-from werobot.logger import enable_pretty_logging
-from wechatpy.oauth import WeChatOAuth
-from wechatpy.component import ComponentOAuth
-from wechatpy.client.api.jsapi import WeChatJSAPI
-from wechatpy.client import WeChatClient
-from wechatpy.utils import WeChatSigner, random_string
 import time
+
+from wechatpy.client import WeChatClient
+from wechatpy.client.api.jsapi import WeChatJSAPI
+from wechatpy.component import ComponentOAuth
+from wechatpy.oauth import WeChatOAuth
+# from .memorystorage import MemoryStorage
+from wechatpy.session.memorystorage import MemoryStorage
+from wechatpy.utils import random_string
+from werobot.client import ClientException
+from werobot.logger import enable_pretty_logging
+from werobot.robot import BaseRoBot
 
 from odoo import exceptions
 from odoo import fields
