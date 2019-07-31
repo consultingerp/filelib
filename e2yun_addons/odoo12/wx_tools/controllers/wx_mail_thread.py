@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-import logging
 import base64
+import logging
 import os
 import uuid
 from datetime import datetime
-from odoo.modules.module import get_module_resource
+
 from odoo import api, models
-from ..rpc import corp_client
 from odoo import exceptions
+from odoo.modules.module import get_module_resource
+from ..rpc import corp_client
 
 _logger = logging.getLogger(__name__)
 

@@ -5,7 +5,7 @@ from odoo import api, fields, models, _
 class E2yuncChangeSales(models.TransientModel):
     _name = 'change.sales'
 
-    newsale = fields.Many2one('res.users', string='新导购')
+    newsale = fields.Many2one('res.users', string='新导购', domain="[('share','=',False)]")
 
     def old_sale_has_gone(self):
 

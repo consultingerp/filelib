@@ -2,18 +2,16 @@
 
 import logging
 
-# 企业号相关
-from wechatpy.enterprise.crypto import WeChatCrypto
-from wechatpy.exceptions import InvalidSignatureException, InvalidAppIdException
-from wechatpy.enterprise.exceptions import InvalidCorpIdException
-from wechatpy.enterprise import parse_message, create_reply
-# 公众号相关
-from wechatpy.utils import check_signature
-
 import werkzeug
+from wechatpy.enterprise import parse_message, create_reply
+from wechatpy.enterprise.exceptions import InvalidCorpIdException
+# 企业号相关
+from wechatpy.exceptions import InvalidSignatureException
 
 from odoo import http
 from odoo.http import request
+
+# 公众号相关
 
 _logger = logging.getLogger(__name__)
 

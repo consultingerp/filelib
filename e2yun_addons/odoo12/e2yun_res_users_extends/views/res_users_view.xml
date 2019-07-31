@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='signature']" position="before">
                     <field name="vacation_status" readonly="0"/>
+                    <field name="function" readonly="1"/>
                 </xpath>
             </field>
         </record>

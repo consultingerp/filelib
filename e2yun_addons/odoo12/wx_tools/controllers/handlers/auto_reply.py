@@ -142,7 +142,7 @@ def main(robot):
         uuid_type = None
 
         if not partner_user_id.vacation_status:  # 上班
-            if partner_user_id and uuid :  # 需要联系客服要 and  存在上次会话
+            if partner_user_id and uuid:  # 需要联系客服要 and  存在上次会话
                 _logger.info('需要联系客服要 存在上次会话')
                 # 查询上次会话是否是用户类型
                 uuid_type = 'USER'

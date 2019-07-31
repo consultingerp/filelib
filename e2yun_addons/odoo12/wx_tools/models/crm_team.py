@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import logging
+
+from geopy.distance import vincenty
+
 from odoo import api, fields, models
 from odoo.fields import Datetime
-from geopy.distance import vincenty
 
 _logger = logging.getLogger(__name__)
 
@@ -32,6 +34,7 @@ class WXCrmTeam(models.Model):
     def _get_address_location(self):
         from ..controllers import amapapi
         if (self.longitude == 0.0 or self.longitude == 0.0) and (self.street or self.street2):
+            _logger.info("生成地址%s" % self.street)
             street_location = amapapi.geocodegeo(self, address=self.street if self.street else self.street2)
             if street_location:
                 location = street_location.split(',')
@@ -48,12 +51,14 @@ class WXCrmTeam(models.Model):
     def _get_qrcodeimg(self):
         # 生成团队二维码
         if not self.qrcode_ticket:
-            _logger.info("生成二维码")
             from ..controllers import client
             entry = client.wxenv(self.env)
-            qrcodedatastr = 'TEAM|%s|%s' % (self.id, self.name)
-            qrcodedata = {"expire_seconds": 2592000, "action_name": "QR_STR_SCENE",
-                          "action_info": {"scene": {"scene_str": qrcodedatastr}}}
+            qrcodedatastr = 'TEAM|%s|%s' % (self.id, self.id)
+            _logger.info("生成二维码%s" % qrcodedatastr)
+            if len(qrcodedatastr) > 30:
+                qrcodedatastr = qrcodedatastr[:30]
+            # "expire_seconds": 2592000,
+            qrcodedata = {"action_name": "QR_LIMIT_STR_SCENE", "action_info": {"scene": {"scene_str": qrcodedatastr}}}
             qrcodeinfo = entry.wxclient.create_qrcode(qrcodedata)
             self.write({'qrcode_ticket': qrcodeinfo['ticket'],
                         'qrcode_url': qrcodeinfo['url']})
@@ -95,7 +100,7 @@ class WXCrmTeam(models.Model):
                 pos_kilometers = vincenty(newport_ri, cleveland_oh).kilometers
                 crm_team.distance = pos_kilometers
                 search_read_new.append(crm_team)
-                _logger.info("门店与用户距离%s" % pos_kilometers)
+                #_logger.info("门店与用户距离%s" % pos_kilometers)
         if search_read_new:
             min_distance = (min(search_read_new, key=lambda dict: dict['distance']))
             self.near_team = '%s:距离%s公里' % (min_distance.street, min_distance.distance)
