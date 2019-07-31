@@ -6,7 +6,6 @@ from wechatpy.crypto import WeChatCrypto
 
 from ..basewechat.base import EntryBase
 
-
 _logger = logging.getLogger(__name__)
 
 

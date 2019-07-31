@@ -18,11 +18,15 @@ odoo.define('wx_tools.nearby_stores', function (require) {
             this._super(parent, action);
             var options = action.params || {};
             this.params = options;  // NOTE forwarded to embedded client action
-        }, nearby_stores_templates: function (locations, isLocation) {
+        }, nearby_stores_templates: function (locations, isLocation, storename) {
             var self = this;
             self._rpc({
                 route: 'amap/nearby_stores',
-                params: {location: locations},
+                params: {
+                    location: locations,
+                    storename: storename
+                },
+
             }).then(function (result) {
                 var html = QWeb.render('store_list', {
                     stores: result.crm_team_list,
@@ -45,7 +49,7 @@ odoo.define('wx_tools.nearby_stores', function (require) {
                 this.isMobile = config.device.isMobile;
             } else {
                 this.isMobile = config.device.isMobile;
-                self.nearby_stores_templates('116.38,39.90', false)
+                self.nearby_stores_templates('', false, '')
             }
             wx.getLocation({
                 type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
@@ -56,9 +60,9 @@ odoo.define('wx_tools.nearby_stores', function (require) {
                     var speed = res.speed; // 速度，以米/每秒计
                     var accuracy = res.accuracy; // 位置精度
                     var locations = res.longitude + "," + res.latitude; //微信位置
-                    self.nearby_stores_templates(locations, true)
+                    self.nearby_stores_templates(locations, true, '')
                 }, fail: function () {
-                    self.nearby_stores_templates('116.38,39.90', false)
+                    self.nearby_stores_templates('', false, '')
                 }
             }); // end getLocation
         },
@@ -85,20 +89,21 @@ odoo.define('wx_tools.nearby_stores', function (require) {
         }, _stores_list(ev) {
             var self = this;
             var name = $(ev.currentTarget).attr('data-addresname')
-            self._rpc({
-                route: 'amap/stores_list',
-                params: {
-                    name: name,
-                },
-            }).then(function (result) {
-                var html = QWeb.render('store_list', {
-                    stores: result.crm_team_list,
-                    isLocation: false
-                });
-                self.$('#aui-store-head').empty();
-                self.$('#aui-store-head').append(html)
-
-            });
+            var iswxstore = false;
+            wx.getLocation({
+                type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                success: function (res) {
+                    iswxstore = true;
+                    var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                    var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                    var speed = res.speed; // 速度，以米/每秒计
+                    var accuracy = res.accuracy; // 位置精度
+                    var locations = res.longitude + "," + res.latitude; //微信位置
+                    self.nearby_stores_templates(locations, true,name)
+                }, fail: function () {
+                    self.nearby_stores_templates('', false,name)
+                }
+            }); // end getLocatio
         }
     });
     core.action_registry.add('wx_tools.nearby_stores', nearby_stores);

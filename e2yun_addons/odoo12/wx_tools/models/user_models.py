@@ -1,17 +1,17 @@
 # coding=utf-8
 
-import logging
-import json
-
-from odoo import models, fields, api
-from ..controllers import client
-from odoo.http import request
-from odoo.exceptions import ValidationError, UserError
-from ..rpc import corp_client
 import datetime
+import json
+import logging
 from datetime import timedelta
+
 import pytz
 
+from odoo import models, fields, api
+from odoo.exceptions import ValidationError, UserError
+from odoo.http import request
+from ..controllers import client
+from ..rpc import corp_client
 
 _logger = logging.getLogger(__name__)
 

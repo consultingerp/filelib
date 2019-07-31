@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from odoo import models, fields, api
-from ..controllers import client
+
 
 class wx_config_settings(models.TransientModel):
     _name = 'wx.config.settings'
