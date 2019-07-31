@@ -5038,7 +5038,7 @@
                     <div class="weui-cells">
                         <a class="weui-cell weui-cell_access" href="/user-center/my-guide">
                             <div class="weui-cell__hd">
-                                <img src="/e2yun_user_center/static/src/images/me2.png" alt=""/>
+                                <img src="/e2yun_user_center/static/src/images/me24.png" alt=""/>
                             </div>
                             <div class="weui-cell__bd" style="margin-left: 30">
                                 <p align="left">客户经理</p>
@@ -5050,7 +5050,7 @@
                     <div class="weui-cells">
                         <a class="weui-cell weui-cell_access" href="/user-center/nearby-shop">
                             <div class="weui-cell__hd">
-                                <img src="/e2yun_user_center/static/src/images/mendian2.png" alt=""/>
+                                <img src="/e2yun_user_center/static/src/images/mendian24.png" alt=""/>
                             </div>
                             <div class="weui-cell__bd" style="margin-left: 30">
                                 <p align="left">附近门店</p>
@@ -5059,7 +5059,7 @@
                         </a>
                         <a class="weui-cell weui-cell_access" href="/user-center">
                             <div class="weui-cell__hd">
-                                <img src="/e2yun_user_center/static/src/images/huodong2.png" alt=""/>
+                                <img src="/e2yun_user_center/static/src/images/huodong24.png" alt=""/>
                             </div>
                             <div class="weui-cell__bd" style="margin-left: 30">
                                 <p align="left">优惠活动</p>
@@ -10097,7 +10097,7 @@
                     <div class="weui-cells">
                         <a class="weui-cell weui-cell_access" href="/user-center/back-to-app-center">
                             <div class="weui-cell__hd">
-                                <img src="/e2yun_user_center/static/src/images/home2.png" alt=""/>
+                                <img src="/e2yun_user_center/static/src/images/home24.png" alt=""/>
                             </div>
                             <div class="weui-cell__bd" style="margin-left: 30">
                                 <p align="left">首页</p>
@@ -10109,7 +10109,7 @@
                     <div class="weui-cells">
                         <a class="weui-cell weui-cell_access" href="/user-center/jump-to-crm">
                             <div class="weui-cell__hd">
-                                <img src="/e2yun_user_center/static/src/images/CRM.png" alt=""/>
+                                <img src="/e2yun_user_center/static/src/images/CRM24.png" alt=""/>
                             </div>
                             <div class="weui-cell__bd" style="margin-left: 30">
                                 <p align="left">CRM</p>
@@ -10118,7 +10118,7 @@
                         </a>
                         <a class="weui-cell weui-cell_access" href="/user-center/jump-to-discussion">
                             <div class="weui-cell__hd">
-                                <img src="/e2yun_user_center/static/src/images/discussion.png" alt=""/>
+                                <img src="/e2yun_user_center/static/src/images/discussion24.png" alt=""/>
                             </div>
                             <div class="weui-cell__bd" style="margin-left: 30">
                                 <p align="left">讨论</p>
@@ -10127,7 +10127,7 @@
                         </a>
                         <a class="weui-cell weui-cell_access" href="/user-center/jump-to-calendar">
                             <div class="weui-cell__hd">
-                                <img src="/e2yun_user_center/static/src/images/calendar.png" alt=""/>
+                                <img src="/e2yun_user_center/static/src/images/calendar24.png" alt=""/>
                             </div>
                             <div class="weui-cell__bd" style="margin-left: 30">
                                 <p align="left">日历</p>
