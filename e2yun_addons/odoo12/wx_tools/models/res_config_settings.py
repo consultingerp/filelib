@@ -72,6 +72,15 @@ class ResConfigSettings(models.TransientModel):
             });
             crm_team._get_address_location()
 
+    def qrcode_company_rest(self):
+        res_company_pool = self.env['res.company'].search([])
+        for res_company in res_company_pool:
+            res_company.write({
+                'qrcode_ticket': '',
+                'qrcode_ticket_external': '',
+            });
+        res_users_pool = self.env['res.company'].search_read([])
+
     @api.one
     def _get_qrcodeimg(self):
         if not self.auth_signup_reset_password_qrcode_ticket:

@@ -16,6 +16,10 @@
                         <button string="初始化二维码" type="object" name="qrcode_rest"/>
                         or
                         <button string="初始化门店位置" type="object" name="addres_location_rest"/>
+                        or
+                        <button string="初始化公司二维码" type="object" name="qrcode_company_rest"/>
+
+
                     </header>
                     <separator string="微信配置"/>
                     <group>
