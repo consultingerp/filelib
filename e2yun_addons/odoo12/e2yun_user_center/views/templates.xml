@@ -5012,9 +5012,9 @@
             </head>
 
             <body ontouchstart="">
-                <div class="wx-header clearfix flex" align="center">
-                    <h1 class="flex-1">个人中心</h1>
-                </div>
+<!--                <div class="wx-header clearfix flex" align="center">-->
+<!--                    <h1 class="flex-1">个人中心</h1>-->
+<!--                </div>-->
                 <!--me-main -->
                 <div class="weui-msg me-main clearfix">
                     <div class="weui-cells" style="margin-top: 0">
@@ -10072,9 +10072,9 @@
                 </style>
             </head>
             <body ontouchstart="">
-                <div class="wx-header clearfix flex" align="center">
-                    <h1 class="flex-1">个人中心</h1>
-                </div>
+<!--                <div class="wx-header clearfix flex" align="center">-->
+<!--                    <h1 class="flex-1">个人中心</h1>-->
+<!--                </div>-->
                 <div class="weui-msg me-main clearfix">
                     <div class="weui-cells" style="margin-top: 0">
                         <a class="weui-cell head-cells weui-cell_access" href="/user-center/my-info">
@@ -15146,9 +15146,9 @@
                 </style>
             </head>
             <body ontouchstart="">
-                <div class="wx-header clearfix flex" align="center">
-                    <h1 class="flex-1">个人信息</h1>
-                </div>
+<!--                <div class="wx-header clearfix flex" align="center">-->
+<!--                    <h1 class="flex-1">个人信息</h1>-->
+<!--                </div>-->
                 <div class="weui-msg me-main clearfix">
                     <div class="weui-cells">
                         <a class="weui-cell weui-cell_access">
@@ -20216,9 +20216,9 @@
                 </style>
             </head>
             <body ontouchstart="">
-                <div class="wx-header clearfix flex" align="center">
-                    <h1 class="flex-1">个人信息</h1>
-                </div>
+<!--                <div class="wx-header clearfix flex" align="center">-->
+<!--                    <h1 class="flex-1">个人信息</h1>-->
+<!--                </div>-->
                 <div class="weui-msg me-main clearfix">
                     <div class="weui-cells">
                         <a class="weui-cell weui-cell_access">
@@ -25291,9 +25291,9 @@
             </head>
             <body>
                 <div id="wrap5" class="container">
-                    <div class="wx-header clearfix flex" align="center">
-                        <h1 class="flex-1">相关导购</h1>
-                    </div>
+<!--                    <div class="wx-header clearfix flex" align="center">-->
+<!--                        <h1 class="flex-1">相关导购</h1>-->
+<!--                    </div>-->
                     <t t-foreach="related_guides" t-as="related_guide">
                         <div class="weui-cells" style="margin-top: 0">
                             <a class="weui-cell head-cells weui-cell_access">
