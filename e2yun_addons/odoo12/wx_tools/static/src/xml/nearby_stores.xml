@@ -5,7 +5,7 @@
 
         <section class="aui-flexView">
             <div class="aui-navBar aui-navBar-fixed b-line">
-                <div class="aui-navBar-item" style="font-size: 13px;" onclick="alert('aa')">
+                <div class="aui-navBar-item" style="font-size: 13px;">
                     <i class="icon icon-return"></i>附近门店
                 </div>
                 <div class="aui-center">
