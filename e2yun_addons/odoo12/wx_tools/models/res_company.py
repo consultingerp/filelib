@@ -41,7 +41,7 @@ class ResCompany(models.Model):
 
             from ..controllers import client
             entry = client.wxenv(self.env)
-            qrcodedatastr = 'COMPANYEXTERNAL|%s|%s' % (self.id, self.name)
+            qrcodedatastr = 'COMPANYEXTERNAL|%s|%s' % (self.id, self.id)
             _logger.info("生成二维码%s" % qrcodedatastr)
             # "expire_seconds": 2592000,
             if len(qrcodedatastr) > 30:
@@ -56,4 +56,4 @@ class ResCompany(models.Model):
         else:
             self.qrcodeimg_external = '<img src=https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=%s width="100px" ' \
                                       'height="100px" />' % (
-                                              self.qrcode_ticket or '/wx_tools/static/description/icon.png')
+                                              self.qrcode_ticket_external or '/wx_tools/static/description/icon.png')
