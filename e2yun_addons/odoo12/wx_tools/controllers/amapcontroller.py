@@ -1,14 +1,14 @@
 # -*-coding:utf-8-*-
 
+import json
 import logging
-from ..rpc import corp_client
+
+from geopy.distance import vincenty
 
 from odoo import http
+from odoo.fields import Datetime
 from odoo.http import request
 from ..controllers import amapapi
-from odoo.fields import Datetime
-from geopy.distance import vincenty
-import json
 
 _logger = logging.getLogger(__name__)
 
