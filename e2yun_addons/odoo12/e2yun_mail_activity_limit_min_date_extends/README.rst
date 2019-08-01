@@ -5,7 +5,7 @@
 ==========
 E2yun user
 ==========
-test add field to res.users
+limit date
 
 Requirements
 ============
@@ -28,7 +28,7 @@ Credits
 Contributors
 ------------
 
-* Joytao <joytao.zhu@e2yun.com>
+* Feng Zhou <feng.zhou@e2yun.com>
 
 Maintainer
 ----------
