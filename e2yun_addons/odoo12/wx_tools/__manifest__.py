@@ -37,6 +37,7 @@
         'views/res_users_views.xml',
         'views/res_partner_views.xml',
         'views/wx_userodoouser.xml',
+        'views/crm_team_templates.xml',
         'views/crm_team_views.xml',
         'views/wx_para_config.xml',
         'views/wx_trace_log.xml',
@@ -44,11 +45,14 @@
         'views/res_company_views.xml',
         'views/res_config_settings_views.xml',
         'views/sale_coupon_program_views.xml',
-        'views/wx_tools_wx.xml'
+        'views/wx_tools_wx.xml',
+        'views/nearby_stores_template.xml'
     ],
-    'qweb': ["static/src/xml/wx_address_location.xml",
-             "static/src/xml/wx_team.xml"
-             ],
+    'qweb': [
+        "static/src/xml/wx_team.xml",
+        "static/src/xml/nearby_stores.xml",
+
+    ],
     'depends': ['base', 'web', 'im_livechat', 'sale_management'],
     'installable': True,
     'auto_install': False,

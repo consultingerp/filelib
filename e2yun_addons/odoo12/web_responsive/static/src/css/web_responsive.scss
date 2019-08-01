@@ -321,6 +321,12 @@ html .o_web_client .o_main .o_main_content {
     }
 }
 
+.o_control_panel {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
 // Normal views
 .o_content, .modal-content {
     max-width: 100%;
@@ -333,12 +339,11 @@ html .o_web_client .o_main .o_main_content {
         }
 
         // Sticky statusbar
-        .o_form_statusbar {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
+        //.o_form_statusbar {
+        //    position: sticky;
+        //    top: 0;
+        //    z-index: 10;
+        //}
         // Support for long title (with ellipsis)
         .oe_title {
             width: initial;

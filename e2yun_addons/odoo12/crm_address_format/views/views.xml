@@ -1,0 +1,109 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="crm_address_format_list">
+      <field name="name">线索的地址格式</field>
+      <field name="model">crm.lead</field>
+      <field name="inherit_id" ref="crm.crm_case_form_view_leads" />
+      <field name="arch" type="xml">
+        <xpath expr="//div[@class='o_address_format']" position="replace">
+          <div class="o_address_format">
+            <field name="street" placeholder="Street..." class="o_address_street" invisible="1"/>
+            <field name="street2" placeholder="Street 2..." class="o_address_street" invisible="1"/>
+            <field name="city" placeholder="City" class="o_address_city" invisible="1"/>
+
+            <field name="country_id" placeholder="中国" class="o_address_state" options='{&quot;no_open&quot;: True, &quot;no_create&quot;: True}' />
+            <field name="state_id" class="o_address_state" placeholder="北京市" options='{"no_open": True}' />
+            <field name="city_id" placeholder="昌平" class="o_address_city" />
+            <field name="area_id" placeholder="县/区" class="o_address_city" />
+            <field name="street" placeholder="街道" class="o_address_street" />
+            <field name="zip" placeholder="邮编" class="o_address_zip" />
+          </div>
+        </xpath>
+<!--        <xpath expr="//field[@name='street2']" position="replace">-->
+<!--          <field name="state_id" class="o_address_state" placeholder="State" options='{"no_open": True}' />-->
+<!--        </xpath>-->
+<!--        <xpath expr="//field[@name='city']" position="attributes">-->
+<!--          <attribute name="invisible">1</attribute>-->
+<!--        </xpath>-->
+<!--        <xpath expr="//field[@name='city']" position="after">-->
+<!--          <field name="city_id" placeholder="City..." class="o_address_city" />-->
+<!--        </xpath>-->
+<!--        <xpath expr="//field[@name='state_id']" position="replace">-->
+<!--          <field name="area_id" placeholder="Area..." class="o_address_street" />-->
+<!--        </xpath>-->
+<!--        <xpath expr="//field[@name='zip']" position="replace">-->
+<!--          <field name="street" placeholder="Street..." class="o_address_street" />-->
+<!--        </xpath>-->
+<!--        <xpath expr="//field[@name='country_id']" position="replace">-->
+<!--          <field name="zip" placeholder="ZIP" class="o_address_zip" />-->
+<!--        </xpath>-->
+      </field>
+    </record>
+
+<!--    <record model="ir.ui.view" id="crm_address_format_form">-->
+<!--      <field name="name">线索的地址</field>-->
+<!--      <field name="model">crm.lead</field>-->
+<!--      <field name="inherit_id" ref="crm.crm_case_form_view_oppor" />-->
+<!--      <field name="arch" type="xml">-->
+<!--        <xpath expr="//field[@name='partner_id']" position="attributes">-->
+<!--          <attribute name="context">{'search_default_customer': 1,-->
+<!--                                        'default_name': partner_name, 'default_area_id': area_id,-->
+<!--                                        'default_street': street, 'default_city_id': city_id,-->
+<!--                                        'default_state_id': state_id, 'default_zip': zip,-->
+<!--                                        'default_country_id': country_id, 'default_function': function,-->
+<!--                                        'default_phone': phone, 'default_mobile': mobile,-->
+<!--                                        'default_email': email_from,-->
+<!--                                        'default_user_id': user_id, 'default_team_id': team_id, 'default_website': website,-->
+<!--                                        'show_vat': True,-->
+<!--                                    }</attribute>-->
+<!--        </xpath>-->
+
+<!--      </field>-->
+<!--    </record>-->
+
+
+    <!-- actions opening views on models -->
+
+<!--    <record model="ir.actions.act_window" id="crm_address_format.action_window">-->
+<!--      <field name="name">crm_address_format window</field>-->
+<!--      <field name="res_model">crm_address_format.crm_address_format</field>-->
+<!--      <field name="view_mode">tree,form</field>-->
+<!--    </record>-->
+
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="crm_address_format.action_server">
+      <field name="name">crm_address_format server</field>
+      <field name="model_id" ref="model_crm_address_format_crm_address_format"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="crm_address_format" id="crm_address_format.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="crm_address_format.menu_1" parent="crm_address_format.menu_root"/>
+    <menuitem name="Menu 2" id="crm_address_format.menu_2" parent="crm_address_format.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="crm_address_format.menu_1_list" parent="crm_address_format.menu_1"
+              action="crm_address_format.action_window"/>
+    <menuitem name="Server to list" id="crm_address_format" parent="crm_address_format.menu_2"
+              action="crm_address_format.action_server"/>
+    -->
+  </data>
+</odoo>

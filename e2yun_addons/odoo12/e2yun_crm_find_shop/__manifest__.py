@@ -14,7 +14,7 @@
         "views/gaode_template.xml",
     ],
     "depends": [
-        "crm", "base", "e2yun_crm_shop_maintain", "sales_team",
+        "crm", "base", "e2yun_crm_shop_maintain", "sales_team","wx_tools"
     ],
     "installable": True
 }
