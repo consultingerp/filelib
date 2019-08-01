@@ -69,6 +69,7 @@ odoo.define('wx_tools.nearby_stores', function (require) {
         events: {
             'click p': '_onClick',
             'click h2': '_onClick',
+            'click h3 span': '_onClick',
             'click .aui-store-addressgo': '_onClick',
             'click #locationbejing': '_stores_list',
             'click #locationsz': '_stores_list',
