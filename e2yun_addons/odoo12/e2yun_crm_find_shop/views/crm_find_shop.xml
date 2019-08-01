@@ -25,7 +25,7 @@
                         <t t-name="kanban-box">
                             <div t-attf-class="oe_module_vignette" >
                                 <div class="o_kanban_image">
-                                    <img class="o_kanban_image_inner_pic" t-att-src="kanban_image('crm.team', 'image_medium', record.id.raw_value)"
+<!--                                    <img class="o_kanban_image_inner_pic" t-att-src="kanban_image('crm.team', 'image_medium', record.id.raw_value)"-->
                                     width="120px"/>
                                 </div>
                                 <div class="oe_kanban_details">
@@ -35,7 +35,7 @@
                                     <br><ul>
                                         <li>
                                             <a href="#" id="go">
-                                                <img src="/e2yun_crm_find_shop/static/marker.jpg" style="width:15px; height:15px;"/>
+<!--                                                <img src="/e2yun_crm_find_shop/static/marker.jpg" style="width:15px; height:15px;"/>-->
                                                 <b>详细地址: </b><field name="address_location" class="add"/>
                                                 <field invisible="1" name="latitude" class="lat"/>
                                                 <field invisible="1" name="longitude" class="lon"/>
@@ -88,11 +88,11 @@
             </field>
         </record>
 
-        <menuitem id="crm_salesteam_menu_findshop"
-                  name="门店查询"
-                  parent="crm.crm_menu_sales"
-                  action="crm_team_salesteams_act"
-                  sequence="2"/>
+<!--        <menuitem id="crm_salesteam_menu_findshop"-->
+<!--                  name="门店查询"-->
+<!--                  parent="crm.crm_menu_sales"-->
+<!--                  action="crm_team_salesteams_act"-->
+<!--                  sequence="2"/>-->
 
 
 
