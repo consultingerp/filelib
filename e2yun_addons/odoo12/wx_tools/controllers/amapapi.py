@@ -1,7 +1,7 @@
 # -*-coding:utf-8-*-
 
-from odoo import http
 import requests
+
 from odoo.exceptions import UserError
 
 

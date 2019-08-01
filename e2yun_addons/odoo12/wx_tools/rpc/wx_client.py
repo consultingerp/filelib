@@ -3,10 +3,9 @@ import logging
 
 from wechatpy.client import WeChatClient
 from wechatpy.crypto import WeChatCrypto
+
 from odoo import fields
-
 from ..basewechat.base import EntryBase
-
 
 _logger = logging.getLogger(__name__)
 
