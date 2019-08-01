@@ -343,3 +343,32 @@ a {
     height:15px;
     width:15px;
 }
+.aui-store-address ul li h3{
+    color:#333;
+    font-size:14px;
+    padding-bottom:10px;
+    width:100%;
+    position:relative;
+}
+
+.aui-store-address ul li h3 a{
+    background:#00a5f5;
+    color:#fff;
+    font-size:12px;
+    width:120px;
+    text-align:center;
+    height:30px;
+    line-height:30px;
+    float:left;
+}
+
+
+.aui-store-address ul li h3 span{
+    position:absolute;
+    right:0;
+    color:#999;
+    font-weight:normal;
+    line-height:15px;
+    padding-top:3px;
+    float:right;
+}

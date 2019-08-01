@@ -2,7 +2,7 @@
 
 from odoo import api, fields, models, _
 
-class E2yuncChangeSales(models.TransientModel):
+class E2yuncChangeSales(models.Model):
     _name = 'change.sales'
 
     newsale = fields.Many2one('res.users', string='新导购', domain="[('share','=',False)]")
