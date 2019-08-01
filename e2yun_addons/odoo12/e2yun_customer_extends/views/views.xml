@@ -234,7 +234,7 @@
                     <field name="car_brand"/>
                     <field name="user_nick_name"/>
                     <field name="gender"/>
-                    <field name="customer_source"/>
+                    <field name="customer_source" readonly="1"/>
                 </field>
             </field>
         </record>
