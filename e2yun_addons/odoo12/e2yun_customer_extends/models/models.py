@@ -42,6 +42,7 @@ class E2yunCsutomerExtends(models.Model):
         ('subscribe', 'Subscribe'),
         ('qrscene_COMPANY', 'QR Scan Company'),
         ('manual', 'Manual'),
+        ('qrscene_COMPANYEXTERNAL', 'QR Scan Company External')
     ], string='', default='manual')
     pos_state = fields.Boolean(String='Sync Pos State',default=False)
     state = fields.Selection([
@@ -54,13 +55,18 @@ class E2yunCsutomerExtends(models.Model):
     ], string='Status', default='potential_customer', group_expand='_group_expand_stage_id')
     related_guide = fields.Many2many('res.users',  domain="[('function', '!=', False)]")
 
+    @api.model
+    def default_get(self, fields_list):
+        res = super(E2yunCsutomerExtends, self).default_get(fields_list)
+        res['user_id'] = self.env.user.id
+        return res
+
     @api.onchange('shop_code')
     def on_change_shop_name(self):
         # new_context = self.env.context.copy()
         # new_context['show_custom_name'] = 2
         # self.with_context(new_context).shop_code.name_get()
         self.shop_name = self.shop_code.name
-
 
     @api.multi
     @api.depends('shop_code')
