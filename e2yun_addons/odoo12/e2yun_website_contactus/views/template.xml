@@ -33,6 +33,15 @@
 			</xpath>
 		</template>
 
+    <template id="company_description" name="Contact Form" inherit_id="website.company_description">
+            <xpath expr="//address" position="replace">
+                <address itemscope="itemscope" itemtype="http://schema.org/Organization">
+                </address>
+			</xpath>
+		</template>
+
+
+
 
     <template id="footer_custom" inherit_id="website.layout" name="Footer">
         <xpath expr="//div[@id='footer']" position="replace">
