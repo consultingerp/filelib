@@ -191,3 +191,19 @@ def get_user_info(self, code, state='login'):
     user_info = oauth.get_user_info(access_token['openid'], access_token=access_token['access_token'])
     logging.info(user_info)
     return user_info
+
+
+def get_img_data(pic_url):
+    import requests
+    headers = {
+        'Accept': 'textml,application/xhtml+xml,application/xml;q=0.9,image/webp,/;q=0.8',
+        'Accept-Encoding': 'gzip, deflate',
+        'Accept-Language': 'zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4',
+        'Cache-Control': 'no-cache',
+        'Host': 'mmbiz.qpic.cn',
+        'Pragma': 'no-cache',
+        'Connection': 'keep-alive',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
+    }
+    r = requests.get(pic_url, headers=headers, timeout=50)
+    return r.content
