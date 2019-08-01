@@ -5,6 +5,7 @@
 ##############################################################################
 
 import logging
+import base64
 
 from odoo.addons.web.controllers.main import DataSet
 from odoo.addons.web.controllers.main import Home
@@ -13,7 +14,7 @@ from odoo.addons.web.controllers.main import Session
 from odoo import http
 from odoo.http import request
 from ..rpc import corp_client
-
+from ..controllers import client
 _logger = logging.getLogger(__name__)
 
 
@@ -44,7 +45,6 @@ class LoginHome(Home):
                 if codetype == 'corp':
                     wx_user_info = corp_client.get_user_info(request, code)
                 else:
-                    from ..controllers import client
                     wx_user_info = client.get_user_info(request, code, code)
                     wx_user_info['UserId'] = wx_user_info['openid']
                 kw.pop('code')
@@ -111,8 +111,10 @@ class LoginHome(Home):
                     obj = request.env['wx.user.odoouser'].sudo().create(wx_user_info)
                     resuser = request.env['res.users'].sudo().search([('id', '=', uid)], limit=1)
                     if not resuser.wx_user_id:
+                        _data = client.get_img_data(str(wx_user_info['headimgurl']))
                         resuser.write({
                             "wx_user_id": wxuserinfo.id,
+                            "image": base64.b64encode(_data),
                         })
 
 
@@ -123,6 +125,8 @@ class LoginHome(Home):
                     userinfo.write({'password': kw['password']})
 
         return super(LoginHome, self).web_login(redirect, **kw)
+
+
 
     @http.route('/web', type='http', auth="none")
     def web_client(self, s_action=None, **kw):
