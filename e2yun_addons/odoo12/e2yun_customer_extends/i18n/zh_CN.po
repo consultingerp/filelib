@@ -223,6 +223,11 @@ msgid "QR Scan Company"
 msgstr "公司二维码"
 
 #. module: e2yun_customer_extends
+#: selection:res.partner,customer_source:0
+msgid "QR Scan Company External"
+msgstr "公司外部二维码"
+
+#. module: e2yun_customer_extends
 #: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner__referrer
 #: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__referrer
 msgid "Referrer"

@@ -1,12 +1,11 @@
 # -*-coding:utf-8-*-
+import datetime
 import logging
-from odoo.exceptions import ValidationError, UserError
+from datetime import timedelta
 
 from odoo import api, models
-from ..rpc import corp_client
 from ..controllers import client
-import datetime
-from datetime import timedelta
+from ..rpc import corp_client
 
 _logger = logging.getLogger(__name__)
 

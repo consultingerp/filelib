@@ -1,8 +1,9 @@
 # coding=utf-8
+import base64
 import logging
 import os
-import base64
 import uuid
+
 from wechatpy.client import WeChatClient
 
 from odoo import models, fields, api

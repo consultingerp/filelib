@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import logging
+
+from geopy.distance import vincenty
+
 from odoo import api, fields, models
 from odoo.fields import Datetime
 
@@ -9,6 +12,7 @@ _logger = logging.getLogger(__name__)
 
 class WXCrmTeam(models.Model):
     _inherit = 'crm.team'
+    # _order = 'distance'
 
     qrcode_ticket = fields.Char(u'二维码ticket')
     qrcode_url = fields.Char(u'二维码url')
@@ -20,11 +24,18 @@ class WXCrmTeam(models.Model):
     location_write_date = fields.Datetime("更新时间", readonly=True)
     address_location = fields.Char(u'地址', compute='_get_address_location')
 
+    @api.model
+    def create(self, values):
+        result = super(WXCrmTeam, self).create(values)
+        self._get_address_location()
+        return result
+
     @api.one
     def _get_address_location(self):
         from ..controllers import amapapi
-        if (self.longitude == 0.0 or self.longitude == 0.0) and self.street:
-            street_location = amapapi.geocodegeo(self, address=self.street)
+        if (self.longitude == 0.0 or self.longitude == 0.0) and (self.street or self.street2):
+            _logger.info("生成地址%s" % self.street)
+            street_location = amapapi.geocodegeo(self, address=self.street if self.street else self.street2)
             if street_location:
                 location = street_location.split(',')
                 self.longitude = location[0]
@@ -40,12 +51,14 @@ class WXCrmTeam(models.Model):
     def _get_qrcodeimg(self):
         # 生成团队二维码
         if not self.qrcode_ticket:
-            _logger.info("生成二维码")
             from ..controllers import client
             entry = client.wxenv(self.env)
-            qrcodedatastr = 'TEAM|%s|%s' % (self.id, self.name)
-            qrcodedata = {"expire_seconds": 2592000, "action_name": "QR_STR_SCENE",
-                          "action_info": {"scene": {"scene_str": qrcodedatastr}}}
+            qrcodedatastr = 'TEAM|%s|%s' % (self.id, self.id)
+            _logger.info("生成二维码%s" % qrcodedatastr)
+            if len(qrcodedatastr) > 30:
+                qrcodedatastr = qrcodedatastr[:30]
+            # "expire_seconds": 2592000,
+            qrcodedata = {"action_name": "QR_LIMIT_STR_SCENE", "action_info": {"scene": {"scene_str": qrcodedatastr}}}
             qrcodeinfo = entry.wxclient.create_qrcode(qrcodedata)
             self.write({'qrcode_ticket': qrcodeinfo['ticket'],
                         'qrcode_url': qrcodeinfo['url']})
@@ -62,7 +75,10 @@ class WXCrmTeam(models.Model):
         # for gamificatio in gamification_goal:
         #     _logger.info(gamificatio.user_id.id)
         #     _logger.info(gamificatio.current)
-        max_goal_user = (max(gamification_goal, key=lambda x: x["current"]))
+        if gamification_goal:
+            max_goal_user = (max(gamification_goal, key=lambda x: x["current"]))
+        else:
+            return None
         _logger.info(max_goal_user)
         return max_goal_user
 
@@ -72,3 +88,22 @@ class WXCrmTeam(models.Model):
         for crm_team in crm_team_pool:
             crm_team._get_address_location()
         return ""
+
+    @api.multi
+    def getrecenttearm(self, latitude, longitude):
+        newport_ri = (latitude, longitude)
+        crm_team_pool = self.env['crm.team'].search([])
+        search_read_new = []
+        for crm_team in crm_team_pool:
+            if crm_team.longitude != 0.0 or crm_team.longitude != 0.0:
+                cleveland_oh = (crm_team.latitude, crm_team.longitude)
+                pos_kilometers = vincenty(newport_ri, cleveland_oh).kilometers
+                crm_team.distance = pos_kilometers
+                search_read_new.append(crm_team)
+                #_logger.info("门店与用户距离%s" % pos_kilometers)
+        if search_read_new:
+            min_distance = (min(search_read_new, key=lambda dict: dict['distance']))
+            self.near_team = '%s:距离%s公里' % (min_distance.street, min_distance.distance)
+            return min_distance
+        return None
+

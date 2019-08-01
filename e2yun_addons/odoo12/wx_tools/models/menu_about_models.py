@@ -1,9 +1,10 @@
 # coding=utf-8
 import logging
 
+from wechatpy.component import ComponentOAuth
+
 from odoo import models, fields, api
 from ..controllers import client
-from wechatpy.component import ComponentOAuth
 
 _logger = logging.getLogger(__name__)
 

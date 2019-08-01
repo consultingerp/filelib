@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import time
-import logging
-from odoo import api, models
-from ..rpc import corp_client
-from ..controllers import client
 import datetime
+import logging
 from datetime import timedelta
+
+from odoo import api, models
+from ..controllers import client
+from ..rpc import corp_client
 
 _logger = logging.getLogger(__name__)
 
@@ -78,6 +78,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
                     template_id = configer_para[0].paraconfig_value
                 url = client.wxenv(
                     self.env).server_url + '/web/login?usercode=saleorderwx&codetype=wx&redirect=' + redirectur
-                client.send_template_message(self, order.partner_id.wx_user_id.openid, template_id, data, url,
+                client.send_template_message(self, order.user_id.wx_user_id.openid, template_id, data, url,
                                              'saleorder')
+
         return res

@@ -1,10 +1,13 @@
 # -*-coding:utf-8-*-
-import logging
 import datetime
+import logging
 from datetime import timedelta
+
+from odoo.addons.auth_signup.models.res_partner import now
+
+import odoo
 from odoo import models, fields, api
 from odoo.exceptions import UserError
-from odoo.addons.auth_signup.models.res_partner import now
 
 _logger = logging.getLogger(__name__)
 
@@ -32,12 +35,14 @@ class WxResUsers(models.Model):
     @api.one
     def _get_qrcodeimg(self):
         if not self.qrcode_ticket:
-            _logger.info("生成二维码")
             from ..controllers import client
             entry = client.wxenv(self.env)
             qrcodedatastr = 'USERS|%s|%s|%s|' % (self.id, self.login, self.name)
-            qrcodedata = {"expire_seconds": 2592000, "action_name": "QR_STR_SCENE",
-                          "action_info": {"scene": {"scene_str": qrcodedatastr}}}
+            _logger.info("生成二维码%s" % qrcodedatastr)
+            # "expire_seconds": 2592000,
+            if len(qrcodedatastr) > 30:
+                qrcodedatastr = qrcodedatastr[:30]
+            qrcodedata = {"action_name": "QR_LIMIT_STR_SCENE","action_info": {"scene": {"scene_str": qrcodedatastr}}}
             qrcodeinfo = entry.wxclient.create_qrcode(qrcodedata)
             self.write({'qrcode_ticket': qrcodeinfo['ticket'],
                         'qrcode_url': qrcodeinfo['url']})
@@ -126,6 +131,67 @@ class WxResUsers(models.Model):
 
         self.env['wx.user'].send_template_message(data, user=user, template_name='密码重置提醒', url=url,
                                                   usercode='RESPASSWORD', url_type='out', openid=openid)
+
+    @api.multi
+    def setpartnerteamanduser(self, request, latitude, longitude):
+        users_ids = []
+        from ..controllers import client
+        entry = client.wxenv(request.env)
+        if not self.function:  # 岗位为空为客户
+            if not self.partner_id.user_id:  # 不存在导购
+                team = self.env['crm.team'].getrecenttearm(latitude, longitude)
+                if team:
+                    max_goal_user = team.tearm_high_goal()  # 获取销售团队下面评分最高用户
+                    if max_goal_user:
+                        tracelog_type = 'location_allocation'
+                        tracelog_title = '%s客户没有关联门店,根据位置分配最近门店，将客户分配给%s,根据评分规则,的团队评分(%s)，' % (
+                              self.wx_user_id.nickname,max_goal_user.user_id.name, max_goal_user.current)
+                        origin_content = tracelog_title
+                        users_ids.append(max_goal_user.user_id.id)
+                        self.partner_id.write({
+                            "user_id": max_goal_user.user_id.id,
+                            'shop_code': team.id,
+                            'related_guide': [(6, 0, users_ids)]
+                        })
+                        tracetype = self.env['wx.tracelog.type'].sudo().search([('code', '=', tracelog_type)])
+                        if tracetype.exists():
+                            self.env['wx.tracelog'].sudo().create({
+                                "tracelog_type": tracetype.id,
+                                "title": tracelog_title,
+                                "user_id": self.id,
+                                "wx_user_id": self.wx_user_id.id
+                        })
+                        oduserinfo = request.env['wx.user.odoouser'].sudo().search([('user_id', '=', self.id)])
+                        wx_user = oduserinfo.wx_user_id
+                        uid = request.session.authenticate(request.session.db, self.login, oduserinfo.password)
+                        partners_to = [max_goal_user.user_id.partner_id.id]  # 增加导购到会话
+                        session_info = request.env["mail.channel"].channel_get(partners_to)
+                        traceuser_id = max_goal_user.user_id
+                        if session_info:
+                            ret_msg = "正在联系您的专属客户经理%s。\n" \
+                                      "请点击屏幕下方左侧小键盘打开对话框与您的客户经理联系。\n我们将竭诚为您服务，欢迎咨询！" % max_goal_user.user_id.name
+                            entry.send_text(wx_user.openid, ret_msg)
+                            uuid = session_info['uuid']
+                            localkwargs = {'weixin_id': self.wx_user_id.openid, 'wx_type': 'wx'}
+                            request_uid = request.session.uid or odoo.SUPERUSER_ID
+                            mail_channel = request.env["mail.channel"].sudo(request_uid).search([('uuid', '=', uuid)],
+                                                                                                limit=1)
+                            msg = mail_channel.sudo(request_uid).with_context(
+                                mail_create_nosubscribe=True).message_post(
+                                author_id=traceuser_id.partner_id.id, email_from=mail_channel.anonymous_name,
+                                body=origin_content,
+                                message_type='comment', subtype='mail.mt_comment', content_subtype='plaintext',
+                                weixin_id=localkwargs)
+                            uuid_type = 'USER'
+                            entry.create_uuid_for_openid(self.wx_user_id.openid, uuid)
+                            wx_user.update_last_uuid(uuid, traceuser_id.id if traceuser_id else None, uuid_type,
+                                                     wx_user)
+                        active_id = session_info["id"]
+                        if traceuser_id.wx_user_id:  # 导购存在二维码
+                            wx_user.consultation_reminder(traceuser_id.partner_id,
+                                                          traceuser_id.wx_user_id.openid,
+                                                          origin_content,
+                                                          active_id)
 
 
 class ChangePasswordUser(models.TransientModel):

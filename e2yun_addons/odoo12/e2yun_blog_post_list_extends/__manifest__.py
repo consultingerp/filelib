@@ -25,6 +25,7 @@
     # always loaded
     'data': [
         'views/views.xml',
+        'static/src/xml/template.xml',
         # 'views/blog_post_view.xml',
     ],
     # only loaded in demonstration mode

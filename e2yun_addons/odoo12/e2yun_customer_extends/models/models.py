@@ -42,6 +42,7 @@ class E2yunCsutomerExtends(models.Model):
         ('subscribe', 'Subscribe'),
         ('qrscene_COMPANY', 'QR Scan Company'),
         ('manual', 'Manual'),
+        ('qrscene_COMPANYEXTERNAL', 'QR Scan Company External')
     ], string='', default='manual')
     pos_state = fields.Boolean(String='Sync Pos State',default=False)
     state = fields.Selection([
@@ -54,13 +55,18 @@ class E2yunCsutomerExtends(models.Model):
     ], string='Status', default='potential_customer', group_expand='_group_expand_stage_id')
     related_guide = fields.Many2many('res.users',  domain="[('function', '!=', False)]")
 
+    @api.model
+    def default_get(self, fields_list):
+        res = super(E2yunCsutomerExtends, self).default_get(fields_list)
+        res['user_id'] = self.env.user.id
+        return res
+
     @api.onchange('shop_code')
     def on_change_shop_name(self):
         # new_context = self.env.context.copy()
         # new_context['show_custom_name'] = 2
         # self.with_context(new_context).shop_code.name_get()
         self.shop_name = self.shop_code.name
-
 
     @api.multi
     @api.depends('shop_code')
@@ -125,7 +131,7 @@ class E2yunCsutomerExtends(models.Model):
             # elif previous_state in ['contract_customers']:
             #     raise Warning(_("不能从成交客户转换到其他状态！"))
         # 对修改后的手机号进行验证
-        if 'mobile' in values:
+        if 'mobile' in values and values.get('mobile',False):
             mobile = values.get('mobile')
             ret = re.match(r"^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$", mobile)
             if not ret:
@@ -215,6 +221,10 @@ class E2yunCsutomerExtends(models.Model):
 
     def sync_customer_to_pos(self):
         for r in self:
+
+            if r.state == 'potential_customer':
+                raise exceptions.Warning('状态为潜在客户，不能同步到POS系统')
+
             # if r.pos_state:
             #     raise exceptions.Warning("POS状态已传输，不能再同步哟！")
             ICPSudo = self.env['ir.config_parameter'].sudo()
@@ -226,6 +236,9 @@ class E2yunCsutomerExtends(models.Model):
             if r.shop_code:
                 shop_code = r.shop_code.shop_code
                 shop_name = r.shop_code.name
+            openid = ''
+            if r.wx_user_id:
+                openid = r.wx_user_id.openid
             result = client.service.createMember(r.state_id.name or '',  # 省
                                                  r.city_id.name or '',  # 城市
                                                  r.area_id.name or '',  # 县区
@@ -239,7 +252,9 @@ class E2yunCsutomerExtends(models.Model):
                                                  shop_name or '',  # 门店名称
                                                  r.occupation or '',  # 职业
                                                  r.app_code or '',  # app编码
-                                                 self.env.user.name)  # 创建人
+                                                 self.env.user.name,# 创建人
+                                                 openid
+                                                 )
 
             if result != 'S':
                 raise exceptions.Warning(result)
@@ -322,6 +337,9 @@ class resPartnerBatch(models.TransientModel):
         for r in rep:
             # if r.pos_state:
             #     raise exceptions.Warning("POS状态已传输，不能再同步哟！")
+
+            if r.state == 'potential_customer':
+                raise exceptions.Warning('状态为潜在客户，不能同步到POS系统')
             ICPSudo = self.env['ir.config_parameter'].sudo()
 
             url = ICPSudo.get_param('e2yun.sync_pos_member_webservice_url')  # webservice调用地址
@@ -332,6 +350,9 @@ class resPartnerBatch(models.TransientModel):
             if r.shop_code:
                 shop_code = r.shop_code.shop_code
                 shop_name = r.shop_code.name
+            openid = ''
+            if r.wx_user_id:
+                openid = r.wx_user_id.openid
 
             result = client.service.createMember(r.state_id.name or '',  # 省
                                                  r.city_id.name or '',  # 城市
@@ -346,7 +367,7 @@ class resPartnerBatch(models.TransientModel):
                                                  shop_name or '',  # 门店名称
                                                  r.occupation or '',  # 职业
                                                  r.app_code or '',  # app编码
-                                                 self.env.user.name)  # 创建人
+                                                 self.env.user.name,openid)  # 创建人
 
             if result != 'S':
                 raise exceptions.Warning(result)

@@ -1,17 +1,17 @@
 # coding=utf-8
 import logging
-
-from werobot.client import ClientException
-from werobot.robot import BaseRoBot
-#from .memorystorage import MemoryStorage
-from wechatpy.session.memorystorage import MemoryStorage
-from werobot.logger import enable_pretty_logging
-from wechatpy.oauth import WeChatOAuth
-from wechatpy.component import ComponentOAuth
-from wechatpy.client.api.jsapi import WeChatJSAPI
-from wechatpy.client import WeChatClient
-from wechatpy.utils import WeChatSigner, random_string
 import time
+
+from wechatpy.client import WeChatClient
+from wechatpy.client.api.jsapi import WeChatJSAPI
+from wechatpy.component import ComponentOAuth
+from wechatpy.oauth import WeChatOAuth
+# from .memorystorage import MemoryStorage
+from wechatpy.session.memorystorage import MemoryStorage
+from wechatpy.utils import random_string
+from werobot.client import ClientException
+from werobot.logger import enable_pretty_logging
+from werobot.robot import BaseRoBot
 
 from odoo import exceptions
 from odoo import fields
@@ -170,13 +170,17 @@ def wxenv(env):
     return WxEnvDict[env.cr.dbname]
 
 
-def send_template_message(self, user_id, template_id, data, url='', state=''):
+def send_template_message(self, user_id, template_id, data, url='', state='', url_type='in'):
     entry = wxenv(self.env)
     wxclient = entry.wxclient
-    wxoauth = ComponentOAuth(wxclient.appid, component_appid='', component_access_token=wxclient.token,
-                             redirect_uri=url, scope='snsapi_userinfo', state=state)
-    logging.info(wxoauth.authorize_url)
-    return wxclient.send_template_message(user_id, template_id, data, wxoauth.authorize_url)
+    if url_type == 'USER':  # 用户URL 直接 转到URL
+        url = url
+    else:
+        wxoauth = ComponentOAuth(wxclient.appid, component_appid='', component_access_token=wxclient.token,
+                                 redirect_uri=url, scope='snsapi_userinfo', state=state)
+        url = wxoauth.authorize_url
+        logging.info(wxoauth.authorize_url)
+    return wxclient.send_template_message(user_id, template_id, data, url)
 
 
 def get_user_info(self, code, state='login'):

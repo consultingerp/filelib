@@ -1,13 +1,14 @@
 # coding=utf-8
-import logging
 import base64
-from .. import client
-from odoo import fields
-from odoo.fields import Datetime
 import datetime
+import logging
+
 import odoo
-from odoo.http import request
 from odoo import _
+from odoo.fields import Datetime
+from odoo.http import request
+from .. import client
+
 
 _logger = logging.getLogger(__name__)
 
@@ -85,19 +86,22 @@ def main(robot):
                 elif eventkey[0] == 'qrscene_TEAM':
                     tracelog_type = 'qrscene_TEAM'
                     _logger.info('TEAM')
+                    crm_team = env['crm.team'].sudo().search([('id', '=', eventkey[1])], limit=1)
+                    eventkey[2] = crm_team.name
                     tracelog_title = "扫描门店%s关注,微信用户%s" % (eventkey[2], str(info['nickname']))
                     ret_msg = "%s \n 欢迎您：我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
                     shop_code = eventkey[1]
-                    crm_team = env['crm.team'].sudo().search([('id', '=', eventkey[1])], limit=1)
                     max_goal_user = crm_team.tearm_high_goal()  # 获取销售团队下面评分最高用户
                     if max_goal_user:  # 需要联系门店的导购
                         users_ids.append(int(max_goal_user.user_id.id))
                         tracelog_title = '%s扫描门店二维码关注公众号，将客户分配给%s,根据评分规则,的团队评分(%s)，' % (
                             str(info['nickname']), max_goal_user.user_id.name, max_goal_user.current)
-                        traceuser_id = max_goal_user.user_id
+                        #traceuser_id = max_goal_user.user_id
                         user_id = max_goal_user.user_id.id
                         ismail_channel = True
                 elif eventkey[0] == 'qrscene_COMPANY':
+                    company = env['res.company'].sudo().search([('id', '=', eventkey[1])], limit=1)
+                    eventkey[2] = company.name
                     tracelog_type = 'qrscene_COMPANY'
                     _logger.info('公司二维码进入')
                     iscompanyuser = True
@@ -105,6 +109,8 @@ def main(robot):
                     ret_msg = "%s \n 欢迎您：我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
                 elif eventkey[0] == 'qrscene_COMPANYEXTERNAL':
                     tracelog_type = 'qrscene_COMPANYEXTERNAL'
+                    company = env['res.company'].sudo().search([('id', '=', eventkey[1])], limit=1)
+                    eventkey[2] = company.name
                     _logger.info('公司外部二维码进入')
                     tracelog_title = "扫描公司%s外部二维码关注,微信用户%s" % (eventkey[2], str(info['nickname']))
                     ret_msg = "%s \n 欢迎您：我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
@@ -122,7 +128,7 @@ def main(robot):
                         "login": info['openid'],
                         "password": defpassword,
                         "name": info['nickname'],
-                        "groups_id": request.env.ref('base.group_user'),  # base.group_public，base.group_portal
+                        "groups_id": request.env.ref('base.group_customer'),  # base.group_public，base.group_portal
                         "wx_user_id": wxuserinfo.id,
                         "login_date": datetime.datetime.now(),
                         "image": base64.b64encode(_data),
@@ -382,16 +388,19 @@ def main(robot):
                         })
             elif eventkey[0] == 'TEAM':
                 tracelog_type = 'qrscene_TEAM'
+                crm_team = env['crm.team'].sudo().search([('id', '=', eventkey[1])], limit=1)
+                eventkey[2] = crm_team.name
                 tracelog_title = "扫描门店%s进入公众号,微信用户%s" % (eventkey[2], str(info['nickname']))
                 ret_msg = "%s 欢迎您：\n 我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
-                crm_team = env['crm.team'].sudo().search([('id', '=', eventkey[1])], limit=1)
+
                 max_goal_user = crm_team.tearm_high_goal()  # 获取销售团队下面评分最高用户
                 users_ids.append(int(max_goal_user.user_id.id))
                 if resuser.exists() and max_goal_user:
-                    traceuser_id = max_goal_user.user_id
+                    traceuser_id = resuser
                     ismail_channel = True
                     resuser.partner_id.write({
                         "customer_source": tracelog_type,
+                        'user_id': resuser.partner_id.user_id.id if resuser.partner_id.user_id.id else max_goal_user.user_id.id,
                         'related_guide': [(6, 0, users_ids)]
                     })
                 elif resuser.exists():
@@ -403,6 +412,8 @@ def main(robot):
                 _logger.info('TEAM')
             elif eventkey[0] == 'COMPANY':
                 tracelog_type = 'qrscene_COMPANY'
+                company = env['res.company'].sudo().search([('id', '=', eventkey[1])], limit=1)
+                eventkey[2] = company.name
                 tracelog_title = "扫描公司%s二维码进入公众号,微信用户%s" % (eventkey[2], str(info['nickname']))
                 _logger.info('TEAM')
                 ret_msg = "%s欢迎您：\n 我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
@@ -412,6 +423,8 @@ def main(robot):
                         "customer_source": tracelog_type,
                     })
             elif eventkey[0] == 'COMPANYEXTERNAL':
+                company = env['res.company'].sudo().search([('id', '=', eventkey[1])], limit=1)
+                eventkey[2] = company.name
                 tracelog_type = 'qrscene_COMPANYEXTERNAL'
                 tracelog_title = "扫描公司%sq外部二维码进入公众号,微信用户%s" % (eventkey[2], str(info['nickname']))
                 _logger.info('TEAM')
@@ -455,35 +468,36 @@ def main(robot):
         if ismail_channel:  # 联系客户 或者 取销售团队下面评分最高用户
             _logger.info('发起客户会话')
             oduserinfo = request.env['wx.user.odoouser'].sudo().search([('user_id', '=', traceuser_id.id)])
-            uid = request.session.authenticate(request.session.db, traceuser_id.login, oduserinfo.password)
-            partners_to = [traceuser_id.partner_id.user_id.partner_id.id]  # 增加导购到会话
-            session_info = request.env["mail.channel"].channel_get(partners_to)
-            if max_goal_user:
-                origin_content = '%s扫描门店二维码关注公众号，根据评分规则,你的团队评分(%s)，将客户分配给您，点击连接直接发起会话。' % (
-                    str(info['nickname']), max_goal_user.current)
-                message_content = '%s扫描门店二维码关注公众号，根据评分规则,你的团队评分(%s)，将客户分配给您。' % (
-                    str(info['nickname']), max_goal_user.current)
-            else:
-                origin_content = '%s扫描二维码关注公众号，点击连接直接发起会话。' % (str(info['nickname']))
-                message_content = '您好，%s通过扫描关注了公众号。' % (str(info['nickname']))
-            if session_info:
-                uuid = session_info['uuid']
-                localkwargs = {'weixin_id': openid, 'wx_type': 'wx'}
-                request_uid = request.session.uid or odoo.SUPERUSER_ID
+            if oduserinfo:  # 如果当前用户在微信中登录了
+                uid = request.session.authenticate(request.session.db, traceuser_id.login, oduserinfo.password)
+                partners_to = [traceuser_id.partner_id.user_id.partner_id.id]  # 增加导购到会话
+                session_info = request.env["mail.channel"].channel_get(partners_to)
+                if max_goal_user:
+                    origin_content = '%s扫描门店二维码关注公众号，根据评分规则,你的团队评分(%s)，将客户分配给您，点击连接直接发起会话。' % (
+                        str(info['nickname']), max_goal_user.current)
+                    message_content = '%s扫描门店二维码关注公众号，根据评分规则,你的团队评分(%s)，将客户分配给您。' % (
+                        str(info['nickname']), max_goal_user.current)
+                else:
+                    origin_content = '%s扫描二维码关注公众号，点击连接直接发起会话。' % (str(info['nickname']))
+                    message_content = '您好，%s通过扫描关注了公众号。' % (str(info['nickname']))
+                if session_info:
+                    uuid = session_info['uuid']
+                    localkwargs = {'weixin_id': openid, 'wx_type': 'wx'}
+                    request_uid = request.session.uid or odoo.SUPERUSER_ID
 
-                mail_channel = request.env["mail.channel"].sudo(request_uid).search([('uuid', '=', uuid)], limit=1)
-                msg = mail_channel.sudo(request_uid).with_context(mail_create_nosubscribe=True).message_post(
-                    author_id=traceuser_id.partner_id.id, email_from=mail_channel.anonymous_name, body=message_content,
-                    message_type='comment', subtype='mail.mt_comment', content_subtype='plaintext',
-                    weixin_id=localkwargs)
-                entry.create_uuid_for_openid(openid, uuid)
-                wx_user.update_last_uuid(uuid, traceuser_id.id if traceuser_id else None, uuid_type, wx_user)
-            active_id = session_info["id"]
-            if traceuser_id.user_id.wx_user_id:  # 导购存在二维码
-                wx_user.consultation_reminder(traceuser_id.partner_id,
-                                              traceuser_id.user_id.wx_user_id.openid,
-                                              origin_content,
-                                              active_id)
+                    mail_channel = request.env["mail.channel"].sudo(request_uid).search([('uuid', '=', uuid)], limit=1)
+                    msg = mail_channel.sudo(request_uid).with_context(mail_create_nosubscribe=True).message_post(
+                        author_id=traceuser_id.partner_id.id, email_from=mail_channel.anonymous_name, body=message_content,
+                        message_type='comment', subtype='mail.mt_comment', content_subtype='plaintext',
+                        weixin_id=localkwargs)
+                    entry.create_uuid_for_openid(openid, uuid)
+                    wx_user.update_last_uuid(uuid, traceuser_id.id if traceuser_id else None, uuid_type, wx_user)
+                active_id = session_info["id"]
+                if traceuser_id.user_id.wx_user_id:  # 导购存在二维码
+                    wx_user.consultation_reminder(traceuser_id.partner_id,
+                                                  traceuser_id.user_id.wx_user_id.openid,
+                                                  origin_content,
+                                                  active_id)
 
         return ret_msg
 
@@ -508,19 +522,32 @@ def main(robot):
     @robot.location_event
     def location_event(message):
         _logger.info('>>>location_event wx msg: %s' % message.__dict__)
+        entry = client.wxenv(request.env)
+        serviceid = message.target
+        openid = message.source
+        mtype = message.type
+        _logger.info('>>> wx msg: %s' % message.__dict__)
+        env = request.env()
+        info = entry.wxclient.get_user_info(openid)
+        messag_info = message.CreateTime + "" + message.FromUserName
+        if messag_info == entry.OPENID_LAST.get(openid):
+            _logger.info('>>> 重复的微信消息')
+            return ''
+        entry.OPENID_LAST[openid] = messag_info
         serviceid = message.target
         openid = message.source
         env = request.env()
         user = env['res.users'].sudo().search([('wx_user_id.openid', '=', openid)], limit=1)
         collect_user_location = env['ir.config_parameter'].sudo().get_param('base_setup.collect_user_location')
         if collect_user_location:
-            if user.exists():
+            if user.exists():  # 存在用户更新用户关联客户
                 user.partner_id.write({
                     'wxlatitude': message.latitude,
                     'wxlongitude': message.longitude,
                     'wxprecision': message.precision,
                     'location_write_date': Datetime.now()
                 })
+                user.setpartnerteamanduser(request,message.latitude,message.longitude)
         return ""
 
     @robot.view
