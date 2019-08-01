@@ -108,3 +108,19 @@ class UserCenter(http.Controller):
         view_id = view_pool.search([('name', 'like', view_name)]).id
         url = '/web#id=' + str(user_id) + '&model=res.users&view_type=form&view_id=' + str(view_id)
         return werkzeug.utils.redirect(url)
+
+    # 个人中心跳转到我的优惠券页面
+    @http.route('/user-center/my_coupon', auth='user')
+    def my_coupon(self, **kwargs):
+        # action_pool = http.request.env['ir.actions.act_window']
+        # action_name = '已领优惠券'
+        # action_id = action_pool.search([('name', 'like', action_name)]).id
+        # url = 'web?#action=' + str(action_id) + '&model=sale.coupon&view_type=list'
+        url = '/web?#action=589&model=sale.coupon&view_type=list&menu_id=191'
+        return werkzeug.utils.redirect(url)
+
+    # 个人中心 用户信息界面 跳转到个人二维码界面
+    @http.route('/user_center/my_qrcode', auth='user')
+    def my_qrcode(self, **kwargs):
+        user = http.request.env.user
+        return http.request.render('e2yun_user_center.e2yun_user_center_my_qrcode_template', {'current_user': user})
