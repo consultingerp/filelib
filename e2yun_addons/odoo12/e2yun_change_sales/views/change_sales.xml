@@ -38,7 +38,8 @@
                     view_type="form"
                     view_id="change_sales_form"
                     target="new"
-                    id="change_sales_action"/>
+                    id="change_sales_action"
+                    groups="e2yun_change_sales.group_hhjc_change_sales_group"/>
 
     </data>
 </odoo>
