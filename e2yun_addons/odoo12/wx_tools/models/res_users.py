@@ -1,11 +1,13 @@
 # -*-coding:utf-8-*-
-import logging
 import datetime
+import logging
 from datetime import timedelta
+
+from odoo.addons.auth_signup.models.res_partner import now
+
+import odoo
 from odoo import models, fields, api
 from odoo.exceptions import UserError
-import odoo
-from odoo.addons.auth_signup.models.res_partner import now
 
 _logger = logging.getLogger(__name__)
 
@@ -33,12 +35,14 @@ class WxResUsers(models.Model):
     @api.one
     def _get_qrcodeimg(self):
         if not self.qrcode_ticket:
-            _logger.info("生成二维码")
             from ..controllers import client
             entry = client.wxenv(self.env)
             qrcodedatastr = 'USERS|%s|%s|%s|' % (self.id, self.login, self.name)
-            qrcodedata = {"expire_seconds": 2592000, "action_name": "QR_STR_SCENE",
-                          "action_info": {"scene": {"scene_str": qrcodedatastr}}}
+            _logger.info("生成二维码%s" % qrcodedatastr)
+            # "expire_seconds": 2592000,
+            if len(qrcodedatastr) > 30:
+                qrcodedatastr = qrcodedatastr[:30]
+            qrcodedata = {"action_name": "QR_LIMIT_STR_SCENE","action_info": {"scene": {"scene_str": qrcodedatastr}}}
             qrcodeinfo = entry.wxclient.create_qrcode(qrcodedata)
             self.write({'qrcode_ticket': qrcodeinfo['ticket'],
                         'qrcode_url': qrcodeinfo['url']})

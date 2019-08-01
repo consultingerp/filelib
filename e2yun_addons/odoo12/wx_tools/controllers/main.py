@@ -4,18 +4,15 @@
 #    实现微信登录
 ##############################################################################
 
-import ast
+import logging
+
+from odoo.addons.web.controllers.main import DataSet
 from odoo.addons.web.controllers.main import Home
 from odoo.addons.web.controllers.main import Session
-from odoo.addons.web.controllers.main import DataSet
-from urllib.parse import urljoin
-import pytz
-import datetime
-import logging
-from ..rpc import corp_client
 
 from odoo import http
 from odoo.http import request
+from ..rpc import corp_client
 
 _logger = logging.getLogger(__name__)
 
@@ -85,6 +82,9 @@ class LoginHome(Home):
             if not request.params['login'] \
                     or not request.params['password']:
                 return super(LoginHome, self).web_login(redirect, **kw)
+            login_as = super(LoginHome, self).web_login(redirect, **kw)
+            if 'error' in login_as.qcontext:
+                return login_as
             uid = request.session.authenticate(request.session.db, request.params['login'], request.params['password'])
             if uid is not False:
                 wx_user_info = request.session.wx_user_info
