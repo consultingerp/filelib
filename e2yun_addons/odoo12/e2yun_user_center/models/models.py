@@ -73,7 +73,7 @@ class UserCenter(http.Controller):
     # 个人中心跳转到附近门店页面
     @http.route('/user-center/nearby-shop', auth='user')
     def nearby_shop(self):
-        return werkzeug.utils.redirect('/web#action=580&model=crm.team&view_type=kanban&menu_id=111')
+        return werkzeug.utils.redirect('/web#action=591&menu_id=111')
 
     # 个人中心跳转到CRM页面
     @http.route('/user-center/jump-to-crm', auth='user')
