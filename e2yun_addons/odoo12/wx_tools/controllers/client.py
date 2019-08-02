@@ -2,12 +2,15 @@
 import logging
 import time
 
+from redis import Redis
+import redis
 from wechatpy.client import WeChatClient
 from wechatpy.client.api.jsapi import WeChatJSAPI
 from wechatpy.component import ComponentOAuth
 from wechatpy.oauth import WeChatOAuth
 # from .memorystorage import MemoryStorage
 from wechatpy.session.memorystorage import MemoryStorage
+from wechatpy.session.redisstorage import RedisStorage
 from wechatpy.utils import random_string
 from werobot.client import ClientException
 from werobot.logger import enable_pretty_logging
@@ -139,15 +142,25 @@ class WxEntry(EntryBase):
             traceback.print_exc()
             _logger.error(u'初始化微信客户端token失败，请在微信对接配置中填写好相关信息！')
 
-        session_storage = MemoryStorage()
+        #session_storage = MemoryStorage()
+        db = redis.Redis(host='session_redis', port=6379)
+        session_storage = RedisStorage(db, prefix="webroot")
+
         robot = WeRoBot(token=self.wx_token, enable_session=True, logger=_logger, session_storage=session_storage)
         enable_pretty_logging(robot.logger)
         self.robot = robot
+        # wechatpy_session = MemoryStorage()
+        # redis_client = Redis.from_url('redis://127.0.0.1:6379/10')
+        # session_interface = RedisStorage(
+        #     redis_client,
+        #     prefix="wechatpy"
+        # )
+        # dbwechatpy = redis.Redis(host='127.0.0.1', port=6379)
+        # session_storage = RedisStorage(dbwechatpy, prefix="wechatpy")
 
-        wechatpy_session = MemoryStorage()
         try:
             wechatpy_client = WeChatClient(self.wx_appid, self.wx_AppSecret, access_token=self.wxclient.token,
-                                           session=wechatpy_session)
+                                           session=session_storage)
             self.wechatpy_client = wechatpy_client
         except Exception as e:
             print(e)
