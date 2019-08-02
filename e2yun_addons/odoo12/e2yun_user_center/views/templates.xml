@@ -5038,7 +5038,7 @@
                     <div class="weui-cells">
                         <a class="weui-cell weui-cell_access" href="/user-center/my-guide">
                             <div class="weui-cell__hd">
-                                <img src="/e2yun_user_center/static/src/images/me241.png" alt=""/>
+<!--                                <img src="/e2yun_user_center/static/src/images/me241.png" alt=""/>-->
                             </div>
                             <div class="weui-cell__bd" style="margin-left: 30">
                                 <p align="left">客户经理</p>
@@ -10097,7 +10097,7 @@
                     <div class="weui-cells">
                         <a class="weui-cell weui-cell_access" href="/user-center/back-to-app-center">
                             <div class="weui-cell__hd">
-                                <img src="/e2yun_user_center/static/src/images/home241.png" alt=""/>
+<!--                                <img src="/e2yun_user_center/static/src/images/home241.png" alt=""/>-->
                             </div>
                             <div class="weui-cell__bd" style="margin-left: 30">
                                 <p align="left">首页</p>
