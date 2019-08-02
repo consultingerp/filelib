@@ -144,7 +144,7 @@ class WxEntry(EntryBase):
 
         #session_storage = MemoryStorage()
         db = redis.Redis(host='session_redis', port=6379)
-        session_storage = RedisStorage(db, prefix="webroot")
+        session_storage = RedisStorage(db, prefix=self.wx_appid)
 
         robot = WeRoBot(token=self.wx_token, enable_session=True, logger=_logger, session_storage=session_storage)
         enable_pretty_logging(robot.logger)
