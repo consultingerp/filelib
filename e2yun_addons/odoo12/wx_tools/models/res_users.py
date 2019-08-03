@@ -193,7 +193,7 @@ class WxResUsers(models.Model):
                                                           traceuser_id.wx_user_id.openid,
                                                           origin_content,
                                                           active_id)
-
+            self.env.cr.commit()
             self.partner_id.write({
                 'wxlatitude': latitude,
                 'wxlongitude': longitude,
