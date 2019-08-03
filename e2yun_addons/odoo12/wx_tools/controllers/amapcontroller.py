@@ -71,13 +71,13 @@ class AmapAip(http.Controller):
                 collect_user_location = request.env['ir.config_parameter'].sudo().get_param(
                     'base_setup.collect_user_location')
                 if collect_user_location:
-                    if user.exists():
-                        user.partner_id.write({
-                            'wxlatitude': location[1],
-                            'wxlongitude': location[0],
-                            'wxprecision': '-1',
-                            'location_write_date': Datetime.now()
-                        })
+                    # if user.exists():
+                    #     user.partner_id.write({
+                    #         'wxlatitude': location[1],
+                    #         'wxlongitude': location[0],
+                    #         'wxprecision': '-1',
+                    #         'location_write_date': Datetime.now()
+                    #     })
                         user.setpartnerteamanduser(request, location[1], location[0])
             except Exception as e:
                 print(e)
