@@ -163,7 +163,6 @@ class WxResUsers(models.Model):
                                 "user_id": self.id,
                                 "wx_user_id": self.wx_user_id.id
                             })
-                            self.env.cr.commit()
                         oduserinfo = request.env['wx.user.odoouser'].sudo().search([('user_id', '=', self.id)])
                         wx_user = oduserinfo.wx_user_id
                         uid = request.session.authenticate(request.session.db, self.login, oduserinfo.password)
@@ -195,13 +194,12 @@ class WxResUsers(models.Model):
                                                           traceuser_id.wx_user_id.openid,
                                                           origin_content,
                                                           active_id)
-            self.env.cr.commit()
-            self.partner_id.write({
-                'wxlatitude': latitude,
-                'wxlongitude': longitude,
-                'wxprecision': '-1',
-                'location_write_date': Datetime.now()
-            })
+            # self.partner_id.write({
+            #     'wxlatitude': latitude,
+            #     'wxlongitude': longitude,
+            #     'wxprecision': '-1',
+            #     'location_write_date': Datetime.now()
+            # })
 
 
 class ChangePasswordUser(models.TransientModel):

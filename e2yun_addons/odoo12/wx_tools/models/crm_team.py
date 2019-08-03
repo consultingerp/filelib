@@ -104,7 +104,6 @@ class WXCrmTeam(models.Model):
         if search_read_new:
             min_distance = (min(search_read_new, key=lambda dict: dict['distance']))
             self.near_team = '%s:距离%s公里' % (min_distance.street, min_distance.distance)
-            self.env.cr.commit()
             return min_distance
         return None
 
