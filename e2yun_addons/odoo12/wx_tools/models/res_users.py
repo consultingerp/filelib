@@ -2,12 +2,14 @@
 import datetime
 import logging
 from datetime import timedelta
+from ..controllers import client
 
 from odoo.addons.auth_signup.models.res_partner import now
 
 import odoo
 from odoo import models, fields, api
 from odoo.exceptions import UserError
+from odoo.fields import Datetime
 
 _logger = logging.getLogger(__name__)
 
@@ -135,7 +137,6 @@ class WxResUsers(models.Model):
     @api.multi
     def setpartnerteamanduser(self, request, latitude, longitude):
         users_ids = []
-        from ..controllers import client
         entry = client.wxenv(request.env)
         if not self.function:  # 岗位为空为客户
             if not self.partner_id.user_id:  # 不存在导购
@@ -192,6 +193,13 @@ class WxResUsers(models.Model):
                                                           traceuser_id.wx_user_id.openid,
                                                           origin_content,
                                                           active_id)
+
+            self.partner_id.write({
+                'wxlatitude': latitude,
+                'wxlongitude': longitude,
+                'wxprecision': '-1',
+                'location_write_date': Datetime.now()
+            })
 
 
 class ChangePasswordUser(models.TransientModel):
