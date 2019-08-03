@@ -32,7 +32,7 @@ class LoginHome(Home):
         codetype = kw.get('codetype', '')
         wx_user_info = {}
         # 获取从WX过来的code
-        wx_client_code = corp_client.corpenv(request.env)
+        wx_client_code = client.wxenv(request.env)
         wxcode = wx_client_code.WX_CODE
         if not wxcode:
             wxcode = {}
@@ -116,6 +116,14 @@ class LoginHome(Home):
                             "wx_user_id": wxuserinfo.id,
                             "image": base64.b64encode(_data),
                         })
+                        tracetype = request.env['wx.tracelog.type'].sudo().search([('code', '=', "login")])
+                        if tracetype.exists():
+                            request.env['wx.tracelog'].sudo().create({
+                                "tracelog_type": tracetype.id,
+                                "title": '通过微信登录',
+                                "user_id": obj.user_id.id if obj.user_id else None,
+                                "wx_user_id": obj.wx_user_id.id if obj.wx_user_id else None
+                            })
 
 
         else:
@@ -131,16 +139,10 @@ class LoginHome(Home):
     @http.route('/web', type='http', auth="none")
     def web_client(self, s_action=None, **kw):
         web_ = super(LoginHome, self).web_client(s_action, **kw)
-        from ..controllers import client
         entry = client.wxenv(request.env)
         try:
             url_ = request.httprequest.url;
-            #url_ = urljoin(request.httprequest.host_url, request.httprequest.full_path)
-            # 解决urljoin 把参数只有一个?号去掉的问题
-            #if request.httprequest.full_path.find("?") > 0 and url_.find("?") < 0:
-            #    url_ = url_ + "%s" % '?'
             url_ = url_.replace(":80", "")
-            #_logger.info("jsapi_ticket_url:%s" % url_)
             wx_appid, timestamp, noncestr, signature = entry.get_jsapi_ticket(url_)
             web_.qcontext.update({
                 'wx_appid': wx_appid,
