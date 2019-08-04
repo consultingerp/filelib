@@ -2,12 +2,14 @@
 import datetime
 import logging
 from datetime import timedelta
+from ..controllers import client
 
 from odoo.addons.auth_signup.models.res_partner import now
 
 import odoo
 from odoo import models, fields, api
 from odoo.exceptions import UserError
+from odoo.fields import Datetime
 
 _logger = logging.getLogger(__name__)
 
@@ -42,7 +44,7 @@ class WxResUsers(models.Model):
             # "expire_seconds": 2592000,
             if len(qrcodedatastr) > 30:
                 qrcodedatastr = qrcodedatastr[:30]
-            qrcodedata = {"action_name": "QR_LIMIT_STR_SCENE","action_info": {"scene": {"scene_str": qrcodedatastr}}}
+            qrcodedata = {"action_name": "QR_LIMIT_STR_SCENE", "action_info": {"scene": {"scene_str": qrcodedatastr}}}
             qrcodeinfo = entry.wxclient.create_qrcode(qrcodedata)
             self.write({'qrcode_ticket': qrcodeinfo['ticket'],
                         'qrcode_url': qrcodeinfo['url']})
@@ -97,11 +99,11 @@ class WxResUsers(models.Model):
                     raise UserError("用户没有绑定微信，不能发送微信重置密码")
                 logging.info("密码重置OK.")
                 self.wx_reset_password(user)
-                #template.with_context(lang=user.lang).send_mail(user.id, force_send=True, raise_exception=True)
+                # template.with_context(lang=user.lang).send_mail(user.id, force_send=True, raise_exception=True)
             _logger.info("Password reset email sent for user <%s> to <%s>", user.login, user.email)
 
     @api.model
-    def wx_reset_password(self, user=None, openid=None,nickname=None):
+    def wx_reset_password(self, user=None, openid=None, nickname=None):
         if not user:
             first = "查询微信未绑定内部用户，不能重置密码。"
             keyword1 = nickname
@@ -135,7 +137,6 @@ class WxResUsers(models.Model):
     @api.multi
     def setpartnerteamanduser(self, request, latitude, longitude):
         users_ids = []
-        from ..controllers import client
         entry = client.wxenv(request.env)
         if not self.function:  # 岗位为空为客户
             if not self.partner_id.user_id:  # 不存在导购
@@ -145,7 +146,7 @@ class WxResUsers(models.Model):
                     if max_goal_user:
                         tracelog_type = 'location_allocation'
                         tracelog_title = '%s客户没有关联门店,根据位置分配最近门店，将客户分配给%s,根据评分规则,的团队评分(%s)，' % (
-                              self.wx_user_id.nickname,max_goal_user.user_id.name, max_goal_user.current)
+                            self.wx_user_id.nickname, max_goal_user.user_id.name, max_goal_user.current)
                         origin_content = tracelog_title
                         users_ids.append(max_goal_user.user_id.id)
                         self.partner_id.write({
@@ -153,6 +154,7 @@ class WxResUsers(models.Model):
                             'shop_code': team.id,
                             'related_guide': [(6, 0, users_ids)]
                         })
+                        self.env.cr.commit()
                         tracetype = self.env['wx.tracelog.type'].sudo().search([('code', '=', tracelog_type)])
                         if tracetype.exists():
                             self.env['wx.tracelog'].sudo().create({
@@ -160,7 +162,7 @@ class WxResUsers(models.Model):
                                 "title": tracelog_title,
                                 "user_id": self.id,
                                 "wx_user_id": self.wx_user_id.id
-                        })
+                            })
                         oduserinfo = request.env['wx.user.odoouser'].sudo().search([('user_id', '=', self.id)])
                         wx_user = oduserinfo.wx_user_id
                         uid = request.session.authenticate(request.session.db, self.login, oduserinfo.password)
@@ -192,6 +194,12 @@ class WxResUsers(models.Model):
                                                           traceuser_id.wx_user_id.openid,
                                                           origin_content,
                                                           active_id)
+            # self.partner_id.write({
+            #     'wxlatitude': latitude,
+            #     'wxlongitude': longitude,
+            #     'wxprecision': '-1',
+            #     'location_write_date': Datetime.now()
+            # })
 
 
 class ChangePasswordUser(models.TransientModel):

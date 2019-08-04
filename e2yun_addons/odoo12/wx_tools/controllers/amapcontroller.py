@@ -24,13 +24,13 @@ class AmapAip(http.Controller):
             collect_user_location = request.env['ir.config_parameter'].sudo().get_param(
                 'base_setup.collect_user_location')
             if collect_user_location:
-                if user.exists():
-                    user.partner_id.write({
-                        'wxlatitude': location[1],
-                        'wxlongitude': location[0],
-                        'wxprecision': '-1',
-                        'location_write_date': Datetime.now()
-                    })
+                # if user.exists():
+                #     user.partner_id.write({
+                #         'wxlatitude': location[1],
+                #         'wxlongitude': location[0],
+                #         'wxprecision': '-1',
+                #         'location_write_date': Datetime.now()
+                #     })
                     user.setpartnerteamanduser(request, location[1], location[0])
         except Exception as e:
             print(e)
@@ -71,13 +71,13 @@ class AmapAip(http.Controller):
                 collect_user_location = request.env['ir.config_parameter'].sudo().get_param(
                     'base_setup.collect_user_location')
                 if collect_user_location:
-                    if user.exists():
-                        user.partner_id.write({
-                            'wxlatitude': location[1],
-                            'wxlongitude': location[0],
-                            'wxprecision': '-1',
-                            'location_write_date': Datetime.now()
-                        })
+                    # if user.exists():
+                    #     user.partner_id.write({
+                    #         'wxlatitude': location[1],
+                    #         'wxlongitude': location[0],
+                    #         'wxprecision': '-1',
+                    #         'location_write_date': Datetime.now()
+                    #     })
                         user.setpartnerteamanduser(request, location[1], location[0])
             except Exception as e:
                 print(e)
@@ -105,6 +105,28 @@ class AmapAip(http.Controller):
         return {
             'crm_team_list': crm_team_list
         }
+
+    @http.route(['/amap/nearby_storeslocation'], type='json', auth='user')
+    def nearby_storeslocation(self, location, storename):
+        if location:  # 如果是带了地址
+            try:
+                convert_location = amapapi.coordinateconvert(request, location)
+                formatted_address = amapapi.geocoderegeo(request, convert_location)
+                location = convert_location.split(',')  # 用户真实位置
+                user = request.env['res.users'].sudo().search([('id', '=', request.uid)], limit=1)
+                collect_user_location = request.env['ir.config_parameter'].sudo().get_param(
+                    'base_setup.collect_user_location')
+                if collect_user_location:
+                    if user.exists():
+                        user.partner_id.write({
+                            'wxlatitude': location[1],
+                            'wxlongitude': location[0],
+                            'wxprecision': '-1',
+                            'location_write_date': Datetime.now()
+                        })
+            except Exception as e:
+                print(e)
+                return ''
 
     @http.route(['/amap/stores_list'], type='json', auth='user')
     def stores_list(self, name):
