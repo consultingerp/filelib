@@ -15,6 +15,7 @@ from odoo import http
 from odoo.http import request
 from ..rpc import corp_client
 from ..controllers import client
+
 _logger = logging.getLogger(__name__)
 
 
@@ -79,9 +80,6 @@ class LoginHome(Home):
                 # uid = request.session.authenticate(request.session.db, obj.user_id.login, '')
                 return super(LoginHome, self).web_login(redirect, **kw)
         elif request.session.wx_user_info:  # 存在微信登录访问
-            if not request.params['login'] \
-                    or not request.params['password']:
-                return super(LoginHome, self).web_login(redirect, **kw)
             login_as = super(LoginHome, self).web_login(redirect, **kw)
             if 'error' in login_as.qcontext:
                 return login_as
@@ -133,8 +131,6 @@ class LoginHome(Home):
                     userinfo.write({'password': kw['password']})
 
         return super(LoginHome, self).web_login(redirect, **kw)
-
-
 
     @http.route('/web', type='http', auth="none")
     def web_client(self, s_action=None, **kw):
