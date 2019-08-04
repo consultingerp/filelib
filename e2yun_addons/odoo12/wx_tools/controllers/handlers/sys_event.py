@@ -374,6 +374,7 @@ def main(robot):
         guideorreferrer = 'guide'  # 导购或者推荐人
         max_goal_user = None  # 获取销售团队下面评分最高用户
         rs = env['wx.user'].sudo().search([('openid', '=', openid)])
+        wx_user = None
         if rs.exists():
             wx_user = rs[0]
             eventkey = message.EventKey.split('|')
