@@ -35,15 +35,15 @@ odoo.define('wx_tools.nearby_stores', function (require) {
                 self.$('#aui-store-head').empty();
                 self.$('#aui-store-head').append(html)
             });
-            self._rpc({
-                route: 'amap/nearby_storeslocation',
-                params: {
-                    location: locations,
-                    storename: storename
-                },
-            }).then(function (result) {
-
-            });
+            // self._rpc({
+            //     route: 'amap/nearby_storeslocation',
+            //     params: {
+            //         location: locations,
+            //         storename: storename
+            //     },
+            // }).then(function (result) {
+            //
+            // });
 
         },
         start: function () {
