@@ -54,7 +54,6 @@ class wx_user(models.Model):
 
     @api.model
     def sync(self):
-        from ..controllers import client
         entry = client.wxenv(self.env)
         next_openid = 'init'
         c_total = 0
@@ -129,7 +128,6 @@ class wx_user(models.Model):
     @api.multi
     def send_text(self, text):
         from werobot.client import ClientException
-        from ..controllers import client
         entry = client.wxenv(self.env)
         for obj in self:
             try:
@@ -198,7 +196,6 @@ class wx_user(models.Model):
 
     @api.multi
     def send_message(self, partner=None, msg='', user=None, partner_id=None, user_id=None):
-        from ..controllers import client
         if partner:
             if partner.wx_user_id.openid:
                 client.send_text(self, partner.wx_user_id.openid, msg)
@@ -264,7 +261,6 @@ class wx_user(models.Model):
             configer_para = self.env["wx.paraconfig"].sudo().search([('paraconfig_name', '=', template_name)])
             if configer_para:
                 template_id = configer_para[0].paraconfig_value
-        from ..controllers import client
         if url_type == 'in':  # 内部URL需要登验证
             url = client.wxenv(
                 self.env).server_url + '/web/login?usercode='+usercode+'&codetype=wx&redirect=' + url
@@ -366,7 +362,6 @@ class wx_user_group(models.Model):
 
     @api.model
     def sync(self):
-        from ..controllers import client
         entry = client.wxenv(self.env)
         from werobot.client import ClientException
         try:
