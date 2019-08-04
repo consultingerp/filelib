@@ -152,7 +152,11 @@ class WxResUsers(models.Model):
                         self.partner_id.write({
                             "user_id": max_goal_user.user_id.id,
                             'shop_code': team.id,
-                            'related_guide': [(6, 0, users_ids)]
+                            'related_guide': [(6, 0, users_ids)],
+                            'wxlatitude': latitude,
+                            'wxlongitude': longitude,
+                            'wxprecision': '-1',
+                            'location_write_date': Datetime.now()
                         })
                         self.env.cr.commit()
                         tracetype = self.env['wx.tracelog.type'].sudo().search([('code', '=', tracelog_type)])
@@ -194,12 +198,23 @@ class WxResUsers(models.Model):
                                                           traceuser_id.wx_user_id.openid,
                                                           origin_content,
                                                           active_id)
-            # self.partner_id.write({
-            #     'wxlatitude': latitude,
-            #     'wxlongitude': longitude,
-            #     'wxprecision': '-1',
-            #     'location_write_date': Datetime.now()
-            # })
+                    else:
+                        self.writepartner_id(latitude, longitude)
+                else:  # 存在导购
+                    self.writepartner_id(latitude, longitude)
+            else:  # 存在导购 更新信息
+                self.writepartner_id(latitude, longitude)
+        else:  # self.function:
+            self.writepartner_id(latitude, longitude)
+
+    @api.model
+    def writepartner_id(self, latitude, longitude):
+        self.partner_id.write({
+            'wxlatitude': latitude,
+            'wxlongitude': longitude,
+            'wxprecision': '-1',
+            'location_write_date': Datetime.now()
+        })
 
 
 class ChangePasswordUser(models.TransientModel):
