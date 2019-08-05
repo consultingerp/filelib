@@ -187,3 +187,10 @@ class WxMp(http.Controller):
     def mp_lh(self, **kwargs):
         # response = http.send_file('MP_verify_xobfOnBKmFpc9HEU.txt')
         return 'PT4MgExxX4ZXjTpP'
+
+    @http.route(['/MP_verify_lGcbHdpG5SNOx6tn.txt'], type='http', auth="public")
+    def mp_lh(self, **kwargs):
+        # response = http.send_file('MP_verify_xobfOnBKmFpc9HEU.txt')
+        return 'lGcbHdpG5SNOx6tn'
+
+
