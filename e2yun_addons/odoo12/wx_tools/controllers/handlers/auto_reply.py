@@ -4,7 +4,10 @@ import logging
 import base64
 import os
 import datetime
+from odoo.modules.module import get_module_resource
 from odoo import fields
+import subprocess
+
 
 from odoo.http import request
 import odoo
