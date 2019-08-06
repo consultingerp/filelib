@@ -327,10 +327,11 @@ def main(robot):
         env = request.env()
         info = entry.wxclient.get_user_info(openid)
         user = env['res.users'].sudo().search([('wx_user_id.openid', '=', openid)])
-        user.write({
-            "wx_id": None,
-            "password": defpassword
-        })
+        if user.exists():
+            user.write({
+                "wx_id": None,
+                "password": defpassword
+            })
         rs = env['wx.user'].sudo().search([('openid', '=', openid)])
         if rs.exists():
             rs.unlink()
@@ -347,6 +348,7 @@ def main(robot):
         uuid = request.env['wx.user.uuid'].sudo().search([('openid', '=', openid)])
         if uuid.exists():
             uuid.unlink()
+        request.session.logout(keep_db=True)
         return ""
 
     @robot.scan
