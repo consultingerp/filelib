@@ -12,3 +12,6 @@ class WxUserOdooUser(models.Model):
     password = fields.Char('密码', size=32, required=False)  # 密码
     DeviceId = fields.Char('设备ID')  # 设备ID
     codetype = fields.Char('登录类型')  # 设备ID
+    _sql_constraints = [
+        ('openid_key', 'UNIQUE (openid)', 'openid必需唯一!')
+    ]
