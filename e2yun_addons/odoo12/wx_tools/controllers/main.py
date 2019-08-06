@@ -33,44 +33,51 @@ class LoginHome(Home):
         codetype = kw.get('codetype', '')
         wx_user_info = {}
         # 获取从WX过来的code
-        wx_client_code = client.wxenv(request.env)
-        wxcode = wx_client_code.WX_CODE
-        if not wxcode:
-            wxcode = {}
+        # wx_client_code = client.wxenv(request.env)
+        # wxcode = wx_client_code.WX_CODE
+        # if not wxcode:
+        #     wxcode = {}
         # logging.info(wxcode)
+        values = request.params.copy()
         if code is False:
             return super(LoginHome, self).web_login(redirect, **kw)
         if code:  # code换取token
-            if code not in wxcode:  # 判断用户code是使用
+            entry = client.wxenv(request.env)
+            #if code not in wxcode:  # 判断用户code是使用
+            if not entry.wxclient.session.get(code):  # code 没有使用，用code 换取
                 # 将获取到的用户放到Session中
                 if codetype == 'corp':
-                    wx_user_info = corp_client.get_user_info(request, code)
+                    wx_user_info = corp_client.get_user_info(request, code)  # code 换取微信登录信息 企业号
                 else:
-                    wx_user_info = client.get_user_info(request, code, code)
+                    wx_user_info = client.get_user_info(request, code, code)  # code 换取微信登录信息 微信号
                     wx_user_info['UserId'] = wx_user_info['openid']
                 kw.pop('code')
                 wx_user_info['codetype'] = codetype
                 request.session.wx_user_info = wx_user_info
-                wx_client_code.WX_CODE[code] = code
+                entry.wxclient.session.set(code, code)
+                #wx_client_code.WX_CODE[code] = code
             else:  # 如果使用，直接用session中的用户信息
                 wx_user_info = request.session.wx_user_info
             if not wx_user_info or 'UserId' not in wx_user_info:
                 return super(LoginHome, self).web_login(redirect, **kw)
-            obj = request.env['wx.user.odoouser'].sudo().search([('openid', '=', wx_user_info['UserId'])])
-            if obj.openid:
-                kw['login'] = obj.user_id.login
-                kw['password'] = obj.password
-                request.params['login'] = obj.user_id.login
-                request.params['password'] = obj.password
+            odoouser = request.env['wx.user.odoouser'].sudo().search([('openid', '=', wx_user_info['UserId'])], limit=1)
+            if odoouser.exists():
+                kw['login'] = odoouser.user_id.login
+                kw['password'] = odoouser.password
+                request.params['login'] = odoouser.user_id.login
+                request.params['password'] = odoouser.password
                 tracetype = request.env['wx.tracelog.type'].sudo().search([('code', '=', provider_id)])
                 if tracetype.exists():
                     request.env['wx.tracelog'].sudo().create({
                         "tracelog_type": tracetype.id,
                         "title": '菜单访问%s' % tracetype.name,
-                        "user_id": obj.user_id.id if obj.user_id else None,
-                        "wx_user_id": obj.wx_user_id.id if obj.wx_user_id else None
+                        "user_id": odoouser.user_id.id if odoouser.user_id else None,
+                        "wx_user_id": odoouser.wx_user_id.id if odoouser.wx_user_id else None
                     })
-                uid = request.session.authenticate(request.session.db, obj.user_id.login, obj.password)
+                login_as = super(LoginHome, self).web_login(redirect, **kw)
+                if 'error' in login_as.qcontext:
+                    return login_as
+                uid = request.session.authenticate(request.session.db, odoouser.user_id.login, odoouser.password)
                 if redirect:
                     return http.local_redirect(redirect)
                 else:
@@ -80,6 +87,8 @@ class LoginHome(Home):
                 # uid = request.session.authenticate(request.session.db, obj.user_id.login, '')
                 return super(LoginHome, self).web_login(redirect, **kw)
         elif request.session.wx_user_info:  # 存在微信登录访问
+            if 'login' not in values:
+                return super(LoginHome, self).web_login(redirect, **kw)
             login_as = super(LoginHome, self).web_login(redirect, **kw)
             if 'error' in login_as.qcontext:
                 return login_as
@@ -106,7 +115,7 @@ class LoginHome(Home):
                 else:
                     wxuserinfo = request.env['wx.user'].sudo().search([('openid', '=', wx_user_info['UserId'])])
                     wx_user_info['wx_user_id'] = wxuserinfo.id
-                    obj = request.env['wx.user.odoouser'].sudo().create(wx_user_info)
+                    odoouser = request.env['wx.user.odoouser'].sudo().create(wx_user_info)
                     resuser = request.env['res.users'].sudo().search([('id', '=', uid)], limit=1)
                     if not resuser.wx_user_id:
                         _data = client.get_img_data(str(wx_user_info['headimgurl']))
@@ -119,9 +128,13 @@ class LoginHome(Home):
                             request.env['wx.tracelog'].sudo().create({
                                 "tracelog_type": tracetype.id,
                                 "title": '通过微信登录',
-                                "user_id": obj.user_id.id if obj.user_id else None,
-                                "wx_user_id": obj.wx_user_id.id if obj.wx_user_id else None
+                                "user_id": odoouser.user_id.id if odoouser.user_id else None,
+                                "wx_user_id": odoouser.wx_user_id.id if odoouser.wx_user_id else None
                             })
+                if redirect:
+                    return http.local_redirect(redirect)
+                else:
+                    return http.local_redirect('/')
 
 
         else:

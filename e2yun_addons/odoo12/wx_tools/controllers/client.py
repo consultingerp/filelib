@@ -62,9 +62,6 @@ class WxEntry(EntryBase):
         self.wx_AppSecret = Param.get_param('wx_AppSecret') or ''
         self.server_url = Param.get_param('server_url') or ''
         self.session_storage = Param.get_param('session_storage') or ''
-        # robot.config["TOKEN"] = self.wx_token
-        # self.wxclient.appid = self.wx_appid
-        # self.wxclient.appsecret = self.wx_AppSecret
         self.wxclient.config["APP_ID"] = self.wx_appid
         self.wxclient.config["APP_SECRET"] = self.wx_AppSecret
         self.wxclient.config["server_url"] = self.server_url
