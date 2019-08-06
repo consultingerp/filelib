@@ -177,11 +177,11 @@ class WxSession(Session):
         return ret
 
 
-class DataSet(DataSet):
-    @http.route(['/web/dataset/call_kw', '/web/dataset/call_kw/<path:path>'], type='json', auth="user")
-    def call_kw(self, model, method, args, kwargs, path=None):
-        kw = super(DataSet, self).call_kw(model, method, args, kwargs, path)
-        return kw
+# class DataSet(DataSet):
+#     @http.route(['/web/dataset/call_kw', '/web/dataset/call_kw/<path:path>'], type='json', auth="user")
+#     def call_kw(self, model, method, args, kwargs, path=None):
+#         kw = super(DataSet, self).call_kw(model, method, args, kwargs, path)
+#         return kw
 
 
 class WxMp(http.Controller):
