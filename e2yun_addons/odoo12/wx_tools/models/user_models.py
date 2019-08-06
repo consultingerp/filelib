@@ -27,6 +27,9 @@ class wx_user(models.Model):
     headimgurl = fields.Char(u'头像', )
     nickname = fields.Char(u'昵称', )
     openid = fields.Char(u'用户标志', )
+    _sql_constraints = [
+        ('openid_key', 'UNIQUE (openid)', '不能有相同的openid存在于系统 !')
+    ]
     province = fields.Char(u'省份', )
     sex = fields.Selection([(1, u'男'), (2, u'女')], string=u'性别', )
     subscribe = fields.Boolean(u'关注状态', )
