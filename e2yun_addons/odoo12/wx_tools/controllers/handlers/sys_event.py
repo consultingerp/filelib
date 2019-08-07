@@ -330,10 +330,13 @@ def main(robot):
         if messag_info == entry.wxclient.session.get(openid):  # entry.OPENID_LAST.get(openid):
             _logger.info('>>> 重复的微信消息')
             return ''
+        info = entry.wxclient.get_user_info(openid)
         entry.wxclient.session.set(openid, messag_info)
         info = entry.wxclient.get_user_info(openid)
         user = env['res.users'].sudo().search([('wx_user_id.openid', '=', openid)], limit=1)
         wx_user = env['wx.user'].sudo().search([('openid', '=', openid)], limit=1)
+        if wx_user:
+            tracelog_title = tracelog_title + str(info['nickname'])
         odoouser = env['wx.user.odoouser'].sudo().search([('openid', '=', openid)], limit=1)
         uuid = request.env['wx.user.uuid'].sudo().search([('openid', '=', openid)])
         if user.exists():
@@ -344,14 +347,14 @@ def main(robot):
         if wx_user.exists():
             wx_user.unlink()
         if odoouser.exists():
-            tracetype = env['wx.tracelog.type'].sudo().search([('code', '=', tracelog_type)])
-            if tracetype.exists():
-                env['wx.tracelog'].sudo().create({
-                    "tracelog_type": tracetype.id,
-                    "title": tracelog_title,
-                    "user_id": user.id,
-                })
             odoouser.unlink()
+        tracetype = env['wx.tracelog.type'].sudo().search([('code', '=', tracelog_type)])
+        if tracetype.exists():
+            env['wx.tracelog'].sudo().create({
+                "tracelog_type": tracetype.id,
+                "title": tracelog_title,
+                "user_id": user.id if user else None,
+            })
         if uuid.exists():
             uuid.unlink()
         request.session.logout(keep_db=True)
