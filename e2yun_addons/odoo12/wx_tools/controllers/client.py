@@ -2,29 +2,23 @@
 import logging
 import time
 
+import redis
 from wechatpy.client import WeChatClient
 from wechatpy.client.api.jsapi import WeChatJSAPI
 from wechatpy.component import ComponentOAuth
 from wechatpy.oauth import WeChatOAuth
-# from .memorystorage import MemoryStorage
 from wechatpy.session.memorystorage import MemoryStorage
+from wechatpy.session.redisstorage import RedisStorage
 from wechatpy.utils import random_string
 from werobot.client import ClientException
 from werobot.logger import enable_pretty_logging
-from werobot.robot import BaseRoBot
 
 from odoo import exceptions
 from odoo import fields
 from ..basewechat.base import EntryBase
+from ..basewechat.werobot import WeRoBot
 
 _logger = logging.getLogger(__name__)
-
-
-class WeRoBot(BaseRoBot):
-    pass
-
-
-WeRoBot.message_types.append('file')
 
 WxEnvDict = {}
 
@@ -32,7 +26,6 @@ WxEnvDict = {}
 class WxEntry(EntryBase):
 
     def __init__(self):
-
         robot = WeRoBot()
         robot.config["APP_ID"] = ""
         robot.config["APP_SECRET"] = ""
@@ -41,7 +34,80 @@ class WxEntry(EntryBase):
         self.robot = None
         self.subscribe_auto_msg = None
 
+        # 微信 CODE
+        self.WX_CODE = {}
+
         super(WxEntry, self).__init__()
+
+    def init(self, env):
+        dbname = env.cr.dbname
+        global WxEnvDict
+        if dbname in WxEnvDict:
+            del WxEnvDict[dbname]
+        WxEnvDict[dbname] = self
+
+        try:
+            config = env['wx.config'].sudo().get_cur()
+            action = config.action
+        except:
+            import traceback;
+            traceback.print_exc()
+            action = None
+        if action:
+            self.subscribe_auto_msg = config.action.get_wx_reply()
+
+        Param = env['ir.config_parameter'].sudo()
+        self.wx_token = Param.get_param('wx_token') or ''
+        self.wx_appid = Param.get_param('wx_appid') or ''
+        self.wx_AppSecret = Param.get_param('wx_AppSecret') or ''
+        self.server_url = Param.get_param('server_url') or ''
+        self.session_storage = Param.get_param('session_storage') or ''
+        self.wxclient.config["APP_ID"] = self.wx_appid
+        self.wxclient.config["APP_SECRET"] = self.wx_AppSecret
+        self.wxclient.config["server_url"] = self.server_url
+
+        if not self.session_storage:
+            session_storage = MemoryStorage()
+            _logger.info("启用MemoryStorage")
+        else:
+            _logger.info("启用RedisStorage%s" % self.wx_appid)
+            db = redis.Redis(host=self.session_storage, port=6379)
+            session_storage = RedisStorage(db, prefix=self.wx_appid)
+        try:
+            #  获取以前的token是否需要获取新的Token AccessToken
+            self.wxclient.session = session_storage
+            # self.wxclient._token = session_storage.get(self.access_token_key)
+            _ = self.wxclient.token
+        except Exception as e:
+            print(e)
+            import traceback;
+            traceback.print_exc()
+            _logger.error(u'初始化微信客户端token失败，请在微信对接配置中填写好相关信息！')
+
+        robot = WeRoBot(token=self.wx_token, enable_session=True, logger=_logger, session_storage=session_storage)
+        enable_pretty_logging(robot.logger)
+        self.robot = robot
+        try:
+            wechatpy_client = WeChatClient(self.wx_appid, self.wx_AppSecret, access_token=self.wxclient.token,
+                                           session=session_storage)
+            self.wechatpy_client = wechatpy_client
+        except Exception as e:
+            print(e)
+            _logger.error("加载微信token错误。")
+        try:
+            users = env['wx.user'].sudo().search([('last_uuid', '!=', None)])
+            for obj in users:
+                if obj.last_uuid_time:
+                    self.recover_uuid(obj.openid, obj.last_uuid, fields.Datetime.from_string(obj.last_uuid_time))
+        except:
+            env.cr.rollback()
+            import traceback;
+            traceback.print_exc()
+        print('wx client init: %s %s' % (self.OPENID_UUID, self.UUID_OPENID))
+
+    @property
+    def access_token_key(self):
+        return '{0}_access_token'.format(self.wxclient.appid)
 
     def send_text(self, openid, text):
         try:
@@ -100,70 +166,6 @@ class WxEntry(EntryBase):
         timestamp = str(int(time.time()))
         signature = jsapi.get_jsapi_signature(noncestr, tick, timestamp, url)
         return self.wx_appid, timestamp, noncestr, signature
-
-    def init(self, env):
-        dbname = env.cr.dbname
-        global WxEnvDict
-        if dbname in WxEnvDict:
-            del WxEnvDict[dbname]
-        WxEnvDict[dbname] = self
-
-        try:
-            config = env['wx.config'].sudo().get_cur()
-            action = config.action
-        except:
-            import traceback;
-            traceback.print_exc()
-            action = None
-        if action:
-            self.subscribe_auto_msg = config.action.get_wx_reply()
-
-        Param = env['ir.config_parameter'].sudo()
-        self.wx_token = Param.get_param('wx_token') or ''
-        self.wx_appid = Param.get_param('wx_appid') or ''
-        self.wx_AppSecret = Param.get_param('wx_AppSecret') or ''
-        self.server_url = Param.get_param('server_url') or ''
-        # robot.config["TOKEN"] = self.wx_token
-        # self.wxclient.appid = self.wx_appid
-        # self.wxclient.appsecret = self.wx_AppSecret
-        self.wxclient.config["APP_ID"] = self.wx_appid
-        self.wxclient.config["APP_SECRET"] = self.wx_AppSecret
-        self.wxclient.config["server_url"] = self.server_url
-        try:
-            # 刷新 AccessToken
-            self.wxclient._token = None
-            _ = self.wxclient.token
-        except Exception as e:
-            print(e)
-            import traceback;
-            traceback.print_exc()
-            _logger.error(u'初始化微信客户端token失败，请在微信对接配置中填写好相关信息！')
-
-        session_storage = MemoryStorage()
-        robot = WeRoBot(token=self.wx_token, enable_session=True, logger=_logger, session_storage=session_storage)
-        enable_pretty_logging(robot.logger)
-        self.robot = robot
-
-        wechatpy_session = MemoryStorage()
-        try:
-            wechatpy_client = WeChatClient(self.wx_appid, self.wx_AppSecret, access_token=self.wxclient.token,
-                                           session=wechatpy_session)
-            self.wechatpy_client = wechatpy_client
-        except Exception as e:
-            print(e)
-            _logger.error("加载微信token错误。")
-
-        try:
-            users = env['wx.user'].sudo().search([('last_uuid', '!=', None)])
-            for obj in users:
-                if obj.last_uuid_time:
-                    self.recover_uuid(obj.openid, obj.last_uuid, fields.Datetime.from_string(obj.last_uuid_time))
-        except:
-            env.cr.rollback()
-            import traceback;
-            traceback.print_exc()
-
-        print('wx client init: %s %s' % (self.OPENID_UUID, self.UUID_OPENID))
 
 
 def wxenv(env):
