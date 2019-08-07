@@ -63,7 +63,7 @@
     <!-- actions opening views on models -->
 
     <record model="ir.actions.act_window" id="e2yun_coupon.action_window">
-      <field name="name">e2yun_coupon window</field>
+      <field name="name">已领优惠券</field>
       <field name="res_model">sale.coupon</field>
       <field name="view_mode">tree,form,kanban</field>
     </record>
