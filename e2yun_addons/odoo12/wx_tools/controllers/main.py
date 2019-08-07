@@ -87,11 +87,12 @@ class LoginHome(Home):
                 # uid = request.session.authenticate(request.session.db, obj.user_id.login, '')
                 return super(LoginHome, self).web_login(redirect, **kw)
         elif request.session.wx_user_info:  # 存在微信登录访问
-            if 'login' not in values:
+            if 'login' not in values or 'password' not in values :
                 return super(LoginHome, self).web_login(redirect, **kw)
             login_as = super(LoginHome, self).web_login(redirect, **kw)
             if 'error' in login_as.qcontext:
                 return login_as
+            logging.info("登录用户%s" % request.params['login'])
             uid = request.session.authenticate(request.session.db, request.params['login'], request.params['password'])
             if uid is not False:
                 wx_user_info = request.session.wx_user_info
