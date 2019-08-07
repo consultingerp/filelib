@@ -187,7 +187,6 @@ class WXMailThread(models.AbstractModel):
                     configer_para = self.env["wx.paraconfig"].sudo().search([('paraconfig_name', '=', '订单提醒')])
                     if configer_para:
                         template_id = configer_para[0].paraconfig_value
-                    from ..controllers import client
                     url = client.wxenv(
                         self.env).server_url + '/web/login?usercode=purchaseorderwxmessage&codetype=wx&redirect=' + order.website_url
                     client.send_template_message(self, self.partner_id.wx_user_id.openid, template_id, data,

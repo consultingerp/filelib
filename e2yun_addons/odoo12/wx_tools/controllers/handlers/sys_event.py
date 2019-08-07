@@ -46,10 +46,11 @@ def main(robot):
         env = request.env()
         # FromUserName + CreateTime
         messag_info = message.CreateTime + "" + message.FromUserName
-        if messag_info == entry.OPENID_LAST.get(openid):
+        if messag_info == entry.wxclient.session.get(openid):     # entry.OPENID_LAST.get(openid):
             _logger.info('>>> 重复的微信消息')
             return ''
-        entry.OPENID_LAST[openid] = messag_info
+        # entry.OPENID_LAST[openid] = messag_info
+        entry.wxclient.session.set(openid, messag_info);
         guideorreferrer = 'guide'
         max_goal_user = None  # 获取销售团队下面评分最高用户
         shop_code = None  # 门店
@@ -325,12 +326,18 @@ def main(robot):
         serviceid = message.target
         openid = message.source
         env = request.env()
+        messag_info = message.CreateTime + "" + message.FromUserName
+        if messag_info == entry.wxclient.session.get(openid):  # entry.OPENID_LAST.get(openid):
+            _logger.info('>>> 重复的微信消息')
+            return ''
+        entry.wxclient.session.set(openid, messag_info)
         info = entry.wxclient.get_user_info(openid)
         user = env['res.users'].sudo().search([('wx_user_id.openid', '=', openid)])
-        user.write({
-            "wx_id": None,
-            "password": defpassword
-        })
+        if user.exists():
+            user.write({
+                "wx_id": None,
+                "password": defpassword
+            })
         rs = env['wx.user'].sudo().search([('openid', '=', openid)])
         if rs.exists():
             rs.unlink()
@@ -347,6 +354,7 @@ def main(robot):
         uuid = request.env['wx.user.uuid'].sudo().search([('openid', '=', openid)])
         if uuid.exists():
             uuid.unlink()
+        request.session.logout(keep_db=True)
         return ""
 
     @robot.scan
@@ -360,11 +368,11 @@ def main(robot):
         env = request.env()
         info = entry.wxclient.get_user_info(openid)
         messag_info = message.CreateTime + "" + message.FromUserName
-        if messag_info == entry.OPENID_LAST.get(openid):
+        if messag_info == entry.wxclient.session.get(openid):  # entry.OPENID_LAST.get(openid):
             _logger.info('>>> 重复的微信消息')
             return ''
-        entry.OPENID_LAST[openid] = messag_info
-
+        # entry.OPENID_LAST[openid] = messag_info
+        entry.wxclient.session.set(openid, messag_info);
         tracelog_type = 'subscribe'
         tracelog_title = '扫描进入公众号'
         traceuser_id = None
@@ -374,6 +382,7 @@ def main(robot):
         guideorreferrer = 'guide'  # 导购或者推荐人
         max_goal_user = None  # 获取销售团队下面评分最高用户
         rs = env['wx.user'].sudo().search([('openid', '=', openid)])
+        wx_user = None
         if rs.exists():
             wx_user = rs[0]
             eventkey = message.EventKey.split('|')
@@ -584,10 +593,11 @@ def main(robot):
         env = request.env()
         info = entry.wxclient.get_user_info(openid)
         messag_info = message.CreateTime + "" + message.FromUserName
-        if messag_info == entry.OPENID_LAST.get(openid):
+        if messag_info == entry.wxclient.session.get(openid):  # entry.OPENID_LAST.get(openid):
             _logger.info('>>> 重复的微信消息')
             return ''
-        entry.OPENID_LAST[openid] = messag_info
+        # entry.OPENID_LAST[openid] = messag_info
+        entry.wxclient.session.set(openid, messag_info);
         serviceid = message.target
         openid = message.source
         env = request.env()
