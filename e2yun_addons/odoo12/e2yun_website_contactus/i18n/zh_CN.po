@@ -1,0 +1,77 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* e2yun_website_contactus
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-08-01 03:49+0000\n"
+"PO-Revision-Date: 2019-08-01 03:49+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: e2yun_website_contactus
+#: model_terms:ir.ui.view,arch_db:e2yun_website_contactus.footer_custom
+msgid "<i class=\"fa fa-phone\"/> <span>北京010-87952911</span>"
+msgstr ""
+
+#. module: e2yun_website_contactus
+#: model_terms:ir.ui.view,arch_db:e2yun_website_contactus.footer_custom
+msgid "<i class=\"fa fa-phone\"/> <span>深圳0755-83420359</span>"
+msgstr ""
+
+#. module: e2yun_website_contactus
+#: model_terms:ir.ui.view,arch_db:e2yun_website_contactus.footer_custom
+msgid "About us"
+msgstr "关于我们"
+
+#. module: e2yun_website_contactus
+#: model_terms:ir.ui.view,arch_db:e2yun_website_contactus.footer_custom
+msgid "Connect with us"
+msgstr "与我们联系"
+
+#. module: e2yun_website_contactus
+#: model_terms:ir.ui.view,arch_db:e2yun_website_contactus.footer_custom
+msgid "Contact us"
+msgstr "联系我们"
+
+#. module: e2yun_website_contactus
+#: model_terms:ir.ui.view,arch_db:e2yun_website_contactus.footer_custom
+msgid "Home"
+msgstr "首页"
+
+#. module: e2yun_website_contactus
+#: model_terms:ir.ui.view,arch_db:e2yun_website_contactus.footer_custom
+msgid "Our Products &amp; Services"
+msgstr "产品和服务"
+
+#. module: e2yun_website_contactus
+#: model_terms:ir.ui.view,arch_db:e2yun_website_contactus.contactus_form
+msgid "发送"
+msgstr ""
+
+#. module: e2yun_website_contactus
+#: model_terms:ir.ui.view,arch_db:e2yun_website_contactus.contactus_form
+msgid "您的姓名"
+msgstr ""
+
+#. module: e2yun_website_contactus
+#: model_terms:ir.ui.view,arch_db:e2yun_website_contactus.contactus_form
+msgid "您的问题"
+msgstr ""
+
+#. module: e2yun_website_contactus
+#: model_terms:ir.ui.view,arch_db:e2yun_website_contactus.footer_custom
+msgid "海以其博大，纳百川而成其浩瀚；山以其厚重，历沧桑而为之雄浑。我们正以山的浑厚、海的广博，诚信、务实的品质，敬业、创新的作风，追求卓越、实现跨越式发展的精神，为实现“打造百年企业”的企业目标，产品走向祖国的长城内外、大江南北，去搏击市场，去拥抱美好灿烂的明天。"
+msgstr ""
+
+#. module: e2yun_website_contactus
+#: model_terms:ir.ui.view,arch_db:e2yun_website_contactus.contactus_form
+msgid "电话号码"
+msgstr ""
+

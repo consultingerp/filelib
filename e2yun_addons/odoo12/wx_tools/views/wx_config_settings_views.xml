@@ -44,6 +44,8 @@
                                     <field name="wx_token" class="oe_inline"/>
                                     <field name="server_url" class="oe_inline"/>
                                     <field name="amapkey" class="oe_inline"/>
+                                    <field name="session_storage" class="oe_inline"/>
+
                                 </group>
                             </div>
                         </div>

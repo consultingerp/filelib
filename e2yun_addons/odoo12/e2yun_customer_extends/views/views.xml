@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="base.view_users_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//page[@name='access_rights']" position="before">
-                    <page name="related_partner" string="Related Partner">
+                    <page name="related_partner" string="Related Partner" attrs="{'invisible': [('function','=',False)]}">
                         <field name="related_partner" widget="many2many" options="{'not_delete': True}">
                             <kanban class="o_res_partner_kanban">
                                 <field name="id"/>
@@ -156,7 +156,7 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//page[@name='sales_purchases']" position="after">
-                    <page name="related_guide" string="Related Guide">
+                    <page name="related_guide" string="Related Guide" attrs="{'invisible': [('customer','!=',True)]}">
                         <field name="related_guide" widget="many2many" options="{'not_delete': True}">
                             <kanban class="o_kanban_mobile">
                                 <field name="id"/>
@@ -234,7 +234,7 @@
                     <field name="car_brand"/>
                     <field name="user_nick_name"/>
                     <field name="gender"/>
-                    <field name="customer_source"/>
+                    <field name="customer_source" readonly="1"/>
                 </field>
             </field>
         </record>
