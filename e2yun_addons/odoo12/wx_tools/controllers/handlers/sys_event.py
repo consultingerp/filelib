@@ -332,16 +332,17 @@ def main(robot):
             return ''
         entry.wxclient.session.set(openid, messag_info)
         info = entry.wxclient.get_user_info(openid)
-        user = env['res.users'].sudo().search([('wx_user_id.openid', '=', openid)])
+        user = env['res.users'].sudo().search([('wx_user_id.openid', '=', openid)], limit=1)
+        wx_user = env['wx.user'].sudo().search([('openid', '=', openid)], limit=1)
+        odoouser = env['wx.user.odoouser'].sudo().search([('openid', '=', openid)], limit=1)
+        uuid = request.env['wx.user.uuid'].sudo().search([('openid', '=', openid)])
         if user.exists():
             user.write({
                 "wx_id": None,
                 "password": defpassword
             })
-        rs = env['wx.user'].sudo().search([('openid', '=', openid)])
-        if rs.exists():
-            rs.unlink()
-        odoouser = env['wx.user.odoouser'].sudo().search([('openid', '=', openid)])
+        if wx_user.exists():
+            wx_user.unlink()
         if odoouser.exists():
             tracetype = env['wx.tracelog.type'].sudo().search([('code', '=', tracelog_type)])
             if tracetype.exists():
@@ -351,7 +352,6 @@ def main(robot):
                     "user_id": user.id,
                 })
             odoouser.unlink()
-        uuid = request.env['wx.user.uuid'].sudo().search([('openid', '=', openid)])
         if uuid.exists():
             uuid.unlink()
         request.session.logout(keep_db=True)
