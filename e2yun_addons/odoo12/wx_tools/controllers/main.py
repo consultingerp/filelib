@@ -77,7 +77,7 @@ class LoginHome(Home):
                 login_as = super(LoginHome, self).web_login(redirect, **kw)
                 if 'error' in login_as.qcontext:
                     return login_as
-                logging.info("登录用户%s" % odoouser.user_id.login)
+                logging.info("登录用户%s:%s" % (odoouser.user_id.login, wx_user_info['UserId']))
                 uid = request.session.authenticate(request.session.db, odoouser.user_id.login, odoouser.password)
                 if redirect:
                     return http.local_redirect(redirect)
