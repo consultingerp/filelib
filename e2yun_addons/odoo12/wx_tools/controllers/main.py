@@ -133,6 +133,11 @@ class LoginHome(Home):
                                 "user_id": odoouser.user_id.id if odoouser.user_id else None,
                                 "wx_user_id": odoouser.wx_user_id.id if odoouser.wx_user_id else None
                             })
+                if redirect:
+                    return http.local_redirect(redirect)
+                else:
+                    return http.local_redirect('/web#home')
+
 
         else:
             if kw.get('login') and kw.get('password'):
