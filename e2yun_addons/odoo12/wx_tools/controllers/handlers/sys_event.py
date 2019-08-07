@@ -356,7 +356,7 @@ def main(robot):
             })
         if uuid.exists():
             uuid.unlink()
-        request.session.logout(keep_db=True)
+        # request.session.logout(keep_db=True)
         return ""
 
     @robot.scan
