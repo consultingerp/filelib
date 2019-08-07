@@ -281,7 +281,6 @@ def main(robot):
                 "user_id": traceuser_id.id if traceuser_id else None,
                 "wx_user_id": wxuserinfo.id if wxuserinfo else None
             })
-        env.cr.commit()
         if ismail_channel:  # 联系客户
             _logger.info('发起客户会话')
             uid = request.session.authenticate(request.session.db, traceuser_id.login, defpassword)
