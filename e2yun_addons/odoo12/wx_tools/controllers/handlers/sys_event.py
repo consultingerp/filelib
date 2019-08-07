@@ -132,9 +132,9 @@ def main(robot):
                 else:
                     ret_msg = "您终于来了！欢迎关注"
             _data = get_img_data(str(info['headimgurl']))
-            if not company_id:
-                company = env['res.company']._get_main_company();
-                company_id = company.id
+            #if not company_id:
+            company = env['res.company']._get_main_company();
+            company_id = company.id
             if not iscompanyuser:
                 if not resuser.exists():  # 如果用户不存在查询用户的微信字段以前有没有用，是不是从门店同步过来的
                     resuser = env['res.users'].sudo().search([('wx_id', '=', info['openid'])], limit=1)
