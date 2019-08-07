@@ -59,6 +59,7 @@ def main(robot):
         scene_userinfo = None  # 被扫描人员
         company_id = None  # 公司ID
         guide = ["店长", "店员"]
+        ret_msg = ""
         if not rs.exists():  # 不存在微信用户在
             wxuserinfo = env['wx.user'].sudo().create(info)  # 创建微信用户。
             resuser = env['res.users'].sudo().search([('login', '=', info['openid'])], limit=1)  # 查询登录名与微信名一样的
