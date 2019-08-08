@@ -86,7 +86,8 @@ class LoginHome(Home):
             else:
                 # request.session.logout()
                 # uid = request.session.authenticate(request.session.db, obj.user_id.login, '')
-                return super(LoginHome, self).web_login(redirect, **kw)
+                return http.local_redirect('/web/login')
+                ## return super(LoginHome, self).web_login(redirect, **kw)
         elif request.session.wx_user_info:  # 存在微信登录访问
             if 'login' not in values or 'password' not in values :
                 return super(LoginHome, self).web_login(redirect, **kw)
@@ -133,6 +134,11 @@ class LoginHome(Home):
                                 "user_id": odoouser.user_id.id if odoouser.user_id else None,
                                 "wx_user_id": odoouser.wx_user_id.id if odoouser.wx_user_id else None
                             })
+                if redirect:
+                    return http.local_redirect(redirect)
+                else:
+                    return http.local_redirect('/web#home')
+
 
         else:
             if kw.get('login') and kw.get('password'):

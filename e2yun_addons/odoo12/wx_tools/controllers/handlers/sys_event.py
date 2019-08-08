@@ -59,6 +59,7 @@ def main(robot):
         scene_userinfo = None  # 被扫描人员
         company_id = None  # 公司ID
         guide = ["店长", "店员"]
+        ret_msg = ""
         if not rs.exists():  # 不存在微信用户在
             wxuserinfo = env['wx.user'].sudo().create(info)  # 创建微信用户。
             resuser = env['res.users'].sudo().search([('login', '=', info['openid'])], limit=1)  # 查询登录名与微信名一样的
@@ -131,9 +132,9 @@ def main(robot):
                 else:
                     ret_msg = "您终于来了！欢迎关注"
             _data = get_img_data(str(info['headimgurl']))
-            if not company_id:
-                company = env['res.company']._get_main_company();
-                company_id = company.id
+            #if not company_id:
+            company = env['res.company']._get_main_company();
+            company_id = company.id
             if not iscompanyuser:
                 if not resuser.exists():  # 如果用户不存在查询用户的微信字段以前有没有用，是不是从门店同步过来的
                     resuser = env['res.users'].sudo().search([('wx_id', '=', info['openid'])], limit=1)
@@ -280,7 +281,6 @@ def main(robot):
                 "user_id": traceuser_id.id if traceuser_id else None,
                 "wx_user_id": wxuserinfo.id if wxuserinfo else None
             })
-        env.cr.commit()
         if ismail_channel:  # 联系客户
             _logger.info('发起客户会话')
             uid = request.session.authenticate(request.session.db, traceuser_id.login, defpassword)
@@ -342,19 +342,20 @@ def main(robot):
                 "password": defpassword
             })
         if wx_user.exists():
+            tracelog_title = tracelog_title + wx_user.nickname
             wx_user.unlink()
         if odoouser.exists():
-            tracetype = env['wx.tracelog.type'].sudo().search([('code', '=', tracelog_type)])
-            if tracetype.exists():
-                env['wx.tracelog'].sudo().create({
-                    "tracelog_type": tracetype.id,
-                    "title": tracelog_title,
-                    "user_id": user.id,
-                })
             odoouser.unlink()
+        tracetype = env['wx.tracelog.type'].sudo().search([('code', '=', tracelog_type)])
+        if tracetype.exists():
+            env['wx.tracelog'].sudo().create({
+                "tracelog_type": tracetype.id,
+                "title": tracelog_title,
+                "user_id": user.id if user else None,
+            })
         if uuid.exists():
             uuid.unlink()
-        request.session.logout(keep_db=True)
+        # request.session.logout(keep_db=True)
         return ""
 
     @robot.scan
