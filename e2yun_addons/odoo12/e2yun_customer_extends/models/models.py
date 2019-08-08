@@ -87,7 +87,15 @@ class E2yunCsutomerExtends(models.Model):
             else:
                 vals['app_code'] = self.env['ir.sequence'].next_by_code('app.code') or _('New')
 
+        pos_flag = False
+        if vals.get('pos_flag', False):
+            pos_flag = True
+            del vals['pos_flag']
+
         result = super(E2yunCsutomerExtends, self).create(vals)
+        if pos_flag and vals.get('shop_code',False):
+            result.teams = [(6,0,[vals.get('shop_code'),])]
+
         return result
 
     # @api.multi
@@ -136,6 +144,10 @@ class E2yunCsutomerExtends(models.Model):
             ret = re.match(r"^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$", mobile)
             if not ret:
                 raise Warning(_("请输入合法手机号码！"))
+
+        if values.get('pos_flag',False) and values.get('shop_code',False):
+            values['teams'] = [(6,0,[values.get('shop_code'),])]
+            del values['pos_flag']
         return super(E2yunCsutomerExtends, self).write(values)
 
 
