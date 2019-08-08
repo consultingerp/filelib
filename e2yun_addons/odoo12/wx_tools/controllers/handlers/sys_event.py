@@ -73,7 +73,6 @@ def main(robot):
                 else:
                     ret_msg = "您终于来了！欢迎关注"
                 entry.send_text(openid, ret_msg)
-                ret_msg = ''
                 befocus_username = ''
                 eventkey = message.EventKey.split('|')
                 if eventkey[0] == 'qrscene_USERS':
@@ -85,6 +84,8 @@ def main(robot):
                     tracelog_title = "扫描用户%s关注,微信用户%s" % (befocus_username, str(info['nickname']))
                     ret_msg = "正在联系您的专属客户经理%s。\n" \
                               "请点击屏幕下方左侧小键盘打开对话框与您的客户经理联系。\n我们将竭诚为您服务，欢迎咨询！" % (befocus_username)
+                    entry.send_text(openid, ret_msg)
+                    ret_msg=''
                     user_id = eventkey[1]
                     users_ids.append(user_id)
                     team_id = env['crm.team'].sudo().search([('member_ids', 'in', [int(eventkey[1])])], limit=1)
@@ -98,6 +99,8 @@ def main(robot):
                     eventkey[2] = crm_team.name
                     tracelog_title = "扫描门店%s关注,微信用户%s" % (eventkey[2], str(info['nickname']))
                     ret_msg = "%s \n 欢迎您：我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
+                    entry.send_text(openid, ret_msg)
+                    ret_msg = ''
                     shop_code = eventkey[1]
                     max_goal_user = crm_team.tearm_high_goal()  # 获取销售团队下面评分最高用户
                     if max_goal_user:  # 需要联系门店的导购
@@ -117,6 +120,8 @@ def main(robot):
                     iscompanyuser = True
                     tracelog_title = "扫描公司%s关注,微信用户%s" % (eventkey[2], str(info['nickname']))
                     ret_msg = "%s \n 欢迎您：我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
+                    entry.send_text(openid, ret_msg)
+                    ret_msg = ''
                     company_id = company.id
                 elif eventkey[0] == 'qrscene_COMPANYEXTERNAL':
                     tracelog_type = 'qrscene_COMPANYEXTERNAL'
@@ -126,6 +131,8 @@ def main(robot):
                     _logger.info('公司外部二维码进入')
                     tracelog_title = "扫描公司%s外部二维码关注,微信用户%s" % (eventkey[2], str(info['nickname']))
                     ret_msg = "%s \n 欢迎您：我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
+                    entry.send_text(openid, ret_msg)
+                    ret_msg = ''
             else:  # 没有带参数进入公众号
                 if entry.subscribe_auto_msg:
                     ret_msg = entry.subscribe_auto_msg
