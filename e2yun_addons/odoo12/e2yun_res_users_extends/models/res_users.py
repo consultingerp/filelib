@@ -49,17 +49,20 @@ class ResUsers(models.Model):
     def create(self, vals_list):
         is_pos = False
         for vl in vals_list:
-            if vl.get('pos_groups',False):
-                pos_groups = vl.get('pos_groups')
-                pos_groups.append(self.env.ref('base.group_user').id)
-                vl['groups_id'] = pos_groups
-                del vl['pos_groups']
             if vl.get('pos_flag',False):
                 is_pos = True
                 del vl['pos_flag']
                 if vl.get('company_ids', False):
                     company_ids = vl.get('company_ids')
                     vl['company_ids'] = [(6,0,[company_ids,])]
+
+                pos_groups = []
+                if vl.get('pos_groups', False):
+                    pos_groups = vl.get('pos_groups')
+                    del vl['pos_groups']
+                pos_groups.append(self.env.ref('base.group_user').id)
+                vl['groups_id'] = pos_groups
+
         if is_pos:
             return super(ResUsers, self.sudo()).create(vals_list)
 
@@ -67,12 +70,6 @@ class ResUsers(models.Model):
 
     @api.multi
     def write(self, vals):
-        if vals.get('pos_groups',False):
-            pos_groups =  vals.get('pos_groups')
-            pos_groups.append(self.env.ref('base.group_user').id)
-            pos_groups = [(6, 0, pos_groups)]
-            vals['groups_id'] = pos_groups
-            del vals['pos_groups']
 
         if vals.get('pos_flag', False):
             del vals['pos_flag']
@@ -80,6 +77,15 @@ class ResUsers(models.Model):
                 company_ids = vals.get('company_ids')
                 vals['company_ids'] = [(6,0,[company_ids,])]
 
+            pos_groups = []
+            if vals.get('pos_groups', False):
+                pos_groups = vals.get('pos_groups')
+                del vals['pos_groups']
+            pos_groups.append(self.env.ref('base.group_user').id)
+            pos_groups = [(6, 0, pos_groups)]
+            vals['groups_id'] = pos_groups
+
             return super(ResUsers, self.sudo()).write(vals)
+
         else:
             return super(ResUsers, self).write(vals)
