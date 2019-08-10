@@ -11,7 +11,7 @@
     "license": "LGPL-3",
     "data": [
         "views/change_sales.xml",
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         'security/security.xml',
     ],
      "depends": [
