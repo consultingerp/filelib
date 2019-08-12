@@ -19,7 +19,7 @@ class res_partner(models.Model):
 
     @api.model
     def create(self, vals):
-        if 'customer' in vals and vals['customer'] and vals['parent_id'] is False and self.env.ref(
+        if 'customer' in vals and vals['customer'] and ('parent_id' not in vals or vals['parent_id'] is False) and self.env.ref(
                 'e2yun_customer_info.group_crm_sale') in self.env.user.groups_id:
             raise exceptions.Warning(_('You can not craete customer!'))
         res = super(res_partner, self).create(vals)
