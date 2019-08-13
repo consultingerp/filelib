@@ -1,0 +1,63 @@
+<odoo>
+    <template id="404" inherit_id="website.404">
+        <xpath expr="//div[hasclass('container')]" position="replace">
+            <link rel="stylesheet" href="/friendly_website_errors/static/src/handle_exceptions.css"/>
+            <div class="container">
+                <div class="my_container">
+                    <div class="col-md-6 oe_structure" style="float:left;">
+                        <img src="/friendly_website_errors/static/images/404-error.png"/>
+                    </div>
+
+                    <div class="col-md-6 oe_structure message_error" style="float:right;">
+                        <h1 class="mt32">404: Page not found!</h1>
+                        <p>
+                            The page you were looking for could not be found; it is possible you have
+                            typed the address incorrectly, but it has most probably been removed due
+                            to the recent website reorganisation.
+                        </p>
+                        <p>You can return to the <a href="/">Homepage</a> or <a href="/contactus">Contact Us</a></p>
+                    </div>
+                </div>
+
+            </div>
+        </xpath>
+    </template>
+
+     <template id="403" inherit_id="website.403">
+        <xpath expr="//div[hasclass('container')]" position="replace">
+            <link rel="stylesheet" href="/friendly_website_errors/static/src/handle_exceptions.css"/>
+            <div class="container">
+                <div class="my_container">
+                    <div class="col-md-6 oe_structure" style="float:left;">
+                        <img src="/friendly_website_errors/static/images/404-error.png"/>
+                    </div>
+                    <div class="col-md-6 oe_structure message_error" style="float:right;">
+                        <h1 class="mt32">403: Forbidden</h1>
+                        <p>The page you were looking for could not be authorized.</p>
+                        <p>You should return to the <a href="/">Homepage</a> or <a href="/contactus">Contact Us</a></p>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+     </template>
+
+     <template id="500" inherit_id="website.500">
+        <xpath expr="//div[@id='wrapwrap']/main/div[hasclass('oe_structure')]" position="replace">
+            <link rel="stylesheet" href="/friendly_website_errors/static/src/handle_exceptions.css"/>
+            <div class="container">
+                <div class="my_container" style="margin-top:100px;">
+                    <div class="col-md-6 oe_structure" style="float:left;">
+                        <img src="/friendly_website_errors/static/images/internal_server_error.png"/>
+                    </div>
+                    <div class="col-md-6 oe_structure message_error" style="float:right;">
+                        <h1 class="container mt32"><t t-esc="status_code"/>: <t t-esc="status_message"/></h1>
+                        <p>The server encountered an internal server error or misconfiguration and was unable to complete
+                            your request.</p>
+                        <p>Please <a href="/contactus">contact</a> the server administrator or return to the <a href="/">Homepage</a></p>
+                    </div>
+                </div>
+            </div>
+
+        </xpath>
+     </template>
+</odoo>

@@ -73,7 +73,6 @@ def main(robot):
                 else:
                     ret_msg = "您终于来了！欢迎关注"
                 entry.send_text(openid, ret_msg)
-                ret_msg = ''
                 befocus_username = ''
                 eventkey = message.EventKey.split('|')
                 if eventkey[0] == 'qrscene_USERS':
@@ -85,6 +84,8 @@ def main(robot):
                     tracelog_title = "扫描用户%s关注,微信用户%s" % (befocus_username, str(info['nickname']))
                     ret_msg = "正在联系您的专属客户经理%s。\n" \
                               "请点击屏幕下方左侧小键盘打开对话框与您的客户经理联系。\n我们将竭诚为您服务，欢迎咨询！" % (befocus_username)
+                    entry.send_text(openid, ret_msg)
+                    ret_msg=''
                     user_id = eventkey[1]
                     users_ids.append(user_id)
                     team_id = env['crm.team'].sudo().search([('member_ids', 'in', [int(eventkey[1])])], limit=1)
@@ -98,6 +99,8 @@ def main(robot):
                     eventkey[2] = crm_team.name
                     tracelog_title = "扫描门店%s关注,微信用户%s" % (eventkey[2], str(info['nickname']))
                     ret_msg = "%s \n 欢迎您：我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
+                    entry.send_text(openid, ret_msg)
+                    ret_msg = ''
                     shop_code = eventkey[1]
                     max_goal_user = crm_team.tearm_high_goal()  # 获取销售团队下面评分最高用户
                     if max_goal_user:  # 需要联系门店的导购
@@ -117,6 +120,8 @@ def main(robot):
                     iscompanyuser = True
                     tracelog_title = "扫描公司%s关注,微信用户%s" % (eventkey[2], str(info['nickname']))
                     ret_msg = "%s \n 欢迎您：我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
+                    entry.send_text(openid, ret_msg)
+                    ret_msg = ''
                     company_id = company.id
                 elif eventkey[0] == 'qrscene_COMPANYEXTERNAL':
                     tracelog_type = 'qrscene_COMPANYEXTERNAL'
@@ -126,6 +131,8 @@ def main(robot):
                     _logger.info('公司外部二维码进入')
                     tracelog_title = "扫描公司%s外部二维码关注,微信用户%s" % (eventkey[2], str(info['nickname']))
                     ret_msg = "%s \n 欢迎您：我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
+                    entry.send_text(openid, ret_msg)
+                    ret_msg = ''
             else:  # 没有带参数进入公众号
                 if entry.subscribe_auto_msg:
                     ret_msg = entry.subscribe_auto_msg
@@ -281,7 +288,6 @@ def main(robot):
                 "user_id": traceuser_id.id if traceuser_id else None,
                 "wx_user_id": wxuserinfo.id if wxuserinfo else None
             })
-        env.cr.commit()
         if ismail_channel:  # 联系客户
             _logger.info('发起客户会话')
             uid = request.session.authenticate(request.session.db, traceuser_id.login, defpassword)
@@ -356,7 +362,7 @@ def main(robot):
             })
         if uuid.exists():
             uuid.unlink()
-        request.session.logout(keep_db=True)
+        # request.session.logout(keep_db=True)
         return ""
 
     @robot.scan
@@ -401,6 +407,8 @@ def main(robot):
                 tracelog_type = 'qrscene_USERS'
                 tracelog_title = "扫描用户%s进入微信公众号，微信用户%s" % (befocus_username, str(info['nickname']))
                 ret_msg = "您好！正在联系您的专属客户经理：%s\n" % (befocus_username)
+                entry.send_text(openid, ret_msg)
+                ret_msg = ''
                 user_id = eventkey[1]  # 客户经理
                 res_guideorreferrer = env['res.users'].sudo().search([('id', '=', user_id)], limit=1)
                 guide = ["店长", "店员"]
@@ -440,7 +448,8 @@ def main(robot):
                 eventkey[2] = crm_team.name
                 tracelog_title = "扫描门店%s进入公众号,微信用户%s" % (eventkey[2], str(info['nickname']))
                 ret_msg = "%s 欢迎您：\n 我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
-
+                entry.send_text(openid, ret_msg)
+                ret_msg = ''
                 max_goal_user = crm_team.tearm_high_goal()  # 获取销售团队下面评分最高用户
                 users_ids.append(int(max_goal_user.user_id.id))
                 if resuser.exists() and max_goal_user:
@@ -473,6 +482,8 @@ def main(robot):
                 tracelog_title = "扫描公司%s二维码进入公众号,微信用户%s" % (eventkey[2], str(info['nickname']))
                 _logger.info('TEAM')
                 ret_msg = "%s欢迎您：\n 我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
+                entry.send_text(openid, ret_msg)
+                ret_msg = ''
                 if resuser.exists():
                     traceuser_id = resuser
                     resuser.partner_id.write({
@@ -485,6 +496,8 @@ def main(robot):
                 tracelog_title = "扫描公司%sq外部二维码进入公众号,微信用户%s" % (eventkey[2], str(info['nickname']))
                 _logger.info('TEAM')
                 ret_msg = "%s欢迎您：\n 我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
+                entry.send_text(openid, ret_msg)
+                ret_msg = ''
                 if resuser.exists():
                     traceuser_id = resuser
                     # 将客户公司归宿导购的公司
@@ -521,6 +534,8 @@ def main(robot):
 
                 ret_msg = _(
                     "优惠券领取成功\n优惠券金额：%s\n优惠券编号：%s" % (coupon_id.program_id.discount_fixed_amount, coupon_id.code))
+                entry.send_text(openid, ret_msg)
+                ret_msg = ''
         tracetype = env['wx.tracelog.type'].sudo().search([('code', '=', tracelog_type)])
         if tracetype.exists():
             env['wx.tracelog'].sudo().create({

@@ -86,7 +86,8 @@ class LoginHome(Home):
             else:
                 # request.session.logout()
                 # uid = request.session.authenticate(request.session.db, obj.user_id.login, '')
-                return super(LoginHome, self).web_login(redirect, **kw)
+                return http.local_redirect('/web/login')
+                ## return super(LoginHome, self).web_login(redirect, **kw)
         elif request.session.wx_user_info:  # 存在微信登录访问
             if 'login' not in values or 'password' not in values :
                 return super(LoginHome, self).web_login(redirect, **kw)
