@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="partner_form_add_button_approval" model="ir.ui.view">
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="before">
+                    <button name="approval_partner" string="批准" type="object" confirm="确认审批？"
+                                attrs="{'invisible': ['|',('supplier','=',True),('id','=',False)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+</odoo>
