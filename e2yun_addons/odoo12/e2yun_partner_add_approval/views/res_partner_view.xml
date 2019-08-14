@@ -6,8 +6,10 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//sheet" position="before">
-                    <button name="approval_partner" string="审批" type="object" confirm="确认审批？"
+                    <header>
+                        <button name="approval_partner" string="审批" type="object" confirm="确认审批？"
                                 attrs="{'invisible': ['|',('supplier','=',True),('id','=',False)]}"/>
+                    </header>
                 </xpath>
             </field>
         </record>
