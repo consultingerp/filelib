@@ -31,7 +31,7 @@ class ProductTemplate(models.Model):
             qr.add_data(url)
             qr.make(fit=True)
             # 生成图片
-            img = qr.make_image(fill_color="#FFFFFF",back_color="#000000")
+            img = qr.make_image(fill_color="#FFFFFF", back_color="#000000")
             product_name = 'product_%s.jpeg' % self.id
             product_image = os.path.join(wx_file_path, product_name)
             # _data = client.get_img_data(
