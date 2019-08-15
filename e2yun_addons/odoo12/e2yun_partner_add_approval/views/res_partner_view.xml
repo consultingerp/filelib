@@ -2,15 +2,29 @@
 <odoo>
 
     <record id="partner_form_add_button_approval" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="approval_partner" string="审批" type="object" confirm="确认审批？"
+                            attrs="{'invisible': ['|',('supplier','=',True),('id','=',False)]}"/>
+                </header>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="res_partner_view_search_inherit" model="ir.ui.view">
+            <field name="name">res.partner.view.search.inherit</field>
             <field name="model">res.partner</field>
-            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
             <field name="arch" type="xml">
-                <xpath expr="//sheet" position="before">
-                    <header>
-                        <button name="approval_partner" string="审批" type="object" confirm="确认审批？"
-                                attrs="{'invisible': ['|',('supplier','=',True),('id','=',False)]}"/>
-                    </header>
-                </xpath>
+                <field name="name" position="after">
+                    <filter name="group_new_signup" string="新注册" context="{'group_by' : 'new_signup'}"/>
+                </field>
+                <filter name="inactive" position="after">
+                    <filter string="新注册" name="filter_new_signup" domain="[('new_signup','=','new_signup')]"/>
+                </filter>
             </field>
         </record>
 

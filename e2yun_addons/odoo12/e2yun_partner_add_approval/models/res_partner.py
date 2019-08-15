@@ -8,6 +8,8 @@ class ResPartner(models.Model):
     _name = 'res.partner'
     _inherit = 'res.partner'
 
+    new_signup = fields.Selection([('supplier','Supplier'),('new_signup','New Signup')],string='New Signup',default='supplier')
+
     @api.multi
     def approval_partner(self):
         self.supplier = True

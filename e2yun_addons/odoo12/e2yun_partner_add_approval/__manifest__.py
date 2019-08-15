@@ -4,7 +4,7 @@
     'version': '12.0.0.1',
     'sequence': '10',
     'category': 'base',
-    'depends': ['base'],
+    'depends': ['base','auth_signup'],
     'author': 'liqiang',
     'website': 'http://e2yun.cn',
     'summary': 'Res Partner Extends',
