@@ -531,7 +531,7 @@ msgstr "搜索业务伙伴"
 #. module: e2yun_supplier_info
 #: model:ir.model.fields,field_description:e2yun_supplier_info.field_e2yun_supplier_info__secondary_industry_ids
 msgid "Secondary Industries"
-msgstr "第二产业"
+msgstr "供应产品类别"
 
 #. module: e2yun_supplier_info
 #: model:ir.model.fields,field_description:e2yun_supplier_info.field_e2yun_supplier_info__self
