@@ -137,18 +137,13 @@ class e2yun_supplier_info(models.Model):
                                                help="This payment term will be used instead of the default one for sales orders and customer invoices",
                                                oldname="property_payment_term")
 
-    team_id = fields.Many2one('crm.team', 'Team')
-
-
     # 新增客户中的字段
     customer_id = fields.Char('	Customer Id')
     parent_account = fields.Many2one('res.partner', company_dependent=True, string='母公司')
     activity_user_id = fields.Many2one('res.users', company_dependent=True, string='责任用户')
-    grade_id = fields.Many2one('res.partner.grade', 'Level')
     secondary_industry_ids = fields.Many2many(
         comodel_name='res.partner.industry', string="Secondary Industries",
         domain="[('id', '!=', industry_id)]")
-    property_product_pricelist = fields.Many2one('product.pricelist', string='Pricelist', required=False)
     is_strategic = fields.Boolean(string='Is Strategic')
 
     state = fields.Selection([
@@ -158,11 +153,26 @@ class e2yun_supplier_info(models.Model):
 
     register_no = fields.Char('Registration number')
 
+    organ_code = fields.Char('组织代码')
+    business_license = fields.Binary('营业执照',attachment=True)
+    annual_turnover = fields.Selection([('1','1000万以下'),('2','1000万-5000万'),('3','5000万-1亿'),('4','1亿-10亿'),('5','10亿-100亿')],'年营业额')
+    employees = fields.Selection([('1','500人以下'),('2','500-1000人'),('3','1000-5000人'),('4','5000-10000人')],'企业员工')
+    # supply_products = fields.Selection([('1','All'),('2','All / Consumable'),('3','All / Expenses'),
+    #                                     ('4','All / Internal'),('5','All / Saleable'),('6','All / Saleable / Office Furniture'),
+    #                                     ('7', 'All / Saleable / Services'),('8','All / Saleable / Services / Saleable') , ('9', 'All / Saleable / Software')
+    #                                     ],'供应产品类别')
+    authenitcation_id = fields.One2many('e2yun.supplier.authentication.info','supplier_info_id','认证信息')
+    supplier_user = fields.Integer('Supplier User')
+
+    listed_company = fields.Boolean('是否上市')
+
+
+
     _sql_constraints = [
         ('check_name', "CHECK( (type='contact' AND name IS NOT NULL) or (type!='contact') )",
          'Contacts require a name.'),
         ('name_unique', 'unique(name)', "The name you entered already exists"),
-        ('register_no_unique', 'unique(register_no)', "The Duty paragraph you entered already exists"),
+        # ('register_no_unique', 'unique(register_no)', "The Duty paragraph you entered already exists"),
     ]
 
     @api.onchange('name')
@@ -363,7 +373,8 @@ class e2yun_supplier_info(models.Model):
         UNINCLUDE_COL = ['bank_ids', 'user_ids', 'state', 'commercial_partner_id', 'child_ids', 'parent_id',
                          'partner_id', 'display_name', 'tz_offset', 'lang', 'tz', 'self', 'id', 'create_uid',
                          'create_uid', 'create_date', 'write_uid', 'write_date', '__last_update',
-                         'message_follower_ids', 'message_partner_ids', 'message_ids', 'website_message_ids']
+                         'message_follower_ids', 'message_partner_ids', 'message_ids', 'website_message_ids','business_license',
+                         'authenitcation_id','listed_company','secondary_industry_ids']
         child_datas = []
         many_cols = []
         for field in self.fields_get():
@@ -399,14 +410,31 @@ class e2yun_supplier_info(models.Model):
                         many_cols.append(field)
                     else:
                         data[field] = self[field].id
-        data['real_create_uid'] = self.user_id.id
+        #data['real_create_uid'] = self.user_id.id
+        data['customer'] = False
+        data['supplier'] = True
         id = self.env['res.partner'].sudo().create(data)
 
+        if self.supplier_user:
+            user = self.env['res.users'].sudo()
+            supplier_user = self.env['e2yun.supplier.user'].sudo().browse(self.supplier_user)
+            groups = []
+            groups.append(self.env.ref('survey.group_survey_user').id)
+            groups.append(self.env.ref('base.group_public').id)
+            groups.append(self.env.ref('base.group_portal').id)
+            user_data = {
+                'login' : supplier_user.name,
+                'password' : supplier_user.password,
+                'name' : self.name,
+                'partner_id':id.id,
+                'groups_id':[(6, 0, groups)]
+            }
+            user.create(user_data)
         for many_col in many_cols:
             id[many_col] = self[many_col]
         if child_datas:
             for child_data in child_datas:
-                child_data['real_create_uid'] = self.user_id.id
+                #child_data['real_create_uid'] = self.user_id.id
                 child_data['parent_id'] = id.id
                 self.env['res.partner'].sudo().create(child_data)
         self.partner_id = id
@@ -416,15 +444,15 @@ class e2yun_supplier_info(models.Model):
         #     raise UserError(u'转正式客户失败，请在工作流中添加^完成^状态')
         return False
 
-    @api.multi
-    def write(self, values):
-        #读取按钮权限组s
-        groups_id = self.env.ref('ZCRM.Business_group').id
-        sql = 'SELECT * from res_groups_users_rel where gid=%s and uid=%s'
-        self._cr.execute(sql, (groups_id, self._uid,))
-        groups_users = self._cr.fetchone()
-
-        # 草稿状态货有商务组权限可更新数据
-        if self.state != 'Draft' and not groups_users:
-            raise UserError('当前状态下无法操作更新，请联系管理员')
-        return super(e2yun_supplier_info, self).write(values)
+    # @api.multi
+    # def write(self, values):
+    #     #读取按钮权限组s
+    #     groups_id = self.env.ref('ZCRM.Business_group').id
+    #     sql = 'SELECT * from res_groups_users_rel where gid=%s and uid=%s'
+    #     self._cr.execute(sql, (groups_id, self._uid,))
+    #     groups_users = self._cr.fetchone()
+    #
+    #     # 草稿状态货有商务组权限可更新数据
+    #     if self.state != 'Draft' and not groups_users:
+    #         raise UserError('当前状态下无法操作更新，请联系管理员')
+    #     return super(e2yun_supplier_info, self).write(values)
