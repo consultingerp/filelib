@@ -25,16 +25,48 @@ class ContactController(WebsiteForm):
                 data = self.extract_data(model_record, request.params)
                 if model_name == 'e2yun.supplier.authentication.info' and data.get('record',False):
                     data['record']['supplier_info_id'] = request.session['e2yun_supplier_info_id']
+
                 elif model_name == 'e2yun.supplier.info' and data.get('record',False):
+                    if data['record']['name']:
+                        count = request.env['res.partner'].sudo().search_count([('name', '=', data['record']['name'])])
+                        if count > 0:
+                            error = {
+                                'name': '联系人名称已经存在，请重新输入'
+                            }
+                            return json.dumps({'error_fields': error})
+                        else:
+                            count = request.env['e2yun.supplier.info'].sudo().search_count(
+                                [('name', '=', data['record']['name'])])
+                            if count > 0:
+                                error = {
+                                    'name': '联系人名称已经存在，请重新输入'
+                                }
+                                return json.dumps({'error_fields': error})
+
                     data['record']['supplier_user'] = request.session['e2yun_supplier_user_id']
                     data['record']['customer'] = False
                     data['record']['supplier'] = True
-                elif model_name == 'e2yun.supplier.user' and data.get('record',False) and data['record']['password'] != data['record']['confirm_password']:
-                    error = {
-                        'confirm_password': '密码不匹配；请重新输入密码'
-                    }
+                elif model_name == 'e2yun.supplier.user' and data.get('record',False) :
+                    if data['record']['name']:
+                        count = request.env['res.users'].sudo().search_count([('login','=',data['record']['name'])])
+                        if count > 0:
+                            error = {
+                                'name': '登录名已经存在，请重新输入'
+                            }
+                            return json.dumps({'error_fields': error})
+                        else:
+                            count = request.env['e2yun.supplier.user'].sudo().search_count([('name', '=', data['record']['name'])])
+                            if count > 0:
+                                error = {
+                                    'name': '登录名已经存在，请重新输入'
+                                }
+                                return json.dumps({'error_fields': error})
 
-                    return json.dumps({'error_fields': error})
+                    if data['record']['password'] != data['record']['confirm_password']:
+                        error = {
+                            'confirm_password': '密码不匹配；请重新输入密码'
+                        }
+                        return json.dumps({'error_fields': error})
             # If we encounter an issue while extracting data
             except ValidationError as e:
                 # I couldn't find a cleaner way to pass data to an exception
