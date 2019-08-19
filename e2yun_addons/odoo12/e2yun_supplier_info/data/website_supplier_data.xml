@@ -30,6 +30,9 @@
                 'function',
                 'secondary_industry_ids',
                 'vat',
+                'login_name',
+                'password',
+                'confirm_password',
             ]"/>
         </function>
 

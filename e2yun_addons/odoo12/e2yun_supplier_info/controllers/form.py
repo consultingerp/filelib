@@ -43,7 +43,28 @@ class ContactController(WebsiteForm):
                                 }
                                 return json.dumps({'error_fields': error})
 
-                    data['record']['supplier_user'] = request.session['e2yun_supplier_user_id']
+                    if data['record']['login_name']:
+                        count = request.env['res.users'].sudo().search_count([('login','=',data['record']['login_name'])])
+                        if count > 0:
+                            error = {
+                                'name': '登录名已经存在，请重新输入'
+                            }
+                            return json.dumps({'error_fields': error})
+                        else:
+                            count = request.env['e2yun.supplier.info'].sudo().search_count([('login_name', '=', data['record']['login_name'])])
+                            if count > 0:
+                                error = {
+                                    'login_name': '登录名已经存在，请重新输入'
+                                }
+                                return json.dumps({'error_fields': error})
+
+                    if data['record']['password'] != data['record']['confirm_password']:
+                        error = {
+                            'confirm_password': '密码不匹配；请重新输入密码'
+                        }
+                        return json.dumps({'error_fields': error})
+
+                    #data['record']['supplier_user'] = request.session['e2yun_supplier_user_id']
                     data['record']['customer'] = False
                     data['record']['supplier'] = True
                 elif model_name == 'e2yun.supplier.user' and data.get('record',False) :

@@ -4,7 +4,8 @@ class Academy(http.Controller):
 
     @http.route('/supplier/register/', auth='public', website=True)
     def register(self, **kw):
-        return http.request.render('e2yun_supplier_info.supplier_register')
+        #return http.request.render('e2yun_supplier_info.supplier_register')
+        return http.request.render('e2yun_supplier_info.supplier_register_index')
 
     @http.route('/supplier/register_index/', auth='public', website=True)
     def index(self, **kw):
