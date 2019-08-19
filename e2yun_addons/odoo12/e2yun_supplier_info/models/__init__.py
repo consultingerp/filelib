@@ -3,3 +3,4 @@
 from . import models
 from . import authentication_info
 from . import supplier_user
+from . import res_partner
