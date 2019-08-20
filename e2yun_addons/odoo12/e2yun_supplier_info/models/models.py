@@ -166,6 +166,11 @@ class e2yun_supplier_info(models.Model):
 
     listed_company = fields.Boolean('是否上市')
 
+    login_name = fields.Char('登录名')
+    password = fields.Char('密码')
+    confirm_password = fields.Char('确认密码')
+    supplier_code = fields.Char('供应商代码')
+
 
 
     _sql_constraints = [
@@ -174,6 +179,12 @@ class e2yun_supplier_info(models.Model):
         ('name_unique', 'unique(name)', "The name you entered already exists"),
         # ('register_no_unique', 'unique(register_no)', "The Duty paragraph you entered already exists"),
     ]
+
+    @api.model
+    def create(self, vals):
+        vals['supplier_code'] = self.env['ir.sequence'].next_by_code('supplier.code')
+        result = super(e2yun_supplier_info, self).create(vals)
+        return result
 
     @api.onchange('name')
     def onchange_name(self):
@@ -373,8 +384,8 @@ class e2yun_supplier_info(models.Model):
         UNINCLUDE_COL = ['bank_ids', 'user_ids', 'state', 'commercial_partner_id', 'child_ids', 'parent_id',
                          'partner_id', 'display_name', 'tz_offset', 'lang', 'tz', 'self', 'id', 'create_uid',
                          'create_uid', 'create_date', 'write_uid', 'write_date', '__last_update',
-                         'message_follower_ids', 'message_partner_ids', 'message_ids', 'website_message_ids','business_license',
-                         'authenitcation_id','listed_company','secondary_industry_ids']
+                         'message_follower_ids', 'message_partner_ids', 'message_ids', 'website_message_ids',
+                         'login_name','password','confirm_password']
         child_datas = []
         many_cols = []
         for field in self.fields_get():
@@ -408,6 +419,8 @@ class e2yun_supplier_info(models.Model):
                 else:
                     if self.fields_get()[field]['type'] in ('one2many', 'many2many'):
                         many_cols.append(field)
+                    elif self.fields_get()[field]['type'] == 'binary':
+                        data[field] = self[field]
                     else:
                         data[field] = self[field].id
         #data['real_create_uid'] = self.user_id.id
@@ -415,16 +428,16 @@ class e2yun_supplier_info(models.Model):
         data['supplier'] = True
         id = self.env['res.partner'].sudo().create(data)
 
-        if self.supplier_user:
+        if self.login_name:
             user = self.env['res.users'].sudo()
-            supplier_user = self.env['e2yun.supplier.user'].sudo().browse(self.supplier_user)
+            #supplier_user = self.env['e2yun.supplier.user'].sudo().browse(self.supplier_user)
             groups = []
-            groups.append(self.env.ref('survey.group_survey_user').id)
+            #groups.append(self.env.ref('survey.group_survey_user').id)
             groups.append(self.env.ref('base.group_public').id)
             groups.append(self.env.ref('base.group_portal').id)
             user_data = {
-                'login' : supplier_user.name,
-                'password' : supplier_user.password,
+                'login' : self.login_name,
+                'password' : self.password,
                 'name' : self.name,
                 'partner_id':id.id,
                 'groups_id':[(6, 0, groups)]
@@ -440,6 +453,28 @@ class e2yun_supplier_info(models.Model):
         self.partner_id = id
         # try:
         self.state = 'done'
+
+        if self.company_name:
+            company_id = id.create_company()
+            if company_id:
+                id.parent_id.write({
+                'supplier_code':self.supplier_code,
+                #'secondary_industry_ids':id.secondary_industry_ids.id,
+                'organ_code':self.organ_code,
+                'business_license':self.business_license,
+                'annual_turnover':self.annual_turnover,
+                'employees':self.employees,
+                #'authenitcation_id':[id.authenitcation_id],
+                'listed_company':self.listed_company,
+                'phone':self.phone,
+                'mobile':self.mobile,
+                'email':self.email,
+                'website':self.website,
+                })
+                id.parent_id.authenitcation_id = id.authenitcation_id
+                id.parent_id.secondary_industry_ids = id.secondary_industry_ids
+
+
         # except Exception as e:
         #     raise UserError(u'转正式客户失败，请在工作流中添加^完成^状态')
         return False

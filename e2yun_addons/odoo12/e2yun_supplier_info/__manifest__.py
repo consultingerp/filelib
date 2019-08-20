@@ -14,7 +14,9 @@
     'depends': ['base', 'purchase','website' ],
     'data': [
         'data/website_supplier_data.xml',
+        'data/ir_sequence_data.xml',
         'views/e2yun_supplier_info_view.xml',
+        'views/res_partner_view.xml',
         'static/src/xml/register.xml',
         'static/src/xml/register_index.xml',
         'static/src/xml/register_authentication_info.xml',
