@@ -47,7 +47,7 @@
                               <div class="col-md-4 text-md-right">
                                 <label class="col-form-label" for="company_name"> 公司名称 </label>
                               </div>
-                              <div class="col-md-8">
+                              <div class="col-lg-7 col-md-8">
                                 <input type="text" class="form-control o_website_form_input" name="company_name" required=""/>
                               </div>
                             </div>
@@ -55,7 +55,7 @@
                               <div class="col-md-4 text-md-right">
                                 <label class="col-form-label" for="organ_code"> 组织代码 </label>
                               </div>
-                              <div class="col-md-8">
+                              <div class="col-lg-7 col-md-8">
                                 <input type="text" class="form-control o_website_form_input" name="organ_code"/>
                               </div>
                             </div>
@@ -63,7 +63,7 @@
                               <div class="col-md-4 text-md-right">
                                 <label class="col-form-label" for="listed_company"> 是否上市 </label>
                               </div>
-                              <div class="col-md-8">
+                              <div class="col-lg-7 col-md-8">
                                 <div class="o_website_form_flex">
                                   <div class="radio o_website_form_flex_item">
                                     <label>
@@ -84,7 +84,7 @@
                               <div class="col-md-4 text-md-right">
                                 <label class="col-form-label" for="website">公司网站</label>
                               </div>
-                              <div class="col-md-8">
+                              <div class="col-lg-7 col-md-8">
                                 <input type="text" class="form-control o_website_form_input" name="website"/>
                               </div>
                             </div>
@@ -92,7 +92,7 @@
                               <div class="col-md-4 text-md-right">
                                 <label class="col-form-label" for="business_license"> 营业执照 </label>
                               </div>
-                              <div class="col-md-8">
+                              <div class="col-lg-7 col-md-8">
                                 <input type="file" class="form-control o_website_form_input" name="business_license"/>
                               </div>
                             </div>
@@ -100,7 +100,7 @@
                               <div class="col-md-4 text-md-right">
                                 <label class="col-form-label" for="vat"> 税号 </label>
                               </div>
-                              <div class="col-md-8">
+                              <div class="col-lg-7 col-md-8">
                                 <input type="text" class="form-control o_website_form_input" name="vat"/>
                               </div>
                             </div>
@@ -108,7 +108,7 @@
                               <div class="col-md-4 text-md-right">
                                 <label class="col-form-label" for="annual_turnover"> 年营业额 </label>
                               </div>
-                              <div class="col-md-8">
+                              <div class="col-lg-7 col-md-8">
                                 <div class="o_website_form_flex">
                                   <div class="radio o_website_form_flex_item">
                                     <label>
@@ -147,7 +147,7 @@
                               <div class="col-md-4 text-md-right">
                                 <label class="col-form-label" for="employees"> 企业员工 </label>
                               </div>
-                              <div class="col-md-8">
+                              <div class="col-lg-7 col-md-8">
                                 <div class="o_website_form_flex">
                                   <div class="radio o_website_form_flex_item">
                                     <label>
@@ -228,7 +228,7 @@
                             <div class="col-md-4 text-md-right">
                               <label class="col-form-label" for="mobile">手机号码</label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-7 col-md-8">
                               <input type="text" class="form-control o_website_form_input" name="mobile" required="1"/>
                             </div>
                           </div>
@@ -236,7 +236,7 @@
                             <div class="col-md-4 text-md-right">
                               <label class="col-form-label" for="phone">固定电话</label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-7 col-md-8">
                               <input type="text" class="form-control o_website_form_input" name="phone"/>
                             </div>
                           </div>
@@ -244,7 +244,7 @@
                             <div class="col-md-4 text-md-right">
                               <label class="col-form-label" for="email">邮箱</label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-7 col-md-8">
                               <input type="text" class="form-control o_website_form_input" name="email" required="1"/>
                             </div>
                           </div>
@@ -252,7 +252,7 @@
                             <div class="col-md-4 text-md-right">
                               <label class="col-form-label" for="function">工作岗位</label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-7 col-md-8">
                               <input type="text" class="form-control o_website_form_input" name="function"/>
                             </div>
                           </div>
@@ -260,8 +260,8 @@
                             <div class="col-md-4 text-md-right">
                               <label class="col-form-label" for="country_id">国家</label>
                             </div>
-                            <div class="col-md-8">
-                                <select class="form-control o_website_form_input" name="country_id" required="false">
+                            <div class="col-lg-7 col-md-8">
+                                <select class="form-control o_website_form_input" name="country_id">
                                   <option value="48">
                                   中国
                                   </option>
@@ -278,8 +278,9 @@
                             <div class="col-md-4 text-md-right">
                               <label class="col-form-label" for="state_id">省/州</label>
                             </div>
-                            <div class="col-md-8">
-                              <select class="form-control o_website_form_input" name="state_id" required="false">
+                            <div class="col-lg-7 col-md-8">
+                              <select class="form-control o_website_form_input" name="state_id">
+                                 <option value=""></option>
                                   <option value="680">
                                   北京市
                                   </option>
@@ -311,7 +312,7 @@
                             <div class="col-md-4 text-md-right">
                               <label class="col-form-label" for="city">城市</label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-7 col-md-8">
                               <input type="text" class="form-control o_website_form_input" name="city"/>
                             </div>
                           </div>
@@ -319,7 +320,7 @@
                             <div class="col-md-4 text-md-right">
                               <label class="col-form-label" for="street">详细地址</label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-7 col-md-8">
                               <input type="text" class="form-control o_website_form_input" name="street"/>
                             </div>
                           </div>
@@ -343,7 +344,7 @@
                         供应产品类别
                     </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-7 col-md-8">
                               <div class="o_website_form_flex">
                                 <div class="checkbox o_website_form_flex_item">
                                   <label>
@@ -482,7 +483,7 @@
                         备注
                     </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-7 col-md-8">
                               <textarea class="form-control o_website_form_input" name="comment"/>
                             </div>
                           </div>
