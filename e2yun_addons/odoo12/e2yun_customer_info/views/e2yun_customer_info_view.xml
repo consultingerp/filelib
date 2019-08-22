@@ -300,9 +300,6 @@
                                 <field name="property_product_pricelist" attrs="{'required':[('customer','=',True)]}"/>
                                 <field name="x_studio_is_new_logo" attrs="{'invisible': [('customer', '=', False)]}"/>
                                 <field name="is_strategic" attrs="{'invisible': [('customer', '=', False)]}"/>
-                                <field name="category_id" widget="many2many_tags"
-                                       options="{'color_field': 'color', 'no_create_edit': True}"
-                                       placeholder="Tags..."/>
                             </group>
                         </group>
 
@@ -547,6 +544,10 @@
                     <filter string="Individuals" name="type_person" domain="[('is_company','=',False)]"/>
                     <filter string="Companies" name="type_company" domain="[('is_company','=',True)]"/>
                     <separator/>
+                    <filter string="未转正潜在客户" name="e2yun.customer.info" domain="[('customer','=',True), ('parent_id', '=', False),('state','!=','done')]"/>
+                    <separator/>
+                    <filter string="所有潜在客户" name="customer" domain="[('customer','=',True), ('parent_id', '=', False)]"/>
+                    <separator/>
                     <filter string="Customers" name="customer"
                             domain="[('customer','=',True), ('parent_id', '=', False)]"/>
                     <filter string="Vendors" name="supplier"
@@ -689,7 +690,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">kanban,tree,form,graph</field>
             <field name="domain">[]</field>
-            <field name="context">{'default_customer':1, 'search_default_customer':1, 'default_is_company': True}
+            <field name="context">{'default_customer':1, 'search_default_e2yun.customer.info':1, 'default_is_company': True}
             </field>
             <field name="filter" eval="True"/>
             <field name="help" type="html">

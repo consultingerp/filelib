@@ -25,3 +25,4 @@ from . import wx_send_mass
 from . import wx_tracelog
 from . import wx_userodoouser
 from . import wxuser_uuid
+from . import product
