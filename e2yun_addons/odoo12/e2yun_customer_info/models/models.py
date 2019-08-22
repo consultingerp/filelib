@@ -503,7 +503,7 @@ class e2yun_customer_info(models.Model):
 
     @api.multi
     def write(self, vals):
-        if vals.get('image'):
+        if 'image' in vals:
             tools.image_resize_images(vals, sizes={'image': (1024, None)})
         result = super(e2yun_customer_info, self).write(vals)
         return result
