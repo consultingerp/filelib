@@ -78,20 +78,20 @@ class CrmLead(models.Model):
                 company_id, create_date)
             self.amount_usd = self.amount * usd_currency_rate
 
-    @api.onchange("tag_ids", "partner_id")
-    def onchange_tag_ids(self):
-        if self.tag_ids.name == 'New LOGO' and self.partner_id:
-            opp_count = self.search_count([('partner_id', '=', self.partner_id.id)])
-            order_count = self.env['sale.order'].search_count([('partner_id', '=', self.partner_id.id)])
-            if opp_count > 0 or order_count > 0:
-                self.tag_ids = False
-                msg = "Customers already have opportunities or orders and cannot choose new customers."
-                return {
-                    'warning': {
-                        'title': 'Tips',
-                        'message': msg
-                    }
-                }
+    # @api.onchange("tag_ids", "partner_id")
+    # def onchange_tag_ids(self):
+    #     if self.tag_ids.name == 'New LOGO' and self.partner_id:
+    #         opp_count = self.search_count([('partner_id', '=', self.partner_id.id)])
+    #         order_count = self.env['sale.order'].search_count([('partner_id', '=', self.partner_id.id)])
+    #         if opp_count > 0 or order_count > 0:
+    #             self.tag_ids = False
+    #             msg = "Customers already have opportunities or orders and cannot choose new customers."
+    #             return {
+    #                 'warning': {
+    #                     'title': 'Tips',
+    #                     'message': msg
+    #                 }
+    #             }
 
     @api.onchange('rec_rev')
     def onchange_rec_rev(self):
