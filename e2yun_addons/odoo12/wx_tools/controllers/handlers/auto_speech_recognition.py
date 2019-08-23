@@ -2,12 +2,15 @@
 from aip import AipSpeech
 import os
 
+from odoo import http
+
 APP_ID = '16960984'
 API_KEY = 'ZVFgFnQ1CxE3UintGnsCcKVI'
 SECRET_KEY = 'B9GgHbcqxUsUzRlyxM5Uh9FdG08EKNex'
 client = AipSpeech(APP_ID, API_KEY, SECRET_KEY)
 
 
+@http.route(['/thread/src'], type='json', auth='user')
 def voice_conversion(file):
     # 音频文件格式转换
     try:
@@ -24,10 +27,8 @@ def voice_conversion(file):
     with open(pcm_file, 'rb') as fp:
         re = fp.read()
         res = client.asr(re, 'pcm', 16000, {'dev_pid': 1536})
-        print(res)
         message = ''.join(res['result'])
-        print(message)
-        return message
+        return {"message": message}
 
 #
 # if __name__ == "__main__":
