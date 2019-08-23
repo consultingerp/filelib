@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+    <template id="supplier_register_authentication_info">
+      <t t-call="website.layout">
+        <div id="wrap" class="oe_structure oe_empty">
+          <section class="pb0 pt8">
+            <div class="container">
+              <div class="row s_nb_column_fixed">
+                <div class="col-lg-12 s_title pb0 pt0" style="text-align: center; background-color: rgb(214, 239, 214);">
+                  <div class="s_btn pt16 pb16 text-center" data-name="Buttons"><a href="/supplier/register_index" class="btn btn-success btn-lg" data-original-title="" title="" aria-describedby="tooltip242123">服务协议</a>&amp;nbsp; &amp;nbsp; <span class="fa fa-chevron-right" style="" data-original-title="" title="" aria-describedby="tooltip126102"/>&amp;nbsp; &amp;nbsp; &amp;nbsp;<a href="/supplier/register_base_info" class="btn btn-success btn-lg" data-original-title="" title="" aria-describedby="tooltip242123">基础信息</a>&amp;nbsp; &amp;nbsp; <span class="fa fa-chevron-right" style=""/>&amp;nbsp; &amp;nbsp;&amp;nbsp;<a href="#" class="btn btn-primary btn-lg" data-original-title="" title="" aria-describedby="tooltip242123">认证信息</a>&amp;nbsp; &amp;nbsp;<span class="fa fa-chevron-right" style=""/> &amp;nbsp; &amp;nbsp;&amp;nbsp;<a href="#" class="btn btn-secondary btn-lg" data-original-title="" title="" aria-describedby="tooltip242123">完成注册</a></div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="s_tabs oe_custom_bg" style="">
+            <div class="container">
+              <div class="row s_col_no_bgcolor">
+                <div class="pt8 col-lg-12 pb0">
+                  <div class="card bg-white" style="">
+                    <div class="card-header">
+                      <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                        <li class="nav-item">
+                          <a class="nav-link" id="nav_tabs_link_1565876877708_11" data-toggle="tab" href="#nav_tabs_content_1565876877708_11" role="tab" aria-controls="nav_tabs_content_1565876877708_11" aria-selected="false" data-original-title="" title="" aria-describedby="tooltip466102">ISO9000认证</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link active show" id="nav_tabs_link_1565876877708_12" data-toggle="tab" href="#nav_tabs_content_1565876877708_12" role="tab" aria-controls="nav_tabs_content_1565876877708_12" aria-selected="true" data-original-title="" title="" aria-describedby="tooltip466102">ISO14000认证</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="nav_tabs_link_1565876877708_13" data-toggle="tab" href="#nav_tabs_content_1565876877708_13" role="tab" aria-controls="nav_tabs_content_1565876877708_13" aria-selected="false" data-original-title="" title="" aria-describedby="tooltip851032">UL认证</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="nav_tabs_link_1565876877709_14" data-toggle="tab" href="#nav_tabs_content_1565876877709_14" role="tab" aria-controls="nav_tabs_content_1565876877709_14" aria-selected="false" data-original-title="" title="" aria-describedby="tooltip851032">CCC认证</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="nav_tabs_link_1565876877709_16" data-toggle="tab" href="#nav_tabs_content_1565876877709_16" role="tab" aria-controls="nav_tabs_content_1565876877709_16" aria-selected="false" data-original-title="" title="" aria-describedby="tooltip851032">FCC认证</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="card-body tab-content">
+                      <div class="tab-pane fade" id="nav_tabs_content_1565876877708_11" role="tabpanel" aria-labelledby="nav_tabs_link_1565876877708_11">
+                        <p class="MsoNormal" align="center" style="margin: 7.8pt 5.95pt 15.6pt 7.35pt; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-align: center; line-height: 18px;"> </p>
+                        <div id="wrap" class="oe_structure oe_empty">
+                          <form action="/website_form/" method="post" class="s_website_form container-fluid mt32" enctype="multipart/form-data" data-model_name="e2yun.supplier.authentication.info" data-success_page="">
+                            <div class="form-group row form-field o_website_form_required">
+                              <div class="col-md-4 text-right">
+                                <label class="col-form-label" for="name"> 名称 </label>
+                              </div>
+                              <div class="col-lg-7 col-md-8">
+                                <input type="text" class="form-control o_website_form_input" name="name" required="1"/>
+                              </div>
+                            </div>
+                            <div class="row form-group form-field">
+                              <div class="col-md-4 text-md-right">
+                                <label class="col-form-label" for="code"> 认证编号 </label>
+                              </div>
+                              <div class="col-md-8">
+                                <input type="text" class="form-control o_website_form_input" name="code"/>
+                              </div>
+                            </div>
+                            <div class="row form-group form-field o_website_form_field_hidden">
+                              <div class="col-md-4 text-md-right">
+                                <label class="col-form-label" for="authentication_type"> 证书类别 </label>
+                              </div>
+                              <div class="col-md-8">
+                                <div class="o_website_form_flex">
+                                  <div class="radio o_website_form_flex_item">
+                                    <label>
+                                      <input type="radio" class="o_website_form_input" name="authentication_type" value="ISO9000" checked="true"/>
+                                      <span> ISO9000 </span>
+                                    </label>
+                                  </div>
+                                  <div class="radio o_website_form_flex_item">
+                                    <label>
+                                      <input type="radio" class="o_website_form_input" name="authentication_type" value="ISO14000"/>
+                                      <span> ISO14000 </span>
+                                    </label>
+                                  </div>
+                                  <div class="radio o_website_form_flex_item">
+                                    <label>
+                                      <input type="radio" class="o_website_form_input" name="authentication_type" value="FCC"/>
+                                      <span> FCC </span>
+                                    </label>
+                                  </div>
+                                  <div class="radio o_website_form_flex_item">
+                                    <label>
+                                      <input type="radio" class="o_website_form_input" name="authentication_type" value="CCC"/>
+                                      <span> CCC </span>
+                                    </label>
+                                  </div>
+                                  <div class="radio o_website_form_flex_item">
+                                    <label>
+                                      <input type="radio" class="o_website_form_input" name="authentication_type" value="UL"/>
+                                      <span> UL </span>
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row form-group form-field">
+                              <div class="col-md-4 text-md-right">
+                                <label class="col-form-label" for="image"> 证书图片 </label>
+                              </div>
+                              <div class="col-md-8">
+                                <input type="file" class="form-control o_website_form_input" name="image"/>
+                              </div>
+                            </div>
+                            <div class="row form-group form-field">
+                              <div class="col-md-4 text-md-right">
+                                <label class="col-form-label" for="start_date"> 生效日期 </label>
+                              </div>
+                              <div class="col-md-8">
+                                <div class="o_website_form_date input-group date" id="datepicker2" data-target-input="nearest">
+                                  <input type="text" class="form-control datetimepicker-input o_website_form_input" data-target="#datepicker2" name="start_date"/>
+                                  <div class="input-group-append" data-target="#datepicker2" data-toggle="datetimepicker">
+                                    <div class="input-group-text">
+                                      <i class="fa fa-calendar"/>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row form-group form-field">
+                              <div class="col-md-4 text-md-right">
+                                <label class="col-form-label" for="end_date"> 失效日期 </label>
+                              </div>
+                              <div class="col-md-8">
+                                <div class="o_website_form_date input-group date" id="datepicker3" data-target-input="nearest">
+                                  <input type="text" class="form-control datetimepicker-input o_website_form_input" data-target="#datepicker3" name="end_date"/>
+                                  <div class="input-group-append" data-target="#datepicker3" data-toggle="datetimepicker">
+                                    <div class="input-group-text">
+                                      <i class="fa fa-calendar"/>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row form-group form-field">
+                              <div class="col-md-4 text-md-right">
+                                <label class="col-form-label" for="remark"> 备注 </label>
+                              </div>
+                              <div class="col-md-8">
+                                <textarea class="form-control o_website_form_input" name="remark"/>
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
+                                <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>
+                                <span id="o_website_form_result" class="text-danger ml8"/>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                        <p/>
+                        <p/>
+                        <span style="font-weight: bolder;"/>
+                        <p/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">
+                            <br/>
+                          </span>
+                        </p>
+                        <h3>
+                          <br/>
+                        </h3>
+                      </div>
+                      <div class="tab-pane fade active show" id="nav_tabs_content_1565876877708_12" role="tabpanel" aria-labelledby="nav_tabs_link_1565876877708_12">
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          </p>
+                        <form action="/website_form/" method="post" class="s_website_form container-fluid mt32" enctype="multipart/form-data" data-model_name="e2yun.supplier.authentication.info" data-success_page="">
+                          <div class="form-group row form-field o_website_form_required">
+                            <div class="col-md-4 text-right">
+                              <label class="col-form-label" for="name"> 名称 </label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                              <input type="text" class="form-control o_website_form_input" name="name" required="1"/>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="code"> 认证编号 </label>
+                            </div>
+                            <div class="col-md-8">
+                              <input type="text" class="form-control o_website_form_input" name="code"/>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field o_website_form_field_hidden">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="authentication_type"> 证书类别 </label>
+                            </div>
+                            <div class="col-md-8">
+                              <div class="o_website_form_flex">
+                                <div class="radio o_website_form_flex_item">
+                                  <label>
+                                    <input type="radio" class="o_website_form_input" name="authentication_type" value="ISO"/>
+                                    <span> ISO9000 </span>
+                                  </label>
+                                </div>
+                                <div class="radio o_website_form_flex_item">
+                                  <label>
+                                    <input type="radio" class="o_website_form_input" name="authentication_type" value="ISO14000" checked="true"/>
+                                    <span> ISO14000 </span>
+                                  </label>
+                                </div>
+                                <div class="radio o_website_form_flex_item">
+                                  <label>
+                                    <input type="radio" class="o_website_form_input" name="authentication_type" value="FCC"/>
+                                    <span> FCC </span>
+                                  </label>
+                                </div>
+                                <div class="radio o_website_form_flex_item">
+                                  <label>
+                                    <input type="radio" class="o_website_form_input" name="authentication_type" value="CCC"/>
+                                    <span> CCC </span>
+                                  </label>
+                                </div>
+                                <div class="radio o_website_form_flex_item">
+                                  <label>
+                                    <input type="radio" class="o_website_form_input" name="authentication_type" value="UL"/>
+                                    <span> UL </span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="image"> 证书图片 </label>
+                            </div>
+                            <div class="col-md-8">
+                              <input type="file" class="form-control o_website_form_input" name="image"/>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="start_date"> 生效日期 </label>
+                            </div>
+                            <div class="col-md-8">
+                              <div class="o_website_form_date input-group date" id="datepicker4" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input o_website_form_input" data-target="#datepicker4" name="start_date"/>
+                                <div class="input-group-append" data-target="#datepicker4" data-toggle="datetimepicker">
+                                  <div class="input-group-text">
+                                    <i class="fa fa-calendar"/>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="end_date"> 失效日期 </label>
+                            </div>
+                            <div class="col-md-8">
+                              <div class="o_website_form_date input-group date" id="datepicker5" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input o_website_form_input" data-target="#datepicker5" name="end_date"/>
+                                <div class="input-group-append" data-target="#datepicker5" data-toggle="datetimepicker">
+                                  <div class="input-group-text">
+                                    <i class="fa fa-calendar"/>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="remark">
+                        备注
+                    </label>
+                            </div>
+                            <div class="col-md-8">
+                              <textarea class="form-control o_website_form_input" name="remark"/>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
+                              <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>
+                              <span id="o_website_form_result" class="text-danger ml8"/>
+                            </div>
+                          </div>
+                        </form>
+                        <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">
+                          <br/>
+                        </span>
+                        <p/>
+                        <h3>
+                          <br/>
+                        </h3>
+                      </div>
+                      <div class="tab-pane fade" id="nav_tabs_content_1565876877708_13" role="tabpanel" aria-labelledby="nav_tabs_link_1565876877708_13">
+                        <h3/>
+                        <p align="center" style="margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto;">
+                          <span class="STYLE7" style="font-family: Arial, Helvetica, sans-serif; font-size: 24px; font-weight: bold;">UL认证&amp;nbsp;<span class="Apple-converted-space">&amp;nbsp;</span>&amp;nbsp;</span>
+                        </p>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          </p>
+                        <form action="/website_form/" method="post" class="s_website_form container-fluid mt32" enctype="multipart/form-data" data-model_name="e2yun.supplier.authentication.info" data-success_page="">
+                          <div class="form-group row form-field o_website_form_required">
+                            <div class="col-md-4 text-right">
+                              <label class="col-form-label" for="name"> 名称 </label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                              <input type="text" class="form-control o_website_form_input" name="name" required="1"/>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="code"> 认证编号 </label>
+                            </div>
+                            <div class="col-md-8">
+                              <input type="text" class="form-control o_website_form_input" name="code"/>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field o_website_form_field_hidden">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="authentication_type"> 证书类别 </label>
+                            </div>
+                            <div class="col-md-8">
+                              <div class="o_website_form_flex">
+                                <div class="radio o_website_form_flex_item">
+                                  <label>
+                                    <input type="radio" class="o_website_form_input" name="authentication_type" value="ISO"/>
+                                    <span> ISO9000 </span>
+                                  </label>
+                                </div>
+                                <div class="radio o_website_form_flex_item">
+                                  <label>
+                                    <input type="radio" class="o_website_form_input" name="authentication_type" value="ISO14000"/>
+                                    <span> ISO14000 </span>
+                                  </label>
+                                </div>
+                                <div class="radio o_website_form_flex_item">
+                                  <label>
+                                    <input type="radio" class="o_website_form_input" name="authentication_type" value="FCC"/>
+                                    <span> FCC </span>
+                                  </label>
+                                </div>
+                                <div class="radio o_website_form_flex_item">
+                                  <label>
+                                    <input type="radio" class="o_website_form_input" name="authentication_type" value="CCC"/>
+                                    <span> CCC </span>
+                                  </label>
+                                </div>
+                                <div class="radio o_website_form_flex_item">
+                                  <label>
+                                    <input type="radio" class="o_website_form_input" name="authentication_type" value="UL" checked="true"/>
+                                    <span> UL </span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="image"> 证书图片 </label>
+                            </div>
+                            <div class="col-md-8">
+                              <input type="file" class="form-control o_website_form_input" name="image"/>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="start_date"> 生效日期 </label>
+                            </div>
+                            <div class="col-md-8">
+                              <div class="o_website_form_date input-group date" id="datepicker6" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input o_website_form_input" data-target="#datepicker6" name="start_date"/>
+                                <div class="input-group-append" data-target="#datepicker6" data-toggle="datetimepicker">
+                                  <div class="input-group-text">
+                                    <i class="fa fa-calendar"/>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="end_date"> 失效日期 </label>
+                            </div>
+                            <div class="col-md-8">
+                              <div class="o_website_form_date input-group date" id="datepicker7" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input o_website_form_input" data-target="#datepicker7" name="end_date"/>
+                                <div class="input-group-append" data-target="#datepicker7" data-toggle="datetimepicker">
+                                  <div class="input-group-text">
+                                    <i class="fa fa-calendar"/>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="remark">
+                        备注
+                    </label>
+                            </div>
+                            <div class="col-md-8">
+                              <textarea class="form-control o_website_form_input" name="remark"/>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
+                              <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>
+                              <span id="o_website_form_result" class="text-danger ml8"/>
+                            </div>
+                          </div>
+                        </form>
+                        <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">
+                          <br/>
+                        </span>
+                        <p/>
+                      </div>
+                      <div class="tab-pane fade" id="nav_tabs_content_1565876877709_14" role="tabpanel" aria-labelledby="nav_tabs_link_1565876877709_14">
+                        <h3/>
+                        <p align="center" style="margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto;">
+                          <span class="STYLE7" style="font-family: Arial, Helvetica, sans-serif; font-size: 24px; font-weight: bold;">CCC认证&amp;nbsp;<span class="Apple-converted-space">&amp;nbsp;</span>&amp;nbsp;</span>
+                        </p>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          </p>
+                        <form action="/website_form/" method="post" class="s_website_form container-fluid mt32" enctype="multipart/form-data" data-model_name="e2yun.supplier.authentication.info" data-success_page="">
+                          <div class="form-group row form-field o_website_form_required">
+                            <div class="col-md-4 text-right">
+                              <label class="col-form-label" for="name"> 名称 </label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                              <input type="text" class="form-control o_website_form_input" name="name" required="1"/>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="code"> 认证编号 </label>
+                            </div>
+                            <div class="col-md-8">
+                              <input type="text" class="form-control o_website_form_input" name="code"/>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field o_website_form_field_hidden">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="authentication_type"> 证书类别 </label>
+                            </div>
+                            <div class="col-md-8">
+                              <div class="o_website_form_flex">
+                                <div class="radio o_website_form_flex_item">
+                                  <label>
+                                    <input type="radio" class="o_website_form_input" name="authentication_type" value="ISO"/>
+                                    <span> ISO9000 </span>
+                                  </label>
+                                </div>
+                                <div class="radio o_website_form_flex_item">
+                                  <label>
+                                    <input type="radio" class="o_website_form_input" name="authentication_type" value="ISO14000"/>
+                                    <span> ISO14000 </span>
+                                  </label>
+                                </div>
+                                <div class="radio o_website_form_flex_item">
+                                  <label>
+                                    <input type="radio" class="o_website_form_input" name="authentication_type" value="FCC"/>
+                                    <span> FCC </span>
+                                  </label>
+                                </div>
+                                <div class="radio o_website_form_flex_item">
+                                  <label>
+                                    <input type="radio" class="o_website_form_input" name="authentication_type" value="CCC" checked="true"/>
+                                    <span> CCC </span>
+                                  </label>
+                                </div>
+                                <div class="radio o_website_form_flex_item">
+                                  <label>
+                                    <input type="radio" class="o_website_form_input" name="authentication_type" value="UL"/>
+                                    <span> UL </span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="image"> 证书图片 </label>
+                            </div>
+                            <div class="col-md-8">
+                              <input type="file" class="form-control o_website_form_input" name="image"/>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="start_date"> 生效日期 </label>
+                            </div>
+                            <div class="col-md-8">
+                              <div class="o_website_form_date input-group date" id="datepicker8" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input o_website_form_input" data-target="#datepicker8" name="start_date"/>
+                                <div class="input-group-append" data-target="#datepicker8" data-toggle="datetimepicker">
+                                  <div class="input-group-text">
+                                    <i class="fa fa-calendar"/>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="end_date"> 失效日期 </label>
+                            </div>
+                            <div class="col-md-8">
+                              <div class="o_website_form_date input-group date" id="datepicker9" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input o_website_form_input" data-target="#datepicker9" name="end_date"/>
+                                <div class="input-group-append" data-target="#datepicker9" data-toggle="datetimepicker">
+                                  <div class="input-group-text">
+                                    <i class="fa fa-calendar"/>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="remark">
+                        备注
+                    </label>
+                            </div>
+                            <div class="col-md-8">
+                              <textarea class="form-control o_website_form_input" name="remark"/>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
+                              <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>
+                              <span id="o_website_form_result" class="text-danger ml8"/>
+                            </div>
+                          </div>
+                        </form>
+                        <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">
+                          <br/>
+                        </span>
+                        <p/>
+                      </div>
+                      <div class="tab-pane fade" id="nav_tabs_content_1565876877709_16" role="tabpanel" aria-labelledby="nav_tabs_link_1565876877709_16">
+                        <h3/>
+                        <p align="center" style="margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto;">
+                          <span class="STYLE7" style="font-family: Arial, Helvetica, sans-serif; font-size: 24px; font-weight: bold;">FCC认证&amp;nbsp;<span class="Apple-converted-space">&amp;nbsp;</span>&amp;nbsp;</span>
+                        </p>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          </p>
+                        <form action="/website_form/" method="post" class="s_website_form container-fluid mt32" enctype="multipart/form-data" data-model_name="e2yun.supplier.authentication.info" data-success_page="">
+                          <div class="form-group row form-field o_website_form_required">
+                            <div class="col-md-4 text-right">
+                              <label class="col-form-label" for="name"> 名称 </label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                              <input type="text" class="form-control o_website_form_input" name="name" required="1"/>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="code"> 认证编号 </label>
+                            </div>
+                            <div class="col-md-8">
+                              <input type="text" class="form-control o_website_form_input" name="code"/>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field o_website_form_field_hidden">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="authentication_type"> 证书类别 </label>
+                            </div>
+                            <div class="col-md-8">
+                              <div class="o_website_form_flex">
+                                <div class="radio o_website_form_flex_item">
+                                  <label>
+                                    <input type="radio" class="o_website_form_input" name="authentication_type" value="ISO"/>
+                                    <span> ISO9000 </span>
+                                  </label>
+                                </div>
+                                <div class="radio o_website_form_flex_item">
+                                  <label>
+                                    <input type="radio" class="o_website_form_input" name="authentication_type" value="ISO14000"/>
+                                    <span> ISO14000 </span>
+                                  </label>
+                                </div>
+                                <div class="radio o_website_form_flex_item">
+                                  <label>
+                                    <input type="radio" class="o_website_form_input" name="authentication_type" value="FCC" checked="true"/>
+                                    <span> FCC </span>
+                                  </label>
+                                </div>
+                                <div class="radio o_website_form_flex_item">
+                                  <label>
+                                    <input type="radio" class="o_website_form_input" name="authentication_type" value="CCC"/>
+                                    <span> CCC </span>
+                                  </label>
+                                </div>
+                                <div class="radio o_website_form_flex_item">
+                                  <label>
+                                    <input type="radio" class="o_website_form_input" name="authentication_type" value="UL"/>
+                                    <span> UL </span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="image"> 证书图片 </label>
+                            </div>
+                            <div class="col-md-8">
+                              <input type="file" class="form-control o_website_form_input" name="image"/>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="start_date"> 生效日期 </label>
+                            </div>
+                            <div class="col-md-8">
+                              <div class="o_website_form_date input-group date" id="datepicker11" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input o_website_form_input" data-target="#datepicker11" name="start_date"/>
+                                <div class="input-group-append" data-target="#datepicker11" data-toggle="datetimepicker">
+                                  <div class="input-group-text">
+                                    <i class="fa fa-calendar"/>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="end_date"> 失效日期 </label>
+                            </div>
+                            <div class="col-md-8">
+                              <div class="o_website_form_date input-group date" id="datepicker22" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input o_website_form_input" data-target="#datepicker22" name="end_date"/>
+                                <div class="input-group-append" data-target="#datepicker22" data-toggle="datetimepicker">
+                                  <div class="input-group-text">
+                                    <i class="fa fa-calendar"/>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row form-group form-field">
+                            <div class="col-md-4 text-md-right">
+                              <label class="col-form-label" for="remark">
+                        备注
+                    </label>
+                            </div>
+                            <div class="col-md-8">
+                              <textarea class="form-control o_website_form_input" name="remark"/>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
+                              <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>
+                              <span id="o_website_form_result" class="text-danger ml8"/>
+                            </div>
+                          </div>
+                        </form>
+                        <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">
+                          <br/>
+                        </span>
+                        <p/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12 s_title pt16 pb16" style="text-align: center;">
+                  <div class="s_btn pb0 pt0 text-center" data-name="Buttons"><a href="/supplier/register_done" class="rounded-circle rounded-circle rounded-circle rounded-circle btn btn-success rounded-circle btn-lg" data-original-title="" title="" aria-describedby="tooltip84497">下一步</a>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="pt32 pb0">
+            <div class="container">
+              <div class="row s_nb_column_fixed"> </div>
+            </div>
+          </section>
+        </div>
+      </t>
+
+    </template>
+  </data>
+</odoo>

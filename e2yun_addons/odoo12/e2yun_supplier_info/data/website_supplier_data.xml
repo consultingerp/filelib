@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="e2yun_supplier_info.model_e2yun_supplier_info" model="ir.model">
+            <!--<field name="website_form_default_field_id" ref="crm.field_crm_lead__description" />-->
+            <field name="website_form_access">True</field>
+            <!--<field name="website_form_label">Create a lead</field>-->
+        </record>
+        <function model="ir.model.fields" name="formbuilder_whitelist">
+            <value>e2yun.supplier.info</value>
+            <value eval="[
+                'name',
+                'company_name',
+                'organ_code',
+                'business_license',
+                'annual_turnover',
+                'employees',
+                'supply_products',
+                'comment',
+                'phone',
+                'email',
+                'supplier_user',
+                'listed_company',
+                'mobile',
+                'website',
+                'country_id',
+                'state_id',
+                'city',
+                'street',
+                'function',
+                'secondary_industry_ids',
+                'vat',
+                'login_name',
+                'password',
+                'confirm_password',
+            ]"/>
+        </function>
+
+        <record id="e2yun_supplier_info.model_e2yun_supplier_authentication_info" model="ir.model">
+            <field name="website_form_access">True</field>
+        </record>
+        <function model="ir.model.fields" name="formbuilder_whitelist">
+            <value>e2yun.supplier.authentication.info</value>
+            <value eval="[
+                'name',
+                'code',
+                'image',
+                'start_date',
+                'end_date',
+                'remark',
+                'supplier_info_id',
+                'authentication_type',
+            ]"/>
+        </function>
+
+        <record id="e2yun_supplier_info.model_e2yun_supplier_user" model="ir.model">
+            <field name="website_form_access">True</field>
+        </record>
+        <function model="ir.model.fields" name="formbuilder_whitelist">
+            <value>e2yun.supplier.user</value>
+            <value eval="[
+                'name',
+                'password',
+                'confirm_password',
+            ]"/>
+        </function>
+
+    </data>
+    <!--<data noupdate="1">-->
+        <!--<record id="action_open_website" model="ir.actions.act_url">-->
+            <!--<field name="name">Website Contact Form</field>-->
+            <!--<field name="target">self</field>-->
+            <!--<field name="url">/contactus</field>-->
+        <!--</record>-->
+
+        <!--<record id="base.open_menu" model="ir.actions.todo">-->
+            <!--<field name="action_id" ref="action_open_website"/>-->
+            <!--<field name="state">open</field>-->
+        <!--</record>-->
+    <!--</data>-->
+</odoo>

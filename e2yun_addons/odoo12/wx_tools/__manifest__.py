@@ -46,7 +46,8 @@
         'views/res_config_settings_views.xml',
         'views/sale_coupon_program_views.xml',
         'views/wx_tools_wx.xml',
-        'views/nearby_stores_template.xml'
+        'views/nearby_stores_template.xml',
+        'views/product_template_views.xml'
     ],
     'qweb': [
         "static/src/xml/wx_team.xml",
