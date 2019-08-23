@@ -20,7 +20,7 @@
 @include media-breakpoint-down(sm) {
     .o_main_navbar {
         // This allows to have a sane layout for mobiles
-        //display: flex;
+        display: flex;
 
         // Remove clutter to only have small icons that fit in a small screen
         > .dropdown {
@@ -31,7 +31,7 @@
             }
 
             .o_menu_sections,
-            .o_menu_systray
+            .o_menu_systray,
             {
                 padding: 0;
             }
@@ -45,7 +45,7 @@
         // Hide big things
         .o_menu_brand,
         .o_menu_sections,
-        .oe_topbar_name
+        .oe_topbar_name,
         {
             display: none;
         }
@@ -74,7 +74,7 @@
 
             > li,
             .o_menu_entry_lvl_1,
-            .o_menu_header_lvl_1
+            .o_menu_header_lvl_1,
             {
                 // Homogeneous background color
                 background-color: $dropdown-bg;
@@ -227,7 +227,7 @@ html .o_web_client .o_main .o_main_content {
         .o_cp_buttons,
         .o_cp_left,
         .o_cp_right,
-        .o_cp_searchview
+        .o_cp_searchview,
         {
             flex: 1 1 100%;
             @include media-breakpoint-up(md) {
@@ -240,7 +240,7 @@ html .o_web_client .o_main .o_main_content {
         }
 
         .o_cp_searchview,
-        .o_cp_right
+        .o_cp_right,
         {
             flex-basis: 10%;
         }
@@ -290,7 +290,7 @@ html .o_web_client .o_main .o_main_content {
         }
 
         // Empty sidebar should not break layout
-        .o_cp_sidebar blank {
+        .o_cp_sidebar:blank {
             display: none;
         }
 
@@ -321,12 +321,6 @@ html .o_web_client .o_main .o_main_content {
     }
 }
 
-//.o_control_panel {
-//    position: sticky;
-//    top: 0;
-//    z-index: 10;
-//}
-
 // Normal views
 .o_content, .modal-content {
     max-width: 100%;
@@ -342,13 +336,14 @@ html .o_web_client .o_main .o_main_content {
         .o_form_statusbar {
             position: sticky;
             top: 0;
-            z-index: 5;
+            z-index: 1;
         }
+
         // Support for long title (with ellipsis)
         .oe_title {
             width: initial;
 
-            span {
+            span.o_field_widget {
                 max-width: 100%;
                 text-overflow: ellipsis;
                 white-space: nowrap;
@@ -365,7 +360,7 @@ html .o_web_client .o_main .o_main_content {
 
             // Avoid overflow on forms with title and/or button box
             .oe_button_box,
-            .oe_title
+            .oe_title,
             {
                 max-width: 100%;
             }
@@ -416,7 +411,7 @@ html .o_web_client .o_main .o_main_content {
 
             // Full width in form sheets
             .o_form_sheet,
-            .oe_chatter
+            .oe_chatter,
             {
                 min-width: auto;
                 max-width: 98%;
@@ -431,7 +426,7 @@ html .o_web_client .o_main .o_main_content {
 
             .o_chatter {
                 // Display send button on small screens
-                .o_thread_composer{
+                .o_thread_composer {
                     padding-left: $o-mail-thread-avatar-size*0.5;
 
                     .o_composer_button_send {
@@ -551,7 +546,3 @@ html .o_web_client .o_main .o_main_content {
 .oe_wait {
   cursor: progress;
 }
-
-#o_composer_send_o_composer_button_send{
-            display:inline !important;
-        }
