@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
-
-from odoo import models, fields, api
+import base64
+from odoo import models, fields, api, tools
 import datetime
+import threading
 import pytz
+from odoo.modules import get_module_resource
 import logging
 from odoo.exceptions import UserError
 from odoo.tools.translate import _
-
+from odoo.tools import pycompat
 from email.utils import formataddr
 
 ADDRESS_FIELDS = ('street', 'street2', 'zip', 'city', 'state_id', 'country_id')
@@ -66,7 +68,7 @@ class e2yun_customer_info(models.Model):
     credit_limit = fields.Float(string='Credit Limit')
     barcode = fields.Char(oldname='ean13', help="Use a barcode to identify this contact from the Point of Sale.")
     active = fields.Boolean(default=True)
-    customer = fields.Boolean(string='Is a Customer', default= True,
+    customer = fields.Boolean(string='Is a Customer', default=True,
                               help="Check this box if this contact is a customer. It can be selected in sales orders.")
     supplier = fields.Boolean(string='Is a Vendor',
                               help="Check this box if this contact is a vendor. It can be selected in purchase orders.")
@@ -196,7 +198,7 @@ class e2yun_customer_info(models.Model):
         name = self.name
         count = self.env['res.partner'].sudo().search_count([('name', '=', name)])
         if count == 0:
-            count = self.env['res.partner'].sudo().search_count([('name', '=', name),('active','=',False)])
+            count = self.env['res.partner'].sudo().search_count([('name', '=', name), ('active', '=', False)])
         if count > 0:
             self.name = False
             msg = _("The name you entered already exists for customers.")
@@ -208,7 +210,7 @@ class e2yun_customer_info(models.Model):
             }
         count = self.env['e2yun.customer.info'].sudo().search_count([('name', '=', name)])
         if count == 0:
-            count = self.env['e2yun.customer.info'].sudo().search_count([('name', '=', name),('active','=',False)])
+            count = self.env['e2yun.customer.info'].sudo().search_count([('name', '=', name), ('active', '=', False)])
         if count > 0:
             self.name = False
             msg = _("The name you entered already exists.")
@@ -225,7 +227,8 @@ class e2yun_customer_info(models.Model):
         if register_no:
             count = self.env['res.partner'].sudo().search_count([('register_no', '=', register_no)])
             if count == 0:
-                count = self.env['res.partner'].sudo().search_count([('register_no', '=', register_no),('active','=',False)])
+                count = self.env['res.partner'].sudo().search_count(
+                    [('register_no', '=', register_no), ('active', '=', False)])
             if count > 0:
                 self.vat = False
                 msg = _("The Duty paragraph you entered already exists for customers.")
@@ -420,9 +423,9 @@ class e2yun_customer_info(models.Model):
                 if field in UNINCLUDE_COL:
                     continue
 
-                if isinstance(self[field], str) or isinstance(self[field], int) or isinstance(self[field],
-                                                                                              float) or isinstance(
-                    self[field], bool):
+                if isinstance(self[field], str) or isinstance(self[field], int) or isinstance(self[field], float) or isinstance( self[field], bool) or isinstance(
+                    self[field], bytes) or isinstance(
+                    self[field], datetime.date):
                     data[field] = self[field]
                 else:
                     if self.fields_get()[field]['type'] in ('one2many', 'many2many'):
@@ -448,7 +451,7 @@ class e2yun_customer_info(models.Model):
 
     @api.multi
     def write(self, values):
-        #读取按钮权限组s
+        # 读取按钮权限组s
         groups_id = self.env.ref('ZCRM.Business_group').id
         sql = 'SELECT * from res_groups_users_rel where gid=%s and uid=%s'
         self._cr.execute(sql, (groups_id, self._uid,))
@@ -458,3 +461,49 @@ class e2yun_customer_info(models.Model):
         if self.state != 'Draft' and not groups_users:
             raise UserError('当前状态下无法操作更新，请联系管理员')
         return super(e2yun_customer_info, self).write(values)
+
+    @api.model
+    def _get_default_image(self, partner_type, is_company, parent_id):
+        if getattr(threading.currentThread(), 'testing', False) or self._context.get('install_mode'):
+            return False
+
+        colorize, img_path, image = False, False, False
+
+        if partner_type in ['other'] and parent_id:
+            parent_image = self.browse(parent_id).image
+            image = parent_image and base64.b64decode(parent_image) or None
+
+        if not image and partner_type == 'invoice':
+            img_path = get_module_resource('base', 'static/img', 'money.png')
+        elif not image and partner_type == 'delivery':
+            img_path = get_module_resource('base', 'static/img', 'truck.png')
+        elif not image and is_company:
+            img_path = get_module_resource('base', 'static/img', 'company_image.png')
+        elif not image:
+            img_path = get_module_resource('base', 'static/img', 'avatar.png')
+            colorize = True
+
+        if img_path:
+            with open(img_path, 'rb') as f:
+                image = f.read()
+        if image and colorize:
+            image = tools.image_colorize(image)
+
+        return tools.image_resize_image_big(base64.b64encode(image))
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if not vals.get('image'):
+                vals['image'] = self._get_default_image(vals.get('type'), vals.get('is_company'), vals.get('parent_id'))
+            tools.image_resize_images(vals, sizes={'image': (1024, None)})
+        partners = super(e2yun_customer_info, self).create(vals_list)
+
+        return partners
+
+    @api.multi
+    def write(self, vals):
+        if 'image' in vals:
+            tools.image_resize_images(vals, sizes={'image': (1024, None)})
+        result = super(e2yun_customer_info, self).write(vals)
+        return result
