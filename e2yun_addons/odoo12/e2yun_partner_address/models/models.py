@@ -27,11 +27,11 @@ class E2yunCsutomerExtends(models.Model):
         if d and e_idx <= len(desc):
             s = self.env[t_name].search([('name', '=', d)])
             if s:
-                return s.id,e_idx
+                return s[0].id,e_idx
             else:
                 s = self.env[t_name].search([('name', '=', d+postfix)])
                 if s:
-                    return s.id, e_idx
+                    return s[0].id, e_idx
                 else:
                     return self.get_add(desc,s_idx,e_idx+1,t_name,postfix)
         else:
@@ -73,6 +73,13 @@ class E2yunCsutomerExtends(models.Model):
                 if state_id > 0:
                     self.state_id = state_id
                     city_id, city_idx = self.get_add(desc,state_idx,1+state_idx,'res.state.city','市')
+                else:
+                    city_id, city_idx = self.get_add(desc, 0, 2, 'res.state.city', '市')
+                    if city_id:
+                        state = self.env['res.state.city'].browse(city_id).state_id
+                        if state:
+                            self.state_id = state[0].id
+
                 if city_id > 0:
                     area_id, area_idx = self.get_add(desc,city_idx,1+city_idx,'res.city.area','区')
                     self.city_id = city_id
