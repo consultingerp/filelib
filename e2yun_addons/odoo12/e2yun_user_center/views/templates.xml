@@ -5020,7 +5020,7 @@
                     <div class="weui-cells" style="margin-top: 0">
                         <a class="weui-cell head-cells weui-cell_access" href="/user-center/my-info">
                             <div class="weui-cell__hd">
-                                <img t-attf-src="data:image/png;base64,#{current_user.image_small}" alt=""/>
+                                <img t-attf-src="data:image/png;base64,#{current_user.image_small}" alt="" height="100px" width="100px"/>
 <!--                                <img src="/e2yun_user_center/static/src/images/me_head_img.jpg" alt=""/>-->
                             </div>
                             <div class="weui-cell__bd flex flex-v" style="margin-left: 30">
@@ -10080,7 +10080,7 @@
                     <div class="weui-cells" style="margin-top: 0">
                         <a class="weui-cell head-cells weui-cell_access" href="/user-center/my-info">
                             <div class="weui-cell__hd">
-                                <img t-attf-src="data:image/png;base64,#{current_user.image_small}" alt=""/>
+                                <img t-attf-src="data:image/png;base64,#{current_user.image_small}" alt="" height="100px" width="100px"/>
 <!--                                <img src="/e2yun_user_center/static/src/images/me_head_img.jpg" alt=""/>-->
                             </div>
                             <div class="weui-cell__bd flex flex-v" style="margin-left: 30">
