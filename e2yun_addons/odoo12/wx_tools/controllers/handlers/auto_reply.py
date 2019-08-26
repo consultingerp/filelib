@@ -66,7 +66,8 @@ def main(robot):
             media_id = message.media_id
             media_format = message.format
             r = client.wxclient.download_media(media_id)
-            _filename = '%s.%s' % (media_id, media_format)
+            #_filename = '%s.%s' % (media_id, media_format)
+            _filename = '%s.%s' % (media_id, 'mp3')
             _data = r.content
             attachment = request.env['ir.attachment'].sudo().create({
                 'name': '__wx_voice|%s' % message.media_id,
