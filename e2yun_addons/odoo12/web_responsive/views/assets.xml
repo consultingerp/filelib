@@ -16,5 +16,9 @@
                     src="/web_responsive/static/src/js/web_responsive.js"
                     />
         </xpath>
+
+        <xpath expr="//script[@src='/web_enterprise/static/src/js/menu.js']" position="replace">
+            <script type="text/javascript" src="/web_responsive/static/src/js/menu.js"/>
+        </xpath>
     </template>
 </odoo>
