@@ -78,7 +78,11 @@ class LoginHome(Home):
                 if 'error' in login_as.qcontext:
                     return login_as
                 logging.info("登录用户%s:%s" % (odoouser.user_id.login, wx_user_info['UserId']))
-                uid = request.session.authenticate(request.session.db, odoouser.user_id.login, odoouser.password)
+                try:
+                    uid = request.session.authenticate(request.session.db, odoouser.user_id.login, odoouser.password)
+                except:
+                    logging.info("登录用户出错：%s:%s" % (odoouser.user_id.login, wx_user_info['UserId']))
+                    return http.local_redirect('/web/login')
                 if redirect:
                     return http.local_redirect(redirect)
                 else:
@@ -115,6 +119,7 @@ class LoginHome(Home):
                     wxuserinfo = request.env['wx.user'].sudo().search([('openid', '=', wx_user_info['UserId'])])
                     wx_user_info['wx_user_id'] = wxuserinfo.id
                     request.env['wx.user.odoouser'].sudo().write(wx_user_info)
+                    odoouser = userinfo.write(wx_user_info)
                 else:
                     wxuserinfo = request.env['wx.user'].sudo().search([('openid', '=', wx_user_info['UserId'])])
                     wx_user_info['wx_user_id'] = wxuserinfo.id
