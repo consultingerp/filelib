@@ -82,7 +82,7 @@ class AmapAip(http.Controller):
 
             data = {"locations": convert_location, 'formatted_address': formatted_address}
             newport_ri = (location[1], location[0])
-            crm_team_pool = request.env['crm.team'].search_read(domain)
+            crm_team_pool = request.env['crm.team'].sudo(2).search_read(domain)
             search_read_new = []
             for crm_team in crm_team_pool:
                 if crm_team['longitude'] != 0.0 or crm_team['longitude'] != 0.0:
@@ -141,7 +141,7 @@ class AmapAip(http.Controller):
                 ('name', 'not ilike', '北京%'),
                 ('name', 'not ilike', '深圳%')
             ]
-        crm_team_list = request.env['crm.team'].search_read(domain, limit=50)
+        crm_team_list = request.env['crm.team'].sudo(2).search_read(domain, limit=20)
         return {
             'crm_team_list': crm_team_list
         }
