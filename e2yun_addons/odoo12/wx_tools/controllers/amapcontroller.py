@@ -40,7 +40,7 @@ class AmapAip(http.Controller):
 
     @http.route(['/amap/nearby_stores'], type='json', auth='user')
     def nearby_stores(self, location, storename):
-        datalistsize = 50
+        datalistsize = 20
         domain = []
         if storename == 'BJ':
             domain = [
