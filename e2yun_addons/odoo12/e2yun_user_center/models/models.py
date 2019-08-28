@@ -124,3 +124,10 @@ class UserCenter(http.Controller):
     def my_qrcode(self, **kwargs):
         user = http.request.env.user
         return http.request.render('e2yun_user_center.e2yun_user_center_my_qrcode_template', {'current_user': user})
+
+    # 个人中心 用户信息界面 跳转到更改密码二维码界面
+    @http.route('/user-center/change-password-qrcode', auth='user')
+    def change_password_qrcode(self, **kwargs):
+        config_pool = http.request.env['ir.config_parameter']
+        auth_signup_reset_password_qrcodeimg = config_pool.search([('key', '=', 'auth_signup_reset_password_qrcodeimg')])
+        return http.request.render('e2yun_user_center.e2yun_user_center_change_password_qrcode_template', {'change_password_qrcode': auth_signup_reset_password_qrcodeimg})
