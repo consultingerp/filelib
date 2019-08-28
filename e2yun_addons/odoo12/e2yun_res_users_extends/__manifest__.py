@@ -15,6 +15,6 @@
         'views/res_users_view.xml',
         'views/res_company_view.xml',
     ],
-    'installable': False,
+    'installable': True,
 }
 # -*- coding: utf-8 -*-
