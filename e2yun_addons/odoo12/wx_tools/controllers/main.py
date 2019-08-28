@@ -43,7 +43,7 @@ class LoginHome(Home):
             return super(LoginHome, self).web_login(redirect, **kw)
         if code:  # code换取token
             entry = client.wxenv(request.env)
-            #if code not in wxcode:  # 判断用户code是使用
+            # if code not in wxcode:  # 判断用户code是使用
             if not entry.wxclient.session.get(code):  # code 没有使用，用code 换取
                 # 将获取到的用户放到Session中
                 if codetype == 'corp':
@@ -55,7 +55,7 @@ class LoginHome(Home):
                 wx_user_info['codetype'] = codetype
                 request.session.wx_user_info = wx_user_info
                 entry.wxclient.session.set(code, code)
-                #wx_client_code.WX_CODE[code] = code
+                # wx_client_code.WX_CODE[code] = code
             else:  # 如果使用，直接用session中的用户信息
                 wx_user_info = request.session.wx_user_info
             if not wx_user_info or 'UserId' not in wx_user_info:
@@ -78,7 +78,11 @@ class LoginHome(Home):
                 if 'error' in login_as.qcontext:
                     return login_as
                 logging.info("登录用户%s:%s" % (odoouser.user_id.login, wx_user_info['UserId']))
-                uid = request.session.authenticate(request.session.db, odoouser.user_id.login, odoouser.password)
+                try:
+                    uid = request.session.authenticate(request.session.db, odoouser.user_id.login, odoouser.password)
+                except Exception as e:
+                    logging.info("登录用户出错：%s:%s:%s" % (odoouser.user_id.login, wx_user_info['UserId'], e))
+                    return http.local_redirect('/web/login')
                 if redirect:
                     return http.local_redirect(redirect)
                 else:
@@ -89,7 +93,7 @@ class LoginHome(Home):
                 return http.local_redirect('/web/login')
                 ## return super(LoginHome, self).web_login(redirect, **kw)
         elif request.session.wx_user_info:  # 存在微信登录访问
-            if 'login' not in values or 'password' not in values :
+            if 'login' not in values or 'password' not in values:
                 return super(LoginHome, self).web_login(redirect, **kw)
             login_as = super(LoginHome, self).web_login(redirect, **kw)
             if 'error' in login_as.qcontext:
@@ -115,6 +119,7 @@ class LoginHome(Home):
                     wxuserinfo = request.env['wx.user'].sudo().search([('openid', '=', wx_user_info['UserId'])])
                     wx_user_info['wx_user_id'] = wxuserinfo.id
                     request.env['wx.user.odoouser'].sudo().write(wx_user_info)
+                    odoouser = userinfo.write(wx_user_info)
                 else:
                     wxuserinfo = request.env['wx.user'].sudo().search([('openid', '=', wx_user_info['UserId'])])
                     wx_user_info['wx_user_id'] = wxuserinfo.id
@@ -213,9 +218,3 @@ class WxMp(http.Controller):
     def mp_kqjidy4bloxx3vc(self, **kwargs):
         # response = http.send_file('MP_verify_xobfOnBKmFpc9HEU.txt')
         return '6KqjIDY4BloxX3Vc'
-
-
-
-
-
-
