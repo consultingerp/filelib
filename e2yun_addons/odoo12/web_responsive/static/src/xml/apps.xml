@@ -62,7 +62,6 @@
                  t-raw="result.string"/>
         </t>
     </t>
-
     <t t-extend="mail.Composer">
         <t t-jquery=".o_composer_send button.o_composer_button_send" t-operation="replace">
             <button tabindex="3" id="o_composer_send_o_composer_button_send" class="btn btn-primary o_composer_button_send d-none d-md-inline-block" type="button"><t t-esc="widget.options.sendText"/></button>

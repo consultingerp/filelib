@@ -1,17 +1,16 @@
 # coding=utf-8
-import re
-import logging
 import base64
-import os
 import datetime
-from odoo.modules.module import get_module_resource
-from odoo import fields
-import subprocess
+import logging
+import os
+import re
+import _thread
 
-
-from odoo.http import request
 import odoo
-from .. import client
+from odoo import fields
+from odoo.http import request
+from odoo.modules.module import get_module_resource
+from . import audio_conversion
 
 _logger = logging.getLogger(__name__)
 
@@ -67,6 +66,7 @@ def main(robot):
             media_format = message.format
             r = client.wxclient.download_media(media_id)
             _filename = '%s.%s' % (media_id, media_format)
+            # _filename = '%s.%s' % (media_id, 'mp3')
             _data = r.content
             attachment = request.env['ir.attachment'].sudo().create({
                 'name': '__wx_voice|%s' % message.media_id,
@@ -75,7 +75,16 @@ def main(robot):
                 'res_model': 'mail.compose.message',
                 'res_id': int(0)
             })
+            wx_file_path = get_module_resource('wx_tools', 'static/wx')
+            wx_file = os.path.join(wx_file_path, _filename)
+            with open(wx_file, 'wb') as str2datas:
+                str2datas.write(_data)
             attachment_ids.append(attachment.id)
+            origin_content = message.Recognition
+            try:  # 启用新线程进行音频处理，加快返回速度
+                _thread.start_new_thread(audio_conversion.armtomp3, (wx_file,))
+            except Exception as e:
+                print("Error: 无法启动线程%s" % e)
         elif mtype in ['video']:
             media_id = message.media_id
             media_format = 'mp4'
@@ -166,7 +175,7 @@ def main(robot):
                 if not uuid_session.exists():  # 会话不是服务类型
                     uuid_session = request.env['wx.user.uuid'].sudo().search(
                         [('wx_user_id', '=', wx_user.id), ('uuid_type', '=', uuid_type)],
-                        limit=1)   # 选择一个服务类型的会话
+                        limit=1)  # 选择一个服务类型的会话
                     if uuid_session.exists():
                         uuid = uuid_session.uuid
                     else:
@@ -214,7 +223,7 @@ def main(robot):
                 uuid = session_info['uuid']
                 entry.create_uuid_for_openid(openid, uuid)
                 # if not record_uuid:
-                wx_user.update_last_uuid(uuid, partner_user_id.id if partner_user_id else None, uuid_type,wx_user)
+                wx_user.update_last_uuid(uuid, partner_user_id.id if partner_user_id else None, uuid_type, wx_user)
 
         if uuid:
             if partner_user_id:
@@ -223,7 +232,7 @@ def main(robot):
                     wx_user.consultation_reminder(partner, partner_user_id.partner_id.wx_user_id.openid,
                                                   origin_content,
                                                   active_id)
-            wx_user.update_last_uuid(uuid, partner_user_id.id if partner_user_id else None, uuid_type,wx_user)
+            wx_user.update_last_uuid(uuid, partner_user_id.id if partner_user_id else None, uuid_type, wx_user)
             localkwargs = {'weixin_id': openid, 'wx_type': 'wx'}
             message_type = "message"
             message_content = origin_content
