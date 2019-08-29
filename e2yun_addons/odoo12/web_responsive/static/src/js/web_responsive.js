@@ -115,7 +115,7 @@ odoo.define('web_responsive', function (require) {
 
         /**
          * Prevent the menu from being opened twice
-         * 
+         *
          * @override
          */
         _onAppsMenuItemClicked: function (ev) {
@@ -288,10 +288,10 @@ odoo.define('web_responsive', function (require) {
     });
 
     BasicController.include({
-        
+
         /**
          * Close the AppDrawer if the data set is dirty and a discard dialog is opened
-         * 
+         *
          * @override
          */
         canBeDiscarded: function (recordID) {
