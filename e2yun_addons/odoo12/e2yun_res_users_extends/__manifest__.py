@@ -13,6 +13,7 @@
     'category': 'HHJC_CRM',
     'data': [
         'views/res_users_view.xml',
+        'views/res_company_view.xml',
     ],
     'installable': True,
 }
