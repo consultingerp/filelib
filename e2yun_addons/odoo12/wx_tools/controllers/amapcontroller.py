@@ -44,22 +44,23 @@ class AmapAip(http.Controller):
         domain = []
         if storename == 'BJ':
             domain = [
-                ('name', 'ilike', "北京%")
+                ('name', 'ilike', "北京%"),
+                ('display', '=', False)
             ]
         elif storename == 'SZ':
             domain = [
-                ('name', 'ilike', "深圳%")
+                ('name', 'ilike', "深圳%"), ('display', '=', False)
             ]
         elif storename == 'OTH':
             domain = [
                 ('name', 'not ilike', '北京%'),
-                ('name', 'not ilike', '深圳%')
+                ('name', 'not ilike', '深圳%'), ('display', '=', False)
             ]
         elif not storename and not location:
-            domain = []
+            domain = [ ('display', '=', False)]
             datalistsize = 80
         elif not storename:
-            domain = []
+            domain = [ ('display', '=', False)]
             datalistsize = 10
 
         if location:  # 如果是带了地址
