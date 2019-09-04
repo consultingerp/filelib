@@ -20,18 +20,18 @@
             <field name="inherit_id" ref="base.view_users_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//page[@name='access_rights']" position="after">
-                    <page name="teams" string="担任店员、公司设计师的门店" attrs="{'invisible': [('function','=',False)]}">
+                    <page name="teams" string="相关门店" attrs="{'invisible': [('function','=',False)]}">
                         <field name="teams" widget="one2many" options="{'not_delete': True}">
                         </field>
                     </page>
-                    <page name="user_id_teams" string="担任店长的门店" attrs="{'invisible': [('function','=',False)]}">
-                        <field name="user_id_teams" widget="one2many" options="{'not_delete': True}">
-                        </field>
-                    </page>
-                    <page name="area_manager_teams" string="担任片区长的门店" attrs="{'invisible': [('function','=',False)]}">
-                        <field name="area_manager_teams" widget="one2many" options="{'not_delete': True}">
-                        </field>
-                    </page>
+<!--                    <page name="user_id_teams" string="担任店长的门店" attrs="{'invisible': [('function','=',False)]}">-->
+<!--                        <field name="user_id_teams" widget="one2many" options="{'not_delete': True}">-->
+<!--                        </field>-->
+<!--                    </page>-->
+<!--                    <page name="area_manager_teams" string="担任片区长的门店" attrs="{'invisible': [('function','=',False)]}">-->
+<!--                        <field name="area_manager_teams" widget="one2many" options="{'not_delete': True}">-->
+<!--                        </field>-->
+<!--                    </page>-->
                 </xpath>
             </field>
         </record>
