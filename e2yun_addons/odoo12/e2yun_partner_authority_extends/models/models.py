@@ -85,20 +85,20 @@ class E2yunCrmTeamExtends(models.Model):
     @api.multi
     def write(self, values):
         res = super(E2yunCrmTeamExtends, self).write(values)
-        if 'member_ids' in values or 'associate_member_ids' in values or 'user_id' in values or 'area_manger' in values:
+        if 'member_ids' in values:
             randon_int_str = str(random.randint)
             for team in self:
                 team.member_ids.write({'update_teams_flag': randon_int_str})
-        # if 'associate_member_ids' in values:
-        #     randon_int_str = str(random.randint)
-        #     for team in self:
-        #         team.associate_member_ids.write({'update_teams_flag': randon_int_str})
-        # if 'user_id' in values:
-        #     randon_int_str = str(random.randint)
-        #     for team in self:
-        #         team.user_id.write({'update_teams_flag': randon_int_str})
-        # if 'area_manger' in values:
-        #     randon_int_str = str(random.randint)
-        #     for team in self:
-        #         team.area_manger.write({'update_teams_flag': randon_int_str})
+        if 'associate_member_ids' in values:
+            randon_int_str = str(random.randint)
+            for team in self:
+                team.associate_member_ids.write({'update_teams_flag': randon_int_str})
+        if 'user_id' in values:
+            randon_int_str = str(random.randint)
+            for team in self:
+                team.user_id.write({'update_teams_flag': randon_int_str})
+        if 'area_manger' in values:
+            randon_int_str = str(random.randint)
+            for team in self:
+                team.area_manger.write({'update_teams_flag': randon_int_str})
         return res
