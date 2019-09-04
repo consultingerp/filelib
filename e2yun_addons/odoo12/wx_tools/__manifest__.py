@@ -52,9 +52,9 @@
     'qweb': [
         "static/src/xml/wx_team.xml",
         "static/src/xml/nearby_stores.xml",
-
+        "static/src/xml/wx_thread_view.xml",
     ],
-    'depends': ['base', 'web', 'im_livechat', 'sale_management'],
+    'depends': ['base', 'web', 'mail', 'im_livechat', 'sale_management'],
     'installable': True,
     'auto_install': False,
     'active': False,

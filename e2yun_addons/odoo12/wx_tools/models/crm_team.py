@@ -23,6 +23,7 @@ class WXCrmTeam(models.Model):
     distance = fields.Float('距离', digits=(10, 7))
     location_write_date = fields.Datetime("更新时间", readonly=True)
     address_location = fields.Char(u'地址', compute='_get_address_location')
+    display = fields.Boolean(string='前端不显示')
 
     @api.model
     def create(self, values):
