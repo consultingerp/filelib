@@ -97,6 +97,10 @@ class E2yunCsutomerExtends(models.Model):
         if pos_flag and vals.get('shop_code',False):
             result.teams = [(6,0,[vals.get('shop_code'),])]
 
+        if not vals.get('pos_flag', False) and result.state != 'potential_customer':
+            result.sync_customer_to_pos()
+            result.pos_state = True
+
         return result
 
     # @api.multi
@@ -149,7 +153,12 @@ class E2yunCsutomerExtends(models.Model):
         if values.get('pos_flag',False) and values.get('shop_code',False):
             values['teams'] = [(6,0,[values.get('shop_code'),])]
             del values['pos_flag']
-        return super(E2yunCsutomerExtends, self).write(values)
+        result = super(E2yunCsutomerExtends, self).write(values)
+
+        if self.state != 'potential_customer' and not values.get('pos_flag',False) and not values.get('pos_state',False):
+            self.sync_customer_to_pos()
+            self.pos_state = True
+        return result
 
 
     def run_send_wx_msg(self):
@@ -271,8 +280,6 @@ class E2yunCsutomerExtends(models.Model):
 
             if result != 'S':
                 raise exceptions.Warning(result)
-            else:
-                r.pos_state = True
 
         return True
 
