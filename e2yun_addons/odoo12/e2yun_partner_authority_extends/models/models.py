@@ -97,8 +97,8 @@ class E2yunCrmTeamExtends(models.Model):
             randon_int_str = str(random.randint)
             for team in self:
                 team.user_id.write({'update_teams_flag': randon_int_str})
-        if 'area_manger' in values:
+        if 'area_manager' in values:
             randon_int_str = str(random.randint)
             for team in self:
-                team.area_manger.write({'update_teams_flag': randon_int_str})
+                team.area_manager.write({'update_teams_flag': randon_int_str})
         return res
