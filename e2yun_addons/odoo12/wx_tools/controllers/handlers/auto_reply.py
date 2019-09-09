@@ -184,7 +184,7 @@ def main(robot):
                 _logger.info('需要联系客服要 没有会话')
                 entry.send_text(openid, "正在联系您的专属客户经理%s，我们将竭诚为您服务，欢迎咨询！ " % (partner_user_id.name))
         else:  # 休假
-            _logger.info('休假状态，联系客户。')
+            _logger.info('联系客户。')
             partner_user_id = None  #
             if uuid:
                 uuid_type = 'service'
@@ -238,13 +238,13 @@ def main(robot):
             message_content = origin_content
             request_uid = request.session.uid or odoo.SUPERUSER_ID
             author_id = False  # message_post accept 'False' author_id, but not 'None'
-            author = request.env['res.partner'].sudo().search([('wx_user_id.openid', '=', openid)])
+            author = request.env['res.partner'].sudo().search([('wx_user_id.openid', '=', openid)], limit=1)
             if author:
                 author_id = author.id
             else:
-                pater_id = request.env['res.partner'].sudo().search([('wx_user_id.openid', '=', openid)])
+                pater_id = request.env['res.partner'].sudo().search([('wx_user_id.openid', '=', openid)], limit=1)
                 if pater_id:
-                    author = request.env['res.users'].sudo().search([('partner_id', '=', pater_id.id)])
+                    author = request.env['res.users'].sudo().search([('partner_id', '=', pater_id.id)], limit=1)
                     author_id = author.id
             if request.session.uid:
                 author_id = request.env['res.users'].sudo().browse(request.session.uid).partner_id.id
