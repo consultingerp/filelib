@@ -136,6 +136,108 @@ class BlogPostBatch(models.TransientModel):
             }
         }
 
+    def blog_post_send_to_wx(self):
+        ctx = self._context.copy()
+        wx_media = self.env['wx.media']
+        active_model = ctx.get('active_model')
+        active_ids = ctx.get('active_ids', [])
+        blogs = self.env[active_model].browse(active_ids)
+        server_url = self.env['ir.config_parameter'].sudo().get_param('server_url')
+        articless = []
+        for blog in blogs:
+            thumb_media_id = False
+            wx_file_path = get_module_resource('e2yun_blog_post_list_extends', 'static/wx')
+            # file_image = blog.main_image
+            if True:
+                if blog.cover_properties:
+                    cover_properties = eval(blog.cover_properties)
+                    if 'background-image' in eval(blog.cover_properties):
+                        imageurl = cover_properties['background-image'].replace('url(', '').replace(')', '')
+                        if 'http' not in imageurl:
+                            # imageurl = server_url + imageurl
+
+                            attench_id = imageurl.replace('/web/image/', '')[
+                                         0: imageurl.replace('/web/image/', '').index('/')]
+
+                            datas = self.env['ir.attachment'].browse(int(attench_id)).datas
+
+                            img = base64.b64decode(datas)
+                            file = open('%s/thumb.jpg' % wx_file_path, 'wb')
+                            file.write(img)
+                            file.close()
+
+                        else:
+                            urlretrieve(imageurl, '%s/thumb.jpg' % wx_file_path)
+                        quality = 80
+                        step = 5
+                        while os.path.getsize('%s/thumb.jpg' % wx_file_path) / 1024 > 64:
+                            file_path = '%s/thumb.jpg' % wx_file_path
+                            im = Image.open(file_path)
+                            # 获得图像尺寸:
+                            # w, h = im.size
+                            # 缩放到50%:
+                            # im.resize((int(w / 0.8), int(h / 0.8)), Image.ANTIALIAS)
+                            # 把缩放后的图像用jpeg格式保存:
+                            if im.mode == "P":
+                                im = im.convert('RGB')
+                            im.save(file_path, 'JPEG', quality=quality)
+                            if quality - step < 0:
+                                break
+                            quality -= step
+                    else:
+                        raise Exception(_('必须要有封面图片，请在文章编辑中输入！'))
+
+                    thumb_media_upload = wx_media.upload_image('%s/thumb.jpg' % wx_file_path)
+                    thumb_media_id = thumb_media_upload['thumb_media_id']
+                else:
+                    raise Exception(_('必须要有封面图片，请在文章编辑中填入！'))
+                extractor = URLExtract()
+                urls = extractor.find_urls(blog.content, only_unique=True)
+                wx_content = blog.content
+                for url in urls:
+                    try:
+                        urlretrieve(url, '%s/news.jpg' % wx_file_path)
+                        import imghdr
+                        imgType = imghdr.what('%s/news.jpg' % wx_file_path)
+                        if imgType:
+                            news_media_upload = wx_media.upload_news_picture('%s/news.jpg' % wx_file_path)
+                            wx_content = wx_content.replace(url, news_media_upload['url'])
+                    except:
+                        continue
+
+                blog.wx_content = wx_content
+                blog.thumb_media_id = thumb_media_id
+                blog.transfer_to_wx_flag = True
+                try:
+                    os.remove('%s/thumb.jpg' % wx_file_path)
+                    os.remove('%s/news.jpg' % wx_file_path)
+                except:
+                    pass
+            blog_url = server_url + blog.website_url
+            articles = {
+                "thumb_media_id": blog.thumb_media_id,
+                "author": blog.create_uid.name,
+                "title": blog.name,
+                "content_source_url": blog_url,
+                "content": '%s' % blog.wx_content,
+                "digest": blog.subtitle,
+                "show_cover_pic": 1,
+                "need_open_comment": 1,
+                "only_fans_can_comment": 1
+            }
+            articless.append(articles)
+        randon_number = random.randint(100000, 999999)
+        mediaid = wx_media.upload_articles(articless, '我的文章-%s' % randon_number)
+        wx_media = self.env['wx.media'].search([('media_id', '=', mediaid['media_id'])])
+        self.env['wx.send.mass'].create(
+            {'wx_media_id': wx_media.id}).mass_send()
+        return {
+            'warning': {
+                'title': 'Tips',
+                'message': '同步成功'
+            }
+        }
+
     def get_size(file):
         # 获取文件大小:KB
         size = os.path.getsize(file)
