@@ -205,7 +205,7 @@ class WxMp(http.Controller):
         return 'npgHFdA6yan51Qd5'
 
     @http.route(['/MP_verify_PT4MgExxX4ZXjTpP.txt'], type='http', auth="public")
-    def mp_lh(self, **kwargs):
+    def mp_pt4mgexxx4zxjtpp(self, **kwargs):
         # response = http.send_file('MP_verify_xobfOnBKmFpc9HEU.txt')
         return 'PT4MgExxX4ZXjTpP'
 
