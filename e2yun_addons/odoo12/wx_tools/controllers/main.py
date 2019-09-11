@@ -27,7 +27,7 @@ class LoginHome(Home):
     @http.route('/web/login', type='http', auth="none")
     def web_login(self, redirect=None, **kw):
         # OAuth提供商id
-        provider_id = kw.get('state', '')
+        provider_id = kw.get('state', 'default')
         # 以下微信相关 #
         code = kw.get('code', '')
         codetype = kw.get('codetype', '')
@@ -106,7 +106,39 @@ class LoginHome(Home):
                 wx_user_info['user_id'] = uid
                 wx_user_info['password'] = request.params['password']
                 request.session.wx_user_info = wx_user_info
+                # 查询当前微信号绑定的用户信息
                 userinfo = request.env['wx.user.odoouser'].sudo().search([('openid', '=', wx_user_info['UserId'])])
+                # 查询前面用户日否已存在
+                userinfo_exist = request.env['res.users'].sudo().search([('wx_id', '=', wx_user_info['UserId'])])
+                for user_e in userinfo_exist:  # 在用里面已存在微信登录
+                    if user_e.login != kw.get('login'):
+                        error_message = "微信账号%s(%s)已绑定账号%s(%s),请联系管理员。" % (
+                            wx_user_info['UserId'], wx_user_info['nickname'], user_e.login, user_e.name)
+                        tracetype = request.env['wx.tracelog.type'].sudo().search([('code', '=', provider_id)])
+                        if tracetype.exists():
+                            request.env['wx.tracelog'].sudo().create({
+                                "tracelog_type": tracetype.id,
+                                "title": '登录出错%s' % error_message,
+                                "user_id": userinfo.user_id.id if userinfo.user_id else None,
+                                "wx_user_id": userinfo.wx_user_id.id if userinfo.wx_user_id else None
+                            })
+                        return http.local_redirect('/web/login?error=%s' % error_message)
+                userinfo_login = request.env['wx.user.odoouser'].sudo().search([('user_id.login', '=', kw['login'])])
+                for user_l in userinfo_login:  # 检查用户否在其它微信登录
+                    if user_l.openid != wx_user_info['UserId']:
+                        error_message = "账号%s(%s)已在微信登录%s(%s),请先注销登录,如问题无法解决请联系管理员。" % (
+                            kw['login'], user_l.user_id.name, user_l.openid,
+                            user_l.wx_user_id.nickname if user_l.wx_user_id else '')
+                        tracetype = request.env['wx.tracelog.type'].sudo().search([('code', '=', provider_id)])
+                        if tracetype.exists():
+                            request.env['wx.tracelog'].sudo().create({
+                                "tracelog_type": tracetype.id,
+                                "title": '登录出错%s' % error_message,
+                                "user_id": userinfo.user_id.id if userinfo.user_id else None,
+                                "wx_user_id": userinfo.wx_user_id.id if userinfo.wx_user_id else None
+                            })
+                        return http.local_redirect('/web/login?error=%s' % error_message)
+
                 if userinfo:
                     tracetype = request.env['wx.tracelog.type'].sudo().search([('code', '=', provider_id)])
                     if tracetype.exists():
@@ -143,8 +175,6 @@ class LoginHome(Home):
                     return http.local_redirect(redirect)
                 else:
                     return http.local_redirect('/web#home')
-
-
         else:
             if kw.get('login') and kw.get('password'):
                 userinfo = request.env['wx.user.odoouser'].sudo().search([('user_id.login', '=', kw['login'])])
@@ -179,9 +209,25 @@ class WxSession(Session):
         wx_user_info = request.session.wx_user_info
         ret = super(WxSession, self).logout(redirect)
         if wx_user_info:
-            userinfo = request.env['wx.user.odoouser'].sudo().search(
+            userinfo_all = request.env['wx.user.odoouser'].sudo().search(
                 [('user_id', '=', uid), ('codetype', '=', wx_user_info['codetype'])])
-            userinfo.unlink()
+            for userinfo in userinfo_all:
+                tracetype = request.env['wx.tracelog.type'].sudo().search([('code', '=', 'logout')])
+                if tracetype.exists():
+                    request.env['wx.tracelog'].sudo().create({
+                        "tracelog_type": tracetype.id,
+                        "title": '退出登录%s' % wx_user_info['nickname'],
+                        "user_id": userinfo.user_id.id if userinfo.user_id else None,
+                        "wx_user_id": userinfo.wx_user_id.id if userinfo.wx_user_id else None
+                    })
+                userinfo.unlink()
+                userinfo_exist = request.env['res.users'].sudo().search([('wx_id', '=', wx_user_info['UserId'])])
+                for user_e in userinfo_exist:
+                    user_e.write({
+                        'wx_id': '',
+                        'wx_user_id':None,
+                    })
+
         return ret
 
 
