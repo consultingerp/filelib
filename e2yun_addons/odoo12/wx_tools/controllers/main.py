@@ -38,10 +38,13 @@ class LoginHome(Home):
         # wxcode = wx_client_code.WX_CODE
         # if not wxcode:
         #     wxcode = {}
-        logging.info("登录：%s" % code)
+        #logging.info("登录：%s" % code)
         values = request.params.copy()
         user_agent = request.httprequest.headers.get('user-agent').lower()
         is_wx_client = True if 'micromessenger' in user_agent else False
+        if is_wx_client and kw.get('login') and kw.get('password'):
+            request.params['login_success'] = False
+            return werkzeug.utils.redirect('/web/login?error=请从微信菜单发起登录')
         if code is False:
             return super(LoginHome, self).web_login(redirect, **kw)
         if code:  # code换取token
@@ -85,6 +88,7 @@ class LoginHome(Home):
                     uid = request.session.authenticate(request.session.db, odoouser.user_id.login, odoouser.password)
                 except Exception as e:
                     logging.info("登录用户出错：%s:%s:%s" % (odoouser.user_id.login, wx_user_info['UserId'], e))
+                    request.params['login_success'] = False
                     return http.local_redirect('/web/login')
                 if redirect:
                     return http.local_redirect(redirect)
@@ -94,6 +98,7 @@ class LoginHome(Home):
                 # request.session.logout()
                 # uid = request.session.authenticate(request.session.db, obj.user_id.login, '')
                 request.session.uid = None
+                request.params['login_success'] = False
                 return http.local_redirect('/web/login')
                 ## return super(LoginHome, self).web_login(redirect, **kw)
         elif request.session.wx_user_info:  # 存在微信登录访问
@@ -190,8 +195,7 @@ class LoginHome(Home):
                 userinfo = request.env['wx.user.odoouser'].sudo().search([('user_id.login', '=', kw['login'])])
                 if userinfo.exists():
                     userinfo.write({'password': kw['password']})
-        if is_wx_client and  kw.get('login') and kw.get('password'):
-            return werkzeug.utils.redirect('/web/login?error=请从微信菜单发起登录')
+
 
         return super(LoginHome, self).web_login(redirect, **kw)
 
