@@ -161,10 +161,11 @@ class LoginHome(Home):
                     wx_user_info['wx_user_id'] = wxuserinfo.id
                     odoouser = request.env['wx.user.odoouser'].sudo().create(wx_user_info)
                     resuser = request.env['res.users'].sudo().search([('id', '=', uid)], limit=1)
-                    if not resuser.wx_user_id:
+                    if resuser:
                         _data = client.get_img_data(str(wx_user_info['headimgurl']))
                         resuser.write({
                             "wx_user_id": wxuserinfo.id,
+                            "wx_id": wx_user_info['UserId'],
                             "image": base64.b64encode(_data),
                         })
                         tracetype = request.env['wx.tracelog.type'].sudo().search([('code', '=', "login")])
@@ -211,7 +212,6 @@ class WxSession(Session):
     def logout(self, redirect='/web'):
         uid = request.session.uid
         wx_user_info = request.session.wx_user_info
-        ret = super(WxSession, self).logout(redirect)
         if wx_user_info:
             userinfo_all = request.env['wx.user.odoouser'].sudo().search(
                 [('user_id', '=', uid), ('codetype', '=', wx_user_info['codetype'])])
@@ -229,10 +229,10 @@ class WxSession(Session):
                 for user_e in userinfo_exist:
                     user_e.write({
                         'wx_id': '',
-                        'wx_user_id':None,
+                        'wx_user_id': None,
                     })
 
-        return ret
+        return super(WxSession, self).logout(redirect)
 
 
 # class DataSet(DataSet):
