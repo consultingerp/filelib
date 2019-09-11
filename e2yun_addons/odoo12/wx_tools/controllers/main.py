@@ -40,6 +40,8 @@ class LoginHome(Home):
         #     wxcode = {}
         # logging.info(wxcode)
         values = request.params.copy()
+        user_agent = request.httprequest.headers.get('user-agent').lower()
+        is_wx_client = True if 'micromessenger' in user_agent else False
         if code is False:
             return super(LoginHome, self).web_login(redirect, **kw)
         if code:  # code换取token
@@ -186,6 +188,8 @@ class LoginHome(Home):
                 userinfo = request.env['wx.user.odoouser'].sudo().search([('user_id.login', '=', kw['login'])])
                 if userinfo.exists():
                     userinfo.write({'password': kw['password']})
+        if is_wx_client and  kw.get('login') and kw.get('password'):
+            return werkzeug.utils.redirect('/web/login?error=请从微信菜单发起登录')
 
         return super(LoginHome, self).web_login(redirect, **kw)
 
