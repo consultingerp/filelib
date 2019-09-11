@@ -101,7 +101,7 @@ class LoginHome(Home):
             userinfo = request.env['wx.user.odoouser'].sudo().search([('openid', '=', wx_user_info['UserId'])])
             # 查询前面用户日否已存在
             userinfo_exist = request.env['res.users'].sudo().search([('wx_id', '=', wx_user_info['UserId'])])
-            if kw.get('login'):
+            if 'login' in values:
                 for user_e in userinfo_exist:  # 在用里面已存在微信登录
                     if user_e.login != kw.get('login') and kw.get('login'):
                         error_message = "微信账号%s(%s)已绑定账号%s(%s),请联系管理员。" % (
@@ -133,7 +133,7 @@ class LoginHome(Home):
                         return werkzeug.utils.redirect('/web/login?error=%s' % error_message)
 
             if 'login' not in values or 'password' not in values:
-                return super(LoginHome, self).web_login(redirect, **kw)
+                return werkzeug.utils.redirect('/web/login')
             login_as = super(LoginHome, self).web_login(redirect, **kw)
             if 'error' in login_as.qcontext:
                 return login_as
