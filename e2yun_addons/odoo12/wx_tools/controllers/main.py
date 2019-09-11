@@ -106,6 +106,7 @@ class LoginHome(Home):
                     if user_e.login != kw.get('login') and kw.get('login'):
                         error_message = "微信账号%s(%s)已绑定账号%s(%s),请联系管理员。" % (
                             wx_user_info['UserId'], wx_user_info['nickname'], user_e.login, user_e.name)
+                        error_str = "此微信已绑定账号s(%s),请联系管理员。" % (user_e.name, user_e.login)
                         tracetype = request.env['wx.tracelog.type'].sudo().search([('code', '=', provider_id)])
                         if tracetype.exists():
                             request.env['wx.tracelog'].sudo().create({
@@ -114,7 +115,7 @@ class LoginHome(Home):
                                 "user_id": userinfo.user_id.id if userinfo.user_id else None,
                                 "wx_user_id": userinfo.wx_user_id.id if userinfo.wx_user_id else None
                             })
-                        return werkzeug.utils.redirect('/web/login?error=%s' % error_message)
+                        return werkzeug.utils.redirect('/web/login?error=%s' % error_str)
                 userinfo_login = request.env['wx.user.odoouser'].sudo().search([('user_id.login', '=', kw['login'])])
                 for user_l in userinfo_login:  # 检查用户否在其它微信登录
                     if user_l.openid != wx_user_info['UserId']:
