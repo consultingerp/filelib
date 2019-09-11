@@ -38,7 +38,7 @@ class LoginHome(Home):
         # wxcode = wx_client_code.WX_CODE
         # if not wxcode:
         #     wxcode = {}
-        # logging.info(wxcode)
+        logging.info("登录")
         values = request.params.copy()
         user_agent = request.httprequest.headers.get('user-agent').lower()
         is_wx_client = True if 'micromessenger' in user_agent else False
