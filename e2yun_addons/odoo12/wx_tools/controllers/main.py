@@ -12,6 +12,7 @@ from odoo.addons.web.controllers.main import Home
 from odoo.addons.web.controllers.main import Session
 
 from odoo import http
+import werkzeug
 from odoo.http import request
 from ..rpc import corp_client
 from ..controllers import client
@@ -122,7 +123,7 @@ class LoginHome(Home):
                                 "user_id": userinfo.user_id.id if userinfo.user_id else None,
                                 "wx_user_id": userinfo.wx_user_id.id if userinfo.wx_user_id else None
                             })
-                        return http.local_redirect('/web/login?error=%s' % error_message)
+                        return werkzeug.utils.redirect('/web/login?error=%s' % error_message)
                 userinfo_login = request.env['wx.user.odoouser'].sudo().search([('user_id.login', '=', kw['login'])])
                 for user_l in userinfo_login:  # 检查用户否在其它微信登录
                     if user_l.openid != wx_user_info['UserId']:
@@ -137,7 +138,7 @@ class LoginHome(Home):
                                 "user_id": userinfo.user_id.id if userinfo.user_id else None,
                                 "wx_user_id": userinfo.wx_user_id.id if userinfo.wx_user_id else None
                             })
-                        return http.local_redirect('/web/login?error=%s' % error_message)
+                        return werkzeug.utils.redirect('/web/login?error=%s' % error_message)
 
                 if userinfo:
                     tracetype = request.env['wx.tracelog.type'].sudo().search([('code', '=', provider_id)])
