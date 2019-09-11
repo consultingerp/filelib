@@ -133,7 +133,8 @@ class LoginHome(Home):
                         return werkzeug.utils.redirect('/web/login?error=%s' % error_message)
 
             if 'login' not in values or 'password' not in values:
-                return werkzeug.utils.redirect('/web/login')
+                request.params['login_success'] = False
+                return super(LoginHome, self).web_login(redirect, **kw)
             login_as = super(LoginHome, self).web_login(redirect, **kw)
             if 'error' in login_as.qcontext:
                 return login_as
