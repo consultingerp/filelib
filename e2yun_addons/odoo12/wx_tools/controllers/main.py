@@ -94,6 +94,43 @@ class LoginHome(Home):
                 return http.local_redirect('/web/login')
                 ## return super(LoginHome, self).web_login(redirect, **kw)
         elif request.session.wx_user_info:  # 存在微信登录访问
+            wx_user_info = request.session.wx_user_info
+            wx_user_info['openid'] = wx_user_info['UserId']
+            wx_user_info['password'] = request.params['password']
+            request.session.wx_user_info = wx_user_info
+            # 查询当前微信号绑定的用户信息
+            userinfo = request.env['wx.user.odoouser'].sudo().search([('openid', '=', wx_user_info['UserId'])])
+            # 查询前面用户日否已存在
+            userinfo_exist = request.env['res.users'].sudo().search([('wx_id', '=', wx_user_info['UserId'])])
+            for user_e in userinfo_exist:  # 在用里面已存在微信登录
+                if user_e.login != kw.get('login'):
+                    error_message = "微信账号%s(%s)已绑定账号%s(%s),请联系管理员。" % (
+                        wx_user_info['UserId'], wx_user_info['nickname'], user_e.login, user_e.name)
+                    tracetype = request.env['wx.tracelog.type'].sudo().search([('code', '=', provider_id)])
+                    if tracetype.exists():
+                        request.env['wx.tracelog'].sudo().create({
+                            "tracelog_type": tracetype.id,
+                            "title": '登录出错%s' % error_message,
+                            "user_id": userinfo.user_id.id if userinfo.user_id else None,
+                            "wx_user_id": userinfo.wx_user_id.id if userinfo.wx_user_id else None
+                        })
+                    return werkzeug.utils.redirect('/web/login?error=%s' % error_message)
+            userinfo_login = request.env['wx.user.odoouser'].sudo().search([('user_id.login', '=', kw['login'])])
+            for user_l in userinfo_login:  # 检查用户否在其它微信登录
+                if user_l.openid != wx_user_info['UserId']:
+                    error_message = "账号%s(%s)已在微信登录%s(%s),请先注销登录,如问题无法解决请联系管理员。" % (
+                        kw['login'], user_l.user_id.name, user_l.openid,
+                        user_l.wx_user_id.nickname if user_l.wx_user_id else '')
+                    tracetype = request.env['wx.tracelog.type'].sudo().search([('code', '=', provider_id)])
+                    if tracetype.exists():
+                        request.env['wx.tracelog'].sudo().create({
+                            "tracelog_type": tracetype.id,
+                            "title": '登录出错%s' % error_message,
+                            "user_id": userinfo.user_id.id if userinfo.user_id else None,
+                            "wx_user_id": userinfo.wx_user_id.id if userinfo.wx_user_id else None
+                        })
+                    return werkzeug.utils.redirect('/web/login?error=%s' % error_message)
+
             if 'login' not in values or 'password' not in values:
                 return super(LoginHome, self).web_login(redirect, **kw)
             login_as = super(LoginHome, self).web_login(redirect, **kw)
@@ -102,48 +139,7 @@ class LoginHome(Home):
             logging.info("登录用户%s" % request.params['login'])
             uid = request.session.authenticate(request.session.db, request.params['login'], request.params['password'])
             if uid is not False:
-                wx_user_info = request.session.wx_user_info
-                wx_user_info['openid'] = wx_user_info['UserId']
                 wx_user_info['user_id'] = uid
-                wx_user_info['password'] = request.params['password']
-                request.session.wx_user_info = wx_user_info
-                # 查询当前微信号绑定的用户信息
-                userinfo = request.env['wx.user.odoouser'].sudo().search([('openid', '=', wx_user_info['UserId'])])
-                # 查询前面用户日否已存在
-                userinfo_exist = request.env['res.users'].sudo().search([('wx_id', '=', wx_user_info['UserId'])])
-                for user_e in userinfo_exist:  # 在用里面已存在微信登录
-                    if user_e.login != kw.get('login'):
-                        error_message = "微信账号%s(%s)已绑定账号%s(%s),请联系管理员。" % (
-                            wx_user_info['UserId'], wx_user_info['nickname'], user_e.login, user_e.name)
-                        tracetype = request.env['wx.tracelog.type'].sudo().search([('code', '=', provider_id)])
-                        if tracetype.exists():
-                            request.env['wx.tracelog'].sudo().create({
-                                "tracelog_type": tracetype.id,
-                                "title": '登录出错%s' % error_message,
-                                "user_id": userinfo.user_id.id if userinfo.user_id else None,
-                                "wx_user_id": userinfo.wx_user_id.id if userinfo.wx_user_id else None
-                            })
-                        kw['password'] = ''
-                        return super(LoginHome, self).web_login(redirect, **kw)
-                        return werkzeug.utils.redirect('/web/login?error=%s' % error_message)
-                userinfo_login = request.env['wx.user.odoouser'].sudo().search([('user_id.login', '=', kw['login'])])
-                for user_l in userinfo_login:  # 检查用户否在其它微信登录
-                    if user_l.openid != wx_user_info['UserId']:
-                        error_message = "账号%s(%s)已在微信登录%s(%s),请先注销登录,如问题无法解决请联系管理员。" % (
-                            kw['login'], user_l.user_id.name, user_l.openid,
-                            user_l.wx_user_id.nickname if user_l.wx_user_id else '')
-                        tracetype = request.env['wx.tracelog.type'].sudo().search([('code', '=', provider_id)])
-                        if tracetype.exists():
-                            request.env['wx.tracelog'].sudo().create({
-                                "tracelog_type": tracetype.id,
-                                "title": '登录出错%s' % error_message,
-                                "user_id": userinfo.user_id.id if userinfo.user_id else None,
-                                "wx_user_id": userinfo.wx_user_id.id if userinfo.wx_user_id else None
-                            })
-                        kw['password'] = ''
-                        return super(LoginHome, self).web_login(redirect, **kw)
-                        return werkzeug.utils.redirect('/web/login?error=%s' % error_message)
-
                 if userinfo:
                     tracetype = request.env['wx.tracelog.type'].sudo().search([('code', '=', provider_id)])
                     if tracetype.exists():
