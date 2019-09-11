@@ -118,6 +118,7 @@ class LoginHome(Home):
                                 "user_id": userinfo.user_id.id if userinfo.user_id else None,
                                 "wx_user_id": userinfo.wx_user_id.id if userinfo.wx_user_id else None
                             })
+                        request.params['login_success'] = False
                         return werkzeug.utils.redirect('/web/login?error=%s' % error_str)
                 userinfo_login = request.env['wx.user.odoouser'].sudo().search([('user_id.login', '=', kw['login'])])
                 for user_l in userinfo_login:  # 检查用户否在其它微信登录
@@ -133,6 +134,7 @@ class LoginHome(Home):
                                 "user_id": userinfo.user_id.id if userinfo.user_id else None,
                                 "wx_user_id": userinfo.wx_user_id.id if userinfo.wx_user_id else None
                             })
+                        request.params['login_success'] = False
                         return werkzeug.utils.redirect('/web/login?error=%s' % error_message)
 
             if 'login' not in values or 'password' not in values:
