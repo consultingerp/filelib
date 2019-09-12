@@ -126,7 +126,7 @@ class LoginHome(Home):
                 userinfo_login = request.env['wx.user.odoouser'].sudo().search([('user_id.login', '=', kw['login'])])
                 for user_l in userinfo_login:  # 检查用户否在其它微信登录
                     if user_l.openid != wx_user_info['UserId']:
-                        error_message = "账号%s(%s)已在微信登录%s(%s),请先注销登录,如问题无法解决请联系管理员。" % (
+                        error_message = "账号%s(%s)已在微信%s(%s)登录,请先注销登录,如问题无法解决请联系管理员。" % (
                             kw['login'], user_l.user_id.name,
                             user_l.wx_user_id.nickname if user_l.wx_user_id else '', user_l.openid)
                         tracetype = request.env['wx.tracelog.type'].sudo().search([('code', '=', provider_id)])
