@@ -105,12 +105,13 @@ class LoginHome(Home):
             # 查询当前微信号绑定的用户信息
             userinfo = request.env['wx.user.odoouser'].sudo().search([('openid', '=', wx_user_info['UserId'])])
             # 查询前面用户日否已存在
-            userinfo_exist = request.env['res.users'].sudo().search([('wx_id', '=', wx_user_info['UserId'])])
+            userinfo_exist = request.env['res.users'].sudo().search([('wx_user_id.openid', '=', wx_user_info['UserId'])])
             if 'login' in values:
                 for user_e in userinfo_exist:  # 在用里面已存在微信登录
                     if user_e.login != kw.get('login') and kw.get('login'):
-                        error_message = "微信账号%s(%s)已绑定账号%s(%s),请联系管理员。" % (
-                            wx_user_info['UserId'], wx_user_info['nickname'], user_e.login, user_e.name)
+                        error_message = "微信账号%s(%s)已绑定账号%s(%s),用户%s不能正常登录,请联系管理员。" % (
+                            wx_user_info['UserId'], wx_user_info['nickname'], user_e.login,
+                            user_e.name,kw.get('login'))
                         error_str = "此微信已绑定账号%s(%s),请联系管理员。" % (user_e.name, user_e.login)
                         tracetype = request.env['wx.tracelog.type'].sudo().search([('code', '=', provider_id)])
                         if tracetype.exists():
