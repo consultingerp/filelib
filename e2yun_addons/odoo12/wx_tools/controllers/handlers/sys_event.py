@@ -218,6 +218,7 @@ def main(robot):
                     if res_guideorreferrer.function in guide or max_goal_user:  # 导购 或者 排名导购
                         ismail_channel = True
                         guideorreferrer = 'guide'
+                        users_ids.extend(resuser.partner_id.related_guide.ids)
                         resuser.partner_id.write({
                             'supplier': True,
                             'customer': True,
