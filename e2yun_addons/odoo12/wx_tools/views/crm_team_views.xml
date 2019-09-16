@@ -20,6 +20,7 @@
         <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='alias_contact']" position="after">
+                 <field name="display"/>
                 <field name="qrcodeimg"/>
             </xpath>
         </field>
