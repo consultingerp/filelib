@@ -30,11 +30,11 @@ class WxSendMass(models.Model):
         wx_client = WeChatClient(wxclient.appid, wxclient.appsecret, access_token=wxclient.token)
         entry.init(self.env)
         for obj in self:
-            res = entry.client.message.send_mass_article(
+            res = wx_client.message.send_mass_article(
                 None,
                 obj.wx_media_id.media_id,
-                is_to_all = True,
-                preview = False
+                is_to_all=True,
+                preview=False
             )
             _logger.info('>>> mass_send ret: %s', res)
             obj.write({'msg_id': res.get('msg_id')})

@@ -75,6 +75,7 @@
                             <a t-if="store['tel']" t-attf-href="tel:{{store['tel']}}">致电
                                 <t t-esc="store['tel']"/>
                             </a>
+<!--                            <div id="luo_test">点击有效吗</div>-->
                             <span  t-att-data-latitude="store['latitude']"
                                   t-att-data-longitude="store['longitude']"
                                   t-att-data-street="store['street']">
