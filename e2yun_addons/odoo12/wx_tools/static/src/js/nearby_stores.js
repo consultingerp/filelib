@@ -83,7 +83,12 @@ odoo.define('wx_tools.nearby_stores', function (require) {
             'click #locationbejing': '_stores_list',
             'click #locationsz': '_stores_list',
             'click #locationother': '_stores_list',
-        }, _onClick: function (ev) {
+//            'click #luo_test': '_Test',
+        },
+//        _Test:function(){
+//            alert('点击有效！')
+//        },
+        _onClick: function (ev) {
             var self = this;
             var latitude = $(ev.currentTarget).attr('data-latitude')
             var longitude = $(ev.currentTarget).attr('data-longitude')

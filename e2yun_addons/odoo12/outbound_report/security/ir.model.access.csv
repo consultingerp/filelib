@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_outbound_report_base_group_user,outbound_report.base_group_user,model_outbound_detail,base.group_user,1,1,1,1
+access_outbound_report_base_group_user,outbound_report.base_group_user,model_sales_order,base.group_user,1,1,1,1

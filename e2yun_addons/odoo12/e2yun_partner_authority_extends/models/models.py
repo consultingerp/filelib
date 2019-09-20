@@ -82,23 +82,63 @@ class E2yunUserExtends(models.Model):
 class E2yunCrmTeamExtends(models.Model):
     _inherit = 'crm.team'
 
-    @api.multi
-    def write(self, values):
-        res = super(E2yunCrmTeamExtends, self).write(values)
-        if 'member_ids' in values or 'associate_member_ids' in values or 'user_id' in values or 'area_manger' in values:
+    # @api.multi
+    # def write(self, values):
+    #     res = super(E2yunCrmTeamExtends, self).write(values)
+    #     if 'member_ids' in values:
+    #         randon_int_str = str(random.randint)
+    #         for team in self:
+    #             team.member_ids.write({'update_teams_flag': randon_int_str})
+    #     if 'associate_member_ids' in values:
+    #         randon_int_str = str(random.randint)
+    #         for team in self:
+    #             team.associate_member_ids.write({'update_teams_flag': randon_int_str})
+    #     if 'user_id' in values:
+    #         randon_int_str = str(random.randint)
+    #         for team in self:
+    #             team.user_id.write({'update_teams_flag': randon_int_str})
+    #     if 'area_manager' in values:
+    #         randon_int_str = str(random.randint)
+    #         for team in self:
+    #             team.area_manager.write({'update_teams_flag': randon_int_str})
+    #     return res
+
+    @api.one
+    def write(self, vals):
+        # member_ids_before_modify = self.env['res.users']
+        # associate_member_ids_before_modify = self.env['res.users']
+        # user_id_before_modify = self.env['res.users']
+        # area_manager_before_modify = self.env['res.users']
+        if 'member_ids' in vals:
+            member_ids_before_modify = self.member_ids
+        if 'associate_member_ids' in vals:
+            associate_member_ids_before_modify = self.associate_member_ids
+        if 'user_id' in vals:
+            user_id_before_modify = self.user_id
+        if 'area_manager' in vals:
+            area_manager_before_modify = self.area_manager
+
+        res = super(E2yunCrmTeamExtends, self).write(vals)
+
+        if 'member_ids' in vals:
             randon_int_str = str(random.randint)
-            for team in self:
-                team.member_ids.write({'update_teams_flag': randon_int_str})
-        # if 'associate_member_ids' in values:
-        #     randon_int_str = str(random.randint)
-        #     for team in self:
-        #         team.associate_member_ids.write({'update_teams_flag': randon_int_str})
-        # if 'user_id' in values:
-        #     randon_int_str = str(random.randint)
-        #     for team in self:
-        #         team.user_id.write({'update_teams_flag': randon_int_str})
-        # if 'area_manger' in values:
-        #     randon_int_str = str(random.randint)
-        #     for team in self:
-        #         team.area_manger.write({'update_teams_flag': randon_int_str})
+            self.member_ids.write({'update_teams_flag': randon_int_str})
+            if member_ids_before_modify:
+                member_ids_before_modify.write({'update_teams_flag': randon_int_str})
+        if 'associate_member_ids' in vals:
+            randon_int_str = str(random.randint)
+            self.associate_member_ids.write({'update_teams_flag': randon_int_str})
+            if associate_member_ids_before_modify:
+                associate_member_ids_before_modify.write({'update_teams_flag': randon_int_str})
+        if 'user_id' in vals:
+            randon_int_str = str(random.randint)
+            self.user_id.write({'update_teams_flag': randon_int_str})
+            if user_id_before_modify:
+                user_id_before_modify.write({'update_teams_flag': randon_int_str})
+        if 'area_manager' in vals:
+            randon_int_str = str(random.randint)
+            self.area_manager.write({'update_teams_flag': randon_int_str})
+            if area_manager_before_modify:
+                area_manager_before_modify.write({'update_teams_flag': randon_int_str})
         return res
+

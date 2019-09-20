@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_e2yun_crm_groups_extends_e2yun_crm_groups_extends,e2yun_crm_groups_extends.e2yun_crm_groups_extends,model_e2yun_crm_groups_extends_e2yun_crm_groups_extends,,1,0,0,0
