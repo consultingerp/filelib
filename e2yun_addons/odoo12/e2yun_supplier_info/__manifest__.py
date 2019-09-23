@@ -19,6 +19,8 @@
         'views/res_partner_view.xml',
         'static/src/xml/register.xml',
         'static/src/xml/register_index.xml',
+        'static/src/xml/register_index_2.xml',
+        'static/src/xml/register_index_3.xml',
         'static/src/xml/register_authentication_info.xml',
         'static/src/xml/register_base_info.xml',
         'static/src/xml/register_done.xml',
