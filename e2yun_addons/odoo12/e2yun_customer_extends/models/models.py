@@ -413,6 +413,12 @@ class E2yunCrmTeamNameExtends(models.Model):
 
     @api.model
     def name_search(self, name='', args=None, operator='ilike', limit=100):
+        flag = self.env.context.get('search_owned_shop', False)
+        if flag:
+            user_related_teams = self.env.user.teams
+            args.append(('id', 'in', user_related_teams.ids))
+            # teams = self.search(['&', '|', ('shop_code', operator, name), ('name', operator, name), ('id', 'in', user_related_teams)])
+            return super(E2yunCrmTeamNameExtends, self).name_search(name, args, operator, limit)
         if name:
             teams = self.search(['|', ('shop_code', operator, name), ('name', operator, name)])
             return teams.name_get()
@@ -438,6 +444,24 @@ class E2yunCrmTeamNameExtends(models.Model):
             return res
         else:
             return super(E2yunCrmTeamNameExtends, self).name_get()
+
+    # def search(self, args, offset=0, limit=None, order=None, count=False):
+    #     flag = self.env.context.get('search_owned_shop', False)
+    #     if flag:
+    #         # user_related_teams = self.env.user.teams
+    #         user_related_teams = self.env['res.users'].browse(2)
+    #         # condition = ['id', 'in', user_related_teams]
+    #         # condition_tuple = tuple(condition)
+    #         # args.append(condition_tuple)
+    #         res = super(E2yunCrmTeamNameExtends, self).search(args, offset, limit, order, count)
+    #         return res
+    #     else:
+    #         return super(E2yunCrmTeamNameExtends, self).search(args, offset, limit, order, count)
+
+
+
+
+
         # return [(e.shop_code, e.name) for e in self]
         # res = self.get_formview_id()
         # for crm_team in self:
@@ -445,3 +469,4 @@ class E2yunCrmTeamNameExtends(models.Model):
         #     name = str(crm_team.shop_code)
         #     res.append((crm_team.id, name))
         # return res
+
