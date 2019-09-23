@@ -1,14 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <template id="supplier_register_layout" inherit_id="website.layout" name="Supplier Register">
-            <xpath expr="//li[@class='nav-item divider']" position="after">
-                <li class="nav-item">
-                    <a role="menuitem" href="/supplier/register" class="nav-link ">
-                        <span data-oe-model="website.menu" data-oe-id="29" data-oe-field="name" data-oe-type="char" data-oe-expression="submenu.name">供应商注册</span>
-                    </a>
-                </li>
-            </xpath>
-        </template>
+        <xpath expr="//li[@class='nav-item divider']" position="after">
+            <li class="nav-item">
+                <a role="menuitem" href="/supplier/register" class="nav-link ">
+                    <span data-oe-model="website.menu" data-oe-id="29" data-oe-field="name" data-oe-type="char" data-oe-expression="submenu.name">供应商注册信息完善</span>
+                </a>
+            </li>
+        </xpath>
+    </template>
+
+    <template id="fields" inherit_id="auth_signup.fields" name="Auth Signup/ResetPassword form fields">
+        <xpath expr="//div[@class='form-group field-login']" position="before">
+            <div class="form-group field-company_name">
+                <label for="login">公司名称<span style="color:red;"> *</span></label>
+                <input type="text" name="company_name" t-att-value="company_name" id="company_name" class="form-control form-control-sm" autofocus="autofocus"
+                    autocapitalize="off" required="required" t-att-readonly="'readonly' if only_passwords else None"/>
+            </div>
+            <div class="form-group field-vat">
+                <label for="login">统一社会信用代码<span style="color:red;"> *</span></label>
+                <input type="text" name="vat" t-att-value="vat" id="vat" class="form-control form-control-sm" autofocus="autofocus"
+                    autocapitalize="off" required="required" t-att-readonly="'readonly' if only_passwords else None"/>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@class='form-group field-login']" position="replace">
+            <div class="form-group field-login">
+                <label for="login">Email登录名<span style="color:red;"> *</span></label>
+                <input type="text" name="login" t-att-value="login" id="login" class="form-control form-control-sm" autofocus="autofocus"
+                    autocapitalize="off" required="required" t-att-readonly="'readonly' if only_passwords else None"/>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@class='form-group field-name']" position="replace">
+            <!--<div class="form-group field-name">-->
+                <!--<label for="name">Your Name</label>-->
+                <!--<input type="text" name="name" t-att-value="name" id="name" class="form-control form-control-sm" placeholder="e.g. John Doe"-->
+                    <!--required="required" t-att-readonly="'readonly' if only_passwords else None"-->
+                    <!--t-att-autofocus="'autofocus' if login and not only_passwords else None" />-->
+            <!--</div>-->
+        </xpath>
+
+        <xpath expr="//div[@class='form-group field-password pt-2']/label" position="replace">
+            <label for="password">密码<span style="color:red;"> *</span></label>
+        </xpath>
+
+        <xpath expr="//div[@class='form-group field-confirm_password']/label" position="replace">
+            <label for="confirm_password">确认密码<span style="color:red;"> *</span></label>
+        </xpath>
+
+
+    </template>
 
 </odoo>
 
