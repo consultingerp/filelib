@@ -248,7 +248,7 @@
                         <button type="action" name="129" class="btn-sm btn-link mb4 fa fa-envelope-o" aria-label="Send SMS" title="Send SMS" attrs="{'invisible':[('mobile', '=', False)]}" context="{'field_name': 'mobile'}"/>
                     </div>
                     <field name="app_code"/>
-                    <field name="shop_code" context="{'show_custom_name': 1}"/>
+                    <field name="shop_code" context="{'show_custom_name': 1,'search_owned_shop': 1}"/>
                     <field name="shop_name"/>
                     <field name="referrer"/>
                     <field name="occupation"/>
@@ -460,7 +460,7 @@
             <field name="res_model">res.partner</field>
             <field name="view_type">form</field>
             <field name="view_mode">kanban,tree,form,activity,graph</field>
-            <field name="context">{"search_default_customer":1, "show_custom_name":2}</field>
+            <field name="context">{"search_default_customer":1, "show_custom_name":2, "search_owned_shop": 1}</field>
             <field name="search_view_id" ref="base.view_res_partner_filter"/>
             <field name="view_ids" eval="[(5, 0, 0),
                 (0, 0, {'sequence': '2', 'view_mode': 'kanban', 'view_id': ref('crm_partner_kanban_add_status_group2')})
