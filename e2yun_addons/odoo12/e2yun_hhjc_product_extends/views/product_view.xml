@@ -71,5 +71,36 @@
             </field>
         </record>
 
+        <record id="view_product_company_show_tree" model="ir.ui.view">
+            <field name="name">product.company.show.tree</field>
+            <field name="model">product.company.show</field>
+            <field name="arch" type="xml">
+                <tree string="产品展示公司">
+                    <field name="company_id"/>
+                    <field name="show_ok"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_product_company_show_kanban" model="ir.ui.view">
+            <field name="name">product.company.show.kanban</field>
+            <field name="model">product.company.show</field>
+            <field name="arch" type="xml">
+                <kanban string="">
+                  <templates>
+                    <t t-name="kanban-box">
+                      <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record">
+                        <div class="o_kanban_card_content">
+                          <field name="company_id"/>
+                            <span>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</span>
+                          <field name="show_ok" widget="checkbox"/>
+                        </div>
+                      </div>
+                    </t>
+                  </templates>
+                </kanban>
+            </field>
+        </record>
+
     </data>
 </odoo>
