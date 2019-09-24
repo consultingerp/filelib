@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+    <template id="supplier_register_index_3">
+      <t t-call="website.layout">
+        <div id="wrap" class="oe_structure oe_empty">
+          <section class="pb0 pt8">
+            <div class="container">
+              <div class="row s_nb_column_fixed">
+                <div class="col-lg-12 s_title pb0 pt0" style="text-align: center; background-color: rgb(214, 239, 214);">
+                  <div class="s_btn pt16 pb16 text-center" data-name="Buttons"><a href="#" class="btn btn-primary btn-lg" data-original-title="" title="" aria-describedby="tooltip242123">服务协议</a>&amp;nbsp; &amp;nbsp; <span class="fa fa-chevron-right" style="" data-original-title="" title="" aria-describedby="tooltip126102"/>&amp;nbsp; &amp;nbsp; &amp;nbsp;<a href="#" class="btn btn-secondary btn-lg" data-original-title="" title="" aria-describedby="tooltip242123">基础信息</a>&amp;nbsp; &amp;nbsp; <span class="fa fa-chevron-right" style=""/>&amp;nbsp; &amp;nbsp;&amp;nbsp;<a href="#" class="btn btn-secondary btn-lg" data-original-title="" title="" aria-describedby="tooltip242123">认证信息</a>&amp;nbsp; &amp;nbsp;<span class="fa fa-chevron-right" style=""/> &amp;nbsp; &amp;nbsp;&amp;nbsp;<a href="#" class="btn btn-secondary btn-lg" data-original-title="" title="" aria-describedby="tooltip242123">完成注册</a></div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="s_tabs oe_custom_bg" style="">
+            <div class="container">
+              <div class="row s_col_no_bgcolor">
+                <div class="pt8 col-lg-12 pb0">
+                  <div class="card bg-white" style="">
+                    <div class="card-header">
+                      <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                        <li class="nav-item">
+                          <a class="nav-link active show" id="nav_tabs_link_1565869647814_6" data-toggle="tab" href="#nav_tabs_content_1565869647814_6" role="tab" aria-controls="nav_tabs_content_1565869647814_6" aria-selected="true" data-original-title="" title="" aria-describedby="tooltip851032">商业道德协议</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="card-body tab-content">
+                      <div class="tab-pane fade active show" id="nav_tabs_content_1565869647814_6" role="tabpanel" aria-labelledby="nav_tabs_link_1565869647814_6">
+                        <h3/>
+                        <p align="center" style="margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto;">
+                          <span class="STYLE7" style="font-family: Arial, Helvetica, sans-serif; font-size: 24px; font-weight: bold;">恪守商业道德协议书&amp;nbsp;<span class="Apple-converted-space">&amp;nbsp;</span>&amp;nbsp;</span>
+                        </p>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;"><span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">甲方：</span>&amp;nbsp;<font style="font-size: 18px;">&amp;nbsp;</font>&amp;nbsp;<span style="font-family: 仿宋; font-size: 18px; text-indent: 42.6667px;">悦辰电子有限责任公司</span></p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">乙方：<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">为规范甲乙双方的商业行为，维护公平竞争，建立健全防治商业贿赂的长效机制，深入推进反腐倡廉工作，根据国家有关法律法规和&amp;nbsp;<span style="text-indent: 42.6667px;">悦辰电子有限责任公司</span>（以下简称&amp;nbsp;<span style="text-indent: 42.6667px;">悦辰电子</span>）有关规定，经双方协商，签订本恪守商业道德协议书。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">第一条&amp;nbsp;&amp;nbsp;甲乙双方共同责任<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（一）严格遵守国家有关法律法规以及廉洁从业的有关规定。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（二）严格遵守商业道德和市场规则，共同营造公平公正的商务交易环境。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（三）加强有关人员的管理和恪守商业道德教育，自觉抵制不廉洁行为。在商务活动中发现对方存在违规违纪违法行为，应及时向对方监察部门或司法机关举报。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">第二条&amp;nbsp;&amp;nbsp;甲方及其人员的责任<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（一）不得索要或接受乙方及其相关单位和人员提供的回扣、礼金、有价证券、支付凭证、贵重物品等。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（二）不得在乙方及其相关单位报销任何应由甲方或个人支付的费用。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（三）不得违反规定在乙方及其相关单位投资入股，不得向乙方单位及人员借款或委托买卖股票、债券等。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（四）不得要求、暗示和接受乙方及其相关单位和个人为其购买或装修住房、婚丧嫁娶、配偶和子女的上学或工作安排以及出国（境）、旅游等提供方便。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（五）不得参加乙方及其相关单位安排的可能影响公正执行公务的宴请及娱乐等活动。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（六）不得接受乙方及其相关单位购置或提供的通讯工具、交通工具和高档办公用品。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（七）不得利用职权通过乙方及其相关单位为其配偶、子女及他人谋取不正当利益。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（八）不得违反规定在乙方或乙方相关单位兼职和领取兼职工资及报酬；不得利用甲方的商业秘密、业务渠道等谋取个人私利，或将其提供泄漏给乙方及其它企业和个人。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（九）不得利用职权和工作之便向乙方提出上述各项规定禁止事项或要求之外的与工作业务无关的事项或要求。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">第三条&amp;nbsp;&amp;nbsp;乙方及其人员的责任<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（一）不得向甲方及其人员提供回扣、礼金、有价证券、支付凭证、贵重物品等。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（二）不得为甲方及其人员报销应由甲方或个人支付的费用。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（三）不得为甲方人员投资入股、个人借款或买卖股票、债券等提供方便。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（四）不得为甲方人员购买或装修住房、婚丧嫁娶、配偶子女上学或工作安排以及出国（境）、旅游等提供方便。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（五）不得为甲方人员安排有可能影响公正执行公务的宴请、娱乐等活动。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（六）不得为甲方及其人员购置或提供通讯工具、交通工具和高档办公用品。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（七）不得为甲方人员的配偶、子女及其他亲属谋取不正当利益提供方便。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（八）不得违反规定安排甲方人员在乙方或乙方相关企业兼职和领取兼职工资及报酬；不得利用非法手段向甲方人员打探有关涉及甲方的商业秘密、业务渠道等。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（九）甲方对涉嫌不廉洁的商业行为进行调查时，乙方有配合甲方提供证据、作证的义务。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（十）未经甲方书面同意，乙方不得向任何新闻媒体、第三人述及有关&amp;nbsp;<span style="text-indent: 42.6667px;">悦辰电子</span>人员恪守商业道德方面的评价、信息。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">第四条&amp;nbsp;&amp;nbsp;违约责任<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（一）甲方及其人员有违反本协议书第一条、第二条规定的，按照管理权限，依据有关法律法规和规定给予有关人员纪律处分或组织处理；涉嫌犯罪的，移交司法机关追究刑事责任。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">（二）乙方及其人员有违反本责协议书第一条、第三条规定的，对属于&amp;nbsp;<span style="text-indent: 42.6667px;">悦辰电子</span>管理的企业，按照管理权限，依据国家法律法规和有关规定给予纪律处分或组织处理；涉嫌犯罪的，移交司法机关追究刑事责任。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">对不属于&amp;nbsp;<span style="text-indent: 42.6667px;">悦辰电子</span>管理的企业，根据具体情节和造成的后果，甲方除有权要求乙方赔偿由此造成的甲方损失外，还将分别在&amp;nbsp;<span style="text-indent: 42.6667px;">悦辰电子</span>范围内给予通报、限制或禁止与其交易的处理；涉嫌犯罪的，建议司法机关追究刑事责任。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">第五条&amp;nbsp;&amp;nbsp;本协议书经双方签署后生效，有效期至 年 月 日。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">甲乙双方通过招投标或其他方式签订采购合同的，本协议书作为双方所有采购合同的附件，与合同具有同等法律效力；如双方未签订采购合同，本协议书独立有效。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">第六条&amp;nbsp;&amp;nbsp;甲乙双方及其人员在采购合同履行完毕后，发生或发现违反本协议书规定的行为，仍按本协议书规定处理。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">第七条&amp;nbsp;&amp;nbsp;本协议书一式两份，甲乙双方各执一份，具有同等法律效力。<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">甲方单位：&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;乙方单位：<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">悦辰电子有限责任公司<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">负责人：&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;法定代表人或授权委托人：<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">地址：广东省中山市港口区&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; 地址：西滨河路22号<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">电话：&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;电话：<span lang="EN-US"/></span>
+                        </p>
+                        <p style="font-size: 14px;"/>
+                        <p style="font-size: 14px;"/>
+                        <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                          <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">日期:&amp;nbsp;&amp;nbsp;&amp;nbsp;年&amp;nbsp;&amp;nbsp;月&amp;nbsp;&amp;nbsp;日&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;日期:&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;年&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;月&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;日</span>
+                        </p>
+                        <div class="s_btn text-center pb0 pt0" data-name="Buttons">
+                          <a href="/supplier/register_base_info/" class="rounded-circle rounded-circle rounded-circle btn btn-success rounded-circle btn-lg" data-original-title="" title="" aria-describedby="tooltip84497">同意</a>
+                          &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;<a href="/" class="rounded-circle rounded-circle btn btn-secondary rounded-circle btn-lg" data-original-title="" title="" aria-describedby="tooltip84497">不同意</a></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12 s_title pt16 pb16" style="text-align: center;">
+                  <div class="s_alert s_alert_md alert-delta w-100 clearfix">
+                    <i class="fa fa-2x fa-info-circle s_alert_icon" data-original-title="" title="" aria-describedby="tooltip780846"/>
+                    <div class="s_alert_content">
+                      <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-align: start; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
+                        <span style="font-family: 仿宋; line-height: 32px;">
+                          <font style="color: rgb(0, 0, 0); font-size: 14px;">您确认本服务协议后，本服务协议即在您和悦辰电子有限责任公司之间产生法律效力。请您务必在注册前认真阅读全部协议内容，</font>
+                          <font style="color: rgb(0, 0, 0); font-size: 14px;">
+                            <br/>
+                          </font>
+                          <font style="color: rgb(0, 0, 0); font-size: 14px;">&amp;nbsp; &amp;nbsp;如有任何疑问，可向</font>
+                          <span style="text-indent: 42.6667px;">
+                            <font style="color: rgb(0, 0, 0); font-size: 14px;">悦辰电子咨询。</font>
+                          </span>
+                        </span>
+                      </p>
+                      <span style="font-family: 仿宋; line-height: 32px;">
+                        <div style="text-align: left;">
+                          <font style="font-size: 14px;">
+                            <b>&amp;nbsp; &amp;nbsp;特别请注意：</b>
+                          </font>
+                          <font style="color: rgb(0, 0, 0); font-size: 14px;"><b>&amp;nbsp; &amp;nbsp;</b>&amp;nbsp; &amp;nbsp;&amp;nbsp;</font>
+                        </div>
+                        <font style="color: rgb(0, 0, 0); font-size: 14px;">
+                          <div style="text-align: left;">&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;<b>只要您点击协议正本下方的"同意"按钮并按照</b><span style="font-size: 0.875rem; color: rgb(33, 37, 41); text-indent: 42.6667px;"><font style="color: rgb(0, 0, 0); font-size: 14px;"><b>悦辰电子供应商系统注册程序成功注册为用户，您的行为即表示同意并签署了本协议。</b></font></span></div>
+                        </font>
+                      </span>
+                      <p/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="pt32 pb0">
+            <div class="container">
+              <div class="row s_nb_column_fixed">
+
+                </div>
+            </div>
+          </section>
+        </div>
+      </t>
+    </template>
+
+  </data>
+
+</odoo>
+
