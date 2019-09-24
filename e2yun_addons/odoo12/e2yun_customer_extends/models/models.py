@@ -25,6 +25,14 @@ class E2yunCsutomerExtends(models.Model):
         shop = user.partner_id.shop_code
         return shop
 
+    # 将现有字段设为必输
+    mobile = fields.Char(required=True)
+    state_id = fields.Many2one("res.country.state", required=True)
+    country_id = fields.Many2one('res.country', required=True)
+    street = fields.Char(required=True)
+    city_id = fields.Many2one('res.state.city', required=True)
+    area_id = fields.Many2one('res.city.area', required=True)
+
     app_code = fields.Char(string='', copy=False, readonly=True, default=lambda self: _('New'))
     shop_code = fields.Many2one('crm.team', string='', default=default_shop_code)
     shop_name = fields.Char(string='', readonly=True, compute='_compute_shop_name', store=True)
@@ -54,7 +62,8 @@ class E2yunCsutomerExtends(models.Model):
         ('target_customer_loss', 'Target Customer Loss'),
         ('contract_customers', 'Contract Customers')
     ], string='Status', default='potential_customer', group_expand='_group_expand_stage_id')
-    related_guide = fields.Many2many('res.users',  domain="[('function', '!=', False)]")
+    related_guide = fields.Many2many('res.users',  domain="[('function', '!=', False)]", readonly=True)
+    user_id = fields.Many2one('res.users', readonly=True)
 
     @api.model
     def default_get(self, fields_list):
@@ -139,6 +148,8 @@ class E2yunCsutomerExtends(models.Model):
             if previous_state in ['potential_customer']:
                 if not self.mobile or not self.state_id or not self.city_id or not self.area_id or not self.street:
                     raise Warning(_("Please fill in partner's mobile and address!"))
+            if previous_state not in ['potential_customer'] and new_state in ['potential_customer']:
+                raise Warning(_("Can not back to potential_customer from other state"))
             # if previous_state in ['intention_customer_loss', 'target_customer_loss']:
             #     raise Warning(_("不能从流失客户转换到其他状态！"))
             # elif previous_state in ['contract_customers']:
@@ -402,6 +413,12 @@ class E2yunCrmTeamNameExtends(models.Model):
 
     @api.model
     def name_search(self, name='', args=None, operator='ilike', limit=100):
+        flag = self.env.context.get('search_owned_shop', False)
+        if flag:
+            user_related_teams = self.env.user.teams
+            args.append(('id', 'in', user_related_teams.ids))
+            # teams = self.search(['&', '|', ('shop_code', operator, name), ('name', operator, name), ('id', 'in', user_related_teams)])
+            return super(E2yunCrmTeamNameExtends, self).name_search(name, args, operator, limit)
         if name:
             teams = self.search(['|', ('shop_code', operator, name), ('name', operator, name)])
             return teams.name_get()
@@ -427,6 +444,24 @@ class E2yunCrmTeamNameExtends(models.Model):
             return res
         else:
             return super(E2yunCrmTeamNameExtends, self).name_get()
+
+    # def search(self, args, offset=0, limit=None, order=None, count=False):
+    #     flag = self.env.context.get('search_owned_shop', False)
+    #     if flag:
+    #         # user_related_teams = self.env.user.teams
+    #         user_related_teams = self.env['res.users'].browse(2)
+    #         # condition = ['id', 'in', user_related_teams]
+    #         # condition_tuple = tuple(condition)
+    #         # args.append(condition_tuple)
+    #         res = super(E2yunCrmTeamNameExtends, self).search(args, offset, limit, order, count)
+    #         return res
+    #     else:
+    #         return super(E2yunCrmTeamNameExtends, self).search(args, offset, limit, order, count)
+
+
+
+
+
         # return [(e.shop_code, e.name) for e in self]
         # res = self.get_formview_id()
         # for crm_team in self:
@@ -434,3 +469,4 @@ class E2yunCrmTeamNameExtends(models.Model):
         #     name = str(crm_team.shop_code)
         #     res.append((crm_team.id, name))
         # return res
+
