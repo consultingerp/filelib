@@ -33,7 +33,29 @@
                 'login_name',
                 'password',
                 'confirm_password',
-            ]"/>
+                'supplier_type',
+                'validity_license',
+                'nature_enterprise',
+                'CreditCode',
+                'registered_capital',
+                'registered_address',
+                'image_company',
+                'organization_chart',
+                'image_product',
+                'company_profile',
+                'country_bank',
+                'province_bank',
+                'city_bank',
+                'region_bank',
+                'name_bank',
+                'name_bank_branch',
+                'name_banks',
+                'account_bank',
+                'name_account',
+                'currency_type',
+                'code_bank',
+                'enclosure_bank',
+               ]"/>
         </function>
 
         <record id="e2yun_supplier_info.model_e2yun_supplier_authentication_info" model="ir.model">
