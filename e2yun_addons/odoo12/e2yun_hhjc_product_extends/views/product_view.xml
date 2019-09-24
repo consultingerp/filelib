@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="product_template_only_form_view" model="ir.ui.view">
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='default_code']" position="after">
+                    <field name="layer"/>
+                    <field name="layer_name"/>
+                    <field name="customized"/>
+                    <field name="product_group"/>
+                    <field name="mat_group"/>
+                    <field name="batch_manager"/>
+                </xpath>
+
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="so_qty"/>
+                    <field name="prefer_date"/>
+                    <field name="add_unit"/>
+                    <field name="groes"/>
+                    <field name="browse_num"/>
+                </xpath>
+
+                <xpath expr="//page[@name='general_information']" position="after">
+                    <page name="show_company" string="产品展示公司">
+                        <field name="pc_show_id">
+                            <tree string="产品展示公司" editable="bottom">
+                                <field name="company_id"/>
+                                <field name="show_ok"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+
+                <xpath expr="//field[@name='type']" position="attributes">
+                    <attribute name="attrs">{'invisible': True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='categ_id']" position="attributes">
+                    <attribute name="attrs">{'invisible': True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='list_price']" position="attributes">
+                    <attribute name="attrs">{'invisible': True}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='standard_price']" position="attributes">
+                    <attribute name="attrs">{'invisible': True}</attribute>
+                </xpath>
+
+                <xpath expr="//form[@name='Product Template']/sheet[1]/notebook[1]/page[@name='general_information']/group[1]/group[@name='group_standard_price']/label[1]" position="replace"/>
+              <xpath expr="//field[@name='taxes_id']" position="attributes">
+                <attribute name="attrs">{}</attribute>
+                <attribute name="invisible">1</attribute>
+              </xpath>
+
+
+            </field>
+        </record>
+
+        <record id="product_template_form_view" model="ir.ui.view">
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="account.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='taxes_id']" position="attributes">
+                    <attribute name="attrs">{'invisible': True}</attribute>
+                </xpath>
+
+
+            </field>
+        </record>
+
+        <record id="view_product_company_show_tree" model="ir.ui.view">
+            <field name="name">product.company.show.tree</field>
+            <field name="model">product.company.show</field>
+            <field name="arch" type="xml">
+                <tree string="产品展示公司">
+                    <field name="company_id"/>
+                    <field name="show_ok"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_product_company_show_kanban" model="ir.ui.view">
+            <field name="name">product.company.show.kanban</field>
+            <field name="model">product.company.show</field>
+            <field name="arch" type="xml">
+                <kanban string="">
+                  <templates>
+                    <t t-name="kanban-box">
+                      <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record">
+                        <div class="o_kanban_card_content">
+                          <field name="company_id"/>
+                            <span>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</span>
+                          <field name="show_ok" widget="checkbox"/>
+                        </div>
+                      </div>
+                    </t>
+                  </templates>
+                </kanban>
+            </field>
+        </record>
+
+    </data>
+</odoo>

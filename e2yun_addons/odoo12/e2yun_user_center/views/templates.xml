@@ -5020,8 +5020,9 @@
                     <div class="weui-cells" style="margin-top: 0">
                         <a class="weui-cell head-cells weui-cell_access" href="/user-center/my-info">
                             <div class="weui-cell__hd">
-                                <img t-attf-src="data:image/png;base64,#{current_user.image_small}" alt="" height="100px" width="100px"/>
-<!--                                <img src="/e2yun_user_center/static/src/images/me_head_img.jpg" alt=""/>-->
+                                <img t-attf-src="data:image/png;base64,#{current_user.image_small}" alt=""
+                                     height="100px" width="100px"/>
+                                <!--                                <img src="/e2yun_user_center/static/src/images/me_head_img.jpg" alt=""/>-->
                             </div>
                             <div class="weui-cell__bd flex flex-v" style="margin-left: 30">
                                 <p t-field="current_user.name" align="left"/>
@@ -5039,7 +5040,7 @@
                     <div class="weui-cells">
                         <a class="weui-cell weui-cell_access" href="/user-center/my-guide">
                             <div class="weui-cell__hd">
-<!--                                <img src="/e2yun_user_center/static/src/images/me241.png" alt=""/>-->
+                                <!--                                <img src="/e2yun_user_center/static/src/images/me241.png" alt=""/>-->
                             </div>
                             <div class="weui-cell__bd" style="margin-left: 30">
                                 <p align="left">客户经理</p>
@@ -10080,8 +10081,9 @@
                     <div class="weui-cells" style="margin-top: 0">
                         <a class="weui-cell head-cells weui-cell_access" href="/user-center/my-info">
                             <div class="weui-cell__hd">
-                                <img t-attf-src="data:image/png;base64,#{current_user.image_small}" alt="" height="100px" width="100px"/>
-<!--                                <img src="/e2yun_user_center/static/src/images/me_head_img.jpg" alt=""/>-->
+                                <img t-attf-src="data:image/png;base64,#{current_user.image_small}" alt=""
+                                     height="100px" width="100px"/>
+                                <!--                                <img src="/e2yun_user_center/static/src/images/me_head_img.jpg" alt=""/>-->
                             </div>
                             <div class="weui-cell__bd flex flex-v" style="margin-left: 30">
                                 <p t-field="current_user.name" align="left" style="font-size:30px;"/>
@@ -10099,7 +10101,7 @@
                     <div class="weui-cells">
                         <a class="weui-cell weui-cell_access" href="/user-center/back-to-app-center">
                             <div class="weui-cell__hd">
-<!--                                <img src="/e2yun_user_center/static/src/images/home241.png" alt=""/>-->
+                                <!--                                <img src="/e2yun_user_center/static/src/images/home241.png" alt=""/>-->
                             </div>
                             <div class="weui-cell__bd" style="margin-left: 30">
                                 <p align="left">首页</p>
@@ -10795,6 +10797,17 @@
                     margin-top: -4px;
                     right: 2px;
                     }
+                    .weui-cell_access .weui-cell__ft__without_arrows {
+                    padding-right: 13px;
+                    position: relative;
+                    }
+                    .weui-cell_access .weui-cell__ft__without_arrows:after {
+                    content: " ";
+                    display: inline-block;
+                    height: 6px;
+                    width: 6px;
+                    border-width: 2px 2px 0 0;
+                    }
                     .weui-cell_link {
                     color: #586C94;
                     font-size: 14px;
@@ -15158,7 +15171,7 @@
                                 <p>昵称</p>
                             </div>
                             <div class="weui-cell__bd"></div>
-                            <div class="weui-cell__ft">
+                            <div class="weui-cell__ft__without_arrows">
                                 <span t-field="current_user.name"/>
                             </div>
                         </a>
@@ -15167,7 +15180,7 @@
                                 <p>账号</p>
                             </div>
                             <div class="weui-cell__bd"></div>
-                            <div class="weui-cell__ft">
+                            <div class="weui-cell__ft__without_arrows">
                                 <span t-field="current_user.login"/>
                             </div>
                         </a>
@@ -15176,7 +15189,7 @@
                                 <p>手机</p>
                             </div>
                             <div class="weui-cell__bd"></div>
-                            <div class="weui-cell__ft">
+                            <div class="weui-cell__ft__without_arrows">
                                 <span t-field="current_user.mobile"/>
                             </div>
                         </a>
@@ -15185,7 +15198,7 @@
                                 <p>地址</p>
                             </div>
                             <div class="weui-cell__bd"></div>
-                            <div class="weui-cell__ft">
+                            <div class="weui-cell__ft__without_arrows">
                                 <span t-field="current_user.partner_id.country_id"/>
                                 <span t-field="current_user.partner_id.state_id"/>
                                 <span t-field="current_user.partner_id.city_id"/>
@@ -15199,7 +15212,7 @@
                                 <p>性别</p>
                             </div>
                             <div class="weui-cell__bd"></div>
-                            <div class="weui-cell__ft">
+                            <div class="weui-cell__ft__without_arrows">
                                 <span t-field="current_user.gender"/>
                             </div>
                         </a>
@@ -15883,6 +15896,17 @@
                     margin-top: -4px;
                     right: 2px;
                     }
+                    .weui-cell_access .weui-cell__ft__without_arrows {
+                    padding-right: 13px;
+                    position: relative;
+                    }
+                    .weui-cell_access .weui-cell__ft__without_arrows:after {
+                    content: " ";
+                    display: inline-block;
+                    height: 6px;
+                    width: 6px;
+                    border-width: 2px 2px 0 0;
+                    }
                     .weui-cell_link {
                     color: #586C94;
                     font-size: 14px;
@@ -20246,7 +20270,7 @@
                                 <p>昵称</p>
                             </div>
                             <div class="weui-cell__bd"></div>
-                            <div class="weui-cell__ft">
+                            <div class="weui-cell__ft__without_arrows">
                                 <span t-field="current_user.name"/>
                             </div>
                         </a>
@@ -20255,7 +20279,7 @@
                                 <p>账号</p>
                             </div>
                             <div class="weui-cell__bd"></div>
-                            <div class="weui-cell__ft">
+                            <div class="weui-cell__ft__without_arrows">
                                 <span t-field="current_user.login"/>
                             </div>
                         </a>
@@ -20271,7 +20295,7 @@
                                 <p>手机</p>
                             </div>
                             <div class="weui-cell__bd"></div>
-                            <div class="weui-cell__ft">
+                            <div class="weui-cell__ft__without_arrows">
                                 <span t-field="current_user.mobile"/>
                             </div>
                         </a>
@@ -20280,7 +20304,7 @@
                                 <p>地址</p>
                             </div>
                             <div class="weui-cell__bd"></div>
-                            <div class="weui-cell__ft">
+                            <div class="weui-cell__ft__without_arrows">
                                 <span t-field="current_user.partner_id.country_id"/>
                                 <span t-field="current_user.partner_id.state_id"/>
                                 <span t-field="current_user.partner_id.city_id"/>
@@ -20294,7 +20318,7 @@
                                 <p>性别</p>
                             </div>
                             <div class="weui-cell__bd"></div>
-                            <div class="weui-cell__ft">
+                            <div class="weui-cell__ft__without_arrows">
                                 <span t-field="current_user.gender"/>
                             </div>
                         </a>
@@ -20328,10 +20352,10 @@
                         </a>
                     </div>
                 </div>
-<!--                <div class="weui-cells__title"></div>-->
-<!--                <div style="width:100px;display: inline-block;position:relative;">-->
-<!--                    <span t-field="current_user.qrcodeimg"/>-->
-<!--                </div>-->
+                <!--                <div class="weui-cells__title"></div>-->
+                <!--                <div style="width:100px;display: inline-block;position:relative;">-->
+                <!--                    <span t-field="current_user.qrcodeimg"/>-->
+                <!--                </div>-->
             </body>
         </html>
     </template>
@@ -20460,8 +20484,8 @@
             <body>
                 <p align="center" t-field="current_user.qrcodeimg"/>
                 <div class="weui-cells">
-                        <a class="weui-cell weui-cell_access" href="/user-center/my-info">返回到个人信息页面</a>
-                    </div>
+                    <a class="weui-cell weui-cell_access" href="/user-center/my-info">返回到个人信息页面</a>
+                </div>
             </body>
         </html>
     </template>
@@ -20588,11 +20612,13 @@
                 </style>
             </head>
             <body>
-                <p align="center"><img t-att-src='change_password_qrcode.value[10:-31]'/></p>
-<!--                <p align="center" t-field="auth_signup_reset_password_qrcodeimg.value"/>-->
+                <p align="center">
+                    <img t-att-src='change_password_qrcode.value[10:-31]'/>
+                </p>
+                <!--                <p align="center" t-field="auth_signup_reset_password_qrcodeimg.value"/>-->
                 <div class="weui-cells">
-                        <a class="weui-cell weui-cell_access" href="/user-center/my-info">返回到个人信息页面</a>
-                    </div>
+                    <a class="weui-cell weui-cell_access" href="/user-center/my-info">返回到个人信息页面</a>
+                </div>
             </body>
         </html>
     </template>
