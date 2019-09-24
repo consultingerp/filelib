@@ -123,6 +123,22 @@
             </field>
         </record>
 
+        <record id="crm_partner_form_change_mobile_field_place" model="ir.ui.view">
+            <field name="name">CRM Partner Form Change Mobile Field Place</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="sms.partner_form_send_sms_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='mobile']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+<!--                <xpath expr="//button[@aria-label='Send SMS']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//label[@for='mobile']" position="replace">
+                </xpath>
+            </field>
+        </record>
+
 
         <record id="crm_partner_form_add_status_bar" model="ir.ui.view">
             <field name="name">CRM Partner Form Add Status Bar</field>
@@ -226,8 +242,13 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                 <field name="vat" position="before">
+                     <label for="mobile"/>
+                    <div class="o_row">
+                        <field name="mobile" widget="phone"/>
+                        <button type="action" name="129" class="btn-sm btn-link mb4 fa fa-envelope-o" aria-label="Send SMS" title="Send SMS" attrs="{'invisible':[('mobile', '=', False)]}" context="{'field_name': 'mobile'}"/>
+                    </div>
                     <field name="app_code"/>
-                    <field name="shop_code" context="{'show_custom_name': 1}"/>
+                    <field name="shop_code" context="{'show_custom_name': 1,'search_owned_shop': 1}"/>
                     <field name="shop_name"/>
                     <field name="referrer"/>
                     <field name="occupation"/>
@@ -238,7 +259,17 @@
                 </field>
             </field>
         </record>
-
+        <!--base.view_partner_tree-->
+        <record id="crm_partner_tree_extend" model="ir.ui.view">
+            <field name="name">CRM Partner Tree Extends</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="/tree" position="attributes">
+                    <attribute name="default_order">write_date desc</attribute>
+                </xpath>
+            </field>
+        </record>
         <!--<record model="ir.actions.server" id="action_sync_customer_pos">-->
         <!--<field name="name">同步POS</field>-->
         <!--<field name="model_id" ref="model_res_partner"/>-->
@@ -429,7 +460,7 @@
             <field name="res_model">res.partner</field>
             <field name="view_type">form</field>
             <field name="view_mode">kanban,tree,form,activity,graph</field>
-            <field name="context">{"search_default_customer":1, "show_custom_name":2}</field>
+            <field name="context">{"search_default_customer":1, "show_custom_name":2, "search_owned_shop": 1}</field>
             <field name="search_view_id" ref="base.view_res_partner_filter"/>
             <field name="view_ids" eval="[(5, 0, 0),
                 (0, 0, {'sequence': '2', 'view_mode': 'kanban', 'view_id': ref('crm_partner_kanban_add_status_group2')})
