@@ -244,7 +244,7 @@
                                 <!--<field name="parent_account"/>-->
                                 <!--新增企业性质/注册地址-->
                                 <field name="nature_enterprise"/>
-                                <field name="registered_address"/>
+                                <field name="registered_address" placeholder="与营业执照保持一致"/>
                                 <!--<label for="street" string="Address"/>-->
                                 <!--<div class="o_address_format">-->
                                     <!--<div attrs="{'invisible': ['|', ('parent_id', '=', False), ('type', '!=', 'contact')]}"-->
@@ -303,15 +303,7 @@
                                     <field name="trade"/>
                                     <label for="trade"/>
                                 </div>
-                                <!--<div>-->
-                                    <!--<span>供应商类型 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span>-->
-                                    <!--<field name="production"/>-->
-                                    <!--<label for="production"/>-->
-
-                                    <!--<field name="trade"/>-->
-                                    <!--<label for="trade"/>-->
-                                <!--</div>-->
-                                <!--<field name="supplier_type" widget="many2many_checkboxes" attrs="{'invisible': [('type', 'in', ['service', 'digital'])]}" />-->
+                                <field name="company_profile"/>
                                 <field name="is_strategic" invisible="1"/>
 
                                 <!--<field name="category_id" widget="many2many_tags"-->
@@ -476,11 +468,11 @@
                             <!--新增银行信息选项卡-->
                             <page name='info_bank' string="银行信息">
 
-                                    <group name="container_row_3">
+                                    <group>
                                         <group>
                                             <field name="country_bank"/>
                                             <field name="province_bank"/>
-                                            <field name="city_bank"/>
+                                            <field name="city_bank" groups="base.group_user"/>
                                             <field name="region_bank"/>
                                             <field name="name_bank"/>
                                         </group>
@@ -525,8 +517,11 @@
                                                        context="{'country_id': country_id}"/>
                                             <field name="city" placeholder="City" class="o_address_city"
                                                 attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                            <field name="street2" placeholder="Street 2..." class="o_address_street"
-                                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                            <label for="street2" string="详细地址"/>
+                                            <div>
+                                                <field name="street2" placeholder="Street 2..." class="o_address_street"
+                                                        attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                            </div>
                                         </group>
                                     </group>
 
@@ -558,8 +553,10 @@
                             </page>
                             <!--新增产品信息选项卡-->
                             <page name='info_product' string="产品信息">
-                                <field name="secondary_industry_ids" widget="many2many_tags"/>
-                                <field name="comment" placeholder="note..."/>
+                                <label for="secondary_industry_ids" string="供应产品类别"/>
+                                    <field name="secondary_industry_ids" widget="many2many_tags"/>
+                                <label for="comment" string="备注"/>
+                                    <field name="comment" placeholder="note..."/>
                             </page>
                             <page name='authenitcation' string="认证信息">
                                 <field name="authenitcation_id" widget="one2many_list" context="{'authenitcation_id': authenitcation_id}">
