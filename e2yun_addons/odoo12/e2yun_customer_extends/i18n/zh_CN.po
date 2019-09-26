@@ -207,6 +207,13 @@ msgid "Please fill in partner's mobile and address!"
 msgstr "请填写客户的手机号码与完整地址！"
 
 #. module: e2yun_customer_extends
+#: code:addons/e2yun_customer_extends/models/models.py:135
+#: code:addons/filelib/e2yun_addons/odoo12/e2yun_customer_extends/models/models.py:135
+#, python-format
+msgid "Can not back to potential_customer from other state"
+msgstr "无法从其他状态变更回潜在客户状态！"
+
+#. module: e2yun_customer_extends
 #: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_partner__pos_state
 #: model:ir.model.fields,field_description:e2yun_customer_extends.field_res_users__pos_state
 msgid "Pos State"
