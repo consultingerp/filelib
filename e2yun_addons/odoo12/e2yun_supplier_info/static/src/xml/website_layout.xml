@@ -48,8 +48,13 @@
         <xpath expr="//div[@class='form-group field-confirm_password']/label" position="replace">
             <label for="confirm_password">确认密码<span style="color:red;"> *</span></label>
         </xpath>
+    </template>
 
-
+    <template id="assets_frontend" inherit_id="website.assets_frontend" name="E2yun Supplier Info assets">
+        <xpath expr="." position="inside">
+            <!--<link rel="stylesheet" type="text/scss" href="/website_blog/static/src/scss/website_blog.scss"/>-->
+            <script type="text/javascript" src="/e2yun_supplier_info/static/src/js/register.js"/>
+        </xpath>
     </template>
 
 </odoo>

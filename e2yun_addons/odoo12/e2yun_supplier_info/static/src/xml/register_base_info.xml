@@ -44,36 +44,64 @@
                           <p class="MsoNormal" align="center" style="margin: 7.8pt 5.95pt 15.6pt 7.35pt; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-align: center; line-height: 18px;"> </p>
                           <div id="wrap" class="oe_structure oe_empty">
                             <div class="row form-group form-field o_website_form_required_custom">
-                              <div class="col-md-4 text-md-right">
+                              <div class="col-md-4 text-md-right col-lg-2">
                                 <label class="col-form-label" for="company_name"> 公司名称 </label>
                               </div>
-                              <div class="col-lg-7 col-md-8">
-                                <input type="text" class="form-control o_website_form_input" name="company_name" required=""/>
+                              <div class="col-lg-3 col-md-8">
+                                <input type="text" class="form-control o_website_form_input" t-att-value="supplier.company_name"  name="company_name" required=""/>
                               </div>
-                            </div>
-                            <div class="row form-group form-field">
-                              <div class="col-md-4 text-md-right">
+                              <div class="col-md-4 text-md-right col-lg-2">
                                 <label class="col-form-label" for="organ_code"> 组织代码 </label>
                               </div>
-                              <div class="col-lg-7 col-md-8">
-                                <input type="text" class="form-control o_website_form_input" name="organ_code"/>
+                              <div class="col-lg-3 col-md-8">
+                                <input type="text" class="form-control o_website_form_input" t-att-value="supplier.organ_code" name="organ_code"/>
+                              </div>
+                            </div>
+                            <!--<div class="row form-group form-field">-->
+                              <!---->
+                            <!--</div>-->
+                            <div class="row form-group form-field">
+
+                              <div class="col-md-4 text-md-right col-lg-2">
+                                <label class="col-form-label" for="vat"> 税号 </label>
+                              </div>
+                              <div class="col-lg-3 col-md-8">
+                                <input type="text" class="form-control o_website_form_input" t-att-value="supplier.vat" name="vat"/>
+                              </div>
+                              <div class="col-md-4 text-md-right col-lg-2">
+                                <label class="col-form-label" for="website">公司网站</label>
+                              </div>
+                              <div class="col-lg-3 col-md-8">
+                                <input type="text" class="form-control o_website_form_input" t-att-value="supplier.website" name="website"/>
                               </div>
                             </div>
                             <div class="row form-group form-field">
-                              <div class="col-md-4 text-md-right">
+                              <div class="col-md-4 text-md-right col-lg-2">
+                                <label class="col-form-label" for="business_license"> 营业执照 </label>
+                              </div>
+                              <div class="col-lg-3 col-md-8">
+                                <input type="file" class="form-control o_website_form_input"  name="business_license"/>
+                              </div>
+                              <div class="col-lg-5 col-md-8">
+                                <img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""
+                                     height="60px" width="100px"/>
+                              </div>
+                            </div>
+                            <div class="row form-group form-field">
+                              <div class="col-md-4 text-md-right col-lg-2">
                                 <label class="col-form-label" for="listed_company"> 是否上市 </label>
                               </div>
-                              <div class="col-lg-7 col-md-8">
+                              <div class="col-lg-3 col-md-8">
                                 <div class="o_website_form_flex">
                                   <div class="radio o_website_form_flex_item">
                                     <label>
-                                      <input type="radio" class="o_website_form_input" name="listed_company" value="t"/>
+                                        <input type="radio" class="o_website_form_input" t-att-checked="supplier.listed_company == True" name="listed_company" value="t"/>
                                       <span> 是 </span>
                                     </label>
                                   </div>
                                   <div class="radio o_website_form_flex_item">
                                     <label>
-                                      <input type="radio" class="o_website_form_input" name="listed_company" value="f"/>
+                                      <input type="radio" class="o_website_form_input" t-att-checked="supplier.listed_company == False" name="listed_company" value="f"/>
                                       <span> 否 </span>
                                     </label>
                                   </div>
@@ -81,62 +109,38 @@
                               </div>
                             </div>
                             <div class="row form-group form-field">
-                              <div class="col-md-4 text-md-right">
-                                <label class="col-form-label" for="website">公司网站</label>
-                              </div>
-                              <div class="col-lg-7 col-md-8">
-                                <input type="text" class="form-control o_website_form_input" name="website"/>
-                              </div>
-                            </div>
-                            <div class="row form-group form-field">
-                              <div class="col-md-4 text-md-right">
-                                <label class="col-form-label" for="business_license"> 营业执照 </label>
-                              </div>
-                              <div class="col-lg-7 col-md-8">
-                                <input type="file" class="form-control o_website_form_input" name="business_license"/>
-                              </div>
-                            </div>
-                            <div class="row form-group form-field">
-                              <div class="col-md-4 text-md-right">
-                                <label class="col-form-label" for="vat"> 税号 </label>
-                              </div>
-                              <div class="col-lg-7 col-md-8">
-                                <input type="text" class="form-control o_website_form_input" name="vat"/>
-                              </div>
-                            </div>
-                            <div class="row form-group form-field">
-                              <div class="col-md-4 text-md-right">
+                              <div class="col-md-4 text-md-right col-lg-2">
                                 <label class="col-form-label" for="annual_turnover"> 年营业额 </label>
                               </div>
-                              <div class="col-lg-7 col-md-8">
+                              <div class="col-md-8">
                                 <div class="o_website_form_flex">
                                   <div class="radio o_website_form_flex_item">
                                     <label>
-                                      <input type="radio" class="o_website_form_input" name="annual_turnover" value="1"/>
+                                      <input type="radio" class="o_website_form_input" t-att-checked="supplier.annual_turnover == '1'" name="annual_turnover" value="1"/>
                                       <span> 1000万以下 </span>
                                     </label>
                                   </div>
                                   <div class="radio o_website_form_flex_item">
                                     <label>
-                                      <input type="radio" class="o_website_form_input" name="annual_turnover" value="2"/>
+                                      <input type="radio" class="o_website_form_input" t-att-checked="supplier.annual_turnover == '2'" name="annual_turnover" value="2"/>
                                       <span> 1000万-5000万 </span>
                                     </label>
                                   </div>
                                   <div class="radio o_website_form_flex_item">
                                     <label>
-                                      <input type="radio" class="o_website_form_input" name="annual_turnover" value="3"/>
+                                      <input type="radio" class="o_website_form_input" t-att-checked="supplier.annual_turnover == '3'" name="annual_turnover" value="3"/>
                                       <span> 5000万-1亿 </span>
                                     </label>
                                   </div>
                                   <div class="radio o_website_form_flex_item">
                                     <label>
-                                      <input type="radio" class="o_website_form_input" name="annual_turnover" value="4"/>
+                                      <input type="radio" class="o_website_form_input" t-att-checked="supplier.annual_turnover == '4'" name="annual_turnover" value="4"/>
                                       <span> 1亿-10亿 </span>
                                     </label>
                                   </div>
                                   <div class="radio o_website_form_flex_item">
                                     <label>
-                                      <input type="radio" class="o_website_form_input" name="annual_turnover" value="5"/>
+                                      <input type="radio" class="o_website_form_input" t-att-checked="supplier.annual_turnover == '5'" name="annual_turnover" value="5"/>
                                       <span> 10亿-100亿 </span>
                                     </label>
                                   </div>
@@ -144,32 +148,32 @@
                               </div>
                             </div>
                             <div class="row form-group form-field">
-                              <div class="col-md-4 text-md-right">
+                              <div class="col-md-4 text-md-right col-lg-2">
                                 <label class="col-form-label" for="employees"> 企业员工 </label>
                               </div>
-                              <div class="col-lg-7 col-md-8">
+                              <div class="col-md-8 ">
                                 <div class="o_website_form_flex">
                                   <div class="radio o_website_form_flex_item">
                                     <label>
-                                      <input type="radio" class="o_website_form_input" name="employees" value="1"/>
+                                      <input type="radio" class="o_website_form_input" t-att-checked="supplier.employees == '1'" name="employees" value="1"/>
                                       <span> 500人以下 </span>
                                     </label>
                                   </div>
                                   <div class="radio o_website_form_flex_item">
                                     <label>
-                                      <input type="radio" class="o_website_form_input" name="employees" value="2"/>
+                                      <input type="radio" class="o_website_form_input" t-att-checked="supplier.employees == '2'" name="employees" value="2"/>
                                       <span> 500-1000人 </span>
                                     </label>
                                   </div>
                                   <div class="radio o_website_form_flex_item">
                                     <label>
-                                      <input type="radio" class="o_website_form_input" name="employees" value="3"/>
+                                      <input type="radio" class="o_website_form_input" t-att-checked="supplier.employees == '3'" name="employees" value="3"/>
                                       <span> 1000-5000人 </span>
                                     </label>
                                   </div>
                                   <div class="radio o_website_form_flex_item">
                                     <label>
-                                      <input type="radio" class="o_website_form_input" name="employees" value="4"/>
+                                      <input type="radio" class="o_website_form_input" t-att-checked="supplier.employees == '4'" name="employees" value="4"/>
                                       <span> 5000-10000人 </span>
                                     </label>
                                   </div>
@@ -193,135 +197,101 @@
                         <div class="tab-pane fade" id="nav_tabs_content_1565869647814_3" role="tabpanel" aria-labelledby="nav_tabs_link_1565869647814_3">
                           <p align="center" style="margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto;"></p>
                           <div class="form-group row form-field o_website_form_required">
-                            <div class="col-md-4 text-right">
+                            <div class="col-md-4 text-right col-lg-2">
                               <label class="col-form-label" for="name">联系人&amp;nbsp;</label>
                             </div>
-                            <div class="col-lg-7 col-md-8">
-                              <input type="text" class="form-control o_website_form_input" name="name" required="1"/>
+                            <div class="col-lg-3 col-md-8">
+                              <input type="text" class="form-control o_website_form_input" t-att-value="supplier.name" name="name" required="1"/>
                             </div>
+                            <div class="col-md-4 text-right col-lg-2">
+                              <label class="col-form-label" for="login_name">Email登录名&amp;nbsp;</label>
+                            </div>
+                            <div class="col-lg-3 col-md-8">
+                              <input type="text" readonly="readonly" class="form-control o_website_form_input" t-att-value="supplier.login_name" name="login_name" required="1"/>
+                            </div>
+
                           </div>
-                          <div class="form-group row form-field o_website_form_required">
-                            <div class="col-md-4 text-right">
-                              <label class="col-form-label" for="login_name">登录名&amp;nbsp;</label>
-                            </div>
-                            <div class="col-lg-7 col-md-8">
-                              <input type="text" class="form-control o_website_form_input" name="login_name" required="1"/>
-                            </div>
-                          </div>
-                          <div class="form-group row form-field o_website_form_required">
-                            <div class="col-md-4 text-right">
-                              <label class="col-form-label" for="password">密码&amp;nbsp;</label>
-                            </div>
-                            <div class="col-lg-7 col-md-8">
-                              <input type="password" class="form-control o_website_form_input" name="password" required="1"/>
-                            </div>
-                          </div>
-                          <div class="form-group row form-field o_website_form_required">
-                            <div class="col-md-4 text-right">
-                              <label class="col-form-label" for="confirm_password">确认密码&amp;nbsp;</label>
-                            </div>
-                            <div class="col-lg-7 col-md-8">
-                              <input type="password" class="form-control o_website_form_input" name="confirm_password" required="1"/>
-                            </div>
-                          </div>
+                          <!--<div class="form-group row form-field o_website_form_required">-->
+                            <!--<div class="col-md-4 text-right">-->
+                              <!--<label class="col-form-label" for="password">密码&amp;nbsp;</label>-->
+                            <!--</div>-->
+                            <!--<div class="col-lg-7 col-md-8">-->
+                              <!--<input type="password" readonly="readonly" class="form-control o_website_form_input" t-att-value="supplier.password" name="password" required="1"/>-->
+                            <!--</div>-->
+                          <!--</div>-->
+                          <!--<div class="form-group row form-field o_website_form_required">-->
+                            <!--<div class="col-md-4 text-right">-->
+                              <!--<label class="col-form-label" for="confirm_password">确认密码&amp;nbsp;</label>-->
+                            <!--</div>-->
+                            <!--<div class="col-lg-7 col-md-8">-->
+                              <!--<input type="password" readonly="readonly" class="form-control o_website_form_input" t-att-value="supplier.confirm_password" name="confirm_password" required="1"/>-->
+                            <!--</div>-->
+                          <!--</div>-->
                           <div class="row form-group form-field o_website_form_required">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="mobile">手机号码</label>
                             </div>
-                            <div class="col-lg-7 col-md-8">
-                              <input type="text" class="form-control o_website_form_input" name="mobile" required="1"/>
+                            <div class="col-lg-3 col-md-8">
+                              <input type="text" class="form-control o_website_form_input" t-att-value="supplier.mobile" name="mobile" required="1"/>
                             </div>
-                          </div>
-                          <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
-                              <label class="col-form-label" for="phone">固定电话</label>
-                            </div>
-                            <div class="col-lg-7 col-md-8">
-                              <input type="text" class="form-control o_website_form_input" name="phone"/>
-                            </div>
-                          </div>
-                          <div class="row form-group form-field o_website_form_required">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="email">邮箱</label>
                             </div>
-                            <div class="col-lg-7 col-md-8">
-                              <input type="text" class="form-control o_website_form_input" name="email" required="1"/>
+                            <div class="col-lg-3 col-md-8">
+                              <input type="text" class="form-control o_website_form_input" t-att-value="supplier.email" name="email" required="1"/>
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
+                              <label class="col-form-label" for="phone">固定电话</label>
+                            </div>
+                            <div class="col-lg-3 col-md-8">
+                              <input type="text" class="form-control o_website_form_input" t-att-value="supplier.phone" name="phone"/>
+                            </div>
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="function">工作岗位</label>
                             </div>
-                            <div class="col-lg-7 col-md-8">
-                              <input type="text" class="form-control o_website_form_input" name="function"/>
+                            <div class="col-lg-3 col-md-8">
+                              <input type="text" class="form-control o_website_form_input" t-att-value="supplier.function" name="function"/>
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="country_id">国家</label>
                             </div>
-                            <div class="col-lg-7 col-md-8">
-                                <select class="form-control o_website_form_input" name="country_id">
-                                  <option value="48">
-                                  中国
-                                  </option>
-                                  <option value="227">
-                                      中国台湾
-                                  </option>
-                                  <option value="94">
-                                      中国香港
-                                  </option>
+                            <div class="col-lg-3 col-md-8">
+                                <select class="form-control o_website_form_input" name="country_id" id="supplier_info_country_id">
+                                  <t t-foreach="countrys" t-as="country">
+                                    <option t-att-data="country.id" t-att-value="country.id" t-att-selected="country.id == supplier.country_id.id"><t t-esc="country.name"/></option>
+                                  </t>
                                 </select>
                             </div>
-                          </div>
-                          <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="state_id">省/州</label>
                             </div>
-                            <div class="col-lg-7 col-md-8">
-                              <select class="form-control o_website_form_input" name="state_id">
+                            <div class="col-lg-3 col-md-8">
+                              <select class="form-control o_website_form_input" name="state_id" id="supplier_info_state_id">
                                  <option value=""></option>
-                                  <option value="680">
-                                  北京市
-                                  </option>
-                                  <option value="681">
-                                      上海市
-                                  </option>
-                                  <option value="682">
-                                      浙江省
-                                  </option>
-                                  <option value="695">
-                                      广东省
-                                  </option>
-                                  <option value="699">
-                                      四川省
-                                  </option>
-                                  <option value="711">
-                                      台湾省
-                                  </option>
-                                  <option value="712">
-                                      香港特别行政区
-                                  </option>
-                                  <option value="713">
-                                      澳门特别行政区
-                                  </option>
+                                 <t t-foreach="states or []" t-as="state">
+                                    <option class="state" t-att-value="state.id" t-att-country="state.country_id.id" t-att-selected="state.id == supplier.state_id.id">
+                                        <t t-esc="state.name"/>
+                                    </option>
+                                 </t>
                                 </select>
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="city">城市</label>
                             </div>
-                            <div class="col-lg-7 col-md-8">
-                              <input type="text" class="form-control o_website_form_input" name="city"/>
+                            <div class="col-lg-3 col-md-8">
+                              <input type="text" class="form-control o_website_form_input" t-att-value="supplier.city" name="city"/>
                             </div>
-                          </div>
-                          <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="street">详细地址</label>
                             </div>
-                            <div class="col-lg-7 col-md-8">
-                              <input type="text" class="form-control o_website_form_input" name="street"/>
+                            <div class="col-lg-3 col-md-8 col-lg-2">
+                              <input type="text" class="form-control o_website_form_input" t-att-value="supplier.street" name="street"/>
                             </div>
                           </div>
                           <p/>
@@ -339,152 +309,34 @@
                           <p align="center" style="margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto;">
                             </p>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="secondary_industry_ids">
                         供应产品类别
                     </label>
                             </div>
                             <div class="col-lg-7 col-md-8">
                               <div class="o_website_form_flex">
-                                <div class="checkbox o_website_form_flex_item">
-                                  <label>
-                                    <input type="checkbox" class="o_website_form_input" name="secondary_industry_ids" value="10"/>
-                                    <span>
-                                        IT/通讯
-                                    </span>
-                                  </label>
-                                </div>
-                                <div class="checkbox o_website_form_flex_item">
-                                  <label>
-                                    <input type="checkbox" class="o_website_form_input" name="secondary_industry_ids" value="5"/>
-                                    <span>
-                                        供水
-                                    </span>
-                                  </label>
-                                </div>
-                                <div class="checkbox o_website_form_flex_item">
-                                  <label>
-                                    <input type="checkbox" class="o_website_form_input" name="secondary_industry_ids" value="17"/>
-                                    <span>
-                                        健康/社会
-                                    </span>
-                                  </label>
-                                </div>
-                                <div class="checkbox o_website_form_flex_item">
-                                  <label>
-                                    <input type="checkbox" class="o_website_form_input" name="secondary_industry_ids" value="15"/>
-                                    <span>
-                                        健康/社会
-                                    </span>
-                                  </label>
-                                </div>
-                                <div class="checkbox o_website_form_flex_item">
-                                  <label>
-                                    <input type="checkbox" class="o_website_form_input" name="secondary_industry_ids" value="1"/>
-                                    <span>
-                                        农业
-                                    </span>
-                                  </label>
-                                </div>
-                                <div class="checkbox o_website_form_flex_item">
-                                  <label>
-                                    <input type="checkbox" class="o_website_form_input" name="secondary_industry_ids" value="3"/>
-                                    <span>
-                                        制造
-                                    </span>
-                                  </label>
-                                </div>
-                                <div class="checkbox o_website_form_flex_item">
-                                  <label>
-                                    <input type="checkbox" class="o_website_form_input" name="secondary_industry_ids" value="18"/>
-                                    <span>
-                                        娱乐
-                                    </span>
-                                  </label>
-                                </div>
-                                <div class="checkbox o_website_form_flex_item">
-                                  <label>
-                                    <input type="checkbox" class="o_website_form_input" name="secondary_industry_ids" value="20"/>
-                                    <span>
-                                        家政
-                                    </span>
-                                  </label>
-                                </div>
-                                <div class="checkbox o_website_form_flex_item">
-                                  <label>
-                                    <input type="checkbox" class="o_website_form_input" name="secondary_industry_ids" value="6"/>
-                                    <span>
-                                        建筑
-                                    </span>
-                                  </label>
-                                </div>
-                                <div class="checkbox o_website_form_flex_item">
-                                  <label>
-                                    <input type="checkbox" class="o_website_form_input" name="secondary_industry_ids" value="7"/>
-                                    <span>
-                                        批发/零售
-                                    </span>
-                                  </label>
-                                </div>
-                                <div class="checkbox o_website_form_flex_item">
-                                  <label>
-                                    <input type="checkbox" class="o_website_form_input" name="secondary_industry_ids" value="4"/>
-                                    <span>
-                                        能源供应
-                                    </span>
-                                  </label>
-                                </div>
-                                <div class="checkbox o_website_form_flex_item">
-                                  <label>
-                                    <input type="checkbox" class="o_website_form_input" name="secondary_industry_ids" value="14"/>
-                                    <span>
-                                        行政
-                                    </span>
-                                  </label>
-                                </div>
-                                <div class="checkbox o_website_form_flex_item">
-                                  <label>
-                                    <input type="checkbox" class="o_website_form_input" name="secondary_industry_ids" value="11"/>
-                                    <span>
-                                        财务/保险
-                                    </span>
-                                  </label>
-                                </div>
-                                <div class="checkbox o_website_form_flex_item">
-                                  <label>
-                                    <input type="checkbox" class="o_website_form_input" name="secondary_industry_ids" value="8"/>
-                                    <span>
-                                        运输
-                                    </span>
-                                  </label>
-                                </div>
-                                <div class="checkbox o_website_form_flex_item">
-                                  <label>
-                                    <input type="checkbox" class="o_website_form_input" name="secondary_industry_ids" value="9"/>
-                                    <span>
-                                        食品
-                                    </span>
-                                  </label>
-                                </div>
-                                <div class="checkbox o_website_form_flex_item">
-                                  <label>
-                                    <input type="checkbox" class="o_website_form_input" name="secondary_industry_ids" value="19"/>
-                                    <span>
-                                        其他服务
-                                    </span>
-                                  </label>
-                                </div>
+                                <t t-foreach="industrys or []" t-as="industry">
+                                  <div class="checkbox o_website_form_flex_item">
+                                    <label>
+                                      <input type="checkbox" t-att-checked="industry.id in supplier.secondary_industry_ids.ids" class="o_website_form_input" t-att-value="industry.id" name="secondary_industry_ids"/>
+                                      <span>
+                                          <t t-esc="industry.name"/>
+                                      </span>
+                                    </label>
+                                  </div>
+                                </t>
                               </div>
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="comment">
                         备注
                     </label>
                             </div>
-                            <div class="col-lg-7 col-md-8">
-                              <textarea class="form-control o_website_form_input" name="comment"/>
+                            <div class="col-lg-6 col-md-8">
+                              <textarea class="form-control o_website_form_input" name="comment"><t t-esc="supplier.comment"/></textarea>
                             </div>
                           </div>
                           <p/>
