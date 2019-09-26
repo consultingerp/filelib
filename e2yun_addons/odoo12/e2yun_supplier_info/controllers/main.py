@@ -1,15 +1,29 @@
 from odoo import http
 class Academy(http.Controller):
 
-
+    # 服务协议
     @http.route('/supplier/register/', auth='public', website=True)
     def register(self, **kw):
         #return http.request.render('e2yun_supplier_info.supplier_register')
-        return http.request.render('e2yun_supplier_info.supplier_register_index')
+        # 判断是否填写基本信息，填写过直接到基本信息页面，否则跳转服务协议页面
+        user = http.request.env.user
+        login = user.login
+        supplier_info = http.request.env['e2yun.supplier.info'].sudo().search([('login_name', '=', login)])
+        if supplier_info and len(supplier_info) > 0:
+            return self.base_info(**kw)
+        else:
+            return http.request.render('e2yun_supplier_info.supplier_register_index')
 
-    #服务协议
+
     @http.route('/supplier/register_index/', auth='public', website=True)
     def index(self, **kw):
+        #判断是否填写基本信息，填写过直接到基本信息页面，否面则跳转服务协议页
+        # user = http.request.env.user
+        # login = user.login
+        # supplier_info = http.request.env['e2yun.supplier.info'].sudo().search([('login_name', '=', login)])
+        # if supplier_info and len(supplier_info) > 0:
+        #     return self.base_info(self, **kw)
+        # else:
         return http.request.render('e2yun_supplier_info.supplier_register_index')
 
     #失信管理规范
@@ -25,7 +39,47 @@ class Academy(http.Controller):
     #基本信息
     @http.route('/supplier/register_base_info/', auth='public', website=True)
     def base_info(self, **kw):
-        return http.request.render('e2yun_supplier_info.supplier_register_base_info')
+        #根据登录的用户带出潜在供应商信息
+        user = http.request.env.user
+        login = user.login
+        supplier_info = http.request.env['e2yun.supplier.info'].sudo().search([('login_name','=',login)],limit=1)
+        #国家
+        countrys = http.request.env['res.country'].sudo().search([])
+
+        #供应产品类别
+        industrys = http.request.env['res.partner.industry'].sudo().search([])
+
+        if supplier_info and len(supplier_info) > 0:
+            states = []
+            if supplier_info.country_id:
+                states = supplier_info.country_id.state_ids
+            else:
+                states = http.request.env['res.country.state'].sudo().search([])
+
+            return http.request.render('e2yun_supplier_info.supplier_register_base_info',{'supplier': supplier_info,
+                                                                                          'countrys':countrys,
+                                                                                          'states':states,
+                                                                                          'industrys':industrys})
+        else:
+            val = {
+                'company_name': user.company_name,
+                'login_name': login,
+                'name': login,
+                'password': user.password,
+                'confirm_password':user.password,
+                'email': user.email,
+                'vat' : user.vat
+            }
+
+            supplier_info_obj = http.request.env['e2yun.supplier.info'].sudo()
+            supplier_info = supplier_info_obj.create(val)
+            states = http.request.env['res.country.state'].sudo().search([])
+            return http.request.render('e2yun_supplier_info.supplier_register_base_info',{'supplier': supplier_info,
+                                                                                          'countrys':countrys,
+                                                                                          'states':states})
+
+
+
 
     #认证信息
     @http.route('/supplier/register_authentication_info/', auth='public', website=True)
