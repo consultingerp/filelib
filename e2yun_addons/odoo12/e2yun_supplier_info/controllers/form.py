@@ -28,41 +28,41 @@ class ContactController(WebsiteForm):
 
                 elif model_name == 'e2yun.supplier.info' and data.get('record',False):
                     if data['record']['name']:
-                        count = request.env['res.partner'].sudo().search_count([('name', '=', data['record']['name'])])
-                        if count > 0:
+                        count = request.env['res.partner'].sudo().search([('name', '=', data['record']['name'])])
+                        if count and  len(count) > 0 and count.user_ids.login != data['record']['login_name']:
                             error = {
                                 'name': '联系人名称已经存在，请重新输入'
                             }
                             return json.dumps({'error_fields': error})
                         else:
                             count = request.env['e2yun.supplier.info'].sudo().search_count(
-                                [('name', '=', data['record']['name'])])
+                                [('name', '=', data['record']['name']),('login_name','!=',data['record']['login_name'])])
                             if count > 0:
                                 error = {
                                     'name': '联系人名称已经存在，请重新输入'
                                 }
                                 return json.dumps({'error_fields': error})
 
-                    if data['record']['login_name']:
-                        count = request.env['res.users'].sudo().search_count([('login','=',data['record']['login_name'])])
-                        if count > 0:
-                            error = {
-                                'name': '登录名已经存在，请重新输入'
-                            }
-                            return json.dumps({'error_fields': error})
-                        else:
-                            count = request.env['e2yun.supplier.info'].sudo().search_count([('login_name', '=', data['record']['login_name'])])
-                            if count > 0:
-                                error = {
-                                    'login_name': '登录名已经存在，请重新输入'
-                                }
-                                return json.dumps({'error_fields': error})
+                    # if data['record']['login_name']:
+                    #     count = request.env['res.users'].sudo().search_count([('login','=',data['record']['login_name'])])
+                    #     if count > 0:
+                    #         error = {
+                    #             'name': '登录名已经存在，请重新输入'
+                    #         }
+                    #         return json.dumps({'error_fields': error})
+                    #     else:
+                    #         count = request.env['e2yun.supplier.info'].sudo().search_count([('login_name', '=', data['record']['login_name'])])
+                    #         if count > 0:
+                    #             error = {
+                    #                 'login_name': '登录名已经存在，请重新输入'
+                    #             }
+                    #             return json.dumps({'error_fields': error})
 
-                    if data['record']['password'] != data['record']['confirm_password']:
-                        error = {
-                            'confirm_password': '密码不匹配；请重新输入密码'
-                        }
-                        return json.dumps({'error_fields': error})
+                    # if data['record']['password'] != data['record']['confirm_password']:
+                    #     error = {
+                    #         'confirm_password': '密码不匹配；请重新输入密码'
+                    #     }
+                    #     return json.dumps({'error_fields': error})
 
                     #data['record']['supplier_user'] = request.session['e2yun_supplier_user_id']
                     data['record']['customer'] = False
@@ -94,9 +94,15 @@ class ContactController(WebsiteForm):
                 return json.dumps({'error_fields': e.args[0]})
 
             try:
-                id_record = self.insert_record(request, model_record, data['record'], data['custom'], data.get('meta'))
-                if id_record:
-                    self.insert_attachment(model_record, id_record, data['attachments'])
+                if model_name == 'e2yun.supplier.info':
+                    supplier_info_obj = http.request.env['e2yun.supplier.info'].sudo()
+                    supplier_info = supplier_info_obj.search([('login_name', '=', data['record']['name'])])
+                    supplier_info.write(data['record'])
+                    id_record = supplier_info.id
+                else:
+                    id_record = self.insert_record(request, model_record, data['record'], data['custom'], data.get('meta'))
+                    if id_record:
+                        self.insert_attachment(model_record, id_record, data['attachments'])
 
             # Some fields have additional SQL constraints that we can't check generically
             # Ex: crm.lead.probability which is a float between 0 and 1

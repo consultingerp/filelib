@@ -41,7 +41,7 @@ class BaseExternalDbsource(models.Model):
     # This is appended to the conn string if pass declared but not detected.
     # Children should declare PWD_STRING_CONNECTOR (such as PWD_STRING_FBD)
     #   to allow for override.
-    PWD_STRING = 'PWD=%s;'
+    PWD_STRING = 'Pwd=%s;'
 
     name = fields.Char('Datasource name', required=True, size=64)
     conn_string = fields.Text('Connection string', help="""

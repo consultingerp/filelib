@@ -520,3 +520,18 @@ class e2yun_supplier_info(models.Model):
     #     if self.state != 'Draft' and not groups_users:
     #         raise UserError('当前状态下无法操作更新，请联系管理员')
     #     return super(e2yun_supplier_info, self).write(values)
+
+    # 根据页面选择的国家带出省
+    @api.model
+    def get_states_by_country(self):
+        ctx = self._context.copy()
+        country_id = ctx.get('country_id', False)
+        state_ids = []
+        if country_id:
+            states = self.env['res.country.state'].sudo().search([('country_id','=',int(country_id))])
+            for s in states:
+                state_ids.append({
+                    'id':s.id,
+                    'name':s.name
+                })
+        return state_ids
