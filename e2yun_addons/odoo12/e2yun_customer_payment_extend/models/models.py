@@ -29,3 +29,42 @@ class e2yun_customer_payment_extend(models.Model):
     handle_person = fields.Char('经手人')
     po_num = fields.Char('市场合同号PO')
     customer_po = fields.Char('客户PO号')
+
+    @api.model
+    def create(self, vals_list):
+        atch = vals_list['payment_attachments'] #[[6, false, [11077, 11022]]]
+        temp = []
+        for r in atch:  #[6,0,[11077]]
+            if type(r) is list:
+
+                for r1 in r:
+                    if type(r1) is list:  #6, 0, [11077, 11022]
+                        temp.extend(r1)
+
+        for ids in temp:
+            # atch_id = ids
+            atch_line = self.env['ir.attachment'].browse(ids)
+            atch_line.res_model = 'account.payment'
+
+        res = super(e2yun_customer_payment_extend, self).create(vals_list)
+        return res
+
+
+    @api.one
+    def write(self, vals):
+        if vals.get('payment_attachments'):
+            atch = vals['payment_attachments']
+            temp = []
+            for r in atch:
+                if type(r) is list:
+
+                    for r1 in r:
+                        if type(r1) is list:
+                            temp.extend(r1)
+
+            for ids in temp:
+                # atch_id = ids
+                atch_line = self.env['ir.attachment'].browse(ids)
+                atch_line.res_model = 'account.payment'
+        else:
+            return super(e2yun_customer_payment_extend, self).write(vals)

@@ -19,3 +19,48 @@ class res_partner(models.Model):
     authenitcation_id = fields.One2many('e2yun.supplier.authentication.info', 'partner_info_id', '认证信息')
 
     listed_company = fields.Boolean('是否上市')
+
+    #新增添字段
+    comment = fields.Text(string='Notes')
+    # 供应商类型
+    production = fields.Boolean('生产类')
+    trade = fields.Boolean('商贸类')
+
+    nature_enterprise = fields.Selection([('State Administrative Enterprises', '国家行政企业'), ('Public-Private Cooperative Enterprises', '公私合作企业'), ('Sino-foreign joint ventures', '中外合资企业'), ('Social Organizations', '社会组织机构'), ('International Organization Institutions', '国际组织机构'), ('Foreign enterprise', '外资企业'), ('private enterprise', '私营企业'), ('Collective enterprise', '集体企业'), ('Defense Military Enterprises', '国防军事企业')], '企业性质')
+    registered_address = fields.Char('注册地址')
+    company_profile = fields.Char('公司简介')
+    # 新增公司信息
+    validity_license = fields.Char('营业执照有效期')
+    CreditCode = fields.Char('统一社会信用代码', help="Unified Social Credit Code.")
+    registered_capital = fields.Char('注册资金')
+    image_company = fields.Binary('公司正门照片', required=True)
+    organization_chart = fields.Binary('组织架构图', required=True)
+    image_product = fields.Binary('工厂区生产照片')
+    # 新增银行信息
+    country_bank = fields.Many2one('res.country', '开户行国家', required=True)
+    province_bank = fields.Many2one('res.country.state', '开户行省份', required=True)
+    city_bank = fields.Many2one('res.state.city', '开户行城市', required=True)
+    region_bank = fields.Many2one('res.city.area', '开户行地区')
+    name_bank = fields.Many2one('res.bank', '银行名称', required=True)
+    name_bank_branch = fields.Char('分行名称')
+    name_banks = fields.Char('支行名称')
+    account_bank = fields.Many2one('res.partner.bank', '银行账号', required=True)
+    name_account = fields.Char('账号名称')
+    currency_type = fields.Many2one('res.currency', '币种', required=True)
+    code_bank = fields.Char('银行代码')
+    enclosure_bank = fields.Binary('开户行资料附件')
+    # 联系人/账号信息
+    name = fields.Char(index=True)
+    login_name = fields.Char('登录名')
+    phone = fields.Char()
+    mobile = fields.Char()
+    email = fields.Char()
+    function = fields.Char(string='Job Position')
+    country_id = fields.Many2one('res.country', string='Country', ondelete='restrict')
+    state_id = fields.Many2one("res.country.state", string='State', ondelete='restrict')
+    city = fields.Char('城市')
+    street = fields.Char('详细地址')
+
+
+
+
