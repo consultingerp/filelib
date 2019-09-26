@@ -150,7 +150,7 @@ class e2yun_supplier_info(models.Model):
     image_company = fields.Binary('公司正门照片', required=True)
     organization_chart = fields.Binary('组织架构图', required=True)
     image_product = fields.Binary('工厂区生产照片')
-    company_profile = fields.Char('公司简介')
+    company_profile = fields.Text('公司简介')
     # 新增银行信息
     country_bank = fields.Many2one('res.country', '开户行国家', required=True)
     province_bank = fields.Many2one('res.country.state', '开户行省份', required=True)
@@ -164,7 +164,7 @@ class e2yun_supplier_info(models.Model):
     currency_type = fields.Many2one('res.currency', '币种', required=True)
     code_bank = fields.Char('银行代码')
     enclosure_bank = fields.Binary('开户行资料附件')
-    # 新增供应商类型
+    # 供应商类型
     production = fields.Boolean('生产类')
     trade = fields.Boolean('商贸类')
 

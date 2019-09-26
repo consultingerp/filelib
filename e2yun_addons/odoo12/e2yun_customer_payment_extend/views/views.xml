@@ -9,7 +9,7 @@
                     <button name="remake" class="oe_highlight" states="draft" string="重置" type="object"/>
                 </xpath>
                 <xpath expr="//group[1]/field[@name='journal_id']" position="after">
-                    <field name="currency"/>
+
                     <field name="payment_type2"/>
                     <field name="bank_num" attrs="{'readonly': [('payment_type2', '=', 'company_cash')]}"/>
                     <field name="payment_voucher"/>
