@@ -75,7 +75,7 @@ class import_odbc_dbtable(models.Model):
         'exec_order': 10,
     }
 
-    def _import_data(self, cr, uid, flds, data, model_obj, table_obj, log):
+    def _import_data(self, flds, data, model_obj, table_obj, log):
         """Import data and returns error msg or empty string"""
 
         def find_m2o(field_list):
@@ -101,11 +101,11 @@ class import_odbc_dbtable(models.Model):
         cols = list(flds)  # copy to avoid side effects
         errmsg = str()
         if table_obj.raise_import_errors:
-            model_obj.import_data(cr, uid, cols, [data],
+            model_obj.import_data(cols, [data],
                                   noupdate=table_obj.noupdate)
         else:
             try:
-                model_obj.import_data(cr, uid, cols, [data],
+                model_obj.import_data(cols, [data],
                                       noupdate=table_obj.noupdate)
             except:
                 errmsg = str(sys.exc_info()[1])
@@ -125,7 +125,7 @@ class import_odbc_dbtable(models.Model):
                 # Try again without the [i] column
                 del cols[i]
                 del data[i]
-                self._import_data(cr, uid, cols, data, model_obj,
+                self._import_data(cols, data, model_obj,
                                   table_obj, log)
             else:
                 # Fail
@@ -135,14 +135,15 @@ class import_odbc_dbtable(models.Model):
                 return False
         return True
 
-    def import_run(self, cr, uid, ids=None, context=None):
-        db_model = self.pool.get('base.external.dbsource')
-        actions = self.read(cr, uid, ids, ['id', 'exec_order'])
+    def import_run(self):
+        # db_model = self.pool.get('base.external.dbsource')
+        db_model = self.env['base.external.dbsource']
+        actions = self.read(['id', 'exec_order'])
         actions.sort(key=lambda x: (x['exec_order'], x['id']))
 
         # Consider each dbtable:
         for action_ref in actions:
-            obj = self.browse(cr, uid, action_ref['id'])
+            obj = self.browse(action_ref['id'])
             if not obj.enabled:
                 continue  # skip
 
@@ -163,7 +164,7 @@ class import_odbc_dbtable(models.Model):
                    'last_error_count': 0,
                    'last_warn_count': 0,
                    'last_log': list()}
-            self.write(cr, uid, [obj.id], log)
+            self.write([obj.id], log)
 
             # Prepare SQL sentence; replace "%s" with the last_sync date
             if obj.last_sync:
@@ -171,7 +172,7 @@ class import_odbc_dbtable(models.Model):
             else:
                 sync = datetime.datetime(1900, 1, 1, 0, 0, 0)
             params = {'sync': sync}
-            res = db_model.execute(cr, uid, [obj.dbsource_id.id],
+            res = db_model.execute([obj.dbsource_id.id],
                                    obj.sql_source, params, metadata=True)
 
             # Exclude columns titled "None"; add (xml_)"id" column
@@ -196,7 +197,7 @@ class import_odbc_dbtable(models.Model):
 
                 # Import the row; on error, write line to the log
                 log['last_record_count'] += 1
-                self._import_data(cr, uid, cols, data, model_obj, obj, log)
+                self._import_data(cols, data, model_obj, obj, log)
                 if log['last_record_count'] % 500 == 0:
                     _logger.info('...%s rows processed...'
                                  % (log['last_record_count']))
@@ -222,15 +223,16 @@ class import_odbc_dbtable(models.Model):
                                        ==|== Message ==')
             log.update({'last_log': '\n'.join(log['last_log'])})
             log.update({'last_run': datetime.now().replace(microsecond=0)})
-            self.write(cr, uid, [obj.id], log)
+            self.write([obj.id], log)
 
         # Finished
         _logger.debug('Import job FINISHED.')
         return True
 
-    def import_schedule(self, cr, uid, ids, context=None):
-        cron_obj = self.pool.get('ir.cron')
-        new_create_id = cron_obj.create(cr, uid, {
+    def import_schedule(self):
+        # cron_obj = self.pool.get('ir.cron')
+        cron_obj = self.env['ir.cron']
+        new_create_id = cron_obj.create({
             'name': 'Import ODBC tables',
             'interval_type': 'hours',
             'interval_number': 1,

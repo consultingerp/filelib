@@ -19,7 +19,7 @@ class SalesOrder(models.Model):
     BWART = fields.Char('移动类型(库存管理)')
     VRKME = fields.Char('销售单位')
     LGMNG = fields.Float(string='以仓库保管单位级的实际交货数量', digits=(13, 3))
-    SHWRK = fields.Char('工厂')
+    SHWRK = fields.Char('收货工厂')
     BRGEW = fields.Float(string='毛重', digits=(13, 3))
     GEWEI = fields.Char('重量单位')
     VOLUM = fields.Float(string='业务量', digits=(13, 3))
