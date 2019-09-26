@@ -1,6 +1,6 @@
 <odoo>
   <data>
-    <record id="account_payment_form_view_extend" model="ir.ui.view">
+      <record id="account_payment_form_view_extend" model="ir.ui.view">
             <field name="name">account.payment.form.view.extend</field>
             <field name="model">account.payment</field>
             <field name="inherit_id" ref="account.view_account_payment_form"/>
@@ -20,11 +20,11 @@
                 <xpath expr="//group[2]/field[@name='payment_date']" position="before">
                     <field name="company_id"/>
                     <field name="related_shop"/>
-                    <field name="terminal_customer"/>
+
                     <field name="receipt_Num"/>
                     <field name="sales_num"/>
                     <field name="handing_cost"/>
-                    <field name="handle_person"/>
+                    <field name="create_uid"/>
                     <field name="po_num"/>
                     <field name="customer_po"/>
                 </xpath>
@@ -38,5 +38,16 @@
                 </xpath>
             </field>
     </record>
+
+      <record id="website_new_attachment_form_inherit" model="ir.ui.view">
+            <field name="name">website.new.attachment.form.inherit</field>
+            <field name="model">ir.attachment</field>
+            <field name="inherit_id" ref="website.view_attachment_form_inherit_website"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='website_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+      </record>
   </data>
 </odoo>
