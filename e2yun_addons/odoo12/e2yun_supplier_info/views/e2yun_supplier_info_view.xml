@@ -156,7 +156,11 @@
                                     <field name="state_id" class="o_address_state" placeholder="State"
                                            options='{"no_open": True}'
                                            attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
-                                           context="{'country_id': country_id, 'zip': zip}"/>
+                                           context="{'country_id': country_id}"/>
+                                    <!--<field name="state_id" class="o_address_state" placeholder="State"-->
+                                           <!--options='{"no_open": True}'-->
+                                           <!--attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"-->
+                                           <!--context="{'country_id': country_id, 'zip': zip}"/>-->
                                     <field name="zip" placeholder="ZIP" class="o_address_zip"
                                            attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
                                     <field name="country_id" placeholder="Country" class="o_address_country"
@@ -238,35 +242,38 @@
                                 <field name="type" attrs="{'invisible': [('parent_id','=', False)]}"
                                        groups="base.group_no_one"/>
                                 <!--<field name="parent_account"/>-->
-                                <label for="street" string="Address"/>
-                                <div class="o_address_format">
-                                    <div attrs="{'invisible': ['|', ('parent_id', '=', False), ('type', '!=', 'contact')]}"
-                                         class="oe_edit_only">
-                                        <b>Company Address:</b>
-                                    </div>
-                                    <field name="country_id" placeholder="Country" class="o_address_country"
-                                           options='{"no_open": True, "no_create": True}'
-                                           attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                    <field name="state_id" class="o_address_state" placeholder="State"
-                                           options='{"no_open": True}'
-                                           attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
-                                           context="{'country_id': country_id, 'zip': zip}"/>
-                                    <field name="city" placeholder="City" class="o_address_city"
-                                           attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                    <field name="zip" placeholder="ZIP" class="o_address_zip"
-                                           attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                    <field name="street" placeholder="Street..." class="o_address_street"
-                                           attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                    <field name="street2" placeholder="Street 2..." class="o_address_street"
-                                           attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
-                                </div>
-                                <field name="supplier_code"/>
+                                <!--新增企业性质/注册地址-->
+                                <field name="nature_enterprise"/>
+                                <field name="registered_address" placeholder="与营业执照保持一致"/>
+                                <!--<label for="street" string="Address"/>-->
+                                <!--<div class="o_address_format">-->
+                                    <!--<div attrs="{'invisible': ['|', ('parent_id', '=', False), ('type', '!=', 'contact')]}"-->
+                                         <!--class="oe_edit_only">-->
+                                        <!--<b>Company Address:</b>-->
+                                    <!--</div>-->
+                                    <!--<field name="country_id" placeholder="Country" class="o_address_country"-->
+                                           <!--options='{"no_open": True, "no_create": True}'-->
+                                           <!--attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>-->
+                                    <!--<field name="state_id" class="o_address_state" placeholder="State"-->
+                                           <!--options='{"no_open": True}'-->
+                                           <!--attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"-->
+                                           <!--context="{'country_id': country_id, 'zip': zip}"/>-->
+                                    <!--<field name="city" placeholder="City" class="o_address_city"-->
+                                           <!--attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>-->
+                                    <!--<field name="zip" placeholder="ZIP" class="o_address_zip"-->
+                                           <!--attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>-->
+                                    <!--<field name="street" placeholder="Street..." class="o_address_street"-->
+                                           <!--attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>-->
+                                    <!--<field name="street2" placeholder="Street 2..." class="o_address_street"-->
+                                           <!--attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>-->
+                                <!--</div>-->
+                                <!--<field name="supplier_code"/>-->
                                 <field name="create_uid" invisible="1"/>
                                 <field name="user_id" invisible="True"/>
                                 <!--<field name="activity_user_id" attrs="{'invisible':True}"/>-->
                                 <field name="property_payment_term_id" invisible="1"/>
                                 <field name="partner_id" invisible="1"/>
-                                <field name="organ_code"/>
+                                <!--<field name="organ_code"/>-->
                                 <field name="annual_turnover"/>
                                 <field name="employees"/>
                                 <field name="listed_company"/>
@@ -274,20 +281,29 @@
                             </group>
                             <group>
                                 <field name="register_no" invisible="1"/>
-                                <field name="vat" placeholder="e.g. BE0477472701"/>
-                                <field name="function" placeholder="e.g. Sales Director"
-                                       attrs="{'invisible': [('is_company','=', True)]}"/>
-                                <field name="phone" widget="phone"/>
-                                <field name="mobile" widget="phone"/>
+                                <!--<field name="vat" placeholder="e.g. BE0477472701"/>-->
+                                <!--<field name="function" placeholder="e.g. Sales Director"-->
+                                       <!--attrs="{'invisible': [('is_company','=', True)]}"/>-->
+                                <!--<field name="phone" widget="phone"/>-->
+                                <!--<field name="mobile" widget="phone"/>-->
                                 <field name="user_ids" invisible="1"/>
                                 <field name="email" widget="email" context="{'gravatar_image': True}"
                                        attrs="{'required': [('user_ids','!=', [])]}"/>
                                 <field name="website" widget="url" placeholder="e.g. www.e2yun.com"/>
                                 <!--<field name="title" options='{"no_open": True}'-->
                                        <!--attrs="{'invisible': [('is_company', '=', True)]}"/>-->
-                                <field name="lang"/>
+                                <!--<field name="lang"/>-->
                                 <field name="industry_id" invisible="1"/>
-                                <field name="secondary_industry_ids" widget="many2many_tags"/>
+                                <!--<field name="secondary_industry_ids" widget="many2many_tags"/>-->
+                                <!--新增供应商类型-->
+                                <label for="production" string="供应商类型"/>
+                                <div>
+                                    <field name="production"/>
+                                    <label for="production"/>
+                                    <field name="trade"/>
+                                    <label for="trade"/>
+                                </div>
+                                <field name="company_profile"/>
                                 <field name="is_strategic" invisible="1"/>
 
                                 <!--<field name="category_id" widget="many2many_tags"-->
@@ -296,10 +312,10 @@
                             </group>
                         </group>
 
-                        <notebook colspan="4">
+                        <notebook>
                             <page string="Contacts &amp; Addresses" autofocus="autofocus" invisible="1">
-                                <field name="child_ids" mode="kanban"
-                                       context="{'default_parent_id': active_id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_supplier': supplier, 'default_customer': customer, 'default_lang': lang, 'default_user_id': user_id}">
+                                <field name="child_ids" mode="kanban" context="{'default_parent_id': active_id, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_country_id': country_id, 'default_supplier': supplier, 'default_customer': customer, 'default_user_id': user_id}">
+                                        <!--context="{'default_parent_id': active_id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_supplier': supplier, 'default_customer': customer, 'default_lang': lang, 'default_user_id': user_id}">-->
                                     <kanban>
                                         <field name="id"/>
                                         <field name="color"/>
@@ -396,9 +412,12 @@
                                                                    class="o_address_street"/>
                                                             <field name="city" placeholder="City"
                                                                    class="o_address_city"/>
+                                                            <!--<field name="state_id" class="o_address_state"-->
+                                                                   <!--placeholder="State" options='{"no_open": True}'-->
+                                                                   <!--context="{'country_id': country_id}"/>-->
                                                             <field name="state_id" class="o_address_state"
                                                                    placeholder="State" options='{"no_open": True}'
-                                                                   context="{'country_id': country_id, 'zip': zip}"/>
+                                                                   context="{'country_id': country_id}"/>
                                                             <field name="zip" placeholder="ZIP" class="o_address_zip"/>
                                                             <field name="country_id" placeholder="Country"
                                                                    class="o_address_country"
@@ -427,6 +446,117 @@
                                         </sheet>
                                     </form>
                                 </field>
+                            </page>
+                            <!--新增公司信息选项卡-->
+                            <page name='info_product' string="公司信息">
+
+                                    <group name="container_row_2">
+                                        <group>
+                                            <field name="business_license" />
+                                            <field name="validity_license" placeholder="与营业执照保持一致"/>
+                                            <field name="CreditCode"/>
+                                            <field name="registered_capital" placeholder="与营业执照保持一致"/>
+                                            <field name="image_company"/>
+                                        </group>
+                                        <group>
+                                            <field name="organization_chart"/>
+                                            <field name="image_product"/>
+                                        </group>
+                                    </group>
+
+                            </page>
+                            <!--新增银行信息选项卡-->
+                            <page name='info_bank' string="银行信息">
+
+                                    <group>
+                                        <group>
+                                            <field name="country_bank"/>
+                                            <field name="province_bank"/>
+                                            <field name="city_bank" groups="base.group_user"/>
+                                            <field name="region_bank"/>
+                                            <field name="name_bank"/>
+                                        </group>
+                                        <group>
+                                            <field name="name_bank_branch"/>
+                                            <field name="name_banks"/>
+                                            <field name="account_bank"/>
+                                            <field name="name_account"/>
+                                            <field name="currency_type"/>
+                                        </group>
+                                        <group>
+                                            <field name="code_bank"/>
+                                            <field name="enclosure_bank"/>
+                                        </group>
+                                    </group>
+
+                            </page>
+                            <!--新增联系人&账号信息选项卡-->
+                            <page name='info_contact_account' string="联系人 &amp; 账号信息">
+
+                                    <group name="container_row_2">
+                                        <group>
+                                            <field name="name"/>
+                                            <field name="login_name"/>
+                                            <field name="mobile"/>
+                                            <field name="phone"/>
+                                            <field name="email"/>
+                                        </group>
+                                        <group>
+                                            <field name="function" placeholder="e.g. Sales Director"
+                                                attrs="{'invisible': [('is_company','=', True)]}"/>
+                                            <field name="country_id" placeholder="Country" class="o_address_country"
+                                                options='{"no_open": True, "no_create": True}'
+                                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                            <!--<field name="state_id" class="o_address_state" placeholder="State"-->
+                                                <!--options='{"no_open": True}'-->
+                                                <!--attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"-->
+                                                <!--context="{'country_id': country_id}"/>-->
+                                            <field name="state_id" class="o_address_state" placeholder="State"
+                                                       options='{"no_open": True}'
+                                                       attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                                                       context="{'country_id': country_id}"/>
+                                            <field name="city" placeholder="City" class="o_address_city"
+                                                attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                            <label for="street2" string="详细地址"/>
+                                            <div>
+                                                <field name="street2" placeholder="Street 2..." class="o_address_street"
+                                                        attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                            </div>
+                                        </group>
+                                    </group>
+
+
+
+                                <!--<field name="name"/>-->
+                                <!--<field name="login_name"/>-->
+                                <!--<field name="mobile" widget="phone"/>-->
+                                <!--<field name="phone" widget="phone"/>-->
+                                <!--<field name="email" widget="email" context="{'gravatar_image': True}"-->
+                                       <!--attrs="{'required': [('user_ids','!=', [])]}"/>-->
+                                <!--<field name="function" placeholder="e.g. Sales Director"-->
+                                       <!--attrs="{'invisible': [('is_company','=', True)]}"/>-->
+                                <!--<field name="country_id" placeholder="Country" class="o_address_country"-->
+                                           <!--options='{"no_open": True, "no_create": True}'-->
+                                           <!--attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>-->
+                                <!--<field name="state_id" class="o_address_state" placeholder="State"-->
+                                           <!--options='{"no_open": True}'-->
+                                           <!--attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"-->
+                                           <!--context="{'country_id': country_id}"/>-->
+                                <!--&lt;!&ndash;<field name="state_id" class="o_address_state" placeholder="State"&ndash;&gt;-->
+                                           <!--&lt;!&ndash;options='{"no_open": True}'&ndash;&gt;-->
+                                           <!--&lt;!&ndash;attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"&ndash;&gt;-->
+                                           <!--&lt;!&ndash;context="{'country_id': country_id, 'zip': zip}"/>&ndash;&gt;-->
+                                <!--<field name="city" placeholder="City" class="o_address_city"-->
+                                           <!--attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>-->
+                                <!--<field name="street2" placeholder="Street 2..." class="o_address_street"-->
+                                           <!--attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>-->
+                            </page>
+                            <!--新增产品信息选项卡-->
+                            <page name='info_product' string="产品信息">
+                                <label for="secondary_industry_ids" string="供应产品类别"/>
+                                    <field name="secondary_industry_ids" widget="many2many_tags"/>
+                                <label for="comment" string="备注"/>
+                                    <field name="comment" placeholder="note..."/>
                             </page>
                             <page name='authenitcation' string="认证信息">
                                 <field name="authenitcation_id" widget="one2many_list" context="{'authenitcation_id': authenitcation_id}">
@@ -457,7 +587,6 @@
                                     </form>
                                 </field>
                             </page>
-
 
                             <page name='internal_notes' string="Internal Notes">
                                 <field name="comment" placeholder="Internal note..."/>
@@ -506,7 +635,10 @@
                                         <field name="city" placeholder="City" class="o_address_city"/>
                                         <field name="state_id" class="o_address_state" placeholder="State"
                                                options='{"no_open": True}'
-                                               context="{'country_id': country_id, 'zip': zip}"/>
+                                               context="{'country_id': country_id}"/>
+                                        <!--<field name="state_id" class="o_address_state" placeholder="State"-->
+                                               <!--options='{"no_open": True}'-->
+                                               <!--context="{'country_id': country_id, 'zip': zip}"/>-->
                                         <field name="zip" placeholder="ZIP" class="o_address_zip"/>
                                         <field name="country_id" placeholder="Country" class="o_address_country"
                                                options='{"no_open": True, "no_create": True}'/>
