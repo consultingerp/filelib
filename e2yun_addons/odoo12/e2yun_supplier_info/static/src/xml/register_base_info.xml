@@ -32,7 +32,10 @@
                             <a class="nav-link active show" id="nav_tabs_link_1565869647814_2" data-toggle="tab" href="#nav_tabs_content_1565869647814_2" role="tab" aria-controls="nav_tabs_content_1565869647814_2" aria-selected="true" data-original-title="" title="" aria-describedby="tooltip466102">公司信息</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" id="nav_tabs_link_1565869647814_3" data-toggle="tab" href="#nav_tabs_content_1565869647814_3" role="tab" aria-controls="nav_tabs_content_1565869647814_3" aria-selected="false" data-original-title="" title="" aria-describedby="tooltip466102">联系方式</a>
+                            <a class="nav-link active show" id="nav_tabs_link_1565869647814_5" data-toggle="tab" href="#nav_tabs_content_1565869647814_5" role="tab" aria-controls="nav_tabs_content_1565869647814_5" aria-selected="true" data-original-title="" title="" aria-describedby="tooltip466102">银行信息</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="nav_tabs_link_1565869647814_3" data-toggle="tab" href="#nav_tabs_content_1565869647814_3" role="tab" aria-controls="nav_tabs_content_1565869647814_3" aria-selected="false" data-original-title="" title="" aria-describedby="tooltip466102">账号&amp;联系人信息</a>
                           </li>
                           <li class="nav-item">
                             <a class="nav-link" id="nav_tabs_link_1565869647814_6" data-toggle="tab" href="#nav_tabs_content_1565869647814_6" role="tab" aria-controls="nav_tabs_content_1565869647814_6" aria-selected="false" data-original-title="" title="" aria-describedby="tooltip851032">产品信息</a>
@@ -48,18 +51,25 @@
                                 <label class="col-form-label" for="company_name"> 公司名称 </label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <input type="text" class="form-control o_website_form_input" t-att-value="supplier.company_name"  name="company_name" required=""/>
+                                <input type="text" placeholder="与营业执照注册名称保持一致，可自动从注册页面带出" class="form-control o_website_form_input" t-att-value="supplier.company_name"  name="company_name" required=""/>
                               </div>
-                              <div class="col-md-4 text-md-right col-lg-2">
-                                <label class="col-form-label" for="organ_code"> 组织代码 </label>
-                              </div>
-                              <div class="col-lg-3 col-md-8">
-                                <input type="text" class="form-control o_website_form_input" t-att-value="supplier.organ_code" name="organ_code"/>
-                              </div>
+
+                              <!--<div class="col-md-4 text-md-right col-lg-2">-->
+                                <!--<label class="col-form-label" for="organ_code"> 组织代码 </label>-->
+                              <!--</div>-->
+                              <!--<div class="col-lg-3 col-md-8">-->
+                                <!--<input type="text" class="form-control o_website_form_input" t-att-value="supplier.organ_code" name="organ_code"/>-->
+                              <!--</div>-->
                             </div>
                             <!--<div class="row form-group form-field">-->
                               <!---->
                             <!--</div>-->
+                            <!--添加供应商类型-->
+                            <div>
+                              <label for="production" string="供应商类型"/>
+                                  <input type="Checkbox" name="supplier" value="生产类" checked="checked"/>
+                                  <input type="Checkbox" name="supplier" value="生产类" checked="checked"/>
+                            </div>
                             <div class="row form-group form-field">
 
                               <div class="col-md-4 text-md-right col-lg-2">
@@ -72,7 +82,7 @@
                                 <label class="col-form-label" for="website">公司网站</label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <input type="text" class="form-control o_website_form_input" t-att-value="supplier.website" name="website"/>
+                                <input type="text" placeholder="非必填项" class="form-control o_website_form_input" t-att-value="supplier.website" name="website"/>
                               </div>
                             </div>
                             <div class="row form-group form-field">
@@ -80,12 +90,77 @@
                                 <label class="col-form-label" for="business_license"> 营业执照 </label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <input type="file" class="form-control o_website_form_input"  name="business_license"/>
+                                <input type="file"  class="form-control o_website_form_input"  name="business_license"/>
                               </div>
                               <div class="col-lg-5 col-md-8">
                                 <img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""
                                      height="60px" width="100px"/>
                               </div>
+                            </div>
+                            <!--营业执照有效期-->
+                            <div class="row form-group form-field">
+                              <div class="col-md-4 text-md-right col-lg-2">
+                                <label class="col-form-label" for="validity_license"> 营业执照有效期 </label>
+                              </div>
+                              <div class="col-lg-3 col-md-8">
+                                <input type="file" placeholder="与营业执照保持一致" class="form-control o_website_form_input"  name="validity_license"/>
+                              </div>
+                              <!--<div class="col-lg-5 col-md-8">-->
+                                <!--<img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""-->
+                                     <!--height="60px" width="100px"/>-->
+                              <!--</div>-->
+                            </div>
+                            <!--添加统一社会信用代码-->
+                            <div class="row form-group form-field">
+                              <div class="col-md-4 text-md-right col-lg-2">
+                                <label class="col-form-label" for="CreditCode"> 统一社会信用代码 </label>
+                              </div>
+                              <div class="col-lg-3 col-md-8">
+                                <input type="file" placeholder="与营业执照保持一致" class="form-control o_website_form_input"  name="CreditCode"/>
+                              </div>
+                              <!--<div class="col-lg-5 col-md-8">-->
+                                <!--<img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""-->
+                                     <!--height="60px" width="100px"/>-->
+                              <!--</div>-->
+                            </div>
+                            <!--企业性质-->
+                            <div class="row form-group form-field">
+                              <div class="col-md-4 text-md-right col-lg-2">
+                                <label class="col-form-label" for="nature_enterprise"> 企业性质 </label>
+                              </div>
+                              <div class="col-lg-3 col-md-8">
+                                <input type="file" class="form-control o_website_form_input"  name="nature_enterprise"/>
+                              </div>
+                              <!--<div class="col-lg-5 col-md-8">-->
+                                <!--<img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""-->
+                                     <!--height="60px" width="100px"/>-->
+                              <!--</div>-->
+                            </div>
+                            <!--注册资金-->
+                            <div class="row form-group form-field">
+                              <div class="col-md-4 text-md-right col-lg-2">
+                                <label class="col-form-label" for="registered_capital"> 注册资金 </label>
+                              </div>
+                              <div class="col-lg-3 col-md-8">
+                                <input type="text" placeholder="与营业执照保持一致" class="form-control o_website_form_input"  name="registered_capital"/>
+                              </div>
+                              <!--<div class="col-lg-5 col-md-8">-->
+                                <!--<img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""-->
+                                     <!--height="60px" width="100px"/>-->
+                              <!--</div>-->
+                            </div>
+                            <!--注册地址-->
+                            <div class="row form-group form-field">
+                              <div class="col-md-4 text-md-right col-lg-2">
+                                <label class="col-form-label" for="registered_address"> 注册地址 </label>
+                              </div>
+                              <div class="col-lg-3 col-md-8">
+                                <input type="file" class="form-control o_website_form_input"  name="registered_address"/>
+                              </div>
+                              <!--<div class="col-lg-5 col-md-8">-->
+                                <!--<img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""-->
+                                     <!--height="60px" width="100px"/>-->
+                              <!--</div>-->
                             </div>
                             <div class="row form-group form-field">
                               <div class="col-md-4 text-md-right col-lg-2">
