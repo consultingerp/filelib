@@ -44,11 +44,10 @@ class e2yun_customer_payment_extend(models.Model):
         for ids in temp:
             # atch_id = ids
             atch_line = self.env['ir.attachment'].browse(ids)
-            atch_line.res_model = 'account.payment'
+            atch_line.write({'res_model': 'account.payment'})
 
         res = super(e2yun_customer_payment_extend, self).create(vals_list)
         return res
-
 
     @api.one
     def write(self, vals):
@@ -65,6 +64,15 @@ class e2yun_customer_payment_extend(models.Model):
             for ids in temp:
                 # atch_id = ids
                 atch_line = self.env['ir.attachment'].browse(ids)
-                atch_line.res_model = 'account.payment'
+                atch_line.write({'res_model': 'account.payment'})
+            return super(e2yun_customer_payment_extend, self).write(vals)
         else:
             return super(e2yun_customer_payment_extend, self).write(vals)
+
+class e2yun_customer_payment_extend2(models.Model):
+    _inherit = 'ir.attachment'
+
+    @api.depends('datas')
+    @api.onchange('datas')
+    def _onchange_name(self):
+        self.name = self.datas_fname
