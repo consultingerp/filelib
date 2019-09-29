@@ -74,10 +74,13 @@
                 <group name="container_row_2">
                     <group>
                         <field name="name"/>
-                        <field name="login_name"/>
+                        <!--<field name="login_name"/>-->
                         <field name="mobile"/>
                         <field name="phone"/>
-                        <field name="email"/>
+                        <label for="email" string="Email(登录名)"/>
+                        <div>
+                            <field name="email"/>
+                        </div>
                     </group>
                     <group>
                         <field name="function" placeholder="e.g. Sales Director"
@@ -126,7 +129,7 @@
                         <group>
                             <field name="country_bank"/>
                             <field name="province_bank"/>
-                            <field name="city_bank" groups="base.group_user"/>
+                            <field name="city_bank"/>
                             <field name="region_bank"/>
                             <field name="name_bank"/>
                         </group>
