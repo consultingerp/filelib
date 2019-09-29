@@ -295,6 +295,16 @@ class E2yunCsutomerExtends(models.Model):
         return True
 
 
+    @api.model
+    def updata_customer_state(self):
+        customers = self.search([('state','in',['potential_customer','intention_customer','target_customer']),('customer','=',True)])
+        ICPSudo = self.env['ir.config_parameter'].sudo()
+        url = ICPSudo.get_param('e2yun.sync_pos_member_webservice_url')  # webservice调用地址
+        for customer in customers:
+            client = suds.client.Client(url)
+            result = client.service.updateState(customer.id or '', customer.app_code or '', customer.state or '')
+
+
 #     name = fields.Char()
 #     value = fields.Integer()
 #     value2 = fields.Float(compute="_value_pc", store=True)
