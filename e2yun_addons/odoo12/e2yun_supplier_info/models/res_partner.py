@@ -28,19 +28,19 @@ class res_partner(models.Model):
 
     nature_enterprise = fields.Selection([('State Administrative Enterprises', '国家行政企业'), ('Public-Private Cooperative Enterprises', '公私合作企业'), ('Sino-foreign joint ventures', '中外合资企业'), ('Social Organizations', '社会组织机构'), ('International Organization Institutions', '国际组织机构'), ('Foreign enterprise', '外资企业'), ('private enterprise', '私营企业'), ('Collective enterprise', '集体企业'), ('Defense Military Enterprises', '国防军事企业')], '企业性质')
     registered_address = fields.Char('注册地址')
-    company_profile = fields.Char('公司简介')
+    company_profile = fields.Text('公司简介')
     # 新增公司信息
-    validity_license = fields.Char('营业执照有效期')
+    validity_license = fields.Date('营业执照有效期')
     CreditCode = fields.Char('统一社会信用代码', help="Unified Social Credit Code.")
     registered_capital = fields.Char('注册资金')
     image_company = fields.Binary('公司正门照片', required=True)
     organization_chart = fields.Binary('组织架构图', required=True)
     image_product = fields.Binary('工厂区生产照片')
     # 新增银行信息
-    country_bank = fields.Many2one('res.country', '开户行国家', required=True)
-    province_bank = fields.Many2one('res.country.state', '开户行省份', required=True)
-    city_bank = fields.Many2one('res.state.city', '开户行城市', required=True)
-    region_bank = fields.Many2one('res.city.area', '开户行地区')
+    country_bank = fields.Many2one('bank.country', '开户行国家', required=True, ondelete='restrict')
+    province_bank = fields.Many2one('bank.state', '开户行省份', required=True, ondelete='restrict')
+    city_bank = fields.Many2one('bank.city', '开户行城市', required=True, ondelete='restrict')
+    region_bank = fields.Many2one('bank.region', '开户行地区', ondelete='restrict')
     name_bank = fields.Many2one('res.bank', '银行名称', required=True)
     name_bank_branch = fields.Char('分行名称')
     name_banks = fields.Char('支行名称')
@@ -58,7 +58,7 @@ class res_partner(models.Model):
     function = fields.Char(string='Job Position')
     country_id = fields.Many2one('res.country', string='Country', ondelete='restrict')
     state_id = fields.Many2one("res.country.state", string='State', ondelete='restrict')
-    city = fields.Char('城市')
+    city = fields.Many2one('res.state.city', 'City', ondelete='restrict')
     street = fields.Char('详细地址')
 
 
