@@ -40,7 +40,9 @@ class Academy(http.Controller):
     @http.route('/supplier/register_base_info/', auth='public', website=True)
     def base_info(self, **kw):
         #根据登录的用户带出潜在供应商信息
+        print('**************************')
         user = http.request.env.user
+        print(user, '/////////////////')
         login = user.login
         supplier_info = http.request.env['e2yun.supplier.info'].sudo().search([('login_name','=',login)],limit=1)
         #国家
@@ -68,11 +70,12 @@ class Academy(http.Controller):
                 'password': user.password,
                 'confirm_password':user.password,
                 'email': user.email,
-                'vat' : user.vat
+                'vat': user.vat,
+                'currency_type': 'EUR'
             }
 
             supplier_info_obj = http.request.env['e2yun.supplier.info'].sudo()
-            supplier_info = supplier_info_obj.create(val)
+            # supplier_info = supplier_info_obj.create(val)
             states = http.request.env['res.country.state'].sudo().search([])
             return http.request.render('e2yun_supplier_info.supplier_register_base_info',{'supplier': supplier_info,
                                                                                           'countrys':countrys,

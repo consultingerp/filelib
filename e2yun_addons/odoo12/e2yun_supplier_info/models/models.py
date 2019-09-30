@@ -85,7 +85,7 @@ class e2yun_supplier_info(models.Model):
     street = fields.Char()
     street2 = fields.Char()
     zip = fields.Char(change_default=True)
-    city = fields.Char()
+    city = fields.Many2one("res.state.city", string='City', ondelete='restrict')
     state_id = fields.Many2one("res.country.state", string='State', ondelete='restrict')
     country_id = fields.Many2one('res.country', string='Country', ondelete='restrict')
     email = fields.Char()
@@ -141,7 +141,7 @@ class e2yun_supplier_info(models.Model):
     # 新增客户中的字段
     # 新增公司信息
     # supplier_type = fields.Many2many('供应商类型')
-    validity_license = fields.Char('营业执照有效期')
+    validity_license = fields.Date('营业执照有效期')
     nature_enterprise = fields.Selection([('State Administrative Enterprises', '国家行政企业'), ('Public-Private Cooperative Enterprises', '公私合作企业'), ('Sino-foreign joint ventures', '中外合资企业'), ('Social Organizations', '社会组织机构'), ('International Organization Institutions', '国际组织机构'), ('Foreign enterprise', '外资企业'), ('private enterprise', '私营企业'), ('Collective enterprise', '集体企业'), ('Defense Military Enterprises', '国防军事企业')], '企业性质')
     customer_id = fields.Char('	Customer Id')
     CreditCode = fields.Char('统一社会信用代码', help="Unified Social Credit Code.")
@@ -152,10 +152,10 @@ class e2yun_supplier_info(models.Model):
     image_product = fields.Binary('工厂区生产照片')
     company_profile = fields.Text('公司简介')
     # 新增银行信息
-    country_bank = fields.Many2one('res.country', '开户行国家', required=True)
-    province_bank = fields.Many2one('res.country.state', '开户行省份', required=True)
-    city_bank = fields.Many2one('res.state.city', '开户行城市', required=True)
-    region_bank = fields.Many2one('res.city.area', '开户行地区')
+    country_bank = fields.Many2one('bank.country', '开户行国家', required=True, ondelete='restrict')
+    province_bank = fields.Many2one('bank.state', '开户行省份', required=True, ondelete='restrict')
+    city_bank = fields.Many2one('bank.city', '开户行城市', required=True, ondelete='restrict')
+    region_bank = fields.Many2one('bank.region', '开户行地区', ondelete='restrict')
     name_bank = fields.Many2one('res.bank', '银行名称', required=True)
     name_bank_branch = fields.Char('分行名称')
     name_banks = fields.Char('支行名称')
