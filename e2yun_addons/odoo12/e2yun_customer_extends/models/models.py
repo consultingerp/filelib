@@ -290,7 +290,7 @@ class E2yunCsutomerExtends(models.Model):
                                                  )
 
             if result != 'S':
-                raise exceptions.Warning(result)
+                raise exceptions.Warning('客户同步到POS系统出现错误，请检查输入的数据'+result)
 
         return True
 
@@ -411,7 +411,7 @@ class resPartnerBatch(models.TransientModel):
                                                  self.env.user.name,openid)  # 创建人
 
             if result != 'S':
-                raise exceptions.Warning(result)
+                raise exceptions.Warning('客户同步到POS系统出现错误，请检查输入的数据'+result)
             else:
                 r.pos_state = True
 
