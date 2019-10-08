@@ -42,6 +42,8 @@ class e2yun_customer_payment_extend(models.Model):
             url = ICPSudo.get_param('e2yun.sync_pos_payment_webservice_url')  # webservice调用地址
             client = suds.client.Client(url)
 
+            now = self.create_date.replace(microsecond=0)
+
             result = client.service.createPayment(r.company_id.company_code,  # 公司
                                                  r.receipt_Num or '',  # 收款编号
                                                  r.company_id.name or '',  # 公司名称
@@ -51,7 +53,7 @@ class e2yun_customer_payment_extend(models.Model):
                                                  '',  # 支票号
                                                  '',  # 销售单号
                                                  r.payment_voucher or '',  # 交款凭证
-                                                 r.related_shop.shop_code,  # 门店
+                                                 r.related_shop.shop_code or '',  # 门店
                                                  r.partner_id.name,  # 终端客户
 
                                                  '',  # 旺旺号
@@ -69,10 +71,10 @@ class e2yun_customer_payment_extend(models.Model):
                                                  '',  # 支票状态
                                                  '',  # 收据日期
                                                  r.bank_num or '',  # 银行账户
-                                                 r.customer_po,  # 客户PO
+                                                 r.customer_po or '',  # 客户PO
 
                                                  self.env.user.name,  # 创建人
-                                                 self.create_date,  # 创建日期
+                                                 now,  # 创建日期
                                                  )
 
 
