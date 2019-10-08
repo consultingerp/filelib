@@ -8,14 +8,14 @@ class e2yun_customer_payment_extend(models.Model):
     _inherit = 'account.payment'
 
     payment_type2 = fields.Selection(
-        [('company_cash', '公司收现金'), ('credit_card', '刷卡'),
-         ('company_wechat', '公司微信'), ('credit_alipay', '公司支付宝'),
-         ('3rd_cash', '第三方现金'), ('3rd_card', '第三方刷卡'),
-         ('3rd_check', '第三方支票'), ('3rd_ticket', '第三方优惠券'),
-         ('3rd_wechat', '第三方微信'), ('3rd_alipay', '第三方支付宝'),
-         ('3rd_eshop_o2o', '第三方电商O2O'), ('3rd_factory_o2o', '第三方厂家O2O'),
-         ('eshop_alipay', '电商支付宝'), ('company_check', '公司收支票'),
-         ('shop_cash', '门店现金'), ('transfer', '转账'), ('distributor_customized', '分销商定制货款')], '支付方式')
+        [('D11', '公司收现金'), ('D12', '刷卡'),
+         ('D13', '公司微信'), ('D16', '公司支付宝'),
+         ('C11', '第三方现金'), ('C12', '第三方刷卡'),
+         ('C13', '第三方支票'), ('C14', '第三方优惠券'),
+         ('C15', '第三方微信'), ('C16', '第三方支付宝'),
+         ('D14', '第三方电商O2O'), ('D15', '第三方厂家O2O'),
+         ('K11', '电商支付宝'), ('G11', '公司收支票'),
+         ('G13', '门店现金'), ('G12', '转账'), ('D17', '分销商定制货款')], '支付方式')
     currency = fields.Char('货币')
     payment_voucher =  fields.Char('付款凭证')
     marketing_activity = fields.Char('参与市场活动')
