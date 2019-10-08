@@ -75,6 +75,7 @@ class e2yun_customer_payment_extend(models.Model):
 
                                                  self.env.user.name,  # 创建人
                                                  now,  # 创建日期
+                                                  r.id
                                                  )
 
 
@@ -116,6 +117,18 @@ class e2yun_customer_payment_extend(models.Model):
             return super(e2yun_customer_payment_extend, self).write(vals)
         else:
             return super(e2yun_customer_payment_extend, self).write(vals)
+
+    @api.model
+    def get_payment_attachments(self, payment_id):
+        payment = self.browse(int(payment_id))
+        attachments = []
+        for a in payment.payment_attachments:
+            attachments.append({
+                'name':a["name"],
+                'datas':a["datas"]
+            })
+
+        return attachments
 
 class e2yun_customer_payment_extend2(models.Model):
     _inherit = 'ir.attachment'
