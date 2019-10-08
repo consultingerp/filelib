@@ -51,15 +51,15 @@ class e2yun_customer_payment_extend(models.Model):
                                                  r.amount or '',  # 收款金额
 
                                                  '',  # 支票号
-                                                 '',  # 销售单号
+                                                 r.sales_num or '',  # 销售单号
                                                  r.payment_voucher or '',  # 交款凭证
                                                  r.related_shop.shop_code or '',  # 门店
-                                                 r.partner_id.name,  # 终端客户
+                                                 r.partner_id.app_code,  # 终端客户
 
                                                  '',  # 旺旺号
                                                  r.payment_date or '',  # 交款日期
                                                  r.handing_cost or '',  # 手续费
-                                                 '',  # 货币
+                                                 'CNY',  # 货币
                                                  r.communication or '',  # 备注
                                                  r.marketing_activity or '',  # 参与市场活动
                                                  '',  # 到期日期
