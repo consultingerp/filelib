@@ -40,14 +40,23 @@ class Academy(http.Controller):
     @http.route('/supplier/register_base_info/', auth='public', website=True)
     def base_info(self, **kw):
         #根据登录的用户带出潜在供应商信息
-        print('**************************')
         user = http.request.env.user
-        print(user, '/////////////////')
         login = user.login
         supplier_info = http.request.env['e2yun.supplier.info'].sudo().search([('login_name','=',login)],limit=1)
         #国家
         countrys = http.request.env['res.country'].sudo().search([])
-
+        # 开户行国家
+        bank_countrys = http.request.env['bank.country'].sudo().search([])
+        # 开户行省份
+        bank_states = http.request.env['bank.state'].sudo().search([])
+        # 开户行城市
+        bank_citys = http.request.env['bank.city'].sudo().search([])
+        # 开户行地区
+        bank_regons = http.request.env['bank.region'].sudo().search([])
+        # 银行名称
+        name_banks = http.request.env['res.bank'].sudo().search([])
+        # 币种
+        currencys_type = http.request.env['res.currency'].sudo().search([])
         #供应产品类别
         industrys = http.request.env['res.partner.industry'].sudo().search([])
 
@@ -61,6 +70,12 @@ class Academy(http.Controller):
             return http.request.render('e2yun_supplier_info.supplier_register_base_info',{'supplier': supplier_info,
                                                                                           'countrys':countrys,
                                                                                           'states':states,
+                                                                                          'bank_countrys': bank_countrys,
+                                                                                          'bank_states':bank_states,
+                                                                                          'bank_citys':bank_citys,
+                                                                                          'bank_regons':bank_regons,
+                                                                                          'name_banks':name_banks,
+                                                                                          'currencys_type':currencys_type,
                                                                                           'industrys':industrys})
         else:
             val = {
@@ -71,15 +86,23 @@ class Academy(http.Controller):
                 'confirm_password':user.password,
                 'email': user.email,
                 'vat': user.vat,
-                'currency_type': 'EUR'
+
             }
 
             supplier_info_obj = http.request.env['e2yun.supplier.info'].sudo()
-            # supplier_info = supplier_info_obj.create(val)
+            supplier_info = supplier_info_obj.create(val)
             states = http.request.env['res.country.state'].sudo().search([])
             return http.request.render('e2yun_supplier_info.supplier_register_base_info',{'supplier': supplier_info,
                                                                                           'countrys':countrys,
-                                                                                          'states':states})
+                                                                                          'states':states,
+                                                                                          'bank_countrys': bank_countrys,
+                                                                                          'bank_states': bank_states,
+                                                                                          'bank_citys': bank_citys,
+                                                                                          'bank_regons': bank_regons,
+                                                                                          'name_banks': name_banks,
+                                                                                          'currencys_type': currencys_type,
+                                                                                          'industrys':industrys
+                                                                                          })
 
 
 
