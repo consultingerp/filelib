@@ -42,6 +42,8 @@ class e2yun_customer_payment_extend(models.Model):
             url = ICPSudo.get_param('e2yun.sync_pos_payment_webservice_url')  # webservice调用地址
             client = suds.client.Client(url)
 
+            now = self.create_date.replace(microsecond=0)
+
             result = client.service.createPayment(r.company_id.company_code,  # 公司
                                                  r.receipt_Num or '',  # 收款编号
                                                  r.company_id.name or '',  # 公司名称
@@ -49,15 +51,15 @@ class e2yun_customer_payment_extend(models.Model):
                                                  r.amount or '',  # 收款金额
 
                                                  '',  # 支票号
-                                                 '',  # 销售单号
+                                                 r.sales_num or '',  # 销售单号
                                                  r.payment_voucher or '',  # 交款凭证
-                                                 r.related_shop.shop_code,  # 门店
-                                                 r.partner_id.name,  # 终端客户
+                                                 r.related_shop.shop_code or '',  # 门店
+                                                 r.partner_id.app_code,  # 终端客户
 
                                                  '',  # 旺旺号
                                                  r.payment_date or '',  # 交款日期
                                                  r.handing_cost or '',  # 手续费
-                                                 '',  # 货币
+                                                 'CNY',  # 货币
                                                  r.communication or '',  # 备注
                                                  r.marketing_activity or '',  # 参与市场活动
                                                  '',  # 到期日期
@@ -69,10 +71,11 @@ class e2yun_customer_payment_extend(models.Model):
                                                  '',  # 支票状态
                                                  '',  # 收据日期
                                                  r.bank_num or '',  # 银行账户
-                                                 r.customer_po,  # 客户PO
+                                                 r.customer_po or '',  # 客户PO
 
                                                  self.env.user.name,  # 创建人
-                                                 self.create_date,  # 创建日期
+                                                 now,  # 创建日期
+                                                  r.id
                                                  )
 
 
@@ -114,6 +117,18 @@ class e2yun_customer_payment_extend(models.Model):
             return super(e2yun_customer_payment_extend, self).write(vals)
         else:
             return super(e2yun_customer_payment_extend, self).write(vals)
+
+    @api.model
+    def get_payment_attachments(self, payment_id):
+        payment = self.browse(int(payment_id))
+        attachments = []
+        for a in payment.payment_attachments:
+            attachments.append({
+                'name':a["name"],
+                'datas':a["datas"]
+            })
+
+        return attachments
 
 class e2yun_customer_payment_extend2(models.Model):
     _inherit = 'ir.attachment'
