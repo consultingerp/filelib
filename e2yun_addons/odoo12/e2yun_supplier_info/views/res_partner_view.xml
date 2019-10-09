@@ -74,13 +74,13 @@
                 <group name="container_row_2">
                     <group>
                         <field name="name"/>
-                        <!--<field name="login_name"/>-->
+                        <field name="login_name"/>
                         <field name="mobile"/>
                         <field name="phone"/>
-                        <label for="email" string="Email(登录名)"/>
-                        <div>
-                            <field name="email"/>
-                        </div>
+                        <!--<label for="email" string="Email(登录名)"/>-->
+                        <!--<div>-->
+                        <field name="email"/>
+                        <!--</div>-->
                     </group>
                     <group>
                         <field name="function" placeholder="e.g. Sales Director"
