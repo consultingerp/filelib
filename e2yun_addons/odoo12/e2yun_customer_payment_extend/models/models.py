@@ -8,14 +8,14 @@ class e2yun_customer_payment_extend(models.Model):
     _inherit = 'account.payment'
 
     payment_type2 = fields.Selection(
-        [('company_cash', '公司收现金'), ('credit_card', '刷卡'),
-         ('company_wechat', '公司微信'), ('credit_alipay', '公司支付宝'),
-         ('3rd_cash', '第三方现金'), ('3rd_card', '第三方刷卡'),
-         ('3rd_check', '第三方支票'), ('3rd_ticket', '第三方优惠券'),
-         ('3rd_wechat', '第三方微信'), ('3rd_alipay', '第三方支付宝'),
-         ('3rd_eshop_o2o', '第三方电商O2O'), ('3rd_factory_o2o', '第三方厂家O2O'),
-         ('eshop_alipay', '电商支付宝'), ('company_check', '公司收支票'),
-         ('shop_cash', '门店现金'), ('transfer', '转账'), ('distributor_customized', '分销商定制货款')], '支付方式')
+        [('D11', '公司收现金'), ('D12', '刷卡'),
+         ('D13', '公司微信'), ('D16', '公司支付宝'),
+         ('C11', '第三方现金'), ('C12', '第三方刷卡'),
+         ('C13', '第三方支票'), ('C14', '第三方优惠券'),
+         ('C15', '第三方微信'), ('C16', '第三方支付宝'),
+         ('D14', '第三方电商O2O'), ('D15', '第三方厂家O2O'),
+         ('K11', '电商支付宝'), ('G11', '公司收支票'),
+         ('G13', '门店现金'), ('G12', '转账'), ('D17', '分销商定制货款')], '支付方式')
     currency = fields.Char('货币')
     payment_voucher =  fields.Char('付款凭证')
     marketing_activity = fields.Char('参与市场活动')
@@ -42,6 +42,8 @@ class e2yun_customer_payment_extend(models.Model):
             url = ICPSudo.get_param('e2yun.sync_pos_payment_webservice_url')  # webservice调用地址
             client = suds.client.Client(url)
 
+            now = self.create_date.replace(microsecond=0)
+
             result = client.service.createPayment(r.company_id.company_code,  # 公司
                                                  r.receipt_Num or '',  # 收款编号
                                                  r.company_id.name or '',  # 公司名称
@@ -49,15 +51,15 @@ class e2yun_customer_payment_extend(models.Model):
                                                  r.amount or '',  # 收款金额
 
                                                  '',  # 支票号
-                                                 '',  # 销售单号
+                                                 r.sales_num or '',  # 销售单号
                                                  r.payment_voucher or '',  # 交款凭证
-                                                 r.related_shop.shop_code,  # 门店
-                                                 r.partner_id.name,  # 终端客户
+                                                 r.related_shop.shop_code or '',  # 门店
+                                                 r.partner_id.app_code,  # 终端客户
 
                                                  '',  # 旺旺号
                                                  r.payment_date or '',  # 交款日期
                                                  r.handing_cost or '',  # 手续费
-                                                 '',  # 货币
+                                                 'CNY',  # 货币
                                                  r.communication or '',  # 备注
                                                  r.marketing_activity or '',  # 参与市场活动
                                                  '',  # 到期日期
@@ -69,10 +71,11 @@ class e2yun_customer_payment_extend(models.Model):
                                                  '',  # 支票状态
                                                  '',  # 收据日期
                                                  r.bank_num or '',  # 银行账户
-                                                 r.customer_po,  # 客户PO
+                                                 r.customer_po or '',  # 客户PO
 
                                                  self.env.user.name,  # 创建人
-                                                 self.create_date,  # 创建日期
+                                                 now,  # 创建日期
+                                                  r.id
                                                  )
 
 
@@ -114,6 +117,18 @@ class e2yun_customer_payment_extend(models.Model):
             return super(e2yun_customer_payment_extend, self).write(vals)
         else:
             return super(e2yun_customer_payment_extend, self).write(vals)
+
+    @api.model
+    def get_payment_attachments(self, payment_id):
+        payment = self.browse(int(payment_id))
+        attachments = []
+        for a in payment.payment_attachments:
+            attachments.append({
+                'name':a["name"],
+                'datas':a["datas"]
+            })
+
+        return attachments
 
 class e2yun_customer_payment_extend2(models.Model):
     _inherit = 'ir.attachment'
