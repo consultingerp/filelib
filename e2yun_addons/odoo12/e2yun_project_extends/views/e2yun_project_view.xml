@@ -6,9 +6,40 @@
             <field name="model">project.task</field>
             <field name="inherit_id" ref="project.view_task_form2"/>
             <field name="arch" type="xml">
+                <xpath expr="//button[@name='%(portal.portal_share_action)d']" position="after">
+                    <button name="turn_page" string="转去问卷操作页面" type="object" class="oe_highlight"
+                            attrs="{'invisible' : [('user_id', '=', False)]}"/>
+                </xpath>
                 <xpath expr="//field[@name='user_id']" position="after">
-                    <field name="survey_temp_id" />
-                    <field name="survey_id" readonly="1"/>
+                    <!--<field name="survey_temp_id" />-->
+                    <field name="questionnaire_classification" attrs="{'invisible': [('task_mode', '=', 'common mode')]}"/>
+                    <!--<field name="survey_id"/>-->
+                </xpath>
+                <xpath expr="//field[@name='tag_ids']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_deadline']" position="after">
+                    <field name="task_mode" />
+                    <field name="multiple_questionnaires" />
+                </xpath>
+                <xpath expr="//notebook" position="before">
+                    <group col="3">
+                        <group>
+                            <field name="questionnaire_scenario"/>
+                            <field name="questionnaire_scenarioo" attrs="{'invisible': [('multiple_questionnaires', '=', 'no')]}" />
+                            <field name="questionnaire_scenariooo" attrs="{'invisible': [('multiple_questionnaires', '=', 'no')]}" />
+                        </group>
+                        <group>
+                            <field name="weight" attrs="{'invisible': [('questionnaire_scenario', '=', 'Other')]}"/>
+                            <field name="weightt" attrs="{'invisible': ['|',('multiple_questionnaires', '=', 'no'),('questionnaire_scenarioo', '=', 'Other')]}"/>
+                            <field name="weighttt" attrs="{'invisible': ['|',('multiple_questionnaires', '=', 'no'),('questionnaire_scenariooo', '=', 'Other')]}"/>
+                        </group>
+                        <group>
+                            <field name="survey_temp_id"/>
+                            <field name="survey_temp_idd" attrs="{'invisible': [('multiple_questionnaires', '=', 'no')]}"/>
+                            <field name="survey_temp_iddd" attrs="{'invisible': [('multiple_questionnaires', '=', 'no')]}"/>
+                        </group>
+                    </group>
                 </xpath>
             </field>
         </record>
