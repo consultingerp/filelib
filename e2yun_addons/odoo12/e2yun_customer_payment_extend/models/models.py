@@ -125,7 +125,8 @@ class e2yun_customer_payment_extend(models.Model):
         for a in payment.payment_attachments:
             attachments.append({
                 'name':a["name"],
-                'datas':a["datas"]
+                'datas':a["datas"],
+                'file_size':a['file_size']
             })
 
         return attachments
