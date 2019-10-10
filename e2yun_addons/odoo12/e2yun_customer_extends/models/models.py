@@ -290,9 +290,19 @@ class E2yunCsutomerExtends(models.Model):
                                                  )
 
             if result != 'S':
-                raise exceptions.Warning(result)
+                raise exceptions.Warning('客户同步到POS系统出现错误，请检查输入的数据'+result)
 
         return True
+
+
+    @api.model
+    def updata_customer_state(self):
+        customers = self.search([('state','in',['potential_customer','intention_customer','target_customer']),('customer','=',True)])
+        ICPSudo = self.env['ir.config_parameter'].sudo()
+        url = ICPSudo.get_param('e2yun.sync_pos_member_webservice_url')  # webservice调用地址
+        for customer in customers:
+            client = suds.client.Client(url)
+            result = client.service.updateState(customer.id or '', customer.app_code or '', customer.state or '')
 
 
 #     name = fields.Char()
@@ -401,7 +411,7 @@ class resPartnerBatch(models.TransientModel):
                                                  self.env.user.name,openid)  # 创建人
 
             if result != 'S':
-                raise exceptions.Warning(result)
+                raise exceptions.Warning('客户同步到POS系统出现错误，请检查输入的数据'+result)
             else:
                 r.pos_state = True
 

@@ -13,6 +13,7 @@
     'version': '0.1',
     'depends': ['base', 'purchase','website' ],
     'data': [
+        'security/ir.model.access.csv',
         'data/website_supplier_data.xml',
         'data/ir_sequence_data.xml',
         'views/e2yun_supplier_info_view.xml',

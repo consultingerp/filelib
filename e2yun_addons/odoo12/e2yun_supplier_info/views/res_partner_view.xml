@@ -77,7 +77,10 @@
                         <field name="login_name"/>
                         <field name="mobile"/>
                         <field name="phone"/>
+                        <!--<label for="email" string="Email(登录名)"/>-->
+                        <!--<div>-->
                         <field name="email"/>
+                        <!--</div>-->
                     </group>
                     <group>
                         <field name="function" placeholder="e.g. Sales Director"
@@ -104,13 +107,13 @@
                 </group>
             </xpath>
             <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
-                <!--新增银行信息选项卡-->
+                <!--新增公司信息选项卡-->
                 <page name='info_company' string="公司信息">
                     <group name="container_row_2">
                         <group>
                             <field name="business_license" />
                             <field name="validity_license" placeholder="与营业执照保持一致"/>
-                            <field name="CreditCode"/>
+                            <field name="vat" placeholder="与营业执照保持一致"/>
                             <field name="registered_capital" placeholder="与营业执照保持一致"/>
                             <field name="image_company"/>
                         </group>
@@ -126,7 +129,7 @@
                         <group>
                             <field name="country_bank"/>
                             <field name="province_bank"/>
-                            <field name="city_bank" groups="base.group_user"/>
+                            <field name="city_bank"/>
                             <field name="region_bank"/>
                             <field name="name_bank"/>
                         </group>

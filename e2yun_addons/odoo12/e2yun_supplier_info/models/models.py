@@ -85,7 +85,7 @@ class e2yun_supplier_info(models.Model):
     street = fields.Char()
     street2 = fields.Char()
     zip = fields.Char(change_default=True)
-    city = fields.Char()
+    city = fields.Many2one("res.state.city", string='City', ondelete='restrict')
     state_id = fields.Many2one("res.country.state", string='State', ondelete='restrict')
     country_id = fields.Many2one('res.country', string='Country', ondelete='restrict')
     email = fields.Char()
@@ -141,27 +141,27 @@ class e2yun_supplier_info(models.Model):
     # 新增客户中的字段
     # 新增公司信息
     # supplier_type = fields.Many2many('供应商类型')
-    validity_license = fields.Char('营业执照有效期')
+    validity_license = fields.Date('营业执照有效期')
     nature_enterprise = fields.Selection([('State Administrative Enterprises', '国家行政企业'), ('Public-Private Cooperative Enterprises', '公私合作企业'), ('Sino-foreign joint ventures', '中外合资企业'), ('Social Organizations', '社会组织机构'), ('International Organization Institutions', '国际组织机构'), ('Foreign enterprise', '外资企业'), ('private enterprise', '私营企业'), ('Collective enterprise', '集体企业'), ('Defense Military Enterprises', '国防军事企业')], '企业性质')
     customer_id = fields.Char('	Customer Id')
     CreditCode = fields.Char('统一社会信用代码', help="Unified Social Credit Code.")
     registered_capital = fields.Char('注册资金')
     registered_address = fields.Char('注册地址')
-    image_company = fields.Binary('公司正门照片', required=True)
-    organization_chart = fields.Binary('组织架构图', required=True)
+    image_company = fields.Binary('公司正门照片')
+    organization_chart = fields.Binary('组织架构图')
     image_product = fields.Binary('工厂区生产照片')
     company_profile = fields.Text('公司简介')
     # 新增银行信息
-    country_bank = fields.Many2one('res.country', '开户行国家', required=True)
-    province_bank = fields.Many2one('res.country.state', '开户行省份', required=True)
-    city_bank = fields.Many2one('res.state.city', '开户行城市', required=True)
-    region_bank = fields.Many2one('res.city.area', '开户行地区')
-    name_bank = fields.Many2one('res.bank', '银行名称', required=True)
+    country_bank = fields.Many2one('bank.country', '开户行国家', ondelete='restrict')
+    province_bank = fields.Many2one('bank.state', '开户行省份', ondelete='restrict')
+    city_bank = fields.Many2one('bank.city', '开户行城市', ondelete='restrict')
+    region_bank = fields.Many2one('bank.region', '开户行地区', ondelete='restrict')
+    name_bank = fields.Many2one('res.bank', '银行名称')
     name_bank_branch = fields.Char('分行名称')
     name_banks = fields.Char('支行名称')
-    account_bank = fields.Many2one('res.partner.bank', '银行账号', required=True)
+    account_bank = fields.Many2one('res.partner.bank', '银行账号')
     name_account = fields.Char('账号名称')
-    currency_type = fields.Many2one('res.currency', '币种', required=True)
+    currency_type = fields.Many2one('res.currency', '币种')
     code_bank = fields.Char('银行代码')
     enclosure_bank = fields.Binary('开户行资料附件')
     # 供应商类型
@@ -194,6 +194,7 @@ class e2yun_supplier_info(models.Model):
     supplier_user = fields.Integer('Supplier User')
 
     listed_company = fields.Boolean('是否上市')
+
 
     login_name = fields.Char('登录名')
     password = fields.Char('密码')
@@ -520,3 +521,18 @@ class e2yun_supplier_info(models.Model):
     #     if self.state != 'Draft' and not groups_users:
     #         raise UserError('当前状态下无法操作更新，请联系管理员')
     #     return super(e2yun_supplier_info, self).write(values)
+
+    # 根据页面选择的国家带出省
+    @api.model
+    def get_states_by_country(self):
+        ctx = self._context.copy()
+        country_id = ctx.get('country_id', False)
+        state_ids = []
+        if country_id:
+            states = self.env['res.country.state'].sudo().search([('country_id','=',int(country_id))])
+            for s in states:
+                state_ids.append({
+                    'id':s.id,
+                    'name':s.name
+                })
+        return state_ids
