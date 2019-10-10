@@ -1,0 +1,34 @@
+<?xml version='1.0'?>
+<odoo>
+    <record id="outbound_template_tree_view" model="ir.ui.view">
+        <field name="name">Outbound Tree</field>
+        <field name="model">outbound.final</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="salesorserid" />
+<!--                <field name="LFDAT" />-->
+                <field name="werks" />
+                <field name="vkorgtext" />
+                <field name="vtweg" />
+                <field name="ywy" />
+<!--                <field name="kunner" />-->
+                <field name="jine" />
+                <field name="jiesuanjine" />
+                <field name="xiaoshoujine" />
+            </tree>
+        </field>
+    </record>
+
+    <act_window id="outbound_template_action"
+        name="测试视图"
+        res_model="outbound.final"
+        view_mode = "tree,form,kanban"
+        view_id = "outbound_report_dashboard_view"
+    />
+
+    <menuitem id="outbound_report_menu"
+        parent="crm.crm_menu_report"
+        action="outbound_template_action"
+        sequence="17"
+    />
+</odoo>
