@@ -38,15 +38,15 @@ class e2yun_customer_info(models.Model):
     def _default_company(self):
         return self.env['res.company']._company_default_get('res.partner')
 
-    name = fields.Char(index=True)
+    name = fields.Char(index=True, track_visibility='onchange')
     display_name = fields.Char(compute='_compute_display_name', store=True, index=True)
-    date = fields.Date(index=True)
-    title = fields.Many2one('res.partner.title')
-    parent_id = fields.Many2one('e2yun.customer.info', string='Related Company', index=True)
+    date = fields.Date(index=True, track_visibility='onchange')
+    title = fields.Many2one('res.partner.title', track_visibility='onchange')
+    parent_id = fields.Many2one('e2yun.customer.info', string='Related Company', index=True, track_visibility='onchange')
     parent_name = fields.Char(related='parent_id.name', readonly=True, string='Parent name')
     child_ids = fields.One2many('e2yun.customer.info', 'parent_id', string='Contacts', domain=[
         ('active', '=', True)])  # force "active_test" domain to bypass _search() override
-    ref = fields.Char(string='Internal Reference', index=True)
+    ref = fields.Char(string='Internal Reference', index=True, track_visibility='onchange')
     lang = fields.Selection(_lang_get, string='Language', default=lambda self: self.env.lang,
                             help="All the emails and documents sent to this contact will be translated in this language.")
     tz = fields.Selection(_tz_get, string='Timezone', default=lambda self: self._context.get('tz'),
@@ -56,24 +56,24 @@ class e2yun_customer_info(models.Model):
                                "render date and time values: your computer's timezone.")
     tz_offset = fields.Char(compute='_compute_tz_offset', string='Timezone offset', invisible=True)
     user_id = fields.Many2one('res.users', string='Salesperson',
-                              help='The internal user in charge of this contact.')
-    vat = fields.Char(string='Tax ID',
+                              help='The internal user in charge of this contact.', track_visibility='onchange')
+    vat = fields.Char(string='Tax ID', track_visibility='onchange',
                       help="The Tax Identification Number. Complete it if the contact is subjected to government taxes. Used in some legal statements.")
-    bank_ids = fields.One2many('res.partner.bank', 'partner_id', string='Banks')
+    bank_ids = fields.One2many('res.partner.bank', 'partner_id', string='Banks', track_visibility='onchange')
     website = fields.Char()
     comment = fields.Text(string='Notes')
 
     category_id = fields.Many2many('res.partner.category', column1='partner_id',
-                                   column2='category_id', string='Tags', default=_default_category)
-    credit_limit = fields.Float(string='Credit Limit')
-    barcode = fields.Char(oldname='ean13', help="Use a barcode to identify this contact from the Point of Sale.")
-    active = fields.Boolean(default=True)
+                                   column2='category_id', string='Tags', default=_default_category, track_visibility='onchange')
+    credit_limit = fields.Float(string='Credit Limit', track_visibility='onchange')
+    barcode = fields.Char(oldname='ean13', help="Use a barcode to identify this contact from the Point of Sale.", track_visibility='onchange')
+    active = fields.Boolean(default=True, track_visibility='onchange')
     customer = fields.Boolean(string='Is a Customer', default=True,
-                              help="Check this box if this contact is a customer. It can be selected in sales orders.")
+                              help="Check this box if this contact is a customer. It can be selected in sales orders.", track_visibility='onchange')
     supplier = fields.Boolean(string='Is a Vendor',
-                              help="Check this box if this contact is a vendor. It can be selected in purchase orders.")
-    employee = fields.Boolean(help="Check this box if this contact is an Employee.")
-    function = fields.Char(string='Job Position')
+                              help="Check this box if this contact is a vendor. It can be selected in purchase orders.", track_visibility='onchange')
+    employee = fields.Boolean(help="Check this box if this contact is an Employee.", track_visibility='onchange')
+    function = fields.Char(string='Job Position', track_visibility='onchange')
     type = fields.Selection(
         [('contact', 'Contact'),
          ('invoice', 'Invoice address'),
@@ -81,46 +81,46 @@ class e2yun_customer_info(models.Model):
          ('other', 'Other address'),
          ("private", "Private Address"),
          ], string='Address Type',
-        default='contact',
+        default='contact', track_visibility='onchange',
         help="Used by Sales and Purchase Apps to select the relevant address depending on the context.")
-    street = fields.Char()
-    street2 = fields.Char()
-    zip = fields.Char(change_default=True)
-    city = fields.Char()
-    state_id = fields.Many2one("res.country.state", string='State', ondelete='restrict')
-    country_id = fields.Many2one('res.country', string='Country', ondelete='restrict')
-    email = fields.Char()
+    street = fields.Char(track_visibility='onchange')
+    street2 = fields.Char(track_visibility='onchange')
+    zip = fields.Char(change_default=True, track_visibility='onchange')
+    city = fields.Char(track_visibility='onchange')
+    state_id = fields.Many2one("res.country.state", string='State', ondelete='restrict', track_visibility='onchange')
+    country_id = fields.Many2one('res.country', string='Country', ondelete='restrict', track_visibility='onchange')
+    email = fields.Char(track_visibility='onchange')
     email_formatted = fields.Char(
         'Formatted Email', compute='_compute_email_formatted',
         help='Format email address "Name <email@domain>"')
-    phone = fields.Char()
-    mobile = fields.Char()
+    phone = fields.Char(track_visibility='onchange')
+    mobile = fields.Char(track_visibility='onchange')
     is_company = fields.Boolean(string='Is a Company', default=False,
                                 help="Check if the contact is a company, otherwise it is a person")
-    industry_id = fields.Many2one('res.partner.industry', 'Industry')
+    industry_id = fields.Many2one('res.partner.industry', 'Industry', track_visibility='onchange')
     # company_type is only an interface field, do not use it in business logic
-    company_type = fields.Selection(string='Company Type',
+    company_type = fields.Selection(string='Company Type', track_visibility='onchange',
                                     selection=[('person', 'Individual'), ('company', 'Company')],
                                     compute='_compute_company_type', inverse='_write_company_type')
-    company_id = fields.Many2one('res.company', 'Company', index=True, default=_default_company)
-    color = fields.Integer(string='Color Index', default=0)
-    user_ids = fields.One2many('res.users', 'partner_id', string='Users', auto_join=True)
+    company_id = fields.Many2one('res.company', 'Company', index=True, default=_default_company, track_visibility='onchange')
+    color = fields.Integer(string='Color Index', default=0, track_visibility='onchange')
+    user_ids = fields.One2many('res.users', 'partner_id', string='Users', auto_join=True, track_visibility='onchange')
     partner_share = fields.Boolean(
         'Share Partner', compute='_compute_partner_share', store=True,
         help="Either customer (not a user), either shared user. Indicated the current partner is a customer without "
-             "access or with a limited access created for sharing data.")
-    contact_address = fields.Char(compute='_compute_contact_address', string='Complete Address')
+             "access or with a limited access created for sharing data.", track_visibility='onchange')
+    contact_address = fields.Char(compute='_compute_contact_address', string='Complete Address', track_visibility='onchange')
 
     # technical field used for managing commercial fields
     commercial_partner_id = fields.Many2one('e2yun.customer.info', compute='_compute_commercial_partner',
-                                            string='Commercial Entity', store=True, index=True)
+                                            string='Commercial Entity', store=True, index=True, track_visibility='onchange')
     commercial_company_name = fields.Char('Company Name Entity', compute='_compute_commercial_company_name',
-                                          store=True)
-    company_name = fields.Char('Company Name')
+                                          store=True, track_visibility='onchange')
+    company_name = fields.Char('Company Name', track_visibility='onchange')
 
     # image: all image fields are base64 encoded and PIL-supported
     image = fields.Binary("Image", attachment=True,
-                          help="This field holds the image used as avatar for this contact, limited to 1024x1024px", )
+                          help="This field holds the image used as avatar for this contact, limited to 1024x1024px")
     image_medium = fields.Binary("Medium-sized image", attachment=True,
                                  help="Medium-sized image of this contact. It is automatically " \
                                       "resized as a 128x128px image, with aspect ratio preserved. " \
@@ -132,59 +132,59 @@ class e2yun_customer_info(models.Model):
     # hack to allow using plain browse record in qweb views, and used in ir.qweb.field.contact
     self = fields.Many2one(comodel_name=_name, compute='_compute_get_ids')
 
-    partner_id = fields.Many2one('res.partner', company_dependent=True, string='Normal Customer')
+    partner_id = fields.Many2one('res.partner', company_dependent=True, string='Normal Customer', track_visibility='onchange')
 
     property_payment_term_id = fields.Many2one('account.payment.term', company_dependent=True,
                                                string='Customer Payment Terms',
                                                help="This payment term will be used instead of the default one for sales orders and customer invoices",
-                                               oldname="property_payment_term")
+                                               oldname="property_payment_term", track_visibility='onchange')
 
-    team_id = fields.Many2one('crm.team', 'Team')
+    team_id = fields.Many2one('crm.team', 'Team', track_visibility='onchange')
 
-    parent_team_id = fields.Many2one(comodel_name='crm.team', compute='_compute_parent_team_id', store=True)
+    parent_team_id = fields.Many2one(comodel_name='crm.team', compute='_compute_parent_team_id', store=True, track_visibility='onchange')
 
     # 新增客户中的字段
-    customer_id = fields.Char('	Customer Id')
-    x_studio_name_en_1 = fields.Char('Name_En')
-    x_studio_account_group = fields.Char('Account Group')
-    parent_account = fields.Many2one('res.partner', company_dependent=True, string='母公司')
+    customer_id = fields.Char('	Customer Id', track_visibility='onchange')
+    x_studio_name_en_1 = fields.Char('Name_En', track_visibility='onchange')
+    x_studio_account_group = fields.Char('Account Group', track_visibility='onchange')
+    parent_account = fields.Many2one('res.partner', company_dependent=True, string='母公司', track_visibility='onchange')
     x_studio_account_type = fields.Selection([["Target Client", "Target Client"], ["Active Client", "Active Client"],
-                                              ["Significant Client", "Significant Client"]], 'Account type')
-    activity_user_id = fields.Many2one('res.users', company_dependent=True, string='责任用户')
+                                              ["Significant Client", "Significant Client"]], 'Account type', track_visibility='onchange')
+    activity_user_id = fields.Many2one('res.users', company_dependent=True, string='责任用户', track_visibility='onchange')
     x_studio__1 = fields.Selection(
         [["华中", "华中"], ["华东", "华东"], ["西南", "西南"], ["华南", "华南"], ["华北", "华北"], ["东北", "东北"], ["西北", "西北"],
          ["Greater China", "Greater China"], ["Japan", "Japan"], ["Asia Pacific", "Asia Pacific"], ["Europe", "Europe"],
-         ["North America", "North America"], ["Rest of World", "Rest of World"]], 'Account Region')
+         ["North America", "North America"], ["Rest of World", "Rest of World"]], 'Account Region', track_visibility='onchange')
     x_studio_ = fields.Selection(
         [["客户类型", "T&M contract,by Month/by Quarter billing"], ["行业1", "FP by Milestone billing"],
          ["银行", "pay after project is completed and project cycle<2 months"],
-         ["制造业", "pay after project is completed and project cycle>2 months"]], 'Way of settlement')
-    x_studio_ender_customer = fields.Char('Ender Customer')
-    x_studio_account_management = fields.Selection([["NMA", "NMA"], ["CMA", "CMA"]], 'Account Management')
-    x_studio_account_source = fields.Selection([["Other", "Other"]], 'Account Source')
-    x_studio_registration_address = fields.Char('Registration Address')
-    grade_id = fields.Many2one('res.partner.grade', 'Level')
+         ["制造业", "pay after project is completed and project cycle>2 months"]], 'Way of settlement', track_visibility='onchange')
+    x_studio_ender_customer = fields.Char('Ender Customer', track_visibility='onchange')
+    x_studio_account_management = fields.Selection([["NMA", "NMA"], ["CMA", "CMA"]], 'Account Management', track_visibility='onchange')
+    x_studio_account_source = fields.Selection([["Other", "Other"]], 'Account Source', track_visibility='onchange')
+    x_studio_registration_address = fields.Char('Registration Address', track_visibility='onchange')
+    grade_id = fields.Many2one('res.partner.grade', 'Level', track_visibility='onchange')
     secondary_industry_ids = fields.Many2many(
         comodel_name='res.partner.industry', string="Secondary Industries",
-        domain="[('id', '!=', industry_id)]")
-    x_studio__2 = fields.Integer('Number of employees')
-    x_studio_revenue_forcast_for_future_4q = fields.Float('Revenue forcast for future 4Q')
-    property_product_pricelist = fields.Many2one('product.pricelist', string='Pricelist', required=False)
-    x_studio_is_new_logo = fields.Boolean('Is New LOGO')
-    is_strategic = fields.Boolean(string='Is Strategic')
-    x_studio_is_a_public_company = fields.Selection([["YES", "YES"]], string='Is Strategic')
-    x_studio_annual_revenue = fields.Float('Annual Revenue')
-    x_studio_ipo_location = fields.Char('IPO Location')
-    x_studio_stock_code = fields.Char('Stock Code')
-    x_studio_annual_profitusdk = fields.Float('Annual Profit（USDK）')
-    x_studio_market_value = fields.Float('Market Value')
+        domain="[('id', '!=', industry_id)]", track_visibility='onchange')
+    x_studio__2 = fields.Integer('Number of employees', track_visibility='onchange')
+    x_studio_revenue_forcast_for_future_4q = fields.Float('Revenue forcast for future 4Q', track_visibility='onchange')
+    property_product_pricelist = fields.Many2one('product.pricelist', string='Pricelist', required=False, track_visibility='onchange')
+    x_studio_is_new_logo = fields.Boolean('Is New LOGO', track_visibility='onchange')
+    is_strategic = fields.Boolean(string='Is Strategic', track_visibility='onchange')
+    x_studio_is_a_public_company = fields.Selection([["YES", "YES"]], string='Is Strategic', track_visibility='onchange')
+    x_studio_annual_revenue = fields.Float('Annual Revenue', track_visibility='onchange')
+    x_studio_ipo_location = fields.Char('IPO Location', track_visibility='onchange')
+    x_studio_stock_code = fields.Char('Stock Code', track_visibility='onchange')
+    x_studio_annual_profitusdk = fields.Float('Annual Profit（USDK）', track_visibility='onchange')
+    x_studio_market_value = fields.Float('Market Value', track_visibility='onchange')
 
     state = fields.Selection([
         ('Draft', '新建'),
         ('done', '完成')
     ], string='Status', readonly=True, required=True, track_visibility='always', copy=False, default='Draft')
 
-    register_no = fields.Char('Registration number')
+    register_no = fields.Char('Registration number', track_visibility='onchange')
 
     _sql_constraints = [
         ('check_name', "CHECK( (type='contact' AND name IS NOT NULL) or (type!='contact') )",
@@ -423,8 +423,8 @@ class e2yun_customer_info(models.Model):
                 if field in UNINCLUDE_COL:
                     continue
 
-                if isinstance(self[field], str) or isinstance(self[field], int) or isinstance(self[field], float) or isinstance( self[field], bool) or isinstance(
-                    self[field], bytes) or isinstance(
+                if isinstance(self[field], str) or isinstance(self[field], int) or isinstance(self[field], float) or isinstance(self[field], bool) or isinstance(
+                        self[field], bytes) or isinstance(
                     self[field], datetime.date):
                     data[field] = self[field]
                 else:
