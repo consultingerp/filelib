@@ -15,23 +15,26 @@ class e2yun_customer_payment_extend(models.Model):
          ('C15', '第三方微信'), ('C16', '第三方支付宝'),
          ('D14', '第三方电商O2O'), ('D15', '第三方厂家O2O'),
          ('K11', '电商支付宝'), ('G11', '公司收支票'),
-         ('G13', '门店现金'), ('G12', '转账'), ('D17', '分销商定制货款')], '支付方式')
+         ('G13', '门店现金'), ('G12', '转账'), ('D17', '分销商定制货款')], '支付方式', required=True)
     currency = fields.Char('货币')
-    payment_voucher =  fields.Char('付款凭证')
+    payment_voucher =  fields.Char('交款凭证')
     marketing_activity = fields.Char('参与市场活动')
     bank_num = fields.Char('银行帐号')
     payment_attachments = fields.Many2many('ir.attachment', string="付款附件",
                                            domain=[('res_model', '=', 'account.payment')])
 
-    related_shop = fields.Many2one('crm.team', '门店')
-    receipt_Num = fields.Char('收据编号')
+    related_shop = fields.Many2one('crm.team', '门店', required=True)
+    receipt_Num = fields.Char('收据编号', required=True)
     sales_num = fields.Char('销售单号')
-    handing_cost = fields.Float('手续费')
+    handing_cost = fields.Monetary('手续费')
     po_num = fields.Char('市场合同号PO')
     customer_po = fields.Char('客户PO号')
     payment_status = fields.Selection([('A1', '定金'), ('A2', '中期款'),
-                                       ('A3', '尾款'), ('A4', '全款')], '交款类型')
+                                       ('A3', '尾款'), ('A4', '全款')], '交款类型', required=True)
     payment_serirs_no = fields.Char('No.')
+
+    customer_pay_amount = fields.Monetary(string='客户交款金额')
+    accept_amount = fields.Monetary(string='收款结算金额')
 
     def sync_customer_payment_to_pos(self):
         for r in self:
@@ -124,3 +127,14 @@ class e2yun_customer_payment_extend2(models.Model):
     @api.onchange('datas')
     def _onchange_name(self):
         self.name = self.datas_fname
+
+class e2yun_customer_payment_res_partner(models.Model):
+    _inherit = 'res.partner'
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        if name:
+            teams = self.search(['|', ('app_code', operator, name), ('name', operator, name)])
+            return teams.name_get()
+        else:
+            return super(e2yun_customer_payment_res_partner, self).name_search(name, args, operator, limit)
