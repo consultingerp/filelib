@@ -78,8 +78,11 @@ class e2yun_customer_payment_extend(models.Model):
 
                                                  self.env.user.name,  # 创建人
                                                  now,  # 创建日期
-                                                  r.id
+                                                 r.id
                                                  )
+            if result[0] != 'S':
+                raise exceptions.Warning('同步到POS系统出现错误，请检查输入的数据'+result)
+        return True
 
 
     @api.model
