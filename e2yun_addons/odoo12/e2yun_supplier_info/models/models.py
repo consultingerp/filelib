@@ -195,6 +195,7 @@ class e2yun_supplier_info(models.Model):
 
     listed_company = fields.Boolean('是否上市')
 
+
     login_name = fields.Char('登录名')
     password = fields.Char('密码')
     confirm_password = fields.Char('确认密码')
