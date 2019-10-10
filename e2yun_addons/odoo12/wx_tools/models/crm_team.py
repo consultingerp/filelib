@@ -4,7 +4,8 @@ import logging
 
 from geopy.distance import vincenty
 
-from odoo import api, fields, models
+from odoo import api, fields, models,exceptions
+import odoo.osv.osv
 from odoo.fields import Datetime
 
 _logger = logging.getLogger(__name__)
@@ -37,6 +38,11 @@ class WXCrmTeam(models.Model):
         if (self.longitude == 0.0 or self.longitude == 0.0) and (self.street or self.street2):
             _logger.info("生成地址%s" % self.street)
             street_location = amapapi.geocodegeo(self, address=self.street if self.street else self.street2)
+            if street_location == '0.0,0.0':
+                # raise exceptions.ValidationError('生成地址出错%s' % self.street)
+                self.address_location = "生成地址出错，请检查地址是否正确"
+                return False
+                # raise odoo.osv.osv.except_osv('title', '生成地址出错%s' % self.street)
             if street_location:
                 location = street_location.split(',')
                 self.longitude = location[0]

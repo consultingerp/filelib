@@ -43,26 +43,26 @@
                         <div id="wrap" class="oe_structure oe_empty">
                           <form action="/website_form/" method="post" class="s_website_form container-fluid mt32" enctype="multipart/form-data" data-model_name="e2yun.supplier.authentication.info" data-success_page="">
                             <div class="form-group row form-field o_website_form_required">
-                              <div class="col-md-4 text-right">
-                                <label class="col-form-label" for="name"> 名称 </label>
+                              <div class="col-md-4 text-right col-lg-2">
+                                <label class="col-form-label" for="name"> 证书名称 </label>
                               </div>
-                              <div class="col-lg-7 col-md-8">
+                              <div class="col-lg-6 col-md-8">
                                 <input type="text" class="form-control o_website_form_input" name="name" required="1"/>
                               </div>
                             </div>
                             <div class="row form-group form-field">
-                              <div class="col-md-4 text-md-right">
+                              <div class="col-md-4 text-md-right col-lg-2">
                                 <label class="col-form-label" for="code"> 认证编号 </label>
                               </div>
-                              <div class="col-md-8">
+                              <div class="col-lg-6 col-md-8">
                                 <input type="text" class="form-control o_website_form_input" name="code"/>
                               </div>
                             </div>
                             <div class="row form-group form-field o_website_form_field_hidden">
-                              <div class="col-md-4 text-md-right">
+                              <div class="col-md-4 text-md-right col-lg-2">
                                 <label class="col-form-label" for="authentication_type"> 证书类别 </label>
                               </div>
-                              <div class="col-md-8">
+                              <div class="col-lg-6 col-md-8">
                                 <div class="o_website_form_flex">
                                   <div class="radio o_website_form_flex_item">
                                     <label>
@@ -98,18 +98,18 @@
                               </div>
                             </div>
                             <div class="row form-group form-field">
-                              <div class="col-md-4 text-md-right">
+                              <div class="col-md-4 text-md-right col-lg-2">
                                 <label class="col-form-label" for="image"> 证书图片 </label>
                               </div>
-                              <div class="col-md-8">
+                              <div class="col-lg-6 col-md-8">
                                 <input type="file" class="form-control o_website_form_input" name="image"/>
                               </div>
                             </div>
                             <div class="row form-group form-field">
-                              <div class="col-md-4 text-md-right">
+                              <div class="col-md-4 text-md-right col-lg-2">
                                 <label class="col-form-label" for="start_date"> 生效日期 </label>
                               </div>
-                              <div class="col-md-8">
+                              <div class="col-lg-6 col-md-8">
                                 <div class="o_website_form_date input-group date" id="datepicker2" data-target-input="nearest">
                                   <input type="text" class="form-control datetimepicker-input o_website_form_input" data-target="#datepicker2" name="start_date"/>
                                   <div class="input-group-append" data-target="#datepicker2" data-toggle="datetimepicker">
@@ -121,10 +121,10 @@
                               </div>
                             </div>
                             <div class="row form-group form-field">
-                              <div class="col-md-4 text-md-right">
+                              <div class="col-md-4 text-md-right col-lg-2">
                                 <label class="col-form-label" for="end_date"> 失效日期 </label>
                               </div>
-                              <div class="col-md-8">
+                              <div class="col-lg-6 col-md-8">
                                 <div class="o_website_form_date input-group date" id="datepicker3" data-target-input="nearest">
                                   <input type="text" class="form-control datetimepicker-input o_website_form_input" data-target="#datepicker3" name="end_date"/>
                                   <div class="input-group-append" data-target="#datepicker3" data-toggle="datetimepicker">
@@ -136,10 +136,10 @@
                               </div>
                             </div>
                             <div class="row form-group form-field">
-                              <div class="col-md-4 text-md-right">
+                              <div class="col-md-4 text-md-right col-lg-2">
                                 <label class="col-form-label" for="remark"> 备注 </label>
                               </div>
-                              <div class="col-md-8">
+                              <div class="col-lg-6 col-md-8">
                                 <textarea class="form-control o_website_form_input" name="remark"/>
                               </div>
                             </div>
@@ -169,26 +169,26 @@
                           </p>
                         <form action="/website_form/" method="post" class="s_website_form container-fluid mt32" enctype="multipart/form-data" data-model_name="e2yun.supplier.authentication.info" data-success_page="">
                           <div class="form-group row form-field o_website_form_required">
-                            <div class="col-md-4 text-right">
-                              <label class="col-form-label" for="name"> 名称 </label>
+                            <div class="col-md-4 text-right col-lg-2">
+                              <label class="col-form-label" for="name"> 证书名称 </label>
                             </div>
-                            <div class="col-lg-7 col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <input type="text" class="form-control o_website_form_input" name="name" required="1"/>
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="code"> 认证编号 </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <input type="text" class="form-control o_website_form_input" name="code"/>
                             </div>
                           </div>
                           <div class="row form-group form-field o_website_form_field_hidden">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="authentication_type"> 证书类别 </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <div class="o_website_form_flex">
                                 <div class="radio o_website_form_flex_item">
                                   <label>
@@ -224,18 +224,18 @@
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="image"> 证书图片 </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <input type="file" class="form-control o_website_form_input" name="image"/>
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="start_date"> 生效日期 </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <div class="o_website_form_date input-group date" id="datepicker4" data-target-input="nearest">
                                 <input type="text" class="form-control datetimepicker-input o_website_form_input" data-target="#datepicker4" name="start_date"/>
                                 <div class="input-group-append" data-target="#datepicker4" data-toggle="datetimepicker">
@@ -247,10 +247,10 @@
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="end_date"> 失效日期 </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <div class="o_website_form_date input-group date" id="datepicker5" data-target-input="nearest">
                                 <input type="text" class="form-control datetimepicker-input o_website_form_input" data-target="#datepicker5" name="end_date"/>
                                 <div class="input-group-append" data-target="#datepicker5" data-toggle="datetimepicker">
@@ -262,12 +262,12 @@
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="remark">
                         备注
                     </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <textarea class="form-control o_website_form_input" name="remark"/>
                             </div>
                           </div>
@@ -287,34 +287,30 @@
                         </h3>
                       </div>
                       <div class="tab-pane fade" id="nav_tabs_content_1565876877708_13" role="tabpanel" aria-labelledby="nav_tabs_link_1565876877708_13">
-                        <h3/>
-                        <p align="center" style="margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto;">
-                          <span class="STYLE7" style="font-family: Arial, Helvetica, sans-serif; font-size: 24px; font-weight: bold;">UL认证&amp;nbsp;<span class="Apple-converted-space">&amp;nbsp;</span>&amp;nbsp;</span>
-                        </p>
                         <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
                           </p>
                         <form action="/website_form/" method="post" class="s_website_form container-fluid mt32" enctype="multipart/form-data" data-model_name="e2yun.supplier.authentication.info" data-success_page="">
                           <div class="form-group row form-field o_website_form_required">
-                            <div class="col-md-4 text-right">
-                              <label class="col-form-label" for="name"> 名称 </label>
+                            <div class="col-md-4 text-right col-lg-2">
+                              <label class="col-form-label" for="name"> 证书名称 </label>
                             </div>
-                            <div class="col-lg-7 col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <input type="text" class="form-control o_website_form_input" name="name" required="1"/>
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="code"> 认证编号 </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <input type="text" class="form-control o_website_form_input" name="code"/>
                             </div>
                           </div>
                           <div class="row form-group form-field o_website_form_field_hidden">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="authentication_type"> 证书类别 </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <div class="o_website_form_flex">
                                 <div class="radio o_website_form_flex_item">
                                   <label>
@@ -350,18 +346,18 @@
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="image"> 证书图片 </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <input type="file" class="form-control o_website_form_input" name="image"/>
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="start_date"> 生效日期 </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <div class="o_website_form_date input-group date" id="datepicker6" data-target-input="nearest">
                                 <input type="text" class="form-control datetimepicker-input o_website_form_input" data-target="#datepicker6" name="start_date"/>
                                 <div class="input-group-append" data-target="#datepicker6" data-toggle="datetimepicker">
@@ -373,10 +369,10 @@
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="end_date"> 失效日期 </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <div class="o_website_form_date input-group date" id="datepicker7" data-target-input="nearest">
                                 <input type="text" class="form-control datetimepicker-input o_website_form_input" data-target="#datepicker7" name="end_date"/>
                                 <div class="input-group-append" data-target="#datepicker7" data-toggle="datetimepicker">
@@ -388,12 +384,12 @@
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="remark">
                         备注
                     </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <textarea class="form-control o_website_form_input" name="remark"/>
                             </div>
                           </div>
@@ -410,34 +406,30 @@
                         <p/>
                       </div>
                       <div class="tab-pane fade" id="nav_tabs_content_1565876877709_14" role="tabpanel" aria-labelledby="nav_tabs_link_1565876877709_14">
-                        <h3/>
-                        <p align="center" style="margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto;">
-                          <span class="STYLE7" style="font-family: Arial, Helvetica, sans-serif; font-size: 24px; font-weight: bold;">CCC认证&amp;nbsp;<span class="Apple-converted-space">&amp;nbsp;</span>&amp;nbsp;</span>
-                        </p>
                         <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
                           </p>
                         <form action="/website_form/" method="post" class="s_website_form container-fluid mt32" enctype="multipart/form-data" data-model_name="e2yun.supplier.authentication.info" data-success_page="">
                           <div class="form-group row form-field o_website_form_required">
-                            <div class="col-md-4 text-right">
-                              <label class="col-form-label" for="name"> 名称 </label>
+                            <div class="col-md-4 text-right col-lg-2">
+                              <label class="col-form-label" for="name"> 证书名称 </label>
                             </div>
-                            <div class="col-lg-7 col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <input type="text" class="form-control o_website_form_input" name="name" required="1"/>
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="code"> 认证编号 </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <input type="text" class="form-control o_website_form_input" name="code"/>
                             </div>
                           </div>
                           <div class="row form-group form-field o_website_form_field_hidden">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="authentication_type"> 证书类别 </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <div class="o_website_form_flex">
                                 <div class="radio o_website_form_flex_item">
                                   <label>
@@ -473,18 +465,18 @@
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="image"> 证书图片 </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <input type="file" class="form-control o_website_form_input" name="image"/>
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="start_date"> 生效日期 </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <div class="o_website_form_date input-group date" id="datepicker8" data-target-input="nearest">
                                 <input type="text" class="form-control datetimepicker-input o_website_form_input" data-target="#datepicker8" name="start_date"/>
                                 <div class="input-group-append" data-target="#datepicker8" data-toggle="datetimepicker">
@@ -496,10 +488,10 @@
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="end_date"> 失效日期 </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <div class="o_website_form_date input-group date" id="datepicker9" data-target-input="nearest">
                                 <input type="text" class="form-control datetimepicker-input o_website_form_input" data-target="#datepicker9" name="end_date"/>
                                 <div class="input-group-append" data-target="#datepicker9" data-toggle="datetimepicker">
@@ -511,12 +503,12 @@
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="remark">
                         备注
                     </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <textarea class="form-control o_website_form_input" name="remark"/>
                             </div>
                           </div>
@@ -533,34 +525,30 @@
                         <p/>
                       </div>
                       <div class="tab-pane fade" id="nav_tabs_content_1565876877709_16" role="tabpanel" aria-labelledby="nav_tabs_link_1565876877709_16">
-                        <h3/>
-                        <p align="center" style="margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto;">
-                          <span class="STYLE7" style="font-family: Arial, Helvetica, sans-serif; font-size: 24px; font-weight: bold;">FCC认证&amp;nbsp;<span class="Apple-converted-space">&amp;nbsp;</span>&amp;nbsp;</span>
-                        </p>
                         <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
                           </p>
                         <form action="/website_form/" method="post" class="s_website_form container-fluid mt32" enctype="multipart/form-data" data-model_name="e2yun.supplier.authentication.info" data-success_page="">
                           <div class="form-group row form-field o_website_form_required">
-                            <div class="col-md-4 text-right">
-                              <label class="col-form-label" for="name"> 名称 </label>
+                            <div class="col-md-4 text-right col-lg-2">
+                              <label class="col-form-label" for="name"> 证书名称 </label>
                             </div>
-                            <div class="col-lg-7 col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <input type="text" class="form-control o_website_form_input" name="name" required="1"/>
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="code"> 认证编号 </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <input type="text" class="form-control o_website_form_input" name="code"/>
                             </div>
                           </div>
                           <div class="row form-group form-field o_website_form_field_hidden">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="authentication_type"> 证书类别 </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <div class="o_website_form_flex">
                                 <div class="radio o_website_form_flex_item">
                                   <label>
@@ -596,18 +584,18 @@
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="image"> 证书图片 </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <input type="file" class="form-control o_website_form_input" name="image"/>
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="start_date"> 生效日期 </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <div class="o_website_form_date input-group date" id="datepicker11" data-target-input="nearest">
                                 <input type="text" class="form-control datetimepicker-input o_website_form_input" data-target="#datepicker11" name="start_date"/>
                                 <div class="input-group-append" data-target="#datepicker11" data-toggle="datetimepicker">
@@ -619,10 +607,10 @@
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="end_date"> 失效日期 </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <div class="o_website_form_date input-group date" id="datepicker22" data-target-input="nearest">
                                 <input type="text" class="form-control datetimepicker-input o_website_form_input" data-target="#datepicker22" name="end_date"/>
                                 <div class="input-group-append" data-target="#datepicker22" data-toggle="datetimepicker">
@@ -634,12 +622,12 @@
                             </div>
                           </div>
                           <div class="row form-group form-field">
-                            <div class="col-md-4 text-md-right">
+                            <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="remark">
                         备注
                     </label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-lg-6 col-md-8">
                               <textarea class="form-control o_website_form_input" name="remark"/>
                             </div>
                           </div>

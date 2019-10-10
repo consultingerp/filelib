@@ -454,12 +454,12 @@
                                         <group>
                                             <field name="business_license" />
                                             <field name="validity_license" placeholder="与营业执照保持一致"/>
-                                            <field name="CreditCode"/>
+                                            <field name="vat" placeholder="与营业执照保持一致"/>
                                             <field name="registered_capital" placeholder="与营业执照保持一致"/>
-                                            <field name="image_company"/>
+                                            <field name="image_company" required='True'/>
                                         </group>
                                         <group>
-                                            <field name="organization_chart"/>
+                                            <field name="organization_chart" required='True'/>
                                             <field name="image_product"/>
                                         </group>
                                     </group>
@@ -470,18 +470,18 @@
 
                                     <group>
                                         <group>
-                                            <field name="country_bank"/>
-                                            <field name="province_bank"/>
-                                            <field name="city_bank" groups="base.group_user"/>
+                                            <field name="country_bank" required='True'/>
+                                            <field name="province_bank" required='True'/>
+                                            <field name="city_bank" required='True'/>
                                             <field name="region_bank"/>
-                                            <field name="name_bank"/>
+                                            <field name="name_bank" required='True'/>
                                         </group>
                                         <group>
                                             <field name="name_bank_branch"/>
                                             <field name="name_banks"/>
-                                            <field name="account_bank"/>
+                                            <field name="account_bank" required='True'/>
                                             <field name="name_account"/>
-                                            <field name="currency_type"/>
+                                            <field name="currency_type" required='True'/>
                                         </group>
                                         <group>
                                             <field name="code_bank"/>
@@ -499,7 +499,10 @@
                                             <field name="login_name"/>
                                             <field name="mobile"/>
                                             <field name="phone"/>
+                                            <!--<label for="email" string="EMail(登录名)"/>-->
+                                            <!--<div>-->
                                             <field name="email"/>
+                                            <!--</div>-->
                                         </group>
                                         <group>
                                             <field name="function" placeholder="e.g. Sales Director"
