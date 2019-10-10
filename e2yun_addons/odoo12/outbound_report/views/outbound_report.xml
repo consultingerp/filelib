@@ -8,7 +8,7 @@
             <graph string="OutboundReport">
                 <field name="jiesuanjine" type="row"/>
                 <field name="xiaoshoujine" type="row"/>
-                <field name="operatedatetime" interval="month" type="row"/>
+                <field name="LFADT" interval="month" type="row"/>
             </graph>
         </field>
     </record>
@@ -17,7 +17,7 @@
         <field name="name">outbound.view.cohort</field>
         <field name="model">outbound.final</field>
         <field name="arch" type="xml">
-            <cohort string="Opportunities" date_start="operatedatetime" date_stop="operatedatetime" interval="week" mode="churn"/>
+            <cohort string="Opportunities" date_start="LFADT" date_stop="LFADT" interval="week" mode="churn"/>
         </field>
     </record>
 

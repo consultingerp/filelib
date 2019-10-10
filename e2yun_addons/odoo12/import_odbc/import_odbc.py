@@ -21,7 +21,7 @@
 
 import sys
 from datetime import datetime
-import datetime
+# import datetime
 # from openerp.osv import orm, fields
 from odoo import models, fields
 import logging
@@ -36,7 +36,7 @@ class import_odbc_dbtable(models.Model):
     _order = 'exec_order'
 
     name = fields.Char('Datasource name', required=True, size=64)
-    enabled = fields.Boolean('Execution enabled')
+    enabled = fields.Boolean('Execution enabled', default=True)
     dbsource_id = fields.Many2one('base.external.dbsource',
                                    'Database source', required=True)
     sql_source = fields.Text('SQL', required=True,
@@ -48,7 +48,7 @@ class import_odbc_dbtable(models.Model):
                                disable updates to existing records.")
     exec_order = fields.Integer('Execution order',
                                  help="Defines the order to perform \
-                                 the import")
+                                 the import", default=10)
     last_sync = fields.Datetime('Last sync date',
                                  help="Datetime for the last succesfull \
                                  sync. \nLater changes on the source may \
@@ -75,6 +75,17 @@ class import_odbc_dbtable(models.Model):
         'exec_order': 10,
     }
 
+    def import_data(self, model_obj, cols, data, noupdate=False):
+        """import data to model filed"""
+        if noupdate:
+            pass
+        else:
+            data_dict = {}
+            for i in range(len(cols)):
+                dict1 = {cols[i]: data[i]}
+                data_dict.update(dict1)
+            model_obj.create(data_dict)
+
     def _import_data(self, flds, data, model_obj, table_obj, log):
         """Import data and returns error msg or empty string"""
 
@@ -97,16 +108,28 @@ class import_odbc_dbtable(models.Model):
                     msg = msg[:msg.find(': .')]
             log['last_log'].append('%s|%s\t|%s\t|%s' % (level.ljust(5),
                                    obj_id, rel_id, msg))
+
         _logger.debug(data)
         cols = list(flds)  # copy to avoid side effects
         errmsg = str()
         if table_obj.raise_import_errors:
-            model_obj.import_data(cols, [data],
+            model_obj.create()
+            table_obj.import_data(model_obj, cols, data,
                                   noupdate=table_obj.noupdate)
+            # data_dict = {}
+            # for i in range(len(cols)):
+            #     dict1 = {cols[i]: data[i]}
+            #     data_dict.update(dict1)
+            # model_obj.create(data_dict)
         else:
             try:
-                model_obj.import_data(cols, [data],
+                table_obj.import_data(model_obj, cols, data,
                                       noupdate=table_obj.noupdate)
+                # data_dict = {}
+                # for i in range(len(cols)):
+                #     dict1 = {cols[i]: data[i]}
+                #     data_dict.update(dict1)
+                # model_obj.create(data_dict)
             except:
                 errmsg = str(sys.exc_info()[1])
         if errmsg and not table_obj.ignore_rel_errors:
@@ -144,8 +167,8 @@ class import_odbc_dbtable(models.Model):
         # Consider each dbtable:
         for action_ref in actions:
             obj = self.browse(action_ref['id'])
-            if not obj.enabled:
-                continue  # skip
+            # if not obj.enabled:
+            #     continue  # skip
 
             _logger.setLevel(obj.raise_import_errors and
                              logging.DEBUG or _loglvl)
@@ -156,7 +179,8 @@ class import_odbc_dbtable(models.Model):
             # TODO: convert UTC Now to local timezone
             # http://stackoverflow.com/questions/4770297/python-convert-utc-datetime-string-to-local-datetime
             model_name = obj.model_target.model
-            model_obj = self.pool.get(model_name)
+            # model_obj = self.pool.get(model_name)
+            model_obj = self.env[model_name]
             xml_prefix = model_name.replace('.', '_') + "_id_"
             log = {'start_run': datetime.now().replace(microsecond=0),
                    'last_run': None,
@@ -164,22 +188,21 @@ class import_odbc_dbtable(models.Model):
                    'last_error_count': 0,
                    'last_warn_count': 0,
                    'last_log': list()}
-            self.write([obj.id], log)
+            self.write(log)
 
             # Prepare SQL sentence; replace "%s" with the last_sync date
             if obj.last_sync:
-                sync = datetime.strptime(obj.last_sync, "%Y-%m-%d %H:%M:%S")
+                sync = datetime.strptime(str(obj.last_sync), "%Y-%m-%d %H:%M:%S")
             else:
-                sync = datetime.datetime(1900, 1, 1, 0, 0, 0)
+                sync = datetime(1900, 1, 1, 0, 0, 0)
             params = {'sync': sync}
-            res = db_model.execute([obj.dbsource_id.id],
-                                   obj.sql_source, params, metadata=True)
+            res = db_model.browse(obj.dbsource_id.id).execute(obj.sql_source, params, metadata=True)
 
             # Exclude columns titled "None"; add (xml_)"id" column
             cidx = ([i for i, x in enumerate(res['cols'])
                     if x.upper() != 'NONE'])
             cols = ([x for i, x in enumerate(res['cols'])
-                    if x.upper() != 'NONE'] + ['id'])
+                    if x.upper() != 'NONE'] + ['ID'])
 
             # Import each row:
             for row in res['rows']:
@@ -223,7 +246,8 @@ class import_odbc_dbtable(models.Model):
                                        ==|== Message ==')
             log.update({'last_log': '\n'.join(log['last_log'])})
             log.update({'last_run': datetime.now().replace(microsecond=0)})
-            self.write([obj.id], log)
+            self.write(log)
+
 
         # Finished
         _logger.debug('Import job FINISHED.')
