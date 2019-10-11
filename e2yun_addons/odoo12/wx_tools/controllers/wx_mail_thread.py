@@ -10,7 +10,7 @@ from odoo import api, models
 from odoo import exceptions
 from odoo.modules.module import get_module_resource
 from ..rpc import corp_client
-
+from bs4 import BeautifulSoup
 _logger = logging.getLogger(__name__)
 
 
@@ -22,6 +22,7 @@ class WXMailThread(models.AbstractModel):
     def message_post(self, body='', subject=None, message_type='notification', subtype=None, parent_id=False,
                      attachments=None, content_subtype='html', **kwargs):
         weixin_id = kwargs.get('weixin_id')
+        from ..controllers import client
         message = super(WXMailThread, self).message_post(body=body, subject=subject, message_type=message_type,
                                                          subtype=subtype, parent_id=parent_id, attachments=attachments,
                                                          content_subtype=content_subtype, **kwargs)
@@ -192,4 +193,51 @@ class WXMailThread(models.AbstractModel):
                     client.send_template_message(self, self.partner_id.wx_user_id.openid, template_id, data,
                                                  url,
                                                  'saleorder')
+        if message.model == 'helpdesk.ticket' and body:
+            if "notif_layout" in kwargs:
+                return message
+            body_text = BeautifulSoup(body, "html.parser")
+            user_data = {
+                "first": {
+                    "value": "%s" % datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                },
+                "keyword1": {
+                    "value": "售后服务单信息提醒",
+                    "color": "#0000EE"
+                },
+                "keyword2": {
+                    "value": self.id
+                },
+                "keyword3": {
+                    "value": self.name
+                },
+                "keyword4": {
+                    "value": self.order_datetime.strftime("%Y-%m-%d %H:%M:%S")
+                },
+                "remark": {
+                    "value": "%s" % body_text.get_text(),
+                    "color": "#0000EE"
+                }
+            }
+            # 判断是否是组用户 是不是 portal 和用户类型
+            author_id = kwargs['author_id'] if hasattr(kwargs, 'author_id') else message._context['uid']
+            if self.env['res.users'].sudo().browse(author_id).has_group('base.group_customer') \
+                    or self.env['res.users'].sudo().browse(self.env['res.users'].sudo().browse(author_id).has_group('base.group_customer')).has_group('base.group_portal'):
+                action_xmlid = 'helpdesk.helpdesk_ticket_action_main_tree'
+                action_url = '/web?#menu_id=%s&action=%s&id=%s&model=helpdesk.ticket&view_type=form' % (
+                    self.env.ref('helpdesk.menu_helpdesk_root').id,
+                    self.env.ref(action_xmlid).id,
+                    str(self.id)
+                )
+                if self.user_id.wx_user_id:
+                    self.user_id.wx_user_id.send_template_message(user_data, template_name='售后服务订单接收通知', user=self.user_id, url=action_url)
+                elif self.team_id.member_ids:
+                    for user in self.team_id.member_ids:
+                        if user.wx_user_id:
+                            user.wx_user_id.send_template_message(user_data, template_name='售后服务订单接收通知', user=user, url=action_url)
+            else:
+                if self.partner_id.wx_user_id:
+                    self.partner_id.wx_user_id.send_template_message(user_data, template_name='售后服务订单接收通知', partner=self.partner_id, url=self.access_url)
+
         return message
+
