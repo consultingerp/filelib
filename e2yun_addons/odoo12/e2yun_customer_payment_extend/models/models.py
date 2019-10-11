@@ -7,6 +7,18 @@ import suds.client
 class e2yun_customer_payment_extend(models.Model):
     _inherit = 'account.payment'
 
+    @api.depends('payment_type2')
+    @api.onchange('payment_type2')
+    def _onchange_(self):
+        if self.payment_type2 == 'D11':
+            self.payment_status = 'A1'
+        elif self.payment_type2 == 'D12':
+            self.payment_status = 'A2'
+        elif self.payment_type2 == 'D13':
+            self.payment_status = 'A3'
+        elif self.payment_type2 == 'D16':
+            self.payment_status = 'A4'
+
     payment_type2 = fields.Selection(
         [('D11', '公司收现金'), ('D12', '刷卡'),
          ('D13', '公司微信'), ('D16', '公司支付宝'),
@@ -36,13 +48,20 @@ class e2yun_customer_payment_extend(models.Model):
     customer_pay_amount = fields.Monetary(string='客户交款金额')
     accept_amount = fields.Monetary(string='收款结算金额')
 
+    customer_pay_amount000 = fields.Boolean(related='related_shop.show_customer_pay_amount')
+    accept_amount000 = fields.Boolean(related='related_shop.show_accept_amount')
+
+    @api.multi
+    def _compute_show_amount(self):
+        self.env['crm.team'].browse('related_shop')
+
     def sync_customer_payment_to_pos(self):
         for r in self:
             if r.state == 'draft':
                 raise exceptions.Warning('状态为草稿单据，不能同步到POS系统')
 
             ICPSudo = self.env['ir.config_parameter'].sudo()
-            url = ICPSudo.get_param('e2yun.sync_pos_payment_webservice_url')  # webservice调用地址
+            url = ICPSudo.get_param('e2yun.pos_url')  # webservice调用地址
             client = suds.client.Client(url)
 
             now = self.create_date.replace(microsecond=0)

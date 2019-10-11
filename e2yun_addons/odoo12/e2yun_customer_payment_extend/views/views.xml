@@ -11,14 +11,16 @@
                 </xpath>
                 <xpath expr="//group[1]/field[@name='journal_id']" position="after">
 
-                    <field name="payment_type2"/>
+                    <field name="payment_type2" widget="e2yun_customer_payment_extend_hide_options"/>
                     <field name="payment_voucher" attrs="{'required': [('payment_type2','in',['C11','C12','C14','C15','C16'])]}"/>
                     <field name="marketing_activity"/>
                     <field name="payment_serirs_no" invisible="1"/>
                     <field name="payment_status"/>
                     <field name="handing_cost" attrs="{'required': [('payment_type2', 'in', ['D12','D13','D14','D15','D16','D17','C12','C15','C16'])]}"/>
-                    <field name="customer_pay_amount"/>
-                    <field name="accept_amount"/>
+                    <field name="customer_pay_amount" attrs="{'invisible': [('customer_pay_amount000', '=', False)]}"/>
+                    <field name="accept_amount" attrs="{'invisible': [('accept_amount000', '=', False)]}"/>
+                    <field name="customer_pay_amount000" invisible="1"/>
+                    <field name="accept_amount000" invisible="1"/>
                 </xpath>
 
                 <xpath expr="//group[2]/field[@name='payment_date']" position="before">
