@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+
+    <record id="e2yun_website_helpdesk_form_inherit_helpdesk" model="ir.ui.view">
+        <field name='name'>e2yun.website.helpdesk.form.inherit.helpdesk</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="brand"/>
+                <field name="userip"/>
+                <field name="posserviceorderid"/>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="address"/>
+                <field name="phone" widget="phone"/>
+                <field name="order_datetime"/>
+                <field name="user_phone" widget="phone"/>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_email']" position="replace">
+
+            </xpath>
+
+
+             <xpath expr="//header" position="inside">
+                 <button name="synserviceorder" type="object" class="oe_link" string="同步到POS" confirm="确认要同步信息到POS，如果同步将会更新信息。"/>
+            </xpath>
+
+
+        </field>
+    </record>
+
+
+    <!-- the js code to initialize the LiveSupport object -->
+    <!--<template id="e2yun_website_helpdesk_form_loader" inherit_id="im_livechat.loader" name="my_load">-->
+    <!--<xpath expr="//t[@t-translation='off']" position="replace">-->
+    <!--<t t-translation="off">-->
+
+    <!--<t t-set="requesturls" t-value="request.httprequest.url.split('/')"/>-->
+    <!--<t t-set="channel" t-value="9"/>-->
+
+
+    <!--<t t-if="not info">-->
+    <!--<t t-set="info" t-value="request.env['im_livechat.channel'].get_livechat_info(channel)"/>-->
+    <!--</t>-->
+    <!--document.addEventListener("DOMContentLoaded", function(event) {-->
+    <!--<t t-if="web_session_required">-->
+    <!--odoo.define('web.session', function (require) {-->
+    <!--var Session = require('web.Session');-->
+    <!--var modules = odoo._modules;-->
+    <!--return new Session(undefined, "<t t-esc="info['server_url']"/>", {modules:modules, use_cors: false});-->
+    <!--});-->
+    <!--</t>-->
+
+
+    <!--odoo.define('im_livechat.livesupport', function (require) {-->
+    <!--<t t-if="info['available']" t-translation="off">-->
+    <!--var rootWidget = require('root.widget');-->
+    <!--var im_livechat = require('im_livechat.im_livechat');-->
+    <!--var button = new im_livechat.LivechatButton(-->
+    <!--rootWidget,-->
+    <!--"<t t-esc="info['server_url']"/>",-->
+    <!--<t t-raw="json.dumps(info.get('options', {}))"/>-->
+    <!--);-->
+    <!--button.appendTo($('#my_o_livechat_button'));-->
+    <!--window.livechat_button = button;-->
+    <!--</t>-->
+    <!--});-->
+    <!--});-->
+    <!--</t>-->
+
+    <!--</xpath>-->
+
+    <!--</template>-->
+
+
+</odoo>
