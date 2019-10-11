@@ -61,7 +61,11 @@ class e2yun_customer_payment_extend(models.Model):
                 raise exceptions.Warning('状态为草稿单据，不能同步到POS系统')
 
             ICPSudo = self.env['ir.config_parameter'].sudo()
+<<<<<<< HEAD
             url = ICPSudo.get_param('e2yun.pos_url')  # webservice调用地址
+=======
+            url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/CreatePayment?wsdl'  # webservice调用地址
+>>>>>>> 4ad653ed768b9c0ed00b05618a36721ae14799be
             client = suds.client.Client(url)
 
             now = self.create_date.replace(microsecond=0)
@@ -175,3 +179,21 @@ class e2yun_customer_payment_res_partner(models.Model):
             return teams.name_get()
         else:
             return super(e2yun_customer_payment_res_partner, self).name_search(name, args, operator, limit)
+
+    @api.multi
+    def name_get(self):
+        flag = self.env.context.get('show_custom_name', False)
+        if flag == 8:
+            res = []
+            for res_partner in self:
+                name = str(res_partner.app_code) + ' ' + str(res_partner.name)
+                res.append((res_partner.id, name))
+            return res
+        # elif flag == 2:
+        #     res = []
+        #     for res_partner in self:
+        #         name = str(res_partner.app_code)
+        #         res.append((res_partner.id, name))
+        #     return res
+        else:
+            return super(e2yun_customer_payment_res_partner, self).name_get()
