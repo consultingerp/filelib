@@ -155,3 +155,21 @@ class e2yun_customer_payment_res_partner(models.Model):
             return teams.name_get()
         else:
             return super(e2yun_customer_payment_res_partner, self).name_search(name, args, operator, limit)
+
+    @api.multi
+    def name_get(self):
+        flag = self.env.context.get('show_custom_name', False)
+        if flag == 8:
+            res = []
+            for res_partner in self:
+                name = str(res_partner.app_code) + ' ' + str(res_partner.name)
+                res.append((res_partner.id, name))
+            return res
+        # elif flag == 2:
+        #     res = []
+        #     for res_partner in self:
+        #         name = str(res_partner.app_code)
+        #         res.append((res_partner.id, name))
+        #     return res
+        else:
+            return super(e2yun_customer_payment_res_partner, self).name_get()
