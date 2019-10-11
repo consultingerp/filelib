@@ -262,7 +262,7 @@ class E2yunCsutomerExtends(models.Model):
             #     raise exceptions.Warning("POS状态已传输，不能再同步哟！")
             ICPSudo = self.env['ir.config_parameter'].sudo()
 
-            url = ICPSudo.get_param('e2yun.sync_pos_member_webservice_url')  # webservice调用地址
+            url = ICPSudo.get_param('e2yun.pos_url') +'/esb/webservice/SyncMember?wsdl'  # webservice调用地址
             client = suds.client.Client(url)
             shop_code = ''
             shop_name = ''
@@ -299,7 +299,7 @@ class E2yunCsutomerExtends(models.Model):
     def updata_customer_state(self):
         customers = self.search([('state','in',['potential_customer','intention_customer','target_customer']),('customer','=',True)])
         ICPSudo = self.env['ir.config_parameter'].sudo()
-        url = ICPSudo.get_param('e2yun.sync_pos_member_webservice_url')  # webservice调用地址
+        url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncMember?wsdl'  # webservice调用地址
         for customer in customers:
             client = suds.client.Client(url)
             result = client.service.updateState(customer.id or '', customer.app_code or '', customer.state or '')
@@ -317,57 +317,6 @@ class E2yunCsutomerExtends(models.Model):
 class resPartnerBatch(models.TransientModel):
     _name = 'res.partner.extends.batch'
 
-    # def sync_customer_to_pos(self):
-    #     ctx = self._context.copy()
-    #
-    #     active_model = ctx.get('active_model')
-    #     active_ids = ctx.get('active_ids', [])
-    #
-    #     rep = self.env['res.partner'].browse(active_ids)
-    #     sync_list = []
-    #     cart_items = suds.client.factory.create('ArrayOfCartItem')
-    #     for r in rep:
-    #         cart_item = suds.client.factory.create('CartItem')
-    #
-    #         cart_item.provice = r.state_id.name#省
-    #         cart_item.city = r.city
-    #         cart_item.area = r.street
-    #         cart_item.detailaddress = r.street2
-    #         cart_item.name1 = r.name
-    #         cart_item.name2 = r.user_nick_name
-    #         cart_item.mendian = r.shop_code
-    #         cart_item.telf1 = r.phone
-    #         cart_item.vtext = r.shop_name
-    #         cart_item.remark = r.occupation
-    #         cart_item.posid = r.app_code
-    #         cart_item.pernam = r.create_uid.name
-    #
-    #
-    #         sync_list.append(cart_item)
-    #
-    #         # sync_list.append({
-    #         #     'provice':r.state_id.name,#省
-    #         #     'city':r.city,#城市
-    #         #     'area':r.street,#县区
-    #         #     'detailaddress':r.street2,#地址
-    #         #     'name1':r.name,#名称
-    #         #     'name2':r.user_nick_name,#昵称
-    #         #     'mendian':r.shop_code,#门店编码
-    #         #     'telf1':r.phone,#电话
-    #         #     'vtext':r.shop_name,#门店名称
-    #         #     'remark':r.occupation,#职业
-    #         #     'posid':r.app_code,#app编码
-    #         #     'pernam':r.create_uid.name,#创建人
-    #         # })
-    #         cart_items.CartItem = cart_items
-    #     if cart_items:
-    #         ICPSudo = self.env['ir.config_parameter'].sudo()
-    #
-    #         url = ICPSudo.get_param('e2yun.sync_pos_member_webservice_url')  # webservice调用地址
-    #         client = suds.client.Client(url)
-    #
-    #         result = client.service.createMember(sync_list)# 调用方法所需要的参数
-    #         print(result)
     def sync_customer_to_pos(self):
         ctx = self._context.copy()
 
@@ -383,7 +332,7 @@ class resPartnerBatch(models.TransientModel):
                 raise exceptions.Warning('状态为潜在客户，不能同步到POS系统')
             ICPSudo = self.env['ir.config_parameter'].sudo()
 
-            url = ICPSudo.get_param('e2yun.sync_pos_member_webservice_url')  # webservice调用地址
+            url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncMember?wsdl'  # webservice调用地址
             client = suds.client.Client(url)
 
             shop_code = ''
