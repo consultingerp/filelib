@@ -32,7 +32,7 @@
                                 var speed = res.speed; // 速度，以米/每秒计
                                 var accuracy = res.accuracy; // 位置精度
                                 var locations = res.longitude + "," + res.latitude; //微信位置
-                                 $.getJSON("amap/convert?location=" + locations,   //将微信地址转为正确的地址，由于GV地址位置有偏差
+                                 $.getJSON("/amap/convert?location=" + locations,   //将微信地址转为正确的地址，由于GV地址位置有偏差
                                         function(result) {
                                                 var tolocations = result.locations;//实际地址
                                                 actual_longitude = tolocations.split(",")[0];
