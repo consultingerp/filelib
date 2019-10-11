@@ -70,6 +70,7 @@ class WebsiteForm(WebsiteForm):
         _logger.info("查询接口2：%s", soup.contents[1].string[6:])
         _logger.info("查询接口3：%s", soup.contents[2].string[6:])
         helpdeskurl = '/helpdesk/' + str(team_id) + '/submit'
+        _logger.info("访问地址：%s" % helpdeskurl)
         return http.local_redirect(helpdeskurl)
 
     def getuserip(self, request):
