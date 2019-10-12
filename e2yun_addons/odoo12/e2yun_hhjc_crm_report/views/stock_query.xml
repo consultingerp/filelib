@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_stock_query_report" model="ir.ui.view">
+            <field name="name">Stock Query Report</field>
+            <field name="model">stock.query.condition.report</field>
+            <field name="arch" type="xml">
+                <form string="Choose your date">
+                    <group>
+                        <group>
+                            <field name="werks"/>
+                            <field name="werks_id" invisible="1"/>
+                            <field name="matnr_code"/>
+                            <field name="matnr_code1"/>
+                        </group>
+                        <group>
+                            <field name="lgort" domain="[('company_id','=',werks_id)]"/>
+                            <field name="charg"/>
+                            <field name="mendian"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="open_table" string="查询" type="object"  class="oe_highlight"  />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="stock_query_report_action" model="ir.actions.act_window">
+            <field name="name">库存查询</field>
+            <field name="res_model">stock.query.condition.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_stock_query_report"/>
+            <field name="target">new</field>
+        </record>
+
+        <record id="stock_query_tree" model="ir.ui.view">
+            <field name="name">stock.query.report.tree</field>
+            <field name="model">stock.query.report</field>
+            <field name="arch" type="xml">
+                <tree string="Move Lines" create="false" delete="false" editable="bottom">
+                    <field name="matnr_code"/>
+                    <field name="matnr_code"/>
+                    <field name="matnr_name"/>
+                    <field name="logrt_name"/>
+                    <field name="charg"/>
+                    <field name="atwrt"/>
+                    <field name="labst"/>
+                    <field name="un_com_qty"/>
+                    <field name="prdha"/>
+                    <field name="groes"/>
+                    <field name="vbeln"/>
+                    <field name="posnr"/>
+                </tree>
+            </field>
+        </record>
+
+        <menuitem
+            action="stock_query_report_action"
+            id="stock_query_report_menu"
+            parent="crm.crm_menu_report"
+            sequence="1"/>
+
+    </data>
+</odoo>

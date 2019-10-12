@@ -74,7 +74,7 @@ class WxEntry(EntryBase):
             env.cr.rollback()
             import traceback;traceback.print_exc()
 
-        print('wx client init: %s %s'%(self.OPENID_UUID, self.UUID_OPENID))
+       # print('wx client init: %s %s'%(self.OPENID_UUID, self.UUID_OPENID))
 
 def wxenv(env):
     return WxEnvDict[env.cr.dbname]

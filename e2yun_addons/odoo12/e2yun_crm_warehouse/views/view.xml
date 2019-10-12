@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_crm_warehouse_tree" model="ir.ui.view">
+        <field name="name">crm.warehouse.tree</field>
+        <field name="model">crm.warehouse</field>
+        <field name="arch" type="xml">
+            <tree string="仓库">
+                <field name="company_id" options="{'no_create': True}" />
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_crm_warehouse_search" model="ir.ui.view">
+        <field name="name">crm.warehouse.search</field>
+        <field name="model">crm.warehouse</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="company_id" string="工厂"/>
+                <field name="name" string="仓库"/>
+                <field name="code" string="仓库代码"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_crm_warehouse_tree" model="ir.actions.act_window">
+        <field name="name">仓库</field>
+        <field name="res_model">crm.warehouse</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_crm_warehouse_search"/>
+        <field name="view_id" ref="view_crm_warehouse_tree"/>
+    </record>
+
+    <menuitem action="action_crm_warehouse_tree" id="menu_crm_warehouse" parent="crm.crm_menu_config" sequence="10"/>
+
+</odoo>
