@@ -19,7 +19,8 @@ def geocodegeo(self, address, city=''):
         geo = result['geocodes'][0]['location']
         return geo
     except (KeyError, ValueError, IndexError):
-        raise UserError('用户址转换出错:%s' % address)
+        return '0.0,0.0'
+        # raise UserError('用户址转换出错:%s' % address)
 
 
 def geocoderegeo(self, location):
