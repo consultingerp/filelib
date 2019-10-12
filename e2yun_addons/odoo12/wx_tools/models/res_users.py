@@ -54,6 +54,23 @@ class WxResUsers(models.Model):
             self.qrcodeimg = '<img src=https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=%s width="100px" ' \
                              'height="100px" />' % (self.qrcode_ticket or '/wx_tools/static/description/icon.png')
 
+    @api.multi
+    def get_jsapi_ticket(self, url):
+        try:
+            url_ = url;
+            url_ = url_.replace(":80", "")
+            from ..controllers import client
+            entry = client.wxenv(self.env)
+            wx_appid, timestamp, noncestr, signature = entry.get_jsapi_ticket(url_)
+        except Exception as e:
+            _logger.error("加载微信jsapi_ticket错误。%s" % e)
+        return {
+            'wx_appid': wx_appid,
+            'timestamp': timestamp,
+            'noncestr': noncestr,
+            'signature': signature
+        }
+
     @api.model
     def change_password(self, old_passwd, new_passwd):
         if new_passwd:
