@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <!--<template id="assets_frontend" name="common_problems" inherit_id="website.assets_frontend">-->
+        <!--<xpath expr="." position="inside">-->
+        <!--<link rel="stylesheet" type="text/scss" href="/website_form/static/src/scss/website_form.scss"/>-->
+        <!--<script type="text/javascript"-->
+        <!--src="/e2yun_website_helpdesk_form/static/src/js/website_helpdesk_forme_2yun.js"/>-->
+        <!--</xpath>-->
+        <!--</template>-->
+
+
+        <template id="e2yun_website_helpdesk_form.common_problems" name="Helpdesk: common_problems">
+            <t name="common_problems" priority="30">
+                <meta charset="UTF-8"/>
+                <title>常见问题</title>
+                <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+                <meta content="yes" name="apple-mobile-web-app-capable"/>
+                <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+                <meta content="telephone=no" name="format-detection"/>
+                <link rel="stylesheet" type="text/css"
+                      href="/e2yun_website_helpdesk_form/static/src/css/commonproblems_style.css?version=1.0.0"/>
+                <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/jquery.min.js"></script>
+
+                <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/fold.js"></script>
+                 <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/tab.js?version=1.0.0"></script>
+
+
+                <section class="aui-flexView">
+                    <header class="aui-navBar aui-navBar-fixed">
+                        <a href="javascript:;" onClick="javascript:history.back(-1);" class="aui-navBar-item">
+                            <i class="icon icon-return"></i>
+                        </a>
+                        <div class="aui-center">
+                            <span class="aui-center-title">  常见问题</span>
+                        </div>
+                        <a href="javascript:;" class="aui-navBar-item">
+                            <i class="icon icon-sys"></i>
+                        </a>
+                    </header>
+                    <section class="aui-scrollView">
+                        <div class="aui-tab" data-ydui-tab="">
+                            <ul class="tab-nav">
+                                <li class="tab-nav-item tab-active">
+                                    <a href="javascript:;">
+                                        购买说明
+                                    </a>
+                                </li>
+                                <li class="tab-nav-item ">
+                                    <a href="javascript:;">
+                                        费用说明
+                                    </a>
+                                </li>
+                                <li class="tab-nav-item ">
+                                    <a href="javascript:;">
+                                        还款说明
+                                    </a>
+                                </li>
+                                <li class="tab-nav-item ">
+                                    <a href="javascript:;">
+                                        xxx说明
+                                    </a>
+                                </li>
+                                <li class="tab-nav-item ">
+                                    <a href="javascript:;">
+                                        xxx说明
+                                    </a>
+                                </li>
+                                <li class="tab-nav-item ">
+                                    <a href="javascript:;">
+                                        其它问题
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <div class="tab-panel">
+                                <div class="tab-panel-item tab-active">
+                                    <div class="tab-item">
+                                        <ul class="accordion">
+                                            <li class="aui-menu-item b-line">
+                                                <div class="link">
+                                                    <i class="icon aui-icon-q"></i>
+                                                    坐式马桶维修常见故障该如何处理
+                                                    <i class="icon icon-dow"></i>
+                                                </div>
+                                                <div class="submenu">
+                                                    <i class="icon icon-a"></i>
+                                                    <p>马桶堵了怎么办 ；马桶堵塞一般是马桶存水弯处堵塞，最好最简单的办法是。。。可以用一根较厚实点的胶管（管壁厚一点），一端套在水龙头上，一端插进马桶的存水弯里。然后打开水龙头，再用手将胶管往存水弯里来回的捅插，最好是捅插过存水弯（但不要怕臭、脏）。时间是捅通为止，快的三五几下，慢点的需要两三分钟。我家马桶就经常性的堵塞，我就是用这种办法捅通的，很简单，包有效果的。。</p>
+                                                    <p>（如果请专业疏通人员了，价格在60元左右；也可以自已买一个疏通器 疏通疏通 是更好的）马桶堵塞的原因多半是属大便干结，粗大、手纸丢的过多和丢异物进马桶。如果要尽量使马桶不堵，在大便时尽量多冲两次（多用一点水）手纸和不要过多使用，如果手纸过多时要分别冲水，因为手纸包裹住大便是最易堵塞马桶的</p>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="tab-panel-item">
+                                    <div class="tab-item">
+                                        <ul class="accordion">
+                                            <li class="aui-menu-item b-line">
+                                                <div class="link">
+                                                    <i class="icon aui-icon-q"></i>
+                                                    坐式马桶维修常见故障该如何处理
+                                                    <i class="icon icon-dow"></i>
+                                                </div>
+                                                <div class="submenu">
+                                                    <i class="icon icon-a"></i>
+                                                    <p>马桶堵了怎么办 ；马桶堵塞一般是马桶存水弯处堵塞，最好最简单的办法是。。。可以用一根较厚实点的胶管（管壁厚一点），一端套在水龙头上，一端插进马桶的存水弯里。然后打开水龙头，再用手将胶管往存水弯里来回的捅插，最好是捅插过存水弯（但不要怕臭、脏）。时间是捅通为止，快的三五几下，慢点的需要两三分钟。我家马桶就经常性的堵塞，我就是用这种办法捅通的，很简单，包有效果的。。</p>
+                                                    <p>（如果请专业疏通人员了，价格在60元左右；也可以自已买一个疏通器 疏通疏通 是更好的）马桶堵塞的原因多半是属大便干结，粗大、手纸丢的过多和丢异物进马桶。如果要尽量使马桶不堵，在大便时尽量多冲两次（多用一点水）手纸和不要过多使用，如果手纸过多时要分别冲水，因为手纸包裹住大便是最易堵塞马桶的</p>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="tab-panel-item">
+                                    <div class="tab-item">
+                                        <ul class="accordion">
+                                            <li class="aui-menu-item b-line">
+                                                <div class="link">
+                                                    <i class="icon aui-icon-q"></i>
+                                                    坐式马桶维修常见故障该如何处理
+                                                    <i class="icon icon-dow"></i>
+                                                </div>
+                                                <div class="submenu">
+                                                    <i class="icon icon-a"></i>
+                                                    <p>马桶堵了怎么办 ；马桶堵塞一般是马桶存水弯处堵塞，最好最简单的办法是。。。可以用一根较厚实点的胶管（管壁厚一点），一端套在水龙头上，一端插进马桶的存水弯里。然后打开水龙头，再用手将胶管往存水弯里来回的捅插，最好是捅插过存水弯（但不要怕臭、脏）。时间是捅通为止，快的三五几下，慢点的需要两三分钟。我家马桶就经常性的堵塞，我就是用这种办法捅通的，很简单，包有效果的。。</p>
+                                                    <p>（如果请专业疏通人员了，价格在60元左右；也可以自已买一个疏通器 疏通疏通 是更好的）马桶堵塞的原因多半是属大便干结，粗大、手纸丢的过多和丢异物进马桶。如果要尽量使马桶不堵，在大便时尽量多冲两次（多用一点水）手纸和不要过多使用，如果手纸过多时要分别冲水，因为手纸包裹住大便是最易堵塞马桶的</p>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="tab-panel-item">
+                                    <div class="tab-item">
+                                        <ul class="accordion">
+                                            <li class="aui-menu-item b-line">
+                                                <div class="link">
+                                                    <i class="icon aui-icon-q"></i>
+                                                    坐式马桶维修常见故障该如何处理
+                                                    <i class="icon icon-dow"></i>
+                                                </div>
+                                                <div class="submenu">
+                                                    <i class="icon icon-a"></i>
+                                                    <p>马桶堵了怎么办 ；马桶堵塞一般是马桶存水弯处堵塞，最好最简单的办法是。。。可以用一根较厚实点的胶管（管壁厚一点），一端套在水龙头上，一端插进马桶的存水弯里。然后打开水龙头，再用手将胶管往存水弯里来回的捅插，最好是捅插过存水弯（但不要怕臭、脏）。时间是捅通为止，快的三五几下，慢点的需要两三分钟。我家马桶就经常性的堵塞，我就是用这种办法捅通的，很简单，包有效果的。。</p>
+                                                    <p>（如果请专业疏通人员了，价格在60元左右；也可以自已买一个疏通器 疏通疏通 是更好的）马桶堵塞的原因多半是属大便干结，粗大、手纸丢的过多和丢异物进马桶。如果要尽量使马桶不堵，在大便时尽量多冲两次（多用一点水）手纸和不要过多使用，如果手纸过多时要分别冲水，因为手纸包裹住大便是最易堵塞马桶的</p>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="tab-panel-item">
+                                    <div class="tab-item">
+                                        <ul class="accordion">
+                                            <li class="aui-menu-item b-line">
+                                                <div class="link">
+                                                    <i class="icon aui-icon-q"></i>
+                                                    坐式马桶维修常见故障该如何处理
+                                                    <i class="icon icon-dow"></i>
+                                                </div>
+                                                <div class="submenu">
+                                                    <i class="icon icon-a"></i>
+                                                    <p>马桶堵了怎么办 ；马桶堵塞一般是马桶存水弯处堵塞，最好最简单的办法是。。。可以用一根较厚实点的胶管（管壁厚一点），一端套在水龙头上，一端插进马桶的存水弯里。然后打开水龙头，再用手将胶管往存水弯里来回的捅插，最好是捅插过存水弯（但不要怕臭、脏）。时间是捅通为止，快的三五几下，慢点的需要两三分钟。我家马桶就经常性的堵塞，我就是用这种办法捅通的，很简单，包有效果的。。</p>
+                                                    <p>（如果请专业疏通人员了，价格在60元左右；也可以自已买一个疏通器 疏通疏通 是更好的）马桶堵塞的原因多半是属大便干结，粗大、手纸丢的过多和丢异物进马桶。如果要尽量使马桶不堵，在大便时尽量多冲两次（多用一点水）手纸和不要过多使用，如果手纸过多时要分别冲水，因为手纸包裹住大便是最易堵塞马桶的</p>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="tab-panel-item">
+                                    <div class="tab-item">
+                                        <ul class="accordion">
+                                            <li class="aui-menu-item b-line">
+                                                <div class="link">
+                                                    <i class="icon aui-icon-q"></i>
+                                                    坐式马桶维修常见故障该如何处理
+                                                    <i class="icon icon-dow"></i>
+                                                </div>
+                                                <div class="submenu">
+                                                    <i class="icon icon-a"></i>
+                                                    <p>马桶堵了怎么办 ；马桶堵塞一般是马桶存水弯处堵塞，最好最简单的办法是。。。可以用一根较厚实点的胶管（管壁厚一点），一端套在水龙头上，一端插进马桶的存水弯里。然后打开水龙头，再用手将胶管往存水弯里来回的捅插，最好是捅插过存水弯（但不要怕臭、脏）。时间是捅通为止，快的三五几下，慢点的需要两三分钟。我家马桶就经常性的堵塞，我就是用这种办法捅通的，很简单，包有效果的。。</p>
+                                                    <p>（如果请专业疏通人员了，价格在60元左右；也可以自已买一个疏通器 疏通疏通 是更好的）马桶堵塞的原因多半是属大便干结，粗大、手纸丢的过多和丢异物进马桶。如果要尽量使马桶不堵，在大便时尽量多冲两次（多用一点水）手纸和不要过多使用，如果手纸过多时要分别冲水，因为手纸包裹住大便是最易堵塞马桶的</p>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+                </section>
+
+
+            </t>
+
+        </template>
+
+    </data>
+
+</odoo>
