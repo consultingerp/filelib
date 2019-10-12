@@ -116,20 +116,10 @@ class import_odbc_dbtable(models.Model):
             model_obj.create()
             table_obj.import_data(model_obj, cols, data,
                                   noupdate=table_obj.noupdate)
-            # data_dict = {}
-            # for i in range(len(cols)):
-            #     dict1 = {cols[i]: data[i]}
-            #     data_dict.update(dict1)
-            # model_obj.create(data_dict)
         else:
             try:
                 table_obj.import_data(model_obj, cols, data,
                                       noupdate=table_obj.noupdate)
-                # data_dict = {}
-                # for i in range(len(cols)):
-                #     dict1 = {cols[i]: data[i]}
-                #     data_dict.update(dict1)
-                # model_obj.create(data_dict)
             except:
                 errmsg = str(sys.exc_info()[1])
         if errmsg and not table_obj.ignore_rel_errors:
