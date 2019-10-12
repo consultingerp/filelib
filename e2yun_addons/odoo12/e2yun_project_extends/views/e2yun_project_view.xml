@@ -23,24 +23,61 @@
                     <field name="multiple_questionnaires" />
                 </xpath>
                 <xpath expr="//notebook" position="before">
-                    <group col="3">
-                        <group>
+                    <!--<group col="3">-->
+                        <!--<group>-->
+                            <!--<field name="questionnaire_scenario"/>-->
+                            <!--<field name="questionnaire_scenarioo" attrs="{'invisible': [('multiple_questionnaires', '=', 'no')]}" />-->
+                            <!--<field name="questionnaire_scenariooo" attrs="{'invisible': [('multiple_questionnaires', '=', 'no')]}" />-->
+                        <!--</group>-->
+                        <!--<group>-->
+                            <!--<field name="weight" attrs="{'invisible': [('questionnaire_scenario', '=', 'Other')]}"/>-->
+                            <!--<field name="weightt" attrs="{'invisible': ['|',('multiple_questionnaires', '=', 'no'),('questionnaire_scenarioo', '=', 'Other')]}"/>-->
+                            <!--<field name="weighttt" attrs="{'invisible': ['|',('multiple_questionnaires', '=', 'no'),('questionnaire_scenariooo', '=', 'Other')]}"/>-->
+                        <!--</group>-->
+                        <!--<group>-->
+                            <!--<field name="survey_temp_id"/>-->
+                            <!--<field name="survey_temp_idd" attrs="{'invisible': [('multiple_questionnaires', '=', 'no')]}"/>-->
+                            <!--<field name="survey_temp_iddd" attrs="{'invisible': [('multiple_questionnaires', '=', 'no')]}"/>-->
+                        <!--</group>-->
+                    <!--</group>-->
+                    <field name="questionnaire_ids" widget="one2many_list" context="{'questionnaire_ids': questionnaire_ids}">
+                        <tree editable="bottom">
                             <field name="questionnaire_scenario"/>
-                            <field name="questionnaire_scenarioo" attrs="{'invisible': [('multiple_questionnaires', '=', 'no')]}" />
-                            <field name="questionnaire_scenariooo" attrs="{'invisible': [('multiple_questionnaires', '=', 'no')]}" />
-                        </group>
-                        <group>
-                            <field name="weight" attrs="{'invisible': [('questionnaire_scenario', '=', 'Other')]}"/>
-                            <field name="weightt" attrs="{'invisible': ['|',('multiple_questionnaires', '=', 'no'),('questionnaire_scenarioo', '=', 'Other')]}"/>
-                            <field name="weighttt" attrs="{'invisible': ['|',('multiple_questionnaires', '=', 'no'),('questionnaire_scenariooo', '=', 'Other')]}"/>
-                        </group>
-                        <group>
+                            <field name="weight"/>
                             <field name="survey_temp_id"/>
-                            <field name="survey_temp_idd" attrs="{'invisible': [('multiple_questionnaires', '=', 'no')]}"/>
-                            <field name="survey_temp_iddd" attrs="{'invisible': [('multiple_questionnaires', '=', 'no')]}"/>
-                        </group>
-                    </group>
+                        </tree>
+                        <form>
+                            <group>
+                                <group>
+                                    <field name="questionnaire_scenario"/>
+                                    <field name="weight"/>
+                                    <field name="survey_temp_id"/>
+                                </group>
+                                <!--<group>-->
+                                    <!--<field name="image" widget='image' class="oe_avatar"-->
+                                    <!--options='{"preview_image": "image", "size": [250, 170]}'/>-->
+                                <!--</group>-->
+                            </group>
+                        </form>
+                    </field>
                 </xpath>
+            </field>
+        </record>
+
+        <record id="survey_form_extends" model="ir.ui.view">
+            <field name="name">survey_form_extends</field>
+            <field name="model">survey.survey</field>
+            <field name="inherit_id" ref="survey.survey_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//label[@for='title']" position="attributes">
+                    <attribute name="string">问卷名称</attribute>
+                </xpath>
+                <!--<xpath expr="//div[@class='oe_title']/h1" position="after">-->
+                    <!--<label for="questionnaire_classification" string="问卷分类"/>-->
+                    <!--<field name="questionnaire_classification"/>-->
+                    <!--<label for="questionnaire_scenario" string="问卷场景"/>-->
+                    <!--<field name="questionnaire_scenario"/>-->
+                <!--</xpath>-->
             </field>
         </record>
     </data>

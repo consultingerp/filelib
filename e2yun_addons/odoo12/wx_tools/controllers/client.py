@@ -103,7 +103,7 @@ class WxEntry(EntryBase):
             env.cr.rollback()
             import traceback;
             traceback.print_exc()
-        print('wx client init: %s %s' % (self.OPENID_UUID, self.UUID_OPENID))
+        # print('wx client init: %s %s' % (self.OPENID_UUID, self.UUID_OPENID))
 
     @property
     def access_token_key(self):

@@ -7,6 +7,18 @@ import suds.client
 class e2yun_customer_payment_extend(models.Model):
     _inherit = 'account.payment'
 
+    @api.depends('payment_type2')
+    @api.onchange('payment_type2')
+    def _onchange_(self):
+        if self.payment_type2 == 'D11':
+            self.payment_status = 'A1'
+        elif self.payment_type2 == 'D12':
+            self.payment_status = 'A2'
+        elif self.payment_type2 == 'D13':
+            self.payment_status = 'A3'
+        elif self.payment_type2 == 'D16':
+            self.payment_status = 'A4'
+
     payment_type2 = fields.Selection(
         [('D11', '公司收现金'), ('D12', '刷卡'),
          ('D13', '公司微信'), ('D16', '公司支付宝'),
@@ -35,6 +47,13 @@ class e2yun_customer_payment_extend(models.Model):
 
     customer_pay_amount = fields.Monetary(string='客户交款金额')
     accept_amount = fields.Monetary(string='收款结算金额')
+
+    customer_pay_amount000 = fields.Boolean(related='related_shop.show_customer_pay_amount')
+    accept_amount000 = fields.Boolean(related='related_shop.show_accept_amount')
+
+    @api.multi
+    def _compute_show_amount(self):
+        self.env['crm.team'].browse('related_shop')
 
     def sync_customer_payment_to_pos(self):
         for r in self:
@@ -156,3 +175,21 @@ class e2yun_customer_payment_res_partner(models.Model):
             return teams.name_get()
         else:
             return super(e2yun_customer_payment_res_partner, self).name_search(name, args, operator, limit)
+
+    @api.multi
+    def name_get(self):
+        flag = self.env.context.get('show_custom_name', False)
+        if flag == 8:
+            res = []
+            for res_partner in self:
+                name = str(res_partner.app_code) + ' ' + str(res_partner.name)
+                res.append((res_partner.id, name))
+            return res
+        # elif flag == 2:
+        #     res = []
+        #     for res_partner in self:
+        #         name = str(res_partner.app_code)
+        #         res.append((res_partner.id, name))
+        #     return res
+        else:
+            return super(e2yun_customer_payment_res_partner, self).name_get()
