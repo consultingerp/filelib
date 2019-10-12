@@ -3,7 +3,9 @@
 
 from odoo import http
 from odoo.http import request
-from odoo.addons.website_form.controllers.main import WebsiteForm
+# from odoo.addons.website_form.controllers.main import WebsiteForm
+
+from odoo.addons.website_helpdesk_form.controller.main import WebsiteForm
 from odoo.addons.http_routing.models.ir_http import slug
 from bs4 import BeautifulSoup
 import requests
