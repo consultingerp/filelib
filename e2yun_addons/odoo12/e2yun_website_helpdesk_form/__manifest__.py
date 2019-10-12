@@ -4,7 +4,6 @@
 {
     'name': 'e2yun_Online Ticket Submission',
     'category': 'Website',
-    'sequence': 58,
     'summary': 'e2yun 服务订单表单在线提交 ',
     'depends': [
         'website_form_editor',
