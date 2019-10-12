@@ -3,7 +3,9 @@
 
 from odoo import http
 from odoo.http import request
-from odoo.addons.website_form.controllers.main import WebsiteForm
+# from odoo.addons.website_form.controllers.main import WebsiteForm
+
+from odoo.addons.website_helpdesk_form.controller.main import WebsiteForm
 from odoo.addons.http_routing.models.ir_http import slug
 from bs4 import BeautifulSoup
 import requests
@@ -13,7 +15,7 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class WebsiteForm(WebsiteForm):
+class E2yunWebsiteForm(WebsiteForm):
 
     @http.route('/website_form/<string:model_name>', type='http', auth="public", methods=['POST'], website=True)
     def website_form(self, model_name, **kwargs):
@@ -24,12 +26,13 @@ class WebsiteForm(WebsiteForm):
             lang = request.env['ir.qweb.field'].user_lang()
             strftime_format = (u"%s %s" % (lang.date_format, lang.time_format))
             request.params['order_datetime'] = datetime.datetime.strftime(order_datetime, strftime_format)
-        reponse_website = super(WebsiteForm, self).website_form(model_name, **kwargs)
+        reponse_website = super(E2yunWebsiteForm, self).website_form(model_name, **kwargs)
         return reponse_website
 
     @http.route('''/helpdesk/<model("helpdesk.team", "[('use_website_helpdesk_form','=',True)]"):team>/submit''', type='http', auth="public", website=True)
     def website_helpdesk_form(self, team, **kwargs):
-        website_helpdesk_form = super(WebsiteForm, self).website_helpdesk_form(team, **kwargs)
+        _logger.info("e2yun_website_helpdesk_form:")
+        website_helpdesk_form = super(E2yunWebsiteForm, self).website_helpdesk_form(team, **kwargs)
         teams = request.env['helpdesk.team'].sudo().search([])
         street = request.env.user.partner_id._display_address()
         website_helpdesk_form.qcontext['default_values'].update({
@@ -42,6 +45,7 @@ class WebsiteForm(WebsiteForm):
         })
         # 更新JSDK以备使用定位功能,获取当前用户地址报修。
         url_ = request.httprequest.url;
+        _logger.info("参数打印:")
         _logger.info(website_helpdesk_form.qcontext['default_values'])
         website_helpdesk_form.qcontext.update(request.env.user.get_jsapi_ticket(url_))
         _logger.info(website_helpdesk_form.qcontext)
@@ -73,6 +77,7 @@ class WebsiteForm(WebsiteForm):
         _logger.info("查询接口3：%s", soup.contents[2].string[6:])
         helpdeskurl = '/helpdesk/' + str(team_id) + '/submit'
         _logger.info("访问地址：%s" % helpdeskurl)
+        #return http.local_redirect('/web/login?redirect=%s' % helpdeskurl)
         return http.local_redirect(helpdeskurl)
 
     def getuserip(self, request):
