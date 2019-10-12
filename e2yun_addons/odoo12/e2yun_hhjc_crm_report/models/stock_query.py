@@ -125,6 +125,17 @@ class StockQueryCondiyion(models.Model):
             'context': ctx,
         }
 
+    @api.model
+    def get_search_view(self):
+        return {
+            'name': '库存查询',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'stock.query.condition.report',
+            'type': 'ir.actions.act_window',
+            'target': 'new'
+        }
+
 class StockQuery(models.Model):
     _name = 'stock.query.report'
     _description = "stock_query_report"
