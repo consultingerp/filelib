@@ -7,21 +7,19 @@ odoo.define('e2yun_hhjc_crm_report.bicon_list_view_button', function (require) {
     //这块代码是继承ListController在原来的基础上进⾏扩展
     var BiConListController = ListController.extend({
         renderButtons: function () {
-            console.log('进进⼊⼊按按钮钮渲渲染染⽅⽅法法！！');
+            console.log('进⼊按钮渲染⽅法！');
             this._super.apply(this, arguments);
             if (this.$buttons) {
                 //这⾥找到刚才定义的class名为create_by_dept的按钮
                 var btn = this.$buttons.find('.create_by_dept');
-                var btn_release_by_container = this.$buttons.find('.release_by_container');
                 //给按钮绑定click事件和⽅法create_data_by_dept
                 btn.on('click', this.proxy('create_data_by_dept'));
-                btn_release_by_container.on('click', this.proxy('create_release_by_container'));
             }
 
         },
         create_data_by_dept: function () {
             var self = this;
-            console.log('进进⼊⼊了了按按钮钮绑绑定定的的⽅⽅法法⾥⾥⾯⾯！！！！！！');
+            console.log('进⼊了按钮绑定的⽅法⾥⾯！');
 
             return this.do_action({
                 name: '',
@@ -32,24 +30,6 @@ odoo.define('e2yun_hhjc_crm_report.bicon_list_view_button', function (require) {
                 views: [[false, 'form']],
                 res_model: 'stock.query.condition.report'
             });
-
-            //这⾥是获取tree视图中选中的数据的记录集
-            //通过rpc调⽤bs.warehouse模块中的my_function⽅法
-            // this._rpc({
-            //     model: 'stock.query.condition.report',
-            //     method: 'get_search_view',
-            // });
-        },
-        create_release_by_container: function () {
-            var self = this;
-            alert(22222);
-            // this._rpc({
-            //     model:'base.container',
-            //     method:'my_function',
-            //     args:[ids],
-            // }).then(function () {
-            //     location.reload();
-            // })
         },
     });
     //这块代码是继承ListView在原来的基础上进⾏扩展
