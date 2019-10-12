@@ -11,12 +11,12 @@
                             <field name="werks"/>
                             <field name="werks_id" invisible="1"/>
                             <field name="matnr_code"/>
-                            <field name="matnr_code1"/>
+                            <field name="matnr_code1" options='{"no_create": True}'/>
                         </group>
                         <group>
-                            <field name="lgort" domain="[('company_id','=',werks_id)]"/>
+                            <field name="lgort" domain="[('company_id','=',werks_id)]" options='{"no_create": True}'/>
                             <field name="charg"/>
-                            <field name="mendian"/>
+                            <field name="mendian" options='{"no_create": True}'/>
                         </group>
                     </group>
                     <footer>
