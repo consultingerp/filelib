@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_e2yun_customer_payment_extend_e2yun_customer_payment_extend,e2yun_customer_payment_extend.e2yun_customer_payment_extend,model_e2yun_customer_payment_extend_e2yun_customer_payment_extend,,1,0,0,0
+access_add_bank_info,add_bank_inof_formview,model_payment_bank_info,,1,1,1,1
