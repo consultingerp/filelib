@@ -42,7 +42,9 @@ class WebsiteForm(WebsiteForm):
         })
         # 更新JSDK以备使用定位功能,获取当前用户地址报修。
         url_ = request.httprequest.url;
+        _logger.info(website_helpdesk_form.qcontext['default_values'])
         website_helpdesk_form.qcontext.update(request.env.user.get_jsapi_ticket(url_))
+        _logger.info(website_helpdesk_form.qcontext)
         return website_helpdesk_form
 
     @http.route('/website_form/common_problems', type='http', auth="public", methods=['GET', 'POST'], website=True)
