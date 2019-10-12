@@ -45,7 +45,7 @@
                     <field name="sales_num"/>
                     <field name="po_num" attrs="{'required': [('payment_type2', 'in', ['C11','C12','C14','C15','C16'])]}"/>
                     <field name="customer_po"/>
-                    <field name="bank_num" attrs="{'invisible': [('payment_type2', '=', 'D11')],
+                    <field name="bank_num" context="{'show_bank_name': 1}" attrs="{'invisible': [('payment_type2', '=', 'D11')],
                                                    'required': [('payment_type2', 'in', ['D12','D13','D14','D15','D16','D17','C11','C12','C14','C15','C16','G12','C13'])]}"/>
                 </xpath>
 
