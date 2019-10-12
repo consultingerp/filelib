@@ -4,7 +4,7 @@
     'version': '12.0.0.1',
     'sequence': '10',
     'category': 'base',
-    'depends': ['base','web','crm'],
+    'depends': ['base','web','crm','e2yun_crm_warehouse'],
     'author': 'liqiang',
     'website': 'http://e2yun.cn',
     'summary': 'E2yun HHJC CRM Report',
