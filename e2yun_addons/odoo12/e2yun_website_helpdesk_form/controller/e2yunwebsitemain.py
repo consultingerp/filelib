@@ -3,7 +3,9 @@
 
 from odoo import http
 from odoo.http import request
-from odoo.addons.website_form.controllers.main import WebsiteForm
+# from odoo.addons.website_form.controllers.main import WebsiteForm
+
+from odoo.addons.website_helpdesk_form.controller.main import WebsiteForm
 from odoo.addons.http_routing.models.ir_http import slug
 from bs4 import BeautifulSoup
 import requests
@@ -75,8 +77,8 @@ class E2yunWebsiteForm(WebsiteForm):
         _logger.info("查询接口3：%s", soup.contents[2].string[6:])
         helpdeskurl = '/helpdesk/' + str(team_id) + '/submit'
         _logger.info("访问地址：%s" % helpdeskurl)
-        return http.local_redirect('/web/login?redirect=%s' % helpdeskurl)
-        # return http.local_redirect(helpdeskurl)
+        #return http.local_redirect('/web/login?redirect=%s' % helpdeskurl)
+        return http.local_redirect(helpdeskurl)
 
     def getuserip(self, request):
         userip = request.httprequest.remote_addr
