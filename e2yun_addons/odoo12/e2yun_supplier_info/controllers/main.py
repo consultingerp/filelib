@@ -46,13 +46,13 @@ class Academy(http.Controller):
         #国家
         countrys = http.request.env['res.country'].sudo().search([])
         # 开户行国家
-        bank_countrys = http.request.env['bank.country'].sudo().search([])
+        bank_countrys = http.request.env['res.country'].sudo().search([])
         # 开户行省份
-        bank_states = http.request.env['bank.state'].sudo().search([])
+        bank_states = http.request.env['res.country.state'].sudo().search([])
         # 开户行城市
-        bank_citys = http.request.env['bank.city'].sudo().search([])
+        bank_citys = http.request.env['res.state.city'].sudo().search([])
         # 开户行地区
-        bank_regons = http.request.env['bank.region'].sudo().search([])
+        bank_regons = http.request.env['res.city.area'].sudo().search([])
         # 银行名称
         name_banks = http.request.env['res.bank'].sudo().search([])
         # 币种
@@ -88,7 +88,6 @@ class Academy(http.Controller):
                 'vat': user.vat,
 
             }
-
             supplier_info_obj = http.request.env['e2yun.supplier.info'].sudo()
             supplier_info = supplier_info_obj.create(val)
             states = http.request.env['res.country.state'].sudo().search([])
