@@ -38,8 +38,8 @@ class CrmTeamADDinformation(models.Model):
     area_manager = fields.Many2one('res.users', string='片区长')
     associate_member_ids = fields.Many2many('res.users', string='附属成员')
 
-    show_customer_pay_amount = fields.Boolean('显示收款结算金额', default=False)
-    show_accept_amount = fields.Boolean('显示客户交款金额', default=False)
+    show_customer_pay_amount = fields.Boolean('显示收款结算金额', default=True)
+    show_accept_amount = fields.Boolean('显示客户交款金额', default=True)
 
     @api.multi
     def write(self, vals):
