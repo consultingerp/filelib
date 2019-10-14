@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+
+    <template id="tree_button_assets_backend" name="tree button assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/e2yun_hhjc_crm_report/static/src/js/tree_button.js"></script>
+        </xpath>
+    </template>
+
+
+
     <data>
         <record id="view_stock_query_report" model="ir.ui.view">
             <field name="name">Stock Query Report</field>
@@ -11,12 +20,12 @@
                             <field name="werks"/>
                             <field name="werks_id" invisible="1"/>
                             <field name="matnr_code"/>
-                            <field name="matnr_code1"/>
+                            <field name="matnr_code1" options='{"no_create": True}'/>
                         </group>
                         <group>
-                            <field name="lgort" domain="[('company_id','=',werks_id)]"/>
+                            <field name="lgort" domain="[('company_id','=',werks_id)]" options='{"no_create": True}'/>
                             <field name="charg"/>
-                            <field name="mendian"/>
+                            <field name="mendian" options='{"no_create": True}'/>
                         </group>
                     </group>
                     <footer>
@@ -38,7 +47,7 @@
             <field name="name">stock.query.report.tree</field>
             <field name="model">stock.query.report</field>
             <field name="arch" type="xml">
-                <tree string="Move Lines" create="false" delete="false" editable="bottom">
+                <tree js_class="bicon_list_view_button" string="Move Lines" create="false" delete="false" editable="bottom">
                     <field name="matnr_code"/>
                     <field name="matnr_code"/>
                     <field name="matnr_name"/>
