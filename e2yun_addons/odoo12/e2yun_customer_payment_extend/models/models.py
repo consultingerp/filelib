@@ -19,6 +19,15 @@ class e2yun_customer_payment_extend(models.Model):
         elif self.payment_type2 == 'D16':
             self.payment_status = 'A4'
 
+    @api.depends('related_shop')
+    @api.onchange('related_shop')
+    def _onchange_banknum(self):
+        code = self.related_shop.shop_code
+        domain = [('shop_code', '=', code)]
+        return {
+            'domain': {'bank_num': domain}
+        }
+
     payment_type2 = fields.Selection(
         [('D11', '公司收现金'), ('D12', '刷卡'),
          ('D13', '公司微信'), ('D16', '公司支付宝'),
@@ -29,9 +38,9 @@ class e2yun_customer_payment_extend(models.Model):
          ('K11', '电商支付宝'), ('G11', '公司收支票'),
          ('G13', '门店现金'), ('G12', '转账'), ('D17', '分销商定制货款')], '支付方式', required=True)
     currency = fields.Char('货币')
-    payment_voucher =  fields.Char('交款凭证')
+    payment_voucher = fields.Char('交款凭证')
     marketing_activity = fields.Char('参与市场活动')
-    bank_num = fields.Char('银行帐号')
+    bank_num = fields.Many2one('payment_bank.info', '银行帐号')
     payment_attachments = fields.Many2many('ir.attachment', string="付款附件",
                                            domain=[('res_model', '=', 'account.payment')])
 
@@ -193,3 +202,11 @@ class e2yun_customer_payment_res_partner(models.Model):
         #     return res
         else:
             return super(e2yun_customer_payment_res_partner, self).name_get()
+
+class e2yun_customer_payment_bank_info(models.Model):
+    _name = 'payment_bank.info'
+
+    name = fields.Char(related='bank_describe')
+    shop_code = fields.Char('门店代码')
+    bank_accont = fields.Char('银行账户科目编码')
+    bank_describe = fields.Char('银行账户科目描述')

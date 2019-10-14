@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_payment_bank_info" model="ir.ui.view">
+            <field name="name">payment.bank_info.tree</field>
+            <field name="model">payment_bank.info</field>
+            <field name="arch" type="xml">
+                <tree string="门店银行帐号管理">
+                    <field name="shop_code"/>
+                    <field name="bank_accont"/>
+                    <field name="bank_describe"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_payment_bank_info" model="ir.actions.act_window">
+            <field name="name">门店银行帐号管理</field>
+            <field name="res_model">payment_bank.info</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem action="action_payment_bank_info"
+                  id="menu_action_payment_bank_info"
+                  name="门店银行帐号管理"
+                  parent="account.account_management_menu"/>
+    </data>
+</odoo>
