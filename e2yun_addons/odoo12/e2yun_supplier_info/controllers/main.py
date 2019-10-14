@@ -88,7 +88,6 @@ class Academy(http.Controller):
                 'vat': user.vat,
 
             }
-
             supplier_info_obj = http.request.env['e2yun.supplier.info'].sudo()
             supplier_info = supplier_info_obj.create(val)
             states = http.request.env['res.country.state'].sudo().search([])
