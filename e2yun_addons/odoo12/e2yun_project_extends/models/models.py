@@ -31,6 +31,7 @@ class E2yunTaskInfo(models.Model):
     # 一对多连接列表对象
     questionnaire_ids = fields.One2many('project.questionnaire', 'parent_id', string='Child Questionnaires')
 
+    # 打开问卷页面的方法
     @api.multi
     def turn_page(self):
         self.ensure_one()
@@ -55,20 +56,20 @@ class E2yunTaskInfo(models.Model):
             'type': 'ir.actions.act_window',
         }
 
-    @api.model
-    def create(self, vals):
-        res = super(E2yunTaskInfo, self).create(vals)
-        if res.survey_temp_id:
-            res.survey_id = res.survey_temp_id.copy().id
-        return res
+    # @api.model
+    # def create(self, vals):
+    #     res = super(E2yunTaskInfo, self).create(vals)
+    #     if res.survey_temp_id:
+    #         res.survey_id = res.survey_temp_id.copy().id
+    #     return res
 
-    @api.multi
-    def write(self, vals):
-        res = super(E2yunTaskInfo, self).write(vals)
-        for item in self:
-            if not item.survey_id and item.survey_temp_id:
-                item.survey_id = item.survey_temp_id.copy().id
-        return res
+    # @api.multi
+    # def write(self, vals):
+    #     res = super(E2yunTaskInfo, self).write(vals)
+    #     for item in self:
+    #         if not item.survey_id and item.survey_temp_id:
+    #             item.survey_id = item.survey_temp_id.copy().id
+    #     return res
 
 # class E2yunProjectSurvey(models.Model):
 #     _inherit = 'survey.survey'
