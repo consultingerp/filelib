@@ -16,7 +16,7 @@ class HelpdeskTicket(models.Model):
     _inherit = ['helpdesk.ticket']
 
     address = fields.Char(string='联系地址')
-    order_datetime = fields.Datetime(string='预约时间')
+    order_datetime = fields.Datetime(string='预约时间', required=True, default=lambda self: fields.Datetime.now())
     user_phone = fields.Char('购买电话')
     phone = fields.Char('联系电话')
     brand = fields.Char('售后品牌')
@@ -25,6 +25,8 @@ class HelpdeskTicket(models.Model):
 
     @api.model
     def create(self, vals):
+        # if not vals.get('order_datetime'):
+        #     print('eeee')
         res = super(HelpdeskTicket, self).create(vals)
         if res.id:
             res_user_obj = self.env['res.users']

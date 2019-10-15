@@ -82,6 +82,8 @@ class StockQueryCondiyion(models.Model):
         matnr_code1 = ''
         if 'matnr_code' in data and data['matnr_code']:
             matnr_code = str(data['matnr_code'])
+            if matnr_code.find('*') < 0:
+                matnr_code = '*'+matnr_code+'*'
 
         if 'matnr_code1' in data and data['matnr_code1']:
             matnr_code1 = data['matnr_code1'][0]
