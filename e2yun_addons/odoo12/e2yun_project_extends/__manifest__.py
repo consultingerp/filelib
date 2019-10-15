@@ -23,7 +23,7 @@
 
     # always loaded
     'data': [
-        'views/e2yun_project_view.xml',
+       'views/e2yun_project_view.xml',
         # 'views/templates.xml',
     ],
     # only loaded in demonstration mode
