@@ -54,10 +54,8 @@ class e2yun_customer_payment_extend(models.Model):
                                        ('A3', '尾款'), ('A4', '全款')], '交款类型', required=True)
     payment_serirs_no = fields.Char('No.')
 
-    customer_pay_amount = fields.Monetary(string='客户交款金额', related='amount')
-    accept_amount = fields.Monetary(string='收款结算金额', related='amount')
+    accept_amount = fields.Monetary(string='收款结算金额')
 
-    customer_pay_amount000 = fields.Boolean(related='related_shop.show_customer_pay_amount')
     accept_amount000 = fields.Boolean(related='related_shop.show_accept_amount')
 
     @api.multi

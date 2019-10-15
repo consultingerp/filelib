@@ -38,9 +38,7 @@
                             <field name="create_uid"/>
                         </group>
                         <group>
-                            <field name="amount" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                            <field name="customer_pay_amount" attrs="{'invisible': [('customer_pay_amount000', '=', False)],
-                                                                      'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="amount" attrs="{'readonly': [('state', '!=', 'draft')]}" string="客户交款金额"/>
                             <field name="accept_amount" attrs="{'invisible': [('accept_amount000', '=', False)],
                                                                 'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="journal_id" widget="selection" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
@@ -60,7 +58,6 @@
                                            'readonly': [('state', '!=', 'draft')]}"/>
 
                             <field name="payment_serirs_no" invisible="1"/>
-                            <field name="customer_pay_amount000" invisible="1"/>
                             <field name="accept_amount000" invisible="1"/>
                         </group>
                     </group>
