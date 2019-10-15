@@ -31,10 +31,29 @@ class E2yunTaskInfo(models.Model):
     # 一对多连接列表对象
     questionnaire_ids = fields.One2many('project.questionnaire', 'parent_id', string='Child Questionnaires')
 
-
-
-
-
+    @api.multi
+    def turn_page(self):
+        self.ensure_one()
+        # Get lead views
+        form_view = self.env.ref('survey.survey_form')
+        tree_view = self.env.ref('survey.survey_tree')
+        kanban_view = self.env.ref('survey.survey_kanban')
+        return {
+            'name': 'Lead',
+            'res_model': 'survey.survey',
+            # 'domain': [('type', '=', 'lead')],
+            # 'res_id': self.id,
+            'view_id': False,
+            'target': 'new',
+            'views': [
+                (form_view.id, 'form'),
+                (tree_view.id, 'tree'),
+                (kanban_view.id, 'kanban')
+            ],
+            'view_type': 'tree',
+            'view_mode': 'tree,form,kanban',
+            'type': 'ir.actions.act_window',
+        }
 
     @api.model
     def create(self, vals):
