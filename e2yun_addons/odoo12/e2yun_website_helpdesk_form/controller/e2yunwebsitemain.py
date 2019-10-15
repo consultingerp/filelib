@@ -68,6 +68,8 @@ class E2yunWebsiteForm(WebsiteForm):
         soup = soup.ul
         # print(r.request.url)
         region_user = soup.contents[0].string[5:7]
+        if region_user and region_user == '广东':
+            region_user = '深圳'
         team_id = request.env['helpdesk.team'].search([('name', 'like', region_user)], limit=1).id
         if not team_id:
             team_id = request.env['helpdesk.team'].search([], limit=1, order='id asc').id
