@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, exceptions
+from odoo import models, fields, api, exceptions, _
 from odoo.exceptions import ValidationError, Warning
 import suds.client
 
@@ -54,8 +54,8 @@ class e2yun_customer_payment_extend(models.Model):
                                        ('A3', '尾款'), ('A4', '全款')], '交款类型', required=True)
     payment_serirs_no = fields.Char('No.')
 
-    customer_pay_amount = fields.Monetary(string='客户交款金额')
-    accept_amount = fields.Monetary(string='收款结算金额')
+    customer_pay_amount = fields.Monetary(string='客户交款金额', related='amount')
+    accept_amount = fields.Monetary(string='收款结算金额', related='amount')
 
     customer_pay_amount000 = fields.Boolean(related='related_shop.show_customer_pay_amount')
     accept_amount000 = fields.Boolean(related='related_shop.show_accept_amount')
@@ -101,7 +101,7 @@ class e2yun_customer_payment_extend(models.Model):
                                                  r.sales_num or '',  # 收据单号
                                                  '',  # 支票状态
                                                  '',  # 收据日期
-                                                 r.bank_num or '',  # 银行账户
+                                                 r.bank_num.bank_accont or '',  # 银行账户
                                                  r.customer_po or '',  # 客户PO
 
                                                  self.env.user.name,  # 创建人
@@ -130,11 +130,20 @@ class e2yun_customer_payment_extend(models.Model):
             atch_line = self.env['ir.attachment'].browse(ids)
             atch_line.write({'res_model': 'account.payment'})
 
+        if vals_list['amount'] == 0:
+            raise Warning(
+                _("付款金额不能为0!"))
+
         res = super(e2yun_customer_payment_extend, self).create(vals_list)
         return res
 
     @api.one
     def write(self, vals):
+
+        if vals.get('amount', False):
+            if vals['amount'] == 0:
+                raise Warning(_("付款金额不能为0!"))
+
         if vals.get('payment_attachments'):
             atch = vals['payment_attachments']
             temp = []
