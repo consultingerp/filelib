@@ -25,8 +25,6 @@ class HelpdeskTicket(models.Model):
 
     @api.model
     def create(self, vals):
-        # if not vals.get('order_datetime'):
-        #     print('eeee')
         res = super(HelpdeskTicket, self).create(vals)
         if res.id:
             res_user_obj = self.env['res.users']
