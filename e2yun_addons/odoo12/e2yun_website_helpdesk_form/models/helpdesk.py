@@ -16,7 +16,7 @@ class HelpdeskTicket(models.Model):
     _inherit = ['helpdesk.ticket']
 
     address = fields.Char(string='联系地址')
-    order_datetime = fields.Datetime(string='预约时间', default=lambda self: fields.Datetime.now())
+    order_datetime = fields.Datetime(string='预约时间', required=True, default=lambda self: fields.Datetime.now())
     user_phone = fields.Char('购买电话')
     phone = fields.Char('联系电话')
     brand = fields.Char('售后品牌')
