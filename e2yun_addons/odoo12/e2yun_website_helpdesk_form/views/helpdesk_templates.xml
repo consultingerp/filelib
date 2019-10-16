@@ -87,7 +87,7 @@
                                                        placeholder="用户名" required="required"/>
                                                   <input type='hidden'
                                                        name="partner_id" t-att-value="default_values.get('partner_id', '')"/>
-
+                                                   <input type="hidden" name="ticket_type_id"  t-att-value="default_values.get('ticket_type_id', '').id"/>
                                                 <label class="form-label">姓名
                                                     <span style="color: red;font-weight:  bold">*</span>
                                                 </label>
