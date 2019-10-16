@@ -35,13 +35,15 @@ class E2yunWebsiteForm(WebsiteForm):
         website_helpdesk_form = super(E2yunWebsiteForm, self).website_helpdesk_form(team, **kwargs)
         teams = request.env['helpdesk.team'].sudo().search([])
         street = request.env.user.partner_id._display_address()
+        ticket_type = request.env['helpdesk.ticket.type'].search([('name', '=', '网页')], limit=1) or request.env['helpdesk.ticket.type'].search([], limit=1)
         website_helpdesk_form.qcontext['default_values'].update({
             'phone': request.env.user.partner_id.phone,
             'mobile': request.env.user.partner_id.mobile,
             'street': street,
             'userip': request.httprequest.access_route[0],
             'partner_id': request.env.user.partner_id.id,
-            'teams': teams
+            'teams': teams,
+            'ticket_type_id': ticket_type
         })
         # 更新JSDK以备使用定位功能,获取当前用户地址报修。
         url_ = request.httprequest.url;
