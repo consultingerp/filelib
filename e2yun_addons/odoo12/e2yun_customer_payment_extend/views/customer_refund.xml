@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_customer_refund_report" model="ir.ui.view">
+            <field name="name">customer.refund.report</field>
+            <field name="model">customer_refund.report</field>
+            <field name="arch" type="xml">
+                <form string="客户退款查询">
+                    <group>
+                        <field name="date_from"/>
+                        <field name="date_end"/>
+                        <field name="shop_name"/>
+                        <field name="customer_name"/>
+                        <field name="mobile_phone"/>
+                    </group>
+                    <footer>
+                        <button name="open_table" string="查询" type="object"  class="oe_highlight"  />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_customer_refund_report" model="ir.actions.act_window">
+            <field name="name">客户退款查询</field>
+            <field name="res_model">customer_refund.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_customer_refund_report"/>
+            <field name="target">new</field>
+        </record>
+        <menuitem action="action_customer_refund_report"
+                  id="menu_action_customer_refund_report"
+                  name="客户退款查询"
+                  parent="account.menu_finance_receivables"/>
+
+        <record id="customer_refund_report_tree" model="ir.ui.view">
+            <field name="name">customer.refund.report.tree</field>
+            <field name="model">customer_refund.report</field>
+            <field name="arch" type="xml">
+                <tree string="Move Lines" create="false" delete="false" editable="bottom">
+                    <field name="company_id"/>
+                    <field name="shop_id"/>
+                    <field name="partner_id"/>
+                    <field name="refund_id"/>
+                    <field name="receipt_doc_num"/>
+                    <field name="thrrd_receipt_num"/>
+                    <field name="refund_amount01"/>
+                    <field name="refund_amount02"/>
+                    <field name="apply_date"/>
+                    <field name="handing_cost"/>
+                    <field name="others_cost"/>
+                    <field name="tax_cost"/>
+                    <field name="return_situation"/>
+                    <field name="refund_reason"/>
+                    <field name="invoice_situation"/>
+                    <field name="refund_account"/>
+                    <field name="apply_user"/>
+                    <field name="communication"/>
+                    <field name="account_bank"/>
+                    <field name="account_name"/>
+                    <field name="receipt_num"/>
+                    <field name="company_id"/>
+                    <field name="customer_po"/>
+                    <field name="customer_refund_amount"/>
+                </tree>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>
