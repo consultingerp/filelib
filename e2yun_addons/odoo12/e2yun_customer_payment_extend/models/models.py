@@ -54,7 +54,7 @@ class e2yun_customer_payment_extend(models.Model):
                                        ('A3', '尾款'), ('A4', '全款')], '交款类型', required=True)
     payment_serirs_no = fields.Char('No.')
 
-    accept_amount = fields.Monetary(string='收款结算金额')
+    accept_amount = fields.Monetary(string='客户交款金额')
 
     accept_amount000 = fields.Boolean(related='related_shop.show_accept_amount')
 
@@ -77,7 +77,7 @@ class e2yun_customer_payment_extend(models.Model):
                                                  r.receipt_Num or '',  # 收款编号
                                                  r.company_id.name or '',  # 公司名称
                                                  r.po_num or '',  # PO
-                                                 r.amount or '',  # 收款金额
+                                                 r.amount or '',  # 收款金额(收款结算金额
 
                                                  '',  # 支票号
                                                  r.sales_num or '',  # 销售单号
@@ -104,7 +104,8 @@ class e2yun_customer_payment_extend(models.Model):
 
                                                  self.env.user.name,  # 创建人
                                                  now,  # 创建日期
-                                                 r.id
+                                                 r.id,
+                                                 r.accept_amount #客户交款金额
                                                  )
             r.receipt_Num = result[1:]
             if result[0] != 'S':

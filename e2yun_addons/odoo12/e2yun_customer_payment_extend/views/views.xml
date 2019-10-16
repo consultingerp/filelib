@@ -38,11 +38,11 @@
                             <field name="create_uid"/>
                         </group>
                         <group>
-                            <field name="amount" attrs="{'readonly': [('state', '!=', 'draft')]}" string="客户交款金额"/>
+                            <field name="amount" attrs="{'readonly': [('state', '!=', 'draft')]}" string="收款结算金额"/>
                             <field name="accept_amount" attrs="{'invisible': [('accept_amount000', '=', False)],
                                                                 'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="journal_id" widget="selection" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                            <field name="receipt_Num" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="receipt_Num"/>
                             <field name="sales_num" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="communication"
                                    attrs="{'invisible': [('state', '!=', 'draft'), ('communication', '=', False)],
