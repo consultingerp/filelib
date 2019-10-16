@@ -140,6 +140,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                     form_values[key.replace('form_field_', '')] = this.$target.data(key);
                 }
             }
+
             self.send_form('send');
             // Post form and handle result
             ajax.post(this.$target.attr('action') + (this.$target.data('force_action') || this.$target.data('model_name')), form_values)
@@ -188,6 +189,22 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                         $field.popover('show');
                         $field.focus();
                         form_valid = false;
+                        return form_valid;
+                    }
+                }
+                if (field_name == "phone") {
+                    var phone = $field.val();
+                    if (!(/^1[3456789]\d{9}$/.test(phone))) {
+                        alert("电话有误，请新重填");
+                        form_valid = false;
+                        return form_valid;
+                    }
+                }
+                if (field_name == "user_phone") {
+                    var phone = $field.val();
+                    if (phone != "" && !(/^1[3456789]\d{9}$/.test(phone))) {
+                        alert("购买电话有误，请新重填");
+                         form_valid = false;
                         return form_valid;
                     }
                 }
