@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+import suds
 
 from odoo import models, fields, api
 import logging
+from datetime import datetime, date
 
 logger = logging.getLogger(__name__)
 
@@ -35,3 +37,15 @@ class Product(models.Model):
     groes = fields.Char('大小量纲')
     browse_num = fields.Integer('浏览量')
     pc_show_id = fields.One2many('product.company.show','product_id','产品展示公司')
+
+    @api.model
+    def sync_pos_matnr_to_crm(self,matnr,current_date):
+
+        if not current_date:
+            current_date = date.today().strftime("%Y-%m-%d")
+
+        ICPSudo = self.env['ir.config_parameter'].sudo()
+        url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncMatnr?wsdl'  # webservice调用地址
+        client = suds.client.Client(url)
+        client.service.getMatnr(matnr,current_date)
+        return True
