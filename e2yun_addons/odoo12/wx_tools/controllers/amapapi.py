@@ -35,7 +35,8 @@ def geocoderegeo(self, location):
     if result['status'] == 0:
         raise UserError('获取地址失败')
     try:
-        geo = result['regeocode']['formatted_address']
+        #geo = result['regeocode']['formatted_address']
+        geo = result['regeocode']
         return geo
     except (KeyError, ValueError):
         return None
