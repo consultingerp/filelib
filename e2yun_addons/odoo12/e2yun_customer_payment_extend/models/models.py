@@ -141,6 +141,11 @@ class e2yun_customer_payment_extend(models.Model):
                 [('type', 'in', ('bank', 'cash')), ('company_id', '=', vals_list.get('company_id', False))], limit=1)
             if journal:
                 vals_list['journal_id'] = journal.id
+            else:
+                journal = self.env['account.journal'].search([],limit=1)
+                if journal:
+                    vals_list['journal_id'] = journal.id
+
         res = super(e2yun_customer_payment_extend, self).create(vals_list)
         return res
 
