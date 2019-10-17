@@ -64,7 +64,6 @@ class E2yunCsutomerExtends(models.Model):
         ('contract_customers', 'Contract Customers')
     ], string='Status', default='potential_customer', group_expand='_group_expand_stage_id')
     related_guide = fields.Many2many('res.users',  domain="[('function', '!=', False)]", readonly=True)
-    user_id = fields.Many2one('res.users', readonly=True)
 
     @api.model
     def default_get(self, fields_list):
