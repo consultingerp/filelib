@@ -103,7 +103,7 @@ class WXSaleOrder(models.AbstractModel):
                         "value": order.amount_total
                     },
                     "keyword4": {
-                        "value": order.date_order
+                        "value": order.date_order.strftime('%Y-%m-%d %H:%M:%S')
                     },
                     "remark": {
                         "value":  "产品："+'：'.join(order.order_line.mapped('product_id.display_name')) +
@@ -115,7 +115,8 @@ class WXSaleOrder(models.AbstractModel):
                 if configer_para:
                     template_id = configer_para[0].paraconfig_value
                 url = client.wxenv(self.env).server_url+'/web/login?usercode=saleorderwx&codetype=wx&redirect=' + redirectur
-                client.send_template_message(self, self.partner_id.wx_user_id.openid, template_id, data, url,
+
+                client.send_template_message(self, order.create_uid.wx_user_id.openid, template_id, data, url,
                                              'saleorder')
             logging.info("order")
         return res
