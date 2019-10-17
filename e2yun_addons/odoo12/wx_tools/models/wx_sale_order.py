@@ -115,7 +115,8 @@ class WXSaleOrder(models.AbstractModel):
                 if configer_para:
                     template_id = configer_para[0].paraconfig_value
                 url = client.wxenv(self.env).server_url+'/web/login?usercode=saleorderwx&codetype=wx&redirect=' + redirectur
-                client.send_template_message(self, self.partner_id.wx_user_id.openid, template_id, data, url,
+
+                client.send_template_message(self, order.create_uid.wx_user_id.openid, template_id, data, url,
                                              'saleorder')
             logging.info("order")
         return res
