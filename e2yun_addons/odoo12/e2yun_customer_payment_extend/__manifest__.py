@@ -26,5 +26,6 @@
         'security/ir.model.access.csv',
         'views/views.xml',
         'views/bank_info.xml',
+        'views/customer_refund.xml',
     ],
 }
