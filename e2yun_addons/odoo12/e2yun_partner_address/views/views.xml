@@ -88,9 +88,22 @@
             <field name="model">res.city.area</field>
             <field name="arch" type="xml">
                 <form>
-                  <field name="name" />
-                  <field name="code"/>
-                  <field name="city_id" options='{"no_open": True}'/>
+                    <div>
+                        <label for="name" string="区/县名称"/>
+                        <field name="name" />
+                    </div>
+                    <div>
+                        <label for="code" string="区/县代码"/>
+                        <field name="code"/>
+                    </div>
+                    <div>
+                        <label for="code" string="城市"/>
+                        <field name="city_id" options='{"no_open": True}'/>
+                    </div>
+
+                    <!--<field name="name" />-->
+                  <!--<field name="code"/>-->
+                  <!--<field name="city_id" options='{"no_open": True}'/>-->
                 </form>
             </field>
         </record>

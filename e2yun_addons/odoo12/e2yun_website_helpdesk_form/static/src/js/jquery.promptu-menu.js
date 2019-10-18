@@ -46,6 +46,7 @@ $(function() {
 
 (function($) {
 	show_datetimetype = 35;
+
 	$.fn.promptumenu = function(options) {
 		// Here goes
 
