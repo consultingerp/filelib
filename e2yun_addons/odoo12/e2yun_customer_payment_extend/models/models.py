@@ -133,6 +133,38 @@ class e2yun_customer_payment_extend(models.Model):
             raise Warning(
                 _("付款金额不能为0!"))
 
+        if vals_list['accept_amount']:
+            trans_amount = vals_list['accept_amount']
+        else:
+            trans_amont = vals_list['amount']
+        user_data = {
+            "first": {
+                "value": "付款成功通知"
+            },
+            "keyword1": {
+                "value": vals_list['payment_date']
+            },
+            "keyword2": {
+                "value": trans_amont,
+                "color": "#173177"
+            },
+            "keyword3": {
+                "value": vals_list['related_shop']
+            },
+            "keyword4": {
+                "value": vals_list['partner_id']
+            },
+            "keyword5": {
+                "value": vals_list['payment_type2']
+            },
+            "remark": {
+                "value": "客户PO号:%s" %vals_list['customer_po']
+            }
+        }
+        if self.env.user.id.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
+            self.env.user.id.wx_user_id.send_template_message(user_data, template_name='客户付款测试',
+                                                            partner=self.env.user.id.partner_id, url=res.access_url)
+
         res = super(e2yun_customer_payment_extend, self).create(vals_list)
         return res
 
