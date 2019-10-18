@@ -98,6 +98,8 @@
                                                        name="city_id" t-att-value="default_values.get('city_id', '')"/>
                                                   <input type='hidden'
                                                        name="state_id" t-att-value="default_values.get('state_id', '')"/>
+                                                  <input type='hidden'
+                                                       name="is_wx_client" t-att-value="default_values.get('is_wx_client', '')"/>
                                                 <label class="form-label">姓名
                                                     <span style="color: red;font-weight:  bold">*</span>
                                                 </label>

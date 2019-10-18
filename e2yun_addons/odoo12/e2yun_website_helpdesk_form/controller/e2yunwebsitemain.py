@@ -38,6 +38,8 @@ class E2yunWebsiteForm(WebsiteForm):
         street = request.env.user.partner_id._display_address()
         ticket_type = request.env['helpdesk.ticket.type'].sudo().search([('name', '=', '网页')], limit=1) or request.env['helpdesk.ticket.type'].sudo().search([], limit=1)
         brandtype = request.env['helpdesk.ticket.brandtype'].sudo().search([])
+        user_agent = request.httprequest.headers.get('user-agent').lower()
+        is_wx_client = '1' if 'micromessenger' in user_agent else '0'
         website_helpdesk_form.qcontext['default_values'].update({
             'phone': request.env.user.partner_id.phone,
             'mobile': request.env.user.partner_id.mobile,
@@ -49,7 +51,8 @@ class E2yunWebsiteForm(WebsiteForm):
             'partner_id': request.env.user.partner_id.id,
             'teams': teams,
             'ticket_type_id': ticket_type,
-            'brandtype': brandtype
+            'brandtype': brandtype,
+            'is_wx_client':is_wx_client
         })
         # 更新JSDK以备使用定位功能,获取当前用户地址报修。
         url_ = request.httprequest.url;
