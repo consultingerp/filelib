@@ -34,7 +34,7 @@ class WXResPartner(models.Model):
             location = convert_location.split(';')[0]  # 用户真实位置
             formatted_address = amapapi.geocoderegeo(self, location)
             if formatted_address:
-                self.wx_address = formatted_address
+                self.wx_address = formatted_address['formatted_address']
             newport_ri = (location.split(',')[1], location.split(',')[0])
             crm_team_pool = self.env['crm.team'].search([])
             search_read_new = []

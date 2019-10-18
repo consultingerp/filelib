@@ -133,6 +133,19 @@ class e2yun_customer_payment_extend(models.Model):
             raise Warning(
                 _("付款金额不能为0!"))
 
+        if not vals_list.get('journal_id',False):
+            # currency_id = self.env['res.company'].browse(vals_list.get('company_id', False)).currency_id.id
+            # journal = self.env['account.journal'].search(
+            #     [('type', 'in', ('bank', 'cash')), ('currency_id', '=', currency_id)], limit=1)
+            journal = self.env['account.journal'].search(
+                [('type', 'in', ('bank', 'cash')), ('company_id', '=', vals_list.get('company_id', False))], limit=1)
+            if journal:
+                vals_list['journal_id'] = journal.id
+            else:
+                journal = self.env['account.journal'].search([],limit=1)
+                if journal:
+                    vals_list['journal_id'] = journal.id
+
         res = super(e2yun_customer_payment_extend, self).create(vals_list)
         return res
 
