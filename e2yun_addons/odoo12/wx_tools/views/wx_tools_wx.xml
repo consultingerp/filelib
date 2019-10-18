@@ -4,7 +4,7 @@
         <xpath expr="//head[1]" position="after">
             <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"/>
             <script type="text/javascript">
-                console.log(location.href.split('#')[0]);
+                // console.log(location.href.split('#')[0]);
                 var latitude = 0.0
 				var longitude = 0.0
 				var actual_latitude = 0.0;
@@ -23,7 +23,6 @@
                     'chooseImage','scanQRCode','getLocation']
                 });  //end   config
                 wx.ready(function () {
-                   console.log('test')
                    wxready =true;
                     //wx.hideOptionMenu();
                    if (obtain_location == "True"){
@@ -48,7 +47,7 @@
                 });  // end read
                 wx.error(function(res){
                     console.log('err', res)
-                  });
+                });
                 function openLocation(latitude,longitude,name,infoUrl) {
                         wx.openLocation({
                             latitude : Number(latitude), // 纬度，浮点数，范围为90 ~ -90
