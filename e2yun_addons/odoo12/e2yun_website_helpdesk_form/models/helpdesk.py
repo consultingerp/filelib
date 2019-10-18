@@ -16,10 +16,11 @@ class HelpdeskTicket(models.Model):
     _inherit = ['helpdesk.ticket']
 
     address = fields.Char(string='联系地址')
+    u_address = fields.Char(string='所在地')
     order_datetime = fields.Datetime(string='预约时间', required=True, default=lambda self: fields.Datetime.now())
     user_phone = fields.Char('购买电话')
     phone = fields.Char('联系电话')
-    brand = fields.Char('售后品牌')
+    brand = fields.Many2one('helpdesk.ticket.brandtype', string="售后品牌")
     userip = fields.Char('IP 地址')
     posserviceorderid = fields.Char('POS服务订单编号')
 
