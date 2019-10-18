@@ -589,6 +589,7 @@
                             </div>
                             <div class="col-lg-3 col-md-8">
                                 <select class="form-control o_website_form_input" name="country_id" id="supplier_info_country_id">
+                                  <option value="请选择">请选择</option>
                                   <t t-foreach="countrys" t-as="country">
                                     <option t-att-data="country.id" t-att-value="country.id" t-att-selected="country.id == supplier.country_id.id"><t t-esc="country.name"/></option>
                                   </t>
@@ -599,7 +600,7 @@
                             </div>
                             <div class="col-lg-3 col-md-8">
                               <select class="form-control o_website_form_input" name="state_id" id="supplier_info_state_id">
-                                 <option value=""></option>
+                                 <option value="请选择">请选择</option>
                                  <t t-foreach="states or []" t-as="state">
                                     <option class="state" t-att-value="state.id" t-att-country="state.country_id.id" t-att-selected="state.id == supplier.state_id.id">
                                         <t t-esc="state.name"/>
