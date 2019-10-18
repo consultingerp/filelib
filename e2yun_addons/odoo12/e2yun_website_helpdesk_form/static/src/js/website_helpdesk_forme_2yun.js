@@ -170,7 +170,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
 
             setTimeout(this.wxGetLocation(), 20000);
 
-            this.$target.find('#addres').on('click', function (e) {
+            this.$target.find('#address').on('click', function (e) {
                 self.wxGetLocation();
             });
 
