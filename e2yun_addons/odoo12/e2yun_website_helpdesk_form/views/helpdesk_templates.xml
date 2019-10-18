@@ -126,7 +126,7 @@
                                             </div>
 
                                             <div class="aui-form-group b-line form-field">
-                                                <input required="required" id="address" type="text" name="address" class="form-control" placeholder=""
+                                                <input required="required" id="j_address" type="text" name="j_address" class="form-control" placeholder=""
                                                        t-att-value="default_values.get('street', '')"
                                                 ></input>
                                                 <label class="form-label">详细地址

@@ -26,6 +26,8 @@ class E2yunWebsiteForm(WebsiteForm):
             lang = request.env['ir.qweb.field'].user_lang()
             strftime_format = (u"%s %s" % (lang.date_format, lang.time_format))
             request.params['order_datetime'] = datetime.datetime.strftime(order_datetime, strftime_format)
+        if request.params.get('u_address') or request.params.get('j_address'):
+            request.params['address'] = request.params['u_address'] + request.params['j_address']
         reponse_website = super(E2yunWebsiteForm, self).website_form(model_name, **kwargs)
         return reponse_website
 

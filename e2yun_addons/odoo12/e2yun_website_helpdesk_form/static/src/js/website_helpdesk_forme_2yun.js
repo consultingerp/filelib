@@ -25,7 +25,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                     var $target = $('#u_address');
                     var team_list_text = $("#team_list option:selected").text();
                     if (addressComponent == "") {
-                        $('input[name=address]').val(formatted_address)
+                        $('input[name=j_address]').val(formatted_address)
                         $target.citySelect(); //默认
                         $target.on('click', function (event) {
                             event.stopPropagation();
@@ -72,7 +72,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                         city: area_user.city,
                         area: area_user.area
                     });
-                    $('input[name=address]').val(formatted_address)
+                    $('input[name=j_address]').val(formatted_address)
                     // $target.citySelect(); //默认
                     $target.on('click', function (event) {
                         event.stopPropagation();
@@ -82,7 +82,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                         $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
                     });
                 };
-                var useraddress = $('input[name=address]').val();
+                var useraddress = $('input[name=j_address]').val();
                 if (wxready || useraddress.trim() == "") { // 如果地址为空，没有默认地址，去取定位地
                     wx.getLocation({
                         type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
@@ -100,7 +100,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                                     var formatted_address = result.addressComponent; //坐标定位
                                     console.log(formatted_address);
                                     if (useraddress.trim() == "") {
-                                        $('input[name=address]').val(result.formatted_address)
+                                        $('input[name=j_address]').val(result.formatted_address)
                                         user_addres_Setting(formatted_address, result.formatted_address);
                                     }
                                 });
@@ -173,7 +173,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
 
            this.wxGetLocation();
 
-            this.$target.find('#address').on('click', function (e) {
+            this.$target.find('#j_address').on('click', function (e) {
                 self.wxGetLocation();
             });
              setTimeout(function () {
