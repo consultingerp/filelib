@@ -5,7 +5,6 @@
             <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"/>
             <script type="text/javascript">
                 console.log(location.href.split('#')[0]);
-                alert(location.href.split('#')[0]+":"+'<t t-raw="wx_appid"/>'+":"+'<t t-raw="signature"/>');
                 var latitude = 0.0
 				var longitude = 0.0
 				var actual_latitude = 0.0;
@@ -20,7 +19,7 @@
                     timestamp: '<t t-raw="timestamp"/>',
                     nonceStr: '<t t-raw="noncestr"/>',
                     signature: '<t t-raw="signature"/>',
-                    jsApiList: ['openLocation', 'openLocation', 'onMenuShareAppMessage',
+                    jsApiList: ['openLocation', 'onMenuShareAppMessage',
                     'chooseImage','scanQRCode','getLocation']
                 });  //end   config
                 wx.ready(function () {
