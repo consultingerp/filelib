@@ -72,100 +72,10 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
             // Adapt options to date-only pickers
             datepickers_options.format = time.getLangDateFormat();
             this.$target.find('.o_website_form_date').datetimepicker(datepickers_options);
-            var isuserlocation = false;
-            var user_addres_Setting = function (addressComponent,formatted_address) {
-                var $target = $('#u_address');
-                var team_list_text = $("#team_list option:selected").text();
-                if (addressComponent == "") {
-                    $('input[name=address]').val(formatted_address)
-                    $target.citySelect(); //默认
-                    $target.on('click', function (event) {
-                        event.stopPropagation();
-                        $target.citySelect('open');
-                    });
-                    $target.on('done.ydui.cityselect', function (ret) {
-                        $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
-                    });
-                    return;
-                }
-                var provance=addressComponent.province;
-                var city = addressComponent.district;
-                var area=""
-                $('input[name=u_address]').val(provance + " " + city + " ")
-                let area_user = {}
-                area_user.provance = "";
-                area_user.city = "";
-                area_user.area = "";
-                $.each(YDUI_CITYS, function (k, v) { //第一层
-                    if (v.n == provance || provance.indexOf(v.n)>-1) {
-                        //console.log("1" + v.n);
-                        area_user.provance = v.n
-                        formatted_address = formatted_address.replace(provance,'');
-                        $.each(v.c, function (k, v) {   //第二层
-                            if (v.n.indexOf(city) > -1) {
-                                //console.log("2:" + v.n + "::" + v.a);
-                                area_user.city = v.n
-                                 formatted_address = formatted_address.replace(city,'');
-                                $.each(v.a, function (k, v) { // 第三层
-                                    if (k == 0) area_user.area = v;
-                                    if (v.indexOf(area) > -1) {
-                                        console.log(k + ":" + v);
-                                        area_user.area = v;
-                                        return false;
-                                    }
-                                });
-                            }
-                        });
-                    }
 
-                });
-                $target.citySelect({  //带地址
-                    provance: area_user.provance,
-                    city: area_user.city,
-                    area: area_user.area
-                });
-                 $('input[name=address]').val(formatted_address)
-                // $target.citySelect(); //默认
-                $target.on('click', function (event) {
-                    event.stopPropagation();
-                    $target.citySelect('open');
-                });
-                $target.on('done.ydui.cityselect', function (ret) {
-                    $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
-                });
-            };
-            var useraddress =  $('input[name=address]').val();
-            if (wxready || useraddress.trim() == "") { // 如果地址为空，没有默认地址，去取定位地
-                wx.getLocation({
-                    type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
-                    success: function (res) {
-                        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-                        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-                        var speed = res.speed; // 速度，以米/每秒计
-                        var accuracy = res.accuracy; // 位置精度
-                        var locations = res.longitude + "," + res.latitude; //微信位置
-                        var locations = res.longitude + "," + res.latitude; //微信位置
-                        isuserlocation = true;
-                        $.getJSON("/amap/convert?location=" + locations,   //将微信地址转为正确的地址，由于GV地址位置有偏差
-                            function (result) {
-                                var tolocations = result.locations;//实际地址
-                                var formatted_address = result.addressComponent; //坐标定位
-                                console.log(formatted_address);
-                                if (useraddress.trim() == "") {
-                                    $('input[name=address]').val(result.formatted_address)
-                                    user_addres_Setting(formatted_address,result.formatted_address);
-                                }
-                            });
-                    }, fail: function (res) {
-                          user_addres_Setting('','');
-                        console.log("失败调用");
 
-                    }, cancel: function (res) {
-                        alert('用户拒绝授权获取地理位置');
-                    }
-                }); // end getLocation
+            setTimeout(this.wxGetLocation(), 2000);
 
-            }
             return this._super.apply(this, arguments);
         },
 
@@ -423,8 +333,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                 '                                    <li><i class="fa fa-phone"/> <span>北京：售后服务时间8:30-17:30，联系电话:<a  href="tel:010-81501568">010-81501568</a></span></li>\n' +
                 '                                    <li><i class="fa fa-phone"/> <span>深圳：售后服务时间8:00-17:30，联系电话:<a  href="tel:0755-26913085">0755-26913085</a></span></li>'
             $('#connect').find('.list-unstyled').replaceWith(html_after_sales)
-        },
-        getArea: function (str) {
+        }, getArea: function (str) {
             let area = {}
             let index11 = 0
             let index1 = str.indexOf("省")
@@ -458,6 +367,102 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                 area.Country = str.substring(index2 + 1, index3 + 1)
             }
             return area;
+        },wxGetLocation(){
+            var isuserlocation = false;
+            var user_addres_Setting = function (addressComponent,formatted_address) {
+                var $target = $('#u_address');
+                var team_list_text = $("#team_list option:selected").text();
+                if (addressComponent == "") {
+                    $('input[name=address]').val(formatted_address)
+                    $target.citySelect(); //默认
+                    $target.on('click', function (event) {
+                        event.stopPropagation();
+                        $target.citySelect('open');
+                    });
+                    $target.on('done.ydui.cityselect', function (ret) {
+                        $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
+                    });
+                    return;
+                }
+                var provance=addressComponent.province;
+                var city = addressComponent.district;
+                var area=""
+                $('input[name=u_address]').val(provance + " " + city + " ")
+                let area_user = {}
+                area_user.provance = "";
+                area_user.city = "";
+                area_user.area = "";
+                $.each(YDUI_CITYS, function (k, v) { //第一层
+                    if (v.n == provance || provance.indexOf(v.n)>-1) {
+                        //console.log("1" + v.n);
+                        area_user.provance = v.n
+                        formatted_address = formatted_address.replace(provance,'');
+                        $.each(v.c, function (k, v) {   //第二层
+                            if (v.n.indexOf(city) > -1) {
+                                //console.log("2:" + v.n + "::" + v.a);
+                                area_user.city = v.n
+                                 formatted_address = formatted_address.replace(city,'');
+                                $.each(v.a, function (k, v) { // 第三层
+                                    if (k == 0) area_user.area = v;
+                                    if (v.indexOf(area) > -1) {
+                                        console.log(k + ":" + v);
+                                        area_user.area = v;
+                                        return false;
+                                    }
+                                });
+                            }
+                        });
+                    }
+
+                });
+                $target.citySelect({  //带地址
+                    provance: area_user.provance,
+                    city: area_user.city,
+                    area: area_user.area
+                });
+                 $('input[name=address]').val(formatted_address)
+                // $target.citySelect(); //默认
+                $target.on('click', function (event) {
+                    event.stopPropagation();
+                    $target.citySelect('open');
+                });
+                $target.on('done.ydui.cityselect', function (ret) {
+                    $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
+                });
+            };
+            var useraddress =  $('input[name=address]').val();
+            if (wxready || useraddress.trim() == "") { // 如果地址为空，没有默认地址，去取定位地
+                wx.getLocation({
+                    type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                    success: function (res) {
+                        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                        var speed = res.speed; // 速度，以米/每秒计
+                        var accuracy = res.accuracy; // 位置精度
+                        var locations = res.longitude + "," + res.latitude; //微信位置
+                        var locations = res.longitude + "," + res.latitude; //微信位置
+                        isuserlocation = true;
+                        $.getJSON("/amap/convert?location=" + locations,   //将微信地址转为正确的地址，由于GV地址位置有偏差
+                            function (result) {
+                                var tolocations = result.locations;//实际地址
+                                var formatted_address = result.addressComponent; //坐标定位
+                                console.log(formatted_address);
+                                if (useraddress.trim() == "") {
+                                    $('input[name=address]').val(result.formatted_address)
+                                    user_addres_Setting(formatted_address,result.formatted_address);
+                                }
+                            });
+                    }, fail: function (res) {
+                          user_addres_Setting('','');
+                        console.log("失败调用");
+
+                    }, cancel: function (res) {
+                        alert('用户拒绝授权获取地理位置');
+                    }
+                }); // end getLocation
+
+            }
+
         }
 
     });
