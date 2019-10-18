@@ -409,8 +409,10 @@ class e2yun_customer_info(models.Model):
                             if field2[field1] and field2[field1] != False:
                                 if field1 in UNINCLUDE_COL:
                                     continue
-                                if isinstance(field2[field1], str) or isinstance(field2[field1], int) or isinstance(
+                                if  isinstance(field2[field1], str) or isinstance(field2[field1], int) or isinstance(
                                         field2[field1], float) or isinstance(field2[field1], bool):
+                                    data1[field1] = field2[field1]
+                                elif isinstance(field2[field1], bytes):
                                     data1[field1] = field2[field1]
                                 else:
                                     data1[field1] = field2[field1].id

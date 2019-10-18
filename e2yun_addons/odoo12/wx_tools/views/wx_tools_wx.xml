@@ -12,6 +12,7 @@
 				var formatted_address = "";
                 var obtain_location = '<t t-esc="request.env['ir.config_parameter'].sudo().get_param('base_setup.obtain_location')"/>';
                 var timestamp = '<t t-raw="timestamp"/>';
+                var wxready = false;
                 wx.config({
                     debug: false,
                     appId: '<t t-raw="wx_appid"/>',
@@ -22,6 +23,7 @@
                     'chooseImage','scanQRCode','getLocation']
                 });  //end   config
                 wx.ready(function () {
+                   wxready =true;
                     //wx.hideOptionMenu();
                    if (obtain_location == "True"){
                         wx.getLocation({
@@ -43,6 +45,9 @@
                         }); // end getLocation
                     } // end obtain_location
                 });  // end read
+                wx.error(function(res){
+                    console.log('err', res)
+                });
                 function openLocation(latitude,longitude,name,infoUrl) {
                         wx.openLocation({
                             latitude : Number(latitude), // 纬度，浮点数，范围为90 ~ -90

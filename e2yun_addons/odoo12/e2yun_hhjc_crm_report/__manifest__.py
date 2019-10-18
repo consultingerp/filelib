@@ -13,7 +13,10 @@
         'views/customer_loss_view.xml',
         'views/stock_query.xml'
     ],
-    'qweb': ['static/src/xml/customer_loss_template.xml',],
+    'qweb': [
+        'static/src/xml/customer_loss_template.xml',
+        'static/src/xml/tree_button_template.xml',
+             ],
     'installable': True,
     'auto_install': False,
 }

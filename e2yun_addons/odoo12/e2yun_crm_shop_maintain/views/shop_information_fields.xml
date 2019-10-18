@@ -47,7 +47,6 @@
                             <field name="zip" placeholder="邮编" class="o_address_zip"/>
                             <field name="street2" placeholder="街道" class="o_address_street"/>
                         </div>
-                    <field name="show_customer_pay_amount"/>
                     <field name="show_accept_amount"/>
                 </xpath>
 

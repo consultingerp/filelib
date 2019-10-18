@@ -25,13 +25,29 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                 this.stop();
                 return;
             }
+
+            var state_id = $('input[name=state_id]').val();
+            var city_id = $('input[name=city_id]').val();
+            var area_id = $('input[name=area_id]').val();
+            if (state_id != "") {
+                $('input[name=u_address]').val(state_id + " " + city_id + " " + area_id)
+                this.start_addres(state_id, city_id, area_id)
+            }
+            if(!wxready){
+                 this.start_addres('', '', '');
+            }
+            this.start_date_controls();
+            this.after_sales_tel_show();
+            //this.address_resolution();
+            //console.log(this.getArea('重庆市九龙坡区石桥铺街道兰美路988-26号隆鑫·花漾湖'));
+
             var self = this;
             this.templates_loaded = ajax.loadXML('/website_form/static/src/xml/website_form.xml', qweb);
             this.$target.find('.aui-website-form-send').on('click', function (e) {
                 self.send(e);
             });
             this.$target.find('#team_list').on('change', function (e) {
-                 window.location.href = window.location.origin + '/helpdesk/'+this.value+'/submit';
+                window.location.href = window.location.origin + '/helpdesk/' + this.value + '/submit';
             });
 
             // Initialize datetimepickers
@@ -56,29 +72,100 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
             // Adapt options to date-only pickers
             datepickers_options.format = time.getLangDateFormat();
             this.$target.find('.o_website_form_date').datetimepicker(datepickers_options);
-
-            wx.getLocation({
-                type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
-                success: function (res) {
-                    var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-                    var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-                    var speed = res.speed; // 速度，以米/每秒计
-                    var accuracy = res.accuracy; // 位置精度
-                    var locations = res.longitude + "," + res.latitude; //微信位置
-                    var locations = res.longitude + "," + res.latitude; //微信位置
-                    $.getJSON("/amap/convert?location=" + locations,   //将微信地址转为正确的地址，由于GV地址位置有偏差
-                        function (result) {
-                            var tolocations = result.locations;//实际地址
-                            var useraddress = $('input[name=address]').val();
-                            if(useraddress.trim() == "") {
-                                $('input[name=address]').val(result.formatted_address)
+            var isuserlocation = false;
+            var user_addres_Setting = function (addressComponent,formatted_address) {
+                var $target = $('#u_address');
+                var team_list_text = $("#team_list option:selected").text();
+                if (addressComponent == "") {
+                    $('input[name=address]').val(formatted_address)
+                    $target.citySelect(); //默认
+                    $target.on('click', function (event) {
+                        event.stopPropagation();
+                        $target.citySelect('open');
+                    });
+                    $target.on('done.ydui.cityselect', function (ret) {
+                        $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
+                    });
+                    return;
+                }
+                var provance=addressComponent.province;
+                var city = addressComponent.district;
+                var area=""
+                $('input[name=u_address]').val(provance + " " + city + " ")
+                let area_user = {}
+                area_user.provance = "";
+                area_user.city = "";
+                area_user.area = "";
+                $.each(YDUI_CITYS, function (k, v) { //第一层
+                    if (v.n == provance || provance.indexOf(v.n)>-1) {
+                        //console.log("1" + v.n);
+                        area_user.provance = v.n
+                        formatted_address = formatted_address.replace(provance,'');
+                        $.each(v.c, function (k, v) {   //第二层
+                            if (v.n.indexOf(city) > -1) {
+                                //console.log("2:" + v.n + "::" + v.a);
+                                area_user.city = v.n
+                                 formatted_address = formatted_address.replace(city,'');
+                                $.each(v.a, function (k, v) { // 第三层
+                                    if (k == 0) area_user.area = v;
+                                    if (v.indexOf(area) > -1) {
+                                        console.log(k + ":" + v);
+                                        area_user.area = v;
+                                        return false;
+                                    }
+                                });
                             }
                         });
-                }, fail: function () {
+                    }
 
-                }
-            }); // end getLocation
+                });
+                $target.citySelect({  //带地址
+                    provance: area_user.provance,
+                    city: area_user.city,
+                    area: area_user.area
+                });
+                 $('input[name=address]').val(formatted_address)
+                // $target.citySelect(); //默认
+                $target.on('click', function (event) {
+                    event.stopPropagation();
+                    $target.citySelect('open');
+                });
+                $target.on('done.ydui.cityselect', function (ret) {
+                    $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
+                });
+            };
+            var useraddress =  $('input[name=address]').val();
+            if (wxready || useraddress.trim() == "") { // 如果地址为空，没有默认地址，去取定位地
+                wx.getLocation({
+                    type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                    success: function (res) {
+                        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                        var speed = res.speed; // 速度，以米/每秒计
+                        var accuracy = res.accuracy; // 位置精度
+                        var locations = res.longitude + "," + res.latitude; //微信位置
+                        var locations = res.longitude + "," + res.latitude; //微信位置
+                        isuserlocation = true;
+                        $.getJSON("/amap/convert?location=" + locations,   //将微信地址转为正确的地址，由于GV地址位置有偏差
+                            function (result) {
+                                var tolocations = result.locations;//实际地址
+                                var formatted_address = result.addressComponent; //坐标定位
+                                console.log(formatted_address);
+                                if (useraddress.trim() == "") {
+                                    $('input[name=address]').val(result.formatted_address)
+                                    user_addres_Setting(formatted_address,result.formatted_address);
+                                }
+                            });
+                    }, fail: function (res) {
+                          user_addres_Setting('','');
+                        console.log("失败调用");
 
+                    }, cancel: function (res) {
+                        alert('用户拒绝授权获取地理位置');
+                    }
+                }); // end getLocation
+
+            }
             return this._super.apply(this, arguments);
         },
 
@@ -140,6 +227,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                     form_values[key.replace('form_field_', '')] = this.$target.data(key);
                 }
             }
+
             self.send_form('send');
             // Post form and handle result
             ajax.post(this.$target.attr('action') + (this.$target.data('force_action') || this.$target.data('model_name')), form_values)
@@ -183,10 +271,26 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                         || $field.is('textarea')
                     )
                     && $field.attr("required") === "required") {
-                    if ($field.val().length == 0) {
+                    if ($field.val().trim().length == 0) {
                         $field.addClass('o_has_error').find('.form-control').addClass('is-invalid');
                         $field.popover('show');
                         $field.focus();
+                        form_valid = false;
+                        return form_valid;
+                    }
+                }
+                if (field_name == "phone") {
+                    var phone = $field.val();
+                    if (!(/^1[3456789]\d{9}$/.test(phone))) {
+                        alert("联系电话有误，请新重填");
+                        form_valid = false;
+                        return form_valid;
+                    }
+                }
+                if (field_name == "user_phone") {
+                    var phone = $field.val();
+                    if (phone != "" && !(/^1[3456789]\d{9}$/.test(phone))) {
+                        alert("购买电话有误，请新重填");
                         form_valid = false;
                         return form_valid;
                     }
@@ -247,10 +351,114 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                 this.$target.find('.aui-website-form-send').attr("disabled", false);
             }
             var $result = this.$('#o_website_form_result');
-            this.$target.find('. aui-website-form-send-text').text("提交")
+            this.$target.find('.aui-website-form-send-text').text("提交")
             this.templates_loaded.done(function () {
                 $result.replaceWith(qweb.render("website_form.status_" + status));
             });
+        }, start_addres: function (provance, city, area) {
+            var $target = $('#u_address');
+            var team_list_text = $("#team_list option:selected").text();
+            var user_addres = this.address_resolution(provance, city, area);
+            $target.citySelect({  //带地址
+                provance: user_addres.provance,
+                city: user_addres.city,
+                area: user_addres.area
+            });
+            // $target.citySelect(); //默认
+            $target.on('click', function (event) {
+                event.stopPropagation();
+                $target.citySelect('open');
+            });
+            $target.on('done.ydui.cityselect', function (ret) {
+                $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
+            });
+
+        }, start_date_controls: function () {
+            var theme = "ios";
+            var mode = "scroller";
+            var display = "bottom";
+            var lang = "zh";
+            var date = new Date;
+            var dateend = new Date;
+            dateend.setMonth(dateend.getMonth() + 2);
+            $('#order_datetime').mobiscroll().date({
+                theme: theme,
+                mode: mode,
+                minDate: new Date(date.getFullYear(), date.getMonth(), date.getDate() + 2),
+                maxDate: new Date(dateend.getFullYear(), dateend.getMonth(), dateend.getDate()),
+                dateFormat: "yyyy-mm-dd",
+                display: display,
+                lang: lang
+            });
         },
+        address_resolution: function (provance, city, area) {
+            let area_user = {}
+            area_user.provance = "";
+            area_user.city = "";
+            area_user.area = "";
+            $.each(YDUI_CITYS, function (k, v) { //第一层
+                if (v.n == provance) {
+                    //console.log("1" + v.n);
+                    area_user.provance = provance
+                    $.each(v.c, function (k, v) {   //第二层
+                        if (v.n.indexOf(city) > -1) {
+                            //console.log("2:" + v.n + "::" + v.a);
+                            area_user.city = v.n
+                            $.each(v.a, function (k, v) { //
+                                if (k == 0) area_user.area = v;
+                                if (v.indexOf(area) > -1) {
+                                    console.log(k + ":" + v);
+                                    area_user.area = v;
+                                    return false;
+                                }
+                            });
+                        }
+                    });
+                }
+
+            });
+            return area_user;
+        }, after_sales_tel_show: function () {
+            var html_after_sales = ' <li>尊敬的客户，您好！欢迎进行售后服务咨询，如需电话咨询请按下方提示进行操作：</li>\n' +
+                '                                    <li><i class="fa fa-phone"/> <span>北京：售后服务时间8:30-17:30，联系电话:<a  href="tel:010-81501568">010-81501568</a></span></li>\n' +
+                '                                    <li><i class="fa fa-phone"/> <span>深圳：售后服务时间8:00-17:30，联系电话:<a  href="tel:0755-26913085">0755-26913085</a></span></li>'
+            $('#connect').find('.list-unstyled').replaceWith(html_after_sales)
+        },
+        getArea: function (str) {
+            let area = {}
+            let index11 = 0
+            let index1 = str.indexOf("省")
+            if (index1 == -1) {
+                index11 = str.indexOf("自治区")
+                if (index11 != -1) {
+                    area.Province = str.substring(0, index11 + 3)
+                } else {
+                    area.Province = str.substring(0, 0)
+                }
+            } else {
+                area.Province = str.substring(0, index1 + 1)
+            }
+
+            let index2 = str.indexOf("市")
+            if (index11 == -1) {
+                area.City = str.substring(index11 + 1, index2 + 1)
+            } else {
+                if (index11 == 0) {
+                    area.City = str.substring(index1 + 1, index2 + 1)
+                } else {
+                    area.City = str.substring(index11 + 3, index2 + 1)
+                }
+            }
+
+            let index3 = str.lastIndexOf("区")
+            if (index3 == -1) {
+                index3 = str.indexOf("县")
+                area.Country = str.substring(index2 + 1, index3 + 1)
+            } else {
+                area.Country = str.substring(index2 + 1, index3 + 1)
+            }
+            return area;
+        }
+
     });
 });

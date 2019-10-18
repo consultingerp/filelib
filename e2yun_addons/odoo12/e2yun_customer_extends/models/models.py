@@ -8,6 +8,7 @@ import datetime
 from datetime import timedelta
 # import werkzeug
 from odoo.exceptions import ValidationError, Warning
+import json
 
 class E2yunUserAddPartnerRelated(models.Model):
     _inherit = 'res.users'
@@ -63,7 +64,6 @@ class E2yunCsutomerExtends(models.Model):
         ('contract_customers', 'Contract Customers')
     ], string='Status', default='potential_customer', group_expand='_group_expand_stage_id')
     related_guide = fields.Many2many('res.users',  domain="[('function', '!=', False)]", readonly=True)
-    user_id = fields.Many2one('res.users', readonly=True)
 
     @api.model
     def default_get(self, fields_list):
@@ -161,12 +161,13 @@ class E2yunCsutomerExtends(models.Model):
             if not ret:
                 raise Warning(_("请输入合法手机号码！"))
 
-        if values.get('pos_flag',False) and values.get('shop_code',False):
+        pos_flag = values.get('pos_flag',False)
+        if pos_flag and values.get('shop_code',False):
             values['teams'] = [(6,0,[values.get('shop_code'),])]
             del values['pos_flag']
         result = super(E2yunCsutomerExtends, self).write(values)
 
-        if self.state != 'potential_customer' and not values.get('pos_flag',False) and not values.get('pos_state',False):
+        if self.state != 'potential_customer' and not pos_flag and not values.get('pos_state',False):
             self.sync_customer_to_pos()
             self.pos_state = True
         return result
@@ -300,10 +301,17 @@ class E2yunCsutomerExtends(models.Model):
         customers = self.search([('state','in',['potential_customer','intention_customer','target_customer']),('customer','=',True)])
         ICPSudo = self.env['ir.config_parameter'].sudo()
         url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncMember?wsdl'  # webservice调用地址
+        lists = []
         for customer in customers:
-            client = suds.client.Client(url)
-            result = client.service.updateState(customer.id or '', customer.app_code or '', customer.state or '')
+            lists.append({
+                'customer_id':customer.id,
+                'customer_app_code':customer.app_code,
+                'customer_state':customer.state
+            })
 
+        client = suds.client.Client(url)
+        result = client.service.updateState(json.dumps(lists))
+        return True
 
 #     name = fields.Char()
 #     value = fields.Integer()

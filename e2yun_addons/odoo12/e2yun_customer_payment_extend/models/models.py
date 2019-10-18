@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, exceptions
+from odoo import models, fields, api, exceptions, _
 from odoo.exceptions import ValidationError, Warning
 import suds.client
 
@@ -19,6 +19,15 @@ class e2yun_customer_payment_extend(models.Model):
         elif self.payment_type2 == 'D16':
             self.payment_status = 'A4'
 
+    @api.depends('related_shop')
+    @api.onchange('related_shop')
+    def _onchange_banknum(self):
+        code = self.related_shop.shop_code
+        domain = [('shop_code', '=', code)]
+        return {
+            'domain': {'bank_num': domain}
+        }
+
     payment_type2 = fields.Selection(
         [('D11', '公司收现金'), ('D12', '刷卡'),
          ('D13', '公司微信'), ('D16', '公司支付宝'),
@@ -29,9 +38,9 @@ class e2yun_customer_payment_extend(models.Model):
          ('K11', '电商支付宝'), ('G11', '公司收支票'),
          ('G13', '门店现金'), ('G12', '转账'), ('D17', '分销商定制货款')], '支付方式', required=True)
     currency = fields.Char('货币')
-    payment_voucher =  fields.Char('交款凭证')
+    payment_voucher = fields.Char('交款凭证')
     marketing_activity = fields.Char('参与市场活动')
-    bank_num = fields.Char('银行帐号')
+    bank_num = fields.Many2one('payment_bank.info', '银行帐号')
     payment_attachments = fields.Many2many('ir.attachment', string="付款附件",
                                            domain=[('res_model', '=', 'account.payment')])
 
@@ -45,10 +54,8 @@ class e2yun_customer_payment_extend(models.Model):
                                        ('A3', '尾款'), ('A4', '全款')], '交款类型', required=True)
     payment_serirs_no = fields.Char('No.')
 
-    customer_pay_amount = fields.Monetary(string='客户交款金额')
-    accept_amount = fields.Monetary(string='收款结算金额')
+    accept_amount = fields.Monetary(string='客户交款金额')
 
-    customer_pay_amount000 = fields.Boolean(related='related_shop.show_customer_pay_amount')
     accept_amount000 = fields.Boolean(related='related_shop.show_accept_amount')
 
     @api.multi
@@ -70,7 +77,7 @@ class e2yun_customer_payment_extend(models.Model):
                                                  r.receipt_Num or '',  # 收款编号
                                                  r.company_id.name or '',  # 公司名称
                                                  r.po_num or '',  # PO
-                                                 r.amount or '',  # 收款金额
+                                                 r.amount or '',  # 收款金额(收款结算金额
 
                                                  '',  # 支票号
                                                  r.sales_num or '',  # 销售单号
@@ -92,12 +99,13 @@ class e2yun_customer_payment_extend(models.Model):
                                                  r.sales_num or '',  # 收据单号
                                                  '',  # 支票状态
                                                  '',  # 收据日期
-                                                 r.bank_num or '',  # 银行账户
+                                                 r.bank_num.bank_accont or '',  # 银行账户
                                                  r.customer_po or '',  # 客户PO
 
                                                  self.env.user.name,  # 创建人
                                                  now,  # 创建日期
-                                                 r.id
+                                                 r.id,
+                                                 r.accept_amount #客户交款金额
                                                  )
             r.receipt_Num = result[1:]
             if result[0] != 'S':
@@ -121,11 +129,33 @@ class e2yun_customer_payment_extend(models.Model):
             atch_line = self.env['ir.attachment'].browse(ids)
             atch_line.write({'res_model': 'account.payment'})
 
+        if vals_list['amount'] == 0:
+            raise Warning(
+                _("付款金额不能为0!"))
+
+        if not vals_list.get('journal_id',False):
+            # currency_id = self.env['res.company'].browse(vals_list.get('company_id', False)).currency_id.id
+            # journal = self.env['account.journal'].search(
+            #     [('type', 'in', ('bank', 'cash')), ('currency_id', '=', currency_id)], limit=1)
+            journal = self.env['account.journal'].search(
+                [('type', 'in', ('bank', 'cash')), ('company_id', '=', vals_list.get('company_id', False))], limit=1)
+            if journal:
+                vals_list['journal_id'] = journal.id
+            else:
+                journal = self.env['account.journal'].search([],limit=1)
+                if journal:
+                    vals_list['journal_id'] = journal.id
+
         res = super(e2yun_customer_payment_extend, self).create(vals_list)
         return res
 
     @api.one
     def write(self, vals):
+
+        if vals.get('amount', False):
+            if vals['amount'] == 0:
+                raise Warning(_("付款金额不能为0!"))
+
         if vals.get('payment_attachments'):
             atch = vals['payment_attachments']
             temp = []
@@ -193,3 +223,11 @@ class e2yun_customer_payment_res_partner(models.Model):
         #     return res
         else:
             return super(e2yun_customer_payment_res_partner, self).name_get()
+
+class e2yun_customer_payment_bank_info(models.Model):
+    _name = 'payment_bank.info'
+
+    name = fields.Char(related='bank_describe')
+    shop_code = fields.Char('门店代码')
+    bank_accont = fields.Char('银行账户科目编码')
+    bank_describe = fields.Char('银行账户科目描述')
