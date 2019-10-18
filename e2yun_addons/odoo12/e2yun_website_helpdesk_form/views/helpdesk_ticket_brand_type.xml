@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+
+    <record id="helpdesk_ticket_brandtype_view_tree" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.brandtype.tree</field>
+        <field name="model">helpdesk.ticket.brandtype</field>
+        <field name="arch" type="xml">
+            <tree editable="top" string="Tag">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="helpdesk_ticket_brandtype_action" model="ir.actions.act_window">
+        <field name="name">Ticket brand Type</field>
+        <field name="res_model">helpdesk.ticket.brandtype</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                创建
+            </p>
+            <p>
+                创建售后品牌类型
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="helpdesk_ticket_brandtype_menu" name="售后品牌" action="helpdesk_ticket_brandtype_action"
+              sequence="11" parent="helpdesk.helpdesk_menu_config" groups="helpdesk.group_helpdesk_manager"/>
+
+</odoo>
