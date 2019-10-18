@@ -14,7 +14,7 @@
                 var timestamp = '<t t-raw="timestamp"/>';
                 var wxready = false;
                 wx.config({
-                    debug: true,
+                    debug: false,
                     appId: '<t t-raw="wx_appid"/>',
                     timestamp: '<t t-raw="timestamp"/>',
                     nonceStr: '<t t-raw="noncestr"/>',
