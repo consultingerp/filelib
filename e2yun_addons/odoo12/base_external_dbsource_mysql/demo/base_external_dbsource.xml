@@ -2,7 +2,7 @@
 <odoo>
     <record model="base.external.dbsource" id="demo_mysql">
         <field name="name">MySQL Demo</field>
-        <field name="conn_string">Server=myServerAddress;Database=myDataBase;Uid=myUsername;</field>
+        <field name="conn_string">mysql+pymysql://username:password@serveraddress/database</field>
         <field name="password">password</field>
         <field name="connector">mysql</field>
     </record>
