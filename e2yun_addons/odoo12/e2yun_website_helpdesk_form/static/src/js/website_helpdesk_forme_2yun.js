@@ -135,7 +135,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                 });
             };
             var useraddress =  $('input[name=address]').val();
-            if (useraddress.trim() == "") { // 如果地址为空，没有默认地址，去取定位地
+            if (wxready || useraddress.trim() == "") { // 如果地址为空，没有默认地址，去取定位地
                 wx.getLocation({
                     type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
                     success: function (res) {
