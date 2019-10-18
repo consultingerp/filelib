@@ -114,7 +114,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                     }); // end getLocation
 
                 }
-            }, 2000);
+            }, 1000);
 
         },start: function (editable_mode) {
             if (editable_mode) {
@@ -129,9 +129,9 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                 $('input[name=u_address]').val(state_id + " " + city_id + " " + area_id)
                 this.start_addres(state_id, city_id, area_id)
             }
-            if(!wxready){
-                 this.start_addres('', '', '');
-            }
+            // if(!wxready){
+            //      this.start_addres('', '', '');
+            // }
             this.start_date_controls();
             this.after_sales_tel_show();
             //this.address_resolution();
