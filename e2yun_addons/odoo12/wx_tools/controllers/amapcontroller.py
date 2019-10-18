@@ -35,7 +35,7 @@ class AmapAip(http.Controller):
         except Exception as e:
             print(e)
             return ''
-        data = {"locations": convert_location, 'formatted_address': formatted_address}
+        data = {"locations": convert_location, 'formatted_address': formatted_address['formatted_address'], "addressComponent": formatted_address['addressComponent']}
         return json.dumps(data)
 
     @http.route(['/amap/nearby_stores'], type='json', auth='user')
@@ -81,7 +81,7 @@ class AmapAip(http.Controller):
                 #     })
                     user.setpartnerteamanduser(request, location[1], location[0])
 
-            data = {"locations": convert_location, 'formatted_address': formatted_address}
+            data = {"locations": convert_location, 'formatted_address': formatted_address['formatted_address']}
             newport_ri = (location[1], location[0])
             crm_team_pool = request.env['crm.team'].sudo().search_read(domain)
             search_read_new = []

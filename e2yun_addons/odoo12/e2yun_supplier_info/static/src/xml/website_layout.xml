@@ -2,10 +2,13 @@
 <odoo>
     <template id="supplier_register_layout" inherit_id="website.layout" name="Supplier Register">
         <xpath expr="//li[@class='nav-item divider']" position="after">
-            <li class="nav-item">
-                <a role="menuitem" href="/supplier/register" class="nav-link ">
-                    <span data-oe-model="website.menu" data-oe-id="29" data-oe-field="name" data-oe-type="char" data-oe-expression="submenu.name">供应商注册信息完善</span>
-                </a>
+            <li class="nav-item divider">
+                <t t-if="uid">
+                    <a role="menuitem" href="/supplier/register" class="nav-link" id="supplier_register_link">
+                        <span data-oe-model="website.menu" data-oe-id="29" data-oe-field="name" data-oe-type="char" data-oe-expression="submenu.name" >供应商注册信息完善</span>
+                    </a>
+                </t>
+
             </li>
         </xpath>
     </template>
