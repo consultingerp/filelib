@@ -31,55 +31,71 @@ class E2yunTaskInfo(models.Model):
     # 一对多连接列表对象
     questionnaire_ids = fields.One2many('project.questionnaire', 'parent_id', string='Child Questionnaires')
 
-
-
-
-
-
-    @api.model
-    def create(self, vals):
-        res = super(E2yunTaskInfo, self).create(vals)
-        if res.survey_temp_id:
-            res.survey_id = res.survey_temp_id.copy().id
-        return res
-
+    # 打开问卷页面的方法
     @api.multi
-    def write(self, vals):
-        res = super(E2yunTaskInfo, self).write(vals)
-        for item in self:
-            if not item.survey_id and item.survey_temp_id:
-                item.survey_id = item.survey_temp_id.copy().id
-        return res
+    def turn_page(self):
+        self.ensure_one()
+        # Get lead views
+        form_view = self.env.ref('survey.survey_form')
+        tree_view = self.env.ref('survey.survey_tree')
+        kanban_view = self.env.ref('survey.survey_kanban')
+        return {
+            'name': 'Lead',
+            'res_model': 'survey.survey',
+            # 'domain': [('type', '=', 'lead')],
+            # 'res_id': self.id,
+            'view_id': False,
+            'target': 'new',
+            'views': [
+                (form_view.id, 'form'),
+                (tree_view.id, 'tree'),
+                (kanban_view.id, 'kanban')
+            ],
+            'view_type': 'tree',
+            'view_mode': 'tree,form,kanban',
+            'type': 'ir.actions.act_window',
+        }
 
-# class E2yunProjectSurvey(models.Model):
-#     _inherit = 'survey.survey'
+    # @api.model
+    # def create(self, vals):
+    #     res = super(E2yunTaskInfo, self).create(vals)
+    #     if res.survey_temp_id:
+    #         res.survey_id = res.survey_temp_id.copy().id
+    #     return res
 
-    # def default_classification(self):
-    #     # questionnaire_classification = self.env.context.get('questionnaire_classification')
-    #     # tasks = self.env['project.task']
-    #     # context = self.context_get()
-    #     uid = self.env.context.get('uid')
-    #     res = self.env['project.task'].search(['user_id', '=', uid])
-    #     # questionnaire_classification = user.partner_id.questionnaire_classification
-    #     # res = self.env.ref('project.view_task_form2')
-    #     questionnaire_classification = res.questionnaire_classification
-    #     return questionnaire_classification
-    # @api.depends('')
-    # def default_scenario(self):
-    #     uid = self.env.context.get('uid')
-    #     res = self.env['project.task'].search(['user_id', '=', uid])
-    #     questionnaire_scenario = res.questionnaire_scenario
-    #     return questionnaire_scenario
+    # @api.multi
+    # def write(self, vals):
+    #     res = super(E2yunTaskInfo, self).write(vals)
+    #     for item in self:
+    #         if not item.survey_id and item.survey_temp_id:
+    #             item.survey_id = item.survey_temp_id.copy().id
+    #     return res
 
+class E2yunProjectSurvey(models.Model):
+    _inherit = 'survey.survey'
 
-    # questionnaire_classification = fields.Char(string='问卷分类', readonly=True, required=True, default=default_classification)
-    # # questionnaire_classification = fields.Selection([('Internally', '对内'), ('Foreign', '对外')], string='问卷分类', default='default_classification')
-    #
-    # questionnaire_scenario = fields.Char(string='问卷场景', readonly=True, required=True, default=default_scenario)
-    # questionnaire_scenario = fields.Selection([('Score questionnaire', '评分问卷'), ('Qualification survey', '资质调查'), ('Satisfaction Survey', '满意度调查'), ('Registration Form', '报名登记表'), ('Other', '其他')], string='问卷场景')
-    #
-
-
+    @api.depends('task_ids')
+    def _compute_classification(self):
+        # questionnaire_classification = self.env.context.get('questionnaire_classification')
+        # tasks = self.env['project.task']
+        # context = self.context_get()
+        # uid = self.env.context.get('uid')
+        # res = self.env['project.task'].search(['user_id', '=', uid])
+        # questionnaire_classification = user.partner_id.questionnaire_classification
+        # res = self.env.ref('project.view_task_form2')
+        # questionnaire_classification = res.questionnaire_classification
+        # return questionnaire_classification
+        for survey in self:
+            # 获取'project.questionnaire'模型
+            id = survey.id
+            questionnaires = self.env['project.questionnaire'].search(['survey_temp_id', '=', id])
+            questionnaire_classification = questionnaires.questionnaire_classification
+            return questionnaire_classification
+    # 新增问卷场景，问卷分类，权重字段
+    questionnaire_classification = fields.Char(string='问卷分类', readonly=True, required=True, compute='_compute_classification')
+    questionnaire_scenario = fields.Char(string='问卷场景', readonly=True, required=True, compute='_compute_scenario')
+    weight = fields.Char(string='权重')
+    task_ids = fields.One2many('project.questionnaire', 'survey_temp_id', string='Child Questionnaires')
     # @api.depends('survey_temp_id')
     # def _compute_survey_classification(self):
     #     # questionnaire_scenario = self.env.ref['survey.survey_form'].questionnaire_scenario

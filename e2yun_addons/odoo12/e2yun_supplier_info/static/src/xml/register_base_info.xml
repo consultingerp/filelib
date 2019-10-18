@@ -60,8 +60,9 @@
                                 <label class="col-form-label" for="supplier"> 供应商类型 </label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <input type="Checkbox" name="supplier" value="生产类" checked="checked"/>生产类
-                                <input type="Checkbox" name="supplier" value="商贸类" checked="checked"/>商贸类
+                                 <!--checked="checked"为默认选中-->
+                                <input type="Checkbox" name="supplier" value="生产类"/>生产类
+                                <input type="Checkbox" name="supplier" value="商贸类"/>商贸类
                               </div>
                             </div>
                             <div class="row form-group form-field">
@@ -193,7 +194,7 @@
                                 <label class="col-form-label" for="registered_address"> 注册地址 </label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <input type="text" class="form-control o_website_form_input"  name="registered_address"/>
+                                <input type="text" class="form-control o_website_form_input"  name="registered_address" placeholder="与营业执照保持一致"/>
                               </div>
                               <!--<div class="col-lg-5 col-md-8">-->
                                 <!--<img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""-->
@@ -328,10 +329,11 @@
                             <!--开户行国家-->
                             <div class="row form-group form-field o_website_form_required_custom">
                               <div class="col-md-4 text-md-right col-lg-2">
-                                <label class="col-form-label" for="bank_country">开户行国家</label>
+                                <label class="col-form-label" for="country_bank">开户行国家</label>
                               </div>
                               <div class="col-lg-3 col-md-8">
                                 <select class="form-control o_website_form_input" name="bank_country" id="supplier_info_bank_country">
+                                  <option value="请选择">请选择</option>
                                   <t t-foreach="bank_countrys" t-as="bank_country">
                                     <option t-att-data="bank_country.id" t-att-value="bank_country.id" t-att-selected="bank_country.id == supplier.country_bank.id"><t t-esc="bank_country.name"/></option>
                                   </t>
@@ -341,10 +343,11 @@
                             <!--开户行省份-->
                             <div class="row form-group form-field o_website_form_required_custom">
                               <div class="col-md-4 text-md-right col-lg-2">
-                                <label class="col-form-label" for="bank_country">开户行省份</label>
+                                <label class="col-form-label" for="country_bank">开户行省份</label>
                               </div>
                               <div class="col-lg-3 col-md-8">
                                 <select class="form-control o_website_form_input" name="bank_state" id="supplier_info_bank_state">
+                                  <option value="请选择">请选择</option>
                                   <t t-foreach="bank_states" t-as="bank_state">
                                     <option t-att-data="bank_state.id" t-att-value="bank_state.id" t-att-selected="bank_state.id == supplier.province_bank.id"><t t-esc="bank_state.name"/></option>
                                   </t>
@@ -354,10 +357,11 @@
                             <!--开户行城市-->
                             <div class="row form-group form-field o_website_form_required_custom">
                               <div class="col-md-4 text-md-right col-lg-2">
-                                <label class="col-form-label" for="website">开户行城市</label>
+                                <label class="col-form-label" for="city_bank">开户行城市</label>
                               </div>
                               <div class="col-lg-3 col-md-8">
                                 <select class="form-control o_website_form_input" name="bank_city" id="supplier_info_bank_city">
+                                  <option value="请选择">请选择</option>
                                   <t t-foreach="bank_citys" t-as="bank_city">
                                     <option t-att-data="bank_city.id" t-att-value="bank_city.id" t-att-selected="bank_city.id == supplier.city_bank.id"><t t-esc="bank_city.name"/></option>
                                   </t>
@@ -371,6 +375,7 @@
                               </div>
                               <div class="col-lg-3 col-md-8">
                                 <select class="form-control o_website_form_input" name="bank_region" id="supplier_info_bank_region">
+                                  <option value="请选择">请选择</option>
                                   <t t-foreach="bank_regions" t-as="bank_region">
                                     <option t-att-data="bank_region.id" t-att-value="bank_region.id" t-att-selected="bank_region.id == supplier.region_bank.id"><t t-esc="bank_region.name"/></option>
                                   </t>
@@ -388,6 +393,7 @@
                               </div>
                               <div class="col-lg-3 col-md-8">
                                 <select class="form-control o_website_form_input" name="name_bank" id="supplier_info_name_bank">
+                                  <option value="请选择">请选择</option>
                                   <t t-foreach="name_banks" t-as="name_bank">
                                     <option t-att-data="name_bank.id" t-att-value="name_bank.id" t-att-selected="name_bank.id == supplier.name_bank.id"><t t-esc="name_bank.name"/></option>
                                   </t>
@@ -526,7 +532,7 @@
                               <label class="col-form-label" for="name">联系人&amp;nbsp;</label>
                             </div>
                             <div class="col-lg-3 col-md-8">
-                              <input type="text" class="form-control o_website_form_input" t-att-value="supplier.name" name="name" required="1"/>
+                              <input type="text" class="form-control o_website_form_input" name="name" required="1"/>
                             </div>
                             <div class="col-md-4 text-right col-lg-2">
                               <label class="col-form-label" for="login_name">登录名&amp;nbsp;</label>
@@ -535,20 +541,20 @@
                               <input type="text" readonly="readonly" class="form-control o_website_form_input" t-att-value="supplier.login_name" name="login_name" required="1"/>
                             </div>
                           </div>
-                          <div class="form-group row form-field o_website_form_required">
-                            <div class="col-md-4 text-right col-lg-2">
-                              <label class="col-form-label" for="password">密码&amp;nbsp;</label>
-                            </div>
-                            <div class="col-lg-3 col-md-8">
-                              <input type="text" readonly="readonly" class="form-control o_website_form_input" t-att-value="supplier.password" name="password" required="1"/>
-                            </div>
-                            <div class="col-md-4 text-right col-lg-2">
-                              <label class="col-form-label" for="confirm_password">确认密码&amp;nbsp;</label>
-                            </div>
-                            <div class="col-lg-3 col-md-8">
-                              <input type="password" readonly="readonly" class="form-control o_website_form_input" t-att-value="supplier.confirm_password" name="confirm_password" required="1"/>
-                            </div>
-                          </div>
+                          <!--<div class="form-group row form-field o_website_form_required">-->
+                            <!--<div class="col-md-4 text-right col-lg-2">-->
+                              <!--<label class="col-form-label" for="password">密码&amp;nbsp;</label>-->
+                            <!--</div>-->
+                            <!--<div class="col-lg-3 col-md-8">-->
+                              <!--<input type="password" class="form-control o_website_form_input" t-att-value="supplier.password" name="password" required="1"/>-->
+                            <!--</div>-->
+                            <!--<div class="col-md-4 text-right col-lg-2">-->
+                              <!--<label class="col-form-label" for="confirm_password">确认密码&amp;nbsp;</label>-->
+                            <!--</div>-->
+                            <!--<div class="col-lg-3 col-md-8">-->
+                              <!--<input type="password" class="form-control o_website_form_input" t-att-value="supplier.confirm_password" name="confirm_password" required="1"/>-->
+                            <!--</div>-->
+                          <!--</div>-->
                           <div class="row form-group form-field o_website_form_required">
                             <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="mobile">手机号码</label>
@@ -583,6 +589,7 @@
                             </div>
                             <div class="col-lg-3 col-md-8">
                                 <select class="form-control o_website_form_input" name="country_id" id="supplier_info_country_id">
+                                  <option value="请选择">请选择</option>
                                   <t t-foreach="countrys" t-as="country">
                                     <option t-att-data="country.id" t-att-value="country.id" t-att-selected="country.id == supplier.country_id.id"><t t-esc="country.name"/></option>
                                   </t>
@@ -593,7 +600,7 @@
                             </div>
                             <div class="col-lg-3 col-md-8">
                               <select class="form-control o_website_form_input" name="state_id" id="supplier_info_state_id">
-                                 <option value=""></option>
+                                 <option value="请选择">请选择</option>
                                  <t t-foreach="states or []" t-as="state">
                                     <option class="state" t-att-value="state.id" t-att-country="state.country_id.id" t-att-selected="state.id == supplier.state_id.id">
                                         <t t-esc="state.name"/>
@@ -670,8 +677,9 @@
                     </div>
                   </div>
                   <div class="form-group row">
+                    <!--<div t-attf-class="clearfix oe_login_buttons text-center mb-1 {{'pt-2' if form_small else 'pt-3'}}">-->
                     <div class="offset-md-4 col-md-8 col-lg-7 offset-lg-5 pb32 pt16">
-                      <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text" data-original-title="" title="" aria-describedby="tooltip262165">下一步</button>
+                      <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text" title="" aria-describedby="tooltip262165">下一步</button>
                       <span id="o_website_form_result" class="text-danger ml8"/>
                     </div>
                   </div>

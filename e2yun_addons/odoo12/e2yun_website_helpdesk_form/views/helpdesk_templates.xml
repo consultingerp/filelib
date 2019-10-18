@@ -29,11 +29,15 @@
             <xpath expr="//t[@name='Helpdesk']" position="replace">
                 <t name="Helpdesk" priority="29" t-name="website.helpdesk">
                     <t t-call="website.layout">
-                         <link rel="stylesheet" type="text/css"
-                              href="/e2yun_website_helpdesk_form/static/src/css/date_time_global.css?version=1.0.40"/>
-                          <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/jquery.promptu-menu.js?version=1.0.9"></script>
-                         <link rel="stylesheet" type="text/css"
+                        <link rel="stylesheet" type="text/css"
+                              href="/e2yun_website_helpdesk_form/static/src/css/mobiscroll.custom.min.css?version=1.0.41"/>
+                        <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/mobiscroll.custom.min.js?version=1.0.10"></script>
+                         <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/address.js?version=1.0.10"></script>
+                         <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/city.js?version=1.0.10"></script>
+                        <link rel="stylesheet" type="text/css"
                               href="/e2yun_website_helpdesk_form/static/src/css/e2yun_helpdesk_ticket_style.css?version=1.0.10"/>
+                        <link rel="stylesheet" type="text/css"
+                              href="/e2yun_website_helpdesk_form/static/src/css/address_style.css?version=1.0.10"/>
                         <div class="mask-time" style="display:none"></div><!--遮罩层-->
                         <div class="time-area" style="display:none"><!--时间选择表格-->
                             <input type="hidden" name="date_" value=""></input>
@@ -87,23 +91,43 @@
                                                        placeholder="用户名" required="required"/>
                                                   <input type='hidden'
                                                        name="partner_id" t-att-value="default_values.get('partner_id', '')"/>
-
+                                                   <input type="hidden" name="ticket_type_id"  t-att-value="default_values.get('ticket_type_id', '').id"/>
+                                                   <input type='hidden'
+                                                       name="area_id" t-att-value="default_values.get('area_id', '')"/>
+                                                   <input type='hidden'
+                                                       name="city_id" t-att-value="default_values.get('city_id', '')"/>
+                                                  <input type='hidden'
+                                                       name="state_id" t-att-value="default_values.get('state_id', '')"/>
                                                 <label class="form-label">姓名
                                                     <span style="color: red;font-weight:  bold">*</span>
                                                 </label>
                                             </div>
                                             <div class="aui-form-group b-line form-field">
                                                 <input required="required" type="text" class="form-control"
-                                                       placeholder="" name="phone" t-att-value="default_values.get('phone', default_values.get('mobile', ''))"></input>
-                                                <label class="form-label">电话
+                                                       placeholder="" name="phone" t-att-value="default_values.get('mobile', default_values.get('phone', ''))"></input>
+                                                <label class="form-label">联系电话
                                                     <span style="color: red;font-weight:  bold">*</span>
                                                 </label>
                                             </div>
+
+                                            <div class="aui-form-group b-line">
+                                                <input class="form-control" name="user_phone" type="text" required="required" placeholder=""></input>
+                                                <label class="form-label">购买电话
+                                                 <span style="color: red;font-weight:  bold">*</span>
+                                                </label>
+                                            </div>
+                                            <div class="aui-form-group b-line form-field">
+                                                <input type="text" class="form-control"  readonly="readonly" value="" name="u_address" id="u_address" placeholder="请选择地区"></input>
+                                                <label class="form-label">所在地区
+                                                    <span style="color: red;font-weight:  bold"></span>
+                                                </label>
+                                            </div>
+
                                             <div class="aui-form-group b-line form-field">
                                                 <input required="required" type="text" name="address" class="form-control" placeholder=""
                                                        t-att-value="default_values.get('street', '')"
                                                 ></input>
-                                                <label class="form-label">地址
+                                                <label class="form-label">详细地址
                                                     <span style="color: red;font-weight:  bold">*</span>
                                                 </label>
                                             </div>
@@ -112,10 +136,19 @@
                                                 <div class="fill_date_item" id="doc-select-1">
                                                     <input type="text" placeholder="请选择开始时间"  class="form-control" name="order_datetime" id="order_datetime" required="required" readonly=""></input>
                                                 </div>
-
                                                 <label class="form-label">预约时间
-                                                    <span style="color: red;font-weight:  bold">*</span>
+                                                    <span style="color: red;font-weight:  bold;font-size:8px">后天及之后*</span>
                                                 </label>
+                                            </div>
+                                            <div class="aui-form-group b-line">
+                                                  <select class="pt_premise_protocol form-control" id="brand" name="brand">
+                                                    <t t-foreach="default_values.get('brandtype', '')" t-as="brandtype_op">
+                                                        <option t-att-value="brandtype_op.id">
+                                                            <t t-esc="brandtype_op.name"/>
+                                                        </option>
+                                                    </t>
+                                                </select>
+                                                <label class="form-label">品牌</label>
                                             </div>
                                             <div class="aui-form-group " style="margin-bottom:0">
                                                 <textarea required="required" name="name" class="form-control"
@@ -124,21 +157,12 @@
                                                     <span style="color: red;font-weight:  bold">*</span>
                                                 </label>
                                             </div>
-                                            <div class="aui-form-group b-line">
-                                                <input class="form-control" name="brand" placeholder=""></input>
-                                                <label class="form-label">品牌</label>
-                                            </div>
-
-                                            <div class="aui-form-group b-line">
-                                                <input class="form-control" name="user_phone" placeholder=""></input>
-                                                <label class="form-label">购买电话</label>
-                                            </div>
-
                                             <div class="divHeight"></div>
                                             <div class="aui-flex ">
                                                 <div class="aui-flex-box">
-                                                    <h2>附件</h2>
-                                                    <input type="file" name="attachments" class="aui-filest" multiple="true"/>
+                                                    <h2>附件   <span style="color: red;font-weight:  bold;font-size:8px">文件大小20M内*</span></h2>
+                                                    <!--capture="camera"-->
+                                                    <input type="file" name="attachments"    class="aui-files" multiple="true"  accept="image/*,application/pdf,video/*"/>
                                                 </div>
                                                 <div>
                                                     <i class="icon icon-link"></i>
@@ -167,12 +191,11 @@
                                 </section>
                             </form>
                         </section>
-
-
                     </t>
                 </t>
             </xpath>
         </template>
+
 
     </data>
 
