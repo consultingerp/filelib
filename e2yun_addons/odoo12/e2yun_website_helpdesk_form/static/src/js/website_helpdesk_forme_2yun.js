@@ -168,7 +168,11 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
             this.$target.find('.o_website_form_date').datetimepicker(datepickers_options);
 
 
-            setTimeout(this.wxGetLocation(), 2000);
+            setTimeout(this.wxGetLocation(), 20000);
+
+            this.$target.find('#addres').on('click', function (e) {
+                self.wxGetLocation();
+            });
 
             return this._super.apply(this, arguments);
         },
