@@ -45,6 +45,8 @@ class Academy(http.Controller):
         supplier_info = http.request.env['e2yun.supplier.info'].sudo().search([('login_name','=',login)],limit=1)
         #国家
         countrys = http.request.env['res.country'].sudo().search([])
+        # 城市
+        citys = http.request.env['res.state.city'].sudo().search([])
         # 开户行国家
         bank_countrys = http.request.env['res.country'].sudo().search([])
         # 开户行省份
@@ -52,14 +54,15 @@ class Academy(http.Controller):
         # 开户行城市
         bank_citys = http.request.env['res.state.city'].sudo().search([])
         # 开户行地区
-        bank_regons = http.request.env['res.city.area'].sudo().search([])
+        bank_regions = http.request.env['res.city.area'].sudo().search([])
         # 银行名称
         name_banks = http.request.env['res.bank'].sudo().search([])
         # 币种
         currencys_type = http.request.env['res.currency'].sudo().search([])
         #供应产品类别
         industrys = http.request.env['res.partner.industry'].sudo().search([])
-
+        # 供应商类型
+        supplier_types = http.request.env['supplier.type'].sudo().search([])
         if supplier_info and len(supplier_info) > 0:
             states = []
             if supplier_info.country_id:
@@ -70,13 +73,15 @@ class Academy(http.Controller):
             return http.request.render('e2yun_supplier_info.supplier_register_base_info',{'supplier': supplier_info,
                                                                                           'countrys':countrys,
                                                                                           'states':states,
+                                                                                          'citys':citys,
                                                                                           'bank_countrys': bank_countrys,
                                                                                           'bank_states':bank_states,
                                                                                           'bank_citys':bank_citys,
-                                                                                          'bank_regons':bank_regons,
+                                                                                          'bank_regions':bank_regions,
                                                                                           'name_banks':name_banks,
                                                                                           'currencys_type':currencys_type,
-                                                                                          'industrys':industrys})
+                                                                                          'industrys':industrys,
+                                                                                          'supplier_types': supplier_types})
         else:
             val = {
                 'company_name': user.company_name,
@@ -94,14 +99,15 @@ class Academy(http.Controller):
             return http.request.render('e2yun_supplier_info.supplier_register_base_info',{'supplier': supplier_info,
                                                                                           'countrys':countrys,
                                                                                           'states':states,
+                                                                                          'citys': citys,
                                                                                           'bank_countrys': bank_countrys,
                                                                                           'bank_states': bank_states,
                                                                                           'bank_citys': bank_citys,
-                                                                                          'bank_regons': bank_regons,
+                                                                                          'bank_regions': bank_regions,
                                                                                           'name_banks': name_banks,
                                                                                           'currencys_type': currencys_type,
-                                                                                          'industrys':industrys
-                                                                                          })
+                                                                                          'industrys':industrys,
+                                                                                          'supplier_types': supplier_types})
 
 
 

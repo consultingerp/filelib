@@ -98,6 +98,8 @@
                                                        name="city_id" t-att-value="default_values.get('city_id', '')"/>
                                                   <input type='hidden'
                                                        name="state_id" t-att-value="default_values.get('state_id', '')"/>
+                                                  <input type='hidden'
+                                                       name="is_wx_client" t-att-value="default_values.get('is_wx_client', '')"/>
                                                 <label class="form-label">姓名
                                                     <span style="color: red;font-weight:  bold">*</span>
                                                 </label>
@@ -124,7 +126,7 @@
                                             </div>
 
                                             <div class="aui-form-group b-line form-field">
-                                                <input required="required" type="text" name="address" class="form-control" placeholder=""
+                                                <input required="required" id="j_address" type="text" name="j_address" class="form-control" placeholder=""
                                                        t-att-value="default_values.get('street', '')"
                                                 ></input>
                                                 <label class="form-label">详细地址
