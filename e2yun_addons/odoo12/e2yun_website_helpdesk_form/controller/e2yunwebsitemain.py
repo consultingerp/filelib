@@ -26,6 +26,8 @@ class E2yunWebsiteForm(WebsiteForm):
             lang = request.env['ir.qweb.field'].user_lang()
             strftime_format = (u"%s %s" % (lang.date_format, lang.time_format))
             request.params['order_datetime'] = datetime.datetime.strftime(order_datetime, strftime_format)
+        if request.params.get('u_address') or request.params.get('j_address'):
+            request.params['address'] = request.params['u_address'] + request.params['j_address']
         reponse_website = super(E2yunWebsiteForm, self).website_form(model_name, **kwargs)
         return reponse_website
 
@@ -38,6 +40,8 @@ class E2yunWebsiteForm(WebsiteForm):
         street = request.env.user.partner_id._display_address()
         ticket_type = request.env['helpdesk.ticket.type'].sudo().search([('name', '=', '网页')], limit=1) or request.env['helpdesk.ticket.type'].sudo().search([], limit=1)
         brandtype = request.env['helpdesk.ticket.brandtype'].sudo().search([])
+        user_agent = request.httprequest.headers.get('user-agent').lower()
+        is_wx_client = '1' if 'micromessenger' in user_agent else '0'
         website_helpdesk_form.qcontext['default_values'].update({
             'phone': request.env.user.partner_id.phone,
             'mobile': request.env.user.partner_id.mobile,
@@ -49,7 +53,8 @@ class E2yunWebsiteForm(WebsiteForm):
             'partner_id': request.env.user.partner_id.id,
             'teams': teams,
             'ticket_type_id': ticket_type,
-            'brandtype': brandtype
+            'brandtype': brandtype,
+            'is_wx_client':is_wx_client
         })
         # 更新JSDK以备使用定位功能,获取当前用户地址报修。
         url_ = request.httprequest.url;
@@ -78,17 +83,20 @@ class E2yunWebsiteForm(WebsiteForm):
         demo = r.text
         soup = BeautifulSoup(demo, "html.parser")
         soup = soup.ul
+        team_id = None
         # print(r.request.url)
-        region_user = soup.contents[0].string[5:7]
-        if region_user and region_user == '广东':
-            region_user = '深圳'
-        team_id = request.env['helpdesk.team'].search([('name', 'like', region_user)], limit=1).id
+        if soup:
+            region_user = soup.contents[0].string[5:7]
+            if region_user and region_user == '广东':
+                region_user = '深圳'
+            team_id = request.env['helpdesk.team'].search([('name', 'like', region_user)], limit=1).id
+            _logger.info("地区：%s:%s" % (userip, region_user))
+            _logger.info("查询接口1：%s", soup.contents[0].string[5:])
+            _logger.info("查询接口2：%s", soup.contents[1].string[6:])
+            _logger.info("查询接口3：%s", soup.contents[2].string[6:])
         if not team_id:
+            _logger.info("获取IP地址，地区失败。")
             team_id = request.env['helpdesk.team'].search([], limit=1, order='id asc').id
-        _logger.info("地区：%s:%s" % (userip, region_user))
-        _logger.info("查询接口1：%s", soup.contents[0].string[5:])
-        _logger.info("查询接口2：%s", soup.contents[1].string[6:])
-        _logger.info("查询接口3：%s", soup.contents[2].string[6:])
         helpdeskurl = '/helpdesk/' + str(team_id) + '/submit'
         _logger.info("访问地址：%s" % helpdeskurl)
         # return http.local_redirect('/web/login?redirect=%s' % helpdeskurl)

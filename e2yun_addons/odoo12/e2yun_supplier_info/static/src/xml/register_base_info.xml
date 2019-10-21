@@ -54,17 +54,7 @@
                                 <input type="text" placeholder="与营业执照注册名称保持一致，可自动从注册页面带出" class="form-control o_website_form_input" t-att-value="supplier.company_name"  name="company_name" required=""/>
                               </div>
                             </div>
-                            <!--添加供应商类型-->
-                            <div class="row form-group form-field o_website_form_required_custom">
-                              <div class="col-md-4 text-md-right col-lg-2">
-                                <label class="col-form-label" for="supplier"> 供应商类型 </label>
-                              </div>
-                              <div class="col-lg-3 col-md-8">
-                                 <!--checked="checked"为默认选中-->
-                                <input type="Checkbox" name="supplier" value="生产类"/>生产类
-                                <input type="Checkbox" name="supplier" value="商贸类"/>商贸类
-                              </div>
-                            </div>
+
                             <div class="row form-group form-field">
                               <div class="col-md-4 text-md-right col-lg-2">
                                 <label class="col-form-label" for="website">公司网站</label>
@@ -78,7 +68,7 @@
                                 <label class="col-form-label" for="business_license"> 营业执照 </label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <input type="file"  class="form-control o_website_form_input"  name="business_license"/>
+                                <input type="file"  class="form-control o_website_form_input" t-att-value="supplier.business_license" name="business_license"/>
                               </div>
                               <div class="col-lg-5 col-md-8">
                                 <img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""
@@ -91,7 +81,14 @@
                                 <label class="col-form-label" for="validity_license"> 营业执照有效期 </label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <input type="date" placeholder="与营业执照保持一致" class="form-control o_website_form_input"  name="validity_license"/>
+                                <div class="o_website_form_date input-group date" id="datepicker3" data-target-input="nearest">
+                                  <input type="text" class="form-control datetimepicker-input o_website_form_input" data-target="#datepicker3" t-att-value="supplier.validity_license" name="validity_license"/>
+                                  <div class="input-group-append" data-target="#datepicker3" data-toggle="datetimepicker">
+                                    <div class="input-group-text">
+                                      <i class="fa fa-calendar"/>
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
                               <!--<div class="col-lg-5 col-md-8">-->
                                 <!--<img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""-->
@@ -111,41 +108,17 @@
                                      <!--height="60px" width="100px"/>-->
                               <!--</div>-->
                             </div>
-                            <!--企业性质-->
-                            <div class="row form-group form-field o_website_form_required_custom">
-                              <div class="col-md-4 text-md-right col-lg-2">
-                                <label class="col-form-label" for="nature_enterprise"> 企业性质 </label>
-                              </div>
-                              <div class="col-lg-3 col-md-8">
-                                <!--<input type="select" class="form-control o_website_form_input"  name="nature_enterprise"/>-->
-                                <select name="nature_enterprise" id="">
-                                  <option value="">请选择</option>
-                                  <option value="国家行政企业">国家行政企业</option>
-                                  <option value="公私合作企业">公私合作企业</option>
-                                  <option value="中外合资企业">中外合资企业</option>
-                                  <option value="社会组织机构">社会组织机构</option>
-                                  <option value="国际组织机构">国际组织机构</option>
-                                  <option value="外资企业">外资企业</option>
-                                  <option value="私营企业">私营企业</option>
-                                  <option value="集体企业">集体企业</option>
-                                  <option value="国防军事企业">国防军事企业</option>
-                                </select>
-                              </div>
-                              <!--<div class="col-lg-5 col-md-8">-->
-                                <!--<img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""-->
-                                     <!--height="60px" width="100px"/>-->
-                              <!--</div>-->
-                            </div>
+
                             <!--公司正门照片-->
                             <div class="row form-group form-field o_website_form_required_custom">
                               <div class="col-md-4 text-md-right col-lg-2">
                                 <label class="col-form-label" for="image_company"> 公司正门照片 </label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <input type="file"  class="form-control o_website_form_input"  name="image_company"/>
+                                <input type="file"  class="form-control o_website_form_input" t-att-value="supplier.image_company" name="image_company" required="1"/>
                               </div>
                               <div class="col-lg-5 col-md-8">
-                                <img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""
+                                <img t-attf-src="data:image/png;base64,#{supplier.image_company}" alt=""
                                      height="60px" width="100px"/>
                               </div>
                             </div>
@@ -155,10 +128,10 @@
                                 <label class="col-form-label" for="organization_chart"> 组织架构图 </label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <input type="file"  class="form-control o_website_form_input"  name="organization_chart"/>
+                                <input type="file"  class="form-control o_website_form_input" t-att-value="supplier.organization_chart" name="organization_chart" required="1"/>
                               </div>
                               <div class="col-lg-5 col-md-8">
-                                <img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""
+                                <img t-attf-src="data:image/png;base64,#{supplier.organization_chart}" alt=""
                                      height="60px" width="100px"/>
                               </div>
                             </div>
@@ -168,10 +141,10 @@
                                 <label class="col-form-label" for="image_product"> 工厂生产区照片 </label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <input type="file"  class="form-control o_website_form_input"  name="image_product"/>
+                                <input type="file"  class="form-control o_website_form_input" t-att-value="supplier.image_product" name="image_product"/>
                               </div>
                               <div class="col-lg-5 col-md-8">
-                                <img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""
+                                <img t-attf-src="data:image/png;base64,#{supplier.image_product}" alt=""
                                      height="60px" width="100px"/>
                               </div>
                             </div>
@@ -181,7 +154,7 @@
                                 <label class="col-form-label" for="registered_capital"> 注册资金 </label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <input type="text" placeholder="与营业执照保持一致" class="form-control o_website_form_input"  name="registered_capital"/>
+                                <input type="text" placeholder="与营业执照保持一致" class="form-control o_website_form_input" t-att-value="supplier.registered_capital" name="registered_capital"/>
                               </div>
                               <!--<div class="col-lg-5 col-md-8">-->
                                 <!--<img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""-->
@@ -194,7 +167,7 @@
                                 <label class="col-form-label" for="registered_address"> 注册地址 </label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <input type="text" class="form-control o_website_form_input"  name="registered_address" placeholder="与营业执照保持一致"/>
+                                <input type="text" class="form-control o_website_form_input" t-att-value="supplier.registered_address" name="registered_address" placeholder="与营业执照保持一致"/>
                               </div>
                               <!--<div class="col-lg-5 col-md-8">-->
                                 <!--<img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""-->
@@ -209,14 +182,99 @@
                                 <div class="o_website_form_flex">
                                   <div class="radio o_website_form_flex_item">
                                     <label>
-                                        <input type="radio" class="o_website_form_input" t-att-checked="supplier.listed_company == True" name="listed_company" value="t"/>
+                                        <input type="radio" class="form-control o_website_form_input" t-att-checked="supplier.listed_company == True" name="listed_company" value="t"/>
                                       <span> 是 </span>
                                     </label>
                                   </div>
                                   <div class="radio o_website_form_flex_item">
                                     <label>
-                                      <input type="radio" class="o_website_form_input" t-att-checked="supplier.listed_company == False" name="listed_company" value="f"/>
+                                      <input type="radio" class="form-control o_website_form_input" t-att-checked="supplier.listed_company == False" name="listed_company" value="f"/>
                                       <span> 否 </span>
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!--添加供应商类型(many2many)-->
+                            <div class="row form-group form-field o_website_form_required_custom">
+                              <div class="col-md-4 text-md-right col-lg-2">
+                              <label class="col-form-label" for="suppliertype_ids">供应商类型</label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                              <div class="o_website_form_flex">
+                                <t t-foreach="supplier_types" t-as="supplier_type">
+                                  <div class="checkbox o_website_form_flex_item">
+                                    <label>
+                                      <input type="checkbox" t-att-checked="supplier_type.id in supplier.suppliertype_ids.ids" class="o_website_form_input" t-att-value="supplier_type.id" name="suppliertype_ids"/>
+                                      <span>
+                                          <t t-esc="supplier_type.name"/>
+                                      </span>
+                                    </label>
+                                  </div>
+                                </t>
+                              </div>
+                            </div>
+                            </div>
+                            <!--企业性质-->
+                            <div class="row form-group form-field o_website_form_required_custom">
+                              <div class="col-md-4 text-md-right col-lg-2">
+                                <label class="col-form-label" for="nature_enterprise"> 企业性质 </label>
+                              </div>
+                              <div class="col-md-8">
+                                <!--<input type="select" class="form-control o_website_form_input"  name="nature_enterprise"/>-->
+                                <div class="o_website_form_flex">
+                                  <div class="radio o_website_form_flex_item">
+                                    <label>
+                                      <input type="radio" class="o_website_form_input" t-att-checked="supplier.nature_enterprise == 'State Administrative Enterprises'" name="nature_enterprise" value="State Administrative Enterprises"/>
+                                      <span> 国家行政企业 </span>
+                                    </label>
+                                  </div>
+                                  <div class="radio o_website_form_flex_item">
+                                    <label>
+                                      <input type="radio" class="o_website_form_input" t-att-checked="supplier.nature_enterprise == 'Public-Private Cooperative Enterprises'" name="nature_enterprise" value="Public-Private Cooperative Enterprises"/>
+                                      <span> 公私合作企业 </span>
+                                    </label>
+                                  </div>
+                                  <div class="radio o_website_form_flex_item">
+                                    <label>
+                                      <input type="radio" class="o_website_form_input" t-att-checked="supplier.nature_enterprise == 'Sino-foreign joint ventures'" name="nature_enterprise" value="Sino-foreign joint ventures"/>
+                                      <span> 中外合资企业 </span>
+                                    </label>
+                                  </div>
+                                  <div class="radio o_website_form_flex_item">
+                                    <label>
+                                      <input type="radio" class="o_website_form_input" t-att-checked="supplier.nature_enterprise == 'Social Organizations'" name="nature_enterprise" value="Social Organizations"/>
+                                      <span> 社会组织机构 </span>
+                                    </label>
+                                  </div>
+                                  <div class="radio o_website_form_flex_item">
+                                    <label>
+                                      <input type="radio" class="o_website_form_input" t-att-checked="supplier.nature_enterprise == 'International Organization Institutions'" name="nature_enterprise" value="International Organization Institutions"/>
+                                      <span> 国际组织机构 </span>
+                                    </label>
+                                  </div>
+                                  <div class="radio o_website_form_flex_item">
+                                    <label>
+                                      <input type="radio" class="o_website_form_input" t-att-checked="supplier.nature_enterprise == 'Foreign enterprise'" name="nature_enterprise" value="Foreign enterprise"/>
+                                      <span> 外资企业 </span>
+                                    </label>
+                                  </div>
+                                  <div class="radio o_website_form_flex_item">
+                                    <label>
+                                      <input type="radio" class="o_website_form_input" t-att-checked="supplier.nature_enterprise == 'private enterprise'" name="nature_enterprise" value="private enterprise"/>
+                                      <span> 私营企业 </span>
+                                    </label>
+                                  </div>
+                                  <div class="radio o_website_form_flex_item">
+                                    <label>
+                                      <input type="radio" class="o_website_form_input" t-att-checked="supplier.nature_enterprise == 'Collective enterprise'" name="nature_enterprise" value="Collective enterprise"/>
+                                      <span> 集体企业 </span>
+                                    </label>
+                                  </div>
+                                  <div class="radio o_website_form_flex_item">
+                                    <label>
+                                      <input type="radio" class="o_website_form_input" t-att-checked="supplier.nature_enterprise == 'Defense Military Enterprises'" name="nature_enterprise" value="Defense Military Enterprises"/>
+                                      <span> 国防军事企业 </span>
                                     </label>
                                   </div>
                                 </div>
@@ -291,11 +349,10 @@
                                       <span> 5000-10000人 </span>
                                     </label>
                                   </div>
-                            <!--新增公司简介-->
-
                                 </div>
                               </div>
                             </div>
+                            <!--新增公司简介-->
                             <div class="row form-group form-field">
                               <div class="col-md-4 text-md-right col-lg-2">
                                 <label class="col-form-label" for="company_profile"> 公司简介 </label>
@@ -332,7 +389,7 @@
                                 <label class="col-form-label" for="country_bank">开户行国家</label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <select class="form-control o_website_form_input" name="bank_country" id="supplier_info_bank_country">
+                                <select class="form-control o_website_form_input" name="bank_country" id="supplier_info_bank_country" required="1">
                                   <option value="请选择">请选择</option>
                                   <t t-foreach="bank_countrys" t-as="bank_country">
                                     <option t-att-data="bank_country.id" t-att-value="bank_country.id" t-att-selected="bank_country.id == supplier.country_bank.id"><t t-esc="bank_country.name"/></option>
@@ -346,7 +403,7 @@
                                 <label class="col-form-label" for="country_bank">开户行省份</label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <select class="form-control o_website_form_input" name="bank_state" id="supplier_info_bank_state">
+                                <select class="form-control o_website_form_input" name="bank_state" id="supplier_info_bank_state" required="1">
                                   <option value="请选择">请选择</option>
                                   <t t-foreach="bank_states" t-as="bank_state">
                                     <option t-att-data="bank_state.id" t-att-value="bank_state.id" t-att-selected="bank_state.id == supplier.province_bank.id"><t t-esc="bank_state.name"/></option>
@@ -360,7 +417,7 @@
                                 <label class="col-form-label" for="city_bank">开户行城市</label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <select class="form-control o_website_form_input" name="bank_city" id="supplier_info_bank_city">
+                                <select class="form-control o_website_form_input" name="bank_city" id="supplier_info_bank_city" required="1">
                                   <option value="请选择">请选择</option>
                                   <t t-foreach="bank_citys" t-as="bank_city">
                                     <option t-att-data="bank_city.id" t-att-value="bank_city.id" t-att-selected="bank_city.id == supplier.city_bank.id"><t t-esc="bank_city.name"/></option>
@@ -381,10 +438,10 @@
                                   </t>
                                 </select>
                               </div>
-                              <div class="col-lg-5 col-md-8">
-                                <img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""
-                                     height="60px" width="100px"/>
-                              </div>
+                              <!--<div class="col-lg-5 col-md-8">-->
+                                <!--<img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""-->
+                                     <!--height="60px" width="100px"/>-->
+                              <!--</div>-->
                             </div>
                             <!--银行名称-->
                             <div class="row form-group form-field o_website_form_required_custom">
@@ -392,7 +449,7 @@
                                 <label class="col-form-label" for="name_bank"> 银行名称 </label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <select class="form-control o_website_form_input" name="name_bank" id="supplier_info_name_bank">
+                                <select class="form-control o_website_form_input" name="name_bank" id="supplier_info_name_bank" required="1">
                                   <option value="请选择">请选择</option>
                                   <t t-foreach="name_banks" t-as="name_bank">
                                     <option t-att-data="name_bank.id" t-att-value="name_bank.id" t-att-selected="name_bank.id == supplier.name_bank.id"><t t-esc="name_bank.name"/></option>
@@ -410,7 +467,7 @@
                                 <label class="col-form-label" for="name_bank_branch"> 分行名称 </label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <input type="text" class="form-control o_website_form_input"  name="name_bank_branch"/>
+                                <input type="text" class="form-control o_website_form_input" t-att-value="supplier.name_bank_branch" name="name_bank_branch"/>
                               </div>
                               <!--<div class="col-lg-5 col-md-8">-->
                                 <!--<img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""-->
@@ -423,19 +480,7 @@
                                 <label class="col-form-label" for="name_banks"> 支行名称 </label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <input type="text" class="form-control o_website_form_input"  name="name_banks"/>
-                                <!--<select name="nature_enterprise" id="">-->
-                                  <!--<option value="">请选择</option>-->
-                                  <!--<option value="国家行政企业">国家行政企业</option>-->
-                                  <!--<option value="公私合作企业">公私合作企业</option>-->
-                                  <!--<option value="中外合资企业">中外合资企业</option>-->
-                                  <!--<option value="社会组织机构">社会组织机构</option>-->
-                                  <!--<option value="国际组织机构">国际组织机构</option>-->
-                                  <!--<option value="外资企业">外资企业</option>-->
-                                  <!--<option value="私营企业">私营企业</option>-->
-                                  <!--<option value="集体企业">集体企业</option>-->
-                                  <!--<option value="国防军事企业">国防军事企业</option>-->
-                                <!--</select>-->
+                                <input type="text" class="form-control o_website_form_input" t-att-value="supplier.name_banks" name="name_banks"/>
                               </div>
                               <!--<div class="col-lg-5 col-md-8">-->
                                 <!--<img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""-->
@@ -448,7 +493,7 @@
                                 <label class="col-form-label" for="account_bank"> 银行账号 </label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <input type="text" class="form-control o_website_form_input"  name="account_bank"/>
+                                <input type="text" class="form-control o_website_form_input" t-att-value="supplier.account_bank" name="account_bank"/>
                               </div>
                               <!--<div class="col-lg-5 col-md-8">-->
                                 <!--<img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""-->
@@ -461,7 +506,7 @@
                                 <label class="col-form-label" for="name_account"> 账号名称(受益人) </label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <input type="text"  class="form-control o_website_form_input"  name="name_account"/>
+                                <input type="text"  class="form-control o_website_form_input" t-att-value="supplier.name_account" name="name_account"/>
                               </div>
                               <!--<div class="col-lg-5 col-md-8">-->
                                 <!--<img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""-->
@@ -475,15 +520,16 @@
                               </div>
                               <div class="col-lg-3 col-md-8">
                                 <select class="form-control o_website_form_input" name="currency_type" id="supplier_info_currency_type">
+                                  <option value="请选择">请选择</option>
                                   <t t-foreach="currencys_type" t-as="currency_type">
                                     <option t-att-data="currency_type.id" t-att-value="currency_type.id" t-att-selected="currency_type.id == supplier.currency_type.id"><t t-esc="currency_type.name"/></option>
                                   </t>
                                 </select>
                               </div>
-                              <div class="col-lg-5 col-md-8">
-                                <img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""
-                                     height="60px" width="100px"/>
-                              </div>
+                              <!--<div class="col-lg-5 col-md-8">-->
+                                <!--<img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""-->
+                                     <!--height="60px" width="100px"/>-->
+                              <!--</div>-->
                             </div>
                             <!--银行代码-->
                             <div class="row form-group form-field">
@@ -491,12 +537,12 @@
                                 <label class="col-form-label" for="code_bank"> 银行代码 </label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <input type="text"  class="form-control o_website_form_input"  name="code_bank"/>
+                                <input type="text"  class="form-control o_website_form_input" t-att-value="supplier.code_bank" name="code_bank"/>
                               </div>
-                              <div class="col-lg-5 col-md-8">
-                                <img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""
-                                     height="60px" width="100px"/>
-                              </div>
+                              <!--<div class="col-lg-5 col-md-8">-->
+                                <!--<img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""-->
+                                     <!--height="60px" width="100px"/>-->
+                              <!--</div>-->
                             </div>
                             <!--开户行资料附件-->
                             <div class="row form-group form-field o_website_form_required_custom">
@@ -504,7 +550,7 @@
                                 <label class="col-form-label" for="enclosure_bank"> 开户行资料附件 </label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <input type="file" class="form-control o_website_form_input"  name="enclosure_bank"/>
+                                <input type="file" class="form-control o_website_form_input" t-att-value="supplier.enclosure_bank" name="enclosure_bank"/>
                               </div>
                               <!--<div class="col-lg-5 col-md-8">-->
                                 <!--<img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""-->
@@ -532,13 +578,13 @@
                               <label class="col-form-label" for="name">联系人&amp;nbsp;</label>
                             </div>
                             <div class="col-lg-3 col-md-8">
-                              <input type="text" class="form-control o_website_form_input" name="name" required="1"/>
+                              <input type="text" class="form-control o_website_form_input" t-att-value="supplier.name" name="name" required="1"/>
                             </div>
                             <div class="col-md-4 text-right col-lg-2">
                               <label class="col-form-label" for="login_name">登录名&amp;nbsp;</label>
                             </div>
                             <div class="col-lg-3 col-md-8">
-                              <input type="text" readonly="readonly" class="form-control o_website_form_input" t-att-value="supplier.login_name" name="login_name" required="1"/>
+                              <input type="text" readonly="readonly" class="form-control o_website_form_input" t-att-value="supplier.login_name" name="login_name" />
                             </div>
                           </div>
                           <!--<div class="form-group row form-field o_website_form_required">-->
@@ -614,13 +660,21 @@
                               <label class="col-form-label" for="city">城市</label>
                             </div>
                             <div class="col-lg-3 col-md-8">
-                              <input type="text" class="form-control o_website_form_input" t-att-value="supplier.city" name="city"/>
+                              <!--<input type="text" class="form-control o_website_form_input" t-att-value="supplier.city" name="city"/>-->
+                               <select class="form-control o_website_form_input" name="city" id="supplier_info_city">
+                                 <option value="请选择">请选择</option>
+                                 <t t-foreach="citys or []" t-as="city">
+                                    <option class="city" t-att-value="city.id" t-att-state="city.state_id.id" t-att-selected="city.id == supplier.city.id">
+                                        <t t-esc="city.name"/>
+                                    </option>
+                                 </t>
+                               </select>
                             </div>
                             <div class="col-md-4 text-md-right col-lg-2">
-                              <label class="col-form-label" for="street">详细地址</label>
+                              <label class="col-form-label" for="street2">详细地址</label>
                             </div>
                             <div class="col-lg-3 col-md-8 col-lg-2">
-                              <input type="text" class="form-control o_website_form_input" t-att-value="supplier.street" name="street"/>
+                              <input type="text" class="form-control o_website_form_input" t-att-value="supplier.street2" name="street2"/>
                             </div>
                           </div>
                           <p/>

@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="view_customer_refund_report" model="ir.ui.view">
-            <field name="name">customer.refund.report</field>
+<!--        <record id="view_customer_refund_report" model="ir.ui.view">-->
+<!--            <field name="name">customer.refund.report</field>-->
+<!--            <field name="model">customer_refund.report</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <form string="客户退款查询">-->
+<!--                    <group>-->
+<!--                        <field name="date_from"/>-->
+<!--                        <field name="date_end"/>-->
+<!--                        <field name="shop_name"/>-->
+<!--                        <field name="customer_name"/>-->
+<!--                        <field name="mobile_phone"/>-->
+<!--                    </group>-->
+<!--                    <footer>-->
+<!--                        <button name="open_table" string="查询" type="object"  class="oe_highlight"  />-->
+<!--                    </footer>-->
+<!--                </form>-->
+<!--            </field>-->
+<!--        </record>-->
+        <record id="customer_refund_report_search" model="ir.ui.view">
+            <field name="name">Customer Refund Search</field>
             <field name="model">customer_refund.report</field>
             <field name="arch" type="xml">
-                <form string="客户退款查询">
-                    <group>
-                        <field name="date_from"/>
-                        <field name="date_end"/>
-                        <field name="shop_name"/>
-                        <field name="customer_name"/>
-                        <field name="mobile_phone"/>
-                    </group>
-                    <footer>
-                        <button name="open_table" string="查询" type="object"  class="oe_highlight"  />
-                    </footer>
-                </form>
+                <search string="Customer Refund Search">
+                    <field name="apply_date" operator="&gt;=" string = '日期从'/>
+                    <field name="apply_date" operator="&lt;=" string = '日期到'/>
+                    <field name="shop_name"/>
+                    <field name="customer_name"/>
+                    <field name="mobile_phone"/>
+                </search>
             </field>
-        </record>
-        <record id="action_customer_refund_report" model="ir.actions.act_window">
-            <field name="name">客户退款查询</field>
-            <field name="res_model">customer_refund.report</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="view_customer_refund_report"/>
-            <field name="target">new</field>
-        </record>
-        <menuitem action="action_customer_refund_report"
-                  id="menu_action_customer_refund_report"
-                  name="客户退款查询"
-                  parent="account.menu_finance_receivables"/>
-
+        </record>2
         <record id="customer_refund_report_tree" model="ir.ui.view">
             <field name="name">customer.refund.report.tree</field>
             <field name="model">customer_refund.report</field>
@@ -64,7 +64,15 @@
                 </tree>
             </field>
         </record>
-
-
+        <record id="action_customer_refund_report" model="ir.actions.act_window">
+            <field name="name">客户退款查询</field>
+            <field name="res_model">customer_refund.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem action="action_customer_refund_report"
+                  id="menu_action_customer_refund_report"
+                  name="客户退款查询"
+                  parent="account.menu_finance_receivables"/>
     </data>
 </odoo>
