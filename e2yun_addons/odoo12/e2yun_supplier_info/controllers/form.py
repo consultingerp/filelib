@@ -96,7 +96,7 @@ class ContactController(WebsiteForm):
             try:
                 if model_name == 'e2yun.supplier.info':
                     supplier_info_obj = http.request.env['e2yun.supplier.info'].sudo()
-                    supplier_info = supplier_info_obj.search([('login_name', '=', data['record']['name'])])
+                    supplier_info = supplier_info_obj.search([('login_name', '=', data['record']['login_name'])])
                     supplier_info.write(data['record'])
                     id_record = supplier_info.id
                 else:
