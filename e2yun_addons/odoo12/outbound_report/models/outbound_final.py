@@ -24,9 +24,7 @@ class OutboundFinal(models.Model):
     vkorgtext = fields.Char('事业部')
     vtweg = fields.Char('分销渠道')
     ywy = fields.Char('导购员')
-    # mendian = fields.Char('门店编码')
     kunnr = fields.Many2one('crm.team', '门店')
-    # jine = fields.Char('金额')
     jiesuanjine = fields.Char('结算小计')
     xiaoshoujine = fields.Char('销售小计')
 
@@ -56,7 +54,7 @@ class OutboundFinal(models.Model):
         else:
             ywy_sql = ""
 
-        sql_str = "select * from outbound_final where %s %s %s %s %s" % (LFADT_sql, vtweg_sql, vkorgtext_sql, kunnr_sql, ywy_sql)
+        sql_str = "select * from outbound_final where %s %s %s %s %s %s" % (werks_sql, LFADT_sql, vtweg_sql, vkorgtext_sql, kunnr_sql, ywy_sql)
 
         self._cr.execute(sql_str)
 
@@ -82,15 +80,16 @@ class OutboundFinal(models.Model):
         ctx['kunnr'] = data['kunnr']
         ctx['ywy'] = data['ywy']
 
-        self.init_date(ctx)
+        # self.init_date(ctx)
 
         return {
             'name': '出库报表查询',
-            'view_type': 'form',
-            'view_mode': 'tree',
+            'view_type': 'dashboard',
+            'view_mode': 'dashboard',
             'res_model': 'outbound.final',
             'type': 'ir.actions.act_window',
-            'context': ctx,
+            'views': [[2812, 'dashboard'], ],
+            'context': ctx.update({'dashboard_view_ref': 'outbound_report.outbound_report_dashboard_view'}),
         }
 
     def search(self, args, offset=0, limit=None, order=None, count=False):
@@ -101,7 +100,7 @@ class OutboundFinal(models.Model):
         domain_list.append(sql2)
         if self._context['werks']:
             werks_query = ('werks', '=', self._context['werks'])
-            domain_list.append(werks_query)
+            # domain_list.append(werks_query)
         if self._context['vtweg']:
             vtweg_query = ('vtweg', '=', self._context['vtweg'])
             domain_list.append(vtweg_query)
