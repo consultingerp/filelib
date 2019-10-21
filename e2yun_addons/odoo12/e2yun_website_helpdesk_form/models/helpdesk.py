@@ -17,6 +17,8 @@ class HelpdeskTicket(models.Model):
 
     address = fields.Char(string='联系地址')
     u_address = fields.Char(string='所在地')
+    j_address = fields.Char(string='具体位置')
+    is_wx_client = fields.Char(string='wx')
     order_datetime = fields.Datetime(string='预约时间', required=True, default=lambda self: fields.Datetime.now())
     user_phone = fields.Char('购买电话')
     phone = fields.Char('联系电话')
