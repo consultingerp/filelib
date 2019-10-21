@@ -120,6 +120,20 @@ class Academy(http.Controller):
     #完成
     @http.route('/supplier/register_done/', auth='public', website=True)
     def done(self, **kw):
+        user = http.request.env.user
+        if user:
+            login = user.login
+            supplier_info = http.request.env['e2yun.supplier.info'].sudo().search([('login_name', '=', login)], limit=1)
+            if supplier_info:
+                template_id = http.request.env.ref('supplier_register.register_info_submit_mail_template')
+                http.request.env['mail.thread'].sudo().message_post_with_template(
+                    template_id.id,
+                    model='e2yun.supplier.info',
+                    res_id=supplier_info.id,
+                    composition_mode='mass_mail',
+                    partner_ids=supplier_info.partner_id.ids,
+                )
+
         return http.request.render('e2yun_supplier_info.supplier_register_done')
 
     @http.route('/supplier/register_base_info_form/', type='http',auth='public', methods=['POST'],website=True)
