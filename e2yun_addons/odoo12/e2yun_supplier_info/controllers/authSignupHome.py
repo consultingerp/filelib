@@ -53,3 +53,12 @@ class AuthSignupHome(AuthSignupHome):
             values['lang'] = request.lang
         self._signup_with_values(qcontext.get('token'), values)
         request.env.cr.commit()
+        template_id = request.env.ref('supplier_register.register_user_mail_template')
+        user = request.env.user
+        request.env['mail.thread'].sudo().message_post_with_template(
+            template_id.id,
+            model='res.users',
+            res_id=user.id,
+            composition_mode='mass_mail',
+            partner_ids=user.partner_id.ids,
+        )

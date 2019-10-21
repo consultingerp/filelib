@@ -159,14 +159,13 @@ class e2yun_supplier_info(models.Model):
     name_bank = fields.Many2one('res.bank', '银行名称')
     name_bank_branch = fields.Char('分行名称')
     name_banks = fields.Char('支行名称')
-    account_bank = fields.Many2one('res.partner.bank', '银行账号')
+    account_bank = fields.Char('银行账号')
     name_account = fields.Char('账号名称')
     currency_type = fields.Many2one('res.currency', '币种')
     code_bank = fields.Char('银行代码')
     enclosure_bank = fields.Binary('开户行资料附件')
     # 供应商类型
-    production = fields.Boolean('生产类')
-    trade = fields.Boolean('商贸类')
+    suppliertype_ids = fields.Many2many('supplier.type',string='供应商类型')
 
     parent_account = fields.Many2one('res.partner', company_dependent=True, string='母公司')
     activity_user_id = fields.Many2one('res.users', company_dependent=True, string='责任用户')

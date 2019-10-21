@@ -2,22 +2,22 @@
 
 from odoo import models, fields, api, exceptions, _
 from odoo.exceptions import ValidationError, Warning
-import suds.client
+import suds.client, time
 
 class e2yun_customer_payment_extend(models.Model):
     _inherit = 'account.payment'
 
-    @api.depends('payment_type2')
-    @api.onchange('payment_type2')
-    def _onchange_(self):
-        if self.payment_type2 == 'D11':
-            self.payment_status = 'A1'
-        elif self.payment_type2 == 'D12':
-            self.payment_status = 'A2'
-        elif self.payment_type2 == 'D13':
-            self.payment_status = 'A3'
-        elif self.payment_type2 == 'D16':
-            self.payment_status = 'A4'
+    # @api.depends('payment_type2')
+    # @api.onchange('payment_type2')
+    # def _onchange_(self):
+    #     if self.payment_type2 == 'D11':
+    #         self.payment_status = 'A1'
+    #     elif self.payment_type2 == 'D12':
+    #         self.payment_status = 'A2'
+    #     elif self.payment_type2 == 'D13':
+    #         self.payment_status = 'A3'
+    #     elif self.payment_type2 == 'D16':
+    #         self.payment_status = 'A4'
 
     @api.depends('related_shop')
     @api.onchange('related_shop')
@@ -62,68 +62,101 @@ class e2yun_customer_payment_extend(models.Model):
     def _compute_show_amount(self):
         self.env['crm.team'].browse('related_shop')
 
-    def sync_customer_payment_to_pos(self):
-        for r in self:
-            if r.state == 'draft':
-                raise exceptions.Warning('状态为草稿单据，不能同步到POS系统')
+    def sync_customer_payment_to_pos(self, res):
+        for r in res:
+            # if r.state == 'draft':
+            #     raise exceptions.Warning('状态为草稿单据，不能同步到POS系统')
 
             ICPSudo = self.env['ir.config_parameter'].sudo()
             url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/CreatePayment?wsdl'  # webservice调用地址
             client = suds.client.Client(url)
 
-            now = self.create_date.replace(microsecond=0)
+            now = r.create_date.replace(microsecond=0)
 
-            result = client.service.createPayment(r.company_id.company_code,  # 公司
-                                                 r.receipt_Num or '',  # 收款编号
-                                                 r.company_id.name or '',  # 公司名称
-                                                 r.po_num or '',  # PO
-                                                 r.amount or '',  # 收款金额(收款结算金额
+            try:
+                result = client.service.createPayment(r.company_id.company_code,  # 公司
+                                                     r.receipt_Num or '',  # 收款编号
+                                                     r.company_id.name or '',  # 公司名称
+                                                     r.po_num or '',  # PO
+                                                     r.amount or '',  # 收款金额(收款结算金额
 
-                                                 '',  # 支票号
-                                                 r.sales_num or '',  # 销售单号
-                                                 r.payment_voucher or '',  # 交款凭证
-                                                 r.related_shop.shop_code or '',  # 门店
-                                                 r.partner_id.app_code,  # 终端客户
+                                                     '',  # 支票号
+                                                     r.sales_num or '',  # 销售单号
+                                                     r.payment_voucher or '',  # 交款凭证
+                                                     r.related_shop.shop_code or '',  # 门店
+                                                     r.partner_id.app_code,  # 终端客户
 
-                                                 '',  # 旺旺号
-                                                 r.payment_date or '',  # 交款日期
-                                                 r.handing_cost or '',  # 手续费
-                                                 'CNY',  # 货币
-                                                 r.communication or '',  # 备注
-                                                 r.marketing_activity or '',  # 参与市场活动
-                                                 '',  # 到期日期
+                                                     '',  # 旺旺号
+                                                     r.payment_date or '',  # 交款日期
+                                                     r.handing_cost or '',  # 手续费
+                                                     'CNY',  # 货币
+                                                     r.communication or '',  # 备注
+                                                     r.marketing_activity or '',  # 参与市场活动
+                                                     '',  # 到期日期
 
-                                                 r.payment_type2 or '',  # 支付方式
-                                                 r.payment_status or '',  # 交款类型
-                                                 self.env.user.name,  # 经手人
-                                                 r.sales_num or '',  # 收据单号
-                                                 '',  # 支票状态
-                                                 '',  # 收据日期
-                                                 r.bank_num.bank_accont or '',  # 银行账户
-                                                 r.customer_po or '',  # 客户PO
+                                                     r.payment_type2 or '',  # 支付方式
+                                                     r.payment_status or '',  # 交款类型
+                                                     self.env.user.name,  # 经手人
+                                                     r.sales_num or '',  # 收据单号
+                                                     '',  # 支票状态
+                                                     '',  # 收据日期
+                                                     r.bank_num.bank_accont or '',  # 银行账户
+                                                     r.customer_po or '',  # 客户PO
 
-                                                 self.env.user.name,  # 创建人
-                                                 now,  # 创建日期
-                                                 r.id,
-                                                 r.accept_amount #客户交款金额
-                                                 )
+                                                     self.env.user.name,  # 创建人
+                                                     now,  # 创建日期
+                                                     r.id,
+                                                     r.accept_amount #客户交款金额
+                                                     )
+            except Exception as e:
+                raise e
             r.receipt_Num = result[1:]
             if result[0] != 'S':
                 raise exceptions.Warning('同步到POS系统出现错误，请检查输入的数据'+result)
         return True
 
+    def transport_wechat_message(self, res):  # 微信消息推送--客户付款
+        if res.accept_amount:
+            trans_amount = res.accept_amount
+        else:
+            trans_amount = res.amount
+        user_data = {
+            "first": {
+                "value": "付款成功通知"
+            },
+            "keyword1": {
+                "value": "time.strftime('%Y.%m.%d',time.localtime(time.time()))"
+            },
+            "keyword2": {
+                "value": trans_amount,
+                "color": "#173177"
+            },
+            "keyword3": {
+                "value": res.related_shop
+            },
+            "keyword4": {
+                "value": res.partner_id
+            },
+            "keyword5": {
+                "value": res.payment_type2
+            },
+            "remark": {
+                "value": "客户PO号:%s" % res.customer_po
+            }
+        }
+        # if self.env.user.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
+        #     self.env.user.wx_user_id.send_template_message(
+        #         user_data, template_name='客户付款测试', partner=self.env.user.partner_id, url=res.access_url)
 
     @api.model
     def create(self, vals_list):
-        atch = vals_list['payment_attachments'] #[[6, false, [11077, 11022]]]
+        atch = vals_list['payment_attachments']  # [[6, false, [11077, 11022]]] 展开多层list
         temp = []
-        for r in atch:  #[6,0,[11077]]
+        for r in atch:  # [6,0,[11077]]
             if type(r) is list:
-
                 for r1 in r:
-                    if type(r1) is list:  #6, 0, [11077, 11022]
+                    if type(r1) is list:  # 6, 0, [11077, 11022]
                         temp.extend(r1)
-
         for ids in temp:
             # atch_id = ids
             atch_line = self.env['ir.attachment'].browse(ids)
@@ -133,7 +166,7 @@ class e2yun_customer_payment_extend(models.Model):
             raise Warning(
                 _("付款金额不能为0!"))
 
-        if not vals_list.get('journal_id',False):
+        if not vals_list.get('journal_id', False):
             # currency_id = self.env['res.company'].browse(vals_list.get('company_id', False)).currency_id.id
             # journal = self.env['account.journal'].search(
             #     [('type', 'in', ('bank', 'cash')), ('currency_id', '=', currency_id)], limit=1)
@@ -142,37 +175,43 @@ class e2yun_customer_payment_extend(models.Model):
             if journal:
                 vals_list['journal_id'] = journal.id
             else:
-                journal = self.env['account.journal'].search([],limit=1)
+                journal = self.env['account.journal'].search([], limit=1)
                 if journal:
                     vals_list['journal_id'] = journal.id
 
         res = super(e2yun_customer_payment_extend, self).create(vals_list)
+
+        #pos同步的不要再次同步回去
+        if(vals_list.get('pos_flag'),False):
+            self.sync_customer_payment_to_pos(res)
+
+        self.transport_wechat_message(res)
         return res
 
-    @api.one
-    def write(self, vals):
-
-        if vals.get('amount', False):
-            if vals['amount'] == 0:
-                raise Warning(_("付款金额不能为0!"))
-
-        if vals.get('payment_attachments'):
-            atch = vals['payment_attachments']
-            temp = []
-            for r in atch:
-                if type(r) is list:
-
-                    for r1 in r:
-                        if type(r1) is list:
-                            temp.extend(r1)
-
-            for ids in temp:
-                # atch_id = ids
-                atch_line = self.env['ir.attachment'].browse(ids)
-                atch_line.write({'res_model': 'account.payment'})
-            return super(e2yun_customer_payment_extend, self).write(vals)
-        else:
-            return super(e2yun_customer_payment_extend, self).write(vals)
+    # @api.one
+    # def write(self, vals):
+    #
+    #     if vals.get('amount', False):
+    #         if vals['amount'] == 0:
+    #             raise Warning(_("付款金额不能为0!"))
+    #
+    #     if vals.get('payment_attachments'):
+    #         atch = vals['payment_attachments']
+    #         temp = []
+    #         for r in atch:
+    #             if type(r) is list:
+    #
+    #                 for r1 in r:
+    #                     if type(r1) is list:
+    #                         temp.extend(r1)
+    #
+    #         for ids in temp:
+    #             # atch_id = ids
+    #             atch_line = self.env['ir.attachment'].browse(ids)
+    #             atch_line.write({'res_model': 'account.payment'})
+    #         return super(e2yun_customer_payment_extend, self).write(vals)
+    #     else:
+    #         return super(e2yun_customer_payment_extend, self).write(vals)
 
     @api.model
     def get_payment_attachments(self, payment_id):

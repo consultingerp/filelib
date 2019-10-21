@@ -19,7 +19,7 @@
                     timestamp: '<t t-raw="timestamp"/>',
                     nonceStr: '<t t-raw="noncestr"/>',
                     signature: '<t t-raw="signature"/>',
-                    jsApiList: ['openLocation', 'openLocation', 'onMenuShareAppMessage',
+                    jsApiList: ['openLocation', 'onMenuShareAppMessage',
                     'chooseImage','scanQRCode','getLocation']
                 });  //end   config
                 wx.ready(function () {
