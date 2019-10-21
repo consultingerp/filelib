@@ -83,17 +83,20 @@ class E2yunWebsiteForm(WebsiteForm):
         demo = r.text
         soup = BeautifulSoup(demo, "html.parser")
         soup = soup.ul
+        team_id = None
         # print(r.request.url)
-        region_user = soup.contents[0].string[5:7]
-        if region_user and region_user == '广东':
-            region_user = '深圳'
-        team_id = request.env['helpdesk.team'].search([('name', 'like', region_user)], limit=1).id
+        if soup:
+            region_user = soup.contents[0].string[5:7]
+            if region_user and region_user == '广东':
+                region_user = '深圳'
+            team_id = request.env['helpdesk.team'].search([('name', 'like', region_user)], limit=1).id
+            _logger.info("地区：%s:%s" % (userip, region_user))
+            _logger.info("查询接口1：%s", soup.contents[0].string[5:])
+            _logger.info("查询接口2：%s", soup.contents[1].string[6:])
+            _logger.info("查询接口3：%s", soup.contents[2].string[6:])
         if not team_id:
+            _logger.info("获取IP地址，地区失败。")
             team_id = request.env['helpdesk.team'].search([], limit=1, order='id asc').id
-        _logger.info("地区：%s:%s" % (userip, region_user))
-        _logger.info("查询接口1：%s", soup.contents[0].string[5:])
-        _logger.info("查询接口2：%s", soup.contents[1].string[6:])
-        _logger.info("查询接口3：%s", soup.contents[2].string[6:])
         helpdeskurl = '/helpdesk/' + str(team_id) + '/submit'
         _logger.info("访问地址：%s" % helpdeskurl)
         # return http.local_redirect('/web/login?redirect=%s' % helpdeskurl)
