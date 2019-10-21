@@ -164,7 +164,7 @@
                                                 <div class="aui-flex-box">
                                                     <h2>附件   <span style="color: red;font-weight:  bold;font-size:8px">文件大小20M内*</span></h2>
                                                     <!--capture="camera"-->
-                                                    <input type="file" name="attachments"    class="aui-files" multiple="true"  accept="image/*,application/pdf,video/*"/>
+                                                    <input type="file" name="attachments"      multiple="true"   accept="image/*,application/pdf,video/*"/>
                                                 </div>
                                                 <div>
                                                     <i class="icon icon-link"></i>
