@@ -18,13 +18,7 @@
             <xpath expr="//field[@name='vat']" position="before">
                 <!--<field name="supplier_code" attrs="{'invisible':[('supplier','=',False)]}"/>-->
                 <!--<field name="organ_code" attrs="{'invisible':[('supplier','=',False)]}"/>-->
-                <label for="production" string="供应商类型"/>
-                    <div>
-                        <field name="production" attrs="{'invisible':[('supplier','=',False)]}"/>
-                        <label for="production"/>
-                        <field name="trade" attrs="{'invisible':[('supplier','=',False)]}"/>
-                        <label for="trade"/>
-                    </div>
+                <field name="suppliertype_ids" widget="many2many_tags"/>
                 <field name="nature_enterprise" attrs="{'invisible':[('supplier','=',False)]}"/>
                 <field name="registered_address" placeholder="与营业执照保持一致" attrs="{'invisible':[('supplier','=',False)]}"/>
                 <field name="annual_turnover" attrs="{'invisible':[('supplier','=',False)]}"/>
