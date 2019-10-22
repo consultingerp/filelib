@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- 同步的远程pos地址
+        <record id="e2yun_pos_url" model="ir.config_parameter">
+            <field name="key">e2yun.pos_url</field>
+            <field name="value">http://localhost:8080/</field>
+        </record>-->
+
+        <!-- Pos Sync PageSize 同步每页多少行
+        <record id="e2yun_pos_sync_pageSize" model="ir.config_parameter">
+            <field name="key">e2yun.pos_sync_pageSize</field>
+            <field name="value">20</field>
+        </record>-->
+    </data>
+</odoo>

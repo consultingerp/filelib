@@ -179,10 +179,12 @@ class e2yun_customer_payment_extend(models.Model):
                 if journal:
                     vals_list['journal_id'] = journal.id
 
+        pos_flag = vals_list.get('pos_flag',False)
+        del vals_list['pos_flag']
         res = super(e2yun_customer_payment_extend, self).create(vals_list)
 
         #pos同步的不要再次同步回去
-        if(vals_list.get('pos_flag'),False):
+        if(not pos_flag):
             self.sync_customer_payment_to_pos(res)
 
         self.transport_wechat_message(res)
