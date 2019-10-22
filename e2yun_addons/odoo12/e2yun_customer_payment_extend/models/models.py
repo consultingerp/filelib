@@ -180,7 +180,8 @@ class e2yun_customer_payment_extend(models.Model):
                     vals_list['journal_id'] = journal.id
 
         pos_flag = vals_list.get('pos_flag',False)
-        del vals_list['pos_flag']
+        if pos_flag:
+            del vals_list['pos_flag']
         res = super(e2yun_customer_payment_extend, self).create(vals_list)
 
         #pos同步的不要再次同步回去
