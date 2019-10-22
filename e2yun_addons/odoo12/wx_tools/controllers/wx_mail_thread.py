@@ -10,7 +10,7 @@ from odoo import api, models
 from odoo import exceptions
 from odoo.modules.module import get_module_resource
 from ..rpc import corp_client
-# from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup
 _logger = logging.getLogger(__name__)
 
 
@@ -196,6 +196,7 @@ class WXMailThread(models.AbstractModel):
         if message.model == 'helpdesk.ticket' and body:
             if "notif_layout" in kwargs:
                 return message
+            body_text = BeautifulSoup(body, "html.parser")
             user_data = {
                 "first": {
                     "value": "%s" % datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
