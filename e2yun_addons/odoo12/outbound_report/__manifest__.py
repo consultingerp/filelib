@@ -11,8 +11,9 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/outbound_report.xml',
+        # 'views/outbound_report.xml',
         # 'views/outbound_template.xml',
+        'views/outbound_report_dashboard.xml',
     ],
     'installable': True,
     'application': True,
