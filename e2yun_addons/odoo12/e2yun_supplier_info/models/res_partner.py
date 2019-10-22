@@ -23,8 +23,8 @@ class res_partner(models.Model):
     #新增添字段
     comment = fields.Text(string='Notes')
     # 供应商类型
-    production = fields.Boolean('生产类')
-    trade = fields.Boolean('商贸类')
+    suppliertype_ids = fields.Many2many('supplier.type',string='供应商类型')
+
 
     nature_enterprise = fields.Selection([('State Administrative Enterprises', '国家行政企业'), ('Public-Private Cooperative Enterprises', '公私合作企业'), ('Sino-foreign joint ventures', '中外合资企业'), ('Social Organizations', '社会组织机构'), ('International Organization Institutions', '国际组织机构'), ('Foreign enterprise', '外资企业'), ('private enterprise', '私营企业'), ('Collective enterprise', '集体企业'), ('Defense Military Enterprises', '国防军事企业')], '企业性质')
     registered_address = fields.Char('注册地址')
