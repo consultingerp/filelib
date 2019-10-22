@@ -12,6 +12,7 @@ class E2yunCustomerRefund(models.Model):
     shop_id = fields.Char('门店')
     partner_id = fields.Char('终端客户')
     refund_id = fields.Char('退款方')
+    refund_num = fields.Char('退款单编号')
     receipt_doc_num = fields.Char('收款单编号')
     thrrd_receipt_num = fields.Char('第三方退款编号')
     refund_amount01 = fields.Char('应退款金额')
