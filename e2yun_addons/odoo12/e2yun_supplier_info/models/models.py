@@ -535,3 +535,65 @@ class e2yun_supplier_info(models.Model):
                     'name':s.name
                 })
         return state_ids
+
+    # 根据页面选择的省份带出城市
+    @api.model
+    def get_citys_by_state(self):
+        ctx = self._context.copy()
+        state_id = ctx.get('state_id', False)
+        city_ids = []
+        if state_id:
+            citys = self.env['res.state.city'].sudo().search([('state_id', '=', int(state_id))])
+            for i in citys:
+                city_ids.append({
+                    'id': i.id,
+                    'name': i.name
+                })
+        return city_ids
+
+    # 根据页面选择的开户行国家带出开户省份
+    @api.model
+    def get_bank_states_by_country(self):
+        ctx = self._context.copy()
+        # 获取开户行国家的id
+        bank_country_id = ctx.get('bank_country_id', False)
+        bank_state_ids = []
+        if bank_country_id:
+            # 通过国家id获取省份记录集
+            states =self.env['res.country.state'].sudo().search([('country_id', '=', int(bank_country_id))])
+            for i in states:
+                bank_state_ids.append({
+                    'id': i.id,
+                    'name': i.name
+                })
+        return  bank_state_ids
+
+    # 根据页面选择的开户行省份带出开户行城市
+    @api.model
+    def get_bank_citys_by_state(self):
+        ctx = self._context.copy()
+        bank_state_id = ctx.get('bank_state_id', False)
+        bank_city_ids = []
+        if bank_state_id:
+            citys = self.env['res.state.city'].sudo().search([('state_id', '=', int(bank_state_id))])
+            for i in citys:
+                bank_city_ids.append({
+                    'id': i.id,
+                    'name': i.name
+                })
+        return bank_city_ids
+
+    # 根据页面选择的开户行城市带出开户行地区
+    @api.model
+    def get_bank_regions_by_city(self):
+        ctx = self._context.copy()
+        bank_city_id = ctx.get('bank_city_id', False)
+        bank_region_ids = []
+        if bank_city_id:
+            regions = self.env['res.city.area'].sudo().search([('city_id', '=', int(bank_city_id))])
+            for i in regions:
+                bank_region_ids.append({
+                    'id': i.id,
+                    'name': i.name
+                })
+        return bank_region_ids
