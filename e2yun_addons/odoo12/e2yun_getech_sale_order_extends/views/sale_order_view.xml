@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="e2yun_sale_order_bu_list">
+            <field name="name">sale.order.bu list</field>
+            <field name="model">sale.order.bu</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="id"/>
+                    <field name="code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="e2yun_sale_order_bu_action_window">
+            <field name="name">产业/BU</field>
+            <field name="res_model">sale.order.bu</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="产业/BU" parent="sale.menu_sale_config" action="e2yun_sale_order_bu_action_window" id="e2yun_sale_order_bu_menu"/>
+
+        <record model="ir.ui.view" id="e2yun_sale_order_project_type_list">
+            <field name="name">sale.order.project.type list</field>
+            <field name="model">sale.order.project.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="id"/>
+                    <field name="code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="e2yun_sale_order_project_type_action_window">
+            <field name="name">项目大类</field>
+            <field name="res_model">sale.order.project.type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="项目大类" parent="sale.menu_sale_config" action="e2yun_sale_order_project_type_action_window" id="e2yun_sale_order_project_type_menu"/>
+
+
+        <record id="view_order_form_hhjc_extends" model="ir.ui.view">
+            <field name="name">sale.order.form.hhjc.extends</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <!--<xpath expr="//header/button[@name='action_unlock']" position="after">
+                    <button name="action_sync_pos_sale_order" type="object" string="同步pos订单信息"/>
+                </xpath>-->
+                <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                    <field name="bu" required="True"/>
+                    <field name="project_type" required="True"/>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

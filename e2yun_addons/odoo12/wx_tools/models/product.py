@@ -46,6 +46,7 @@ class ProductTemplate(models.Model):
             # 获取图片的宽高
             img_w, img_h = img.size
             # 参数设置logo的大小
+
             factor = 6
             size_w = int(img_w / factor)
             size_h = int(img_h / factor)

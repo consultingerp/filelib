@@ -11,6 +11,7 @@
     'description': """宏华俊成销售订单扩展""",
     'data': [
         'views/sale_order_view.xml',
+        'data/data.xml',
     ],
     'installable': True,
     'auto_install': False,
