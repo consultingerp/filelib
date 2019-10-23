@@ -74,15 +74,16 @@
                 </xpath>
             </field>
         </record>
-        <!--<record id="survey_page_extends" model="ir.ui.view">-->
-            <!--<field name="name">survey_page_extends</field>-->
-            <!--<field name="model">survey.page</field>-->
-            <!--<field name="inherit_id" ref="survey.survey_page_tree"/>-->
-            <!--<field name="arch" type="xml">-->
-                <!--<xpath expr="field[@name='title']" position="after">-->
-                    <!--<field name="weight"/>-->
-                <!--</xpath>-->
-            <!--</field>-->
-        <!--</record>-->
+        <record id="survey_page_extends" model="ir.ui.view">
+            <field name="name">survey_page_extends</field>
+            <field name="model">survey.page</field>
+            <field name="inherit_id" ref="survey.survey_page_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='oe_title']" position="after">
+                    <label for="weight" class="oe_edit_only"/>
+                    <h1><field name="weight" placeholder="Weight"/></h1>
+                </xpath>
+            </field>
+        </record>
     </data>
 </odoo>    
