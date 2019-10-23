@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing tailsde.
-from odoo import models, fields, api
+from odoo import models, fields, api, exceptions
 import datetime
 import suds.client
 import json
@@ -28,5 +28,5 @@ class Product(models.Model):
                     default_code = self.env['ir.sequence'].get_next_code_info_if_no_create('product', res.categ_id.code, '', 7)
                     res.default_code = default_code
                 else:
-                    raise Exception('产品类别没有配置code，请配置后重试！')
+                    raise exceptions.Warning('产品类别没有配置code，请配置后重试！')
         return res
