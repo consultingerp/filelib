@@ -43,6 +43,6 @@ class SaleOrder(models.Model):
             prefix = '%s%s' % (res.bu.code, res.project_type.code)
             name = self.env['ir.sequence'].get_next_code_info_if_no_create('sale_order', prefix, '', 6)
             res.name = name
-            if res.project_ids:
-                res.project_ids.name = name
+            # if res.project_ids:
+            #     res.project_ids.name = name
         return res
