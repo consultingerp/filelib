@@ -45,7 +45,7 @@ class e2yun_customer_payment_extend(models.Model):
                                            domain=[('res_model', '=', 'account.payment')])
 
     related_shop = fields.Many2one('crm.team', '门店', required=True)
-    receipt_Num = fields.Char('收据编号', readonly=True)
+    receipt_Num = fields.Char('收款编号', readonly=True)
     sales_num = fields.Char('销售单号')
     handing_cost = fields.Monetary('手续费')
     po_num = fields.Char('市场合同号PO')
@@ -120,6 +120,7 @@ class e2yun_customer_payment_extend(models.Model):
             trans_amount = res.accept_amount
         else:
             trans_amount = res.amount
+
         user_data = {
             "first": {
                 "value": "付款成功通知"

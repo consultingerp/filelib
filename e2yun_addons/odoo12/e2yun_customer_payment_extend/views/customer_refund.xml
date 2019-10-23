@@ -36,7 +36,8 @@
             <field name="name">customer.refund.report.tree</field>
             <field name="model">customer_refund.report</field>
             <field name="arch" type="xml">
-                <tree string="Move Lines" create="false" delete="false" editable="bottom">
+                <tree string="Move Lines" create="false" delete="false" edit="0">
+                    <field name="refund_num"/>
                     <field name="company_id"/>
                     <field name="shop_id"/>
                     <field name="partner_id"/>
