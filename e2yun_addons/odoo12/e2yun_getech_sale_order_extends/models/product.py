@@ -24,6 +24,9 @@ class Product(models.Model):
         res = super(Product, self).create(vals)
         if res:
             if res.categ_id:
-                default_code = self.env['ir.sequence'].get_next_code_info_if_no_create('product', res.categ_id.code, '', 7)
-                res.default_code = default_code
+                if res.categ_id.code:
+                    default_code = self.env['ir.sequence'].get_next_code_info_if_no_create('product', res.categ_id.code, '', 7)
+                    res.default_code = default_code
+                else:
+                    raise Exception('产品类别没有配置code，请配置后重试！')
         return res
