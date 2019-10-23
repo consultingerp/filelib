@@ -10,6 +10,6 @@ class LivechatController(LivechatController):
 
     @http.route('/im_livechat/loader/<int:channel_id>', type='http', auth='public')
     def loader(self, channel_id, **kwargs):
-        channel_id = 9
+        #channel_id = 9
         reponse_website = super(LivechatController, self).loader(channel_id, **kwargs)
         return reponse_website
