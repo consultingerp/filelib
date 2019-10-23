@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_groups_form" model="ir.ui.view">
+            <field name="name">res.groups.form</field>
+            <field name="model">res.groups</field>
+            <field name="inherit_id" ref="base.view_groups_form" />
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='menu_access']" position="after">
+                    <footer>
+                        <button name="generate_model_access" class="oe_highlight" type="object" string="生成访问权限" attrs="{'invisible': ['|', '|', ('menu_access', '=', []), ('menu_access', '=', False)]}" />
+                        <button name="generate_rule_groups" class="oe_highlight" type="object" string="生成访问规则" attrs="{'invisible': ['|', ('menu_access', '=', []), ('menu_access', '=', False)]}" />
+                    </footer>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
