@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_credit_query_report_form" model="ir.ui.view">
+        <field name="name">credit.query.report.form</field>
+        <field name="model">credit.query.report</field>
+        <field name="arch" type="xml">
+            <form string="信用查询" save="false" create="false" delete="false" edit="false">
+                <group>
+                    <field name="team"/>
+                </group>
+                <footer>
+                    <button name="search_credit" string="查询" type="object"  class="oe_highlight"  />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_credit_query_report" model="ir.actions.act_window">
+        <field name="name">信用查询</field>
+        <field name="res_model">credit.query.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem action="action_credit_query_report" id="menu_credit_query_report" parent="crm.crm_menu_report" sequence="5"/>
+
+    <record id="view_credit_result_report_form" model="ir.ui.view">
+        <field name="name">credit.result.report.form</field>
+        <field name="model">credit.result.report</field>
+        <field name="arch" type="xml">
+            <form string="信用查询" save="false" create="false" delete="false" edit="false">
+                <group>
+                    <field name="credit" readonly="1"/>
+                </group>
+                <footer>
+                    <button name="search_credit" string="返回" type="object"  class="oe_highlight"  />
+                    <button string="关闭" class="btn btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_credit_result_report" model="ir.actions.act_window">
+        <field name="name">信用查询</field>
+        <field name="res_model">credit.result.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

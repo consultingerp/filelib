@@ -11,7 +11,8 @@
     'description': """E2yun HHJC CRM Report""",
     'data': [
         'views/customer_loss_view.xml',
-        'views/stock_query.xml'
+        'views/stock_query.xml',
+        'views/credit_query_view.xml'
     ],
     'qweb': [
         'static/src/xml/customer_loss_template.xml',
