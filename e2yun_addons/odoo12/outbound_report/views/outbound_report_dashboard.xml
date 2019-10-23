@@ -2,19 +2,19 @@
 <odoo>
     <data>
         <record id="outbound_report_graph_view" model="ir.ui.view">
-        <field name="name">outbound.report.graph.view</field>
-        <field name="model">outbound.final</field>
-        <field name="arch" type="xml">
-            <graph string="OutboundReport">
-                <field name="jiesuanjine" type="row"/>
-                <field name="LFADT" interval="month" type="row"/>
-            </graph>
-<!--            <graph string="OutboundReport">-->
-<!--                <field name="xiaoshoujine" type="row"/>-->
-<!--                <field name="LFADT" interval="month" type="row"/>-->
-<!--            </graph>-->
-        </field>
-    </record>
+            <field name="name">outbound.report.graph.view</field>
+            <field name="model">outbound.final</field>
+            <field name="arch" type="xml">
+                <graph string="OutboundReport">
+                    <field name="jiesuanjine" type="row"/>
+                    <field name="LFADT" interval="month" type="row"/>
+                </graph>
+<!--                <graph string="OutboundReport">-->
+<!--                    <field name="xiaoshoujine" type="row"/>-->
+<!--                    <field name="LFADT" interval="month" type="row"/>-->
+<!--                </graph>-->
+            </field>
+        </record>
 
         <record id="outbound_report_view_cohort" model="ir.ui.view">
             <field name="name">outbound.view.cohort</field>
@@ -25,44 +25,22 @@
         </record>
 
         <record id="outbound_report_dashboard_view" model="ir.ui.view">
-        <field name="name">outbound.report.dashboard.view</field>
-        <field name="model">outbound.final</field>
-        <field name="mode">primary</field>
-        <field name="arch" type="xml">
-            <dashboard>
-                <view type="graph" ref="outbound_report_graph_view"/>
-                <group>
-                    <group col="1">
-                        <widget name="pie_chart" title="分销渠道" attrs="{'groupby': 'vtweg'}"/>
+            <field name="name">outbound.report.dashboard.view</field>
+            <field name="model">outbound.final</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <dashboard>
+                    <view type="graph" ref="outbound_report_graph_view"/>
+                    <group>
+                        <group col="1">
+                            <widget name="pie_chart" title="分销渠道" attrs="{'groupby': 'vtweg'}"/>
+                        </group>
                     </group>
-                </group>
-<!--                <view type="cohort" ref="outbound_report_view_cohort"/>-->
-            </dashboard>
-        </field>
-    </record>
+    <!--                <view type="cohort" ref="outbound_report_view_cohort"/>-->
+                </dashboard>
+            </field>
+        </record>
 
-<!--        <record id="outbound_query_tree" model="ir.ui.view">-->
-<!--            <field name="name">outbound.query.report.tree</field>-->
-<!--            <field name="model">outbound.final</field>-->
-<!--            <field name="arch" type="xml">-->
-<!--                <tree string="Move Lines" create="false" delete="false" editable="bottom">-->
-<!--                    <field string="日期" name="LFADT"/>-->
-<!--                    <field string="工厂" name="werks"/>-->
-<!--                    <field string="事业部" name="vkorgtext"/>-->
-<!--                    <field string="分销渠道" name="vtweg"/>-->
-<!--                    <field string="导购员" name="ywy"/>-->
-<!--                    <field string="门店" name="kunnr"/>-->
-<!--                    <field string="结算小计" name="jiesuanjine"/>-->
-<!--                    <field string="销售小计" name="xiaoshoujine"/>-->
-<!--                </tree>-->
-<!--            </field>-->
-<!--        </record>-->
-
-        <menuitem id="outbound_report_menu"
-        parent="crm.crm_menu_report"
-        action="outbound_report_query_action"
-        sequence="18"
-        />
         <record id="view_outbound_query_report" model="ir.ui.view">
             <field name="name">Outbound Query Report</field>
             <field name="model">outbound.final</field>
@@ -88,6 +66,7 @@
                 </form>
             </field>
         </record>
+
         <record id="outbound_report_query_action" model="ir.actions.act_window">
             <field name="name">出库报表查询</field>
             <field name="res_model">outbound.final</field>
@@ -96,5 +75,11 @@
             <field name="view_id" ref="view_outbound_query_report"/>
             <field name="target">new</field>
         </record>
+
+        <menuitem id="outbound_report_menu"
+        parent="crm.crm_menu_report"
+        action="outbound_report_query_action"
+        sequence="18"
+        />
     </data>
 </odoo>

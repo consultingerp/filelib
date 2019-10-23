@@ -21,6 +21,7 @@
     },
     'demo': [
         'demo/base_external_dbsource.xml',
+        'demo/local_database.xml',
     ],
     'installable': True,
 }
