@@ -23,26 +23,29 @@ class ContactController(WebsiteForm):
 
             try:
                 data = self.extract_data(model_record, request.params)
+                # 认证信息每次添加都执行这个程序
                 if model_name == 'e2yun.supplier.authentication.info' and data.get('record',False):
                     data['record']['supplier_info_id'] = request.session['e2yun_supplier_info_id']
 
                 elif model_name == 'e2yun.supplier.info' and data.get('record',False):
-                    if data['record']['name']:
-                        count = request.env['res.partner'].sudo().search([('name', '=', data['record']['name'])])
-                        if count and  len(count) > 0 and count.user_ids.login != data['record']['login_name']:
-                            error = {
-                                'name': '联系人名称已经存在，请重新输入'
-                            }
-                            return json.dumps({'error_fields': error})
-                        else:
-                            count = request.env['e2yun.supplier.info'].sudo().search_count(
-                                [('name', '=', data['record']['name']),('login_name','!=',data['record']['login_name'])])
-                            if count > 0:
+                    try:
+                        if data['record']['name']:
+                            count = request.env['res.partner'].sudo().search([('name', '=', data['record']['name'])])
+                            if count and  len(count) > 0 and count.user_ids.login != data['record']['login_name']:
                                 error = {
                                     'name': '联系人名称已经存在，请重新输入'
                                 }
                                 return json.dumps({'error_fields': error})
-
+                            else:
+                                count = request.env['e2yun.supplier.info'].sudo().search_count(
+                                    [('name', '=', data['record']['name']),('login_name','!=',data['record']['login_name'])])
+                                if count > 0:
+                                    error = {
+                                        'name': '联系人名称已经存在，请重新输入'
+                                    }
+                                    return json.dumps({'error_fields': error})
+                    except:
+                        print('done')
                     # if data['record']['login_name']:
                     #     count = request.env['res.users'].sudo().search_count([('login','=',data['record']['login_name'])])
                     #     if count > 0:
@@ -96,7 +99,9 @@ class ContactController(WebsiteForm):
             try:
                 if model_name == 'e2yun.supplier.info':
                     supplier_info_obj = http.request.env['e2yun.supplier.info'].sudo()
-                    supplier_info = supplier_info_obj.search([('login_name', '=', data['record']['login_name'])])
+                    # supplier_info = supplier_info_obj.search([('login_name', '=', data['record']['login_name'])])
+                    # 分步添加
+                    supplier_info = supplier_info_obj.search([('id', '=', request.session['e2yun_supplier_info_id'])])
                     supplier_info.write(data['record'])
                     id_record = supplier_info.id
                 else:

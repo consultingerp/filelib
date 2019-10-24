@@ -566,7 +566,7 @@ class e2yun_supplier_info(models.Model):
                     'id': i.id,
                     'name': i.name
                 })
-        return  bank_state_ids
+        return bank_state_ids
 
     # 根据页面选择的开户行省份带出开户行城市
     @api.model
