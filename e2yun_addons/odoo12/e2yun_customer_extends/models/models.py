@@ -167,9 +167,9 @@ class E2yunCsutomerExtends(models.Model):
             del values['pos_flag']
         result = super(E2yunCsutomerExtends, self).write(values)
 
-        # if self.state != 'potential_customer' and not pos_flag and not values.get('pos_state',False):
-        #     self.sync_customer_to_pos()
-        #     self.pos_state = True
+        if self.state != 'potential_customer' and not pos_flag and not values.get('pos_state',False):
+            self.sync_customer_to_pos()
+            self.pos_state = True
         return result
 
 
