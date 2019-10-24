@@ -1,20 +1,25 @@
 # -*- coding: utf-8 -*-
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 
 class Questionnaire(models.Model):
     _name = 'project.questionnaire'
 
     # 问卷场景
     questionnaire_scenario = fields.Selection(
-        [('Score questionnaire', '评分问卷'), ('Qualification survey', '资质调查'), ('Satisfaction Survey', '满意度调查'),
-         ('Registration Form', '报名登记表'), ('Other', '其他')], string='问卷场景')
+        [('评分问卷', '评分问卷'), ('资质调查', '资质调查'), ('满意度调查', '满意度调查'),
+         ('报名登记表', '报名登记表'), ('其他', '其他')], string='问卷场景')
     # 权重
     weight = fields.Char(string='权重')
     # 问卷模板
     survey_temp_id = fields.Many2one('survey.survey', string='问卷模版')
     parent_id = fields.Many2one('project.task', string='Parent Task')
 
-
+    @api.onchange('weight')
+    def _onchange_weight(self):
+        if self.weight:
+            self.weight = str(self.weight)+'%'
+        else:
+            self.weight = ''
 
 
 
@@ -74,30 +79,71 @@ class E2yunTaskInfo(models.Model):
 class E2yunProjectSurvey(models.Model):
     _inherit = 'survey.survey'
 
-    @api.depends('task_ids')
-    def _compute_classification(self):
-        # questionnaire_classification = self.env.context.get('questionnaire_classification')
-        # tasks = self.env['project.task']
-        # context = self.context_get()
-        # uid = self.env.context.get('uid')
-        # res = self.env['project.task'].search(['user_id', '=', uid])
-        # questionnaire_classification = user.partner_id.questionnaire_classification
-        # res = self.env.ref('project.view_task_form2')
-        # questionnaire_classification = res.questionnaire_classification
-        # return questionnaire_classification
-        for survey in self:
-            # 获取'project.questionnaire'模型
-            id = survey.id
-            questionnaires = self.env['project.questionnaire'].search(['survey_temp_id', '=', id])
-            questionnaire_classification = questionnaires.questionnaire_classification
-            return questionnaire_classification
-    # 新增问卷场景，问卷分类，权重字段
-    questionnaire_classification = fields.Char(string='问卷分类', readonly=True, required=True, compute='_compute_classification')
-    questionnaire_scenario = fields.Char(string='问卷场景', readonly=True, required=True, compute='_compute_scenario')
+    # ======================================================================================#
+    # 自动带出问卷分类
+    def default_classification(self):
+        ctx = self.env.context
+        res_model = ctx['active_model']
+        task_id = ctx['active_id']
+        res_record = self.env[res_model].search([('id', '=', task_id)])
+        questionnaire_classification = res_record.questionnaire_classification
+        if questionnaire_classification == 'Internally':
+            res = '对内测评（公司商务）'
+            return res
+        else:
+            res = '对外测评（供应商）'
+            return res
+    # 自动带出问卷场景字段值
+    def default_scenario(self):
+        ctx = self.env.context
+        res_model = ctx['active_model']
+        task_id = ctx['active_id']
+        res_record = self.env[res_model].search([('id', '=', task_id)])
+        questionnaire = res_record['questionnaire_ids']
+        res = ''
+        for i in questionnaire:
+            res = i.questionnaire_scenario
+        return res
+    # questionnaire_classification = fields.Char(string='问卷分类', default=default_classification)
+    # questionnaire_scenario = fields.Char(string='问卷场景', default=default_scenario)
+    # ======================================================================================#
+
+    questionnaire_classification = fields.Char(string='问卷分类', default=default_classification)
+    questionnaire_scenario = fields.Char(string='问卷场景', default=default_scenario)
+
+
+
+    # 权重百分比之和为100%，超出则弹框提醒
+    @api.one
+    def write(self, vals):
+
+        res = super(E2yunProjectSurvey, self).write(vals)
+        return res
+    # task_ids = fields.One2many('project.questionnaire', 'survey_temp_id', string='Child Questionnaires')
+
+
+
+class SurveyPage(models.Model):
+    _inherit = 'survey.page'
+
+    # 调查问卷page页面添加’权重‘字段
     weight = fields.Char(string='权重')
-    task_ids = fields.One2many('project.questionnaire', 'survey_temp_id', string='Child Questionnaires')
-    # @api.depends('survey_temp_id')
-    # def _compute_survey_classification(self):
-    #     # questionnaire_scenario = self.env.ref['survey.survey_form'].questionnaire_scenario
-    #     for survey in self:
-    #         survey.questionnaire_classification = self.env.ref['e2yun_project_extends.view_task_form2_extends'].questionnaire_classification
+
+    # 权重百分比
+    @api.onchange('weight')
+    def _onchange_weight(self):
+        if self.weight:
+            self.weight = str(self.weight) + '%'
+        else:
+            self.weight = ''
+
+
+    # @api.multi
+    # def page_weight(self):
+    #     weight_top = 100
+    #     weight = 0
+    #     for i in self:
+    #         weight = weight+self.weight
+    #     if weight > 100:
+    #         raise Warning(_("Do not have access, skip this data for user's digest email"))
+
