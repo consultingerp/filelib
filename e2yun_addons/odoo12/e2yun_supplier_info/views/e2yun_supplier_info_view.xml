@@ -558,10 +558,14 @@
                             </page>
                             <!--新增产品信息选项卡-->
                             <page name='info_product' string="产品信息">
-                                <label for="secondary_industry_ids" string="供应产品类别"/>
+                                <group>
+                                    <label for="secondary_industry_ids" string="供应产品类别"/>
                                     <field name="secondary_industry_ids" widget="many2many_tags"/>
-                                <label for="comment" string="备注"/>
+                                </group>
+                                <group>
+                                    <label for="comment" string="备注"/>
                                     <field name="comment" placeholder="note..."/>
+                                </group>
                             </page>
                             <page name='authenitcation' string="认证信息">
                                 <field name="authenitcation_id" widget="one2many_list" context="{'authenitcation_id': authenitcation_id}">
@@ -594,7 +598,12 @@
                             </page>
 
                             <page name='internal_notes' string="Internal Notes">
-                                <field name="comment" placeholder="Internal note..."/>
+                                <group>
+                                    <field name="comment" placeholder="Internal note..."/>
+                                </group>
+                                <group>
+                                    <field name="approval_remark" placeholder="审批拒绝原因"/>
+                                </group>
                             </page>
                             <page name='sales_purchases' string="Sales &amp; Purchases">
                                 <group name="container_row_2">
