@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<odoo>
+    <record model="base.external.dbsource" id="local_mysql">
+        <field name="name">MySQL Local</field>
+        <field name="conn_string">mysql+pymysql://lth:python11@localhost/report</field>
+        <field name="password"/>
+        <field name="connector">mysql</field>
+    </record>
+</odoo>

@@ -78,10 +78,10 @@ class E2yunWebsiteForm(WebsiteForm):
         userip = request.httprequest.access_route[0]
         url = "http://ip138.com/ips138.asp"
         ip_check = {'ip': userip}
-        r = requests.request('GET', url, params=ip_check)
-        r.encoding = 'gbk'
-        demo = r.text
-        soup = BeautifulSoup(demo, "html.parser")
+        ipresult = requests.request('GET', url, params=ip_check)
+        ipresult.encoding = 'gbk'
+        iphtml = ipresult.text
+        soup = BeautifulSoup(iphtml, "html.parser")
         soup = soup.ul
         team_id = None
         # print(r.request.url)
