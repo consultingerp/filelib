@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<odoo>
+    <record model="import.odbc.dbtable" id="demo_mysql_users">
+        <field name="name">Data from MySQL </field>
+        <field name="dbsource_id" ref="base_external_dbsource.demo_postgre"/>
+        <field name="sql_source">select
+aoh.salesorderid as 'salesorderid',
+aoh.operatedatetime as 'LFADT',
+aoh.werks as 'werks',
+aoh.vkorgtext as 'vkorgtext',
+aoh.vtweg as 'vtweg',
+aoh.ywy as 'ywy',
+aoh.kunnr as 'kunnr',
+sum(aoi.xiaoshoujine * aoi.kwmen) as 'xiaoshoujine',
+aoh.jiesuanjine as 'jiesuanjine'
+from (aig_orderhead as aoh inner join aig_orderitem as aoi on aoh.salesorderid = aoi.salesorderid) inner join aig_lhjc_likp as al on aoh.salesorderid = al.salesorderid where al.status = 'C' group by al.salesorderid;</field>
+        <field name="model_target" ref="base.model_res_users"/>
+    </record>
+</odoo>

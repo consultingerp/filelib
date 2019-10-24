@@ -54,7 +54,7 @@ class OutboundFinal(models.Model):
         else:
             ywy_sql = ""
 
-        sql_str = "select * from outbound_final where %s %s %s %s %s %s" % (werks_sql, LFADT_sql, vtweg_sql, vkorgtext_sql, kunnr_sql, ywy_sql)
+        sql_str = "select * from outbound_final where %s %s %s %s %s %s" % (LFADT_sql, werks_sql, vtweg_sql, vkorgtext_sql, kunnr_sql, ywy_sql)
 
         self._cr.execute(sql_str)
 
@@ -80,16 +80,19 @@ class OutboundFinal(models.Model):
         ctx['kunnr'] = data['kunnr']
         ctx['ywy'] = data['ywy']
 
-        # self.init_date(ctx)
+        self.init_date(ctx)
 
         return {
             'name': '出库报表查询',
-            'view_type': 'dashboard',
-            'view_mode': 'dashboard',
+            # 'view_type': 'dashboard',
+            'view_type': 'form',
+            # 'view_mode': 'dashboard',
+            'view_mode': 'tree',
             'res_model': 'outbound.final',
             'type': 'ir.actions.act_window',
-            'views': [[2812, 'dashboard'], ],
-            'context': ctx.update({'dashboard_view_ref': 'outbound_report.outbound_report_dashboard_view'}),
+            'context': ctx,
+            # 'views': [[2812, 'dashboard'], ],
+            # 'context': ctx.update({'dashboard_view_ref': 'outbound_report.outbound_report_dashboard_view'}),
         }
 
     def search(self, args, offset=0, limit=None, order=None, count=False):
