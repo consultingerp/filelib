@@ -79,6 +79,7 @@ class E2yunTaskInfo(models.Model):
 class E2yunProjectSurvey(models.Model):
     _inherit = 'survey.survey'
 
+    # ======================================================================================#
     # 自动带出问卷分类
     def default_classification(self):
         ctx = self.env.context
@@ -92,7 +93,6 @@ class E2yunProjectSurvey(models.Model):
         else:
             res = '对外测评（供应商）'
             return res
-
     # 自动带出问卷场景字段值
     def default_scenario(self):
         ctx = self.env.context
@@ -104,6 +104,9 @@ class E2yunProjectSurvey(models.Model):
         for i in questionnaire:
             res = i.questionnaire_scenario
         return res
+    # questionnaire_classification = fields.Char(string='问卷分类', default=default_classification)
+    # questionnaire_scenario = fields.Char(string='问卷场景', default=default_scenario)
+    # ======================================================================================#
 
     questionnaire_classification = fields.Char(string='问卷分类', default=default_classification)
     questionnaire_scenario = fields.Char(string='问卷场景', default=default_scenario)
