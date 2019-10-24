@@ -23,7 +23,7 @@
           <section class="s_tabs oe_custom_bg" style="">
             <div class="container">
               <div class="row s_col_no_bgcolor">
-                <form action="/website_form/" method="post" class="s_website_form container-fluid mt32" enctype="multipart/form-data" data-model_name="e2yun.supplier.info" data-success_page="/supplier/register_authentication_info/">
+                <!--<form action="/website_form/" method="post" class="s_website_form container-fluid mt32" enctype="multipart/form-data" data-model_name="e2yun.supplier.info" data-success_page="/supplier/register_authentication_info/">-->
                   <div class="pt8 col-lg-12 pb0">
                     <div class="card bg-white" style="">
                       <div class="card-header">
@@ -46,6 +46,7 @@
                         <div class="tab-pane fade active show" id="nav_tabs_content_1565869647814_2" role="tabpanel" aria-labelledby="nav_tabs_link_1565869647814_2">
                           <p class="MsoNormal" align="center" style="margin: 7.8pt 5.95pt 15.6pt 7.35pt; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-align: center; line-height: 18px;"> </p>
                           <div id="wrap" class="oe_structure oe_empty">
+                            <form action="/website_form/" method="post" class="s_website_form container-fluid mt32" enctype="multipart/form-data" data-model_name="e2yun.supplier.info" data-success_page="">
                             <div class="row form-group form-field o_website_form_required_custom">
                               <div class="col-md-4 text-md-right col-lg-2">
                                 <label class="col-form-label" for="company_name"> 公司名称 </label>
@@ -365,6 +366,13 @@
                                      <!--height="60px" width="100px"/>-->
                               <!--</div>-->
                             </div>
+                            <div class="form-group row">
+                              <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
+                                <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>
+                                <span id="o_website_form_result" class="text-danger ml8"/>
+                              </div>
+                            </div>
+                            </form>
                           </div>
                           <p/>
                           <p/>
@@ -383,6 +391,7 @@
                         <div class="tab-pane fade" id="nav_tabs_content_1565869647814_5" role="tabpanel" aria-labelledby="nav_tabs_link_1565869647814_5">
                           <p class="MsoNormal" align="center" style="margin: 7.8pt 5.95pt 15.6pt 7.35pt; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-align: center; line-height: 18px;"> </p>
                           <div id="wrap" class="oe_structure oe_empty">
+                            <form action="/website_form/" method="post" class="s_website_form container-fluid mt32" enctype="multipart/form-data" data-model_name="e2yun.supplier.info" data-success_page="">
                             <!--开户行国家-->
                             <div class="row form-group form-field o_website_form_required_custom">
                               <div class="col-md-4 text-md-right col-lg-2">
@@ -557,6 +566,13 @@
                                      <!--height="60px" width="100px"/>-->
                               <!--</div>-->
                             </div>
+                            <div class="form-group row">
+                              <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
+                                <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>
+                                <span id="o_website_form_result" class="text-danger ml8"/>
+                              </div>
+                            </div>
+                            </form>
                           </div>
                           <p/>
                           <p/>
@@ -573,6 +589,7 @@
                         </div>
                         <div class="tab-pane fade" id="nav_tabs_content_1565869647814_3" role="tabpanel" aria-labelledby="nav_tabs_link_1565869647814_3">
                           <p align="center" style="margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto;"></p>
+                          <form action="/website_form/" method="post" class="s_website_form container-fluid mt32" enctype="multipart/form-data" data-model_name="e2yun.supplier.info" data-success_page="">
                           <div class="form-group row form-field o_website_form_required">
                             <div class="col-md-4 text-right col-lg-2">
                               <label class="col-form-label" for="name">联系人&amp;nbsp;</label>
@@ -677,6 +694,13 @@
                               <input type="text" class="form-control o_website_form_input" t-att-value="supplier.street2" name="street2"/>
                             </div>
                           </div>
+                          <div class="form-group row">
+                            <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
+                              <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>
+                              <span id="o_website_form_result" class="text-danger ml8"/>
+                            </div>
+                          </div>
+                          </form>
                           <p/>
                           <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
                             <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">
@@ -691,6 +715,7 @@
                           <h3/>
                           <p align="center" style="margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto;">
                             </p>
+                          <form action="/website_form/" method="post" class="s_website_form container-fluid mt32" enctype="multipart/form-data" data-model_name="e2yun.supplier.info" data-success_page="">
                           <div class="row form-group form-field">
                             <div class="col-md-4 text-md-right col-lg-2">
                               <label class="col-form-label" for="secondary_industry_ids">供应产品类别</label>
@@ -720,6 +745,13 @@
                               <textarea class="form-control o_website_form_input" name="comment"><t t-esc="supplier.comment"/></textarea>
                             </div>
                           </div>
+                          <div class="form-group row">
+                            <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
+                              <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>
+                              <span id="o_website_form_result" class="text-danger ml8"/>
+                            </div>
+                          </div>
+                          </form>
                           <p/>
                           <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
                             <span style="font-family: 仿宋; font-size: 18px; line-height: 32px;">
@@ -732,12 +764,11 @@
                   </div>
                   <div class="form-group row">
                     <!--<div t-attf-class="clearfix oe_login_buttons text-center mb-1 {{'pt-2' if form_small else 'pt-3'}}">-->
-                    <div class="offset-md-4 col-md-8 col-lg-7 offset-lg-5 pb32 pt16">
-                      <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text" title="" aria-describedby="tooltip262165">下一步</button>
-                      <span id="o_website_form_result" class="text-danger ml8"/>
+                    <div class="col-lg-12 s_title pt16 pb16" style="text-align: center;">
+                      <div class="s_btn pb0 pt0 text-center" data-name="Buttons"><a href="/supplier/register_authentication_info/" class="rounded-circle rounded-circle rounded-circle rounded-circle btn btn-success rounded-circle btn-lg" data-original-title="" title="" aria-describedby="tooltip84497">下一步</a>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</div>
                     </div>
                   </div>
-                </form>
+                <!--</form>-->
               </div>
             </div>
           </section>

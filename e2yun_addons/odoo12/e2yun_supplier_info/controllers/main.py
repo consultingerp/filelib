@@ -1,4 +1,5 @@
 from odoo import http
+from odoo.http import request
 class Academy(http.Controller):
 
     # 服务协议
@@ -84,8 +85,8 @@ class Academy(http.Controller):
                                                                                           'supplier_types': supplier_types})
         else:
             val = {
-                'company_name': user.company_name,
                 'login_name': login,
+                'company_name': user.company_name,
                 'name': login,
                 'password': user.password,
                 'confirm_password':user.password,
@@ -95,6 +96,7 @@ class Academy(http.Controller):
             }
             supplier_info_obj = http.request.env['e2yun.supplier.info'].sudo()
             supplier_info = supplier_info_obj.create(val)
+            request.session['e2yun_supplier_info_id'] = supplier_info.id
             states = http.request.env['res.country.state'].sudo().search([])
             return http.request.render('e2yun_supplier_info.supplier_register_base_info',{'supplier': supplier_info,
                                                                                           'countrys':countrys,
