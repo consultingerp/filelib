@@ -200,6 +200,8 @@ class e2yun_supplier_info(models.Model):
     confirm_password = fields.Char('确认密码')
     supplier_code = fields.Char('供应商代码')
 
+    approval_remark = fields.Text('审批拒绝原因')
+
 
 
     _sql_constraints = [
