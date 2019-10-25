@@ -7,7 +7,7 @@ from odoo.http import request
 
 from odoo.addons.website_helpdesk_form.controller.main import WebsiteForm
 from odoo.addons.http_routing.models.ir_http import slug
-# from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup
 import requests
 import datetime
 import logging
@@ -78,10 +78,10 @@ class E2yunWebsiteForm(WebsiteForm):
         userip = request.httprequest.access_route[0]
         url = "http://ip138.com/ips138.asp"
         ip_check = {'ip': userip}
-        r = requests.request('GET', url, params=ip_check)
-        r.encoding = 'gbk'
-        demo = r.text
-        soup = BeautifulSoup(demo, "html.parser")
+        ipresult = requests.request('GET', url, params=ip_check)
+        ipresult.encoding = 'gbk'
+        iphtml = ipresult.text
+        soup = BeautifulSoup(iphtml, "html.parser")
         soup = soup.ul
         team_id = None
         # print(r.request.url)
