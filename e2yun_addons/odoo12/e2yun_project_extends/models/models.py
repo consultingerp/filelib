@@ -61,6 +61,13 @@ class E2yunTaskInfo(models.Model):
             'type': 'ir.actions.act_window',
         }
 
+    # 权重百分比之和为100%，超出则弹框提醒
+    # @api.one
+    # def write(self, vals):
+    #
+    #     res = super(E2yunProjectSurvey, self).write(vals)
+    #     return res
+
     # @api.model
     # def create(self, vals):
     #     res = super(E2yunTaskInfo, self).create(vals)
@@ -113,12 +120,7 @@ class E2yunProjectSurvey(models.Model):
 
 
 
-    # 权重百分比之和为100%，超出则弹框提醒
-    @api.one
-    def write(self, vals):
 
-        res = super(E2yunProjectSurvey, self).write(vals)
-        return res
     # task_ids = fields.One2many('project.questionnaire', 'survey_temp_id', string='Child Questionnaires')
 
 

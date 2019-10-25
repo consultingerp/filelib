@@ -6,6 +6,25 @@ from odoo import http, _
 
 class AuthSignupHome(AuthSignupHome):
 
+    @http.route('/supplier/auth_register_base_info/', auth='public', website=True)
+    def auth_base_info(self, *args, **kw):
+        qcontext = self.get_auth_signup_qcontext()
+        login = qcontext.get('login', False)
+        if login:
+            user = request.env['e2yun.supplier.user'].sudo().search([('name', '=', login)], limit=1)
+            db = request.env.cr.dbname
+            if user:
+                request.session.authenticate(db, login, user.password)
+        if qcontext.get('redirect',False) == 'base_info':
+            return request.redirect("/supplier/register_base_info/")
+        elif qcontext.get('redirect',False) == 'index':
+            return request.redirect("/supplier/register/")
+        else:
+            return request.redirect("/web/login")
+
+
+
+
     def do_signup(self, qcontext):
         """ Shared helper that creates a res.partner out of a token """
         values = { key: qcontext.get(key) for key in ('login', 'password','vat','company_name') }
@@ -52,6 +71,15 @@ class AuthSignupHome(AuthSignupHome):
         if request.lang in supported_langs:
             values['lang'] = request.lang
         self._signup_with_values(qcontext.get('token'), values)
+
+        if values.get('login',False) and values.get('password',False):
+            su = request.env['e2yun.supplier.user'].sudo()
+            su_info = su.search([('name','=',values.get('login'))])
+            if su_info:
+                su_info.write({'password':values.get('password'),'confirm_password':values.get('password')})
+            else:
+                su.create({'name':values.get('login'),'password':values.get('password'),'confirm_password':values.get('password')})
+
         request.env.cr.commit()
         template_id = request.env.ref('supplier_register.register_user_mail_template')
         user = request.env.user
