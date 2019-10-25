@@ -97,7 +97,7 @@ class e2yun_supplier_info(models.Model):
         default='contact',
         help="Used by Sales and Purchase Apps to select the relevant address depending on the context.")
     street = fields.Char()
-    street2 = fields.Char()
+    street2 = fields.Char(string='street2')
     zip = fields.Char(change_default=True)
     city = fields.Many2one("res.state.city", string='City', ondelete='restrict')
     state_id = fields.Many2one("res.country.state", string='State', ondelete='restrict')
