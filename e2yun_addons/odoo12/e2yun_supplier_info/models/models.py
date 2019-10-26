@@ -27,6 +27,20 @@ def _tz_get(self):
     return _tzs
 
 
+class approval_remark(models.TransientModel):
+    _name = 'e2yun.supplier.info.approval.remark'
+
+    approval_remark = fields.Text('审批意见')
+
+    def approval_confirm(self):
+        active_id = self._context['active_id']
+        if active_id:
+            supplier = self.env['e2yun.supplier.info'].sudo().browse(active_id)
+            supplier.approval_remark = self.approval_remark
+            supplier.state = '拒绝'
+
+
+
 class e2yun_supplier_info(models.Model):
     _name = 'e2yun.supplier.info'
 
@@ -83,7 +97,7 @@ class e2yun_supplier_info(models.Model):
         default='contact',
         help="Used by Sales and Purchase Apps to select the relevant address depending on the context.")
     street = fields.Char()
-    street2 = fields.Char()
+    street2 = fields.Char(string='street2')
     zip = fields.Char(change_default=True)
     city = fields.Many2one("res.state.city", string='City', ondelete='restrict')
     state_id = fields.Many2one("res.country.state", string='State', ondelete='restrict')
@@ -568,7 +582,7 @@ class e2yun_supplier_info(models.Model):
                     'id': i.id,
                     'name': i.name
                 })
-        return  bank_state_ids
+        return bank_state_ids
 
     # 根据页面选择的开户行省份带出开户行城市
     @api.model

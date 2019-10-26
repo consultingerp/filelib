@@ -104,6 +104,8 @@ def main(robot):
             origin_content = '对方发送位置: %s 纬度为：%s 经度为：%s' % (message.label, message.location[0], message.location[1])
         elif mtype == 'text':
             origin_content = message.content
+        if not origin_content:
+            origin_content = ''
 
         content = origin_content.lower()
         wxuserinfo = request.env()['wx.autoreply'].sudo().search([])
