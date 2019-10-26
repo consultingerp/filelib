@@ -21,10 +21,10 @@
                     <div class="card-header">
                       <ul class="nav nav-tabs card-header-tabs" role="tablist">
                         <li class="nav-item">
-                          <a class="nav-link" id="nav_tabs_link_1565876877708_11" data-toggle="tab" href="#nav_tabs_content_1565876877708_11" role="tab" aria-controls="nav_tabs_content_1565876877708_11" aria-selected="false" data-original-title="" title="" aria-describedby="tooltip466102">ISO9000认证</a>
+                          <a class="nav-link active show" id="nav_tabs_link_1565876877708_11" data-toggle="tab" href="#nav_tabs_content_1565876877708_11" role="tab" aria-controls="nav_tabs_content_1565876877708_11" aria-selected="false" data-original-title="" title="" aria-describedby="tooltip466102">ISO9000认证</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link active show" id="nav_tabs_link_1565876877708_12" data-toggle="tab" href="#nav_tabs_content_1565876877708_12" role="tab" aria-controls="nav_tabs_content_1565876877708_12" aria-selected="true" data-original-title="" title="" aria-describedby="tooltip466102">ISO14000认证</a>
+                          <a class="nav-link" id="nav_tabs_link_1565876877708_12" data-toggle="tab" href="#nav_tabs_content_1565876877708_12" role="tab" aria-controls="nav_tabs_content_1565876877708_12" aria-selected="true" data-original-title="" title="" aria-describedby="tooltip466102">ISO14000认证</a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" id="nav_tabs_link_1565876877708_13" data-toggle="tab" href="#nav_tabs_content_1565876877708_13" role="tab" aria-controls="nav_tabs_content_1565876877708_13" aria-selected="false" data-original-title="" title="" aria-describedby="tooltip851032">UL认证</a>
@@ -38,7 +38,7 @@
                       </ul>
                     </div>
                     <div class="card-body tab-content">
-                      <div class="tab-pane fade" id="nav_tabs_content_1565876877708_11" role="tabpanel" aria-labelledby="nav_tabs_link_1565876877708_11">
+                      <div class="tab-pane fade active show" id="nav_tabs_content_1565876877708_11" role="tabpanel" aria-labelledby="nav_tabs_link_1565876877708_11">
                         <p class="MsoNormal" align="center" style="margin: 7.8pt 5.95pt 15.6pt 7.35pt; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-align: center; line-height: 18px;"> </p>
                         <div id="wrap" class="oe_structure oe_empty">
                           <form action="/website_form/" method="post" class="s_website_form container-fluid mt32" enctype="multipart/form-data" data-model_name="e2yun.supplier.authentication.info" data-success_page="">
@@ -164,7 +164,7 @@
                           <br/>
                         </h3>
                       </div>
-                      <div class="tab-pane fade active show" id="nav_tabs_content_1565876877708_12" role="tabpanel" aria-labelledby="nav_tabs_link_1565876877708_12">
+                      <div class="tab-pane fade" id="nav_tabs_content_1565876877708_12" role="tabpanel" aria-labelledby="nav_tabs_link_1565876877708_12">
                         <p class="MsoNormal" style="margin: 7.8pt 0cm; padding: 0px; caret-color: rgb(102, 102, 102); color: rgb(102, 102, 102); font-family: &quot;Microsoft YaHei&quot;, Tahoma, Verdana; font-size: 12px; text-size-adjust: auto; text-indent: 32pt; line-height: 18px;">
                           </p>
                         <form action="/website_form/" method="post" class="s_website_form container-fluid mt32" enctype="multipart/form-data" data-model_name="e2yun.supplier.authentication.info" data-success_page="">
