@@ -133,21 +133,24 @@ class e2yun_customer_payment_extend(models.Model):
                 "color": "#173177"
             },
             "keyword3": {
-                "value": res.related_shop
+                "value": res.related_shop.display_name
             },
             "keyword4": {
-                "value": res.partner_id
+                "value": res.partner_id.name
             },
             "keyword5": {
                 "value": res.payment_type2
             },
             "remark": {
-                "value": "客户PO号:%s" % res.customer_po
+                "value": "客户PO号:%s" % res.customer_po,
+                "value": "市场合同号:%s" % res.po_num,
+                "value": "交款凭证:%s" % res.payment_voucher,
+
             }
         }
-        # if self.env.user.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
-        #     self.env.user.wx_user_id.send_template_message(
-        #         user_data, template_name='客户付款测试', partner=self.env.user.partner_id, url=res.access_url)
+        if self.env.user.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
+            self.env.user.wx_user_id.send_template_message(
+                user_data, template_name='客户收款提醒', partner=self.env.user.partner_id)
 
     @api.model
     def create(self, vals_list):
