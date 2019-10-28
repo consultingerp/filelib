@@ -40,9 +40,9 @@ class E2yunCustomerRefund(models.Model):
                 "value": "第三方退款编号:%s" % self.thrrd_receipt_num,
             }
         }
-        # if self.env.user.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
-        #     self.env.user.wx_user_id.send_template_message(
-        #         user_data, template_name='客户付款测试', partner=self.env.user.partner_id, url=res.access_url)
+        if self.env.user.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
+            self.env.user.wx_user_id.send_template_message(
+                user_data, template_name='客户退款测试', partner=self.env.user.partner_id)
 
     company_id = fields.Char('公司名称')
     shop_id = fields.Char('门店')
