@@ -150,7 +150,7 @@ class e2yun_customer_payment_extend(models.Model):
         }
         if self.env.user.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
             self.env.user.wx_user_id.send_template_message(
-                user_data, template_name='客户付款测试', partner=self.env.user.partner_id)
+                user_data, template_name='客户收款提醒', partner=self.env.user.partner_id)
 
     @api.model
     def create(self, vals_list):
