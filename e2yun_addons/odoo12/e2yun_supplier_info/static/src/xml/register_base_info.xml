@@ -398,7 +398,7 @@
                                 <label class="col-form-label" for="country_bank">开户行国家</label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <select class="form-control o_website_form_input" name="bank_country" id="supplier_info_bank_country" required="1">
+                                <select class="form-control o_website_form_input" name="country_bank" id="supplier_info_bank_country" required="1">
                                   <option value="请选择">请选择</option>
                                   <t t-foreach="bank_countrys" t-as="bank_country">
                                     <option t-att-data="bank_country.id" t-att-value="bank_country.id" t-att-selected="bank_country.id == supplier.country_bank.id"><t t-esc="bank_country.name"/></option>
@@ -412,7 +412,7 @@
                                 <label class="col-form-label" for="country_bank">开户行省份</label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <select class="form-control o_website_form_input" name="bank_state" id="supplier_info_bank_state" required="1">
+                                <select class="form-control o_website_form_input" name="province_bank" id="supplier_info_bank_state" required="1">
                                   <option value="请选择">请选择</option>
                                   <t t-foreach="bank_states" t-as="bank_state">
                                     <option t-att-data="bank_state.id" t-att-value="bank_state.id" t-att-selected="bank_state.id == supplier.province_bank.id"><t t-esc="bank_state.name"/></option>
@@ -426,7 +426,7 @@
                                 <label class="col-form-label" for="city_bank">开户行城市</label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <select class="form-control o_website_form_input" name="bank_city" id="supplier_info_bank_city" required="1">
+                                <select class="form-control o_website_form_input" name="city_bank" id="supplier_info_bank_city" required="1">
                                   <option value="请选择">请选择</option>
                                   <t t-foreach="bank_citys" t-as="bank_city">
                                     <option t-att-data="bank_city.id" t-att-value="bank_city.id" t-att-selected="bank_city.id == supplier.city_bank.id"><t t-esc="bank_city.name"/></option>
@@ -440,7 +440,7 @@
                                 <label class="col-form-label" for="region_bank"> 开户行地区 </label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <select class="form-control o_website_form_input" name="bank_region" id="supplier_info_bank_region">
+                                <select class="form-control o_website_form_input" name="region_bank" id="supplier_info_bank_region">
                                   <option value="请选择">请选择</option>
                                   <t t-foreach="bank_regions" t-as="bank_region">
                                     <option t-att-data="bank_region.id" t-att-value="bank_region.id" t-att-selected="bank_region.id == supplier.region_bank.id"><t t-esc="bank_region.name"/></option>
