@@ -7,7 +7,7 @@
             <field name="arch" type="xml">
                 <graph string="OutboundReport">
                     <field name="jiesuanjine" type="measure"/>
-                    <field name="LFADT" interval="week" type="row"/>
+                    <field name="LFADT" interval="month" type="row"/>
                 </graph>
 <!--                <graph string="OutboundReport">-->
 <!--                    <field name="xiaoshoujine" type="row"/>-->
