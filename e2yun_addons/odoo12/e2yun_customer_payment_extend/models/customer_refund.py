@@ -2,7 +2,7 @@
 
 from odoo import models, fields, api, exceptions, _
 import suds.client
-import datetime
+import time
 
 
 class E2yunCustomerRefund(models.Model):
@@ -15,12 +15,21 @@ class E2yunCustomerRefund(models.Model):
         else:
             trans_amount = self.refund_amount01
 
+        if self.customer_po:
+            cpo = self.customer_po
+        else:
+            cpo = '无'
+        if self.thrrd_receipt_num:
+            trn = self.thrrd_receipt_num
+        else:
+            trn = '无'
+
         user_data = {
             "first": {
                 "value": "%退款成功通知"
             },
             "keyword1": {
-                "value": "time.strftime('%Y.%m.%d',time.localtime(time.time()))"
+                "value": time.strftime('%Y.%m.%d', time.localtime(time.time()))
             },
             "keyword2": {
                 "value": trans_amount,
@@ -36,8 +45,7 @@ class E2yunCustomerRefund(models.Model):
                 "value": self.partner_id
             },
             "remark": {
-                "value": "客户PO号:%s" % self.customer_po,
-                "value": "第三方退款编号:%s" % self.thrrd_receipt_num,
+                "value": "客户PO号:%s" % cpo + ' ' + "第三方退款编号:%s" % trn
             }
         }
         if self.env.user.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
