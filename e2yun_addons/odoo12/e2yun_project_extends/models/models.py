@@ -21,8 +21,6 @@ class Questionnaire(models.Model):
         else:
             self.weight = ''
 
-
-
 class E2yunTaskInfo(models.Model):
     _inherit = 'project.task'
 
@@ -45,7 +43,7 @@ class E2yunTaskInfo(models.Model):
         tree_view = self.env.ref('survey.survey_tree')
         kanban_view = self.env.ref('survey.survey_kanban')
         return {
-            'name': 'Lead',
+            'name': '新建问卷',
             'res_model': 'survey.survey',
             # 'domain': [('type', '=', 'lead')],
             # 'res_id': self.id,
@@ -86,7 +84,6 @@ class E2yunTaskInfo(models.Model):
 class E2yunProjectSurvey(models.Model):
     _inherit = 'survey.survey'
 
-    # ======================================================================================#
     # 自动带出问卷分类
     def default_classification(self):
         ctx = self.env.context
@@ -100,6 +97,7 @@ class E2yunProjectSurvey(models.Model):
         else:
             res = '对外测评（供应商）'
             return res
+
     # 自动带出问卷场景字段值
     def default_scenario(self):
         ctx = self.env.context
@@ -111,18 +109,9 @@ class E2yunProjectSurvey(models.Model):
         for i in questionnaire:
             res = i.questionnaire_scenario
         return res
-    # questionnaire_classification = fields.Char(string='问卷分类', default=default_classification)
-    # questionnaire_scenario = fields.Char(string='问卷场景', default=default_scenario)
-    # ======================================================================================#
 
     questionnaire_classification = fields.Char(string='问卷分类', default=default_classification)
     questionnaire_scenario = fields.Char(string='问卷场景', default=default_scenario)
-
-
-
-
-    # task_ids = fields.One2many('project.questionnaire', 'survey_temp_id', string='Child Questionnaires')
-
 
 
 class SurveyPage(models.Model):
@@ -130,7 +119,6 @@ class SurveyPage(models.Model):
 
     # 调查问卷page页面添加’权重‘字段
     weight = fields.Char(string='权重')
-
     # 权重百分比
     @api.onchange('weight')
     def _onchange_weight(self):
@@ -140,12 +128,84 @@ class SurveyPage(models.Model):
             self.weight = ''
 
 
-    # @api.multi
-    # def page_weight(self):
-    #     weight_top = 100
-    #     weight = 0
-    #     for i in self:
-    #         weight = weight+self.weight
-    #     if weight > 100:
-    #         raise Warning(_("Do not have access, skip this data for user's digest email"))
+class SurveyQuestion(models.Model):
+    _inherit = 'survey.question'
 
+    highest_score = fields.Integer(string='最高分值')
+    scoring_method = fields.Selection([('唯一性计分', '唯一性计分'),('选择性计分', '选择性计分')],string='计分方式')
+    reference_existing_question = fields.Many2one('survey.question', string='引用已有题库')
+
+    @api.onchange('reference_existing_question')
+    def reference(self):
+        self.question = self.reference_existing_question.question
+        self.question_bank_type = self.reference_existing_question.question_bank_type
+        self.type = self.reference_existing_question.type
+        self.scoring_method = self.reference_existing_question.scoring_method
+        self.labels_ids = self.reference_existing_question.labels_ids
+
+
+    # 打开题库页面的方法
+    # @api.multi
+    # def turn_question(self):
+        # self.ensure_one()
+        # # Get lead views
+        # # form_view = self.env.ref('survey.survey_question_form')
+        # tree_view = self.env.ref('survey.survey_question_tree')
+        # # kanban_view = self.env.ref('survey.survey_kanban')
+        # return {
+        #     'name': '查看页面_已有题库',
+        #     'res_model': 'survey.question',
+        #     # 'domain': [('type', '=', 'lead')],
+        #     # 'res_id': self.id,
+        #     'view_id': False,
+        #     'target': 'new',
+        #     'views': [
+        #         # (form_view.id, 'form'),
+        #         (tree_view.id, 'tree'),
+        #         # (kanban_view.id, 'kanban')
+        #     ],
+        #     'view_type': 'tree',
+        #     'view_mode': 'tree,form,kanban',
+        #     'type': 'ir.actions.act_window',
+        # }
+        # data = self.read()[0]
+        # ctx = self._context.copy()
+        # return {
+        #     'name': '查看页面_已有题库',
+        #     'view_type': 'form',
+        #     'view_mode': 'form',
+        #     'res_model': 'quoting.question.bank',
+        #     'type': 'ir.actions.act_window',
+        #     'context': ctx,
+        #     'target': 'current',
+        #     # 'action': 'survey.action_survey_question_form',
+        # }
+
+# class SurveyLabel(models.Model):
+#     _inherit = 'survey.label'
+
+    # score = fields.Integer(string='分值')
+
+# class QuotingQuestionBank(models.Model):
+#     _name = 'quoting.question.bank'
+#     # 对应题库
+#     question_bank_id = fields.Many2one('survey.question', string='选择已有题库')
+    # 问题名称
+    # question_name = fields.Char('问题名称', required=True, translate=True)
+    # 题库大类
+    # question_bank_type = fields.Selection([('供应商基本信息', '供应商基本信息'), ('人口属性', '人口属性'), ('市场调研', '市场调研')
+    #                                           , ('用户满意度', '用户满意度'), ('联系方式', '联系方式'), ('其他', '其他')], string='题库大类')
+    # 问题类型
+    # type = fields.Selection([
+    #     ('free_text', 'Multiple Lines Text Box'),
+    #     ('textbox', 'Single Line Text Box'),
+    #     ('numerical_box', 'Numerical Value'),
+    #     ('date', 'Date'),
+    #     ('simple_choice', 'Multiple choice: only one answer'),
+    #     ('multiple_choice', 'Multiple choice: multiple answers allowed'),
+    #     ('matrix', 'Matrix')], string='问题类型', default='free_text', required=True)
+    # 计分方式
+    # scoring_method = fields.Selection([('唯一性计分', '唯一性计分'), ('选择性计分', '选择性计分')], string='计分方式')
+    # 可供选项
+    # labels_ids = fields.One2many('survey.label', 'id', string='可供选项', oldname='answer_choice_ids', copy=True)
+    # sequence = fields.Integer('Label Sequence order', default=10)
