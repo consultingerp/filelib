@@ -26,6 +26,7 @@
         'static/src/xml/register_base_info.xml',
         'static/src/xml/register_done.xml',
         'static/src/xml/website_layout.xml',
+        'views/my_home_template.xml',
     ],
     'installable': True,
 }

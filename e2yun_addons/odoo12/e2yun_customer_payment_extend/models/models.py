@@ -7,18 +7,6 @@ import suds.client, time
 class e2yun_customer_payment_extend(models.Model):
     _inherit = 'account.payment'
 
-    # @api.depends('payment_type2')
-    # @api.onchange('payment_type2')
-    # def _onchange_(self):
-    #     if self.payment_type2 == 'D11':
-    #         self.payment_status = 'A1'
-    #     elif self.payment_type2 == 'D12':
-    #         self.payment_status = 'A2'
-    #     elif self.payment_type2 == 'D13':
-    #         self.payment_status = 'A3'
-    #     elif self.payment_type2 == 'D16':
-    #         self.payment_status = 'A4'
-
     @api.depends('related_shop')
     @api.onchange('related_shop')
     def _onchange_banknum(self):
@@ -117,37 +105,71 @@ class e2yun_customer_payment_extend(models.Model):
 
     def transport_wechat_message(self, res):  # 微信消息推送--客户付款
         if res.accept_amount:
-            trans_amount = res.accept_amount
+            trans_amount = '%.2f' % res.accept_amount
         else:
-            trans_amount = res.amount
+            trans_amount = '%.2f' % res.amount
+
+        if res.customer_po:
+            cpo = res.customer_po
+        else:
+            cpo = '无'
+        if res.po_num:
+            po = res.po_num
+        else:
+            po = '无'
+        if res.payment_voucher:
+            pv = res.payment_voucher
+        else:
+            pv = '无'
+
+        dic = {'D11': '公司收现金',
+               'D12': '刷卡',
+               'D13': '公司微信',
+               'D16': '公司支付宝',
+               'C11': '第三方现金',
+               'C12': '第三方刷卡',
+               'C13': '第三方支票',
+               'C14': '第三方优惠券',
+               'C15': '第三方微信',
+               'C16': '第三方支付宝',
+               'D14': '第三方电商O2O',
+               'D15': '第三方厂家O2O',
+               'K11': '电商支付宝',
+               'G11': '公司收支票',
+               'G13': '门店现金',
+               'G12': '转账',
+               'D17': '分销商定制货款'}
 
         user_data = {
             "first": {
                 "value": "付款成功通知"
             },
             "keyword1": {
-                "value": "time.strftime('%Y.%m.%d',time.localtime(time.time()))"
+                "value": time.strftime('%Y.%m.%d', time.localtime(time.time()))
             },
             "keyword2": {
                 "value": trans_amount,
                 "color": "#173177"
             },
             "keyword3": {
-                "value": res.related_shop
+                "value": res.related_shop.display_name
             },
             "keyword4": {
-                "value": res.partner_id
+                "value": res.partner_id.name
             },
             "keyword5": {
-                "value": res.payment_type2
+                "value": dic[res.payment_type2]
             },
             "remark": {
-                "value": "客户PO号:%s" % res.customer_po
+                "value": "客户PO号:%s" % cpo + ' ' +
+                         "市场合同号:%s" % po + ' ' +
+                         "交款凭证:%s" % pv,
+
             }
         }
-        # if self.env.user.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
-        #     self.env.user.wx_user_id.send_template_message(
-        #         user_data, template_name='客户付款测试', partner=self.env.user.partner_id, url=res.access_url)
+        if self.env.user.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
+            self.env.user.wx_user_id.send_template_message(
+                user_data, template_name='客户收款提醒', partner=self.env.user.partner_id)
 
     @api.model
     def create(self, vals_list):
