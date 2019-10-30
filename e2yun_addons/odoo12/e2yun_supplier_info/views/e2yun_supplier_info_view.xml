@@ -475,7 +475,7 @@
                                             <field name="country_bank" required='True'/>
                                             <field name="province_bank" required='True'/>
                                             <field name="city_bank" required='True'/>
-                                            <field name="region_bank"/>
+                                            <!--<field name="region_bank"/>-->
                                             <field name="name_bank" required='True'/>
                                         </group>
                                         <group>
