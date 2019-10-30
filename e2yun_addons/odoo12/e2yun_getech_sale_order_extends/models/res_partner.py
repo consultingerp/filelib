@@ -12,6 +12,8 @@ class Partner(models.Model):
     partner_code = fields.Char('编号', copy=False)
     vat = fields.Char(copy=False)
 
+    is_company = fields.Boolean(default=True)
+
     _sql_constraints = [
         ('partner_code_unique', 'unique (partner_code)', "客户编号不能重复"),
         ('vat_unique', 'unique (vat)', "统一社会信用代码不能重复"),
