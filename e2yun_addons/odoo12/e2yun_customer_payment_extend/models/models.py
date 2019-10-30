@@ -171,6 +171,51 @@ class e2yun_customer_payment_extend(models.Model):
             self.env.user.wx_user_id.send_template_message(
                 user_data, template_name='客户收款提醒', partner=self.env.user.partner_id)
 
+    def transport_wechat_message_refund(self, res):  # 微信消息推送--客户退款
+        flag = self.related_shop.show_accept_amount
+        refund = self.env['customer_refund.report'].search([('refund_num', '=', '1000201910220003')])
+
+        if flag:
+            trans_amount = refund.customer_refund_amount
+        else:
+            trans_amount = refund.refund_amount01
+        if refund.customer_po:
+            cpo = refund.customer_po
+        else:
+            cpo = '无'
+        if refund.thrrd_receipt_num:
+            trn = refund.thrrd_receipt_num
+        else:
+            trn = '无'
+
+        user_data = {
+            "first": {
+                "value": "%退款成功通知"
+            },
+            "keyword1": {
+                "value": time.strftime('%Y.%m.%d', time.localtime(time.time()))
+            },
+            "keyword2": {
+                "value": trans_amount,
+                "color": "#173177"
+            },
+            "keyword3": {
+                "value": refund.refund_amount02
+            },
+            "keyword4": {
+                "value": refund.shop_id
+            },
+            "keyword5": {
+                "value": refund.partner_id
+            },
+            "remark": {
+                "value": "客户PO号:%s" % cpo + ' ' + "第三方退款编号:%s" % trn
+            }
+        }
+        if self.env.user.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
+            self.env.user.wx_user_id.send_template_message(
+                user_data, template_name='客户退款提醒', partner=self.env.user.partner_id)
+
     @api.model
     def create(self, vals_list):
         atch = vals_list['payment_attachments']  # [[6, false, [11077, 11022]]] 展开多层list
@@ -214,30 +259,17 @@ class e2yun_customer_payment_extend(models.Model):
         self.transport_wechat_message(res)
         return res
 
-    # @api.one
-    # def write(self, vals):
-    #
-    #     if vals.get('amount', False):
-    #         if vals['amount'] == 0:
-    #             raise Warning(_("付款金额不能为0!"))
-    #
-    #     if vals.get('payment_attachments'):
-    #         atch = vals['payment_attachments']
-    #         temp = []
-    #         for r in atch:
-    #             if type(r) is list:
-    #
-    #                 for r1 in r:
-    #                     if type(r1) is list:
-    #                         temp.extend(r1)
-    #
-    #         for ids in temp:
-    #             # atch_id = ids
-    #             atch_line = self.env['ir.attachment'].browse(ids)
-    #             atch_line.write({'res_model': 'account.payment'})
-    #         return super(e2yun_customer_payment_extend, self).write(vals)
-    #     else:
-    #         return super(e2yun_customer_payment_extend, self).write(vals)
+    @api.one
+    def write(self, vals):
+        previous_state = self.state
+        # vals['state'] = 'cancelled'
+        new_state = vals.get('state')
+
+        res = super(e2yun_customer_payment_extend, self).write(vals)
+        if previous_state == 'draft':
+            if new_state == 'cancelled':
+                self.transport_wechat_message_refund(res)
+        return res
 
     @api.model
     def get_payment_attachments(self, payment_id):
