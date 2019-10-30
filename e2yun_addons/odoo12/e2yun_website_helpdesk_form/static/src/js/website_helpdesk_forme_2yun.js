@@ -11,7 +11,9 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
 
     sAnimation.registry.form_builder_send = sAnimation.Class.extend({
         selector: '.s_website_form_e2yun',
+         events: {
 
+         },
         willStart: function () {
             var def;
             if (!$.fn.datetimepicker) {
@@ -33,6 +35,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                         });
                         $target.on('done.ydui.cityselect', function (ret) {
                             $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
+                              $('input[name=j_address]').val('');
                         });
                         return;
                     }
@@ -80,6 +83,8 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                     });
                     $target.on('done.ydui.cityselect', function (ret) {
                         $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
+                           $('input[name=j_address]').val('');
+
                     });
                 };
                 var useraddress = $('input[name=j_address]').val();
@@ -385,6 +390,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
             });
             $target.on('done.ydui.cityselect', function (ret) {
                 $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
+                $('input[name=j_address]').val('');
             });
 
         }, start_date_controls: function () {
