@@ -46,7 +46,7 @@
                     <field name="updater"></field>
                     <field name="totalmoney"></field>
                 </xpath>
-                <xpath expr="//field[@name='order_line']//tree//field[@name='sequence']" position="after">
+                <xpath expr="//field[@name='order_line']//tree//field[@name='price_tax']" position="after">
                     <field name="rownum"></field>
                     <field name="matnr"></field>
                     <field name="maktx"></field>
