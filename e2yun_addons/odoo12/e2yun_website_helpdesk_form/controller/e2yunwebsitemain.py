@@ -7,7 +7,7 @@ from odoo.http import request
 
 from odoo.addons.website_helpdesk_form.controller.main import WebsiteForm
 from odoo.addons.http_routing.models.ir_http import slug
-# from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup
 import requests
 import datetime
 import logging
