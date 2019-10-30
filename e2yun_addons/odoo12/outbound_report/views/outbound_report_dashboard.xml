@@ -6,7 +6,7 @@
             <field name="model">outbound.final</field>
             <field name="arch" type="xml">
                 <graph string="OutboundReport">
-                    <field name="jiesuanjine" type="row"/>
+                    <field name="jiesuanjine" type="measure"/>
                     <field name="LFADT" interval="month" type="row"/>
                 </graph>
 <!--                <graph string="OutboundReport">-->

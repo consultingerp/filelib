@@ -47,15 +47,15 @@ class Academy(http.Controller):
         #国家
         countrys = http.request.env['res.country'].sudo().search([])
         # 城市
-        citys = http.request.env['res.state.city'].sudo().search([])
+        citys = http.request.env['res.city'].sudo().search([])
         # 开户行国家
         bank_countrys = http.request.env['res.country'].sudo().search([])
         # 开户行省份
         bank_states = http.request.env['res.country.state'].sudo().search([])
         # 开户行城市
-        bank_citys = http.request.env['res.state.city'].sudo().search([])
+        bank_citys = http.request.env['res.city'].sudo().search([])
         # 开户行地区
-        bank_regions = http.request.env['res.city.area'].sudo().search([])
+        # bank_regions = http.request.env['res.city.area'].sudo().search([])
         # 银行名称
         name_banks = http.request.env['res.bank'].sudo().search([])
         # 币种
@@ -78,7 +78,7 @@ class Academy(http.Controller):
                                                                                           'bank_countrys': bank_countrys,
                                                                                           'bank_states':bank_states,
                                                                                           'bank_citys':bank_citys,
-                                                                                          'bank_regions':bank_regions,
+                                                                                          # 'bank_regions':bank_regions,
                                                                                           'name_banks':name_banks,
                                                                                           'currencys_type':currencys_type,
                                                                                           'industrys':industrys,
@@ -105,7 +105,7 @@ class Academy(http.Controller):
                                                                                           'bank_countrys': bank_countrys,
                                                                                           'bank_states': bank_states,
                                                                                           'bank_citys': bank_citys,
-                                                                                          'bank_regions': bank_regions,
+                                                                                          # 'bank_regions': bank_regions,
                                                                                           'name_banks': name_banks,
                                                                                           'currencys_type': currencys_type,
                                                                                           'industrys':industrys,

@@ -99,7 +99,7 @@ class e2yun_supplier_info(models.Model):
     street = fields.Char()
     street2 = fields.Char(string='street2')
     zip = fields.Char(change_default=True)
-    city = fields.Many2one("res.state.city", string='City', ondelete='restrict')
+    city = fields.Many2one("res.city", string='City', ondelete='restrict')
     state_id = fields.Many2one("res.country.state", string='State', ondelete='restrict')
     country_id = fields.Many2one('res.country', string='Country', ondelete='restrict')
     email = fields.Char()
@@ -168,8 +168,8 @@ class e2yun_supplier_info(models.Model):
     # 新增银行信息
     country_bank = fields.Many2one('res.country', '开户行国家', ondelete='restrict')
     province_bank = fields.Many2one('res.country.state', '开户行省份', ondelete='restrict')
-    city_bank = fields.Many2one('res.state.city', '开户行城市', ondelete='restrict')
-    region_bank = fields.Many2one('res.city.area', '开户行地区', ondelete='restrict')
+    city_bank = fields.Many2one('res.city', '开户行城市', ondelete='restrict')
+    # region_bank = fields.Many2one('res.city.area', '开户行地区', ondelete='restrict')
     name_bank = fields.Many2one('res.bank', '银行名称')
     name_bank_branch = fields.Char('分行名称')
     name_banks = fields.Char('支行名称')
@@ -559,7 +559,7 @@ class e2yun_supplier_info(models.Model):
         state_id = ctx.get('state_id', False)
         city_ids = []
         if state_id:
-            citys = self.env['res.state.city'].sudo().search([('state_id', '=', int(state_id))])
+            citys = self.env['res.city'].sudo().search([('state_id', '=', int(state_id))])
             for i in citys:
                 city_ids.append({
                     'id': i.id,
@@ -591,7 +591,7 @@ class e2yun_supplier_info(models.Model):
         bank_state_id = ctx.get('bank_state_id', False)
         bank_city_ids = []
         if bank_state_id:
-            citys = self.env['res.state.city'].sudo().search([('state_id', '=', int(bank_state_id))])
+            citys = self.env['res.city'].sudo().search([('state_id', '=', int(bank_state_id))])
             for i in citys:
                 bank_city_ids.append({
                     'id': i.id,
@@ -600,16 +600,16 @@ class e2yun_supplier_info(models.Model):
         return bank_city_ids
 
     # 根据页面选择的开户行城市带出开户行地区
-    @api.model
-    def get_bank_regions_by_city(self):
-        ctx = self._context.copy()
-        bank_city_id = ctx.get('bank_city_id', False)
-        bank_region_ids = []
-        if bank_city_id:
-            regions = self.env['res.city.area'].sudo().search([('city_id', '=', int(bank_city_id))])
-            for i in regions:
-                bank_region_ids.append({
-                    'id': i.id,
-                    'name': i.name
-                })
-        return bank_region_ids
+    # @api.model
+    # def get_bank_regions_by_city(self):
+    #     ctx = self._context.copy()
+    #     bank_city_id = ctx.get('bank_city_id', False)
+    #     bank_region_ids = []
+    #     if bank_city_id:
+    #         regions = self.env['res.city.area'].sudo().search([('city_id', '=', int(bank_city_id))])
+    #         for i in regions:
+    #             bank_region_ids.append({
+    #                 'id': i.id,
+    #                 'name': i.name
+    #             })
+    #     return bank_region_ids

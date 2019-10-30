@@ -435,23 +435,23 @@
                               </div>
                             </div>
                             <!--开户行地区-->
-                            <div class="row form-group form-field o_website_form_required_custom">
-                              <div class="col-md-4 text-md-right col-lg-2">
-                                <label class="col-form-label" for="region_bank"> 开户行地区 </label>
-                              </div>
-                              <div class="col-lg-3 col-md-8">
-                                <select class="form-control o_website_form_input" name="region_bank" id="supplier_info_bank_region">
-                                  <option value="请选择">请选择</option>
-                                  <t t-foreach="bank_regions" t-as="bank_region">
-                                    <option t-att-data="bank_region.id" t-att-value="bank_region.id" t-att-selected="bank_region.id == supplier.region_bank.id"><t t-esc="bank_region.name"/></option>
-                                  </t>
-                                </select>
-                              </div>
+                            <!--<div class="row form-group form-field o_website_form_required_custom">-->
+                              <!--<div class="col-md-4 text-md-right col-lg-2">-->
+                                <!--<label class="col-form-label" for="region_bank"> 开户行地区 </label>-->
+                              <!--</div>-->
+                              <!--<div class="col-lg-3 col-md-8">-->
+                                <!--<select class="form-control o_website_form_input" name="region_bank" id="supplier_info_bank_region">-->
+                                  <!--<option value="请选择">请选择</option>-->
+                                  <!--<t t-foreach="bank_regions" t-as="bank_region">-->
+                                    <!--<option t-att-data="bank_region.id" t-att-value="bank_region.id" t-att-selected="bank_region.id == supplier.region_bank.id"><t t-esc="bank_region.name"/></option>-->
+                                  <!--</t>-->
+                                <!--</select>-->
+                              <!--</div>-->
                               <!--<div class="col-lg-5 col-md-8">-->
                                 <!--<img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""-->
                                      <!--height="60px" width="100px"/>-->
                               <!--</div>-->
-                            </div>
+                            <!--</div>-->
                             <!--银行名称-->
                             <div class="row form-group form-field o_website_form_required_custom">
                               <div class="col-md-4 text-md-right col-lg-2">
