@@ -49,3 +49,29 @@ class Product(models.Model):
         client = suds.client.Client(url)
         client.service.getMatnr(matnr,current_date)
         return True
+
+    @api.model
+    def sync_pos_setmeal_to_crm(self,matnr,current_date):
+
+        if not matnr and not current_date:
+            current_date = date.today().strftime("%Y-%m-%d")
+
+
+        ICPSudo = self.env['ir.config_parameter'].sudo()
+        url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncMatnr?wsdl'  # webservice调用地址
+        client = suds.client.Client(url)
+        client.service.getSetmeal(matnr,current_date)
+        return True
+
+    @api.model
+    def sync_pos_mateproduct_to_crm(self,matnr,current_date):
+
+        if not matnr and not current_date:
+            current_date = date.today().strftime("%Y-%m-%d")
+
+
+        ICPSudo = self.env['ir.config_parameter'].sudo()
+        url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncMatnr?wsdl'  # webservice调用地址
+        client = suds.client.Client(url)
+        client.service.getMateproduct(matnr,current_date)
+        return True
