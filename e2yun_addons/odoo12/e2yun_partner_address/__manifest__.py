@@ -10,7 +10,7 @@
     'website': "http://www.e2yun.cn",
     'category': 'Uncategorized',
     'version': '0.1',
-    'depends': ['base','contacts','base_address_city'],
+    'depends': ['base','contacts'],
     'data': [
         'security/ir.model.access.csv',
         'views/views.xml',
