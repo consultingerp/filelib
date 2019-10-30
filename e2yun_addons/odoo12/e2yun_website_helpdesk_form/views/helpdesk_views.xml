@@ -9,7 +9,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='company_id']" position="after">
                 <field name="brand"/>
-                <field name="userip"/>
+                <!--<field name="userip"/>-->
                 <field name="posserviceorderid"/>
             </xpath>
 

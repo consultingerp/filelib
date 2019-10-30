@@ -25,8 +25,8 @@ class OutboundFinal(models.Model):
     vtweg = fields.Char('分销渠道')
     ywy = fields.Char('导购员')
     kunnr = fields.Many2one('crm.team', '门店')
-    jiesuanjine = fields.Char('结算小计')
-    xiaoshoujine = fields.Char('销售小计')
+    jiesuanjine = fields.Float('结算小计')
+    xiaoshoujine = fields.Float('销售小计')
 
     def init_date(self, ctx):
 
