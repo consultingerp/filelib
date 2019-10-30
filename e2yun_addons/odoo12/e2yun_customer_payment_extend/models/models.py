@@ -173,7 +173,7 @@ class e2yun_customer_payment_extend(models.Model):
 
     def transport_wechat_message_refund(self, res):  # 微信消息推送--客户退款
         flag = self.related_shop.show_accept_amount
-        refund = self.env['customer_refund.report'].search([('refund_num', '=', '1000201910220003')])
+        refund = self.env['customer_refund.report'].search([('refund_num', '=', self.receipt_Num)])
 
         if flag:
             trans_amount = refund.customer_refund_amount
