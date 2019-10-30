@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2017 LasLabs Inc.
+    Copyright 2018 Alexandre Díaz
+    Copyright 2018 Tecnativa - Jairo Llopis
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+
+<templates id="portal_chatter_messagefiles" xml:space="preserve">
+
+
+    <t t-extend="portal.chatter_composer">
+          <t t-jquery="form" t-operation="attributes">
+            <attribute name="enctype">multipart/form-data</attribute>
+        </t>
+     </t>
+
+    <t t-extend="portal.chatter_composer">
+        <t t-jquery="button" t-operation="after">
+            <button tabindex="5" class="btn btn-secondary fa fa-paperclip o_composer_button_add_attachment" type="button" aria-label="Add attachment" title="Add attachment"/>
+            <input type="file" class="o_input_file" name="ufile" multiple="multiple" accept="image/*,application/pdf,video/*"></input>
+        </t>
+    </t>
+
+    <t t-extend="portal.chatter_messages">
+             <t t-jquery=".o_portal_chatter_attachments" t-operation="replace">
+                   <div class="col-lg-2 col-md-3 text-center" t-foreach='message.attachment_ids' t-as='attachment'>
+                     <t t-set="type" t-value="attachment.mimetype and attachment.mimetype.split('/').shift()"/>
+                       <t t-set="editable" t-value="attachment.mimetype and attachment.mimetype.split('/').shift()"/>
+                       <t t-set="has_preview" t-value="type == 'image' or type == 'video' or attachment.mimetype == 'application/pdf'"/>
+                       <a t-attf-href="/web/content/#{attachment.id}?download=true&amp;access_token=#{attachment.access_token}" target="_blank">
+                           <div t-if="has_preview" class='oe_attachment_embedded o_image' t-att-title="attachment.name"
+                                t-att-style="type == 'image' ? 'width:200px;height:200px;background-image:url(/web/image/' + attachment.id + '/200x200/?crop=true);background-repeat:no-repeat; background-size:200px 200px;-moz-background-size:100% 100%;' : '' "
+                                t-att-data-mimetype="attachment.mimetype" t-attf-data-src="/web/image/#{attachment.id}/100x80"/>
+                           <t t-raw='attachment.name'/>
+
+                          </a>
+                      </div>
+             </t>
+     </t>
+</templates>
