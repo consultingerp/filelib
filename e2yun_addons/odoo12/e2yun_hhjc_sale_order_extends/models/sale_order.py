@@ -49,42 +49,50 @@ class SaleOrder(models.Model):
     def create(self, vals):
         res = super(SaleOrder, self).create(vals)
         if 'is_sync' not in vals or not vals['is_sync']:
-            ICPSudo = self.env['ir.config_parameter'].sudo()
-            url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncSaleOrder?wsdl'  # webservice调用地址
-            client = suds.client.Client(url)
-            datajsonstring = vals
-            for key in datajsonstring.keys():
-                if not datajsonstring[key]:
-                    datajsonstring[key] = ''
-            datajsonstring['posid'] = res.partner_id.app_code
-            datajsonstring['kunnr'] = res.team_id.shop_code
-            datajsonstring['VTEXT'] = res.team_id.shop_type
-            datajsonstring['orderdate'] = res.create_date.today()
-            datajsonstring['creater'] = self.env.user.name
-            datajsonstring['dianyuan'] = res.user_id.name
-            # datajsonstring['dianyuan'] = res.user_id.login
-            orderitem = []
-            num = 10
-            for line in res.order_line:
-                item = {}
-                line.product_id
-                item['matnr'] = line.product_id.default_code
-                item['maktx'] = line.product_id.name
-                item['itemtype'] = 'ZTA1'
-                item['itemtypetext'] = '标准项目'
-                item['rownum'] = num
-                item['kwmen'] = line.product_uom_qty
-                item['vrkme'] = line.product_uom.name
-                item['meins'] = line.product_uom.name
-                item['kbetr'] = line.price_unit
-                item['kpein'] = 1
-                num += 10
-                orderitem.append(item)
-            datajsonstring['orderitem'] = orderitem
-            result = client.service.synSaleOrderFromCrm(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
-            resultjson = json.loads(result)
-            res.salesorderid = resultjson['salesorderid']
+            res.action_sync_sale_to_pos()
         return res
+
+    def action_sync_sale_to_pos(self):
+        res = self
+        ICPSudo = self.env['ir.config_parameter'].sudo()
+        url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncSaleOrder?wsdl'  # webservice调用地址
+        client = suds.client.Client(url)
+        datajsonstring = {}
+        for key in res._fields.keys():
+            if res._fields[key].type not in ('many2one', 'many2many', 'one2many', 'binary'):
+                datajsonstring[key] = res[key] or ''
+        # datajsonstring = dict(res)
+        # for key in datajsonstring.keys():
+        #     if not datajsonstring[key]:
+        #         datajsonstring[key] = ''
+        datajsonstring['posid'] = res.partner_id.app_code
+        datajsonstring['kunnr'] = res.team_id.shop_code
+        datajsonstring['VTEXT'] = res.team_id.shop_type
+        datajsonstring['orderdate'] = res.create_date.today()
+        datajsonstring['creater'] = self.env.user.name
+        datajsonstring['dianyuan'] = res.user_id.name
+        # datajsonstring['dianyuan'] = res.user_id.login
+        orderitem = []
+        num = 10
+        for line in res.order_line:
+            item = {}
+            line.product_id
+            item['matnr'] = line.product_id.default_code
+            item['maktx'] = line.product_id.name
+            item['itemtype'] = 'ZTA1'
+            item['itemtypetext'] = '标准项目'
+            item['rownum'] = num
+            item['kwmen'] = line.product_uom_qty
+            item['vrkme'] = line.product_uom.name
+            item['meins'] = line.product_uom.name
+            item['kbetr'] = line.price_unit
+            item['kpein'] = 1
+            num += 10
+            orderitem.append(item)
+        datajsonstring['orderitem'] = orderitem
+        result = client.service.synSaleOrderFromCrm(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
+        resultjson = json.loads(result)
+        res.salesorderid = resultjson['salesorderid']
 
     def action_sync_pos_sale_order(self):
         # self.env['sale.order']._fields.keys()
