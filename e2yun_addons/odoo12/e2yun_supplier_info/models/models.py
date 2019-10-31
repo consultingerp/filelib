@@ -50,6 +50,11 @@ class e2yun_supplier_info(models.Model):
     def _default_company(self):
         return self.env['res.company']._company_default_get('res.partner')
 
+    @api.depends('user_ids.share', 'user_ids.active')
+    def _compute_partner_share(self):
+        for partner in self:
+            partner.partner_share = not partner.user_ids or not any(not user.share for user in partner.user_ids)
+
     name = fields.Char(index=True)
     display_name = fields.Char(compute='_compute_display_name', store=True, index=True)
     date = fields.Date(index=True)
