@@ -166,7 +166,9 @@ class E2yunCsutomerExtends(models.Model):
             values['teams'] = [(6,0,[values.get('shop_code'),])]
             del values['pos_flag']
         result = super(E2yunCsutomerExtends, self).write(values)
-
+        # add by hepeng 20191020 当更新客户微信地址时候不提交客户信息到POS
+        if values.get('wxlatitude'):
+            return result
         if self.state != 'potential_customer' and not pos_flag and not values.get('pos_state',False):
             self.sync_customer_to_pos()
             self.pos_state = True
