@@ -131,10 +131,22 @@ class SurveyPage(models.Model):
 class SurveyQuestion(models.Model):
     _inherit = 'survey.question'
 
-    highest_score = fields.Integer(string='最高分值')
-    scoring_method = fields.Selection([('唯一性计分', '唯一性计分'),('选择性计分', '选择性计分')],string='计分方式')
+    highest_score = fields.Float(string='最高分值')
+    scoring_method = fields.Selection([('唯一性计分', '唯一性计分'),('选择性计分', '选择性计分'),('不计分', '不计分')],string='计分方式')
     reference_existing_question = fields.Many2one('survey.question', string='引用已有题库')
 
+    @api.onchange('labels_ids')
+    def _onchange_score(self):
+        res = self.labels_ids
+        if res:
+            all_score = []
+            for i in res:
+                score = i.quizz_mark
+                all_score.append(score)
+            rr = max(all_score)
+            self.highest_score = rr
+        else:
+            return True
     @api.onchange('reference_existing_question')
     def reference(self):
         self.question = self.reference_existing_question.question
