@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "E2yun Partner Address",
+    'name': "E2yun SRM Partner Address",
     'summary': """
-        客户地址维护""",
+        供应商地址维护""",
     'description': """
-        客户地址维护
+        供应商地址维护
     """,
     'author': "liqiang",
     'website': "http://www.e2yun.cn",
