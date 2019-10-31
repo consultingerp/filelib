@@ -4,22 +4,35 @@ from odoo import models, fields, api, _
 class Questionnaire(models.Model):
     _name = 'project.questionnaire'
 
+    # 如若是否多问卷字段选择否，则权重字段默认带出100%
+    # @api.model
+    # def _default_weight(self):
+    #     res = self.parent_id.multiple_questionnaires
+    #     print(res, 'rrrrrrrrrrrrrrrrr')
+    #     if res == 'no':
+    #         self.weight = 100
+
     # 问卷场景
     questionnaire_scenario = fields.Selection(
         [('评分问卷', '评分问卷'), ('资质调查', '资质调查'), ('满意度调查', '满意度调查'),
          ('报名登记表', '报名登记表'), ('其他', '其他')], string='问卷场景')
     # 权重
-    weight = fields.Char(string='权重')
+    weight = fields.Integer(string='权重', default=_default_weight)
+    # 权重单位
+    weight_unit = fields.Char(string='权重单位', default='%')
     # 问卷模板
     survey_temp_id = fields.Many2one('survey.survey', string='问卷模版')
     parent_id = fields.Many2one('project.task', string='Parent Task')
 
-    @api.onchange('weight')
-    def _onchange_weight(self):
-        if self.weight:
-            self.weight = str(self.weight)+'%'
-        else:
-            self.weight = ''
+    # @api.onchange('weight')
+    # def _onchange_weight(self):
+    #     if self.weight:
+    #         self.weight = str(self.weight)+'%'
+    #     else:
+    #         self.weight = ''
+
+
+
 
 class E2yunTaskInfo(models.Model):
     _inherit = 'project.task'
@@ -34,7 +47,9 @@ class E2yunTaskInfo(models.Model):
     # 一对多连接列表对象
     questionnaire_ids = fields.One2many('project.questionnaire', 'parent_id', string='Child Questionnaires')
 
-    # 打开问卷页面的方法
+
+
+    # 任务页面打开问卷页面的方法
     @api.multi
     def turn_page(self):
         self.ensure_one()
@@ -65,7 +80,7 @@ class E2yunTaskInfo(models.Model):
     #
     #     res = super(E2yunProjectSurvey, self).write(vals)
     #     return res
-
+    #
     # @api.model
     # def create(self, vals):
     #     res = super(E2yunTaskInfo, self).create(vals)
