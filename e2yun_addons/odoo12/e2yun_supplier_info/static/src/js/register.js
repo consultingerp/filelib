@@ -104,30 +104,30 @@ odoo.define('e2yun_supplier_info.base_info', function (require) {
             });
         })
     });
-    $(document).ready(function() {
-        $('#supplier_info_bank_city').on('change',function(){
-            var rpc = require('web.rpc');
-            var bank_city_id = $("#supplier_info_bank_city").val();
-            var blog_id = $("input[name='blog_post_id']").val();
-            rpc.query({
-                model: 'e2yun.supplier.info',
-                method: 'get_bank_regions_by_city',
-                args:[{'bank_city_id':bank_city_id}]
-            }).then(function(bank_region_ids){
-                var select_bank_region_id = $('#supplier_info_bank_region');
-                select_bank_region_id.html('')
-                if(bank_region_ids && bank_region_ids.length > 0){
-                    _.each(bank_region_ids, function (x) {
-                        var opt = $('<option>').text(x.name)
-                            .attr('value', x.id);
-                            select_bank_region_id.append(opt);
-                    });
-                }else{
-                    var opt = $('<option>').text('')
-                        .attr('value', '');
-                        select_bank_region_id.append(opt);
-                }
-            });
-        })
-    });
+    // $(document).ready(function() {
+    //     $('#supplier_info_bank_city').on('change',function(){
+    //         var rpc = require('web.rpc');
+    //         var bank_city_id = $("#supplier_info_bank_city").val();
+    //         var blog_id = $("input[name='blog_post_id']").val();
+    //         rpc.query({
+    //             model: 'e2yun.supplier.info',
+    //             method: 'get_bank_regions_by_city',
+    //             args:[{'bank_city_id':bank_city_id}]
+    //         }).then(function(bank_region_ids){
+    //             var select_bank_region_id = $('#supplier_info_bank_region');
+    //             select_bank_region_id.html('')
+    //             if(bank_region_ids && bank_region_ids.length > 0){
+    //                 _.each(bank_region_ids, function (x) {
+    //                     var opt = $('<option>').text(x.name)
+    //                         .attr('value', x.id);
+    //                         select_bank_region_id.append(opt);
+    //                 });
+    //             }else{
+    //                 var opt = $('<option>').text('')
+    //                     .attr('value', '');
+    //                     select_bank_region_id.append(opt);
+    //             }
+    //         });
+    //     })
+    // });
 });

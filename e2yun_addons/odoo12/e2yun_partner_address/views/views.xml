@@ -40,73 +40,7 @@
                 </xpath>
             </field>
         </record>
-        <!--把城市,区加入到联系人/配置菜单下-->
-        <record id="res_state_city_list" model="ir.ui.view">
-            <field name="name">Res State City List</field>
-            <field name="model">res.state.city</field>
-            <field name="arch" type="xml">
-                <tree>
 
-                    <field name="name" />
-
-                    <field name="code"/>
-                </tree>
-            </field>
-        </record>
-        <record id="res_state_city_form" model="ir.ui.view">
-            <field name="name">Res State City Form</field>
-            <field name="model">res.state.city</field>
-            <field name="arch" type="xml">
-                <form>
-                    <div>
-                        <label for="name" string="城市名称"/>
-                        <field name="name" />
-                    </div>
-                    <div>
-                        <label for="code" string="城市代码"/>
-                        <field name="code"/>
-                    </div>
-                    <div>
-                        <label for="code" string="省份"/>
-                        <field name="state_id" options='{"no_open": True}'/>
-                    </div>
-                </form>
-            </field>
-        </record>
-        <record id="res_city_area_list" model="ir.ui.view">
-            <field name="name">Res City Area List</field>
-            <field name="model">res.city.area</field>
-            <field name="arch" type="xml">
-                <tree>
-                  <field name="name" />
-                  <field name="code"/>
-                </tree>
-            </field>
-        </record>
-        <record id="res_city_area_form" model="ir.ui.view">
-            <field name="name">Res City Area Form</field>
-            <field name="model">res.city.area</field>
-            <field name="arch" type="xml">
-                <form>
-                    <div>
-                        <label for="name" string="区/县名称"/>
-                        <field name="name" />
-                    </div>
-                    <div>
-                        <label for="code" string="区/县代码"/>
-                        <field name="code"/>
-                    </div>
-                    <div>
-                        <label for="code" string="城市"/>
-                        <field name="city_id" options='{"no_open": True}'/>
-                    </div>
-
-                    <!--<field name="name" />-->
-                  <!--<field name="code"/>-->
-                  <!--<field name="city_id" options='{"no_open": True}'/>-->
-                </form>
-            </field>
-        </record>
         <record model="ir.actions.act_window" id="action_res_state_city">
             <field name="name">城市</field>
             <field name="res_model">res.state.city</field>

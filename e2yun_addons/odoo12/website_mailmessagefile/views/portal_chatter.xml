@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets_frontend" inherit_id="website.assets_frontend" name="Website messagefile frontend assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/website_mailmessagefile/static/src/js/website_messagefile.js"></script>
+            <link rel="stylesheet" type="text/scss" href="/website_mailmessagefile/static/src/css/website_messagefile.scss"/>
+              <link rel="stylesheet" type="text/scss" href="/website_mailmessagefile/static/src/scss/composer.scss"/>
+        </xpath>
+    </template>
+
+    <template id="message_thread" inherit_id="portal.message_thread">
+        <xpath expr="//div[@id='discussion']" position="attributes">
+            <attribute name="t-att-data-file_show">显示文件</attribute>
+        </xpath>
+    </template>
+
+</odoo>

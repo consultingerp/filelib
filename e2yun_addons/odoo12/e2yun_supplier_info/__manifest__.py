@@ -11,7 +11,7 @@
     'website': "http://www.e2yun.com",
     'category': 'Purchase',
     'version': '0.1',
-    'depends': ['base', 'purchase','website','e2yun_partner_address' ],
+    'depends': ['base', 'purchase','website','e2yun_srm_partner_address' ],
     'data': [
         'security/ir.model.access.csv',
         'data/website_supplier_data.xml',

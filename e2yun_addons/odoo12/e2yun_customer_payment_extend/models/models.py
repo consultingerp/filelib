@@ -7,18 +7,6 @@ import suds.client, time
 class e2yun_customer_payment_extend(models.Model):
     _inherit = 'account.payment'
 
-    # @api.depends('payment_type2')
-    # @api.onchange('payment_type2')
-    # def _onchange_(self):
-    #     if self.payment_type2 == 'D11':
-    #         self.payment_status = 'A1'
-    #     elif self.payment_type2 == 'D12':
-    #         self.payment_status = 'A2'
-    #     elif self.payment_type2 == 'D13':
-    #         self.payment_status = 'A3'
-    #     elif self.payment_type2 == 'D16':
-    #         self.payment_status = 'A4'
-
     @api.depends('related_shop')
     @api.onchange('related_shop')
     def _onchange_banknum(self):
@@ -117,16 +105,47 @@ class e2yun_customer_payment_extend(models.Model):
 
     def transport_wechat_message(self, res):  # 微信消息推送--客户付款
         if res.accept_amount:
-            trans_amount = res.accept_amount
+            trans_amount = '%.2f' % res.accept_amount
         else:
-            trans_amount = res.amount
+            trans_amount = '%.2f' % res.amount
+
+        if res.customer_po:
+            cpo = res.customer_po
+        else:
+            cpo = '无'
+        if res.po_num:
+            po = res.po_num
+        else:
+            po = '无'
+        if res.payment_voucher:
+            pv = res.payment_voucher
+        else:
+            pv = '无'
+
+        dic = {'D11': '公司收现金',
+               'D12': '刷卡',
+               'D13': '公司微信',
+               'D16': '公司支付宝',
+               'C11': '第三方现金',
+               'C12': '第三方刷卡',
+               'C13': '第三方支票',
+               'C14': '第三方优惠券',
+               'C15': '第三方微信',
+               'C16': '第三方支付宝',
+               'D14': '第三方电商O2O',
+               'D15': '第三方厂家O2O',
+               'K11': '电商支付宝',
+               'G11': '公司收支票',
+               'G13': '门店现金',
+               'G12': '转账',
+               'D17': '分销商定制货款'}
 
         user_data = {
             "first": {
                 "value": "付款成功通知"
             },
             "keyword1": {
-                "value": "time.strftime('%Y.%m.%d',time.localtime(time.time()))"
+                "value": time.strftime('%Y.%m.%d', time.localtime(time.time()))
             },
             "keyword2": {
                 "value": trans_amount,
@@ -139,18 +158,63 @@ class e2yun_customer_payment_extend(models.Model):
                 "value": res.partner_id.name
             },
             "keyword5": {
-                "value": res.payment_type2
+                "value": dic[res.payment_type2]
             },
             "remark": {
-                "value": "客户PO号:%s" % res.customer_po,
-                "value": "市场合同号:%s" % res.po_num,
-                "value": "交款凭证:%s" % res.payment_voucher,
+                "value": "客户PO号:%s" % cpo + ' ' +
+                         "市场合同号:%s" % po + ' ' +
+                         "交款凭证:%s" % pv,
 
             }
         }
         if self.env.user.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
             self.env.user.wx_user_id.send_template_message(
                 user_data, template_name='客户收款提醒', partner=self.env.user.partner_id)
+
+    def transport_wechat_message_refund(self, res):  # 微信消息推送--客户退款
+        flag = self.related_shop.show_accept_amount
+        refund = self.env['customer_refund.report'].search([('refund_num', '=', self.receipt_Num)])
+
+        if flag:
+            trans_amount = refund.customer_refund_amount
+        else:
+            trans_amount = refund.refund_amount01
+        if refund.customer_po:
+            cpo = refund.customer_po
+        else:
+            cpo = '无'
+        if refund.thrrd_receipt_num:
+            trn = refund.thrrd_receipt_num
+        else:
+            trn = '无'
+
+        user_data = {
+            "first": {
+                "value": "%退款成功通知"
+            },
+            "keyword1": {
+                "value": time.strftime('%Y.%m.%d', time.localtime(time.time()))
+            },
+            "keyword2": {
+                "value": trans_amount,
+                "color": "#173177"
+            },
+            "keyword3": {
+                "value": refund.refund_amount02
+            },
+            "keyword4": {
+                "value": refund.shop_id
+            },
+            "keyword5": {
+                "value": refund.partner_id
+            },
+            "remark": {
+                "value": "客户PO号:%s" % cpo + ' ' + "第三方退款编号:%s" % trn
+            }
+        }
+        if self.env.user.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
+            self.env.user.wx_user_id.send_template_message(
+                user_data, template_name='客户退款提醒', partner=self.env.user.partner_id)
 
     @api.model
     def create(self, vals_list):
@@ -195,30 +259,17 @@ class e2yun_customer_payment_extend(models.Model):
         self.transport_wechat_message(res)
         return res
 
-    # @api.one
-    # def write(self, vals):
-    #
-    #     if vals.get('amount', False):
-    #         if vals['amount'] == 0:
-    #             raise Warning(_("付款金额不能为0!"))
-    #
-    #     if vals.get('payment_attachments'):
-    #         atch = vals['payment_attachments']
-    #         temp = []
-    #         for r in atch:
-    #             if type(r) is list:
-    #
-    #                 for r1 in r:
-    #                     if type(r1) is list:
-    #                         temp.extend(r1)
-    #
-    #         for ids in temp:
-    #             # atch_id = ids
-    #             atch_line = self.env['ir.attachment'].browse(ids)
-    #             atch_line.write({'res_model': 'account.payment'})
-    #         return super(e2yun_customer_payment_extend, self).write(vals)
-    #     else:
-    #         return super(e2yun_customer_payment_extend, self).write(vals)
+    @api.one
+    def write(self, vals):
+        previous_state = self.state
+        # vals['state'] = 'cancelled'
+        new_state = vals.get('state')
+
+        res = super(e2yun_customer_payment_extend, self).write(vals)
+        if previous_state == 'draft':
+            if new_state == 'cancelled':
+                self.transport_wechat_message_refund(res)
+        return res
 
     @api.model
     def get_payment_attachments(self, payment_id):
