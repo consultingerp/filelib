@@ -39,12 +39,13 @@ class res_partner(models.Model):
     # 新增银行信息
     country_bank = fields.Many2one('res.country', '开户行国家', required=True, ondelete='restrict')
     province_bank = fields.Many2one('res.country.state', '开户行省份', required=True, ondelete='restrict')
-    city_bank = fields.Many2one('res.state.city', '开户行城市', required=True, ondelete='restrict')
-    region_bank = fields.Many2one('res.city.area', '开户行地区', ondelete='restrict')
+    city_bank = fields.Many2one('res.city', '开户行城市', required=True, ondelete='restrict')
+    # region_bank = fields.Many2one('res.city.area', '开户行地区', ondelete='restrict')
     name_bank = fields.Many2one('res.bank', '银行名称', required=True)
     name_bank_branch = fields.Char('分行名称')
     name_banks = fields.Char('支行名称')
-    account_bank = fields.Many2one('res.partner.bank', '银行账号', required=True)
+    # account_bank = fields.Many2one('res.partner.bank', '银行账号', required=True)
+    account_bank = fields.Char('银行账号')
     name_account = fields.Char('账号名称')
     currency_type = fields.Many2one('res.currency', '币种', required=True)
     code_bank = fields.Char('银行代码')
@@ -58,7 +59,7 @@ class res_partner(models.Model):
     function = fields.Char(string='Job Position')
     country_id = fields.Many2one('res.country', string='Country', ondelete='restrict')
     state_id = fields.Many2one("res.country.state", string='State', ondelete='restrict')
-    city = fields.Many2one('res.state.city', 'City', ondelete='restrict')
+    city = fields.Many2one('res.city', 'City', ondelete='restrict')
     street = fields.Char('详细地址')
 
 

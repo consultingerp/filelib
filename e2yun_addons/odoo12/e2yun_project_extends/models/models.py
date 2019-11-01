@@ -214,8 +214,8 @@ class SurveyQuestion(models.Model):
 
 # class SurveyLabel(models.Model):
 #     _inherit = 'survey.label'
-
-    # score = fields.Integer(string='分值')
+#
+#     score = fields.Integer(string='分值')
 
 # class QuotingQuestionBank(models.Model):
 #     _name = 'quoting.question.bank'
