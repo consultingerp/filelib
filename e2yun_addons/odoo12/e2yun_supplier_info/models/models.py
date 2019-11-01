@@ -50,6 +50,11 @@ class e2yun_supplier_info(models.Model):
     def _default_company(self):
         return self.env['res.company']._company_default_get('res.partner')
 
+    @api.depends('user_ids.share', 'user_ids.active')
+    def _compute_partner_share(self):
+        for partner in self:
+            partner.partner_share = not partner.user_ids or not any(not user.share for user in partner.user_ids)
+
     name = fields.Char(index=True)
     display_name = fields.Char(compute='_compute_display_name', store=True, index=True)
     date = fields.Date(index=True)
@@ -467,27 +472,30 @@ class e2yun_supplier_info(models.Model):
                     elif self.fields_get()[field]['type'] == 'binary':
                         data[field] = self[field]
                     else:
-                        data[field] = self[field].id
+                        try:
+                            data[field] = self[field].id
+                        except:
+                            print('Done')
         #data['real_create_uid'] = self.user_id.id
         data['customer'] = False
         data['supplier'] = True
         id = self.env['res.partner'].sudo().create(data)
 
-        if self.login_name:
-            user = self.env['res.users'].sudo()
-            #supplier_user = self.env['e2yun.supplier.user'].sudo().browse(self.supplier_user)
-            groups = []
-            #groups.append(self.env.ref('survey.group_survey_user').id)
-            groups.append(self.env.ref('base.group_public').id)
-            groups.append(self.env.ref('base.group_portal').id)
-            user_data = {
-                'login' : self.login_name,
-                'password' : self.password,
-                'name' : self.name,
-                'partner_id':id.id,
-                'groups_id':[(6, 0, groups)]
-            }
-            user.create(user_data)
+        # if self.login_name:
+        #     user = self.env['res.users'].sudo()
+        #     #supplier_user = self.env['e2yun.supplier.user'].sudo().browse(self.supplier_user)
+        #     groups = []
+        #     #groups.append(self.env.ref('survey.group_survey_user').id)
+        #     groups.append(self.env.ref('base.group_public').id)
+        #     groups.append(self.env.ref('base.group_portal').id)
+        #     user_data = {
+        #         'login' : self.login_name,
+        #         'password' : self.password,
+        #         'name' : self.name,
+        #         'partner_id':id.id,
+        #         'groups_id':[(6, 0, groups)]
+        #     }
+        #     user.create(user_data)
         for many_col in many_cols:
             id[many_col] = self[many_col]
         if child_datas:

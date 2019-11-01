@@ -5,6 +5,9 @@ import datetime
 import suds.client
 import json
 from . import myjsondateencode
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class SaleOrder(models.Model):
@@ -49,42 +52,58 @@ class SaleOrder(models.Model):
     def create(self, vals):
         res = super(SaleOrder, self).create(vals)
         if 'is_sync' not in vals or not vals['is_sync']:
-            ICPSudo = self.env['ir.config_parameter'].sudo()
-            url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncSaleOrder?wsdl'  # webservice调用地址
-            client = suds.client.Client(url)
-            datajsonstring = vals
-            for key in datajsonstring.keys():
-                if not datajsonstring[key]:
-                    datajsonstring[key] = ''
-            datajsonstring['posid'] = res.partner_id.app_code
-            datajsonstring['kunnr'] = res.team_id.shop_code
-            datajsonstring['VTEXT'] = res.team_id.shop_type
-            datajsonstring['orderdate'] = res.create_date.today()
-            datajsonstring['creater'] = self.env.user.name
-            datajsonstring['dianyuan'] = res.user_id.name
-            # datajsonstring['dianyuan'] = res.user_id.login
-            orderitem = []
-            num = 10
-            for line in res.order_line:
-                item = {}
-                line.product_id
-                item['matnr'] = line.product_id.default_code
-                item['maktx'] = line.product_id.name
-                item['itemtype'] = 'ZTA1'
-                item['itemtypetext'] = '标准项目'
-                item['rownum'] = num
-                item['kwmen'] = line.product_uom_qty
-                item['vrkme'] = line.product_uom.name
-                item['meins'] = line.product_uom.name
-                item['kbetr'] = line.price_unit
-                item['kpein'] = 1
-                num += 10
-                orderitem.append(item)
-            datajsonstring['orderitem'] = orderitem
-            result = client.service.synSaleOrderFromCrm(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
-            resultjson = json.loads(result)
-            res.salesorderid = resultjson['salesorderid']
+            try:
+                res.action_sync_sale_to_pos()
+            except Exception as e:
+                _logger.error("同步订单到POS出现错误，对象: %s，错误信息：%s", self, e)
         return res
+
+    # @api.multi
+    # def write(self, vals):
+    #     res = super(SaleOrder, self).write(vals)
+    #     return res
+
+    def action_sync_sale_to_pos(self):
+        res = self
+        ICPSudo = self.env['ir.config_parameter'].sudo()
+        url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncSaleOrder?wsdl'  # webservice调用地址
+        client = suds.client.Client(url)
+        datajsonstring = {}
+        for key in res._fields.keys():
+            if res._fields[key].type not in ('many2one', 'many2many', 'one2many', 'binary'):
+                datajsonstring[key] = res[key] or ''
+        # datajsonstring = dict(res)
+        # for key in datajsonstring.keys():
+        #     if not datajsonstring[key]:
+        #         datajsonstring[key] = ''
+        datajsonstring['posid'] = res.partner_id.app_code
+        datajsonstring['kunnr'] = res.team_id.shop_code or ''
+        datajsonstring['VTEXT'] = res.team_id.shop_type or '电商终端'
+        datajsonstring['orderdate'] = res.create_date.today()
+        datajsonstring['operator'] = self.env.user.name
+        datajsonstring['dianyuan'] = res.user_id.name
+        # datajsonstring['dianyuan'] = res.user_id.login
+        orderitem = []
+        num = 10
+        for line in res.order_line:
+            item = {}
+            line.product_id
+            item['matnr'] = line.product_id.default_code
+            item['maktx'] = line.product_id.name
+            item['itemtype'] = 'ZTA1'
+            item['itemtypetext'] = '标准项目'
+            item['rownum'] = num
+            item['kwmen'] = line.product_uom_qty
+            item['vrkme'] = line.product_uom.name
+            item['meins'] = line.product_uom.name
+            item['kbetr'] = line.price_unit
+            item['kpein'] = 1
+            num += 10
+            orderitem.append(item)
+        datajsonstring['orderitem'] = orderitem
+        result = client.service.synSaleOrderFromCrm(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
+        resultjson = json.loads(result)
+        res.salesorderid = resultjson['salesorderid']
 
     def action_sync_pos_sale_order(self):
         # self.env['sale.order']._fields.keys()
@@ -97,9 +116,34 @@ class SaleOrder(models.Model):
 
         if self.salesorderid:
             result = client.service.getSaleOrderInfo(self.salesorderid)
-            # lastDate = datetime.datetime.now()
-            # result = client.service.getSaleOrderInfo(lastDate)
-            # print(result)
+            json2python = json.loads(result)
+            line = json2python['orderHead']
+            order = sale_order.search([('salesorderid', '=', line['salesorderid'])])
+            order.unlink()
+            data = {}
+            date_line = {}
+            for key in line.keys():
+                if key in sale_order._fields:
+                    data[key] = line[key]
+            partner = self.env['res.partner'].search([('app_code', '=', line['memberposid'])])
+            data['partner_id'] = partner.id
+            data['is_sync'] = True
+            order_id = sale_order.create(data)
+
+            orderitem = json2python['orderItem']
+            for line in orderitem:
+                for key in line:
+                    if key in sale_order_line._fields:
+                        date_line[key] = line[key]
+                date_line['order_id'] = order_id.id
+                date_line['name'] = line['maktx']
+                product = self.env['product.product'].search([('default_code', '=', line['matnr'])])
+                if not product:
+                    self.env['product.product'].sync_pos_matnr_to_crm(line['matnr'], '2000-01-01')
+                    product = self.env['product.product'].search([('default_code', '=', line['matnr'])])
+                date_line['product_id'] = product.id
+                sale_order_line['is_sync'] = True
+                sale_order_line.create(date_line)
         else:
             info = self.env['sale.order'].search([('operatedatetime', '!=', False)], order='operatedatetime desc', limit=1)
             if info.operatedatetime:
@@ -134,6 +178,7 @@ class SaleOrder(models.Model):
                         self.env['product.product'].sync_pos_matnr_to_crm(line['matnr'], '2000-01-01')
                         product = self.env['product.product'].search([('default_code', '=', line['matnr'])])
                     date_line['product_id'] = product.id
+                    sale_order_line['is_sync'] = True
                     sale_order_line.create(date_line)
 
             # raise Exception('pos销售订单为空，不能同步！')
@@ -164,3 +209,27 @@ class SaleOrderLine(models.Model):
     closed = fields.Char('是否关闭')
     isthird = fields.Char('是否第三方')
     jiagongtext = fields.Char('是否加工')
+
+    @api.model
+    def create(self, vals):
+        res = super(SaleOrderLine, self).create(vals)
+        if 'is_sync' not in vals or not vals['is_sync']:
+            for item in self:
+                try:
+                    if item.order_id.state == 'draft':
+                        item.order_id.action_sync_sale_to_pos()
+                except Exception as e:
+                    _logger.error("同步订单到POS出现错误，对象: %s，错误信息：%s", self, e)
+        return res
+
+    @api.multi
+    def write(self, vals):
+        res = super(SaleOrderLine, self).write(vals)
+        if 'is_sync' not in vals or not vals['is_sync']:
+            for item in self:
+                try:
+                    if item.order_id.state == 'draft':
+                        item.order_id.action_sync_sale_to_pos()
+                except Exception as e:
+                    _logger.error("同步订单到POS出现错误，对象: %s，错误信息：%s", self, e)
+        return res
