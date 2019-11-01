@@ -17,7 +17,7 @@ class Questionnaire(models.Model):
         [('评分问卷', '评分问卷'), ('资质调查', '资质调查'), ('满意度调查', '满意度调查'),
          ('报名登记表', '报名登记表'), ('其他', '其他')], string='问卷场景')
     # 权重
-    weight = fields.Integer(string='权重', default=_default_weight)
+    weight = fields.Integer(string='权重')
     # 权重单位
     weight_unit = fields.Char(string='权重单位', default='%')
     # 问卷模板
