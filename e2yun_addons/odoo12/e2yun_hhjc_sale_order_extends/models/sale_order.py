@@ -5,6 +5,9 @@ import datetime
 import suds.client
 import json
 from . import myjsondateencode
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class SaleOrder(models.Model):
@@ -49,7 +52,10 @@ class SaleOrder(models.Model):
     def create(self, vals):
         res = super(SaleOrder, self).create(vals)
         if 'is_sync' not in vals or not vals['is_sync']:
-            res.action_sync_sale_to_pos()
+            try:
+                res.action_sync_sale_to_pos()
+            except Exception as e:
+                _logger.error("同步订单到POS出现错误，对象: %s，错误信息：%s", self, e)
         return res
 
     # @api.multi
@@ -209,8 +215,11 @@ class SaleOrderLine(models.Model):
         res = super(SaleOrderLine, self).create(vals)
         if 'is_sync' not in vals or not vals['is_sync']:
             for item in self:
-                if item.order_id.state == 'draft':
-                    item.order_id.action_sync_sale_to_pos()
+                try:
+                    if item.order_id.state == 'draft':
+                        item.order_id.action_sync_sale_to_pos()
+                except Exception as e:
+                    _logger.error("同步订单到POS出现错误，对象: %s，错误信息：%s", self, e)
         return res
 
     @api.multi
@@ -218,6 +227,9 @@ class SaleOrderLine(models.Model):
         res = super(SaleOrderLine, self).write(vals)
         if 'is_sync' not in vals or not vals['is_sync']:
             for item in self:
-                if item.order_id.state == 'draft':
-                    item.order_id.action_sync_sale_to_pos()
+                try:
+                    if item.order_id.state == 'draft':
+                        item.order_id.action_sync_sale_to_pos()
+                except Exception as e:
+                    _logger.error("同步订单到POS出现错误，对象: %s，错误信息：%s", self, e)
         return res
