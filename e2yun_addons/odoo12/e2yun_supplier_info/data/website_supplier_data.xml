@@ -55,6 +55,8 @@
                 'currency_type',
                 'code_bank',
                 'enclosure_bank',
+                'suppliertype_ids',
+                'street2',
                ]"/>
         </function>
 

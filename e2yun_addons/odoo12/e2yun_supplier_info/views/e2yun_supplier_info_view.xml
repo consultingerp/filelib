@@ -297,8 +297,8 @@
                                 <!--<field name="secondary_industry_ids" widget="many2many_tags"/>-->
                                 <!--新增供应商类型-->
                                 <!--<label for="suppliertype_ids"/>-->
-                                <field name="suppliertype_ids" widget="many2many_tags"/>
-
+                                <field name="suppliertype_ids" widget="many2many_tags" options="{'no_create_edit':1}"/>
+                                <!--<field name="suppliertype_ids"/>-->
                                 <!--<div>-->
                                     <!--<field name="production"/>-->
                                     <!--<label for="production"/>-->
@@ -475,7 +475,7 @@
                                             <field name="country_bank" required='True'/>
                                             <field name="province_bank" required='True'/>
                                             <field name="city_bank" required='True'/>
-                                            <field name="region_bank"/>
+                                            <!--<field name="region_bank"/>-->
                                             <field name="name_bank" required='True'/>
                                         </group>
                                         <group>
@@ -559,11 +559,11 @@
                             <!--新增产品信息选项卡-->
                             <page name='info_product' string="产品信息">
                                 <group>
-                                    <label for="secondary_industry_ids" string="供应产品类别"/>
+                                    <!--<label for="secondary_industry_ids" string="供应产品类别"/>-->
                                     <field name="secondary_industry_ids" widget="many2many_tags"/>
                                 </group>
                                 <group>
-                                    <label for="comment" string="备注"/>
+                                    <!--<label for="comment" string="备注"/>-->
                                     <field name="comment" placeholder="note..."/>
                                 </group>
                             </page>

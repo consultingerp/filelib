@@ -1,48 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, exceptions, _
-import suds.client
-import datetime
-
 
 class E2yunCustomerRefund(models.Model):
     _name = 'customer_refund.report'
-
-    def transport_wechat_message_refund(self):  # 微信消息推送--客户退款
-        flag = self.env['crm.team'].browse(self.id).show_accept_amount
-        if flag:
-            trans_amount = self.customer_refund_amount
-        else:
-            trans_amount = self.refund_amount01
-
-        user_data = {
-            "first": {
-                "value": "%退款成功通知"
-            },
-            "keyword1": {
-                "value": "time.strftime('%Y.%m.%d',time.localtime(time.time()))"
-            },
-            "keyword2": {
-                "value": trans_amount,
-                "color": "#173177"
-            },
-            "keyword3": {
-                "value": self.refund_amount02
-            },
-            "keyword4": {
-                "value": self.shop_id
-            },
-            "keyword5": {
-                "value": self.partner_id
-            },
-            "remark": {
-                "value": "客户PO号:%s" % self.customer_po,
-                "value": "第三方退款编号:%s" % self.thrrd_receipt_num,
-            }
-        }
-        if self.env.user.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
-            self.env.user.wx_user_id.send_template_message(
-                user_data, template_name='客户退款提醒', partner=self.env.user.partner_id)
 
     company_id = fields.Char('公司名称')
     shop_id = fields.Char('门店')

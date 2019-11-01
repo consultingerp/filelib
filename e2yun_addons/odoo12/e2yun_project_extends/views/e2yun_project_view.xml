@@ -17,7 +17,8 @@
                 </xpath>
                 <!--添加问卷分类-->
                 <xpath expr="//field[@name='user_id']" position="after">
-                    <field name="questionnaire_classification" attrs="{'invisible': [('task_mode', '=', 'common mode')]}"/>
+                    <field name="questionnaire_classification"
+                           attrs="{'invisible': [('task_mode', '=', 'common mode')]}"/>
                 </xpath>
                 <!--隐藏标签-->
                 <xpath expr="//field[@name='tag_ids']" position="attributes">
@@ -25,14 +26,17 @@
                 </xpath>
                 <!--添加任务模式和是否为多问卷-->
                 <xpath expr="//field[@name='date_deadline']" position="after">
-                    <field name="task_mode" />
-                    <field name="multiple_questionnaires" attrs="{'invisible': [('task_mode', '=', 'common mode')]}" />
+                    <field name="task_mode"/>
+                    <field name="multiple_questionnaires" attrs="{'invisible': [('task_mode', '=', 'common mode')]}"/>
                 </xpath>
                 <xpath expr="//notebook" position="before">
-                    <field name="questionnaire_ids" widget="one2many_list" context="{'questionnaire_ids': questionnaire_ids}" attrs="{'invisible': [('task_mode', '=', 'common mode')]}">
+                    <field name="questionnaire_ids" widget="one2many_list"
+                           context="{'questionnaire_ids': questionnaire_ids}"
+                           attrs="{'invisible': [('task_mode', '=', 'common mode')]}">
                         <tree editable="bottom">
                             <field name="questionnaire_scenario"/>
-                            <field name="weight" attrs="{'invisible': [('questionnaire_scenario', '=', 'Other')]}"/>
+                            <field name="weight" attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>
+                            <field name="weight_unit" attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>
                             <!--去掉创建并编辑：options="{'no_create_edit':1}"-->
                             <field name="survey_temp_id" options="{'no_create_edit':1}"/>
                         </tree>
@@ -40,12 +44,14 @@
                             <group>
                                 <group>
                                     <field name="questionnaire_scenario"/>
-                                    <field name="weight" attrs="{'invisible': [('questionnaire_scenario', '=', 'Other')]}"/>
+                                    <field name="weight"
+                                           attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>
+                                    <field name="weight_unit" attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>
                                     <field name="survey_temp_id"/>
                                 </group>
                                 <!--<group>-->
-                                    <!--<field name="image" widget='image' class="oe_avatar"-->
-                                    <!--options='{"preview_image": "image", "size": [250, 170]}'/>-->
+                                <!--<field name="image" widget='image' class="oe_avatar"-->
+                                <!--options='{"preview_image": "image", "size": [250, 170]}'/>-->
                                 <!--</group>-->
                             </group>
                         </form>
@@ -82,7 +88,62 @@
             <field name="arch" type="xml">
                 <xpath expr="//div[@class='oe_title']" position="after">
                     <label for="weight" class="oe_edit_only"/>
-                    <h1><field name="weight" placeholder="Weight"/></h1>
+                    <h1>
+                        <field name="weight" placeholder="Weight"/>
+                    </h1>
+                </xpath>
+                <xpath expr="//field[@name='question_ids']" position="replace">
+                    <field name="question_ids" nolabel="1" mode="tree" context="{'default_page_id': active_id}">
+                        <tree>
+                            <field name="sequence" widget="handle"/>
+                            <field name="question"/>
+                            <field name="highest_score"/>
+                            <field name="type"/>
+                            <field name="scoring_method"/>
+                            <field name="constr_mandatory"/>
+                        </tree>
+                    </field>
+                </xpath>
+                <!--<field name="question_ids" nolabel="1" mode="tree" context="{'default_page_id': active_id}">-->
+                <!--<tree>-->
+                <!--<field name="sequence" widget="handle"/>-->
+                <!--<field name="question"/>-->
+                <!--<field name="type"/>-->
+                <!--<field name="constr_mandatory"/>-->
+                <!--</tree>-->
+                <!--</field>-->
+                <!--<xpath expr="//field[@name='question']" position="after">-->
+                <!--<label for="highest_score"/>-->
+                <!--<h1><field name="highest_score" placeholder="最高分值"/></h1>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//field[@name='type']" position="after">-->
+                <!--<label for="scoring_method"/>-->
+                <!--<h1><field name="scoring_method" placeholder="计分方式"/></h1>-->
+                <!--</xpath>-->
+            </field>
+        </record>
+        <record model="ir.ui.view" id="survey_question_form_extends">
+            <field name="name">Form view for survey question extends</field>
+            <field name="model">survey.question</field>
+            <field name="inherit_id" ref="survey.survey_question_form"/>
+            <field name="arch" type="xml">
+                <!--添加引用已有题库按钮-->
+                <!--<xpath expr="//field[@name='question']" position="attributes">-->
+                    <!--<attribute name="name">questionn</attribute>-->
+                <!--</xpath>-->
+                <xpath expr="//div[@class='oe_title']" position="after">
+                    <!--<control>-->
+                        <!--<create string="引用已有题库"/>-->
+                    <!--</control>-->
+                    <!--<button name="turn_question" string="引用已有题库按钮" type="object" class="oe_highlight oe_edit_only"/>-->
+                    <label for="reference_existing_question"/>
+                    <field name="reference_existing_question" />
+                </xpath>
+
+
+                <xpath expr="//field[@name='labels_ids']" position="before">
+                    <label for="scoring_method" string="计分方式"/>
+                    <field name="scoring_method" string="Scoring Method"/>
                 </xpath>
             </field>
         </record>

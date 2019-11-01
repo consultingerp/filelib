@@ -126,13 +126,14 @@ class HelpdeskTicket(models.Model):
             datajsonstring['taskcontent2'] = self.name
             datajsonstring['mesage'] = first_str
             datajsonstring['creater'] = self.env.user.name
-            result = client.service.synServiceOrderFromCrm(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
-            resultjson = json.loads(result)
-
-            if resultjson['sucess'] != 'ok':
-                raise exceptions.Warning('同步创建POS服务单出错' + result)
-            else:
-                self.write({'posserviceorderid': resultjson['serviceorderid']})
+            # 不同步服务订单到POS
+            # result = client.service.synServiceOrderFromCrm(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
+            # resultjson = json.loads(result)
+            #
+            # if resultjson['sucess'] != 'ok':
+            #     raise exceptions.Warning('同步创建POS服务单出错' + result)
+            # else:
+            #     self.write({'posserviceorderid': resultjson['serviceorderid']})
 
             for user in self.team_id.member_ids:
 
@@ -196,20 +197,28 @@ class HelpdeskTicket(models.Model):
         url = self.env['ir.config_parameter'].sudo().get_param('e2yun.pos_url') + "/esb/webservice/Serviceorder?wsdl"  # webservice调用地址
         client = suds.client.Client(url)
         datajsonstring = dict()
-        datajsonstring['store'] = self.partner_id.shop_code.shop_code
         datajsonstring['customerid'] = self.partner_id.app_code
-        datajsonstring['telephone'] = self.phone
-        datajsonstring['address'] = self.address
+        telephone = "%s/%s" % (self.phone, self.user_phone)
+        datajsonstring['telephone'] = telephone
+        address = self.u_address.replace(' ', '|');
+        datajsonstring['address'] = address + self.j_address
         datajsonstring['app_code'] = self.partner_id.app_code
         datajsonstring['taskdate'] = self.order_datetime
         datajsonstring['serviceorderid'] = self.posserviceorderid or ''
         datajsonstring['taskcontent2'] = self.name
         datajsonstring['mesage'] = '同步服务订单'
         datajsonstring['creater'] = self.env.user.name
+        datajsonstring['account'] = self.env.user.login
+        bukrs = self.team_id.company_id.company_code or '1000'
+        datajsonstring['bukrs'] = self.team_id.company_id.company_code
+        # datajsonstring['store'] = self.partner_id.shop_code.shop_code
+        store = '100002002' if bukrs == '1000' else '200002002'
+        datajsonstring['store'] = store
         result = client.service.synServiceOrderFromCrm(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
+
         resultjson = json.loads(result)
         if resultjson['sucess'] != 'ok':
-            raise exceptions.Warning('同步创建POS服务单出错' + result)
+            raise exceptions.Warning('同步创建POS服务单出错:%s客户:%s' % (resultjson['message'], self.partner_id.name))
         else:
             self.write({'posserviceorderid': resultjson['serviceorderid']})
         return {'success': True,
