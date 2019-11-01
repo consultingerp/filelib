@@ -102,29 +102,33 @@ class E2yunProjectSurvey(models.Model):
     # 自动带出问卷分类
     def default_classification(self):
         ctx = self.env.context
-        res_model = ctx['active_model']
-        task_id = ctx['active_id']
-        res_record = self.env[res_model].search([('id', '=', task_id)])
-        questionnaire_classification = res_record.questionnaire_classification
-        if questionnaire_classification == 'Internally':
-            res = '对内测评（公司商务）'
-            return res
-        else:
-            res = '对外测评（供应商）'
-            return res
-
+        try:
+            res_model = ctx['active_model']
+            task_id = ctx['active_id']
+            res_record = self.env[res_model].search([('id', '=', task_id)])
+            questionnaire_classification = res_record.questionnaire_classification
+            if questionnaire_classification == 'Internally':
+                res = '对内测评（公司商务）'
+                return res
+            else:
+                res = '对外测评（供应商）'
+                return res
+        except:
+            return ''
     # 自动带出问卷场景字段值
     def default_scenario(self):
         ctx = self.env.context
-        res_model = ctx['active_model']
-        task_id = ctx['active_id']
-        res_record = self.env[res_model].search([('id', '=', task_id)])
-        questionnaire = res_record['questionnaire_ids']
-        res = ''
-        for i in questionnaire:
-            res = i.questionnaire_scenario
-        return res
-
+        try:
+            res_model = ctx['active_model']
+            task_id = ctx['active_id']
+            res_record = self.env[res_model].search([('id', '=', task_id)])
+            questionnaire = res_record['questionnaire_ids']
+            res = ''
+            for i in questionnaire:
+                res = i.questionnaire_scenario
+            return res
+        except:
+            return ''
     questionnaire_classification = fields.Char(string='问卷分类', default=default_classification)
     questionnaire_scenario = fields.Char(string='问卷场景', default=default_scenario)
 
