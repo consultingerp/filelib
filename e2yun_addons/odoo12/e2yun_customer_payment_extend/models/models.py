@@ -65,6 +65,15 @@ class e2yun_customer_payment_extend(models.Model):
 
             now = r.create_date.replace(microsecond=0)
 
+            # attachments = []
+            # for a in r.payment_attachments:
+            #     attachments.append({
+            #         'name': a["name"],
+            #         'datas': a["datas"].decode('utf-8'),
+            #         'file_size': a['file_size']
+            #     })
+            # json_attachments = json.dumps(attachments)
+
             try:
                 result = client.service.createPayment(r.company_id.company_code,  # 公司
                                                      r.receipt_Num or '',  # 收款编号
@@ -98,7 +107,8 @@ class e2yun_customer_payment_extend(models.Model):
                                                      self.env.user.name,  # 创建人
                                                      now,  # 创建日期
                                                      r.id,
-                                                     r.accept_amount #客户交款金额
+                                                     r.accept_amount, #客户交款金额
+                                                     #json_attachments #附件
                                                      )
             except Exception as e:
                 raise e
@@ -261,7 +271,7 @@ class e2yun_customer_payment_extend(models.Model):
         if pos_flag:
             del vals_list['pos_flag']
         res = super(e2yun_customer_payment_extend, self).create(vals_list)
-
+        self.env.cr.commit()
         #pos同步的不要再次同步回去
         if(not pos_flag):
             self.sync_customer_payment_to_pos(res)
