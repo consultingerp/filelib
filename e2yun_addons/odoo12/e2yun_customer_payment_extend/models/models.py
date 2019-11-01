@@ -220,10 +220,11 @@ class e2yun_customer_payment_extend(models.Model):
                 "value": "客户PO号:%s" % cpo + ' ' + "第三方退款编号:%s" % trn
             }
         }
+
         if self.env.user.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
             self.env.user.wx_user_id.send_template_message(
                 user_data, template_name='客户退款提醒', partner=self.env.user.partner_id)
-        _logger.info("退款推送测试--4")
+            _logger.info("退款推送测试--4，用户id%s" % self.env.user.id)
 
     @api.model
     def create(self, vals_list):
@@ -266,7 +267,7 @@ class e2yun_customer_payment_extend(models.Model):
             self.sync_customer_payment_to_pos(res)
 
         self.transport_wechat_message(res)
-        _logger.info("退款推送测试--5")
+        _logger.info("退款推送测试--5用户id%s" % self.env.user.id)
         return res
 
     @api.one

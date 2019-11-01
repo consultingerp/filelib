@@ -46,6 +46,7 @@
                     <field name="shop_id"/>
                     <field name="partner_id"/>
                     <field name="refund_id"/>
+                    <field name="huming"/>
                     <field name="receipt_doc_num"/>
                     <field name="thrrd_receipt_num"/>
                     <field name="refund_amount01"/>
