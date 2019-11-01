@@ -2,7 +2,10 @@
 
 from odoo import models, fields, api, exceptions, _
 from odoo.exceptions import ValidationError, Warning
-import suds.client, time
+import suds.client, time, logging
+
+_logger = logging.getLogger(__name__)
+
 
 class e2yun_customer_payment_extend(models.Model):
     _inherit = 'account.payment'
@@ -45,6 +48,7 @@ class e2yun_customer_payment_extend(models.Model):
     accept_amount = fields.Monetary(string='客户交款金额')
 
     accept_amount000 = fields.Boolean(related='related_shop.show_accept_amount')
+    wx_message_error = fields.Char('推送消息状况', default=1)
 
     @api.multi
     def _compute_show_amount(self):
@@ -178,10 +182,14 @@ class e2yun_customer_payment_extend(models.Model):
             }
         }
         if self.env.user.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
-            self.env.user.wx_user_id.send_template_message(
-                user_data, template_name='客户收款提醒', partner=self.env.user.partner_id)
+            try:
+                self.env.user.wx_user_id.send_template_message(
+                    user_data, template_name='客户收款提醒', partner=self.env.user.partner_id)
+            except Exception as e:
+                res.wx_message_error = e
 
     def transport_wechat_message_refund(self, res):  # 微信消息推送--客户退款
+        _logger.info("退款推送测试--3")
         flag = self.related_shop.show_accept_amount
         refund = self.env['customer_refund.report'].search([('refund_num', '=', self.receipt_Num)])
 
@@ -222,9 +230,11 @@ class e2yun_customer_payment_extend(models.Model):
                 "value": "客户PO号:%s" % cpo + ' ' + "第三方退款编号:%s" % trn
             }
         }
+
         if self.env.user.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
             self.env.user.wx_user_id.send_template_message(
                 user_data, template_name='客户退款提醒', partner=self.env.user.partner_id)
+            _logger.info("退款推送测试--4，用户id%s" % self.env.user.id)
 
     @api.model
     def create(self, vals_list):
@@ -267,6 +277,7 @@ class e2yun_customer_payment_extend(models.Model):
             self.sync_customer_payment_to_pos(res)
 
         self.transport_wechat_message(res)
+        _logger.info("退款推送测试--5用户id%s" % self.env.user.id)
         return res
 
     @api.one
@@ -274,10 +285,12 @@ class e2yun_customer_payment_extend(models.Model):
         previous_state = self.state
         # vals['state'] = 'cancelled'
         new_state = vals.get('state')
+        _logger.info("退款推送测试--1")
 
         res = super(e2yun_customer_payment_extend, self).write(vals)
         if previous_state == 'draft':
             if new_state == 'cancelled':
+                _logger.info("退款推送测试--2")
                 self.transport_wechat_message_refund(res)
         return res
 

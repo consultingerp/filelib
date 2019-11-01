@@ -41,7 +41,8 @@
                         <group>
                             <field name="amount" attrs="{'readonly': [('receipt_Num', '!=', False)]}" string="收款结算金额"/>
                             <field name="accept_amount" attrs="{'invisible': [('accept_amount000', '=', False)],
-                                                                'readonly': [('receipt_Num', '!=', False)]}"/>
+                                                                'readonly': [('receipt_Num', '!=', False)],
+                                                                'required': [('accept_amount000', '=', True)]}"/>
                             <field name="journal_id" readonly="True"/>
                             <field name="receipt_Num"/>
                             <field name="sales_num" attrs="{'readonly': [('receipt_Num', '!=', False)]}"/>
@@ -60,6 +61,7 @@
 
                             <field name="payment_serirs_no" invisible="1"/>
                             <field name="accept_amount000" invisible="1"/>
+                            <field name="wx_message_error" attrs="{'invisible': [('wx_message_error', '=', '1')]}"/>
                         </group>
                     </group>
                     <notebook>
