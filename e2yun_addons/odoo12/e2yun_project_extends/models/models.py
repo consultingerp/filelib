@@ -4,22 +4,35 @@ from odoo import models, fields, api, _
 class Questionnaire(models.Model):
     _name = 'project.questionnaire'
 
+    # 如若是否多问卷字段选择否，则权重字段默认带出100%
+    # @api.model
+    # def _default_weight(self):
+    #     res = self.parent_id.multiple_questionnaires
+    #     print(res, 'rrrrrrrrrrrrrrrrr')
+    #     if res == 'no':
+    #         self.weight = 100
+
     # 问卷场景
     questionnaire_scenario = fields.Selection(
         [('评分问卷', '评分问卷'), ('资质调查', '资质调查'), ('满意度调查', '满意度调查'),
          ('报名登记表', '报名登记表'), ('其他', '其他')], string='问卷场景')
     # 权重
-    weight = fields.Char(string='权重')
+    weight = fields.Integer(string='权重')
+    # 权重单位
+    weight_unit = fields.Char(string='权重单位', default='%')
     # 问卷模板
     survey_temp_id = fields.Many2one('survey.survey', string='问卷模版')
     parent_id = fields.Many2one('project.task', string='Parent Task')
 
-    @api.onchange('weight')
-    def _onchange_weight(self):
-        if self.weight:
-            self.weight = str(self.weight)+'%'
-        else:
-            self.weight = ''
+    # @api.onchange('weight')
+    # def _onchange_weight(self):
+    #     if self.weight:
+    #         self.weight = str(self.weight)+'%'
+    #     else:
+    #         self.weight = ''
+
+
+
 
 class E2yunTaskInfo(models.Model):
     _inherit = 'project.task'
@@ -34,7 +47,9 @@ class E2yunTaskInfo(models.Model):
     # 一对多连接列表对象
     questionnaire_ids = fields.One2many('project.questionnaire', 'parent_id', string='Child Questionnaires')
 
-    # 打开问卷页面的方法
+
+
+    # 任务页面打开问卷页面的方法
     @api.multi
     def turn_page(self):
         self.ensure_one()
@@ -65,7 +80,7 @@ class E2yunTaskInfo(models.Model):
     #
     #     res = super(E2yunProjectSurvey, self).write(vals)
     #     return res
-
+    #
     # @api.model
     # def create(self, vals):
     #     res = super(E2yunTaskInfo, self).create(vals)
@@ -87,29 +102,33 @@ class E2yunProjectSurvey(models.Model):
     # 自动带出问卷分类
     def default_classification(self):
         ctx = self.env.context
-        res_model = ctx['active_model']
-        task_id = ctx['active_id']
-        res_record = self.env[res_model].search([('id', '=', task_id)])
-        questionnaire_classification = res_record.questionnaire_classification
-        if questionnaire_classification == 'Internally':
-            res = '对内测评（公司商务）'
-            return res
-        else:
-            res = '对外测评（供应商）'
-            return res
-
+        try:
+            res_model = ctx['active_model']
+            task_id = ctx['active_id']
+            res_record = self.env[res_model].search([('id', '=', task_id)])
+            questionnaire_classification = res_record.questionnaire_classification
+            if questionnaire_classification == 'Internally':
+                res = '对内测评（公司商务）'
+                return res
+            else:
+                res = '对外测评（供应商）'
+                return res
+        except:
+            return ''
     # 自动带出问卷场景字段值
     def default_scenario(self):
         ctx = self.env.context
-        res_model = ctx['active_model']
-        task_id = ctx['active_id']
-        res_record = self.env[res_model].search([('id', '=', task_id)])
-        questionnaire = res_record['questionnaire_ids']
-        res = ''
-        for i in questionnaire:
-            res = i.questionnaire_scenario
-        return res
-
+        try:
+            res_model = ctx['active_model']
+            task_id = ctx['active_id']
+            res_record = self.env[res_model].search([('id', '=', task_id)])
+            questionnaire = res_record['questionnaire_ids']
+            res = ''
+            for i in questionnaire:
+                res = i.questionnaire_scenario
+            return res
+        except:
+            return ''
     questionnaire_classification = fields.Char(string='问卷分类', default=default_classification)
     questionnaire_scenario = fields.Char(string='问卷场景', default=default_scenario)
 
@@ -131,10 +150,22 @@ class SurveyPage(models.Model):
 class SurveyQuestion(models.Model):
     _inherit = 'survey.question'
 
-    highest_score = fields.Integer(string='最高分值')
-    scoring_method = fields.Selection([('唯一性计分', '唯一性计分'),('选择性计分', '选择性计分')],string='计分方式')
+    highest_score = fields.Float(string='最高分值')
+    scoring_method = fields.Selection([('唯一性计分', '唯一性计分'),('选择性计分', '选择性计分'),('不计分', '不计分')],string='计分方式')
     reference_existing_question = fields.Many2one('survey.question', string='引用已有题库')
 
+    @api.onchange('labels_ids')
+    def _onchange_score(self):
+        res = self.labels_ids
+        if res:
+            all_score = []
+            for i in res:
+                score = i.quizz_mark
+                all_score.append(score)
+            rr = max(all_score)
+            self.highest_score = rr
+        else:
+            return True
     @api.onchange('reference_existing_question')
     def reference(self):
         self.question = self.reference_existing_question.question
@@ -183,8 +214,8 @@ class SurveyQuestion(models.Model):
 
 # class SurveyLabel(models.Model):
 #     _inherit = 'survey.label'
-
-    # score = fields.Integer(string='分值')
+#
+#     score = fields.Integer(string='分值')
 
 # class QuotingQuestionBank(models.Model):
 #     _name = 'quoting.question.bank'

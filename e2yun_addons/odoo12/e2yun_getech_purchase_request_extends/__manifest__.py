@@ -6,7 +6,7 @@
     'depends': ['base', 'purchase_request'],
     'author': 'FengZhou',
     'website': 'http://e2yun.cn',
-    'summary': 'Sale Order Extends',
+    'summary': 'Purchase Order Extends',
     'description': """格创东智采购申请扩展""",
     'data': [
     ],

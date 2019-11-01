@@ -31,11 +31,8 @@ class E2yunCustomerRefund(models.Model):
     customer_refund_amount = fields.Char('客户退款金额')
     refund_num = fields.Char('退款单编号')
 
-    # date_from = fields.Date('日期从')
-    # date_end = fields.Date('日期到')
-    shop_name = fields.Char('门店名称')
-    customer_name = fields.Char('客户名称')
     mobile_phone = fields.Char('手机号')
+    huming = fields.Char('户名')
 
     # def init_date(self, ctx):
     #
