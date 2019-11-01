@@ -171,10 +171,10 @@ class e2yun_customer_payment_extend(models.Model):
 
             }
         }
-        if self.env.user.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
+        if res.partner_id.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
             try:
-                self.env.user.wx_user_id.send_template_message(
-                    user_data, template_name='客户收款提醒', partner=self.env.user.partner_id)
+                res.partner_id.wx_user_id.send_template_message(
+                    user_data, template_name='客户收款提醒', partner=res.partner_id)
             except Exception as e:
                 res.wx_message_error = e
 
@@ -221,10 +221,10 @@ class e2yun_customer_payment_extend(models.Model):
             }
         }
 
-        if self.env.user.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
-            self.env.user.wx_user_id.send_template_message(
-                user_data, template_name='客户退款提醒', partner=self.env.user.partner_id)
-            _logger.info("退款推送测试--4，用户id%s" % self.env.user.id)
+        if self.partner_id.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
+            self.partner_id.wx_user_id.send_template_message(
+                user_data, template_name='客户退款提醒', partner=self.partner_id)
+            _logger.info("退款推送测试--4，用户id%s" % self.partner_id)
 
     @api.model
     def create(self, vals_list):
@@ -267,7 +267,7 @@ class e2yun_customer_payment_extend(models.Model):
             self.sync_customer_payment_to_pos(res)
 
         self.transport_wechat_message(res)
-        _logger.info("退款推送测试--5用户id%s" % self.env.user.id)
+        _logger.info("退款推送测试--5用户id%s" % res.partner_id)
         return res
 
     @api.one
