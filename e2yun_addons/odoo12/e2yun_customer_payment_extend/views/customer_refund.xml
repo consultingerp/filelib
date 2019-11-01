@@ -26,12 +26,16 @@
                 <search string="Customer Refund Search">
                     <field name="apply_date" operator="&gt;=" string = '日期从'/>
                     <field name="apply_date" operator="&lt;=" string = '日期到'/>
-                    <field name="shop_name"/>
-                    <field name="customer_name"/>
+                    <field name="shop_id" string="门店名称"/>
+                    <field name="partner_id"/>
                     <field name="mobile_phone"/>
+                    <group expand="0" string="Group By">
+                        <filter string="按门店" name="shop_id" domain="[]" context="{'group_by':'model'}"/>
+                        <filter string="按客户" name="partner_id" domain="[]" context="{'group_by':'type'}"/>
+                    </group>
                 </search>
             </field>
-        </record>2
+        </record>
         <record id="customer_refund_report_tree" model="ir.ui.view">
             <field name="name">customer.refund.report.tree</field>
             <field name="model">customer_refund.report</field>
