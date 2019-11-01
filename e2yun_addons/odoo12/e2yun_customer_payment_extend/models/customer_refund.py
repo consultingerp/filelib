@@ -32,6 +32,7 @@ class E2yunCustomerRefund(models.Model):
     refund_num = fields.Char('退款单编号')
 
     mobile_phone = fields.Char('手机号')
+    huming = fields.Char('户名')
 
     # def init_date(self, ctx):
     #
