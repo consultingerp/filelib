@@ -7,12 +7,8 @@
             <field name="arch" type="xml">
                 <graph string="OutboundReport">
                     <field name="jiesuanjine" type="measure"/>
-                    <field name="LFADT" interval="month" type="row"/>
+                    <field name="LFADT" interval="week" type="row"/>
                 </graph>
-<!--                <graph string="OutboundReport">-->
-<!--                    <field name="xiaoshoujine" type="row"/>-->
-<!--                    <field name="LFADT" interval="month" type="row"/>-->
-<!--                </graph>-->
             </field>
         </record>
 
@@ -67,7 +63,6 @@
                         <group>
                             <field name="start_date"/>
                             <field name="werks"/>
-                            <field name="werks_id" invisible="1"/>
                             <field name="vtweg"/>
                             <field name="ywy"/>
                         </group>

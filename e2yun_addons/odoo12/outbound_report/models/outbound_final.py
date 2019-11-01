@@ -33,7 +33,7 @@ class OutboundFinal(models.Model):
         start_date = ctx['start_date']
         end_date = ctx['end_date']
         LFADT_sql = "upper('LFADT') between '%s' and '%s'" % (start_date, end_date)
-        if ctx['werks']:
+        if ctx['werks'] and ctx['werks'] != '0000':
             werks_sql = "and werks = '%s'" % ctx['werks']
         else:
             werks_sql = ""
@@ -42,7 +42,7 @@ class OutboundFinal(models.Model):
         else:
             vtweg_sql = ""
         if ctx['vkorgtext']:
-            vkorgtext_sql = "and vkorgtext = %s" % ctx['vkorgtext']
+            vkorgtext_sql = "and vkorgtext like %s" % ctx['vkorgtext']
         else:
             vkorgtext_sql = ""
         if ctx['kunnr']:
@@ -86,14 +86,14 @@ class OutboundFinal(models.Model):
         sql2 = ('LFADT', '<=', ctx['end_date'])
         domain_list.append(sql1)
         domain_list.append(sql2)
-        if ctx['werks']:
+        if ctx['werks'] and ctx['werks'] != '0000':
             werks_query = ('werks', '=', ctx['werks'])
-            # domain_list.append(werks_query)
+            domain_list.append(werks_query)
         if ctx['vtweg']:
             vtweg_query = ('vtweg', '=', ctx['vtweg'])
             domain_list.append(vtweg_query)
         if ctx['vkorgtext']:
-            vkorgtext_query = ('vkorgtext', '=', ctx['vkorgtext'])
+            vkorgtext_query = ('vkorgtext', 'ilike', ctx['vkorgtext'])
             domain_list.append(vkorgtext_query)
         if ctx['kunnr']:
             kunnr_query = ('kunnr', '=', ctx['kunnr'][0])
