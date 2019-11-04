@@ -31,13 +31,13 @@
                     <t t-call="website.layout">
                         <link rel="stylesheet" type="text/css"
                               href="/e2yun_website_helpdesk_form/static/src/css/mobiscroll.custom.min.css?version=1.0.41"/>
-                        <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/mobiscroll.custom.min.js?version=1.0.10"></script>
-                         <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/address.js?version=1.0.10"></script>
-                         <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/city.js?version=1.0.10"></script>
+                        <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/mobiscroll.custom.min.js?version=1.2.11"></script>
+                         <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/address.js?version=1.2.11"></script>
+                         <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/city.js?version=1.2.11"></script>
                         <link rel="stylesheet" type="text/css"
-                              href="/e2yun_website_helpdesk_form/static/src/css/e2yun_helpdesk_ticket_style.css?version=1.0.10"/>
+                              href="/e2yun_website_helpdesk_form/static/src/css/e2yun_helpdesk_ticket_style.css?version=1.0.11"/>
                         <link rel="stylesheet" type="text/css"
-                              href="/e2yun_website_helpdesk_form/static/src/css/address_style.css?version=1.0.10"/>
+                              href="/e2yun_website_helpdesk_form/static/src/css/address_style.css?version=1.0.11"/>
                         <div class="mask-time" style="display:none"></div><!--遮罩层-->
                         <div class="time-area" style="display:none"><!--时间选择表格-->
                             <input type="hidden" name="date_" value=""></input>
@@ -171,7 +171,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="aui-flex ">
+                                            <div class="aui-flex">
                                                 <span id="o_website_form_result"></span>
                                                 <button type="submit"
                                                         class="aui-website-form-send">
@@ -182,14 +182,11 @@
 
                                         </div>
                                     </section>
-                                    <!--<footer class="aui-footer aui-footer-fixed">-->
-                                        <!--<span id="o_website_form_result"></span>-->
-                                        <!--<button type="submit"-->
-                                                <!--class="aui-website-form-send">-->
-                                            <!--<span class="aui-website-form-send-text">提交</span>-->
-                                        <!--</button>-->
-
-                                    <!--</footer>-->
+                                    <footer class="aui-footer aui-footer-fixed">
+                                        <a href="javascript:;" id="user_helpdesk" class="aui-tabBar-item">
+                                            <span class="aui-tabBar-item-text">咨询在线客服</span>
+                                        </a>
+                                    </footer>
                                 </section>
                             </form>
                         </section>
