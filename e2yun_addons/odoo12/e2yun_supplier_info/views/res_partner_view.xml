@@ -124,7 +124,7 @@
                             <field name="country_bank"/>
                             <field name="province_bank"/>
                             <field name="city_bank"/>
-                            <field name="region_bank"/>
+                            <!--<field name="region_bank"/>-->
                             <field name="name_bank"/>
                         </group>
                         <group>
