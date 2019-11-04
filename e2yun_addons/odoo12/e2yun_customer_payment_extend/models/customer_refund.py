@@ -4,6 +4,7 @@ from odoo import models, fields, api, exceptions, _
 
 class E2yunCustomerRefund(models.Model):
     _name = 'customer_refund.report'
+    _description = '客户退款查询报表'
 
     company_id = fields.Char('公司名称')
     shop_id = fields.Char('门店')
@@ -32,6 +33,7 @@ class E2yunCustomerRefund(models.Model):
     refund_num = fields.Char('退款单编号')
 
     mobile_phone = fields.Char('手机号')
+    huming = fields.Char('户名')
 
     # def init_date(self, ctx):
     #

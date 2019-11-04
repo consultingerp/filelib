@@ -10,7 +10,7 @@ from odoo import api, models
 from odoo import exceptions
 from odoo.modules.module import get_module_resource
 from ..rpc import corp_client
-# from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup
 _logger = logging.getLogger(__name__)
 
 
