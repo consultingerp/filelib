@@ -20,10 +20,9 @@ class OutboundFinal(models.Model):
     start_date = fields.Date('日期从')
     end_date = fields.Date('日期到')
     werks = fields.Char('工厂', default=default_werks, readonly=True)
-    werks_id = fields.Integer('工厂', default=default_werks_id, readonly=True)
     vkorgtext = fields.Char('事业部')
     vtweg = fields.Char('分销渠道')
-    ywy = fields.Char('导购员')
+    ywy = fields.Many2one('res.users', '导购员')
     kunnr = fields.Many2one('crm.team', '门店')
     jiesuanjine = fields.Float('结算小计')
     xiaoshoujine = fields.Float('销售小计')
@@ -42,7 +41,7 @@ class OutboundFinal(models.Model):
         else:
             vtweg_sql = ""
         if ctx['vkorgtext']:
-            vkorgtext_sql = "and vkorgtext like %s" % ctx['vkorgtext']
+            vkorgtext_sql = "and vkorgtext like '%" + ctx['vkorgtext'] + "%'"
         else:
             vkorgtext_sql = ""
         if ctx['kunnr']:
@@ -98,8 +97,11 @@ class OutboundFinal(models.Model):
         if ctx['kunnr']:
             kunnr_query = ('kunnr', '=', ctx['kunnr'][0])
             domain_list.append(kunnr_query)
+        if ctx['ywy']:
+            ywy_query = ('ywy', '=', ctx['ywy'][0])
+            domain_list.append(ywy_query)
 
-        self.init_date(ctx)
+        # self.init_date(ctx)
 
         return {
             'name': '出库报表查询',
@@ -115,29 +117,3 @@ class OutboundFinal(models.Model):
             # 'context': ctx.update({'dashboard_view_ref': 'outbound_report.outbound_report_dashboard_view'}),
         }
 
-    def search(self, args, offset=0, limit=None, order=None, count=False):
-        domain_list = []
-        sql1 = ('LFADT', '>=', self._context['start_date'])
-        sql2 = ('LFADT', '<=', self._context['end_date'])
-        domain_list.append(sql1)
-        domain_list.append(sql2)
-        if self._context['werks']:
-            werks_query = ('werks', '=', self._context['werks'])
-            # domain_list.append(werks_query)
-        if self._context['vtweg']:
-            vtweg_query = ('vtweg', '=', self._context['vtweg'])
-            domain_list.append(vtweg_query)
-        if self._context['vkorgtext']:
-            vkorgtext_query = ('vkorgtext', '=', self._context['vkorgtext'])
-            domain_list.append(vkorgtext_query)
-        if self._context['kunnr']:
-            kunnr_query = ('kunnr', '=', self._context['kunnr'][0])
-            domain_list.append(kunnr_query)
-        if self._context['ywy']:
-            ywy_query = ('ywy', '=', self._context['ywy'])
-            domain_list.append(ywy_query)
-
-        args = args + domain_list
-        return super(OutboundFinal, self).search(
-            args, offset=offset, limit=limit, order=order,
-            count=count)
