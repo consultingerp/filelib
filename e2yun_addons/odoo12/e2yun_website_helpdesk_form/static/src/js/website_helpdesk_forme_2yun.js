@@ -135,7 +135,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                 this.start_addres(state_id, city_id, area_id)
             }
             var is_wx_client = $('input[name=is_wx_client]').val();
-            if(is_wx_client =='0'){
+            if(is_wx_client =='0'){   //判断是微信浏览器
                  this.start_addres('', '', '');
             }
             this.start_date_controls();
@@ -148,6 +148,12 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
             this.$target.find('.aui-website-form-send').on('click', function (e) {
                 self.send(e);
             });
+             this.$target.find('#user_helpdesk').on('click', function (e) {
+                   var team_id = $('input[name=team_id]').val();
+                   window.location.href = window.location.origin + '/im_livechat/user_helpdesk/'+team_id;
+            });
+
+
             this.$target.find('#team_list').on('change', function (e) {
                 window.location.href = window.location.origin + '/helpdesk/' + this.value + '/submit';
             });
@@ -176,11 +182,11 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
             this.$target.find('.o_website_form_date').datetimepicker(datepickers_options);
 
 
-           this.wxGetLocation();
+            this.wxGetLocation();
 
-            this.$target.find('#j_address').on('click', function (e) {
-                self.wxGetLocation();
-            });
+            // this.$target.find('#j_address').on('click', function (e) {
+            //     self.wxGetLocation();
+            // });
              setTimeout(function () {
 
              });
