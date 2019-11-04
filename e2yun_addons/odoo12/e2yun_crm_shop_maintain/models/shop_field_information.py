@@ -39,6 +39,7 @@ class CrmTeamADDinformation(models.Model):
     associate_member_ids = fields.Many2many('res.users', string='附属成员')
 
     show_accept_amount = fields.Boolean('显示客户交款金额', default=True)
+    sent_wx_message = fields.Boolean('推送微信消息', default=True)
 
     @api.multi
     def write(self, vals):

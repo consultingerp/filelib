@@ -48,6 +48,7 @@
                             <field name="street2" placeholder="街道" class="o_address_street"/>
                         </div>
                     <field name="show_accept_amount"/>
+                    <field name="sent_wx_message"/>
                 </xpath>
 
                 <xpath expr="//field[@name='user_id']" position="attributes">
