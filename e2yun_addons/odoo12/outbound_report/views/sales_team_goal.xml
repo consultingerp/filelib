@@ -8,7 +8,7 @@
                 <xpath expr="//t[@groups='sales_team.group_sale_manager']" position="replace">
                 </xpath>
                 <div class="col-12 o_kanban_primary_bottom bottom_block">
-                    <field name="invoiced" widget="progressbar" title="开票目标"
+                    <field name="invoiced" widget="progressbar" title="门店目标"
                     options="{'current_value': 'invoiced', 'max_value': 'invoiced_target'}"/>
                 </div>
             </field>
