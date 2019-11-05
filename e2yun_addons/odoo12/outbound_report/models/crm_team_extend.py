@@ -55,8 +55,11 @@ class TeamTarget(models.Model):
     def default_target_date(self):
         return date.today().month
 
+    def _compute_sales_member(self):
+        self.sales_member = self.env['crm.team'].search()
+
     current_shop = fields.Many2one('crm.team', string='当前门店', default=default_shop, readonly=True)
-    sales_member = fields.Many2one(related='current_shop.member_ids', string='导购')
+    sales_member = fields.Many2one(compute='_compute_sales_member', string='导购')
     target_date = fields.Selection([
         ('1', '一月'), ('2', '二月'), ('3', '三月'), ('4', '四月'), ('5', '五月'), ('6', '六月'),
         ('7', '七月'), ('8', '八月'), ('9', '九月'), ('10', '十月'), ('11', '十一月'), ('12', '十二月'),
