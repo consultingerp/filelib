@@ -54,7 +54,7 @@ class HelpdeskTicket(models.Model):
                                 "value": res.name
                             },
                             "keyword4": {
-                                "value": res.order_datetime.strftime("%Y-%m-%d %H:%M:%S")   # (datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
+                                "value": res.order_datetime.strftime("%Y-%m-%d")   # (datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
                             },
                             "remark": {
                                 "value": "地址:%s" % res.address
@@ -77,7 +77,7 @@ class HelpdeskTicket(models.Model):
                         "value": res.name
                     },
                     "keyword4": {
-                        "value": res.order_datetime.strftime("%Y-%m-%d %H:%M:%S")    # (datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
+                        "value": res.order_datetime.strftime("%Y-%m-%d")    # (datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
                     },
                     "remark": {
                         "value": "服务地地址:%s，我们将24小时电话联系。谢谢！" % res.address,
@@ -152,7 +152,7 @@ class HelpdeskTicket(models.Model):
                         "value": self.name
                     },
                     "keyword4": {
-                        "value":  self.order_datetime.strftime("%Y-%m-%d %H:%M:%S")
+                        "value":  self.order_datetime.strftime("%Y-%m-%d")
                     },
                     "remark": {
                         "value": "地址:%s" % self.address,
@@ -180,7 +180,7 @@ class HelpdeskTicket(models.Model):
                     "value": self.name
                 },
                 "keyword4": {
-                    "value": self.order_datetime.strftime("%Y-%m-%d %H:%M:%S")
+                    "value": self.order_datetime.strftime("%Y-%m-%d")
                 },
                 "remark": {
                     "value": "服务订单状态已变更为%s" % datavalues.display_name,
