@@ -24,6 +24,8 @@ class HelpdeskTicket(models.Model):
     phone = fields.Char('联系电话')
     brand = fields.Many2one('helpdesk.ticket.brandtype', string="售后品牌")
     userip = fields.Char('IP 地址')
+    matnrs = fields.Char('物料')
+    arktxs = fields.Char('物料描述')
     posserviceorderid = fields.Char('POS服务订单编号')
 
     @api.model

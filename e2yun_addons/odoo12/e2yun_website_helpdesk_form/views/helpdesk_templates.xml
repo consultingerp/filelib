@@ -23,21 +23,21 @@
             </xpath>
         </template>
 
-
         <template id="e2yun_website_helpdesk_form.ticket_submit_e2yun" inherit_id="website_helpdesk_form.ticket_submit">
             <!--<xpath expr="//div[@id='wrap']" position="replace">-->
             <xpath expr="//t[@name='Helpdesk']" position="replace">
                 <t name="Helpdesk" priority="29" t-name="website.helpdesk">
                     <t t-call="website.layout">
                         <link rel="stylesheet" type="text/css"
-                              href="/e2yun_website_helpdesk_form/static/src/css/mobiscroll.custom.min.css?version=1.0.41"/>
-                        <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/mobiscroll.custom.min.js?version=1.2.11"></script>
-                         <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/address.js?version=1.2.11"></script>
-                         <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/city.js?version=1.2.11"></script>
+                              href="/e2yun_website_helpdesk_form/static/src/css/mobiscroll.custom.min.css?version=1.2.12"/>
+                        <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/mobiscroll.custom.min.js?version=1.2.12"></script>
+                        <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/address.js?version=1.2.12"></script>
+                        <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/city.js?version=1.2.12"></script>
+                        <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/select.js?version=1.2.12"></script>
                         <link rel="stylesheet" type="text/css"
-                              href="/e2yun_website_helpdesk_form/static/src/css/e2yun_helpdesk_ticket_style.css?version=1.0.11"/>
+                              href="/e2yun_website_helpdesk_form/static/src/css/e2yun_helpdesk_ticket_style.css?version=1.2.12"/>
                         <link rel="stylesheet" type="text/css"
-                              href="/e2yun_website_helpdesk_form/static/src/css/address_style.css?version=1.0.11"/>
+                              href="/e2yun_website_helpdesk_form/static/src/css/address_style.css?version=1.2.12"/>
                         <div class="mask-time" style="display:none"></div><!--遮罩层-->
                         <div class="time-area" style="display:none"><!--时间选择表格-->
                             <input type="hidden" name="date_" value=""></input>
@@ -58,6 +58,7 @@
                                 <input type="hidden" name="team_id"
                                        t-att-value="team and team.id or False"/>
                                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <input type="hidden" name="matnrs" value=""/>
                                 <section class="aui-flexView">
                                     <header class="aui-navBar aui-navBar-fixed">
                                         <a href="/forum/1" class="aui-navBar-item">
@@ -89,16 +90,16 @@
                                                 <input type="text" class="form-control"
                                                        name="partner_name" t-att-value="default_values.get('name', '')"
                                                        placeholder="用户名" required="required"/>
-                                                  <input type='hidden'
+                                                <input type='hidden'
                                                        name="partner_id" t-att-value="default_values.get('partner_id', '')"/>
-                                                   <input type="hidden" name="ticket_type_id"  t-att-value="default_values.get('ticket_type_id', '').id"/>
-                                                   <input type='hidden'
+                                                <input type="hidden" name="ticket_type_id" t-att-value="default_values.get('ticket_type_id', '').id"/>
+                                                <input type='hidden'
                                                        name="area_id" t-att-value="default_values.get('area_id', '')"/>
-                                                   <input type='hidden'
+                                                <input type='hidden'
                                                        name="city_id" t-att-value="default_values.get('city_id', '')"/>
-                                                  <input type='hidden'
+                                                <input type='hidden'
                                                        name="state_id" t-att-value="default_values.get('state_id', '')"/>
-                                                  <input type='hidden'
+                                                <input type='hidden'
                                                        name="is_wx_client" t-att-value="default_values.get('is_wx_client', '')"/>
                                                 <label class="form-label">姓名
                                                     <span style="color: red;font-weight:  bold">*</span>
@@ -115,11 +116,11 @@
                                             <div class="aui-form-group b-line">
                                                 <input class="form-control" name="user_phone" type="text" required="required" placeholder=""></input>
                                                 <label class="form-label">购买电话
-                                                 <span style="color: red;font-weight:  bold">*</span>
+                                                    <span style="color: red;font-weight:  bold">*</span>
                                                 </label>
                                             </div>
                                             <div class="aui-form-group b-line form-field">
-                                                <input type="text" class="form-control"  readonly="readonly" value="" name="u_address" id="u_address" placeholder="请选择地区"></input>
+                                                <input type="text" class="form-control" readonly="readonly" value="" name="u_address" id="u_address" placeholder="请选择地区"></input>
                                                 <label class="form-label">所在地区
                                                     <span style="color: red;font-weight:  bold"></span>
                                                 </label>
@@ -136,14 +137,14 @@
                                             <div class="aui-form-group b-line">
                                                 <!--<input type="datetime-local" name="order_datetime" placeholder="预约时间" class="form-control" required="required"/>-->
                                                 <div class="fill_date_item" id="doc-select-1">
-                                                    <input type="text" placeholder="请选择开始时间"  class="form-control" name="order_datetime" id="order_datetime" required="required" readonly=""></input>
+                                                    <input type="text" placeholder="请选择开始时间" class="form-control" name="order_datetime" id="order_datetime" required="required" readonly=""></input>
                                                 </div>
                                                 <label class="form-label">预约时间
                                                     <span style="color: red;font-weight:  bold;font-size:8px">后天及之后*</span>
                                                 </label>
                                             </div>
                                             <div class="aui-form-group b-line">
-                                                  <select class="pt_premise_protocol form-control" id="brand" name="brand">
+                                                <select class="pt_premise_protocol form-control" id="brand" name="brand">
                                                     <t t-foreach="default_values.get('brandtype', '')" t-as="brandtype_op">
                                                         <option t-att-value="brandtype_op.id">
                                                             <t t-esc="brandtype_op.name"/>
@@ -162,15 +163,18 @@
                                             <div class="divHeight"></div>
                                             <div class="aui-flex ">
                                                 <div class="aui-flex-box">
-                                                    <h2>附件   <span style="color: red;font-weight:  bold;font-size:8px">文件大小20M内*</span></h2>
+                                                    <h2>附件
+                                                        <span style="color: red;font-weight:  bold;font-size:8px">文件大小20M内*</span>
+                                                    </h2>
                                                     <!--capture="camera"-->
-                                                    <input type="file" name="attachments"      multiple="true"   accept="image/*,application/pdf,video/*"/>
+                                                    <input type="file" name="attachments" multiple="true" accept="image/*,application/pdf,video/*"/>
                                                 </div>
                                                 <div>
                                                     <i class="icon icon-link"></i>
                                                 </div>
                                             </div>
-
+                                            <div class="aui-flex" id="matnrs" style="display:None">
+                                            </div>
                                             <div class="aui-flex">
                                                 <span id="o_website_form_result"></span>
                                                 <button type="submit"
