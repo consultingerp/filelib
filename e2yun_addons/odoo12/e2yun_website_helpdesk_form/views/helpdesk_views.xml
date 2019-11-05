@@ -10,7 +10,9 @@
             <xpath expr="//field[@name='company_id']" position="after">
                 <field name="brand"/>
                 <!--<field name="userip"/>-->
-                <field name="posserviceorderid"/>
+                <field name="posserviceorderid" attrs="{'invisible': [('posserviceorderid', '=', False)]}"/>
+                <field name="matnrs" attrs="{'invisible': [('matnrs', '=', False)]}"/>
+                <field name="arktxs" attrs="{'invisible': [('arktxs', '==', False)]}"/>
             </xpath>
 
             <xpath expr="//field[@name='partner_id']" position="after">

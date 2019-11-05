@@ -54,7 +54,7 @@ class LivechatController(LivechatController):
 
         message = channel.sudo().with_context(mail_create_nosubscribe=True). \
             message_post(author_id=author.id, email_from=False, body='你好，%s发起售后咨询。' % anonymous_name,
-                         message_type='comment', subtype='mail.mt_comment',website_published=False)
+                         message_type='comment', subtype='mail.mt_comment', website_published=False)
         #_now = fields.datetime.now()
         #if _now - helpdesk_useruuid.last_uuid_time >= datetime.timedelta(seconds=5 * 60):
         channel_partner_name = channel.channel_partner_ids - author
@@ -65,5 +65,6 @@ class LivechatController(LivechatController):
 
         request.session.helpdeskuuid = uuid
         action = request.env.ref('mail.action_discuss').id
-        url = '/web#action=%s&active_id=%s&menu_id=%s' % (action, active_id, '83')
+        menu_id = request.env.ref('mail.menu_root_discuss').id
+        url = '/web#action=%s&active_id=%s&menu_id=%s' % (action, active_id, menu_id)
         return http.local_redirect(url)

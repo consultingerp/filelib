@@ -24,6 +24,10 @@
         'views/commonproblems_templates.xml',
         'views/helpdesk_views.xml',
         'views/helpdesk_ticket_brand_type.xml',
+        'views/helpdesk_tickchat_uuid.xml',
+    ],
+    'qweb': [
+        "static/src/xml/helpdeskdesk_matnr.xml"
     ],
     'license': 'OEEL-1',
     'installable': True,
