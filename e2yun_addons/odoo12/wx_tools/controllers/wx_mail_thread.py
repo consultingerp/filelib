@@ -212,7 +212,7 @@ class WXMailThread(models.AbstractModel):
                     "value": self.name
                 },
                 "keyword4": {
-                    "value": self.order_datetime.strftime("%Y-%m-%d %H:%M:%S")
+                    "value": self.order_datetime.strftime("%Y-%m-%d")
                 },
                 "remark": {
                     "value": "%s" % body_text.get_text(),
