@@ -220,7 +220,15 @@ class WXMailThread(models.AbstractModel):
                 }
             }
             # 判断是否是组用户 是不是 portal 和用户类型
-            author_id = kwargs['author_id'] if hasattr(kwargs, 'author_id') else message._context['uid']
+            #author_id = kwargs['author_id'] if hasattr(kwargs, 'author_id') else message._context['uid']
+            author_id = None
+            if kwargs.get("author_id"):
+                author_id = self.env['res.users'].sudo().search([('partner_id', '=', kwargs['author_id'])])
+            elif message._context['uid']:
+                author_id = message._context['uid']
+            else:
+                return message
+
             if self.env['res.users'].sudo().browse(author_id).has_group('base.group_customer') \
                     or self.env['res.users'].sudo().browse(self.env['res.users'].sudo().browse(author_id).has_group('base.group_customer')).has_group('base.group_portal'):
                 action_xmlid = 'helpdesk.helpdesk_ticket_action_main_tree'
