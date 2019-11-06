@@ -49,8 +49,15 @@
                     <button name="action_sync_pos_sale_order" type="object" string="同步pos订单信息"/>
                 </xpath>-->
                 <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                    <field name="po_customer" required="True"/>
+                    <field name="final_customer"/>
                     <field name="bu" required="True"/>
                     <field name="project_type" required="True"/>
+                </xpath>
+                <xpath expr="//field[@name='pricelist_id']" position="after">
+                    <field name="project_name" required="True"/>
+                    <field name="project_owner"/>
+                    <field name="sales_manager"/>
                 </xpath>
             </field>
         </record>
