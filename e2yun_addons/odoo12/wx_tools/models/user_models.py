@@ -320,14 +320,17 @@ class wx_user(models.Model):
                 "value": "信息：" + message
             }
         }
-        discuss_menu_id = None
-        discuss_menu = self.env["wx.paraconfig"].sudo().search([('paraconfig_name', '=', 'Discuss_menu_id')])
-        if discuss_menu:
-            discuss_menu_id = discuss_menu[0].paraconfig_value
-        discuss_action_id = None
-        discuss_action = self.env["wx.paraconfig"].sudo().search([('paraconfig_name', '=', 'Discuss_action')])
-        if discuss_action:
-            discuss_action_id = discuss_action[0].paraconfig_value
+        discuss_action_id = self.env.ref('mail.action_discuss').id
+        discuss_menu_id = self.env.ref('mail.menu_root_discuss').id
+
+        # discuss_menu_id = None
+        # discuss_menu = self.env["wx.paraconfig"].sudo().search([('paraconfig_name', '=', 'Discuss_menu_id')])
+        # if discuss_menu:
+        #     discuss_menu_id = discuss_menu[0].paraconfig_value
+        # discuss_action_id = None
+        # discuss_action = self.env["wx.paraconfig"].sudo().search([('paraconfig_name', '=', 'Discuss_action')])
+        # if discuss_action:
+        #     discuss_action_id = discuss_action[0].paraconfig_value
 
         template_id = ''
         configer_para = self.env["wx.paraconfig"].sudo().search([('paraconfig_name', '=', '客户咨询提醒模板ID')])

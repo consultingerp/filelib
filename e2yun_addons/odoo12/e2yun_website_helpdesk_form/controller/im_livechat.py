@@ -43,7 +43,11 @@ class LivechatController(LivechatController):
         else:  # 创建新的会话
             if request.session.uid:
                 session_info = request.env["im_livechat.channel"].with_context(lang=False).get_mail_channel(channel_id, anonymous_name)
-                uuid = session_info['uuid']
+                if session_info:  # 如果创建了session
+                    uuid = session_info['uuid']
+                else:
+                    return request.render('e2yun_website_helpdesk_form.livechat_out')
+
             # localkwargs = {'weixin_id': 'web', 'wx_type': 'wx'}
             channel = request.env["mail.channel"].sudo().search([('uuid', '=', uuid)], limit=1)
             active_id = channel["id"]
@@ -51,10 +55,10 @@ class LivechatController(LivechatController):
                 'channel_id': session_info['id'], 'uuid': uuid, 'last_uuid_time': fields.Datetime.now(),
                 'uuid_user_id': request_uid, 'anonymous_name': anonymous_name, 'team_id': team_id
             })
-
+        userbody = '你好，%s发起售后咨询。' % anonymous_name
         message = channel.sudo().with_context(mail_create_nosubscribe=True). \
-            message_post(author_id=author.id, email_from=False, body='你好，%s发起售后咨询。' % anonymous_name,
-                         message_type='comment', subtype='mail.mt_comment',website_published=False)
+            message_post(author_id=author.id, email_from=False, body=userbody,
+                         message_type='comment', subtype='mail.mt_comment', website_published=False)
         #_now = fields.datetime.now()
         #if _now - helpdesk_useruuid.last_uuid_time >= datetime.timedelta(seconds=5 * 60):
         channel_partner_name = channel.channel_partner_ids - author
@@ -63,7 +67,13 @@ class LivechatController(LivechatController):
                          body='尊敬的%s您好，我是售后服务经理%s，有任何问题都可以问我哦~' % (anonymous_name, channel_partner_name.name),
                          message_type='comment', subtype='mail.mt_comment')
 
+        wxuserinfo = request.env['wx.user'].sudo().search([('id', '=', channel_partner_name.wx_user_id.id)])
+        channel_partner_name.wx_user_id.consultation_reminder(request.env.user.partner_id, wxuserinfo.openid,
+                                                              userbody,
+                                                              active_id)
+
         request.session.helpdeskuuid = uuid
         action = request.env.ref('mail.action_discuss').id
-        url = '/web#action=%s&active_id=%s&menu_id=%s' % (action, active_id, '83')
+        menu_id = request.env.ref('mail.menu_root_discuss').id
+        url = '/web#action=%s&active_id=%s&menu_id=%s' % (action, active_id, menu_id)
         return http.local_redirect(url)
