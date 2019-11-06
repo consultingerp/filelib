@@ -1,16 +1,20 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import datetime
+import json
+import logging
+
+import requests
+import suds.client
+from bs4 import BeautifulSoup
+from odoo.addons.website_helpdesk_form.controller.main import WebsiteForm
+
 from odoo import http
 from odoo.http import request
-# from odoo.addons.website_form.controllers.main import WebsiteForm
+from ..models import myjsondateencode
 
-from odoo.addons.website_helpdesk_form.controller.main import WebsiteForm
-from odoo.addons.http_routing.models.ir_http import slug
-from bs4 import BeautifulSoup
-import requests
-import datetime
-import logging
+# from odoo.addons.website_form.controllers.main import WebsiteForm
 
 _logger = logging.getLogger(__name__)
 
@@ -101,6 +105,17 @@ class E2yunWebsiteForm(WebsiteForm):
         _logger.info("访问地址：%s" % helpdeskurl)
         # return http.local_redirect('/web/login?redirect=%s' % helpdeskurl)
         return http.local_redirect(helpdeskurl)
+
+    @http.route(['/helpdesk/searchusermatnr'], type='json', auth='public')
+    def searchusermatnr(self, **kwargs):
+        url = request.env['ir.config_parameter'].sudo().get_param('e2yun.pos_url') + "/esb/webservice/Serviceorder?wsdl"  # webservice调用地址
+        client = suds.client.Client(url)
+        datajsonstring = dict()
+        datajsonstring['telephone'] =  kwargs.get('telephone')
+        result = client.service.searchUserMatnr(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
+        resultjson = json.loads(result)
+        _logger.info("参数打印:%s" % resultjson)
+        return resultjson
 
     def getuserip(self, request):
         userip = request.httprequest.remote_addr

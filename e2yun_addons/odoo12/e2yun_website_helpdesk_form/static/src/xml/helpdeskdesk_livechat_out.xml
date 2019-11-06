@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="livechat_user_out">
+        <div class="mian">
+            <script type="text/javascript">
+                var InterValObj; //timer变量，控制时间
+                var count=5;
+                var curCount;
+
+                function SetRemainTime() {
+                if (curCount == 0) {
+                window.clearInterval(InterValObj);//停止计时器
+                window.setTimeout("window.location='/'",0);
+                }
+                else {
+                curCount--;
+                document.getElementById("redirect_info").innerHTML=(curCount+"秒后返回首页");
+                }
+                }
+            </script>
+            <div class="error_div">
+                <a href="#">返回首页</a>
+                <p id="redirect_info" class="info">5秒后返回首页</p>
+                <script type="text/javascript">
+                    curCount=count;
+                    InterValObj = window.setInterval(SetRemainTime, 1000);
+                </script>
+            </div>
+        </div>
+    </t>
+</templates>
