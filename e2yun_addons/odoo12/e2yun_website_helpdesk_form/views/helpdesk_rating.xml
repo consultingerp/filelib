@@ -31,16 +31,22 @@
                                                         <td>
                                                             <a t-att-href="'/rating/'+rating.access_token+'/10'">
                                                                 <img alt="Satisfied" src="/rating/static/src/img/rating_10.png" title="Satisfied"/>
+                                                                 <br/>
+                                                                满意
                                                             </a>
                                                         </td>
                                                         <td>
                                                             <a t-att-href="'/rating/'+rating.access_token+'/5'">
                                                                 <img alt="Not satisfied" src="/rating/static/src/img/rating_5.png" title="Not satisfied"/>
+                                                                 <br/>
+                                                                不满意
                                                             </a>
                                                         </td>
                                                         <td>
                                                             <a t-att-href="'/rating/'+rating.access_token+'/1'">
                                                                 <img alt="Highly Dissatisfied" src="/rating/static/src/img/rating_1.png" title="Highly Dissatisfied"/>
+                                                                 <br/>
+                                                                 非常不满意
                                                             </a>
                                                         </td>
                                                     </tr>
