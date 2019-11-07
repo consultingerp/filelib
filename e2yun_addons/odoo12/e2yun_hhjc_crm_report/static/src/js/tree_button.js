@@ -20,7 +20,7 @@ odoo.define('e2yun_hhjc_crm_report.bicon_list_view_button', function (require) {
         create_data_by_dept: function () {
             var self = this;
             console.log('进⼊了按钮绑定的⽅法⾥⾯！');
-
+            debugger;
             return this.do_action({
                 name: '',
                 type: 'ir.actions.act_window',
@@ -28,7 +28,8 @@ odoo.define('e2yun_hhjc_crm_report.bicon_list_view_button', function (require) {
                 view_mode: 'form',
                 target: 'new',
                 views: [[false, 'form']],
-                res_model: 'stock.query.condition.report'
+                res_model: 'stock.query.condition.report',
+                context : self.initialState.context
             });
         },
     });
