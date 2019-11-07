@@ -59,8 +59,8 @@ class LivechatController(LivechatController):
         message = channel.sudo().with_context(mail_create_nosubscribe=True). \
             message_post(author_id=author.id, email_from=False, body=userbody,
                          message_type='comment', subtype='mail.mt_comment', website_published=False)
-        #_now = fields.datetime.now()
-        #if _now - helpdesk_useruuid.last_uuid_time >= datetime.timedelta(seconds=5 * 60):
+        # _now = fields.datetime.now()
+        # if _now - helpdesk_useruuid.last_uuid_time >= datetime.timedelta(seconds=5 * 60):
         channel_partner_name = channel.channel_partner_ids - author
         message = channel.sudo().with_context(mail_create_nosubscribe=True). \
             message_post(author_id=channel_partner_name.id, email_from=False,
@@ -77,3 +77,16 @@ class LivechatController(LivechatController):
         menu_id = request.env.ref('mail.menu_root_discuss').id
         url = '/web#action=%s&active_id=%s&menu_id=%s' % (action, active_id, menu_id)
         return http.local_redirect(url)
+
+    @http.route('/im_livechat/user_rating/<int:res_id>', type='http', auth='public')
+    def user_helpdesk(self, res_id, **kwargs):
+        rating = request.env['rating.rating'].sudo().search([('res_id', '=', res_id)])
+        if not rating:
+            return request.not_found()
+        lang = rating.partner_id.lang or 'en_US'
+        helpdesk_ticket = request.env['helpdesk.ticket'].sudo().search([('id', '=', rating.res_id)])
+        return request.env['ir.ui.view'].with_context(lang=lang).render_template('e2yun_website_helpdesk_form.user_rating', {
+            'web_base_url': request.env['ir.config_parameter'].sudo().get_param('web.base.url'),
+            'rating': rating,
+            'helpdesk_ticket': helpdesk_ticket
+        })

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="e2yun_website_helpdesk_form.user_rating" name="客户评价">
+            <t t-call="web.layout">
+                <div>
+                    <table border="0" cellpadding="0" cellspacing="0" style="width:100%; margin:0;">
+                        <tbody>
+                            <tr>
+                                <td valign="top" style="font-size: 14px;">
+                                    你好！<b t-esc="helpdesk_ticket.partner_name"></b>
+                                    <br/>
+                                    请花点时间给我们的服务打分
+                                    <br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;">
+                                    <table border="0" cellpadding="0" cellspacing="0" summary="o_mail_notification" style="width:100%; margin: 32px 0px 32px 0px;">
+                                        <tr>
+                                            <td style="font-size: 14px;">
+                                                <strong>告诉我们你对我们服务的评价</strong>
+                                                <br/>
+                                                <span style="text-color: #888888">(点击其中一个微笑)</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 14px;">
+                                                <table style="width:100%;text-align:center;">
+                                                    <tr>
+                                                        <td>
+                                                            <a t-att-href="'/rating/'+rating.access_token+'/10'">
+                                                                <img alt="Satisfied" src="/rating/static/src/img/rating_10.png" title="Satisfied"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a t-att-href="'/rating/'+rating.access_token+'/5'">
+                                                                <img alt="Not satisfied" src="/rating/static/src/img/rating_5.png" title="Not satisfied"/>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a t-att-href="'/rating/'+rating.access_token+'/1'">
+                                                                <img alt="Highly Dissatisfied" src="/rating/static/src/img/rating_1.png" title="Highly Dissatisfied"/>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="top" style="font-size: 14px;">
+                                    感谢您的反馈它有助于我们不断改进。
+                                    <br/>
+                                    <span style="margin: 0px 0px 0px 0px; font-size: 12px; opacity: 0.5; color: #454748;">
+                                        <b t-esc="rating.parent_res_name"></b>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </template>
+
+    </data>
+
+</odoo>
