@@ -8,13 +8,8 @@
     'description': """在线提交服务订单.""",
     'application': True,
     'depends': [
-        'web',
-        'website_helpdesk',
-        'helpdesk',
-        'website_helpdesk_form',
-        'im_livechat',
-        'portal',
-        'mail',
+        'web', 'website', 'website_helpdesk', 'helpdesk', 'website_helpdesk_form',
+        'im_livechat', 'portal', 'mail',
     ],
     'data': [
         'security/helpdesk_security.xml',
@@ -24,6 +19,13 @@
         'views/commonproblems_templates.xml',
         'views/helpdesk_views.xml',
         'views/helpdesk_ticket_brand_type.xml',
+        'views/helpdesk_tickchat_uuid.xml',
+        'views/helpdesk_rating.xml',
+        'views/helpdesk_team_views_subuser.xml',
+    ],
+    'qweb': [
+        "static/src/xml/helpdeskdesk_matnr.xml",
+        "static/src/xml/helpdeskdesk_livechat_out.xml"
     ],
     'license': 'OEEL-1',
     'installable': True,

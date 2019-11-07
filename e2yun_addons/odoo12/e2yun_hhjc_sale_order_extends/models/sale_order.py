@@ -48,15 +48,20 @@ class SaleOrder(models.Model):
     totalmoney = fields.Float('总金额')
     operatedatetime = fields.Datetime('pos最后更新时间')
 
-    @api.model
-    def create(self, vals):
-        res = super(SaleOrder, self).create(vals)
-        if 'is_sync' not in vals or not vals['is_sync']:
-            try:
-                res.action_sync_sale_to_pos()
-            except Exception as e:
-                _logger.error("同步订单到POS出现错误，对象: %s，错误信息：%s", self, e)
-        return res
+    vkorgtext = fields.Char('事业部')
+    vtweg = fields.Char('分销渠道')
+
+
+
+    # @api.model
+    # def create(self, vals):
+    #     res = super(SaleOrder, self).create(vals)
+    #     if 'is_sync' not in vals or not vals['is_sync']:
+    #         try:
+    #             res.action_sync_sale_to_pos()
+    #         except Exception as e:
+    #             _logger.error("同步订单到POS出现错误，对象: %s，错误信息：%s", self, e)
+    #     return res
 
     # @api.multi
     # def write(self, vals):
@@ -82,6 +87,9 @@ class SaleOrder(models.Model):
         datajsonstring['orderdate'] = res.create_date.today()
         datajsonstring['operator'] = self.env.user.name
         datajsonstring['dianyuan'] = res.user_id.name
+        datajsonstring['totalmoney'] = res.amount_total
+        datajsonstring['jiesuanjine'] = res.amount_total
+        datajsonstring['degree'] = 'A'
         # datajsonstring['dianyuan'] = res.user_id.login
         orderitem = []
         num = 10
@@ -97,6 +105,10 @@ class SaleOrder(models.Model):
             item['vrkme'] = line.product_uom.name
             item['meins'] = line.product_uom.name
             item['kbetr'] = line.price_unit
+            item['xiaoshoujine'] = line.price_unit
+            item['jiesuanjine'] = line.price_unit
+            item['itemtotal'] = line.price_subtotal
+            item['itemjiesuantotal'] = line.price_subtotal
             item['kpein'] = 1
             num += 10
             orderitem.append(item)
@@ -104,6 +116,15 @@ class SaleOrder(models.Model):
         result = client.service.synSaleOrderFromCrm(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
         resultjson = json.loads(result)
         res.salesorderid = resultjson['salesorderid']
+
+    def action_unfreeze_order(self):
+        # self.env['sale.order']._fields.keys()
+        ICPSudo = self.env['ir.config_parameter'].sudo()
+        url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncSaleOrder?wsdl'  # webservice调用地址
+        client = suds.client.Client(url)
+        datajsonstring = {'salesorderid': self.salesorderid}
+        result = client.service.unfreezeSaleOrder(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
+        return result
 
     def action_sync_pos_sale_order(self):
         # self.env['sale.order']._fields.keys()
@@ -119,17 +140,20 @@ class SaleOrder(models.Model):
             json2python = json.loads(result)
             line = json2python['orderHead']
             order = sale_order.search([('salesorderid', '=', line['salesorderid'])])
-            order.unlink()
+            order.order_line.unlink()
             data = {}
             date_line = {}
             for key in line.keys():
                 if key in sale_order._fields:
                     data[key] = line[key]
             partner = self.env['res.partner'].search([('app_code', '=', line['memberposid'])])
-            data['partner_id'] = partner.id
+            if partner:
+                data['partner_id'] = partner.id
+            else:
+                data['partner_id'] = 3
             data['is_sync'] = True
-            order_id = sale_order.create(data)
-
+            order.write(data)
+            order_id = order
             orderitem = json2python['orderItem']
             for line in orderitem:
                 for key in line:
@@ -139,10 +163,13 @@ class SaleOrder(models.Model):
                 date_line['name'] = line['maktx']
                 product = self.env['product.product'].search([('default_code', '=', line['matnr'])])
                 if not product:
-                    self.env['product.product'].sync_pos_matnr_to_crm(line['matnr'], '2000-01-01')
+                    self.env['product.template'].sync_pos_matnr_to_crm(line['matnr'], '2000-01-01')
                     product = self.env['product.product'].search([('default_code', '=', line['matnr'])])
-                date_line['product_id'] = product.id
-                sale_order_line['is_sync'] = True
+                if product:
+                    date_line['product_id'] = product.id
+                else:
+                    date_line['product_id'] = 1
+                date_line['is_sync'] = True
                 sale_order_line.create(date_line)
         else:
             info = self.env['sale.order'].search([('operatedatetime', '!=', False)], order='operatedatetime desc', limit=1)
@@ -183,6 +210,16 @@ class SaleOrder(models.Model):
 
             # raise Exception('pos销售订单为空，不能同步！')
 
+    @api.multi
+    def action_confirm(self):
+        res = super(SaleOrder, self).action_confirm()
+        # if 'is_sync' not in vals or not vals['is_sync']:
+        # try:
+        for item in self:
+            item.action_sync_sale_to_pos()
+        # except Exception as e:
+        #     _logger.error("同步订单到POS出现错误，对象: %s，错误信息：%s", self, e)
+        return res
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
@@ -210,26 +247,32 @@ class SaleOrderLine(models.Model):
     isthird = fields.Char('是否第三方')
     jiagongtext = fields.Char('是否加工')
 
-    @api.model
-    def create(self, vals):
-        res = super(SaleOrderLine, self).create(vals)
-        if 'is_sync' not in vals or not vals['is_sync']:
-            for item in self:
-                try:
-                    if item.order_id.state == 'draft':
-                        item.order_id.action_sync_sale_to_pos()
-                except Exception as e:
-                    _logger.error("同步订单到POS出现错误，对象: %s，错误信息：%s", self, e)
-        return res
+    shiyebu = fields.Char('事业部')
+    qudao = fields.Char('分销渠道')
+    daogou = fields.Char('导购员', related='order_id.ywy', store=True)
+    mendian = fields.Char('门店', related='order_id.kunnr', store=True)
+    confirmdate = fields.Date('确认日期', related='order_id.insertdatetime', store=True)
 
-    @api.multi
-    def write(self, vals):
-        res = super(SaleOrderLine, self).write(vals)
-        if 'is_sync' not in vals or not vals['is_sync']:
-            for item in self:
-                try:
-                    if item.order_id.state == 'draft':
-                        item.order_id.action_sync_sale_to_pos()
-                except Exception as e:
-                    _logger.error("同步订单到POS出现错误，对象: %s，错误信息：%s", self, e)
-        return res
+    # @api.model
+    # def create(self, vals):
+    #     res = super(SaleOrderLine, self).create(vals)
+    #     if 'is_sync' not in vals or not vals['is_sync']:
+    #         for item in self:
+    #             try:
+    #                 if item.order_id.state == 'draft':
+    #                     item.order_id.action_sync_sale_to_pos()
+    #             except Exception as e:
+    #                 _logger.error("同步订单到POS出现错误，对象: %s，错误信息：%s", self, e)
+    #     return res
+    #
+    # @api.multi
+    # def write(self, vals):
+    #     res = super(SaleOrderLine, self).write(vals)
+    #     if 'is_sync' not in vals or not vals['is_sync']:
+    #         for item in self:
+    #             try:
+    #                 if item.order_id.state == 'draft':
+    #                     item.order_id.action_sync_sale_to_pos()
+    #             except Exception as e:
+    #                 _logger.error("同步订单到POS出现错误，对象: %s，错误信息：%s", self, e)
+    #     return res

@@ -24,6 +24,8 @@ class HelpdeskTicket(models.Model):
     phone = fields.Char('联系电话')
     brand = fields.Many2one('helpdesk.ticket.brandtype', string="售后品牌")
     userip = fields.Char('IP 地址')
+    matnrs = fields.Char('物料')
+    arktxs = fields.Char('物料描述')
     posserviceorderid = fields.Char('POS服务订单编号')
 
     @api.model
@@ -54,10 +56,10 @@ class HelpdeskTicket(models.Model):
                                 "value": res.name
                             },
                             "keyword4": {
-                                "value": res.order_datetime.strftime("%Y-%m-%d %H:%M:%S")   # (datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
+                                "value": res.order_datetime.strftime("%Y-%m-%d")  # (datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
                             },
                             "remark": {
-                                "value": "地址:%s" % res.address
+                                "value": "地址:%s" % res.address or ''
                             }
                         }
                         if user.wx_user_id:
@@ -77,7 +79,7 @@ class HelpdeskTicket(models.Model):
                         "value": res.name
                     },
                     "keyword4": {
-                        "value": res.order_datetime.strftime("%Y-%m-%d %H:%M:%S")    # (datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
+                        "value": res.order_datetime.strftime("%Y-%m-%d")  # (datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
                     },
                     "remark": {
                         "value": "服务地地址:%s，我们将24小时电话联系。谢谢！" % res.address,
@@ -96,9 +98,9 @@ class HelpdeskTicket(models.Model):
     @api.multi
     def write(self, vals):
         user_old = ''
-        if vals.get('user_id'):
-            user_old = self.user_id.name
         res = super(HelpdeskTicket, self).write(vals)
+        if vals.get('user_id'):
+            ok = ''
         if vals.get('user_id'):
             _logger.debug("分配单")
             wx_user_obj = self.env['wx.user']
@@ -134,7 +136,6 @@ class HelpdeskTicket(models.Model):
             #     raise exceptions.Warning('同步创建POS服务单出错' + result)
             # else:
             #     self.write({'posserviceorderid': resultjson['serviceorderid']})
-
             for user in self.team_id.member_ids:
 
                 member_data = {
@@ -152,7 +153,7 @@ class HelpdeskTicket(models.Model):
                         "value": self.name
                     },
                     "keyword4": {
-                        "value":  self.order_datetime.strftime("%Y-%m-%d %H:%M:%S")
+                        "value": self.order_datetime.strftime("%Y-%m-%d")
                     },
                     "remark": {
                         "value": "地址:%s" % self.address,
@@ -180,7 +181,7 @@ class HelpdeskTicket(models.Model):
                     "value": self.name
                 },
                 "keyword4": {
-                    "value": self.order_datetime.strftime("%Y-%m-%d %H:%M:%S")
+                    "value": self.order_datetime.strftime("%Y-%m-%d")
                 },
                 "remark": {
                     "value": "服务订单状态已变更为%s" % datavalues.display_name,
@@ -189,6 +190,33 @@ class HelpdeskTicket(models.Model):
             }
             if self.partner_id.wx_user_id:
                 self.partner_id.wx_user_id.send_template_message(member_data, template_name='售后服务单通知', user=self.partner_id, url=self.access_url)
+            if vals.get('stage_id') == 3:
+                member_data = {
+                    "first": {
+                        "value": "你的售后服务订单已完成"
+                    },
+                    "keyword1": {
+                        "value": "售后服务单"
+                    },
+                    "keyword2": {
+                        "value": self.id,
+                        "color": "#173177"
+                    },
+                    "keyword3": {
+                        "value": self.name
+                    },
+                    "keyword4": {
+                        "value": self.order_datetime.strftime("%Y-%m-%d")
+                    },
+                    "remark": {
+                        "value": "请花点时间给我们的服务打分，告诉我们你对我们服务的评价。",
+                        "color": "#173177"
+                    }
+                }
+                if self.partner_id.wx_user_id:
+                    access_url = "/im_livechat/user_rating/%s" % self.id
+                    self.partner_id.wx_user_id.send_template_message(member_data, template_name='售后服务单通知',
+                                                                     user=self.partner_id, url_type='', url=access_url)
 
         return res
 
@@ -200,8 +228,10 @@ class HelpdeskTicket(models.Model):
         datajsonstring['customerid'] = self.partner_id.app_code
         telephone = "%s/%s" % (self.phone, self.user_phone)
         datajsonstring['telephone'] = telephone
-        address = self.u_address.replace(' ', '|');
-        datajsonstring['address'] = address + self.j_address
+        address = self.u_address or ''
+        address = address.replace(' ', '|');
+        j_address = self.j_address or ''
+        datajsonstring['address'] = address + j_address
         datajsonstring['app_code'] = self.partner_id.app_code
         datajsonstring['taskdate'] = self.order_datetime
         datajsonstring['serviceorderid'] = self.posserviceorderid or ''
