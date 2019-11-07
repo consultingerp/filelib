@@ -20,6 +20,8 @@
         'views/helpdesk_views.xml',
         'views/helpdesk_ticket_brand_type.xml',
         'views/helpdesk_tickchat_uuid.xml',
+        'views/helpdesk_rating.xml',
+        'views/helpdesk_team_views_subuser.xml',
     ],
     'qweb': [
         "static/src/xml/helpdeskdesk_matnr.xml",

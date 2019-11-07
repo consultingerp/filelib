@@ -8,6 +8,7 @@ import json
 
 class SaleOrder_BU(models.Model):
     _name = 'sale.order.bu'
+    _description = 'sale order bu'
 
     code = fields.Char('Code')
     name = fields.Char('Name')
@@ -20,6 +21,7 @@ class SaleOrder_BU(models.Model):
 
 class SaleOrder_Project_type(models.Model):
     _name = 'sale.order.project.type'
+    _description = 'sale order project type'
 
     code = fields.Char('Code')
     name = fields.Char('Name')
@@ -35,6 +37,15 @@ class SaleOrder(models.Model):
 
     bu = fields.Many2one('sale.order.bu', '产业/BU')
     project_type = fields.Many2one('sale.order.project.type', '项目大类')
+    po_customer = fields.Char('客户PO/销售合同编号', copy=False)
+    project_name = fields.Char('项目名称')
+    project_owner = fields.Char('项目负责人')
+    sales_manager = fields.Char('销售经理')
+    final_customer = fields.Char('最终用户')
+
+    _sql_constraints = [
+        ('po_customer_unique', 'unique(po_customer)', "客户PO/销售合同编号不能重复！"),
+    ]
 
     @api.model
     def create(self, vals):
