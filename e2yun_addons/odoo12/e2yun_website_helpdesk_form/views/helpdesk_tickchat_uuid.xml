@@ -39,7 +39,7 @@
 
 
        <record id="helpdesk_livechat_uuid_action" model="ir.actions.act_window">
-            <field name="name">微信跟踪记录</field>
+            <field name="name">售后客户Session管理</field>
             <field name="res_model">helpdesk.livechat.uuid</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>

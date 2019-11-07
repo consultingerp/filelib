@@ -16,8 +16,8 @@ class model(models.Model):
         ICPSudo = self.env['ir.config_parameter'].sudo()
         url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncReport?wsdl'  # webservice调用地址
         client = suds.client.Client(url)
-        company_code = self.env['res.company']._company_default_get('credit.query.report').company_code
-        result = client.service.queryXY(company_code, self.team.shop_code)
+        #company_code = self.env['res.company']._company_default_get('credit.query.report').company_code
+        result = client.service.queryXY(self.team.company_id.company_code, self.team.shop_code)
         if result[0] == 'E':
             raise exceptions.Warning('查询信用数据异常:' + result)
         else:
