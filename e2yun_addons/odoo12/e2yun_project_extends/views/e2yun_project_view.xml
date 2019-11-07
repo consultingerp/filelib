@@ -36,7 +36,7 @@
                         <tree editable="bottom">
                             <field name="questionnaire_scenario"/>
                             <field name="weight" attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>
-                            <field name="weight_unit" attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>
+                            <!--<field name="weight_unit" attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>-->
                             <!--去掉创建并编辑：options="{'no_create_edit':1}"-->
                             <field name="survey_temp_id" options="{'no_create_edit':1}"/>
                         </tree>
@@ -46,7 +46,7 @@
                                     <field name="questionnaire_scenario"/>
                                     <field name="weight"
                                            attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>
-                                    <field name="weight_unit" attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>
+                                    <!--<field name="weight_unit" attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>-->
                                     <field name="survey_temp_id"/>
                                 </group>
                                 <!--<group>-->

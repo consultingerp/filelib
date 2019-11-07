@@ -16,13 +16,42 @@ class StockQueryCondiyion(models.Model):
     def default_werks_id(self):
         return self.env['res.company']._company_default_get('stock.query.condition.report').id
 
-    matnr_code = fields.Char('物料编码1')
-    matnr_code1 = fields.Many2one('product.product','物料编码2')
+    def default_matne_code(self):
+        ctx = self._context.copy()
+        if ctx.get('matnr_code',False):
+            matnr_code = ctx.get('matnr_code')
+            if isinstance(matnr_code,str):
+                return matnr_code.replace('*', '')
+
+    def default_matne_code1(self):
+        ctx = self._context.copy()
+        if ctx.get('matnr_code',False):
+            matnr_code = ctx.get('matnr_code')
+            if isinstance(matnr_code,int):
+                return matnr_code
+
+    def default_charg(self):
+        ctx = self._context.copy()
+        if ctx.get('charg',False):
+            return ctx.get('charg')
+
+    def default_lgort(self):
+        ctx = self._context.copy()
+        if ctx.get('lgort',False):
+            return ctx.get('lgort')
+
+    def default_mendian(self):
+        ctx = self._context.copy()
+        if ctx.get('mendian',False):
+            return ctx.get('mendian')
+
+    matnr_code = fields.Char('物料编码1',default=default_matne_code)
+    matnr_code1 = fields.Many2one('product.product',default=default_matne_code1,string='物料编码2')
     werks = fields.Char('工厂',default=default_werks,readonly=True)
     werks_id = fields.Integer('工厂',default=default_werks_id,readonly=True)
-    lgort = fields.Many2one('crm.warehouse','仓库')
-    charg = fields.Char('批次')
-    mendian = fields.Many2one('crm.team','门店代码')
+    lgort = fields.Many2one('crm.warehouse','仓库',default=default_lgort)
+    charg = fields.Char('批次',default=default_charg)
+    mendian = fields.Many2one('crm.team','门店代码',default=default_mendian)
 
     def init_date(self,ctx):
 
