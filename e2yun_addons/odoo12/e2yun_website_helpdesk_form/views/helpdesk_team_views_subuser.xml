@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!--定义新form -->
+    <record id="helpdesk_team_user_view_form" model="ir.ui.view">
+        <field name="name">helpdesk.team.sub.form</field>
+        <field name="model">helpdesk.team</field>
+        <field name="arch" type="xml">
+            <form string="团队.." class="oe_form_configuration" create="0" delete="0" duplicate="0">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object"
+                                confirm="(Un)archiving a helpdesk team automatically (un)archives its tickets. Do you want to proceed?"
+                                class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <div class="oe_title" id='title'>
+                        <label for="name" class="oe_edit_only"/>
+                        <h1 id="name">
+                            <field name="name" placeholder="Helpdesk Team..."/>
+                        </h1>
+                    </div>
+                    <field name="description" placeholder="Description for customer portal"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <h2>分配人员</h2>
+                    <div class="row mt16 o_settings_container" id="productivity">
+                        <div class="col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="member_ids"/>
+                                <div>
+                                    <field name="member_ids" widget="many2many_tags" options="{'color_field': 'color'}" class="mt16"/>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+    <!--定义新的tree -->
+    <record id="helpdesk_team_user_view_tree" model="ir.ui.view">
+        <field name="name">helpdesk.sub.team.tree</field>
+        <field name="model">helpdesk.team</field>
+        <field name="arch" type="xml">
+            <tree string="售后团队"  create="0">
+                <field name="name" class="field_name"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <!--定义action,菜单执行的action -->
+    <record id="helpdesk_team_user_action" model="ir.actions.act_window">
+        <field name="name">售后团队</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">helpdesk.team</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--为tree指定菜单的动作 form 2 -->
+    <record id="helpdesk_team_view2" model="ir.actions.act_window.view">
+        <field eval="2" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="helpdesk_team_user_view_form"/>
+        <field name="act_window_id" ref="helpdesk_team_user_action"/>
+    </record>
+    <!--为form指定菜单的动作   tree 1 -->
+    <record id="helpdesk_team_tree_view1" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="helpdesk_team_user_view_tree"/>
+        <field name="act_window_id" ref="helpdesk_team_user_action"/>
+    </record>
+
+    <!--定义新菜单 -->
+    <menuitem id="helpdesk_team_user_menu" name="帮助台团队" action="helpdesk_team_user_action"
+              sequence="20" parent="helpdesk.helpdesk_menu_config"
+              groups="helpdesk.group_helpdesk_manager"/>
+
+
+</odoo>

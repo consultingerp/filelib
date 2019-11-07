@@ -46,8 +46,10 @@ class e2yun_customer_payment_extend(models.Model):
     payment_serirs_no = fields.Char('No.')
 
     accept_amount = fields.Monetary(string='客户交款金额')
+    tel = fields.Char('手机号', related='partner_id.mobile')
 
     accept_amount000 = fields.Boolean(related='related_shop.show_accept_amount')
+    sent_wx_message = fields.Boolean(related='related_shop.sent_wx_message')
     wx_message_error = fields.Char('推送消息状况', default=1)
 
     @api.multi
@@ -276,8 +278,9 @@ class e2yun_customer_payment_extend(models.Model):
         if(not pos_flag):
             self.sync_customer_payment_to_pos(res)
 
-        self.transport_wechat_message(res)
-        _logger.info("退款推送测试--5用户id%s" % res.partner_id)
+        if res.sent_wx_message:
+            self.transport_wechat_message(res)
+            _logger.info("退款推送测试--5用户id%s" % res.partner_id)
         return res
 
     @api.one
@@ -288,10 +291,11 @@ class e2yun_customer_payment_extend(models.Model):
         _logger.info("退款推送测试--1")
 
         res = super(e2yun_customer_payment_extend, self).write(vals)
-        if previous_state == 'draft':
-            if new_state == 'cancelled':
-                _logger.info("退款推送测试--2")
-                self.transport_wechat_message_refund(res)
+        if self.sent_wx_message:
+            if previous_state == 'draft':
+                if new_state == 'cancelled':
+                    _logger.info("退款推送测试--2")
+                    self.transport_wechat_message_refund(res)
         return res
 
     @api.model
@@ -346,6 +350,7 @@ class e2yun_customer_payment_res_partner(models.Model):
 
 class e2yun_customer_payment_bank_info(models.Model):
     _name = 'payment_bank.info'
+    _description = '银行帐号信息管理'
 
     name = fields.Char(related='bank_describe')
     shop_code = fields.Char('门店代码')
