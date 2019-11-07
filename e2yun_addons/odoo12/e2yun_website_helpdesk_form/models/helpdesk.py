@@ -229,7 +229,7 @@ class HelpdeskTicket(models.Model):
         telephone = "%s/%s" % (self.phone, self.user_phone)
         datajsonstring['telephone'] = telephone
         address = self.u_address or ''
-        address = self.u_address.replace(' ', '|');
+        address = address.replace(' ', '|');
         datajsonstring['address'] = address + self.j_address
         datajsonstring['app_code'] = self.partner_id.app_code
         datajsonstring['taskdate'] = self.order_datetime
