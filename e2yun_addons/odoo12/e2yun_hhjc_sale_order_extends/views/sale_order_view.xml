@@ -69,6 +69,10 @@
                     <field name="closed"></field>
                     <field name="isthird"></field>
                     <field name="jiagongtext"></field>
+                    <field name="shiyebu"/>
+                    <field name="qudao"/>
+                    <field name="daogou"/>
+                    <field name="mendian"/>
                 </xpath>
             </field>
         </record>
