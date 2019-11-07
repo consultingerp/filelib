@@ -61,6 +61,7 @@
 
                             <field name="payment_serirs_no" invisible="1"/>
                             <field name="accept_amount000" invisible="1"/>
+                            <field name="sent_wx_message" invisible="1"/>
                             <field name="wx_message_error" attrs="{'invisible': [('wx_message_error', '=', '1')]}"/>
                         </group>
                     </group>
@@ -72,7 +73,21 @@
                 </xpath>
 
             </field>
-    </record>
+      </record>
+
+      <record id="account_payment_search_new" model="ir.ui.view">
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="payment_date" operator="&gt;=" string = '日期从'/>
+                    <field name="payment_date" operator="&lt;=" string = '日期到'/>
+                    <field name="tel"/>
+                    <field name="partner_id" string="终端客户"/>
+                    <field name="related_shop" string="门店名称"/>
+                </xpath>
+            </field>
+      </record>
 
       <record id="website_new_attachment_form_inherit" model="ir.ui.view">
             <field name="name">website.new.attachment.form.inherit</field>

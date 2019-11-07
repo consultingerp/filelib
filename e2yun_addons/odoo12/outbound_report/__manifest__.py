@@ -12,8 +12,11 @@
     'data': [
         'security/ir.model.access.csv',
         'views/outbound_report_dashboard.xml',
-        'views/sales_team_goal.xml',
+        # 'views/sales_team_goal.xml',
     ],
+    'qweb': [
+        'static/src/xml/outbound_button_template.xml',
+             ],
     'installable': True,
     'application': True,
     'auto_install': False,

@@ -30,8 +30,8 @@
                     <field name="partner_id"/>
                     <field name="mobile_phone"/>
                     <group expand="0" string="Group By">
-                        <filter string="按门店" name="shop_id" domain="[]" context="{'group_by':'model'}"/>
-                        <filter string="按客户" name="partner_id" domain="[]" context="{'group_by':'type'}"/>
+                        <filter string="按门店" name="shop_id"/>
+                        <filter string="按客户" name="partner_id"/>
                     </group>
                 </search>
             </field>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="helpdesk_tickchat_uuid_view_tree" model="ir.ui.view">
+            <field name="name">helpdesk.livechat.uuid.view_tree</field>
+            <field name="model">helpdesk.livechat.uuid</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="微信跟踪记录" default_order="create_date desc">
+                    <field name="uuid"/>
+                    <field name="channel_id"/>
+                    <field name="last_uuid_time"/>
+                    <field name="uuid_user_id"/>
+                    <field name="anonymous_name"/>
+                    <field name="team_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="helpdesk_tickchat_uuid_view_form" model="ir.ui.view">
+            <field name="name">helpdesk.livechat.uuid.view_form</field>
+            <field name="model">helpdesk.livechat.uuid</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Session">
+                    <sheet>
+                        <group>
+                             <field name="channel_id"/>
+                            <field name="last_uuid_time"/>
+                            <field name="uuid_user_id"/>
+                            <field name="anonymous_name"/>
+                            <field name="team_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+       <record id="helpdesk_livechat_uuid_action" model="ir.actions.act_window">
+            <field name="name">售后客户Session管理</field>
+            <field name="res_model">helpdesk.livechat.uuid</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+        </record>
+
+
+        <menuitem id="helpdesk_tickchat_uuid_menu" name="售后客户Session管理" action="helpdesk_livechat_uuid_action"
+                  sequence="13" parent="helpdesk.helpdesk_menu_config" groups="helpdesk.group_helpdesk_manager"/>
+
+
+    </data>
+</odoo>

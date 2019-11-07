@@ -72,7 +72,7 @@ def main(robot):
                 'name': '__wx_voice|%s' % message.media_id,
                 'datas': base64.b64encode(_data),
                 'datas_fname': _filename,
-                'res_model': 'mail.compose.message',
+                'res_model': 'mail.channel',
                 'res_id': int(0)
             })
             wx_file_path = get_module_resource('wx_tools', 'static/wx')
@@ -95,7 +95,7 @@ def main(robot):
                 'name': '__wx_video|%s' % message.media_id,
                 'datas': base64.b64encode(_data),
                 'datas_fname': _filename,
-                'res_model': 'mail.compose.message',
+                'res_model': 'mail.channel',
                 'res_id': int(0)
             })
             attachment_ids.append(attachment.id)
