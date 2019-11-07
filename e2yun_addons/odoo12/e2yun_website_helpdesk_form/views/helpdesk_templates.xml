@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-         <template id="e2yun_website_helpdesk_form.livechat_out" name="在线客户不在线">
+        <template id="e2yun_website_helpdesk_form.livechat_out" name="在线客户不在线">
 
-                 <div>在线客户离线。售后服务时间8:30-17:30
-                 </div>
+            <div>在线客户离线。售后服务时间8:30-17:30
+            </div>
 
-         </template>
+        </template>
 
         <template id="assets_frontend" name="ticket_submit_e2yun" inherit_id="website.assets_frontend">
             <xpath expr="." position="inside">

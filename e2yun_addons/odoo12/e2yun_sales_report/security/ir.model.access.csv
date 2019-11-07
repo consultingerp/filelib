@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_e2yun_sales_report,e2yun_sales_report_info,model_sales_report_form,,1,1,1,1
+access_e2yun_GroupDepartments,e2yun_GroupDepartments_info,model_group_departments,,1,1,1,1
+access_e2yun_GroupChannels,e2yun_GroupChannels_info,model_group_channels,,1,1,1,1
