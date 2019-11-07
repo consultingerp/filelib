@@ -83,8 +83,11 @@ class import_odbc_dbtable(models.Model):
             data_dict = {}
             for i in range(len(cols)):
                 if cols[i] == 'kunnr':
-                    ss = self.env['crm.team'].search([('shop_code', '=', data[i])]).id
-                    dict1 = {cols[i]: ss}
+                    md = self.env['crm.team'].search([('shop_code', '=', data[i])]).id
+                    dict1 = {cols[i]: md}
+                elif cols[i] == 'ywy':
+                    xs = self.env['res.users'].search([('name', '=', data[i])]).id
+                    dict1 = {cols[i]: xs}
                 else:
                     dict1 = {cols[i]: data[i]}
                 data_dict.update(dict1)
@@ -267,3 +270,8 @@ class import_odbc_dbtable(models.Model):
             'res_id': new_create_id,
             'type': 'ir.actions.act_window',
             }
+
+    # def import_schedule1(self):
+    #     md = self.env['crm.team'].search([('shop_code', '=', '100005018')]).id
+    #     res = self.env['res.users'].search([('name', '=', '')]).id
+    #     dict = {md: res}

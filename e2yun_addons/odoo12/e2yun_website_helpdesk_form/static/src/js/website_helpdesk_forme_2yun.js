@@ -8,12 +8,13 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
 
     var _t = core._t;
     var qweb = core.qweb;
+    ajax.loadXML('/e2yun_website_helpdesk_form/static/src/xml/helpdeskdesk_matnr.xml', qweb);
 
     sAnimation.registry.form_builder_send = sAnimation.Class.extend({
         selector: '.s_website_form_e2yun',
-         events: {
-
-         },
+        events: {
+           // 'change input[name=user_phone]': '_searchusermatnr',
+        },
         willStart: function () {
             var def;
             if (!$.fn.datetimepicker) {
@@ -35,7 +36,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                         });
                         $target.on('done.ydui.cityselect', function (ret) {
                             $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
-                              $('input[name=j_address]').val('');
+                            $('input[name=j_address]').val('');
                         });
                         return;
                     }
@@ -83,7 +84,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                     });
                     $target.on('done.ydui.cityselect', function (ret) {
                         $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
-                           $('input[name=j_address]').val('');
+                        $('input[name=j_address]').val('');
 
                     });
                 };
@@ -121,7 +122,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                 }
             }, 1000);
 
-        },start: function (editable_mode) {
+        }, start: function (editable_mode) {
             if (editable_mode) {
                 this.stop();
                 return;
@@ -135,8 +136,8 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                 this.start_addres(state_id, city_id, area_id)
             }
             var is_wx_client = $('input[name=is_wx_client]').val();
-            if(is_wx_client =='0'){
-                 this.start_addres('', '', '');
+            if (is_wx_client == '0') {   //判断是微信浏览器
+                this.start_addres('', '', '');
             }
             this.start_date_controls();
             this.after_sales_tel_show();
@@ -148,6 +149,12 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
             this.$target.find('.aui-website-form-send').on('click', function (e) {
                 self.send(e);
             });
+            this.$target.find('#user_helpdesk').on('click', function (e) {
+                var team_id = $('input[name=team_id]').val();
+                window.location.href = window.location.origin + '/im_livechat/user_helpdesk/' + team_id;
+            });
+
+
             this.$target.find('#team_list').on('change', function (e) {
                 window.location.href = window.location.origin + '/helpdesk/' + this.value + '/submit';
             });
@@ -176,14 +183,19 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
             this.$target.find('.o_website_form_date').datetimepicker(datepickers_options);
 
 
-           this.wxGetLocation();
+            this.wxGetLocation();
 
-            this.$target.find('#j_address').on('click', function (e) {
-                self.wxGetLocation();
+            // this.$target.find('#j_address').on('click', function (e) {
+            //     self.wxGetLocation();
+            // });
+            setTimeout(function () {
+
             });
-             setTimeout(function () {
 
-             });
+
+            // this.$target.find('input[name=user_phone]').on('change', function (e) {
+            //     alert("aaaa");
+            // });
 
             return this._super.apply(this, arguments);
         },
@@ -392,6 +404,48 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                 $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
                 $('input[name=j_address]').val('');
             });
+
+        }, _searchusermatnr: function (e) {
+            var self = this;
+            var $input = $(e.target);
+            self._rpc({
+                route: '/helpdesk/searchusermatnr',
+                params: {
+                    telephone: $input.val()
+                },
+            }).then(function (result) {
+                var html = qweb.render('matnrs_list', {
+                    matnrs: result.matnrs
+                });
+                self.$('#matnrs').empty();
+                self.$('#matnrs').append(html)
+                var matnrs_option = new Array();
+                for (let index in result.matnrs) {
+                    var matnr = result.matnrs[index];
+                    if (result.matnrs.length > 0 && typeof  matnr.arktx != "undefined") {
+                        matnrs_option.push({label: matnr.arktx, value: matnr.matnr})
+                    }
+
+                }
+                $("#mySelect").empty();
+                if (matnrs_option.length > 0) {
+                    self.$('#matnrs').show();
+                    var mySelect = $("#mySelect").mySelect({
+                        mult: true,//true为多选,false为单选
+                        option: matnrs_option,
+                        onChange: function (res) {//选择框值变化返回结果
+                            console.log(res)
+                            $('input[name=matnrs]').val(res);
+
+                        }
+                    });
+                    mySelect.setResult([]);
+                }else{
+                      self.$('#matnrs').hide();
+                }
+
+            });
+
 
         }, start_date_controls: function () {
             var theme = "ios";

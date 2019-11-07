@@ -8,14 +8,17 @@
             <field name="inherit_id" ref="purchase.purchase_order_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='currency_id']" position="after">
-                    <field name="po_customer"/>
-                    <field name="project_name"/>
-                    <field name="project_owner"/>
+                    <!--<field name="po_customer"/>-->
+                    <field name="project_name"  readonly="1"/>
+                    <field name="project_owner"  readonly="1"/>
+                    <field name="final_customer" readonly="1"/>
+                    <field name="receiver" readonly="1"/>
+                    <field name="receiver_address" readonly="1"/>
                 </xpath>
                 <xpath expr="//field[@name='company_id']" position="after">
-                    <field name="project_id"/>
-                    <field name="bu"/>
-                    <field name="project_type"/>
+                    <field name="project_id" readonly="1"/>
+                    <field name="bu" readonly="1"/>
+                    <field name="project_type" readonly="1"/>
                 </xpath>
             </field>
         </record>

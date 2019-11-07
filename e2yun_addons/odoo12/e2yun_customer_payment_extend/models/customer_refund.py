@@ -4,6 +4,7 @@ from odoo import models, fields, api, exceptions, _
 
 class E2yunCustomerRefund(models.Model):
     _name = 'customer_refund.report'
+    _description = '客户退款查询报表'
 
     company_id = fields.Char('公司名称')
     shop_id = fields.Char('门店')
