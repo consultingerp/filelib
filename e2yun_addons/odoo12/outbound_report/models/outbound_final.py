@@ -14,16 +14,46 @@ class OutboundFinal(models.Model):
     def default_werks_id(self):
         return self.env['res.company']._company_default_get('outbound.final').id
 
+    def default_start_date(self):
+        ctx = self._context.copy()
+        if ctx.get('start_date', False):
+            return ctx.get('start_date')
+
+    def default_end_date(self):
+        ctx = self._context.copy()
+        if ctx.get('end_date', False):
+            return ctx.get('end_date')
+
+    def default_vkorgtext(self):
+        ctx = self._context.copy()
+        if ctx.get('vkorgtext', False):
+            return ctx.get('vkorgtext')
+
+    def default_vtweg(self):
+        ctx = self._context.copy()
+        if ctx.get('vtweg', False):
+            return ctx.get('vtweg')
+
+    def default_ywy(self):
+        ctx = self._context.copy()
+        if ctx.get('ywy', False):
+            return ctx.get('ywy')
+
+    def default_kunnr(self):
+        ctx = self._context.copy()
+        if ctx.get('kunnr', False):
+            return ctx.get('kunnr')
+
     ID = fields.Char('ID')
     salesorderid = fields.Char('销售订单')
     LFADT = fields.Date('日期')
-    start_date = fields.Date('日期从')
-    end_date = fields.Date('日期到')
+    start_date = fields.Date('日期从', default=default_start_date)
+    end_date = fields.Date('日期到', default=default_end_date)
     werks = fields.Char('工厂', default=default_werks, readonly=True)
-    vkorgtext = fields.Char('事业部')
-    vtweg = fields.Char('分销渠道')
-    ywy = fields.Many2one('res.users', '导购员')
-    kunnr = fields.Many2one('crm.team', '门店')
+    vkorgtext = fields.Char('事业部', default=default_vkorgtext)
+    vtweg = fields.Char('分销渠道', default=default_vtweg)
+    ywy = fields.Many2one('res.users', '导购员', default=default_ywy)
+    kunnr = fields.Many2one('crm.team', '门店', default=default_kunnr)
     jiesuanjine = fields.Float('结算小计')
     xiaoshoujine = fields.Float('销售小计')
 
