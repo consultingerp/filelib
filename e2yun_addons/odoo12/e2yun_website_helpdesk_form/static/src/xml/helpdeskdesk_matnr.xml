@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="matnrs_list">
+        <div style="float: left;position: relative">选择服务产品</div>
+        <div id="mySelect" class="mySelect" style="width: 300px;z-index: 101;float:left"></div>
+    </t>
+</templates>

@@ -9,19 +9,22 @@ class PurchaseRequestLine(models.Model):
     project_id = fields.Many2one('project.project', '项目编号')
     bu = fields.Many2one('sale.order.bu', '产业/BU')
     project_type = fields.Many2one('sale.order.project.type', '项目大类')
-    po_customer = fields.Char('客户订单号')
+    # po_customer = fields.Char('客户订单号')
     project_name = fields.Char('项目名称')
     project_owner = fields.Char('项目负责人')
-    project_owner = fields.Char('项目负责人')
+    final_customer = fields.Char('最终用户')
+    receiver = fields.Char('收货人')
+    receiver_address = fields.Char('收货地址')
 
     @api.onchange('project_id')
     def onchange_project_id(self):
-        if self.project_id:
-            self.bu = self.project_id.sale_order_id.bu
-            self.project_type = self.project_id.sale_order_id.project_type
-            try:
-                self.po_customer = self.project_id.sale_order_id.x_studio_po_customer
-                self.project_name = self.project_id.sale_order_id.x_studio_project_name
-                self.project_owner = self.project_id.sale_order_id.x_studio_project_owner
-            except Exception:
-                pass
+        for item in self:
+            if item.project_id:
+                item.bu = item.project_id.sale_order_id.bu
+                item.project_type = item.project_id.sale_order_id.project_type
+                try:
+                    item.po_customer = item.project_id.sale_order_id.po_customer
+                    item.project_name = item.project_id.sale_order_id.project_name
+                    item.project_owner = item.project_id.sale_order_id.project_owner
+                except Exception:
+                    pass

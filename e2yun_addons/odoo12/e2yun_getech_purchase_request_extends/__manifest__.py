@@ -9,6 +9,7 @@
     'summary': 'Purchase Order Extends',
     'description': """格创东智采购申请扩展""",
     'data': [
+        'views/purchase_request_view.xml',
     ],
     'installable': True,
     'auto_install': False,
