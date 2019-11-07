@@ -112,6 +112,15 @@ class SaleOrder(models.Model):
         resultjson = json.loads(result)
         res.salesorderid = resultjson['salesorderid']
 
+    def action_unfreeze_order(self):
+        # self.env['sale.order']._fields.keys()
+        ICPSudo = self.env['ir.config_parameter'].sudo()
+        url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncSaleOrder?wsdl'  # webservice调用地址
+        client = suds.client.Client(url)
+        datajsonstring = {'salesorderid': self.salesorderid}
+        result = client.service.unfreezeSaleOrder(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
+        return result
+
     def action_sync_pos_sale_order(self):
         # self.env['sale.order']._fields.keys()
         ICPSudo = self.env['ir.config_parameter'].sudo()
@@ -126,17 +135,20 @@ class SaleOrder(models.Model):
             json2python = json.loads(result)
             line = json2python['orderHead']
             order = sale_order.search([('salesorderid', '=', line['salesorderid'])])
-            order.unlink()
+            order.order_line.unlink()
             data = {}
             date_line = {}
             for key in line.keys():
                 if key in sale_order._fields:
                     data[key] = line[key]
             partner = self.env['res.partner'].search([('app_code', '=', line['memberposid'])])
-            data['partner_id'] = partner.id
+            if partner:
+                data['partner_id'] = partner.id
+            else:
+                data['partner_id'] = 3
             data['is_sync'] = True
-            order_id = sale_order.create(data)
-
+            order.write(data)
+            order_id = order
             orderitem = json2python['orderItem']
             for line in orderitem:
                 for key in line:
@@ -146,10 +158,13 @@ class SaleOrder(models.Model):
                 date_line['name'] = line['maktx']
                 product = self.env['product.product'].search([('default_code', '=', line['matnr'])])
                 if not product:
-                    self.env['product.product'].sync_pos_matnr_to_crm(line['matnr'], '2000-01-01')
+                    self.env['product.template'].sync_pos_matnr_to_crm(line['matnr'], '2000-01-01')
                     product = self.env['product.product'].search([('default_code', '=', line['matnr'])])
-                date_line['product_id'] = product.id
-                sale_order_line['is_sync'] = True
+                if product:
+                    date_line['product_id'] = product.id
+                else:
+                    date_line['product_id'] = 1
+                date_line['is_sync'] = True
                 sale_order_line.create(date_line)
         else:
             info = self.env['sale.order'].search([('operatedatetime', '!=', False)], order='operatedatetime desc', limit=1)
