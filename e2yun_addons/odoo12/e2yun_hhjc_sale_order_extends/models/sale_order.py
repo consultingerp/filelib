@@ -48,6 +48,11 @@ class SaleOrder(models.Model):
     totalmoney = fields.Float('总金额')
     operatedatetime = fields.Datetime('pos最后更新时间')
 
+    vkorgtext = fields.Char('事业部')
+    vtweg = fields.Char('分销渠道')
+
+
+
     # @api.model
     # def create(self, vals):
     #     res = super(SaleOrder, self).create(vals)
@@ -216,7 +221,6 @@ class SaleOrder(models.Model):
         #     _logger.error("同步订单到POS出现错误，对象: %s，错误信息：%s", self, e)
         return res
 
-
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
@@ -242,6 +246,12 @@ class SaleOrderLine(models.Model):
     closed = fields.Char('是否关闭')
     isthird = fields.Char('是否第三方')
     jiagongtext = fields.Char('是否加工')
+
+    shiyebu = fields.Char('事业部')
+    qudao = fields.Char('分销渠道')
+    daogou = fields.Char('导购员', related='order_id.ywy', store=True)
+    mendian = fields.Char('门店', related='order_id.kunnr', store=True)
+    confirmdate = fields.Date('确认日期', related='order_id.insertdatetime', store=True)
 
     # @api.model
     # def create(self, vals):
