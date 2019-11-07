@@ -35,10 +35,13 @@ class TeamTarget(models.Model):
     _name = 'team.target'
     _description = '门店目标'
 
-    def _compute_sales_member(self):
-        self.sales_member = self.env['res.users'].search([('sale_team_id', '=', self.id)])
+    @api.model
+    def default_get(self, fields_list):
+        res = super(TeamTarget, self).default_get(fields_list)
+        res.update({'team_id': self.env.context.get('team_id')})
+        return res
 
-
+    # current_shop_id = fields.Integer('门店id')
     team_target_monthly = fields.Integer('目标值')
     target_date = fields.Selection([('1', '一月'), ('2', '二月'), ('3', '三月'), ('4', '四月'), ('5', '五月'), ('6', '六月'), ('7', '七月'), ('8', '八月'), ('9', '九月'), ('10', '十月'), ('11', '十一月'), ('12', '十二月')], string='月份')
     sales_member = fields.Many2one('res.users', string='导购')
