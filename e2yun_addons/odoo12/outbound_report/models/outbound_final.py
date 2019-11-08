@@ -14,48 +14,48 @@ class OutboundFinal(models.Model):
     def default_werks_id(self):
         return self.env['res.company']._company_default_get('outbound.final').id
 
+    def default_start_date(self):
+        ctx = self._context.copy()
+        if ctx.get('start_date', False):
+            return ctx.get('start_date')
+
+    def default_end_date(self):
+        ctx = self._context.copy()
+        if ctx.get('end_date', False):
+            return ctx.get('end_date')
+
+    def default_vkorgtext(self):
+        ctx = self._context.copy()
+        if ctx.get('vkorgtext', False):
+            return ctx.get('vkorgtext')
+
+    def default_vtweg(self):
+        ctx = self._context.copy()
+        if ctx.get('vtweg', False):
+            return ctx.get('vtweg')
+
+    def default_ywy(self):
+        ctx = self._context.copy()
+        if ctx.get('ywy', False):
+            return ctx.get('ywy')
+
+    def default_kunnr(self):
+        ctx = self._context.copy()
+        if ctx.get('kunnr', False):
+            return ctx.get('kunnr')
+
     ID = fields.Char('ID')
     salesorderid = fields.Char('销售订单')
     LFADT = fields.Date('日期')
-    start_date = fields.Date('日期从')
-    end_date = fields.Date('日期到')
+    start_date = fields.Date('日期从', default=default_start_date)
+    end_date = fields.Date('日期到', default=default_end_date)
     werks = fields.Char('工厂', default=default_werks, readonly=True)
-    vkorgtext = fields.Char('事业部')
-    vtweg = fields.Char('分销渠道')
-    ywy = fields.Many2one('res.users', '导购员')
-    kunnr = fields.Many2one('crm.team', '门店')
+    vkorgtext = fields.Many2one('group.departments', '事业部', default=default_vkorgtext)
+    vtweg = fields.Many2one('group.channels', '分销渠道', default=default_vtweg)
+    ywy = fields.Many2one('res.users', '导购员', default=default_ywy)
+    kunnr = fields.Many2one('crm.team', '门店', default=default_kunnr)
     jiesuanjine = fields.Float('结算小计')
     xiaoshoujine = fields.Float('销售小计')
-
-    def init_date(self, ctx):
-
-        start_date = ctx['start_date']
-        end_date = ctx['end_date']
-        LFADT_sql = "upper('LFADT') between '%s' and '%s'" % (start_date, end_date)
-        if ctx['werks'] and ctx['werks'] != '0000':
-            werks_sql = "and werks = '%s'" % ctx['werks']
-        else:
-            werks_sql = ""
-        if ctx['vtweg']:
-            vtweg_sql = "and vtweg = %s" % ctx['vtweg']
-        else:
-            vtweg_sql = ""
-        if ctx['vkorgtext']:
-            vkorgtext_sql = "and vkorgtext like '%" + ctx['vkorgtext'] + "%'"
-        else:
-            vkorgtext_sql = ""
-        if ctx['kunnr']:
-            kunnr_sql = "and kunnr = %s" % int(ctx['kunnr'][0])
-        else:
-            kunnr_sql = ""
-        if ctx['ywy']:
-            ywy_sql = "and ywy = %s" % ctx['ywy']
-        else:
-            ywy_sql = ""
-
-        sql_str = "select * from outbound_final where %s %s %s %s %s %s" % (LFADT_sql, werks_sql, vtweg_sql, vkorgtext_sql, kunnr_sql, ywy_sql)
-
-        self._cr.execute(sql_str)
 
     def open_table(self):
         data = self.read()[0]
@@ -89,10 +89,10 @@ class OutboundFinal(models.Model):
             werks_query = ('werks', '=', ctx['werks'])
             domain_list.append(werks_query)
         if ctx['vtweg']:
-            vtweg_query = ('vtweg', '=', ctx['vtweg'])
+            vtweg_query = ('vtweg', '=', ctx['vtweg'][0])
             domain_list.append(vtweg_query)
         if ctx['vkorgtext']:
-            vkorgtext_query = ('vkorgtext', 'ilike', ctx['vkorgtext'])
+            vkorgtext_query = ('vkorgtext', 'ilike', ctx['vkorgtext'][0])
             domain_list.append(vkorgtext_query)
         if ctx['kunnr']:
             kunnr_query = ('kunnr', '=', ctx['kunnr'][0])
@@ -100,8 +100,6 @@ class OutboundFinal(models.Model):
         if ctx['ywy']:
             ywy_query = ('ywy', '=', ctx['ywy'][0])
             domain_list.append(ywy_query)
-
-        # self.init_date(ctx)
 
         return {
             'name': '出库报表查询',

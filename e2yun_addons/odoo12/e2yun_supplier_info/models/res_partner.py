@@ -61,6 +61,7 @@ class res_partner(models.Model):
     state_id = fields.Many2one("res.country.state", string='State', ondelete='restrict')
     city = fields.Many2one('res.city', 'City', ondelete='restrict')
     street = fields.Char('详细地址')
+    website = fields.Char()
 
 
 

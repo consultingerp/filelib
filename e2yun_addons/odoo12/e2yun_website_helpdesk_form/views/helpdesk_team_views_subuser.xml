@@ -46,10 +46,11 @@
     <record id="helpdesk_team_user_view_tree" model="ir.ui.view">
         <field name="name">helpdesk.sub.team.tree</field>
         <field name="model">helpdesk.team</field>
+        <field eval="90" name="priority"/>
         <field name="arch" type="xml">
-            <tree string="售后团队"  create="0">
+            <tree string="售后团队" create="false">
                 <field name="name" class="field_name"/>
-
+                <field name="alias_id"/>
             </tree>
         </field>
     </record>
@@ -61,6 +62,7 @@
         <field name="res_model">helpdesk.team</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="helpdesk_team_user_view_tree"/>
     </record>
 
     <!--为tree指定菜单的动作 form 2 -->
