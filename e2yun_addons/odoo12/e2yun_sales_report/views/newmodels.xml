@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_GroupDepartments" model="ir.ui.view">
+            <field name="name">GroupDepartments</field>
+            <field name="model">group.departments</field>
+            <field name="arch" type="xml">
+                <tree string="事业部管理">
+                    <field name="name"/>
+                    <field name="factory"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_GroupDepartments" model="ir.actions.act_window">
+            <field name="name">事业部管理</field>
+            <field name="res_model">group.departments</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem action="action_GroupDepartments"
+                  id="menu_action_GroupDepartments"
+                  name="事业部管理"
+                  parent="account.account_management_menu"/>
+
+        <record id="view_GroupChannels" model="ir.ui.view">
+            <field name="name">GroupChannels</field>
+            <field name="model">group.channels</field>
+            <field name="arch" type="xml">
+                <tree string="渠道管理">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_GroupChannels" model="ir.actions.act_window">
+            <field name="name">渠道管理</field>
+            <field name="res_model">group.channels</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem action="action_GroupChannels"
+                  id="menu_action_GroupChannels"
+                  name="渠道管理"
+                  parent="account.account_management_menu"/>
+
+    </data>
+</odoo>

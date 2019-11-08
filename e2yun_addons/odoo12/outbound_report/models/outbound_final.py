@@ -27,22 +27,22 @@ class OutboundFinal(models.Model):
     def default_vkorgtext(self):
         ctx = self._context.copy()
         if ctx.get('vkorgtext', False):
-            return ctx.get('vkorgtext')
+            return ctx.get('vkorgtext')[0]
 
     def default_vtweg(self):
         ctx = self._context.copy()
         if ctx.get('vtweg', False):
-            return ctx.get('vtweg')
+            return ctx.get('vtweg')[0]
 
     def default_ywy(self):
         ctx = self._context.copy()
         if ctx.get('ywy', False):
-            return ctx.get('ywy')
+            return ctx.get('ywy')[0]
 
     def default_kunnr(self):
         ctx = self._context.copy()
         if ctx.get('kunnr', False):
-            return ctx.get('kunnr')
+            return ctx.get('kunnr')[0]
 
     ID = fields.Char('ID')
     salesorderid = fields.Char('销售订单')
