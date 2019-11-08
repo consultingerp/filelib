@@ -1,0 +1,189 @@
+<form enctype="multipart/form-data">
+    <input type="hidden" id="imagepath" name="">  <!-- 保存的图片id 用于表单提交 -->
+    <span id="upload_duixiang">上传</span><!-- 上传按钮 -->
+    <div class="show"></div> <!-- 输出图片 -->
+    <pre id="geoJsonTxt"></pre> <!-- 输出文件的json数据 -->
+</form>
+
+<style type="text/css">
+        /*.string { color: green; }*/
+         /*.number { color: darkorange; }*/
+         /*.boolean { color: blue; }*/
+         /*.null { color: magenta; }*/
+         /*.key { color: red; }*/
+         /*body{*/
+            /*padding: 1rem;*/
+         /*}*/
+         /*pre{*/
+            /*background-color: #f7f7f9;*/
+            /*border: 1px solid #e1e1e8;*/
+            /*padding: 5px 10px;*/
+            /*margin: 0;*/
+            /*border-radius: 8px;*/
+            /*min-height: 20px;*/
+         /*}*/
+         /*xmp{*/
+            /*margin: 0;*/
+            /*padding: 0;*/
+         /*}*/
+         #upload_duixiang{
+            display: inline-block;
+            margin-bottom: 5px;
+            color: #fff;
+            background-color: #337ab7;
+            border-color: #2e6da4;
+            padding: 5px 10px;
+            font-size: 12px;
+            line-height: 1.5;
+            border-radius: 3px;
+            cursor: pointer;
+         }
+    </style>
+
+<link rel="stylesheet" type="text/css" href="/e2yun_hhjc_product_image/static/css/FraUpload.css">
+<!--<script type="text/javascript" src="/e2yun_hhjc_product_image/static/js/jquery.min.js"></script>-->
+<!-- 图片排序 -->
+<script type="text/javascript" src="/e2yun_hhjc_product_image/static/js/Sortable/Sortable.js"></script>
+<script type="text/javascript" src="/e2yun_hhjc_product_image/static/js/MD5.js"></script>
+<script type="text/javascript" src="/e2yun_hhjc_product_image/static/js/FraUpload.js"></script>
+<script type="text/javascript">
+
+    function getProductId(){
+        return ${editor_id};
+    }
+
+// 商品图片上传
+a = $("#upload_duixiang").FraUpload({
+    view        : ".show",      // 视图输出位置
+    url         :  "/images/add" , // 上传接口
+    fetch       : "img",   // 视图现在只支持img
+    debug       : false,    // 是否开启调试模式
+    /* 外部获得的回调接口 */
+    onLoad: function(e){                    // 选择文件的回调方法
+        var product_id = getProductId();
+        $.post('/images/get',{
+            'product_tmpl_id':product_id
+        },function(data){
+            var d = JSON.parse(data);
+            for(var i in d){
+                var img = d[i];
+                a.FraUpload.loadData(img);
+
+                // var reader = new FileReader();
+                // debugger;
+                // var f = new File(img.value,img.file_name);
+                //
+                // reader.readAsDataURL(f);
+                // reader.onload=function(e){
+                //
+                //
+                //
+                // }
+
+
+
+            }
+        });
+    },
+    breforePort: function (e) {         // 发送前触发
+
+    },
+    successPort: function (e) {         // 发送成功触发
+        var result = JSON.parse(e);
+        var filepath = result.data.filepath;
+        var file_name = result.data.file_name;
+        var product_id = getProductId();;
+
+        var md5 = '';
+        var size = 0;
+        var res = a.FraUpload.show();
+        var ids = [];
+        for(let k in res){
+            if(res[k]['filename'] == file_name){
+                md5 = res[k]['md5'];
+                size = res[k]['size'];
+            }
+        }
+
+        $.post('/images/add_info',{
+            'product_tmpl_id':product_id,
+            'file_name':file_name,
+            'filepath':filepath,
+            'md5':md5,
+            'size':size
+        },function(data){
+
+        });
+    },
+    errorPort: function (e) {       // 发送失败触发
+
+    },
+    deletePost: function(e){    // 删除文件触发
+        var product_id = getProductId();
+        $.post('/image/delete',{
+            'product_tmpl_id':product_id,
+            'file_md5':e
+        },function(data){
+
+        });
+    },
+    sort: function(e){      // 排序触发
+        // console.log("排序");
+        // onload_image()
+    },
+});
+
+// 获取图片上传信息
+function onload_image(){
+    var res = a.FraUpload.show()
+    var ids = [];
+    for(let k in res){
+        this_val = res[k]
+        if(!empty(res[k]['is_upload']) && !empty(res[k]['ajax'])){
+            ajax_value = res[k]['ajax'];
+            ajax_value = JSON.parse(ajax_value);
+            ids.push(ajax_value.data.id)
+        }
+    }
+    $("#imagepath").val(ids);
+    $('#geoJsonTxt').html(JsonFormat(res));
+}
+
+// 将类库返回的json打印到pre中
+function JsonFormat(json) {
+    if (typeof json != 'string') {
+        json = JSON.stringify(json, undefined, 2);
+    }
+        json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
+        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+             var cls = 'number';
+                if (/^"/.test(match)) {
+                        if (/:$/.test(match)) {
+                            cls = 'key';
+                        } else {
+                            cls = 'string';
+                        }
+                } else if (/true|false/.test(match)) {
+                    cls = 'boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'null';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+         });
+}
+/**
+ * 判断变量是否为空
+ */
+function empty(value) {
+    if(value=="" || value==undefined || value==null || value==false || value==[] || value=={}){
+        return true;
+    }else{
+        return false;
+    }
+}
+</script>
+
+
+
+
+
