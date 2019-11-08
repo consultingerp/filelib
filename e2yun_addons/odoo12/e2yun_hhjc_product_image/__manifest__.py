@@ -2,10 +2,11 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    "name": "E2yun HHJC Product imagess",
+    "name": "E2yun HHJC Product image",
     "version": "1.0",
     "depends": ["base","sale","product"],
     "category": "tools",
+    'author': "liqiang",
     "description": """ 
     本模块主要解决，在odoo中产品多图片的上传，和图片的顺序。
     
