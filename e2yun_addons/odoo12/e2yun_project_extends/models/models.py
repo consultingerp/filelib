@@ -5,31 +5,41 @@ class Questionnaire(models.Model):
     _name = 'project.questionnaire'
 
     # 如若是否多问卷字段选择否，则权重字段默认带出100%
-    # @api.model
-    # def _default_weight(self):
-    #     res = self.parent_id.multiple_questionnaires
-    #     print(res, 'rrrrrrrrrrrrrrrrr')
-    #     if res == 'no':
-    #         self.weight = 100
+    # @api.onchange("parent_id")
+    # def onchange_weight(self):
+    #     res = self.parent_id
+        # ctx = self.env.context
+        # id = ctx['params']['id']
+        # record = self.env['project.task'].search([('id', '=', id)])
+        # res = record.multiple_questionnaires
+        # if res == 'no':
+        #     self.weight = '100'
+        # else:
+        #     self.weight = ''
+
 
     # 问卷场景
     questionnaire_scenario = fields.Selection(
         [('评分问卷', '评分问卷'), ('资质调查', '资质调查'), ('满意度调查', '满意度调查'),
          ('报名登记表', '报名登记表'), ('其他', '其他')], string='问卷场景')
     # 权重
-    weight = fields.Integer(string='权重')
+    # weight = fields.Char(string='权重', default=_default_weight)
+    weight = fields.Char(string='权重')
     # 权重单位
-    weight_unit = fields.Char(string='权重单位', default='%')
+    # weight_unit = fields.Char(string='权重单位', default='%')
     # 问卷模板
     survey_temp_id = fields.Many2one('survey.survey', string='问卷模版')
     parent_id = fields.Many2one('project.task', string='Parent Task')
 
-    # @api.onchange('weight')
-    # def _onchange_weight(self):
-    #     if self.weight:
-    #         self.weight = str(self.weight)+'%'
-    #     else:
-    #         self.weight = ''
+    @api.onchange('weight')
+    def _onchange_weight(self):
+        if self.weight:
+            if '%' in self.weight:
+                self.weight = str(self.weight)
+            else:
+                self.weight = str(self.weight)+'%'
+        else:
+            self.weight = ''
 
 
 
@@ -47,6 +57,13 @@ class E2yunTaskInfo(models.Model):
     # 一对多连接列表对象
     questionnaire_ids = fields.One2many('project.questionnaire', 'parent_id', string='Child Questionnaires')
 
+    @api.multi
+    def write(self, vals):
+        res = super(E2yunTaskInfo, self).write(vals)
+        for item in self:
+            if item.multiple_questionnaires and item.multiple_questionnaires == 'no':
+                item.questionnaire_ids.weight = '100%'
+        return res
 
 
     # 任务页面打开问卷页面的方法
@@ -132,19 +149,66 @@ class E2yunProjectSurvey(models.Model):
     questionnaire_classification = fields.Char(string='问卷分类', default=default_classification)
     questionnaire_scenario = fields.Char(string='问卷场景', default=default_scenario)
 
+    # 权重百分比之和为100%，超出则弹框提醒
+    @api.multi
+    def write(self, vals):
+        res = super(E2yunProjectSurvey, self).write(vals)
+        for item in self:
+            all_weight = 0
+            for l in item.page_ids:
+                i = l.weight[:-1]
+                all_weight += int(i)
+            if all_weight > 100:
+                raise ValueError('权重之和大于100%，请重新输入')
+        return res
+
+
 
 class SurveyPage(models.Model):
     _inherit = 'survey.page'
 
     # 调查问卷page页面添加’权重‘字段
     weight = fields.Char(string='权重')
+    # 权重单位
+    # weight_unit = fields.Char(string='单位', default='%')
     # 权重百分比
     @api.onchange('weight')
     def _onchange_weight(self):
         if self.weight:
-            self.weight = str(self.weight) + '%'
+            if '%' in self.weight:
+                self.weight = str(self.weight)
+            else:
+                self.weight = str(self.weight) + '%'
         else:
             self.weight = ''
+
+    # 权重百分比之和为100%，超出则弹框提醒
+    # @api.onchange('weight')
+    # def onchange_weightt(self):
+    #     all_weight = 0
+    #     res = self.weight
+    #     # record = self.env['survey.page'].search([('weight', '=', res)])
+    #     # id = record['survey_id'].id
+    #     # records = self.env['survey.page'].search([('survey_id', '=', id)])
+    #     ctx = self.env.context
+    #     print(ctx, '*******************')
+    #     record = self.env['survey.survey'].search([('id', '=', ctx['default_survey_id'])])
+    #     print(record, '###########')
+    #     records = record.page_ids
+    #     print(records, '!!!!!!!!!!!!!1')
+    #     for item in records:
+    #         # i = item.weight[:-1]
+    #         i = item.weight
+    #         all_weight += int(i)
+    #     if all_weight > 100:
+    #         return {
+    #             'warning': {
+    #                 'title': _("检查到错误"),
+    #                 'message': _(
+    #                     "权重之和大于100%，请重新输入")
+    #             }
+    #         }
+    #     return res
 
 
 class SurveyQuestion(models.Model):

@@ -523,10 +523,34 @@ class e2yun_supplier_info(models.Model):
                 'mobile':self.mobile,
                 'email':self.email,
                 'website':self.website,
+                'validity_license': self.validity_license,
+                'registered_capital': self.registered_capital,
+                'image_company': self.image_company,
+                'organization_chart': self.organization_chart,
+                'image_product': self.image_product,
+                'country_bank': self.country_bank.id,
+                'province_bank': self.province_bank.id,
+                'city_bank': self.city_bank.id,
+                'name_bank': self.name_bank.id,
+                'name_bank_branch': self.name_bank_branch,
+                'name_banks': self.name_banks,
+                'account_bank': self.account_bank,
+                'name_account': self.name_account,
+                'currency_type': self.currency_type.id,
+                'code_bank': self.code_bank,
+                'enclosure_bank': self.enclosure_bank,
+                # 'suppliertype_ids': self.suppliertype_ids,
+                'nature_enterprise': self.nature_enterprise,
+                'registered_address': self.registered_address,
+                'company_profile': self.company_profile,
+                'login_name': self.login_name,
+
+
+
                 })
                 id.parent_id.authenitcation_id = id.authenitcation_id
                 id.parent_id.secondary_industry_ids = id.secondary_industry_ids
-
+                id.parent_id.suppliertype_ids = id.suppliertype_ids
 
         # except Exception as e:
         #     raise UserError(u'转正式客户失败，请在工作流中添加^完成^状态')

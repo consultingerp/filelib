@@ -28,7 +28,8 @@ odoo.define('outbound_report.outbound_tree_view_button', function (require) {
                 view_mode: 'form',
                 target: 'new',
                 views: [[false, 'form']],
-                res_model: 'outbound.final'
+                res_model: 'outbound.final',
+                context : self.initialState.context
             });
         },
     });

@@ -6,9 +6,14 @@ from odoo import api, fields, models, exceptions, tools
 class CrmTeamExtend(models.Model):
     _inherit = 'crm.team'
 
+    @api.multi
+    def write(self, vals):
+        res = super(CrmTeamExtend, self).write(vals)
+        return res
+
     invoiced_target_month = fields.One2many(
         'team.target',
-        'team_target_monthly',
+        'current_team_id',
         string='月度目标')
 
     invoiced_year = fields.Integer(
@@ -35,10 +40,14 @@ class TeamTarget(models.Model):
     _name = 'team.target'
     _description = '门店目标'
 
-    def _compute_sales_member(self):
-        self.sales_member = self.env['res.users'].search([('sale_team_id', '=', self.id)])
+    def read(self, fields=None, load='_classic_read'):
+        res = super(TeamTarget, self).read(fields, load)
+        return res
 
+    # def default_team_id(self):
+    #     return self.id
 
+    current_team_id = fields.Integer('门店ID', readonly=True)
     team_target_monthly = fields.Integer('目标值')
     target_date = fields.Selection([('1', '一月'), ('2', '二月'), ('3', '三月'), ('4', '四月'), ('5', '五月'), ('6', '六月'), ('7', '七月'), ('8', '八月'), ('9', '九月'), ('10', '十月'), ('11', '十一月'), ('12', '十二月')], string='月份')
     sales_member = fields.Many2one('res.users', string='导购')

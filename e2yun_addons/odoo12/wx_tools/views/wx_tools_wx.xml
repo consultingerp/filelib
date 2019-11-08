@@ -20,7 +20,7 @@
                     nonceStr: '<t t-raw="noncestr"/>',
                     signature: '<t t-raw="signature"/>',
                     jsApiList: ['openLocation', 'onMenuShareAppMessage',
-                    'chooseImage','scanQRCode','getLocation']
+                    'chooseImage','scanQRCode','getLocation','uploadImage' ]
                 });  //end   config
                 wx.ready(function () {
                    wxready =true;

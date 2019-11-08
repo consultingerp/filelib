@@ -35,7 +35,19 @@
                     <field name="jiesuanjine"/>
                 </tree>
             </field>
+        </record>
 
+        <record id="outbound_report_search_view" model="ir.ui.view">
+            <field name="name">Outbound Report Search</field>
+            <field name="model">outbound.final</field>
+            <field name="arch" type="xml">
+                <search string="outbound Search">
+                   <field name="LFADT" string="单据日期"/>
+                    <group expand="0" string="Group By">
+                        <filter string="展示周期" name="order_month" context="{'group_by':'LFADT'}"/>
+                    </group>
+                </search>
+            </field>
         </record>
 
         <record id="view_outbound_query_report" model="ir.ui.view">
