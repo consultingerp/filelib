@@ -21,7 +21,7 @@
         <menuitem action="action_GroupDepartments"
                   id="menu_action_GroupDepartments"
                   name="事业部管理"
-                  parent="account.account_management_menu"/>
+                  parent="crm.crm_menu_config"/>
 
         <record id="view_GroupChannels" model="ir.ui.view">
             <field name="name">GroupChannels</field>
@@ -41,7 +41,7 @@
         <menuitem action="action_GroupChannels"
                   id="menu_action_GroupChannels"
                   name="渠道管理"
-                  parent="account.account_management_menu"/>
+                  parent="crm.crm_menu_config"/>
 
     </data>
 </odoo>
