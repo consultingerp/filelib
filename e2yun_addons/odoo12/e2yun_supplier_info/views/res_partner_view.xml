@@ -11,19 +11,21 @@
             <xpath expr="//div[@class='o_address_format']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
-
             <xpath expr="//field[@name='vat']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
             <xpath expr="//field[@name='vat']" position="before">
                 <!--<field name="supplier_code" attrs="{'invisible':[('supplier','=',False)]}"/>-->
                 <!--<field name="organ_code" attrs="{'invisible':[('supplier','=',False)]}"/>-->
-                <field name="suppliertype_ids" widget="many2many_tags"/>
                 <field name="nature_enterprise" attrs="{'invisible':[('supplier','=',False)]}"/>
                 <field name="registered_address" placeholder="与营业执照保持一致" attrs="{'invisible':[('supplier','=',False)]}"/>
                 <field name="annual_turnover" attrs="{'invisible':[('supplier','=',False)]}"/>
                 <field name="employees" attrs="{'invisible':[('supplier','=',False)]}"/>
                 <field name="listed_company" attrs="{'invisible':[('supplier','=',False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='lang']" position="before">
+                <field name="website" widget="url" placeholder="e.g. www.odoo.com"/>
+                <field name="suppliertype_ids" widget="many2many_tags"/>
             </xpath>
             <xpath expr="//field[@name='lang']" position="after">
                 <field name="company_profile" attrs="{'invisible':[('supplier','=',False)]}"/>
@@ -100,7 +102,7 @@
                     </group>
                 </group>
             </xpath>
-            <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@autofocus='autofocus']" position="before">
                 <!--新增公司信息选项卡-->
                 <page name='info_company' string="公司信息">
                     <group name="container_row_2">
@@ -126,21 +128,24 @@
                             <field name="city_bank"/>
                             <!--<field name="region_bank"/>-->
                             <field name="name_bank"/>
-                        </group>
-                        <group>
                             <field name="name_bank_branch"/>
                             <field name="name_banks"/>
+                        </group>
+                        <group>
                             <field name="account_bank"/>
                             <field name="name_account"/>
                             <field name="currency_type"/>
-                        </group>
-                        <group>
                             <field name="code_bank"/>
                             <field name="enclosure_bank"/>
                         </group>
+                        <!--<group>-->
+                            <!---->
+                        <!--</group>-->
                     </group>
                 </page>
-                <!--新增产品信息选项卡-->
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@autofocus='autofocus']" position="after">
+            <!--新增产品信息选项卡-->
                 <page name='info_product' string="产品信息">
                     <label for="secondary_industry_ids" string="供应产品类别"/>
                     <field name="secondary_industry_ids" widget="many2many_tags"/>
@@ -177,15 +182,7 @@
                     </form>
                   </field>
                 </page>
-                <!--<page name="business_license" string="营业执照">-->
-                    <!--<group>-->
-                        <!--<group><field name="business_license" widget='image' class="oe_avatar oe_center"-->
-                               <!--options='{"preview_image": "business_license", "size": [350, 200]}'/></group>-->
-                        <!--<group></group>-->
-                    <!--</group>-->
-
-                <!--</page>-->
-              </xpath>
+            </xpath>
 
         </field>
     </record>
