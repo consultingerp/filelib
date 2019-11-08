@@ -23,8 +23,8 @@
                     <field name="invoiced_target_detail" attrs="{'invisible': [('use_invoices', '=', False)]}" >
                         <tree>
                             <field name="current_team_id" invisible="1"/>
-                            <field name="team_target_monthly"/>
                             <field name="target_date"/>
+                            <field name="team_target_monthly"/>
                             <field name="sales_member" domain="[('sale_team_id', '=', self.id)]"/>
                         </tree>
                     </field>
