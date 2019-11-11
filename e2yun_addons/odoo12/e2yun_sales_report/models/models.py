@@ -15,13 +15,44 @@ class e2yun_sales_report(models.Model):
             'domain': {'vkorgtext': domain}
         }
 
-    date_from1 = fields.Date('日期从')
-    date_end2 = fields.Date('日期到')
+    def default_start_date(self):
+        ctx = self._context.copy()
+        if ctx.get('date_from1', False):
+            return ctx.get('date_from1')
+
+    def default_end_date(self):
+        ctx = self._context.copy()
+        if ctx.get('date_end2', False):
+            return ctx.get('date_end2')
+
+    def default_vkorgtext(self):
+        ctx = self._context.copy()
+        if ctx.get('vkorgtext', False):
+            return ctx.get('vkorgtext')[0]
+
+
+    def default_vtweg(self):
+        ctx = self._context.copy()
+        if ctx.get('vtweg', False):
+            return ctx.get('vtweg')[0]
+
+    def default_ywy(self):
+        ctx = self._context.copy()
+        if ctx.get('ywy', False):
+            return ctx.get('ywy')[0]
+
+    def default_kunnr(self):
+        ctx = self._context.copy()
+        if ctx.get('kunnr', False):
+            return ctx.get('kunnr')[0]
+
+    date_from1 = fields.Date('日期从', default=default_start_date)
+    date_end2 = fields.Date('日期到', default=default_start_date)
     werks = fields.Selection([('1000', "1000"), ('2000', "2000")], '工厂')
-    vkorgtext = fields.Many2one('group.departments', '事业部')
-    vtweg = fields.Many2one('group.channels', '渠道')
-    ywy = fields.Many2one('res.users', '导购员')
-    kunnr = fields.Many2one('crm.team', '门店')
+    vkorgtext = fields.Many2one('group.departments', '事业部', default=default_vkorgtext)
+    vtweg = fields.Many2one('group.channels', '渠道', default=default_vtweg)
+    ywy = fields.Many2one('res.users', '导购员', default=default_ywy, domain=[('function', 'in', ['店长', '店员'])])
+    kunnr = fields.Many2one('crm.team', '门店', default=default_kunnr)
 
     def open_table(self):
         data = self.read()[0]
@@ -77,7 +108,7 @@ class e2yun_sales_report(models.Model):
                     domain_list.append(orders.id)
 
         return {
-            'name': '销售明细查询',
+            'name': '销售明细报表',
             'view_type': 'form',
             'view_mode': 'tree,graph',
             'res_model': 'sale.order.line',

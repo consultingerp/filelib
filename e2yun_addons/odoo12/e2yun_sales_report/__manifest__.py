@@ -26,7 +26,10 @@
         'security/ir.model.access.csv',
         'views/views.xml',
         'views/newmodels.xml',
-        # 'views/templates.xml',
+        'views/templates.xml',
+    ],
+    'qweb':[
+        'static/src/xml/outbound_button_template.xml',
     ],
     'installable': True
 }
