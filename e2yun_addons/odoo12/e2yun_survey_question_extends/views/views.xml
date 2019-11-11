@@ -7,6 +7,50 @@
                 <xpath expr="//field[@name='type']" position="before">
                     <field name="question_bank_type" widget="radio"/>
                 </xpath>
+                <xpath expr="//div[@class='col-lg-6 offset-lg-3 o_preview_questions']" position="inside">
+                    <div attrs="{'invisible': [('type', '!=', 'select_box')]}" role="img" aria-label="Select choice" title="Select choice">
+                        <div class="row"><i/> 请选择 v</div>
+                        <div class="row"><i/> 选项一</div>
+                        <div class="row"><i/> 选项二</div>
+                    </div>
+                    <div attrs="{'invisible': [('type', '!=', 'scoring')]}">
+                        <div class="row o_matrix_head">
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-2">非常不满意</div>
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-2">非常满意</div>
+                        </div>
+                        <div class="row o_matrix_head">
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-2">1</div>
+                            <div class="col-lg-2">2</div>
+                            <div class="col-lg-2">3</div>
+                            <div class="col-lg-2">4</div>
+                            <div class="col-lg-2">5</div>
+                        </div>
+                        <div class="row o_matrix_row">
+                            <div class="col-lg-2">标题一</div>
+                            <div class="col-lg-2"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
+                            <div class="col-lg-2"><i class="fa fa-dot-circle-o fa-lg" role="img" aria-label="Checked" title="Checked"/></div>
+                            <div class="col-lg-2"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
+                            <div class="col-lg-2"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
+                            <div class="col-lg-2"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
+                        </div>
+                        <div class="row o_matrix_row">
+                            <div class="col-lg-2">标题二</div>
+                            <div class="col-lg-2"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
+                            <div class="col-lg-2"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
+                            <div class="col-lg-2"><i class="fa fa-dot-circle-o fa-lg" role="img" aria-label="Checked" title="Checked"/></div>
+                            <div class="col-lg-2"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
+                            <div class="col-lg-2"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
+                        </div>
+                    </div>
+                    <div attrs="{'invisible': [('type', '!=', 'upload attachments')]}" role="img" aria-label="upload attachments" title="upload attachments">
+                        <div class="row"><i/> 请选择文件(30Mb以内)</div>
+                    </div>
+                </xpath>
             </field>
         </record>
     </data>
