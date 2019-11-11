@@ -88,6 +88,57 @@
                 'confirm_password',
             ]"/>
         </function>
+    <!--新增正式供应商白名单-->
+        <record id="e2yun_supplier_info.model_res_partner" model="ir.model">
+            <!--<field name="website_form_default_field_id" ref="crm.field_crm_lead__description" />-->
+            <field name="website_form_access">True</field>
+            <!--<field name="website_form_label">Create a lead</field>-->
+        </record>
+        <function model="ir.model.fields" name="formbuilder_whitelist">
+            <value>res.partner</value>
+            <value eval="[
+                'supplier_code',
+                'secondary_industry_ids',
+                'organ_code',
+                'business_license',
+                'annual_turnover',
+                'authenitcation_id',
+                'listed_company',
+                'comment',
+                'suppliertype_ids',
+                'nature_enterprise',
+                'registered_address',
+                'company_profile',
+                'validity_license',
+                'CreditCode',
+                'registered_capital',
+                'image_company',
+                'organization_chart',
+                'image_product',
+                'country_bank',
+                'province_bank',
+                'city_bank',
+                'name_bank',
+                'name_bank_branch',
+                'name_banks',
+                'account_bank',
+                'name_account',
+                'currency_type',
+                'code_bank',
+                'enclosure_bank',
+                'name',
+                'login_name',
+                'phone',
+                'mobile',
+                'email',
+                'function',
+                'country_id',
+                'state_id',
+                'city',
+                'street',
+                'website',
+                ]"/>
+        </function>
 
     </data>
     <!--<data noupdate="1">-->
