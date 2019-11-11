@@ -90,6 +90,7 @@ class SaleOrder(models.Model):
         datajsonstring['totalmoney'] = res.amount_total
         datajsonstring['jiesuanjine'] = res.amount_total
         datajsonstring['degree'] = 'A'
+        datajsonstring['pricedate'] = res.create_date.strftime("%Y-%m-%d")
         # datajsonstring['dianyuan'] = res.user_id.login
         orderitem = []
         num = 10
