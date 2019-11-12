@@ -37,15 +37,15 @@
             <xpath expr="//field[@name='function']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
-            <xpath expr="//label[@for='phone']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
+            <!--<xpath expr="//label[@for='phone']" position="attributes">-->
+                <!--<attribute name="invisible">True</attribute>-->
+            <!--</xpath>-->
             <xpath expr="//field[@name='phone']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
-            <xpath expr="//label[@for='mobile']" position="attributes">
-                <attribute name="invisible">True</attribute>
-            </xpath>
+            <!--<xpath expr="//label[@for='mobile']" position="attributes">-->
+                <!--<attribute name="invisible">True</attribute>-->
+            <!--</xpath>-->
             <xpath expr="//field[@name='mobile']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
@@ -186,5 +186,22 @@
 
         </field>
     </record>
+    <!--去掉供应商信息图标-->
+    <!--<record model="ir.ui.view" id="partner_form_send_sms_form_view_extends">-->
+        <!--<field name="name">res.partner.form.send.sms.extends</field>-->
+        <!--<field name="model">res.partner</field>-->
+        <!--<field name="inherit_id" ref="sms.partner_form_send_sms_form_view"/>-->
+        <!--<field name="arch" type="xml">-->
+            <!--<xpath expr="//field[@name='phone']" position="after">-->
+                <!--<attribute name="invisible">true</attribute>-->
+            <!--</xpath>-->
+            <!--<xpath expr="//button[@context='{'field_name': 'mobile'}']" position="attributes">-->
+                <!--<attribute name="invisible">true</attribute>-->
+            <!--</xpath>-->
+            <!--&lt;!&ndash;<xpath expr="//tree" position="attributes">&ndash;&gt;-->
+                <!--&lt;!&ndash;<attribute name="import">false</attribute>&ndash;&gt;-->
+            <!--&lt;!&ndash;</xpath>&ndash;&gt;-->
+        <!--</field>-->
+    <!--</record>-->
 
 </odoo>
