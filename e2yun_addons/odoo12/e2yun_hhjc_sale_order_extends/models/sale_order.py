@@ -13,7 +13,7 @@ _logger = logging.getLogger(__name__)
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    salesorderid = fields.Char('订单编号')
+    salesorderid = fields.Char('订单编号', copy=False)
     vip = fields.Char('客户编号')
     vipname = fields.Char('客户名称')
     kunnr = fields.Char('门店名称')
@@ -51,8 +51,6 @@ class SaleOrder(models.Model):
     vkorgtext = fields.Char('事业部')
     vtweg = fields.Char('分销渠道')
 
-
-
     # @api.model
     # def create(self, vals):
     #     res = super(SaleOrder, self).create(vals)
@@ -89,7 +87,11 @@ class SaleOrder(models.Model):
         datajsonstring['dianyuan'] = res.user_id.name
         datajsonstring['totalmoney'] = res.amount_total
         datajsonstring['jiesuanjine'] = res.amount_total
+        datajsonstring['bukrs'] = res.company_id.company_code
+        datajsonstring['bukrstext'] = res.company_id.name
         datajsonstring['degree'] = 'A'
+        datajsonstring['pricedate'] = res.create_date.strftime("%Y-%m-%d")
+        datajsonstring['yujijiaohuoriqi'] = res.create_date.strftime("%Y-%m-%d")
         # datajsonstring['dianyuan'] = res.user_id.login
         orderitem = []
         num = 10
@@ -97,6 +99,11 @@ class SaleOrder(models.Model):
             item = {}
             line.product_id
             item['matnr'] = line.product_id.default_code
+            item['maktx'] = line.product_id.name
+            item['spart'] = line.product_id.product_group
+            item['sparttext'] = line.product_id.product_group
+            item['prdha'] = line.product_id.layer
+            item['prdhatext'] = line.product_id.layer_name
             item['maktx'] = line.product_id.name
             item['itemtype'] = 'ZTA1'
             item['itemtypetext'] = '标准项目'
@@ -220,6 +227,18 @@ class SaleOrder(models.Model):
         # except Exception as e:
         #     _logger.error("同步订单到POS出现错误，对象: %s，错误信息：%s", self, e)
         return res
+
+    @api.multi
+    def action_sync_to_pos(self):
+        # res = super(SaleOrder, self).action_confirm()
+        # if 'is_sync' not in vals or not vals['is_sync']:
+        # try:
+        for item in self:
+            item.action_sync_sale_to_pos()
+        # except Exception as e:
+        #     _logger.error("同步订单到POS出现错误，对象: %s，错误信息：%s", self, e)
+        # return res
+
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api, _
+import warnings
 
 class Questionnaire(models.Model):
     _name = 'project.questionnaire'
@@ -57,12 +58,35 @@ class E2yunTaskInfo(models.Model):
     # 一对多连接列表对象
     questionnaire_ids = fields.One2many('project.questionnaire', 'parent_id', string='Child Questionnaires')
 
+    # @api.multi
+    # def weight_write(self, vals):
+    #     print("@@@@@@@@@@@@@@@@@@@@@")
+    #     res = super(E2yunTaskInfo, self).write(vals)
+    #     for item in self:
+    #         all_score = 0
+    #         for record in item.questionnaire_ids:
+    #             str_weight = record.weight
+    #             if str_weight:
+    #                 int_weight = int(str_weight[:1])
+    #                 all_score += int_weight
+    #         if all_score > 100:
+    #             raise Warning(_('权重之和大于100%，请重新输入'))
+    #     return res
+
     @api.multi
     def write(self, vals):
         res = super(E2yunTaskInfo, self).write(vals)
         for item in self:
             if item.multiple_questionnaires and item.multiple_questionnaires == 'no':
                 item.questionnaire_ids.weight = '100%'
+            all_score = 0
+            for record in item.questionnaire_ids:
+                str_weight = record.weight
+                if str_weight:
+                    int_weight = int(str_weight[:-1])
+                    all_score += int_weight
+            if all_score > 100:
+                raise Warning(_('权重之和大于100%，请重新输入'))
         return res
 
 
@@ -150,6 +174,7 @@ class E2yunProjectSurvey(models.Model):
     questionnaire_scenario = fields.Char(string='问卷场景', default=default_scenario)
 
     # 权重百分比之和为100%，超出则弹框提醒
+
     @api.multi
     def write(self, vals):
         res = super(E2yunProjectSurvey, self).write(vals)
@@ -159,7 +184,9 @@ class E2yunProjectSurvey(models.Model):
                 i = l.weight[:-1]
                 all_weight += int(i)
             if all_weight > 100:
-                raise ValueError('权重之和大于100%，请重新输入')
+                # warnings.warn('权重之和大于100%，请重新输入')
+                # raise ValueError('权重之和大于100%，请重新输入')
+                raise Warning(_('权重之和大于100%，请重新输入'))
         return res
 
 
