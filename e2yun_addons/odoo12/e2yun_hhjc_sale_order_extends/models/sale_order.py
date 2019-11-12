@@ -228,6 +228,17 @@ class SaleOrder(models.Model):
         #     _logger.error("同步订单到POS出现错误，对象: %s，错误信息：%s", self, e)
         return res
 
+    @api.multi
+    def action_sync_to_pos(self):
+        # res = super(SaleOrder, self).action_confirm()
+        # if 'is_sync' not in vals or not vals['is_sync']:
+        # try:
+        for item in self:
+            item.action_sync_sale_to_pos()
+        # except Exception as e:
+        #     _logger.error("同步订单到POS出现错误，对象: %s，错误信息：%s", self, e)
+        # return res
+
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
