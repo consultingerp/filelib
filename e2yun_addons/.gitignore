@@ -38,4 +38,4 @@ setup/win32/static/postgresql*.exe
 /man/
 /share/
 /src/
-/odoo12/wx_tools/static/wx/
+/odoo12/wx_tools/static/wx/*.*
