@@ -13,7 +13,9 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
     sAnimation.registry.form_builder_send = sAnimation.Class.extend({
         selector: '.s_website_form_e2yun',
         events: {
-           // 'change input[name=user_phone]': '_searchusermatnr',
+            'change input[name=user_phone]': '_searchusermatnr',
+            'click a[id=wximages]': '_userimag',
+            'click a[id=online_customer]':'_clickteamcustomer'
         },
         willStart: function () {
             var def;
@@ -89,7 +91,8 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                     });
                 };
                 var useraddress = $('input[name=j_address]').val();
-                if (wxready || useraddress.trim() == "") { // 如果地址为空，没有默认地址，去取定位地
+                var is_wx_client = $('input[name=is_wx_client]').val();
+                if (is_wx_client == "1" || useraddress.trim() == "") { // 如果地址为空，没有默认地址，去取定位地
                     wx.getLocation({
                         type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
                         success: function (res) {
@@ -136,7 +139,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                 this.start_addres(state_id, city_id, area_id)
             }
             var is_wx_client = $('input[name=is_wx_client]').val();
-            if (is_wx_client == '0') {   //判断是微信浏览器
+            if (is_wx_client == '0') {   //判断是微信浏览器 不是就加载空地址让用户选择
                 this.start_addres('', '', '');
             }
             this.start_date_controls();
@@ -153,8 +156,6 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                 var team_id = $('input[name=team_id]').val();
                 window.location.href = window.location.origin + '/im_livechat/user_helpdesk/' + team_id;
             });
-
-
             this.$target.find('#team_list').on('change', function (e) {
                 window.location.href = window.location.origin + '/helpdesk/' + this.value + '/submit';
             });
@@ -330,8 +331,10 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
 
 
             return form_valid;
+        }, _clickteamcustomer: function (e) {
+            var team_id = $('input[name=team_id]').val();
+            window.location.href = window.location.origin + '/im_livechat/user_helpdesk/' + team_id;
         },
-
         is_datetime_valid: function (value, type_of_date) {
             if (value === "") {
                 return true;
@@ -408,6 +411,11 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
         }, _searchusermatnr: function (e) {
             var self = this;
             var $input = $(e.target);
+            var user_phone = $input.val()
+            if (user_phone != "" && !(/^1[3456789]\d{9}$/.test(user_phone))) {
+                alert("购买电话有误，请新重填");
+                return false;
+            }
             self._rpc({
                 route: '/helpdesk/searchusermatnr',
                 params: {
@@ -422,7 +430,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                 var matnrs_option = new Array();
                 for (let index in result.matnrs) {
                     var matnr = result.matnrs[index];
-                    if (result.matnrs.length > 0 && typeof  matnr.arktx != "undefined") {
+                    if (result.matnrs.length > 0 && typeof matnr.arktx != "undefined") {
                         matnrs_option.push({label: matnr.arktx, value: matnr.matnr})
                     }
 
@@ -433,15 +441,14 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                     var mySelect = $("#mySelect").mySelect({
                         mult: true,//true为多选,false为单选
                         option: matnrs_option,
-                        onChange: function (res) {//选择框值变化返回结果
-                            console.log(res)
+                        onChange: function (res, res2) {//选择框值变化返回结果
                             $('input[name=matnrs]').val(res);
-
+                            $('input[name=arktxs]').val(res2);
                         }
                     });
                     mySelect.setResult([]);
-                }else{
-                      self.$('#matnrs').hide();
+                } else {
+                    self.$('#matnrs').hide();
                 }
 
             });
@@ -531,6 +538,74 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                 area.Country = str.substring(index2 + 1, index3 + 1)
             }
             return area;
+        }, _userimag(serviceorderid) {
+            var images = {
+                localId: [],
+                serverId: [],
+                localwebid: []
+            };
+            wx.chooseImage({
+                count: 9, // 默认9
+                sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                success: function (res) {
+                    var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                    //alert("localIds:"+localIds);
+                    images.localId = res.localIds;
+
+                    alert('已选择 ' + res.localIds.length + ' 张图片');
+                    if (images.localId.length == 0) {
+                        alert('请先使用 chooseImage 接口选择图片');
+                        return;
+                    }
+                    var i = 0, length = images.localId.length;
+                    images.serverId = [];
+
+                    function upload() {
+                        wx.uploadImage({
+                            localId: images.localId[i],
+                            success: function (res) {
+                                var image_index = i;
+                                i++;
+                                var serverId = res.serverId; // 返回图片的服务器端ID
+                                //alert("serverId:"+serverId);
+                                images.serverId.push(res.serverId);
+                                alert(images.localId[image_index]);
+                                images.localwebid.push(images.localId[image_index]);
+                                // var image = "<a id='image" + image_index + "' href='#popupPhotoLandscape" + image_index + "' data-rel='popup' data-position-to='window' class='ui-btn ui-corner-all ui-shadow ui-btn-inline'>";
+                                // image = image + "<image idth='60px' height='60px' src='" + images.localId[image_index] + "'/>";
+                                // image = image + "</a>";
+                                // image = image + "<div data-role='popup' id='popupPhotoLandscape' class='photopopup' data-overlay-theme='b' data-corners='true' data-tolerance='50,30'>";
+                                // image = image + "<div data-role='controlgroup' data-type='horizontal'>";
+                                // image = image + " <a href=\"javascript:deleteimage('"+image_index+"')\"    data-ajax='false'>删除</a>";
+                                // image = image + " <a href='#' data-rel='back'>back</a>";
+                                // image = image + "</div>";
+                                // image = image + "<img src='" + images.localId[image_index] + "'' alt='Photo landscape'>";
+                                // image = image + "</div>";
+                                var image = "";
+                                image = image + "<img src='" + images.localId[image_index] + "'' alt='Photo landscape'>";
+                                image = image + " <a href=\"javascript:\"    data-ajax='false'>删除</a>";
+
+                                alert(image);
+                                // var image=$("<image idth='60px' height='60px' src='${pageContext.request.contextPath}/weixinfile/"+data.media_id+"'/>");
+                                $("#imagecount").append(image).trigger("create");
+
+
+                                alert(i + "：" + length);
+                                if (i < length) {
+                                    upload();
+                                }
+                            },
+                            fail: function (res) {
+                                alert(JSON.stringify(res));
+                            }
+                        });
+
+                    } // end
+                    upload();
+                }
+            });
+
         }
 
     });
