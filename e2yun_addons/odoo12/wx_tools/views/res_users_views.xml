@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="res_users_wx_user" model="ir.ui.view">
+            <field name="name">res.users.view.form.wx_user_id</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='signature']" position="after">
+                    <field name="wx_user_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="res_users_qrcodeimg" model="ir.ui.view">
+            <field name="name">res.users.view.form.qrcodeimg</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='wx_user_id']" position="after">
+                    <field name="qrcodeimg"/>
+                </xpath>
+            </field>
+        </record>
+        <!--首选项中重置微信密码-->
+        <record id="res_users_modif_wx_reset_password" model="ir.ui.view">
+            <field name="name">res.users.preferences.form.wx.modif.reset.password</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='preference_change_password']" position="after">
+                    <button name="action_wx_user_reset_password" type="object" class="oe_link" string="微信重置密码"/>
+                </xpath>
+            </field>
+        </record>
+        <!--在用户中重置微信密码-->
+        <record id="res_users_wx_reset_password" model="ir.ui.view">
+            <field name="name">res.users.preferences.form.wx.reset.password</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_reset_password']" position="after">
+                    <button name="action_wx_user_reset_password" type="object" class="oe_link" string="微信重置密码"/>
+                </xpath>
+            </field>
+        </record>
+
+         <!--微信二维码重置-->
+        <record id="oe_reset_password_wx" model="ir.ui.view">
+            <field name="name">oe.reset.password.wx</field>
+            <field name="inherit_id" ref="auth_signup.reset_password"/>
+            <field name="arch" type="xml">
+                <xpath expr="//input[@id='login']" position="after">
+                      <label>扫描二维码找回密码</label>
+                      <img border="0"  t-attf-src="#{auth_signup_reset_password_qrcode_ticket}" style="max-width:200px;" alt="二维码找回密码"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
