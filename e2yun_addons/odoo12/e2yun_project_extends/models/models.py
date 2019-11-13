@@ -174,7 +174,6 @@ class E2yunProjectSurvey(models.Model):
     questionnaire_scenario = fields.Char(string='问卷场景', default=default_scenario)
 
     # 权重百分比之和为100%，超出则弹框提醒
-
     @api.multi
     def write(self, vals):
         res = super(E2yunProjectSurvey, self).write(vals)
@@ -265,70 +264,20 @@ class SurveyQuestion(models.Model):
         self.scoring_method = self.reference_existing_question.scoring_method
         self.labels_ids = self.reference_existing_question.labels_ids
 
+    # 唯一性计分分值超出则弹框提醒
+    @api.multi
+    def write(self, vals):
+        res = super(SurveyQuestion, self).write(vals)
+        for item in self:
+            if item.scoring_method == '唯一性计分':
+                if item.labels_ids:
+                    count = 0
+                    all = []
+                    for l in item.labels_ids:
+                        count += 1
+                        all.append(l.quizz_mark)
+                    statistics = all.count(0.0)
+                    if count > 2 or count == 1 or statistics > 1 or statistics == 0:
+                        raise Warning(_('唯一性计分只能给一个选项赋值，其他为0，请重新输入'))
+        return res
 
-
-    # 打开题库页面的方法
-    # @api.multi
-    # def turn_question(self):
-        # self.ensure_one()
-        # # Get lead views
-        # # form_view = self.env.ref('survey.survey_question_form')
-        # tree_view = self.env.ref('survey.survey_question_tree')
-        # # kanban_view = self.env.ref('survey.survey_kanban')
-        # return {
-        #     'name': '查看页面_已有题库',
-        #     'res_model': 'survey.question',
-        #     # 'domain': [('type', '=', 'lead')],
-        #     # 'res_id': self.id,
-        #     'view_id': False,
-        #     'target': 'new',
-        #     'views': [
-        #         # (form_view.id, 'form'),
-        #         (tree_view.id, 'tree'),
-        #         # (kanban_view.id, 'kanban')
-        #     ],
-        #     'view_type': 'tree',
-        #     'view_mode': 'tree,form,kanban',
-        #     'type': 'ir.actions.act_window',
-        # }
-        # data = self.read()[0]
-        # ctx = self._context.copy()
-        # return {
-        #     'name': '查看页面_已有题库',
-        #     'view_type': 'form',
-        #     'view_mode': 'form',
-        #     'res_model': 'quoting.question.bank',
-        #     'type': 'ir.actions.act_window',
-        #     'context': ctx,
-        #     'target': 'current',
-        #     # 'action': 'survey.action_survey_question_form',
-        # }
-
-# class SurveyLabel(models.Model):
-#     _inherit = 'survey.label'
-#
-#     score = fields.Integer(string='分值')
-
-# class QuotingQuestionBank(models.Model):
-#     _name = 'quoting.question.bank'
-#     # 对应题库
-#     question_bank_id = fields.Many2one('survey.question', string='选择已有题库')
-    # 问题名称
-    # question_name = fields.Char('问题名称', required=True, translate=True)
-    # 题库大类
-    # question_bank_type = fields.Selection([('供应商基本信息', '供应商基本信息'), ('人口属性', '人口属性'), ('市场调研', '市场调研')
-    #                                           , ('用户满意度', '用户满意度'), ('联系方式', '联系方式'), ('其他', '其他')], string='题库大类')
-    # 问题类型
-    # type = fields.Selection([
-    #     ('free_text', 'Multiple Lines Text Box'),
-    #     ('textbox', 'Single Line Text Box'),
-    #     ('numerical_box', 'Numerical Value'),
-    #     ('date', 'Date'),
-    #     ('simple_choice', 'Multiple choice: only one answer'),
-    #     ('multiple_choice', 'Multiple choice: multiple answers allowed'),
-    #     ('matrix', 'Matrix')], string='问题类型', default='free_text', required=True)
-    # 计分方式
-    # scoring_method = fields.Selection([('唯一性计分', '唯一性计分'), ('选择性计分', '选择性计分')], string='计分方式')
-    # 可供选项
-    # labels_ids = fields.One2many('survey.label', 'id', string='可供选项', oldname='answer_choice_ids', copy=True)
-    # sequence = fields.Integer('Label Sequence order', default=10)
