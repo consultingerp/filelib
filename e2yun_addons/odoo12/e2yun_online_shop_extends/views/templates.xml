@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <template id="header" inherit_id="website.layout" name="Header Shop Test Link">
+        <xpath expr="//header//ul[@id='top_menu']/li" position="after">
+                <li id="my_shop_tesr" class="nav-item" t-attf-class="nav-item #{button_state}">
+                    <a href="/hhjc_shop_index" class="nav-link">
+                        <i class="fa"/>
+                        ShopTsT
+                    </a>
+                </li>
+        </xpath>
+    </template>
+    </data>
+</odoo>
