@@ -196,7 +196,7 @@ class SurveyPage(models.Model):
 
     # 调查问卷page页面添加’权重‘字段
     weight = fields.Char(string='权重')
-    # 权重单位
+    # 网页标题变更为段落
     # weight_unit = fields.Char(string='单位', default='%')
     # 权重百分比
     @api.onchange('weight')
@@ -255,8 +255,8 @@ class SurveyQuestion(models.Model):
                 all_score.append(score)
             rr = max(all_score)
             self.highest_score = rr
-        else:
-            return True
+        # else:
+        #     return True
     @api.onchange('reference_existing_question')
     def reference(self):
         self.question = self.reference_existing_question.question
@@ -264,6 +264,7 @@ class SurveyQuestion(models.Model):
         self.type = self.reference_existing_question.type
         self.scoring_method = self.reference_existing_question.scoring_method
         self.labels_ids = self.reference_existing_question.labels_ids
+
 
 
     # 打开题库页面的方法
