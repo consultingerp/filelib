@@ -95,30 +95,57 @@ class SaleOrder(models.Model):
         # datajsonstring['dianyuan'] = res.user_id.login
         orderitem = []
         num = 10
+
+        chuxiao_total = 0
+
         for line in res.order_line:
             item = {}
             line.product_id
-            item['matnr'] = line.product_id.default_code
-            item['maktx'] = line.product_id.name
-            item['spart'] = line.product_id.product_group
-            item['sparttext'] = line.product_id.product_group
-            item['prdha'] = line.product_id.layer
-            item['prdhatext'] = line.product_id.layer_name
-            item['maktx'] = line.product_id.name
-            item['itemtype'] = 'ZTA1'
-            item['itemtypetext'] = '标准项目'
-            item['rownum'] = num
-            item['kwmen'] = line.product_uom_qty
-            item['vrkme'] = line.product_uom.name
-            item['meins'] = line.product_uom.name
-            item['kbetr'] = line.price_unit
-            item['xiaoshoujine'] = line.price_unit
-            item['jiesuanjine'] = line.price_unit
-            item['itemtotal'] = line.price_subtotal
-            item['itemjiesuantotal'] = line.price_subtotal
-            item['kpein'] = 1
+            if line.price_unit < 0:
+                chuxiao_total += line.price_unit * line.product_uom_qty
+                pass
+            else:
+                item['matnr'] = line.product_id.default_code
+                item['maktx'] = line.product_id.name
+                item['spart'] = line.product_id.product_group
+                item['sparttext'] = line.product_id.product_group
+                item['prdha'] = line.product_id.layer
+                item['prdhatext'] = line.product_id.layer_name
+                item['maktx'] = line.product_id.name
+                item['itemtype'] = 'ZTA1'
+                item['itemtypetext'] = '标准项目'
+                item['rownum'] = num
+                item['kwmen'] = line.product_uom_qty
+                item['vrkme'] = line.product_uom.name
+                item['meins'] = line.product_uom.name
+                item['kbetr'] = line.price_unit
+                item['xiaoshoujine'] = line.price_unit
+                item['jiesuanjine'] = line.price_unit
+                item['itemtotal'] = line.price_subtotal
+                item['itemjiesuantotal'] = line.price_subtotal
+                item['kpein'] = 1
             num += 10
             orderitem.append(item)
+        try:
+            newtotalmoney = 0
+            if chuxiao_total < 0:
+                for item in orderitem:
+                    price_unit = item['itemtotal'] / (datajsonstring['totalmoney'] + chuxiao_total) * datajsonstring['totalmoney'] / item['kwmen']
+                    totalmoney = price_unit * item['kwmen']
+                    item['xiaoshoujine'] = price_unit
+                    item['jiesuanjine'] = price_unit
+                    item['itemtotal'] = totalmoney
+                    item['itemjiesuantotal'] = totalmoney
+                    newtotalmoney += totalmoney
+            if newtotalmoney != datajsonstring['totalmoney']:
+                leave_money = newtotalmoney - datajsonstring['totalmoney']
+                orderitem[0]['itemtotal'] = orderitem[0]['itemtotal'] + leave_money
+                orderitem[0]['itemjiesuantotal'] = orderitem[0]['itemtotal']
+                orderitem[0]['xiaoshoujine'] = orderitem[0]['xiaoshoujine'] + leave_money / orderitem[0]['kwmen']
+                orderitem[0]['jiesuanjine'] = orderitem[0]['xiaoshoujine']
+                # datajsonstring['totalmoney'] = newtotalmoney
+        except Exception as e:
+            _logger.log(e)
         datajsonstring['orderitem'] = orderitem
         result = client.service.synSaleOrderFromCrm(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
         resultjson = json.loads(result)
