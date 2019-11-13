@@ -1,0 +1,70 @@
+<odoo>
+  <data>
+    <record id="product_template_form_view_inherit_website_sale_product_category" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.website.sale.product.category</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="website_sale.product_template_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='public_categ_ids']" position="after">
+              <field name="category_parents" readonly="1" widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="e2yun_online_shop_extends.list">
+      <field name="name">e2yun_online_shop_extends list</field>
+      <field name="model">e2yun_online_shop_extends.e2yun_online_shop_extends</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="e2yun_online_shop_extends.action_window">
+      <field name="name">e2yun_online_shop_extends window</field>
+      <field name="res_model">e2yun_online_shop_extends.e2yun_online_shop_extends</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="e2yun_online_shop_extends.action_server">
+      <field name="name">e2yun_online_shop_extends server</field>
+      <field name="model_id" ref="model_e2yun_online_shop_extends_e2yun_online_shop_extends"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="e2yun_online_shop_extends" id="e2yun_online_shop_extends.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="e2yun_online_shop_extends.menu_1" parent="e2yun_online_shop_extends.menu_root"/>
+    <menuitem name="Menu 2" id="e2yun_online_shop_extends.menu_2" parent="e2yun_online_shop_extends.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="e2yun_online_shop_extends.menu_1_list" parent="e2yun_online_shop_extends.menu_1"
+              action="e2yun_online_shop_extends.action_window"/>
+    <menuitem name="Server to list" id="e2yun_online_shop_extends" parent="e2yun_online_shop_extends.menu_2"
+              action="e2yun_online_shop_extends.action_server"/>
+    -->
+  </data>
+</odoo>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+    <title>Test</title>
+</head>
+
+<body>
+ <div id="view">
+        <p>商品类别</p>
+     <p id="category">类别等待替换</p>
+     <p id="item_list">列表等待替换</p>
+    </div>
+
+    <script>
+          window.onload=function(){
+    var get_category_xhr = new XMLHttpRequest();
+
+    get_category_xhr.open("GET", "/online_shop/get_category", true);
+    get_category_xhr.send();
+
+    get_category_xhr.onreadystatechange = function(){
+        if (get_category_xhr.readyState  === 4 && get_category_xhr.status === 200) {
+            document.getElementById("category").innerHTML = get_category_xhr.responseText;
+        }
+    }
+
+
+        var get_product_list_xhr = new this.XMLHttpRequest();
+
+        get_product_list_xhr.open("GET", "/online_shop/get_product_list_by_category/99999", true)
+        get_product_list_xhr.send();
+
+        get_product_list_xhr.onreadystatechange = function(){
+            if (get_product_list_xhr.readyState == 4 && get_product_list_xhr.status == 200) {
+                document.getElementById("item_list").innerHTML = get_product_list_xhr.responseText;
+            }
+        }
+}
+
+
+ function show_goods_in_category(category_id){
+     id = category_id.id.slice(14)
+     url = "/online_shop/get_product_list_by_category/" + id
+     var get_product_list_xhr = new this.XMLHttpRequest();
+
+    get_product_list_xhr.open("GET", url, true)
+    get_product_list_xhr.send();
+
+    get_product_list_xhr.onreadystatechange = function(){
+        if (get_product_list_xhr.readyState == 4 && get_product_list_xhr.status == 200) {
+            document.getElementById("item_list").innerHTML = get_product_list_xhr.responseText;
+        }
+    }
+ }
+</script>
+</body>
+
+</html>
