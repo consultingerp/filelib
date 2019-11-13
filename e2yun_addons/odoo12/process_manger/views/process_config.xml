@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<odoo>
+
+
+    <record model="ir.ui.view" id="view_process_config_tree">
+        <field name="name">process.config.tree</field>
+        <field name="model">process.config</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="process config">
+                <field name="name"/>
+                <field name="desc"/>
+                <field name="status"/>
+                <field name="enable"/>
+                <field name="check_time"/>
+                <!--<field name="exe"/>-->
+                <!--<field name="cwd"/>-->
+                <!--<field name="status"/>-->
+                <!--<field name="create_time"/>-->
+                <!--<field name="uids"/>-->
+                <!--<field name="gids"/>-->
+                <!--<field name="cpu_times"/>-->
+                <!--<field name="memory_percent"/>-->
+                <!--<field name="memory_info"/>-->
+                <!--<field name="io_counters"/>-->
+                <!--<field name="username"/>-->
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_process_config_form">
+        <field name="name">process.config.form</field>
+        <field name="model">process.config</field>
+        <field name="arch" type="xml">
+            <form string="process config" create="0">
+                <header>
+                    <button name="end_process" string="结束进程" type="object" attrs="{'invisible': [('name', '=', False)]}" class="oe_highlight"/>
+                    <button name="reset_process" string="启动" type="object"  attrs="{'invisible': [('name', '=', False)]}" class="oe_highlight"/>
+                </header>
+
+                <sheet>
+                    <group string="输入信息">
+                        <field name="name"/>
+                        <field name="desc"/>
+                        <field name="run_type"/>
+                        <field name="command_text"/>
+                        <field name="enable"/>
+                    </group>
+                    <group string="显示信息" attrs="{'invisible': [('check_time', '=', False)]}">
+                        <field name="check_time" readonly="1" attrs="{'invisible': [('check_time', '=', False)]}"/>
+                        <field name="option_desc" readonly="1" attrs="{'invisible': [('option_desc', '=', False)]}"/>
+                        <field name="exe" readonly="1" attrs="{'invisible': [('exe', '=', False)]}"/>
+                        <field name="cwd" readonly="1" attrs="{'invisible': [('cwd', '=', False)]}"/>
+                        <field name="status" readonly="1" attrs="{'invisible': [('status', '=', False)]}"/>
+                        <field name="create_time" readonly="1" attrs="{'invisible': [('create_time', '=', False)]}"/>
+                        <field name="uids" readonly="1" attrs="{'invisible': [('uids', '=', False)]}"/>
+                        <field name="gids" readonly="1" attrs="{'invisible': [('gids', '=', False)]}"/>
+                        <field name="cpu_times" readonly="1" attrs="{'invisible': [('cpu_times', '=', False)]}"/>
+                        <field name="memory_percent" readonly="1" attrs="{'invisible': [('memory_percent', '=', False)]}"/>
+                        <field name="memory_info" readonly="1" attrs="{'invisible': [('memory_info', '=', False)]}"/>
+                        <field name="io_counters" readonly="1" attrs="{'invisible': [('io_counters', '=', False)]}"/>
+                        <field name="username" readonly="1" attrs="{'invisible': [('username', '=', False)]}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="process_config_action">
+        <field name="name">程序配置</field>
+        <field name="res_model">process.config</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_process_config_tree"/>
+    </record>
+
+
+    <menuitem id="process_config_menu" name="命令执行"
+              parent="base.menu_custom" sequence="60"
+              groups="base.group_system"/>
+
+
+    <menuitem
+            id="process_config_command_menuitem"
+            name="命令配置"
+            parent="process_config_menu"
+            action="process_config_action"
+            sequence="2"
+            groups="base.group_system"
+    />
+
+
+</odoo>
