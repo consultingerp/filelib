@@ -13,7 +13,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
     sAnimation.registry.form_builder_send = sAnimation.Class.extend({
         selector: '.s_website_form_e2yun',
         events: {
-            'change input[name=user_phone]': '_searchusermatnr',
+            //'change input[name=user_phone]': '_searchusermatnr',
             'click a[id=wximages]': '_userimag',
             'click a[id=online_customer]':'_clickteamcustomer'
         },
@@ -141,6 +141,9 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
             var is_wx_client = $('input[name=is_wx_client]').val();
             if (is_wx_client == '0') {   //判断是微信浏览器 不是就加载空地址让用户选择
                 this.start_addres('', '', '');
+                $('.mod_hang_appeal_show').css("display", "block");
+            }else{
+                // this.$target.find('.mod_hang_appeal_show').css("display", "none");
             }
             this.start_date_controls();
             this.after_sales_tel_show();
@@ -154,7 +157,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
             });
             this.$target.find('#user_helpdesk').on('click', function (e) {
                 var team_id = $('input[name=team_id]').val();
-                window.location.href = window.location.origin + '/im_livechat/user_helpdesk/' + team_id;
+                window.location.href = window.location.origin + '/helpdesk/user_helpdesk/' + team_id;
             });
             this.$target.find('#team_list').on('change', function (e) {
                 window.location.href = window.location.origin + '/helpdesk/' + this.value + '/submit';
@@ -333,7 +336,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
             return form_valid;
         }, _clickteamcustomer: function (e) {
             var team_id = $('input[name=team_id]').val();
-            window.location.href = window.location.origin + '/im_livechat/user_helpdesk/' + team_id;
+            window.location.href = window.location.origin + '/helpdesk/user_helpdesk/' + team_id+"";
         },
         is_datetime_valid: function (value, type_of_date) {
             if (value === "") {

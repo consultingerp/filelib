@@ -137,12 +137,12 @@ class SaleOrder(models.Model):
                     item['itemtotal'] = totalmoney
                     item['itemjiesuantotal'] = totalmoney
                     newtotalmoney += totalmoney
-            if newtotalmoney != datajsonstring['totalmoney']:
-                leave_money = newtotalmoney - datajsonstring['totalmoney']
-                orderitem[0]['itemtotal'] = orderitem[0]['itemtotal'] + leave_money
-                orderitem[0]['itemjiesuantotal'] = orderitem[0]['itemtotal']
-                orderitem[0]['xiaoshoujine'] = orderitem[0]['xiaoshoujine'] + leave_money / orderitem[0]['kwmen']
-                orderitem[0]['jiesuanjine'] = orderitem[0]['xiaoshoujine']
+                if newtotalmoney != datajsonstring['totalmoney']:
+                    leave_money = newtotalmoney - datajsonstring['totalmoney']
+                    orderitem[0]['itemtotal'] = orderitem[0]['itemtotal'] + leave_money
+                    orderitem[0]['itemjiesuantotal'] = orderitem[0]['itemtotal']
+                    orderitem[0]['xiaoshoujine'] = orderitem[0]['xiaoshoujine'] + leave_money / orderitem[0]['kwmen']
+                    orderitem[0]['jiesuanjine'] = orderitem[0]['xiaoshoujine']
                 # datajsonstring['totalmoney'] = newtotalmoney
         except Exception as e:
             _logger.log(e)
