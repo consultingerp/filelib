@@ -243,7 +243,9 @@ class SurveyQuestion(models.Model):
     highest_score = fields.Float(string='最高分值')
     scoring_method = fields.Selection([('唯一性计分', '唯一性计分'),('选择性计分', '选择性计分'),('不计分', '不计分')],string='计分方式')
     reference_existing_question = fields.Many2one('survey.question', string='引用已有题库')
-
+    # 题库页面创建并可以保存，继承并修改：required=False
+    page_id = fields.Many2one('survey.page', string='Survey page',
+                              ondelete='cascade', required=False, default=lambda self: self.env.context.get('page_id'))
     @api.onchange('labels_ids')
     def _onchange_score(self):
         res = self.labels_ids
