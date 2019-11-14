@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <template id="e2yun_website_helpdesk_form.livechat_out" name="在线客户不在线">
-
-            <div>在线客户离线。售后服务时间8:30-17:30
-            </div>
-
-        </template>
-
         <template id="assets_frontend" name="ticket_submit_e2yun" inherit_id="website.assets_frontend">
             <xpath expr="." position="inside">
                 <!--<link rel="stylesheet" type="text/scss" href="/website_form/static/src/scss/website_form.scss"/>-->
@@ -21,15 +14,20 @@
                 <t name="Helpdesk" priority="29" t-name="website.helpdesk">
                     <t t-call="website.layout">
                         <link rel="stylesheet" type="text/css"
-                              href="/e2yun_website_helpdesk_form/static/src/css/mobiscroll.custom.min.css?version=1.2.12"/>
-                        <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/mobiscroll.custom.min.js?version=1.2.12"></script>
-                        <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/address.js?version=1.2.12"></script>
-                        <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/city.js?version=1.2.12"></script>
-                        <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/select.js?version=1.2.12"></script>
+                              href="/e2yun_website_helpdesk_form/static/src/css/mobiscroll.custom.min.css?version=1.2.16"/>
+                        <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/mobiscroll.custom.min.js?version=1.2.16"></script>
+                        <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/address.js?version=1.2.16"></script>
+                        <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/city.js?version=1.2.16"></script>
+                        <script type="text/javascript" src="/e2yun_website_helpdesk_form/static/src/js/select.js?version=1.2.16"></script>
                         <link rel="stylesheet" type="text/css"
-                              href="/e2yun_website_helpdesk_form/static/src/css/e2yun_helpdesk_ticket_style.css?version=1.2.12"/>
+                              href="/e2yun_website_helpdesk_form/static/src/css/e2yun_helpdesk_ticket_style.css?version=1.2.16"/>
                         <link rel="stylesheet" type="text/css"
-                              href="/e2yun_website_helpdesk_form/static/src/css/address_style.css?version=1.2.12"/>
+                              href="/e2yun_website_helpdesk_form/static/src/css/address_style.css?version=1.2.16"/>
+                        <link rel="stylesheet" type="text/css"
+                              href="/e2yun_website_helpdesk_form/static/src/css/customers_common.css?version=1.2.16"/>
+                        <link rel="stylesheet" type="text/css"
+                              href="/e2yun_website_helpdesk_form/static/src/css/customers_common_jdc-side-panel.css?version=1.2.16"/>
+
                         <div class="mask-time" style="display:none"></div><!--遮罩层-->
                         <div class="time-area" style="display:none"><!--时间选择表格-->
                             <input type="hidden" name="date_" value=""></input>
@@ -51,6 +49,7 @@
                                        t-att-value="team and team.id or False"/>
                                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                 <input type="hidden" name="matnrs" value=""/>
+                                <input type="hidden" name="arktxs" value=""/>
                                 <section class="aui-flexView">
                                     <header class="aui-navBar aui-navBar-fixed">
                                         <a href="/forum/1" class="aui-navBar-item">
@@ -165,6 +164,14 @@
                                                     <i class="icon icon-link"></i>
                                                 </div>
                                             </div>
+
+                                            <div class="aui-flex" id="images" style="display:None">
+                                                <a id='wximages' data-serviceorderid="">图片附件</a>
+                                                <div id="imagecount" style="border:1px solid #F00">
+                                                </div>
+                                            </div>
+
+
                                             <div class="aui-flex" id="matnrs" style="display:None">
                                             </div>
                                             <div class="aui-flex">
@@ -178,11 +185,68 @@
 
                                         </div>
                                     </section>
-                                    <footer class="aui-footer aui-footer-fixed">
-                                        <a href="javascript:;" id="user_helpdesk" class="aui-tabBar-item">
-                                            <span class="aui-tabBar-item-text">咨询在线客服</span>
-                                        </a>
-                                    </footer>
+                                    <!--<footer class="aui-footer aui-footer-fixed" style="display:none">-->
+                                    <!--<a href="javascript:;" id="user_helpdesk" class="aui-tabBar-item">-->
+                                    <!--<span class="aui-tabBar-item-text">咨询在线客服</span>-->
+                                    <!--</a>-->
+                                    <!--</footer>-->
+
+                                    <!--在线客服浮动窗口-->
+                                    <div class="jdc-side" style="display: block;">
+
+                                        <div class="mod_hang_appeal">
+                                            <div class="mod_hang_appeal_btn">
+                                                <i class="jdcfont"></i>
+                                                <span>咨询反馈</span>
+                                            </div>
+                                            <div class="mod_hang_appeal_show">
+                                                <ul>
+                                                    <li>
+                                                        <a id="online_customer">
+                                                            <div class="icon_box">
+                                                                <i class="jdcfont"></i>
+                                                            </div>
+                                                            <div class="text_box">
+                                                                <h5>人工客服</h5>
+                                                                <p>7*12 专业客服，服务咨询</p>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li id="entry">
+                                                        <a href="/my/tickets" target="_blank" class="f-cb">
+                                                            <div class="icon_box">
+                                                                <i class="jdcfont"></i>
+                                                            </div>
+                                                            <div class="text_box">
+                                                                <h5>工单服务</h5>
+                                                                <p>我的服务订单</p>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="mod_hang_qrcode mod_hang_top">
+                                            <a href="#" class="mod_hang_qrcode_btn">
+                                                <i class="jdcfont"></i>
+                                                <span>返回顶部</span>
+                                            </a>
+                                        </div>
+                                        <div class="el-dialog__wrapper" style="display: none;">
+                                            <div class="el-dialog el-dialog--small" style="top: 15%;">
+                                                <div class="el-dialog__header">
+                                                    <span class="el-dialog__title"></span>
+                                                    <div type="button" class="el-dialog__headerbtn">
+                                                        <i class="el-dialog__close el-icon el-icon-close"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--在线客服浮动窗口 end-->
+
                                 </section>
                             </form>
                         </section>
