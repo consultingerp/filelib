@@ -121,16 +121,16 @@ class SaleOrder(models.Model):
                 item['kbetr'] = line.price_unit
                 item['xiaoshoujine'] = line.price_unit
                 item['jiesuanjine'] = line.price_unit
-                item['itemtotal'] = line.price_subtotal
-                item['itemjiesuantotal'] = line.price_subtotal
+                item['itemtotal'] = item['xiaoshoujine'] * item['kwmen']
+                item['itemjiesuantotal'] = item['jiesuanjine'] * item['kwmen']
                 item['kpein'] = 1
-            num += 10
-            orderitem.append(item)
+                num += 10
+                orderitem.append(item)
         try:
             newtotalmoney = 0
             if chuxiao_total < 0:
                 for item in orderitem:
-                    price_unit = item['itemtotal'] / (datajsonstring['totalmoney'] + chuxiao_total) * datajsonstring['totalmoney'] / item['kwmen']
+                    price_unit = round(item['itemtotal'] / (datajsonstring['totalmoney'] - chuxiao_total) * datajsonstring['totalmoney'] / item['kwmen'], 2)
                     totalmoney = price_unit * item['kwmen']
                     item['xiaoshoujine'] = price_unit
                     item['jiesuanjine'] = price_unit
@@ -145,7 +145,7 @@ class SaleOrder(models.Model):
                     orderitem[0]['jiesuanjine'] = orderitem[0]['xiaoshoujine']
                 # datajsonstring['totalmoney'] = newtotalmoney
         except Exception as e:
-            _logger.log(e)
+            _logger.log(str(e))
         datajsonstring['orderitem'] = orderitem
         result = client.service.synSaleOrderFromCrm(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
         resultjson = json.loads(result)
