@@ -274,6 +274,13 @@ class e2yun_customer_payment_extend(models.Model):
             del vals_list['pos_flag']
         res = super(e2yun_customer_payment_extend, self).create(vals_list)
         self.env.cr.commit()
+        if pos_flag and vals_list.get('create_uid',False):
+            sql = """update account_payment set create_uid = """ + str(vals_list.get('create_uid')) + """ where id = """ + str(res.id)
+            self._cr.execute(sql)
+
+
+
+
         #pos同步的不要再次同步回去
         if(not pos_flag):
             self.sync_customer_payment_to_pos(res)
