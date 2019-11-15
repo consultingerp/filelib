@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import models, fields, api, _
+from odoo import models, fields, api, _, exceptions
 import warnings
 
 class Questionnaire(models.Model):
@@ -86,42 +86,36 @@ class E2yunTaskInfo(models.Model):
                     int_weight = int(str_weight[:-1])
                     all_score += int_weight
             if all_score > 100:
-                raise Warning(_('权重之和大于100%，请重新输入'))
+                # raise Warning(_('权重之和大于100%，请重新输入'))
+                raise exceptions.Warning(_('权重之和大于100%，请重新输入'))
         return res
 
 
     # 任务页面打开问卷页面的方法
-    @api.multi
-    def turn_page(self):
-        self.ensure_one()
-        # Get lead views
-        form_view = self.env.ref('survey.survey_form')
-        tree_view = self.env.ref('survey.survey_tree')
-        kanban_view = self.env.ref('survey.survey_kanban')
-        return {
-            'name': '新建问卷',
-            'res_model': 'survey.survey',
-            # 'domain': [('type', '=', 'lead')],
-            # 'res_id': self.id,
-            'view_id': False,
-            'target': 'new',
-            'views': [
-                (form_view.id, 'form'),
-                (tree_view.id, 'tree'),
-                (kanban_view.id, 'kanban')
-            ],
-            'view_type': 'tree',
-            'view_mode': 'tree,form,kanban',
-            'type': 'ir.actions.act_window',
-        }
+    # @api.multi
+    # def turn_page(self):
+    #     self.ensure_one()
+    #     # Get lead views
+    #     form_view = self.env.ref('survey.survey_form')
+    #     tree_view = self.env.ref('survey.survey_tree')
+    #     kanban_view = self.env.ref('survey.survey_kanban')
+    #     return {
+    #         'name': '新建问卷',
+    #         'res_model': 'survey.survey',
+    #         # 'domain': [('type', '=', 'lead')],
+    #         # 'res_id': self.id,
+    #         'view_id': False,
+    #         'target': 'new',
+    #         'views': [
+    #             (form_view.id, 'form'),
+    #             (tree_view.id, 'tree'),
+    #             (kanban_view.id, 'kanban')
+    #         ],
+    #         'view_type': 'tree',
+    #         'view_mode': 'tree,form,kanban',
+    #         'type': 'ir.actions.act_window',
+    #     }
 
-    # 权重百分比之和为100%，超出则弹框提醒
-    # @api.one
-    # def write(self, vals):
-    #
-    #     res = super(E2yunProjectSurvey, self).write(vals)
-    #     return res
-    #
     # @api.model
     # def create(self, vals):
     #     res = super(E2yunTaskInfo, self).create(vals)
@@ -185,7 +179,8 @@ class E2yunProjectSurvey(models.Model):
             if all_weight > 100:
                 # warnings.warn('权重之和大于100%，请重新输入')
                 # raise ValueError('权重之和大于100%，请重新输入')
-                raise Warning(_('权重之和大于100%，请重新输入'))
+                # raise Warning(_('权重之和大于100%，请重新输入'))
+                raise exceptions.Warning(_('权重之和大于100%，请重新输入'))
         return res
 
 

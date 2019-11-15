@@ -22,6 +22,8 @@
         'views/helpdesk_tickchat_uuid.xml',
         'views/helpdesk_rating.xml',
         'views/helpdesk_team_views_subuser.xml',
+        'views/helpdesk_csoffline.xml',
+
     ],
     'qweb': [
         "static/src/xml/helpdeskdesk_matnr.xml",
