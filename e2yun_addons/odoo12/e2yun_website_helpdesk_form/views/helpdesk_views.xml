@@ -18,12 +18,15 @@
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="address"/>
                 <field name="phone" widget="phone"/>
-                <field name="order_datetime"/>
+                <field name="order_datetime" widget='date'/>
                 <field name="user_phone" widget="phone"/>
             </xpath>
 
-            <xpath expr="//field[@name='partner_email']" position="replace">
-
+            <xpath expr="//field[@name='partner_email']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+            </xpath>
+              <xpath expr="//field[@name='tag_ids']" position="attributes">
+                        <attribute name="invisible">1</attribute>
             </xpath>
 
 
