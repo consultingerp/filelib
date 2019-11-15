@@ -10,6 +10,7 @@
         };
         this.options=$.extend({},this.defaults,options);
         this.result=[];
+        this.result_text=[];
     };
     mySelect.prototype={
         init:function(){//初始化函数
@@ -24,7 +25,7 @@
                 event.stopPropagation();
                 if(that.ele.find(".inputWrap>i").hasClass("fa-angle-down")){
                     that.ele.find(".inputWrap>i").removeClass("fa-angle-down").addClass("fa-angle-up");
-                    that.ele.find(".mySelect-option").animate({height:"600px",opacity:"1"},"fast","swing")
+                    that.ele.find(".mySelect-option").animate({height:"800px",opacity:"1"},"fast","swing")
                 }else{
                     that.ele.find(".inputWrap>i").removeClass("fa-angle-up").addClass("fa-angle-down");
                     that.ele.find(".mySelect-option").animate({height:"0",opacity:"0"},"fast","swing")
@@ -51,7 +52,7 @@
             this.ele.append('<div class="inputWrap"><ul></ul><i class="fa fa-angle-down"></i></div>');
             this.ele.append('<div class="mySelect-option"></div>');
             for(var i= 0;i<this.options.option.length;i++){
-                this.ele.find(".mySelect-option").append('<div data-value="'+this.options.option[i].value+'"><span>'+this.options.option[i].label+'</span><i class="fa fa-check"></i></div>')
+                this.ele.find(".mySelect-option").append('<div data-value="'+this.options.option[i].value+'" data-text="'+this.options.option[i].label+'"><span>'+this.options.option[i].label+'</span><i class="fa fa-check"></i></div>')
             }
         },
         addEvent:function(){
@@ -61,10 +62,12 @@
                 if(that.options.mult){
                     if($(this).hasClass("selected")){
                         $(this).removeClass("selected");
-                        that.result.splice(that.result.contains($(this).attr("data-value")),1)
+                        that.result.splice(that.result.contains($(this).attr("data-value")),1);
+                        that.result_text.splice(that.result.contains($(this).attr("data-text")),1);
                     }else{
                         $(this).addClass("selected");
-                        that.result.push($(this).attr("data-value"))
+                        that.result.push($(this).attr("data-value"));
+                        that.result_text.push($(this).attr("data-text"));
                     }
                     that.refreshInput();
                 }else{
@@ -80,7 +83,8 @@
                     }
                     that.refreshInput($(this).find("span").text());
                 }
-                that.options.onChange(that.result)
+
+                that.options.onChange(that.result,that.result_text)
             });
         },
         inputResultRemoveEvent:function(){
@@ -88,9 +92,10 @@
             this.ele.find(".inputWrap ul li i").on("click",function(event){
                 event.stopPropagation();
                 that.result.splice(that.result.contains($(this).attr("data-value")),1);
+                that.result_text.splice(that.result_text.contains($(this).attr("data-text")),1);
                 that.refreshInput();
                 that.removeOptionStyle($(this).attr("data-value"));
-                that.options.onChange(that.result);
+                that.options.onChange(that.result,that.result_text);
             })
         },
         removeOptionStyle:function(val){

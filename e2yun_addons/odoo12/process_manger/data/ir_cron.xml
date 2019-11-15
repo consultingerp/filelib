@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+
+    <record id="process_manger" model="ir.cron">
+        <field name="name">process_manger</field>
+        <field name="model_id" ref="model_process_config"/>
+        <field name="state">code</field>
+        <field name="code">model.alive()</field>
+        <field name="interval_number">5</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+
+    </record>
+
+</odoo>
