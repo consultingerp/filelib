@@ -11,10 +11,10 @@
                     <attribute name="create">0</attribute>
                 </xpath>
                 <!--增加转去问卷操作按钮，编辑时隐藏，保存时显示-->
-                <xpath expr="//button[@name='%(portal.portal_share_action)d']" position="after">
-                    <button name="turn_page" string="转去问卷操作页面" type="object" class="oe_highlight oe_read_only"
-                            attrs="{'invisible' : [('task_mode', '=', 'common mode')]}"/>
-                </xpath>
+                <!--<xpath expr="//button[@name='%(portal.portal_share_action)d']" position="after">-->
+                    <!--<button name="turn_page" string="转去问卷操作页面" type="object" class="oe_highlight oe_read_only"-->
+                            <!--attrs="{'invisible' : [('task_mode', '=', 'common mode')]}"/>-->
+                <!--</xpath>-->
                 <!--添加问卷分类-->
                 <xpath expr="//field[@name='user_id']" position="after">
                     <field name="questionnaire_classification"
@@ -38,7 +38,8 @@
                             <field name="weight" attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>
                             <!--<field name="weight_unit" attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>-->
                             <!--去掉创建并编辑：options="{'no_create_edit':1}"-->
-                            <field name="survey_temp_id" options="{'no_create_edit':1}"/>
+                            <!--<field name="survey_temp_id" options="{'no_create_edit':1}"/>-->
+                            <field name="survey_temp_id"/>
                         </tree>
                         <form>
                             <group>
@@ -147,35 +148,26 @@
                     <field name="labels_ids" string="Type of answers" context="{'default_question_id': active_id}" attrs="{'invisible': [('type', 'not in', ['simple_choice', 'multiple_choice', 'matrix'])]}">
                         <tree editable="bottom">
                             <field name="sequence" widget="handle"/>
-                            <field name="value" string="Choices"/>
+                            <field name="value" string="选项"/>
                             <field name="quizz_mark" />
                         </tree>
                     </field>
                 </xpath>
             </field>
         </record>
-        <!--显示分值-->
-        <!--<record model="ir.ui.view" id="survey_label_extends">-->
-            <!--<field name="name">view for survey label extends</field>-->
-            <!--<field name="model">survey.label</field>-->
-            <!--<field name="inherit_id" ref="survey.survey_question_form"/>-->
-            <!--<field name="arch" type="xml">-->
-                <!---->
-                <!--<xpath expr="//div[@class='oe_title']" position="after">-->
-                    <!--&lt;!&ndash;<control>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<create string="引用已有题库"/>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</control>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<button name="turn_question" string="引用已有题库按钮" type="object" class="oe_highlight oe_edit_only"/>&ndash;&gt;-->
-                    <!--<label for="reference_existing_question"/>-->
-                    <!--<field name="reference_existing_question" />-->
+        <!--题库页面添加创建按钮-->
+        <record model="ir.ui.view" id="survey_question_tree_create">
+            <field name="name">Tree view for survey question create</field>
+            <field name="model">survey.question</field>
+            <field name="inherit_id" ref="survey.survey_question_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree[@create='false']" position="attributes">
+                    <attribute name="create">true</attribute>
+                </xpath>
+                <!--<xpath expr="//tree" position="attributes">-->
+                    <!--<attribute name="import">false</attribute>-->
                 <!--</xpath>-->
-
-
-                <!--<xpath expr="//field[@name='labels_ids']" position="before">-->
-                    <!--<label for="scoring_method" string="计分方式"/>-->
-                    <!--<field name="scoring_method" string="Scoring Method"/>-->
-                <!--</xpath>-->
-            <!--</field>-->
-        <!--</record>-->
+            </field>
+        </record>
     </data>
 </odoo>    
