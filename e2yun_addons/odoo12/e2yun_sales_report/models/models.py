@@ -51,7 +51,7 @@ class e2yun_sales_report(models.Model):
     werks = fields.Selection([('1000', "1000"), ('2000', "2000")], '工厂')
     vkorgtext = fields.Many2one('group.departments', '事业部', default=default_vkorgtext)
     vtweg = fields.Many2one('group.channels', '渠道', default=default_vtweg)
-    ywy = fields.Many2one('res.users', '导购员', default=default_ywy)
+    ywy = fields.Many2one('res.users', '导购员', default=default_ywy, domain=[('function', 'in', ['店长', '店员'])])
     kunnr = fields.Many2one('crm.team', '门店', default=default_kunnr)
 
     def open_table(self):
