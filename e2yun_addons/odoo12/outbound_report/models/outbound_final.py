@@ -52,7 +52,7 @@ class OutboundFinal(models.Model):
     werks = fields.Char('工厂', default=default_werks, readonly=True)
     vkorgtext = fields.Many2one('group.departments', '事业部', default=default_vkorgtext)
     vtweg = fields.Many2one('group.channels', '分销渠道', default=default_vtweg)
-    ywy = fields.Many2one('res.users', '导购员', default=default_ywy)
+    ywy = fields.Many2one('res.users', '导购员', default=default_ywy, domain=[('function', 'in', ['店长', '店员'])])
     kunnr = fields.Many2one('crm.team', '门店', default=default_kunnr)
     jiesuanjine = fields.Float('结算小计')
     xiaoshoujine = fields.Float('销售小计')
@@ -115,3 +115,22 @@ class OutboundFinal(models.Model):
             # 'context': ctx.update({'dashboard_view_ref': 'outbound_report.outbound_report_dashboard_view'}),
         }
 
+    @api.model
+    def get_outbound_report_data(self):
+        datas = []
+        parent_obj = self.env['outbound.final']
+
+        v1 = parent_obj.search_count([('customer', '=', True)])
+        v2 = parent_obj.search_count([('customer', '=', True), ('state', 'in',
+                                                                ['intention_customer', 'intention_customer_loss',
+                                                                 'target_customer', 'target_customer_loss',
+                                                                 'contract_customers'])])
+        v3 = parent_obj.search_count([('customer', '=', True), (
+        'state', 'in', ['target_customer', 'target_customer_loss', 'contract_customers'])])
+        v4 = parent_obj.search_count([('customer', '=', True), ('state', 'in', ['contract_customers'])])
+        datas.append({'value': v1, 'name': '潜在客户'})
+        datas.append({'value': v2, 'name': '意向客户'})
+        datas.append({'value': v3, 'name': '准客户'})
+        datas.append({'value': v4, 'name': '成交客户'})
+
+        return datas
