@@ -1,5 +1,5 @@
 /******************************
-¸ü¶à¾«Æ·Ä£°åÇë·ÃÎÊ£ºhttp://www.bootstrapmb.com
+ï¿½ï¿½ï¿½à¾«Æ·Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê£ï¿½http://www.bootstrapmb.com
 INDEX:
 
     00 - Base - Global
@@ -2107,13 +2107,13 @@ a, button, .item-overlay, .global-overlay, .pagination li .page-number, .scroll-
     .mini-cart__close .btn-close i {
       font-size: 40px; }
   .mini-cart-inner {
-    padding: 5rem; }
+    padding: 2.5rem; }
   .mini-cart__list {
-    max-height: 300px;
+    max-height: 400px;
     overflow: auto;
     margin-right: -70px;
     padding-right: 70px;
-    margin-bottom: 30px; }
+    margin-bottom: 20px; }
     @media (max-width: 35.94em) {
       .mini-cart__list {
         margin-bottom: 20px; } }
@@ -2130,7 +2130,8 @@ a, button, .item-overlay, .global-overlay, .pagination li .page-number, .scroll-
     -moz-flex-basis: 70px;
     -ms-flex-preferred-size: 70px;
     flex-basis: 70px;
-    max-width: 70px; }
+    max-width: 70px;
+  }
   .mini-cart__product-content {
     -webkit-flex-basis: calc(100% - 70px);
     -moz-flex-basis: calc(100% - 70px);
@@ -2150,9 +2151,9 @@ a, button, .item-overlay, .global-overlay, .pagination li .page-number, .scroll-
   .mini-cart__product-title {
     margin: 0 0 5px; }
   .mini-cart__total {
-    margin-bottom: 30px; }
+    margin-bottom: 20px; }
     .mini-cart__total span {
-      font-size: 30px; }
+      font-size: 26px; }
 
 /*****************************
 28 - Components - Modal

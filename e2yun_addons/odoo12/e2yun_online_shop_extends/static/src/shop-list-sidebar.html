@@ -18,15 +18,14 @@
 
     <!-- style css -->
     <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/main.css">
+    <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/my.css">
 
     <!-- slide menu css-->
 <!--    <link rel="stylesheet" type="text/css" href="/e2yun_online_shop_extends/static/src/assets/slide-menu/css/style.css" />-->
 
-
 </head>
 
 <body>
-
     <!-- Preloader Start -->
     <div class="ft-preloader active">
         <div class="ft-preloader-inner h-100 d-flex align-items-center justify-content-center">
@@ -341,7 +340,6 @@
                                                 <div class="header-toolbar__item header-toolbar--minicart-btn">
                                                     <a href="#miniCart" class="header-toolbar__btn toolbar-btn">
                                                         <i class="la la-shopping-cart"></i>
-                                                        <span>01</span>
                                                     </a>
                                                 </div>
                                                 <div class="header-toolbar__item d-block d-lg-none">
@@ -2030,53 +2028,17 @@
                     <a href="#" class="btn-close"><i class="la la-remove"></i></a>
                 </div>
                 <div class="mini-cart-inner">
-                    <h3 class="mini-cart__heading mb--45">Shopping Cart</h3>
+                    <h3 class="mini-cart__heading mb--10">购物车</h3>
                     <div class="mini-cart__content">
                         <ul class="mini-cart__list">
-                            <li class="mini-cart__product">
-                                <a href="#" class="mini-cart__product-remove">
-                                    <i class="la la-remove"></i>
-                                </a>
-                                <div class="mini-cart__product-image">
-                                    <img src="/e2yun_online_shop_extends/static/src/assets/img/products/prod-01-100x100.jpg" alt="products">
-                                </div>
-                                <div class="mini-cart__product-content">
-                                    <a class="mini-cart__product-title" href="product-details.html">Golden Easy Spot Chair.</a>
-                                    <span class="mini-cart__product-quantity">1 x $49.00</span>
-                                </div>
-                            </li>
-                            <li class="mini-cart__product">
-                                <a href="#" class="mini-cart__product-remove">
-                                    <i class="la la-remove"></i>
-                                </a>
-                                <div class="mini-cart__product-image">
-                                    <img src="/e2yun_online_shop_extends/static/src/assets/img/products/prod-02-100x100.jpg" alt="products">
-                                </div>
-                                <div class="mini-cart__product-content">
-                                    <a class="mini-cart__product-title" href="product-details.html">Golden Easy Spot Chair.</a>
-                                    <span class="mini-cart__product-quantity">1 x $49.00</span>
-                                </div>
-                            </li>
-                            <li class="mini-cart__product">
-                                <a href="#" class="mini-cart__product-remove">
-                                    <i class="la la-remove"></i>
-                                </a>
-                                <div class="mini-cart__product-image">
-                                    <img src="/e2yun_online_shop_extends/static/src/assets/img/products/prod-03-100x100.jpg" alt="products">
-                                </div>
-                                <div class="mini-cart__product-content">
-                                    <a class="mini-cart__product-title" href="product-details.html">Golden Easy Spot Chair.</a>
-                                    <span class="mini-cart__product-quantity">1 x $49.00</span>
-                                </div>
-                            </li>
                         </ul>
                         <div class="mini-cart__total">
-                            <span>Subtotal</span>
-                            <span class="ammount">$98.00</span>
+                            <span>合计</span>
+                            <span class="ammount"></span>
                         </div>
                         <div class="mini-cart__buttons">
-                            <a href="cart.html" class="btn btn-fullwidth btn-bg-primary mb--20">View Cart</a>
-                            <a href="checkout.html" class="btn btn-fullwidth btn-bg-primary">Checkout</a>
+                            <a href="cart.html" class="btn btn-fullwidth btn-bg-primary mb--20">确认购物车</a>
+                            <!--<a href="checkout.html" class="btn btn-fullwidth btn-bg-primary">Checkout</a>  -->
                         </div>
                     </div>
                 </div>
@@ -2266,6 +2228,12 @@
         get_product_list_xhr.onreadystatechange = function(){
             if (get_product_list_xhr.readyState == 4 && get_product_list_xhr.status == 200) {
                 document.getElementById("shop_product_list").innerHTML = get_product_list_xhr.responseText;
+                $('.list_btn_add_cart').click(function(e){
+                    return list_btn_add_cart_click(e)
+                });
+
+
+
             }
         }
     }
@@ -2279,6 +2247,7 @@
     get_product_list_xhr.send();
 
     get_product_list_xhr.onreadystatechange = function(){
+
         if (get_product_list_xhr.readyState == 4 && get_product_list_xhr.status == 200) {
             document.getElementById("shop_product_list").innerHTML = get_product_list_xhr.responseText;
         }
@@ -2314,12 +2283,15 @@
  }
     </script>
 
-
     <!-- jQuery JS -->
     <script src="/e2yun_online_shop_extends/static/src/assets/js/vendor.js"></script>
 
+    <!-- 购物车相关js代码-->
+    <script src="/e2yun_online_shop_extends/static/src/assets/js/cart.js"></script>
+
     <!-- Main JS -->
     <script src="/e2yun_online_shop_extends/static/src/assets/js/main.js"></script>
+
 
     <!--slide menu js-->
 <!--    <script src="/e2yun_online_shop_extends/static/src/assets/slide-menu/js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>-->
