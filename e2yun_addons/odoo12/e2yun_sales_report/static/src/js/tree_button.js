@@ -14,6 +14,10 @@ odoo.define('e2yun_sales_report.sales_report_tree_view_button', function (requir
                 var btn = this.$buttons.find('.create_by_sales_report');
                 //给按钮绑定click事件和⽅法create_data_by_dept
                 btn.on('click', this.proxy('create_data_by_sales_report'));
+
+                //增加第二个按钮transport_to_charts
+                var btn_charts = this.$buttons.find('.transport_to_charts');
+                btn_charts.on('click', this.proxy('transport_to_charts_by_sales_report'));
             }
 
         },
@@ -31,6 +35,20 @@ odoo.define('e2yun_sales_report.sales_report_tree_view_button', function (requir
                 res_model: 'sales.report.form',
                 context : self.initialState.context
             });
+        },
+        //第二个按钮对应的
+        transport_to_charts_by_sales_report: function (){
+            var self = this;
+                console.log('进⼊了按钮222绑定的⽅法⾥⾯！');
+            return self._rpc({
+                route: 'web/action/load',
+                params:{
+                    action_id: 'e2yun_sales_report.action_sales_echarts',
+                    context : self.initialState.context
+                },
+            }).then(function(action){
+                return self.do_action(action);
+            })
         },
     });
     //这块代码是继承ListView在原来的基础上进⾏扩展

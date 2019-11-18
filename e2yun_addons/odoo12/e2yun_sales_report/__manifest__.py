@@ -28,8 +28,9 @@
         'views/newmodels.xml',
         'views/templates.xml',
     ],
-    'qweb':[
+    'qweb': [
         'static/src/xml/outbound_button_template.xml',
+        # 'static/src/xml/sales_report_tamplate.xml',
     ],
     'installable': True
 }
