@@ -243,7 +243,11 @@ class OnlineShop(http.Controller):
                 </div>
                 <p class="product-short-description mb--20">""" + product_template_description + """</p>  
                 <div class="ft-product-action-list d-flex align-items-center">
-                    <a href='""" + product_add_to_cart_href + """' class="btn btn-size-md">添加到购物车</a>
+                    <input type='hidden' name='product_id' value='"""+str(product_template.product_variant_ids[0].id)+"""'/>
+                    <input type='hidden' name='product_template_id' value='"""+str(product_template.id)+"""'/>
+                    <!-- <input type='hidden' name='csrf_token' value='"""+http.request.csrf_token()+"""'/>
+                     <a href='""" + product_add_to_cart_href + """' class="btn btn-size-md">添加到购物车</a> -->
+                    <a href='javascript:;' class="list_btn_add_cart btn btn-size-md">添加到购物车</a>
                 </div>                                            
             </div>
         </div>
@@ -355,7 +359,9 @@ class OnlineShop(http.Controller):
             </div>
         </div>
         <!--TODO：这里有匿名函数使用js的示例-->
-        <button type="button" class="btn btn-size-sm btn-shape-square" onclick="window.location.href='cart.html'">
+        <input type='hidden' name='inp_product_id' value='"""+str(product.id)+"""'/>
+        <input type='hidden' name='inp_product_template_id' value='"""+str(product_template_id)+"""'/>
+        <button type="button" class="btn btn-size-sm btn-shape-square" onclick="detail_add_cart()">
             添加到购物车
         </button>
     </div>  
