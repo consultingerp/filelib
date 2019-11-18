@@ -6,11 +6,22 @@ from odoo import api, fields, models, exceptions, tools
 class CrmTeamExtend(models.Model):
     _inherit = 'crm.team'
 
-    # def write(self, vals):
-    #     res = super(CrmTeamExtend, self).write(vals)
-    #     if self.invoiced_target_year and self.invoiced_target_assigned > self.invoiced_target_year:
-    #         raise exceptions.Warning('设定目标不能超过年度目标')
-    #     return res
+    def write(self, vals):
+        res = super(CrmTeamExtend, self).write(vals)
+        team_target_year = self.env['team.target.year'].search([])
+        for line in team_target_year:
+            year = line.target_year
+            total_target = line.invoiced_target_year
+
+            target_detail = self.env['team.target.detail'].search([('current_team_id', '=', self.id),
+                                                                   ('detail_year', '=', year)])
+            invoiced_target = 0
+            for target in target_detail:
+                invoiced_target += target.team_target_monthly
+
+            if invoiced_target > total_target:
+                raise exceptions.Warning('%s年：设定目标不能超过年度目标' % year)
+        return res
 
     team_target = fields.One2many(
         'team.target.year',
@@ -26,12 +37,6 @@ class CrmTeamExtend(models.Model):
 class TeamTargetYear(models.Model):
     _name = 'team.target.year'
     _description = '门店年度目标'
-
-    # @api.onchange('crm_team.team_target')
-    # def _onchange_target_assigned(self):
-    #     for record in self:
-    #         record.targets = record.crm_team.team_target_detail.mapped('team_target_monthly')
-    #         record.invoiced_target_assigned = sum(record.targets)
 
     # @api.multi
     # def _compute_invoiced_year(self):
@@ -54,7 +59,7 @@ class TeamTargetYear(models.Model):
         [(num, str(num)) for num in range(datetime.now().year - 5, datetime.now().year + 30)],
         string='年份')
     invoiced_target_year = fields.Integer(string='年度目标')
-    invoiced_target_assigned = fields.Integer(string='已分配目标', readonly=True)
+    # invoiced_target_assigned = fields.Integer(string='已分配目标', readonly=True, )
     # invoiced_year = fields.Integer(
     #     compute='_compute_invoiced_year',
     #     string='已达成年目标', readonly=True
