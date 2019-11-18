@@ -3,6 +3,7 @@
     <template id="sale_report_tree_button_assets_backend" name="tree button assets1" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
             <script type="text/javascript" src="/e2yun_sales_report/static/src/js/tree_button.js"></script>
+<!--            <script type="text/javascript" src="/e2yun_sales_report/static/src/js/echarts.min.js"></script>-->
         </xpath>
     </template>
 
@@ -78,6 +79,12 @@
             <!--        <field name="view_ids" eval="[(5, 0, 0),-->
             <!--            (0, 0, {'view_mode': 'form', 'view_id': ref('e2yun_sales_report.Inquire')})]"/>-->
             <field name="target">new</field>
+        </record>
+
+        <record id="action_sales_echarts" model="ir.actions.client">
+            <field name="name">sales echarts</field>
+            <field name="tag">sales_report_echart</field>
+            <field name="targer">new</field>
         </record>
 
         <menuitem name="销售明细报表"
