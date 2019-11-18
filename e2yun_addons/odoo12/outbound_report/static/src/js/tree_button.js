@@ -14,6 +14,9 @@ odoo.define('outbound_report.outbound_tree_view_button', function (require) {
                 var btn = this.$buttons.find('.create_by_outbound');
                 //给按钮绑定click事件和⽅法create_data_by_dept
                 btn.on('click', this.proxy('create_data_by_outbound'));
+
+                var btn_view = this.$buttons.find('.show_outbound_view');
+                btn_view.on('click', this.proxy('show_outbound_view'));
             }
 
         },
@@ -32,6 +35,21 @@ odoo.define('outbound_report.outbound_tree_view_button', function (require) {
                 context : self.initialState.context
             });
         },
+
+        show_outbound_view: function(){
+            var self = this;
+            console.log('进⼊了按钮绑定的⽅法⾥⾯！');
+            return self._rpc({
+                route: '/web/action/load',
+                params: {
+                    action_id: 'outbound_report.outbound_report_echarts_view_action',
+                    context: self.initialState.context
+                },
+            }).then(function(action){
+                return self.do_action(action);
+            })
+        },
+
     });
     //这块代码是继承ListView在原来的基础上进⾏扩展
     //这块⼀般只需要在config中添加上⾃⼰的Model,Renderer,Controller
