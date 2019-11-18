@@ -3,8 +3,4 @@
         <t t-name='customer_loss_funnel_template'>
             <div class="funnel_div" id="funnel_div"></div><!--  style="width:800px;height:500px;"-->
         </t>
-
-<!--        <t t-name='outbound_report_template'>-->
-<!--            <div class="funnel_div" id="outbound_div"></div>&lt;!&ndash;  style="width:800px;height:500px;"&ndash;&gt;-->
-<!--        </t>-->
     </templates>

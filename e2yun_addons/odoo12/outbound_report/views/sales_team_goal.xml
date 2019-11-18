@@ -24,7 +24,6 @@
                             <field name="team_id" invisible="1"/>
                             <field name="target_year"/>
                             <field name="invoiced_target_year"/>
-                            <field name="invoiced_target_assigned"/>
                         </tree>
                     </field>
                     <field name="invoiced_target_detail" attrs="{'invisible': [('use_invoices', '=', False)]}" >
