@@ -381,7 +381,7 @@
                         <!--TODO:该div下，为头部左边，产品图像展示处-->
                         <div class="col-lg-7 product-main-image">
                             <div class="product-image">
-                                <div class="product-gallery">
+                                <div class="product-gallery" id="product_image_replace">
                                     <!--TODO:下面这个div，是产品大图定义处-->
                                     <div class="product-gallery__large-image mb--30">
                                         <div class="product-gallery__wrapper">
@@ -1407,15 +1407,25 @@
 var current_product_template_id = sessionStorage.getItem("current_product_detail_id");
 
 window.onload=function(){
-    var get_category_xhr = new XMLHttpRequest();
+    var get_product_template_detail_xhr = new XMLHttpRequest();
+    get_detail_url = "/online_shop/get_product_detail/" + current_product_template_id
+    get_product_template_detail_xhr.open("GET", get_detail_url, true);
+    get_product_template_detail_xhr.send();
 
-    url = "/online_shop/get_product_detail/" + current_product_template_id
-    get_category_xhr.open("GET", url, true);
-    get_category_xhr.send();
+    var get_product_template_image_xhr = new XMLHttpRequest();
+    get_image_url = "/online_shop/get_product_image/" + current_product_template_id
+    get_product_template_image_xhr.open("GET", get_image_url, true);
+    get_product_template_image_xhr.send();
 
-    get_category_xhr.onreadystatechange = function(){
-        if (get_category_xhr.readyState  === 4 && get_category_xhr.status === 200) {
-            document.getElementById("product_detail_replace").innerHTML = get_category_xhr.responseText;
+    get_product_template_detail_xhr.onreadystatechange = function(){
+        if (get_product_template_detail_xhr.readyState  === 4 && get_product_template_detail_xhr.status === 200) {
+            document.getElementById("product_detail_replace").innerHTML = get_product_template_detail_xhr.responseText;
+        }
+    }
+
+    get_product_template_image_xhr.onreadystatechange = function(){
+        if (get_product_template_image_xhr.readyState  === 4 && get_product_template_image_xhr.status === 200) {
+            document.getElementById("product_image_replace").innerHTML = get_product_template_image_xhr.responseText;
         }
     }
 }
