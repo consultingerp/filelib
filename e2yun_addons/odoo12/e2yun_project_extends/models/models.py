@@ -5,32 +5,27 @@ import warnings
 class Questionnaire(models.Model):
     _name = 'project.questionnaire'
 
-    # 如若是否多问卷字段选择否，则权重字段默认带出100%
-    # @api.onchange("parent_id")
-    # def onchange_weight(self):
-    #     res = self.parent_id
-        # ctx = self.env.context
-        # id = ctx['params']['id']
-        # record = self.env['project.task'].search([('id', '=', id)])
-        # res = record.multiple_questionnaires
-        # if res == 'no':
-        #     self.weight = '100'
-        # else:
-        #     self.weight = ''
-
-
     # 问卷场景
     questionnaire_scenario = fields.Selection(
         [('评分问卷', '评分问卷'), ('资质调查', '资质调查'), ('满意度调查', '满意度调查'),
          ('报名登记表', '报名登记表'), ('其他', '其他')], string='问卷场景')
     # 权重
-    # weight = fields.Char(string='权重', default=_default_weight)
     weight = fields.Char(string='权重')
-    # 权重单位
-    # weight_unit = fields.Char(string='权重单位', default='%')
     # 问卷模板
     survey_temp_id = fields.Many2one('survey.survey', string='问卷模版')
     parent_id = fields.Many2one('project.task', string='Parent Task')
+
+    # 动态domain筛选模板
+    @api.depends('questionnaire_scenario', 'parent_id')
+    @api.onchange('questionnaire_scenario', 'parent_id')
+    def onchange_temp_id(self):
+        code = self.questionnaire_scenario
+        code1 = self.parent_id.questionnaire_classification
+        domain = [('questionnaire_scenario', '=', code), ('questionnaire_classification', '=', code1)]
+        return {
+            'domain': {'survey_temp_id': domain}
+        }
+
 
     @api.onchange('weight')
     def _onchange_weight(self):
@@ -41,9 +36,6 @@ class Questionnaire(models.Model):
                 self.weight = str(self.weight)+'%'
         else:
             self.weight = ''
-
-
-
 
 class E2yunTaskInfo(models.Model):
     _inherit = 'project.task'
@@ -56,7 +48,7 @@ class E2yunTaskInfo(models.Model):
     # 是否多问卷
     multiple_questionnaires = fields.Selection([('yes', '是'), ('no', '否')], string='是否多问卷')
     # 一对多连接列表对象
-    # questionnaire_ids = fields.One2many('project.questionnaire', 'parent_id', string='Child Questionnaires')
+    questionnaire_ids = fields.One2many('project.questionnaire', 'parent_id', string='Child Questionnaires')
     # temp_ids = fields.One2many('survey.survey', 'task_id', string='问卷模板')
     # @api.multi
     # def weight_write(self, vals):
