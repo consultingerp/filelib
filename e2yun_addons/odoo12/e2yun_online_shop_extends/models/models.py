@@ -373,6 +373,8 @@ class ProductTemplateCategoryExtend(models.Model):
     _inherit = 'product.template'
 
     category_parents = fields.Many2many('product.public.category', 'parent_id', string='所属父类别', compute='get_category_parents', store=True)
+    product_template_external_website = fields.Char(string='产品外部页面链接')
+    custom_order = fields.Integer(string='产品展示自定义排序')
 
     @api.one
     @api.depends('public_categ_ids')
