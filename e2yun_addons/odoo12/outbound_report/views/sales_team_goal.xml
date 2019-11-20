@@ -18,8 +18,10 @@
             <field name="model">crm.team</field>
             <field name="inherit_id" ref="sale.crm_team_salesteams_view_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//group[@name='invoicing']/field[@name='invoiced_target']" position="replace">
-                    <field name="team_target" attrs="{'invisible': [('use_invoices', '=', False)]}" >
+                <xpath expr="//group[@name='invoicing']/field[@name='use_invoices']" position="replace">
+                    <field name="use_invoices"/>
+                    <field name="team_year" attrs="{'invisible': [('use_invoices', '=', False)]}" />
+                    <field name="team_target" attrs="{'invisible': [('use_invoices', '=', False)]}">
                         <tree>
                             <field name="team_id" invisible="1"/>
                             <field name="target_year"/>
@@ -31,11 +33,12 @@
                             <field name="current_team_id" invisible="1"/>
                             <field name="detail_year"/>
                             <field name="target_month"/>
-                            <field name="team_target_monthly"/>
                             <field name="sales_member"/>
+                            <field name="team_target_monthly"/>
                         </tree>
                     </field>
                 </xpath>
+                <xpath expr="//group[@name='invoicing']/field[@name='invoiced_target']" position="replace"/>
             </field>
         </record>
     </data>

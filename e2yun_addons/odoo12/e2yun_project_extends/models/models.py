@@ -274,3 +274,10 @@ class SurveyQuestion(models.Model):
                         raise exceptions.Warning(_('唯一性计分只能给一个选项赋值，其他为0，请重新输入'))
         return res
 
+    # ⑥创建问题保存时，系统校验 “题库大类”和“计分方式”是否选择，如果未选择，则弹出提示“计分方式未选择，请选择”；
+    @api.model
+    def create(self, vals):
+        res = super(SurveyQuestion, self).create(vals)
+        if not res.question_bank_type or not res.scoring_method:
+            raise exceptions.Warning(_('题库大类或计分方式未选择，请选择'))
+        return res

@@ -329,6 +329,7 @@ class OnlineShop(http.Controller):
 
     @http.route(['/online_shop/get_product_detail/<int:product_template_id>'], type='http', auth="public")
     def get_product_detail(self, product_template_id, **kwargs):
+        product_template = http.request.env['product.template'].search([('id', '=', product_template_id)], limit=1)
         if product_template_id:
             product_product_pool = http.request.env['product.product'].search([('product_tmpl_id', '=', product_template_id)])
             if product_product_pool:
@@ -363,16 +364,26 @@ class OnlineShop(http.Controller):
         <input type='hidden' name='inp_product_template_id' value='"""+str(product_template_id)+"""'/>
         <button type="button" class="btn btn-size-sm btn-shape-square" onclick="detail_add_cart()">
             添加到购物车
+        </button>"""
+                if product_template.product_template_external_website:
+                    footer_text2 = """<button type="button" class="btn btn-size-sm btn-shape-square" onclick="window.open('""" + product_template.product_template_external_website + """')" target='_blank'>
+            产品效果图
         </button>
-    </div>  
+                    </div>  
 </div>"""
-                response_text = header_text + product.name + middle_text + price_str + footer_text
+                else:
+                    footer_text2 = """</div>  
+</div>"""
+
+                response_text = header_text + product.name + middle_text + price_str + footer_text +footer_text2
                 return http.Response(response_text)
 
 class ProductTemplateCategoryExtend(models.Model):
     _inherit = 'product.template'
 
     category_parents = fields.Many2many('product.public.category', 'parent_id', string='所属父类别', compute='get_category_parents', store=True)
+    product_template_external_website = fields.Char(string='产品外部页面链接')
+    custom_order = fields.Integer(string='产品展示自定义排序')
 
     @api.one
     @api.depends('public_categ_ids')
