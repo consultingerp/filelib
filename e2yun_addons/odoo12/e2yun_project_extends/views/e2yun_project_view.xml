@@ -38,8 +38,8 @@
                             <field name="weight" attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>
                             <!--<field name="weight_unit" attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>-->
                             <!--去掉创建并编辑：options="{'no_create_edit':1}"-->
-                            <!--<field name="survey_temp_id" options="{'no_create_edit':1}"/>-->
-                            <field name="survey_temp_id"/>
+                            <field name="survey_temp_id" options="{'no_create_edit':1}"/>
+                            <!--<field name="survey_temp_id"/>-->
                         </tree>
                         <form>
                             <group>
@@ -164,9 +164,23 @@
                 <xpath expr="//tree[@create='false']" position="attributes">
                     <attribute name="create">true</attribute>
                 </xpath>
-                <!--<xpath expr="//tree" position="attributes">-->
-                    <!--<attribute name="import">false</attribute>-->
-                <!--</xpath>-->
+                <xpath expr="//field[@name='question']" position="before">
+                    <field name="question_bank_type"/>
+                </xpath>
+                <xpath expr="//field[@name='type']" position="after">
+                    <field name="scoring_method"/>
+                </xpath>
+            </field>
+        </record>
+        <!--题库按题库大类分组继承问题搜索视图-->
+        <record model="ir.ui.view" id="survey_question_search_extends">
+            <field name="name">Search view for survey question extends</field>
+            <field name="model">survey.question</field>
+            <field name="inherit_id" ref="survey.survey_question_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='group_by_type']" position="after">
+                    <filter name="group_by_question_bank_type" string="Type" domain="[]"  context="{'group_by':'question_bank_type'}"/>
+                </xpath>
             </field>
         </record>
     </data>

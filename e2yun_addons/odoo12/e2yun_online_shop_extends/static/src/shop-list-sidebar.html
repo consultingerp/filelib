@@ -18,15 +18,14 @@
 
     <!-- style css -->
     <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/main.css">
+    <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/my.css">
 
     <!-- slide menu css-->
 <!--    <link rel="stylesheet" type="text/css" href="/e2yun_online_shop_extends/static/src/assets/slide-menu/css/style.css" />-->
 
-
 </head>
 
 <body>
-
     <!-- Preloader Start -->
     <div class="ft-preloader active">
         <div class="ft-preloader-inner h-100 d-flex align-items-center justify-content-center">
@@ -341,7 +340,6 @@
                                                 <div class="header-toolbar__item header-toolbar--minicart-btn">
                                                     <a href="#miniCart" class="header-toolbar__btn toolbar-btn">
                                                         <i class="la la-shopping-cart"></i>
-                                                        <span>01</span>
                                                     </a>
                                                 </div>
                                                 <div class="header-toolbar__item d-block d-lg-none">
@@ -527,19 +525,24 @@
                                             <div class="product-ordering">
                                                 <!--TODO:列表排序方式选择-->
                                                 <select class="product-ordering__select nice-select">
-                                                    <option value="0">Default Sorting</option>
-                                                    <option value="1">Relevance</option>
-                                                    <option value="2">Name, A to Z</option>
-                                                    <option value="3">Name, Z to A</option>
-                                                    <option value="4">Price, low to high</option>
-                                                    <option value="5">Price, high to low</option>
+                                                    <option value="0">默认排序</option>
+                                                    <option value="1">名称升序</option>
+                                                    <option value="2">名称降序</option>
+                                                    <option value="3">价格升序</option>
+                                                    <option value="4">价格降序</option>
+                                                    <option value="5">销售数量升序</option>
+                                                    <option value="6">销售数量降序</option>
+                                                    <option value="7">浏览量升序</option>
+                                                    <option value="8">浏览量降序</option>
+                                                    <option value="9">上架时间升序</option>
+                                                    <option value="10">上架时间降序</option>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-7">
                                         <div class="shop-toolbar__right d-flex justify-content-md-end justify-content-start flex-sm-row flex-column">
-                                            <p class="product-pages">Showing Result  08 Among  72</p>
+<!--                                            <p class="product-pages">Showing Result  08 Among  72</p>-->
                                             <div class="product-view-mode ml--50 ml-xs--0">
                                                 <!--TODO:切换视图形式（列表or块状）-->
                                                 <a class="active" href="#" data-target="grid">
@@ -1533,16 +1536,16 @@
                                 </div>
                             </div>
                             <!--TODO：分页-->
-                            <nav class="pagination-wrap">
-                                <ul class="pagination">
-                                    <li><span class="page-number current">1</span></li>
-                                    <li><a href="#" class="page-number">2</a></li>
-                                    <li><span class="dot"></span></li>
-                                    <li><span class="dot"></span></li>
-                                    <li><span class="dot"></span></li>
-                                    <li><a href="#" class="page-number">16</a></li>
-                                </ul>
-                            </nav>
+<!--                            <nav class="pagination-wrap">-->
+<!--                                <ul class="pagination">-->
+<!--                                    <li><span class="page-number current">1</span></li>-->
+<!--                                    <li><a href="#" class="page-number">2</a></li>-->
+<!--                                    <li><span class="dot"></span></li>-->
+<!--                                    <li><span class="dot"></span></li>-->
+<!--                                    <li><span class="dot"></span></li>-->
+<!--                                    <li><a href="#" class="page-number">16</a></li>-->
+<!--                                </ul>-->
+<!--                            </nav>-->
                         </div>
                     </div>
                 </div>
@@ -2030,53 +2033,17 @@
                     <a href="#" class="btn-close"><i class="la la-remove"></i></a>
                 </div>
                 <div class="mini-cart-inner">
-                    <h3 class="mini-cart__heading mb--45">Shopping Cart</h3>
+                    <h3 class="mini-cart__heading mb--10">购物车</h3>
                     <div class="mini-cart__content">
                         <ul class="mini-cart__list">
-                            <li class="mini-cart__product">
-                                <a href="#" class="mini-cart__product-remove">
-                                    <i class="la la-remove"></i>
-                                </a>
-                                <div class="mini-cart__product-image">
-                                    <img src="/e2yun_online_shop_extends/static/src/assets/img/products/prod-01-100x100.jpg" alt="products">
-                                </div>
-                                <div class="mini-cart__product-content">
-                                    <a class="mini-cart__product-title" href="product-details.html">Golden Easy Spot Chair.</a>
-                                    <span class="mini-cart__product-quantity">1 x $49.00</span>
-                                </div>
-                            </li>
-                            <li class="mini-cart__product">
-                                <a href="#" class="mini-cart__product-remove">
-                                    <i class="la la-remove"></i>
-                                </a>
-                                <div class="mini-cart__product-image">
-                                    <img src="/e2yun_online_shop_extends/static/src/assets/img/products/prod-02-100x100.jpg" alt="products">
-                                </div>
-                                <div class="mini-cart__product-content">
-                                    <a class="mini-cart__product-title" href="product-details.html">Golden Easy Spot Chair.</a>
-                                    <span class="mini-cart__product-quantity">1 x $49.00</span>
-                                </div>
-                            </li>
-                            <li class="mini-cart__product">
-                                <a href="#" class="mini-cart__product-remove">
-                                    <i class="la la-remove"></i>
-                                </a>
-                                <div class="mini-cart__product-image">
-                                    <img src="/e2yun_online_shop_extends/static/src/assets/img/products/prod-03-100x100.jpg" alt="products">
-                                </div>
-                                <div class="mini-cart__product-content">
-                                    <a class="mini-cart__product-title" href="product-details.html">Golden Easy Spot Chair.</a>
-                                    <span class="mini-cart__product-quantity">1 x $49.00</span>
-                                </div>
-                            </li>
                         </ul>
                         <div class="mini-cart__total">
-                            <span>Subtotal</span>
-                            <span class="ammount">$98.00</span>
+                            <span>合计</span>
+                            <span class="ammount"></span>
                         </div>
                         <div class="mini-cart__buttons">
-                            <a href="cart.html" class="btn btn-fullwidth btn-bg-primary mb--20">View Cart</a>
-                            <a href="checkout.html" class="btn btn-fullwidth btn-bg-primary">Checkout</a>
+                            <a href="cart.html" class="btn btn-fullwidth btn-bg-primary mb--20">确认购物车</a>
+                            <!--<a href="checkout.html" class="btn btn-fullwidth btn-bg-primary">Checkout</a>  -->
                         </div>
                     </div>
                 </div>
@@ -2266,6 +2233,12 @@
         get_product_list_xhr.onreadystatechange = function(){
             if (get_product_list_xhr.readyState == 4 && get_product_list_xhr.status == 200) {
                 document.getElementById("shop_product_list").innerHTML = get_product_list_xhr.responseText;
+                $('.list_btn_add_cart').click(function(e){
+                    return list_btn_add_cart_click(e)
+                });
+
+
+
             }
         }
     }
@@ -2279,6 +2252,7 @@
     get_product_list_xhr.send();
 
     get_product_list_xhr.onreadystatechange = function(){
+
         if (get_product_list_xhr.readyState == 4 && get_product_list_xhr.status == 200) {
             document.getElementById("shop_product_list").innerHTML = get_product_list_xhr.responseText;
         }
@@ -2314,12 +2288,15 @@
  }
     </script>
 
-
     <!-- jQuery JS -->
     <script src="/e2yun_online_shop_extends/static/src/assets/js/vendor.js"></script>
 
+    <!-- 购物车相关js代码-->
+    <script src="/e2yun_online_shop_extends/static/src/assets/js/cart.js"></script>
+
     <!-- Main JS -->
     <script src="/e2yun_online_shop_extends/static/src/assets/js/main.js"></script>
+
 
     <!--slide menu js-->
 <!--    <script src="/e2yun_online_shop_extends/static/src/assets/slide-menu/js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>-->
