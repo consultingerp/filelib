@@ -18,6 +18,8 @@
 
     <!-- style css -->
     <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/main.css">
+
+    <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/my.css">
 </head>
 
 <body>
@@ -327,7 +329,6 @@
                                                 <div class="header-toolbar__item header-toolbar--minicart-btn">
                                                     <a href="#miniCart" class="header-toolbar__btn toolbar-btn">
                                                         <i class="la la-shopping-cart"></i>
-                                                        <span>01</span>
                                                     </a>
                                                 </div>
                                                 <!--TODO:购物车中有几件商品的提示按钮-->
@@ -381,7 +382,7 @@
                         <!--TODO:该div下，为头部左边，产品图像展示处-->
                         <div class="col-lg-7 product-main-image">
                             <div class="product-image">
-                                <div class="product-gallery">
+                                <div class="product-gallery" id="product_image_replace">
                                     <!--TODO:下面这个div，是产品大图定义处-->
                                     <div class="product-gallery__large-image mb--30">
                                         <div class="product-gallery__wrapper">
@@ -1187,53 +1188,17 @@
                     <a href="#" class="btn-close"><i class="la la-remove"></i></a>
                 </div>
                 <div class="mini-cart-inner">
-                    <h3 class="mini-cart__heading mb--45">Shopping Cart</h3>
+                    <h3 class="mini-cart__heading mb--10">购物车</h3>
                     <div class="mini-cart__content">
                         <ul class="mini-cart__list">
-                            <li class="mini-cart__product">
-                                <a href="#" class="mini-cart__product-remove">
-                                    <i class="la la-remove"></i>
-                                </a>
-                                <div class="mini-cart__product-image">
-                                    <img src="/e2yun_online_shop_extends/static/src/assets/img/products/prod-01-100x100.jpg" alt="products">
-                                </div>
-                                <div class="mini-cart__product-content">
-                                    <a class="mini-cart__product-title" href="product-details.html">Golden Easy Spot Chair.</a>
-                                    <span class="mini-cart__product-quantity">1 x $49.00</span>
-                                </div>
-                            </li>
-                            <li class="mini-cart__product">
-                                <a href="#" class="mini-cart__product-remove">
-                                    <i class="la la-remove"></i>
-                                </a>
-                                <div class="mini-cart__product-image">
-                                    <img src="/e2yun_online_shop_extends/static/src/assets/img/products/prod-02-100x100.jpg" alt="products">
-                                </div>
-                                <div class="mini-cart__product-content">
-                                    <a class="mini-cart__product-title" href="product-details.html">Golden Easy Spot Chair.</a>
-                                    <span class="mini-cart__product-quantity">1 x $49.00</span>
-                                </div>
-                            </li>
-                            <li class="mini-cart__product">
-                                <a href="#" class="mini-cart__product-remove">
-                                    <i class="la la-remove"></i>
-                                </a>
-                                <div class="mini-cart__product-image">
-                                    <img src="/e2yun_online_shop_extends/static/src/assets/img/products/prod-03-100x100.jpg" alt="products">
-                                </div>
-                                <div class="mini-cart__product-content">
-                                    <a class="mini-cart__product-title" href="product-details.html">Golden Easy Spot Chair.</a>
-                                    <span class="mini-cart__product-quantity">1 x $49.00</span>
-                                </div>
-                            </li>
                         </ul>
                         <div class="mini-cart__total">
-                            <span>Subtotal</span>
-                            <span class="ammount">$98.00</span>
+                            <span>合计</span>
+                            <span class="ammount"></span>
                         </div>
                         <div class="mini-cart__buttons">
-                            <a href="cart.html" class="btn btn-fullwidth btn-bg-primary mb--20">View Cart</a>
-                            <a href="checkout.html" class="btn btn-fullwidth btn-bg-primary">Checkout</a>
+                            <a href="cart.html" class="btn btn-fullwidth btn-bg-primary mb--20">确认购物车</a>
+                            <!-- <a href="checkout.html" class="btn btn-fullwidth btn-bg-primary">Checkout</a> -->
                         </div>
                     </div>
                 </div>
@@ -1407,15 +1372,25 @@
 var current_product_template_id = sessionStorage.getItem("current_product_detail_id");
 
 window.onload=function(){
-    var get_category_xhr = new XMLHttpRequest();
+    var get_product_template_detail_xhr = new XMLHttpRequest();
+    get_detail_url = "/online_shop/get_product_detail/" + current_product_template_id
+    get_product_template_detail_xhr.open("GET", get_detail_url, true);
+    get_product_template_detail_xhr.send();
 
-    url = "/online_shop/get_product_detail/" + current_product_template_id
-    get_category_xhr.open("GET", url, true);
-    get_category_xhr.send();
+    var get_product_template_image_xhr = new XMLHttpRequest();
+    get_image_url = "/online_shop/get_product_image/" + current_product_template_id
+    get_product_template_image_xhr.open("GET", get_image_url, true);
+    get_product_template_image_xhr.send();
 
-    get_category_xhr.onreadystatechange = function(){
-        if (get_category_xhr.readyState  === 4 && get_category_xhr.status === 200) {
-            document.getElementById("product_detail_replace").innerHTML = get_category_xhr.responseText;
+    get_product_template_detail_xhr.onreadystatechange = function(){
+        if (get_product_template_detail_xhr.readyState  === 4 && get_product_template_detail_xhr.status === 200) {
+            document.getElementById("product_detail_replace").innerHTML = get_product_template_detail_xhr.responseText;
+        }
+    }
+
+    get_product_template_image_xhr.onreadystatechange = function(){
+        if (get_product_template_image_xhr.readyState  === 4 && get_product_template_image_xhr.status === 200) {
+            document.getElementById("product_image_replace").innerHTML = get_product_template_image_xhr.responseText;
         }
     }
 }
@@ -1428,6 +1403,9 @@ window.onload=function(){
 
     <!-- jQuery JS -->
     <script src="/e2yun_online_shop_extends/static/src/assets/js/vendor.js"></script>
+
+    <!-- 购物车相关js代码-->
+    <script src="/e2yun_online_shop_extends/static/src/assets/js/cart.js"></script>
 
     <!-- Main JS -->
     <script src="/e2yun_online_shop_extends/static/src/assets/js/main.js"></script>
