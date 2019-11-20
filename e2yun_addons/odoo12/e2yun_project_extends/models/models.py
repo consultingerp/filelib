@@ -1,36 +1,31 @@
 # -*- coding: utf-8 -*-
-from odoo import models, fields, api, _
+from odoo import models, fields, api, _, exceptions
 import warnings
 
 class Questionnaire(models.Model):
     _name = 'project.questionnaire'
-
-    # 如若是否多问卷字段选择否，则权重字段默认带出100%
-    # @api.onchange("parent_id")
-    # def onchange_weight(self):
-    #     res = self.parent_id
-        # ctx = self.env.context
-        # id = ctx['params']['id']
-        # record = self.env['project.task'].search([('id', '=', id)])
-        # res = record.multiple_questionnaires
-        # if res == 'no':
-        #     self.weight = '100'
-        # else:
-        #     self.weight = ''
-
 
     # 问卷场景
     questionnaire_scenario = fields.Selection(
         [('评分问卷', '评分问卷'), ('资质调查', '资质调查'), ('满意度调查', '满意度调查'),
          ('报名登记表', '报名登记表'), ('其他', '其他')], string='问卷场景')
     # 权重
-    # weight = fields.Char(string='权重', default=_default_weight)
     weight = fields.Char(string='权重')
-    # 权重单位
-    # weight_unit = fields.Char(string='权重单位', default='%')
     # 问卷模板
     survey_temp_id = fields.Many2one('survey.survey', string='问卷模版')
     parent_id = fields.Many2one('project.task', string='Parent Task')
+
+    # 动态domain筛选模板
+    @api.depends('questionnaire_scenario', 'parent_id')
+    @api.onchange('questionnaire_scenario', 'parent_id')
+    def onchange_temp_id(self):
+        code = self.questionnaire_scenario
+        code1 = self.parent_id.questionnaire_classification
+        domain = [('questionnaire_scenario', '=', code), ('questionnaire_classification', '=', code1)]
+        return {
+            'domain': {'survey_temp_id': domain}
+        }
+
 
     @api.onchange('weight')
     def _onchange_weight(self):
@@ -41,9 +36,6 @@ class Questionnaire(models.Model):
                 self.weight = str(self.weight)+'%'
         else:
             self.weight = ''
-
-
-
 
 class E2yunTaskInfo(models.Model):
     _inherit = 'project.task'
@@ -57,7 +49,7 @@ class E2yunTaskInfo(models.Model):
     multiple_questionnaires = fields.Selection([('yes', '是'), ('no', '否')], string='是否多问卷')
     # 一对多连接列表对象
     questionnaire_ids = fields.One2many('project.questionnaire', 'parent_id', string='Child Questionnaires')
-
+    # temp_ids = fields.One2many('survey.survey', 'task_id', string='问卷模板')
     # @api.multi
     # def weight_write(self, vals):
     #     print("@@@@@@@@@@@@@@@@@@@@@")
@@ -86,42 +78,36 @@ class E2yunTaskInfo(models.Model):
                     int_weight = int(str_weight[:-1])
                     all_score += int_weight
             if all_score > 100:
-                raise Warning(_('权重之和大于100%，请重新输入'))
+                # raise Warning(_('权重之和大于100%，请重新输入'))
+                raise exceptions.Warning(_('权重之和大于100%，请重新输入'))
         return res
 
 
     # 任务页面打开问卷页面的方法
-    @api.multi
-    def turn_page(self):
-        self.ensure_one()
-        # Get lead views
-        form_view = self.env.ref('survey.survey_form')
-        tree_view = self.env.ref('survey.survey_tree')
-        kanban_view = self.env.ref('survey.survey_kanban')
-        return {
-            'name': '新建问卷',
-            'res_model': 'survey.survey',
-            # 'domain': [('type', '=', 'lead')],
-            # 'res_id': self.id,
-            'view_id': False,
-            'target': 'new',
-            'views': [
-                (form_view.id, 'form'),
-                (tree_view.id, 'tree'),
-                (kanban_view.id, 'kanban')
-            ],
-            'view_type': 'tree',
-            'view_mode': 'tree,form,kanban',
-            'type': 'ir.actions.act_window',
-        }
+    # @api.multi
+    # def turn_page(self):
+    #     self.ensure_one()
+    #     # Get lead views
+    #     form_view = self.env.ref('survey.survey_form')
+    #     tree_view = self.env.ref('survey.survey_tree')
+    #     kanban_view = self.env.ref('survey.survey_kanban')
+    #     return {
+    #         'name': '新建问卷',
+    #         'res_model': 'survey.survey',
+    #         # 'domain': [('type', '=', 'lead')],
+    #         # 'res_id': self.id,
+    #         'view_id': False,
+    #         'target': 'new',
+    #         'views': [
+    #             (form_view.id, 'form'),
+    #             (tree_view.id, 'tree'),
+    #             (kanban_view.id, 'kanban')
+    #         ],
+    #         'view_type': 'tree',
+    #         'view_mode': 'tree,form,kanban',
+    #         'type': 'ir.actions.act_window',
+    #     }
 
-    # 权重百分比之和为100%，超出则弹框提醒
-    # @api.one
-    # def write(self, vals):
-    #
-    #     res = super(E2yunProjectSurvey, self).write(vals)
-    #     return res
-    #
     # @api.model
     # def create(self, vals):
     #     res = super(E2yunTaskInfo, self).create(vals)
@@ -141,37 +127,40 @@ class E2yunProjectSurvey(models.Model):
     _inherit = 'survey.survey'
 
     # 自动带出问卷分类
-    def default_classification(self):
-        ctx = self.env.context
-        try:
-            res_model = ctx['active_model']
-            task_id = ctx['active_id']
-            res_record = self.env[res_model].search([('id', '=', task_id)])
-            questionnaire_classification = res_record.questionnaire_classification
-            if questionnaire_classification == 'Internally':
-                res = '对内测评（公司商务）'
-                return res
-            else:
-                res = '对外测评（供应商）'
-                return res
-        except:
-            return ''
+    # @api.onchange("questionnaire_classification")
+    # def default_classification(self):
+    #     ctx = self.env.context
+        # try:
+        #     res_model = ctx['active_model']
+        #     questionnaire_id = ctx['active_id']
+        #     res_record = self.env[res_model].search([('id', '=', questionnaire_id)])
+        #     questionnaire_classification = res_record.parent_id.questionnaire_classification
+        # if questionnaire_classification == 'Internally':
+        #     res = '对内测评（公司商务）'
+        #     return res
+        # else:
+        #     res = '对外测评（供应商）'
+        #     return res
+        # except:
+        #     return ''
     # 自动带出问卷场景字段值
-    def default_scenario(self):
-        ctx = self.env.context
-        try:
-            res_model = ctx['active_model']
-            task_id = ctx['active_id']
-            res_record = self.env[res_model].search([('id', '=', task_id)])
-            questionnaire = res_record['questionnaire_ids']
-            res = ''
-            for i in questionnaire:
-                res = i.questionnaire_scenario
-            return res
-        except:
-            return ''
-    questionnaire_classification = fields.Char(string='问卷分类', default=default_classification)
-    questionnaire_scenario = fields.Char(string='问卷场景', default=default_scenario)
+    # @api.onchange("field_domain", "default_value")
+    # def default_scenario(self):
+    #     ctx = self.env.context
+    #     try:
+    #         res_model = ctx['active_model']
+    #         task_id = ctx['active_id']
+    #         res_record = self.env[res_model].search([('id', '=', task_id)])
+    #         scenario = res_record['questionnaire_scenario']
+    #         return scenario
+    #     except:
+    #         return ''
+
+    questionnaire_classification = fields.Selection([('Internally', '对内'), ('Foreign', '对外')], string='问卷分类')
+    questionnaire_scenario = fields.Selection([('评分问卷', '评分问卷'), ('资质调查', '资质调查'), ('满意度调查', '满意度调查'),
+         ('报名登记表', '报名登记表'), ('其他', '其他')], string='问卷场景')
+    # questionnaire_id = fields.Many2one('project.questionnaire', 'survey_temp_id', string='')
+    # task_id = fields.Many2one('project.task', related='questionnaire_id.', string='任务')
 
     # 权重百分比之和为100%，超出则弹框提醒
     @api.multi
@@ -180,12 +169,14 @@ class E2yunProjectSurvey(models.Model):
         for item in self:
             all_weight = 0
             for l in item.page_ids:
-                i = l.weight[:-1]
-                all_weight += int(i)
+                if l.weight:
+                    i = l.weight[:-1]
+                    all_weight += int(i)
             if all_weight > 100:
                 # warnings.warn('权重之和大于100%，请重新输入')
                 # raise ValueError('权重之和大于100%，请重新输入')
-                raise Warning(_('权重之和大于100%，请重新输入'))
+                # raise Warning(_('权重之和大于100%，请重新输入'))
+                raise exceptions.Warning(_('权重之和大于100%，请重新输入'))
         return res
 
 
@@ -280,6 +271,13 @@ class SurveyQuestion(models.Model):
                         all.append(l.quizz_mark)
                     statistics = all.count(0.0)
                     if count > 2 or count == 1 or statistics > 1 or statistics == 0:
-                        raise Warning(_('唯一性计分只能给一个选项赋值，其他为0，请重新输入'))
+                        raise exceptions.Warning(_('唯一性计分只能给一个选项赋值，其他为0，请重新输入'))
         return res
 
+    # ⑥创建问题保存时，系统校验 “题库大类”和“计分方式”是否选择，如果未选择，则弹出提示“计分方式未选择，请选择”；
+    @api.model
+    def create(self, vals):
+        res = super(SurveyQuestion, self).create(vals)
+        if not res.question_bank_type or not res.scoring_method:
+            raise exceptions.Warning(_('题库大类或计分方式未选择，请选择'))
+        return res

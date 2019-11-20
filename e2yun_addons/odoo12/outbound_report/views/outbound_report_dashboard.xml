@@ -3,7 +3,10 @@
 
     <template id="outbound_tree_button_assets_backend" name="tree button assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
+            <script type="text/javascript" src="/outbound_report/static/src/js/echarts.min.js"></script>
             <script type="text/javascript" src="/outbound_report/static/src/js/tree_button.js"></script>
+            <script type="text/javascript" src="/outbound_report/static/src/js/outbound_report_view.js"></script>
+            <link rel="stylesheet" href="/outbound_report/static/src/css/outbound_report.css"/>
         </xpath>
     </template>
 
@@ -66,7 +69,7 @@
                         <group>
                             <field name="vkorgtext" options="{'no_create_edit': True}"/>
                             <field name="kunnr" options="{'no_create_edit': True}"/>
-                            <field name="ywy" domain="[('function', 'in', ['店长', '店员'])]" options="{'no_create_edit': True}"/>
+                            <field name="ywy" options="{'no_create_edit': True}"/>
                         </group>
                     </group>
                     <footer>
@@ -82,6 +85,12 @@
             <field name="view_type">form</field>
             <field name="view_mode">form,tree,graph,dashboard</field>
             <field name="view_id" ref="view_outbound_query_report"/>
+            <field name="target">new</field>
+        </record>
+
+        <record id="outbound_report_echarts_view_action" model="ir.actions.client">
+            <field name="name">出库报表查询</field>
+            <field name="tag">outbound_report_echarts</field>
             <field name="target">new</field>
         </record>
 

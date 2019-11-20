@@ -544,6 +544,7 @@ class e2yun_supplier_info(models.Model):
                 'registered_address': self.registered_address,
                 'company_profile': self.company_profile,
                 'login_name': self.login_name,
+                'name': self.name,
 
 
 

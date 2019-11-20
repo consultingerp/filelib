@@ -166,7 +166,21 @@ class OnlineShop(http.Controller):
                         product_template_price_float = min(product_product_price_list)
 
                 # TODO: 产品图片获取
-                product_template_image = "/e2yun_online_shop_extends/static/src/assets/img/products/prod-04-270x300.jpg"
+                def get_product_image(product_tmpl_id):
+                    product_template_image_object = http.request.env['product.image.ext'].search([('product_tmpl_id', '=', product_tmpl_id), ('is_primary', '=', True)], limit=1)
+                    if product_template_image_object:
+                        return product_template_image_object.image_path
+                    else:
+                        product_template_image_object = http.request.env['product.image.ext'].search([('product_tmpl_id', '=', product_tmpl_id)], order='order_sort asc', limit=1)
+                        if product_template_image_object:
+                            return product_template_image_object.image_path
+                        else:
+                            return "/e2yun_online_shop_extends/static/src/assets/img/products/prod-04-270x300.jpg"
+
+                product_template_image = get_product_image(product_template.id)
+
+
+                # product_template_image = "/e2yun_online_shop_extends/static/src/assets/img/products/prod-04-270x300.jpg"
                 # onclick='grid_image_show_product_template_detail_page(this)'
                 # onclick='grid_tittle_show_product_template_detail_page(this)'
                 # onclick='list_image_show_product_template_detail_page(this)'
@@ -229,7 +243,11 @@ class OnlineShop(http.Controller):
                 </div>
                 <p class="product-short-description mb--20">""" + product_template_description + """</p>  
                 <div class="ft-product-action-list d-flex align-items-center">
-                    <a href='""" + product_add_to_cart_href + """' class="btn btn-size-md">添加到购物车</a>
+                    <input type='hidden' name='product_id' value='"""+str(product_template.product_variant_ids[0].id)+"""'/>
+                    <input type='hidden' name='product_template_id' value='"""+str(product_template.id)+"""'/>
+                    <!-- <input type='hidden' name='csrf_token' value='"""+http.request.csrf_token()+"""'/>
+                     <a href='""" + product_add_to_cart_href + """' class="btn btn-size-md">添加到购物车</a> -->
+                    <a href='javascript:;' class="list_btn_add_cart btn btn-size-md">添加到购物车</a>
                 </div>                                            
             </div>
         </div>
@@ -239,6 +257,75 @@ class OnlineShop(http.Controller):
                 # product_str = "" + str(product_template.id) + ' ' + str(product_template.default_code) + ' ' + str(product_template.name)
                 # text = text + "<p id='shop_product_product_" + str(product_template.id) + "' onclick='show_product_details(this)'>" + product_str + "</p>"
         return http.Response(response_text)
+
+    @http.route(['/online_shop/get_product_image/<int:product_template_id>'], type='http', auth="public")
+    def get_product_image(self, product_template_id, **kwargs):
+        large_image_header = """<div class="product-gallery__large-image mb--30">
+                                                <div class="product-gallery__wrapper">
+                                                    <div class="element-carousel main-slider image-popup"
+                                                    data-slick-options='{
+                                                        "slidesToShow": 1,
+                                                        "slidesToScroll": 1,
+                                                        "infinite": true,
+                                                        "arrows": false, 
+                                                        "asNavFor": ".nav-slider"
+                                                    }'>"""
+        large_image_footer = """</div>
+                                                </div>
+                                            </div>"""
+        small_image_header = """<div class="product-gallery__nav-image">
+                                                <div class="element-carousel nav-slider product-slide-nav slick-vertical-center" 
+                                                data-slick-options='{
+                                                    "spaceBetween": 30,
+                                                    "slidesToShow": 3,
+                                                    "slidesToScroll": 1,
+                                                    "swipe": true,
+                                                    "infinite": true,
+                                                    "focusOnSelect": true,
+                                                    "asNavFor": ".main-slider",
+                                                    "arrows": true, 
+                                                    "prevArrow": {"buttonClass": "slick-btn slick-prev", "iconClass": "la la-angle-left" },
+                                                    "nextArrow": {"buttonClass": "slick-btn slick-next", "iconClass": "la la-angle-right" }
+                                                }'
+                                                data-slick-responsive='[
+                                                    {
+                                                        "breakpoint":767, 
+                                                        "settings": {
+                                                            "slidesToShow": 4
+                                                        } 
+                                                    },
+                                                    {
+                                                        "breakpoint":575, 
+                                                        "settings": {
+                                                            "slidesToShow": 3
+                                                        } 
+                                                    },
+                                                    {
+                                                        "breakpoint":480, 
+                                                        "settings": {
+                                                            "slidesToShow": 2
+                                                        } 
+                                                    }
+                                                ]'>"""
+        small_image_footer = """</div></div>"""
+        product_template_image_pool = http.request.env['product.image.ext'].search([('product_tmpl_id', '=', product_template_id)], order='order_sort asc')
+        large_image_body = """"""
+        small_image_body = """"""
+        for product_template_image in product_template_image_pool:
+            large_text = """<figure class="product-gallery__image zoom">
+                                                    <img src='""" + product_template_image.image_path + """' alt="Product"><div class="product-gallery__actions"><button class="action-btn btn-zoom-popup"><i class="la la-eye"></i></button>
+                                                    </div>
+                                                </figure>"""
+            small_text = """<figure class="product-gallery__nav-image--single">
+                                                <img src='""" + product_template_image.image_path +"""' alt="Products">
+                                            </figure>"""
+            small_image_body = small_image_body + small_text
+            large_image_body = large_image_body + large_text
+
+        response_text = large_image_header + large_image_body + large_image_footer + small_image_header + small_image_body + small_image_footer
+        return http.Response(response_text)
+
+
 
     @http.route(['/online_shop/get_product_detail/<int:product_template_id>'], type='http', auth="public")
     def get_product_detail(self, product_template_id, **kwargs):
@@ -272,7 +359,9 @@ class OnlineShop(http.Controller):
             </div>
         </div>
         <!--TODO：这里有匿名函数使用js的示例-->
-        <button type="button" class="btn btn-size-sm btn-shape-square" onclick="window.location.href='cart.html'">
+        <input type='hidden' name='inp_product_id' value='"""+str(product.id)+"""'/>
+        <input type='hidden' name='inp_product_template_id' value='"""+str(product_template_id)+"""'/>
+        <button type="button" class="btn btn-size-sm btn-shape-square" onclick="detail_add_cart()">
             添加到购物车
         </button>
     </div>  
@@ -284,6 +373,8 @@ class ProductTemplateCategoryExtend(models.Model):
     _inherit = 'product.template'
 
     category_parents = fields.Many2many('product.public.category', 'parent_id', string='所属父类别', compute='get_category_parents', store=True)
+    product_template_external_website = fields.Char(string='产品外部页面链接')
+    custom_order = fields.Integer(string='产品展示自定义排序')
 
     @api.one
     @api.depends('public_categ_ids')
