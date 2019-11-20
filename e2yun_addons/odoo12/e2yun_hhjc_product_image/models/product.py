@@ -61,3 +61,11 @@ class ProductTemplate(models.Model):
         for product in self[0]:
             template = jinja2Env.get_template('images.html')
             product.images_html = template.render({'editor_id': product.id})
+
+    @api.model
+    def get_primary_url(self):
+        url = ''
+        for image in self.product_image_ext_ids:
+            if image.order_sort == 0 or image.is_primary == True:
+                url = image.image_path
+        return url
