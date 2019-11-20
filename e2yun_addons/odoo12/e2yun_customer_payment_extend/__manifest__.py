@@ -19,7 +19,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['account'],
+    'depends': ['account', 'e2yun_customer_extends'],
 
     # always loaded
     'data': [
@@ -27,5 +27,6 @@
         'views/views.xml',
         'views/bank_info.xml',
         'views/customer_refund.xml',
+        'views/button_to_payment.xml',
     ],
 }
