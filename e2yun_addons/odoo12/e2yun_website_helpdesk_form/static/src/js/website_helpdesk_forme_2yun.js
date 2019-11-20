@@ -181,26 +181,11 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                 format: time.getLangDatetimeFormat(),
             };
             this.$target.find('.o_website_form_datetime').datetimepicker(datepickers_options);
-
             // Adapt options to date-only pickers
             datepickers_options.format = time.getLangDateFormat();
             this.$target.find('.o_website_form_date').datetimepicker(datepickers_options);
-
-
             this.wxGetLocation();
-
-            // this.$target.find('#j_address').on('click', function (e) {
-            //     self.wxGetLocation();
-            // });
-            setTimeout(function () {
-
-            });
-
-
-            // this.$target.find('input[name=user_phone]').on('change', function (e) {
-            //     alert("aaaa");
-            // });
-
+            this.$target.find('.openerp o_livechat_button d-print-none').hide();
             return this._super.apply(this, arguments);
         },
 
