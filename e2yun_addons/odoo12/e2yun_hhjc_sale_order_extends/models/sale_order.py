@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing tailsde.
-from odoo import models, fields, api
+from odoo import models, fields, api, exceptions
 import datetime
 import suds.client
 import json
@@ -96,59 +96,84 @@ class SaleOrder(models.Model):
         orderitem = []
         num = 10
 
-        chuxiao_total = 0
+        # chuxiao_total = 0
 
         for line in res.order_line:
             item = {}
             line.product_id
-            if line.price_unit < 0:
-                chuxiao_total += line.price_unit * line.product_uom_qty
-                pass
-            else:
-                item['matnr'] = line.product_id.default_code
-                item['maktx'] = line.product_id.name
-                item['spart'] = line.product_id.product_group
-                item['sparttext'] = line.product_id.product_group
-                item['prdha'] = line.product_id.layer
-                item['prdhatext'] = line.product_id.layer_name
-                item['maktx'] = line.product_id.name
-                item['itemtype'] = 'ZTA1'
-                item['itemtypetext'] = '标准项目'
-                item['rownum'] = num
-                item['kwmen'] = line.product_uom_qty
-                item['vrkme'] = line.product_uom.name
-                item['meins'] = line.product_uom.name
-                item['kbetr'] = line.price_unit
-                item['xiaoshoujine'] = line.price_unit
-                item['jiesuanjine'] = line.price_unit
-                item['itemtotal'] = item['xiaoshoujine'] * item['kwmen']
-                item['itemjiesuantotal'] = item['jiesuanjine'] * item['kwmen']
-                item['kpein'] = 1
-                num += 10
-                orderitem.append(item)
-        try:
-            newtotalmoney = 0
-            if chuxiao_total < 0:
-                for item in orderitem:
-                    price_unit = round(item['itemtotal'] / (datajsonstring['totalmoney'] - chuxiao_total) * datajsonstring['totalmoney'] / item['kwmen'], 2)
-                    totalmoney = price_unit * item['kwmen']
-                    item['xiaoshoujine'] = price_unit
-                    item['jiesuanjine'] = price_unit
-                    item['itemtotal'] = totalmoney
-                    item['itemjiesuantotal'] = totalmoney
-                    newtotalmoney += totalmoney
-                if newtotalmoney != datajsonstring['totalmoney']:
-                    leave_money = newtotalmoney - datajsonstring['totalmoney']
-                    orderitem[0]['itemtotal'] = orderitem[0]['itemtotal'] + leave_money
-                    orderitem[0]['itemjiesuantotal'] = orderitem[0]['itemtotal']
-                    orderitem[0]['xiaoshoujine'] = orderitem[0]['xiaoshoujine'] + leave_money / orderitem[0]['kwmen']
-                    orderitem[0]['jiesuanjine'] = orderitem[0]['xiaoshoujine']
-                # datajsonstring['totalmoney'] = newtotalmoney
-        except Exception as e:
-            _logger.log(str(e))
+            # if line.price_unit < 0:
+            #     chuxiao_total += line.price_unit * line.product_uom_qty
+            #     pass
+            # else:
+            item['matnr'] = line.product_id.default_code
+            item['maktx'] = line.product_id.name
+            item['spart'] = line.product_id.product_group
+            item['sparttext'] = line.product_id.product_group
+            item['prdha'] = line.product_id.layer
+            item['prdhatext'] = line.product_id.layer_name
+            item['maktx'] = line.product_id.name
+            item['itemtype'] = 'ZTA1'
+            item['itemtypetext'] = '标准项目'
+            item['rownum'] = num
+            item['kwmen'] = line.product_uom_qty
+            item['vrkme'] = line.product_uom.name
+            item['meins'] = line.product_uom.name
+            item['kbetr'] = line.price_unit
+            item['xiaoshoujine'] = line.price_unit
+            item['jiesuanjine'] = line.price_unit
+            item['itemtotal'] = item['xiaoshoujine'] * item['kwmen']
+            item['itemjiesuantotal'] = item['jiesuanjine'] * item['kwmen']
+            item['kpein'] = 1
+            num += 10
+            orderitem.append(item)
+
+        item = {}
+        item['matnr'] = '100'
+        item['maktx'] = 'AZF安装费'
+        # item['spart'] = line.product_id.product_group
+        # item['sparttext'] = line.product_id.product_group
+        # item['prdha'] = line.product_id.layer
+        # item['prdhatext'] = line.product_id.layer_name
+        item['itemtype'] = 'ZWOD'
+        item['itemtypetext'] = '费用项目'
+        item['rownum'] = num
+        item['kwmen'] = 1
+        item['vrkme'] = 'SET'
+        item['meins'] = 'SET'
+        item['kbetr'] = 0
+        item['xiaoshoujine'] = 0
+        item['jiesuanjine'] = 0
+        item['itemtotal'] = 0
+        item['itemjiesuantotal'] = 0
+        item['kpein'] = 1
+        orderitem.append(item)
+
+        # try:
+        #     newtotalmoney = 0
+        #     if chuxiao_total < 0:
+        #         for item in orderitem:
+        #             price_unit = round(item['itemtotal'] / (datajsonstring['totalmoney'] - chuxiao_total) * datajsonstring['totalmoney'] / item['kwmen'], 2)
+        #             totalmoney = price_unit * item['kwmen']
+        #             item['xiaoshoujine'] = price_unit
+        #             item['jiesuanjine'] = price_unit
+        #             item['itemtotal'] = totalmoney
+        #             item['itemjiesuantotal'] = totalmoney
+        #             newtotalmoney += totalmoney
+        #         if newtotalmoney != datajsonstring['totalmoney']:
+        #             leave_money = newtotalmoney - datajsonstring['totalmoney']
+        #             orderitem[0]['itemtotal'] = orderitem[0]['itemtotal'] + leave_money
+        #             orderitem[0]['itemjiesuantotal'] = orderitem[0]['itemtotal']
+        #             orderitem[0]['xiaoshoujine'] = orderitem[0]['xiaoshoujine'] + leave_money / orderitem[0]['kwmen']
+        #             orderitem[0]['jiesuanjine'] = orderitem[0]['xiaoshoujine']
+        #         # datajsonstring['totalmoney'] = newtotalmoney
+        # except Exception as e:
+        #     _logger.log(str(e))
         datajsonstring['orderitem'] = orderitem
         result = client.service.synSaleOrderFromCrm(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
         resultjson = json.loads(result)
+        sucess = resultjson['sucess']
+        if sucess == 'no':
+            raise exceptions.Warning("同步失败,返回信息：%s" % resultjson['message'])
         res.salesorderid = resultjson['salesorderid']
 
     def action_unfreeze_order(self):
