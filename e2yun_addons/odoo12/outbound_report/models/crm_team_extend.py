@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from _datetime import date, datetime
+from datetime import date, datetime
 from odoo import api, fields, models, exceptions, tools
 
 
@@ -86,11 +86,11 @@ class TeamTargetYear(models.Model):
 class SalesNameSearch(models.Model):
     _inherit = 'res.users'
 
-    # @api.model
-    # def name_search(self, name='', args=None, operator='ilike', limit=100):
-    #     if name:
-    #         users = self.search([('name', 'i')])
-    #     return super(SalesNameSearch, self).name_search(name, args, operator, limit)
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        res = super(SalesNameSearch, self).name_search(name, args, operator, limit)
+        ctx = self.env.context
+        return res
 
 
 class TeamTargetDetail(models.Model):
