@@ -581,7 +581,7 @@
                                 </div>
                                 <div class="tab-content" id="product-tabContent">
                                     <div class="tab-pane fade show active" id="nav-description" role="tabpanel" aria-labelledby="nav-description-tab">
-                                        <div class="product-description">
+                                        <div class="product-description" id="product_description_replace">
                                             <!--TODO:该div下为产品详情Tab的内容-->
 <!--                                            <p>Lorem ipsum dolor sit amet, consec do eiusmod tincididunt ut labore et dolore magna aliqua. Ut enim ad minim veniaLo ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla paExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. iatis unde omnis iste natus error sit voluptatem accusantium </p>-->
 
@@ -1394,6 +1394,11 @@ window.onload=function(){
     get_product_template_image_xhr.open("GET", get_image_url, true);
     get_product_template_image_xhr.send();
 
+    var get_product_description_xhr = new XMLHttpRequest();
+    get_product_description_url = "/online_shop/get_product_description/" + current_product_template_id
+    get_product_description_xhr.open("GET", get_product_description_url, true)
+    get_product_description_xhr.send();
+
     get_product_template_detail_xhr.onreadystatechange = function(){
         if (get_product_template_detail_xhr.readyState  === 4 && get_product_template_detail_xhr.status === 200) {
             document.getElementById("product_detail_replace").innerHTML = get_product_template_detail_xhr.responseText;
@@ -1403,6 +1408,12 @@ window.onload=function(){
     get_product_template_image_xhr.onreadystatechange = function(){
         if (get_product_template_image_xhr.readyState  === 4 && get_product_template_image_xhr.status === 200) {
             document.getElementById("product_image_replace").innerHTML = get_product_template_image_xhr.responseText;
+        }
+    }
+
+    get_product_description_xhr.onreadystatechange = function(){
+        if (get_product_description_xhr.readyState  === 4 && get_product_description_xhr.status === 200) {
+            document.getElementById("product_description_replace").innerHTML = get_product_description_xhr.responseText;
         }
     }
 }
