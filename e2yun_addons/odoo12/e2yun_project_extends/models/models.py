@@ -237,6 +237,8 @@ class SurveyQuestion(models.Model):
     # 题库页面创建并可以保存，继承并修改：required=False
     page_id = fields.Many2one('survey.page', string='Survey page',
                               ondelete='cascade', required=False, default=lambda self: self.env.context.get('page_id'))
+    type_id = fields.Many2one('question.type', string='问题类型')
+
     @api.onchange('labels_ids')
     def _onchange_score(self):
         res = self.labels_ids
@@ -281,3 +283,17 @@ class SurveyQuestion(models.Model):
         if not res.question_bank_type or not res.scoring_method:
             raise exceptions.Warning(_('题库大类或计分方式未选择，请选择'))
         return res
+
+    # @api.depends('new_type')
+    # @api.onchange('new_type')
+    # def onchange_question_type(self):
+    #     code = self.new_type.name
+    #     if code != '单选题' or code != '多选' or code != '矩阵':
+    #         self.labels_ids = int()
+
+class NewQuestionType(models.Model):
+    _name = 'question.type'
+
+    name = fields.Char(string='问题类型的名称')
+    type_html = fields.Html(string='问题类型的样式')
+
