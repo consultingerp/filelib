@@ -33,7 +33,7 @@
                             <field name="current_team_id" invisible="1"/>
                             <field name="detail_year"/>
                             <field name="target_month"/>
-                            <field name="sales_member"/>
+                            <field name="sales_member" domain="[('id', 'in', current_team_id.member_ids.ids)]"/>
                             <field name="team_target_monthly"/>
                         </tree>
                     </field>
