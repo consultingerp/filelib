@@ -7,6 +7,8 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='public_categ_ids']" position="after">
               <field name="category_parents" readonly="1" widget="many2many_tags"/>
+                <field name="product_template_external_website"/>
+                <field name="custom_order"/>
             </xpath>
         </field>
     </record>

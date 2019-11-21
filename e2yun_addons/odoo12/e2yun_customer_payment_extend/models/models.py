@@ -238,7 +238,16 @@ class e2yun_customer_payment_extend(models.Model):
             _logger.info("退款推送测试--4，用户id%s" % self.partner_id)
 
     @api.model
+    def default_get(self, fields_list):
+        ctx = self._context.copy()
+        idd = ctx['partner_id']
+        res = super(e2yun_customer_payment_extend, self).default_get(fields_list)
+        res.update({'partner_id': idd})
+        return res
+
+    @api.model
     def create(self, vals_list):
+        ctx = self._context.copy()
         # atch = vals_list['payment_attachments']  # [[6, false, [11077, 11022]]] 展开多层list
         # temp = []
         # for r in atch:  # [6,0,[11077]]
@@ -250,6 +259,14 @@ class e2yun_customer_payment_extend(models.Model):
         #     # atch_id = ids
         #     atch_line = self.env['ir.attachment'].browse(ids)
         #     atch_line.write({'res_model': 'account.payment'})
+
+        # if not vals_list['payment_type']:
+        #     vals_list['payment_type'] = 'inbound'
+        # if not vals_list['partner_type']:
+        #     vals_list['partner_type'] = 'customer'
+
+        # if not vals_list['partner_id']:
+        #     vals_list['partner_id'] = ctx['partner_id']
 
         if vals_list['amount'] == 0:
             raise Warning(
