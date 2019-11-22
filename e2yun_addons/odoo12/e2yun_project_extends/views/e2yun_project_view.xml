@@ -153,6 +153,159 @@
                         </tree>
                     </field>
                 </xpath>
+                <xpath expr="//field[@name='type']" position="before">
+                    <field name="type_id" string="问题类型" widget="radio"/>
+                </xpath>
+                <xpath expr="//field[@name='type']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='labels_ids']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('type_id', 'not in', [9, 10, 11])]}</attribute>
+                </xpath>
+                <xpath expr="//label[@for='labels_ids_2']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('type_id', '!=', 11)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='labels_ids_2']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('type_id', '!=', 11)]}</attribute>
+                </xpath>
+                <!--问题页面继承选项-->
+                <xpath expr="//notebook/page[2]/group[1]/div" position="attributes">
+                    <attribute name="attrs">{'invisible': [('type_id', 'not in', [5,6,8])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='validation_required']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('validation_email', '=', True), ('type_id', '=', 6)]}</attribute>
+                </xpath>
+                <xpath expr="//notebook/page[2]/group[1]/div/group[2]" position="replace">
+                    <field name="validation_length_min" attrs="{'invisible': [('type_id', '!=', 6)]}"/>
+                    <field name="validation_length_max" attrs="{'invisible': [('type_id', '!=', 6)]}"/>
+                    <field name="validation_min_float_value" attrs="{'invisible': [('type_id', '!=', 5)]}"/>
+                    <field name="validation_max_float_value" attrs="{'invisible': [('type_id', '!=', 5)]}"/>
+                    <field name="validation_min_date" attrs="{'invisible': [('type_id', '!=', 8)]}"/>
+                    <field name="validation_max_date" attrs="{'invisible': [('type_id', '!=', 8)]}"/>
+                    <field name="validation_error_msg" colspan="4"/>
+                </xpath>
+                <xpath expr="//field[@name='matrix_subtype']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('type_id','!=',11)]}</attribute>
+                </xpath>
+                <xpath expr="//notebook/page[2]/group[2]" position="attributes">
+                    <attribute name="attrs">{'invisible':[('type_id','not in',[6, 5])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='display_mode']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('type_id','not in',[9])],'required':[('type_id','=',9)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='column_nb']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('display_mode','=','dropdown'), ('type_id','=',9)]}</attribute>
+                </xpath>
+                <xpath expr="//notebook/page[2]/group[3]" position="attributes">
+                    <attribute name="attrs">{'invisible':[('type_id','not in',[9,10,11])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='comment_count_as_answer']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', ('comments_allowed', '=', False), ('type_id', 'in', [11])]}</attribute>
+                </xpath>
+                <!--样式继承-->
+                <xpath expr="//form/sheet/group/group[2]/div" position="replace">
+                    <div class="col-lg-6 offset-lg-3 o_preview_questions">
+                        <!-- Multiple Lines Text Zone -->
+                        <div attrs="{'invisible': [('type_id', '!=', 5)]}">
+                            <i class="fa fa-align-justify fa-4x" role="img" aria-label="Multiple lines" title="Multiple Lines"/>
+                        </div>
+                        <!-- Single Line Text Zone -->
+                        <div attrs="{'invisible': [('type_id', '!=', 6)]}">
+                            <i class="fa fa-minus fa-4x" role="img" aria-label="Single Line" title="Single Line"/>
+                        </div>
+                        <!-- Numerical Value -->
+                        <div attrs="{'invisible': [('type_id', '!=', 7)]}">
+                            <i class="fa fa-2x" role="img" aria-label="Numeric" title="Numeric">123..</i>
+                        </div>
+                        <!-- Date and Time -->
+                        <div attrs="{'invisible': [('type_id', '!=', 8)]}">
+                            <p class="o_datetime">YYYY-MM-DD
+                                <i class="fa fa-calendar fa-2x" role="img" aria-label="Calendar" title="Calendar"/>
+                            </p>
+                        </div>
+                        <!-- Multiple choice: only one answer -->
+                        <div attrs="{'invisible': [('type_id', '!=', 9)]}" role="img" aria-label="Multiple choice with one answer" title="Multiple choice with one answer">
+                            <div class="row"><i class="fa fa-circle-o  fa-lg"/> answer</div>
+                            <div class="row"><i class="fa fa-dot-circle-o fa-lg"/> answer</div>
+                            <div class="row"><i class="fa fa-circle-o  fa-lg"/> answer</div>
+                        </div>
+                        <!-- Multiple choice: multiple answers allowed -->
+                        <div attrs="{'invisible': [('type_id', '!=', 10)]}" role="img" aria-label="Multiple choice with multiple answers" title="Multiple choice with multiple answers">
+                            <div class="row"><i class="fa fa-square-o fa-lg"/> answer</div>
+                            <div class="row"><i class="fa fa-check-square-o fa-lg"/> answer</div>
+                            <div class="row"><i class="fa fa-square-o fa-lg"/> answer</div>
+                        </div>
+                        <!-- Matrix -->
+                        <div attrs="{'invisible': [('type_id', '!=', 11)]}">
+                            <div class="row o_matrix_head">
+                                <div class="col-lg-3"></div>
+                                <div class="col-lg-3">ans</div>
+                                <div class="col-lg-3">ans</div>
+                                <div class="col-lg-3">ans</div>
+                            </div>
+                            <div class="row o_matrix_row">
+                                <div class="col-lg-3">Row1</div>
+                                <div class="col-lg-3"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
+                                <div class="col-lg-3"><i class="fa fa-dot-circle-o fa-lg" role="img" aria-label="Checked" title="Checked"/></div>
+                                <div class="col-lg-3"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
+                            </div>
+                            <div class="row o_matrix_row">
+                                <div class="col-lg-3">Row2</div>
+                                <div class="col-lg-3"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
+                                <div class="col-lg-3"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
+                                <div class="col-lg-3"><i class="fa fa-dot-circle-o fa-lg" role="img" aria-label="Checked" title="Checked"/></div>
+                            </div>
+                            <div class="row o_matrix_row">
+                                <div class="col-lg-3">Row3</div>
+                                <div class="col-lg-3"><i class="fa fa-dot-circle-o fa-lg" role="img" aria-label="Checked" title="Checked"/></div>
+                                <div class="col-lg-3"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
+                                <div class="col-lg-3"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
+                            </div>
+                        </div>
+                        <div attrs="{'invisible': [('type_id', '!=', 12)]}" role="img" aria-label="Select choice" title="Select choice">
+                            <div class="row"><i/> 请选择 v</div>
+                            <div class="row"><i/> 选项一</div>
+                            <div class="row"><i/> 选项二</div>
+                        </div>
+                        <div attrs="{'invisible': [('type_id', '!=', 13)]}">
+                            <div class="row o_matrix_head">
+                                <div class="col-lg-2"></div>
+                                <div class="col-lg-2">非常不满意</div>
+                                <div class="col-lg-2"></div>
+                                <div class="col-lg-2"></div>
+                                <div class="col-lg-2"></div>
+                                <div class="col-lg-2">非常满意</div>
+                            </div>
+                            <div class="row o_matrix_head">
+                                <div class="col-lg-2"></div>
+                                <div class="col-lg-2">1</div>
+                                <div class="col-lg-2">2</div>
+                                <div class="col-lg-2">3</div>
+                                <div class="col-lg-2">4</div>
+                                <div class="col-lg-2">5</div>
+                            </div>
+                            <div class="row o_matrix_row">
+                                <div class="col-lg-2">标题一</div>
+                                <div class="col-lg-2"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
+                                <div class="col-lg-2"><i class="fa fa-dot-circle-o fa-lg" role="img" aria-label="Checked" title="Checked"/></div>
+                                <div class="col-lg-2"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
+                                <div class="col-lg-2"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
+                                <div class="col-lg-2"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
+                            </div>
+                            <div class="row o_matrix_row">
+                                <div class="col-lg-2">标题二</div>
+                                <div class="col-lg-2"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
+                                <div class="col-lg-2"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
+                                <div class="col-lg-2"><i class="fa fa-dot-circle-o fa-lg" role="img" aria-label="Checked" title="Checked"/></div>
+                                <div class="col-lg-2"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
+                                <div class="col-lg-2"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
+                            </div>
+                        </div>
+                        <div attrs="{'invisible': [('type_id', '!=', 14)]}" role="img" aria-label="upload attachments" title="upload attachments">
+                            <div class="row"><i/> 请选择文件(30Mb以内)</div>
+                        </div>
+                    </div>
+                </xpath>
             </field>
         </record>
         <!--题库页面添加创建按钮-->
@@ -179,9 +332,40 @@
             <field name="inherit_id" ref="survey.survey_question_search"/>
             <field name="arch" type="xml">
                 <xpath expr="//filter[@name='group_by_type']" position="after">
-                    <filter name="group_by_question_bank_type" string="Type" domain="[]"  context="{'group_by':'question_bank_type'}"/>
+                    <filter name="group_by_question_bank_type" string="题库大类" domain="[]"  context="{'group_by':'question_bank_type'}"/>
                 </xpath>
             </field>
         </record>
+        <!--新增问题类型列表-->
+        <record model="ir.ui.view" id="question_type">
+            <field name="name">Question Type</field>
+            <field name="model">question.type</field>
+            <field name="arch" type="xml">
+                <tree string="Question Type">
+                    <field name="name"/>
+                    <field name="type_html"/>
+                </tree>
+            </field>
+        </record>
+        <!--新增问题类型表单-->
+        <record model="ir.ui.view" id="question_type">
+            <field name="name">Question Type</field>
+            <field name="model">question.type</field>
+            <field name="arch" type="xml">
+                <form string="Question Type">
+                    <field name="name"/>
+                    <field name="type_html"/>
+                </form>
+            </field>
+        </record>
+        <!--添加视图的动作-->
+        <record model="ir.actions.act_window" id="action_question_type">
+            <field name="name">问题类型</field>
+            <field name="res_model">question.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!--添加问题类型菜单-->
+        <menuitem name="新题型配置" id="new_question_type" action="action_question_type" parent="survey.menu_surveys_configuration"/>
     </data>
 </odoo>    
