@@ -18,7 +18,6 @@ class ModelName (models.Model):
         client = suds.client.Client(url)
         result = client.service.getSAPState(self.app_code or '')
         if result == 'S':
-        # print('success')
             return {
                 'view_type': 'form',
                 'view_mode': 'form',
