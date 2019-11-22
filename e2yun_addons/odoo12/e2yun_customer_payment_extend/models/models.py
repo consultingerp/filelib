@@ -32,7 +32,8 @@ class e2yun_customer_payment_extend(models.Model):
     payment_voucher = fields.Char('交款凭证')
     marketing_activity = fields.Char('参与市场活动')
     bank_num = fields.Many2one('payment_bank.info', '银行帐号')
-    payment_attachments = fields.One2many('ir.attachment', 'res_id', string="付款附件", required=True)
+    payment_attachments = fields.One2many('ir.attachment', 'res_id',
+                                          domain=[('res_model', '=', 'account.payment')], string="付款附件")
 
     related_shop = fields.Many2one('crm.team', '门店', required=True)
     receipt_Num = fields.Char('收款编号', readonly=True)
@@ -253,29 +254,18 @@ class e2yun_customer_payment_extend(models.Model):
     def create(self, vals_list):
         ctx = self._context.copy()
 
-        # atch = vals_list['payment_attachments']  # [[6, false, [11077, 11022]]] 展开多层list
-        # temp = []
-        # for r in atch:  # [6,0,[11077]]
-        #     if type(r) is dict:
-        #         for r1 in r:
-        #             if type(r1) is dict:  # 6, 0, [11077, 11022]
-        #                 temp.extend(r1)
-        # for ids in temp:
-        #     atch_id = ids
-        #     atch_line = self.env['ir.attachment'].browse(ids)
-        #     atch_line.write({'res_model': 'account.payment'})
-
-        # if not vals_list['payment_type']:
-        #     vals_list['payment_type'] = 'inbound'
-        # if not vals_list['partner_type']:
-        #     vals_list['partner_type'] = 'customer'
-
-        # if not vals_list['partner_id']:
-        #     vals_list['partner_id'] = ctx['partner_id']
+        atch = vals_list['payment_attachments']  # [[],[]]
+        for r in atch:  # [0,'virtual', {}]
+            r[2]['res_model'] = 'account.payment'
 
         if vals_list['amount'] == 0:
             raise Warning(
                 _("付款金额不能为0!"))
+
+        a = vals_list.get('payment_attachments')
+        if not a:
+            raise Warning(
+                _("付款附件不能为空!"))
 
         if not vals_list.get('journal_id', False):
             # currency_id = self.env['res.company'].browse(vals_list.get('company_id', False)).currency_id.id
