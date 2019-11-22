@@ -195,7 +195,10 @@ class OnlineShop(http.Controller):
                 product_add_to_cart_href = "cart.html"
                 product_template_price_str = "¥" + str(product_template_price_float)
                 # TODO:是否需要增加产品描述字段
-                product_template_description = "产品描述产品描述产品描述"
+                if product_template.description_sale:
+                    product_template_description = product_template.description_sale
+                else:
+                    product_template_description = ''
                 # TODO:是否添加一个字段，控制产品是否展示到在线商城
 
                 text = """
@@ -325,6 +328,18 @@ class OnlineShop(http.Controller):
         response_text = large_image_header + large_image_body + large_image_footer + small_image_header + small_image_body + small_image_footer
         return http.Response(response_text)
 
+    # get_product_description
+    @http.route(['/online_shop/get_product_description/<int:product_template_id>'], type='http', auth="public")
+    def get_product_description(self, product_template_id, **kwargs):
+        product_template = http.request.env['product.template'].search([('id', '=', product_template_id)], limit=1)
+        if product_template:
+            if product_template.description_html:
+                response_text = product_template.description_html
+                return http.Response(response_text)
+            else:
+                return http.Response(' ')
+        else:
+            return http.Response(' ')
 
 
     @http.route(['/online_shop/get_product_detail/<int:product_template_id>'], type='http', auth="public")
@@ -343,12 +358,21 @@ class OnlineShop(http.Controller):
     </div>
     <!--TODO:产品名称-->
     <h3 class="product-title mb--20">"""
-                middle_text = """</h3>
-    <!--TODO:产品简介（短）-->
-    <p class="product-short-description mb--20">产品简介</p>
-    <!--TODO:产品价格-->
-    <div class="product-price-wrapper mb--25">
-        <span class="money">"""
+                if product_template.description_sale:
+                    middle_text = """</h3>
+                        <!--TODO:产品简介（短）-->
+                        <p class="product-short-description mb--20">""" + str(product_template.description_sale) + """</p>
+                        <!--TODO:产品价格-->
+                        <div class="product-price-wrapper mb--25">
+                            <span class="money">"""
+                else:
+                    middle_text = """</h3>
+                        <!--TODO:产品简介（短）-->
+                        <p class="product-short-description mb--20"></p>
+                        <!--TODO:产品价格-->
+                        <div class="product-price-wrapper mb--25">
+                            <span class="money">"""
+
                 price_str = "¥" + str(product.lst_price)
                 footer_text = """</span>
     </div>
@@ -384,6 +408,7 @@ class ProductTemplateCategoryExtend(models.Model):
     category_parents = fields.Many2many('product.public.category', 'parent_id', string='所属父类别', compute='get_category_parents', store=True)
     product_template_external_website = fields.Char(string='产品外部页面链接')
     custom_order = fields.Integer(string='产品展示自定义排序')
+    description_html = fields.Html(string='产品详细介绍')
 
     @api.one
     @api.depends('public_categ_ids')
