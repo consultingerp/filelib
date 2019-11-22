@@ -2241,6 +2241,7 @@
         get_product_list_xhr.onreadystatechange = function(){
             if (get_product_list_xhr.readyState == 4 && get_product_list_xhr.status == 200) {
                 document.getElementById("shop_product_list").innerHTML = get_product_list_xhr.responseText;
+                sessionStorage.setItem("current_category_id", 99999);
                 $('.list_btn_add_cart').click(function(e){
                     return list_btn_add_cart_click(e)
                 });
@@ -2263,6 +2264,7 @@
 
         if (get_product_list_xhr.readyState == 4 && get_product_list_xhr.status == 200) {
             document.getElementById("shop_product_list").innerHTML = get_product_list_xhr.responseText;
+            sessionStorage.setItem("current_category_id", id);
         }
     }
  }
@@ -2299,11 +2301,12 @@
 
  function sort_chooser(){
     var chooser_id = document.getElementById("sort_chooser").value
-    url = "/online_shop/sort_product_list/" + chooser_id
+    var current_category_id = sessionStorage.getItem("current_category_id");
+    url = "/online_shop/sort_product_list/" + current_category_id + "/" + chooser_id
     var sort_product_list_xhr = new this.XMLHttpRequest();
 
     sort_product_list_xhr.open("GET", url, true)
-    sort_product_list_xhr.send
+    sort_product_list_xhr.send()
 
     sort_product_list_xhr.onreadystatechange = function(){
         if (sort_product_list_xhr.readyState == 4 && sort_product_list_xhr.status == 200) {
