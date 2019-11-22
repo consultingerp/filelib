@@ -24,15 +24,20 @@ class order_list(http.Controller):
         datas = []
         orders = request.env['sale.order'].search([('state','!=','draft'),('partner_id','=',request.env.user.partner_id.id)])
         for order in orders:
+
+
             data = {
                 'order_name':order.name,
                 'order_date':order.date_order,
                 'order_state':order.state,
-                'order_team':order.team_id.name,
+                'order_team':'',
                 'order_address':order.address or '',
                 'order_phone':order.telephone or '',
                 'order_price' : order.amount_total
             }
+
+            if order.team_id and order.team_id.name:
+                data['order_team'] = order.team_id.name
             lines = []
             total_num = 0
             for line in order.order_line:
