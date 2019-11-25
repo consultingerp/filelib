@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, http
+from odoo.tools import date_utils
 import jinja2
 import os
 import logging
+import json
 
 BASE_DIR = os.path.dirname((os.path.dirname(__file__)))
 templateLoader = jinja2.FileSystemLoader(searchpath=BASE_DIR + "/static/src")
@@ -419,70 +421,13 @@ class OnlineShop(http.Controller):
 
     @http.route(['/online_shop/get_product_image/<int:product_template_id>'], type='http', auth="public")
     def get_product_image(self, product_template_id, **kwargs):
-        large_image_header = """<div class="product-gallery__large-image mb--30">
-                                                <div class="product-gallery__wrapper">
-                                                    <div class="element-carousel main-slider image-popup"
-                                                    data-slick-options='{
-                                                        "slidesToShow": 1,
-                                                        "slidesToScroll": 1,
-                                                        "infinite": true,
-                                                        "arrows": false, 
-                                                        "asNavFor": ".nav-slider"
-                                                    }'>"""
-        large_image_footer = """</div>
-                                                </div>
-                                            </div>"""
-        small_image_header = """<div class="product-gallery__nav-image">
-                                                <div class="element-carousel nav-slider product-slide-nav slick-vertical-center" 
-                                                data-slick-options='{
-                                                    "spaceBetween": 30,
-                                                    "slidesToShow": 3,
-                                                    "slidesToScroll": 1,
-                                                    "swipe": true,
-                                                    "infinite": true,
-                                                    "focusOnSelect": true,
-                                                    "asNavFor": ".main-slider",
-                                                    "arrows": true, 
-                                                    "prevArrow": {"buttonClass": "slick-btn slick-prev", "iconClass": "la la-angle-left" },
-                                                    "nextArrow": {"buttonClass": "slick-btn slick-next", "iconClass": "la la-angle-right" }
-                                                }'
-                                                data-slick-responsive='[
-                                                    {
-                                                        "breakpoint":767, 
-                                                        "settings": {
-                                                            "slidesToShow": 4
-                                                        } 
-                                                    },
-                                                    {
-                                                        "breakpoint":575, 
-                                                        "settings": {
-                                                            "slidesToShow": 3
-                                                        } 
-                                                    },
-                                                    {
-                                                        "breakpoint":480, 
-                                                        "settings": {
-                                                            "slidesToShow": 2
-                                                        } 
-                                                    }
-                                                ]'>"""
-        small_image_footer = """</div></div>"""
         product_template_image_pool = http.request.env['product.image.ext'].search([('product_tmpl_id', '=', product_template_id)], order='order_sort asc')
-        large_image_body = """"""
-        small_image_body = """"""
+        datas = []
+        # product_template_image.image_path
         for product_template_image in product_template_image_pool:
-            large_text = """<figure class="product-gallery__image zoom">
-                                                    <img src='""" + product_template_image.image_path + """' alt="Product"><div class="product-gallery__actions"><button class="action-btn btn-zoom-popup"><i class="la la-eye"></i></button>
-                                                    </div>
-                                                </figure>"""
-            small_text = """<figure class="product-gallery__nav-image--single">
-                                                <img src='""" + product_template_image.image_path +"""' alt="Products">
-                                            </figure>"""
-            small_image_body = small_image_body + small_text
-            large_image_body = large_image_body + large_text
+            datas.append(product_template_image.image_path)
 
-        response_text = large_image_header + large_image_body + large_image_footer + small_image_header + small_image_body + small_image_footer
-        return http.Response(response_text)
+        return http.request.make_response(json.dumps(datas, default=date_utils.json_default))
 
     # get_product_description
     @http.route(['/online_shop/get_product_description/<int:product_template_id>'], type='http', auth="public")
