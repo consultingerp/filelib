@@ -74,5 +74,5 @@ class crm_lead(models.Model):
     # x_studio_proposal_type = fields.Selection(track_visibility='onchange')
     source_id = fields.Many2one(track_visibility='onchange')
     # x_studio_eatp = fields.Selection(track_visibility='onchange')
-    rec_rev = fields.Selection(track_visibility='onchange')
+    # rec_rev = fields.Selection(track_visibility='onchange')
     # x_studio_pre_sales_support = fields.Selection(track_visibility='onchange')

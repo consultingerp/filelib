@@ -41,7 +41,7 @@ class CrmLead(models.Model):
                                 ("FP", "FP-Fixed price"),
                                 ("VG", "VG-Service Retail,Gross(withou pass-through)"),
                                 ("VN", "VN-Service Retail,Net(pass-through)"),
-                                ("WL", "WL-Workload")], string='Rec Rev', required=True)
+                                ("WL", "WL-Workload")], string='Rec Rev', required=True, track_visibility='onchange')
 
     cooperate_with_partner = fields.Boolean('Cooperate with Partner?', default=False)
     alliance_mode = fields.Selection([('Resell', 'Resell'), ('Solution', 'Solution'), ('Referral', 'Referral')],
