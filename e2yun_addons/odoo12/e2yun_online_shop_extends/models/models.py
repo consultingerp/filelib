@@ -279,10 +279,25 @@ class OnlineShop(http.Controller):
         <option value="10">上架时间降序</option>
 
         """
+        # 刷新按名称排序的次序
+        replace_view_sql = """
+        CREATE OR REPLACE VIEW product_template_order_view AS (
+        SELECT ROW_NUMBER() OVER(ORDER BY convert_to(LOWER(name),'GB18030')),id from product_template
+        );
+        """
+        reset_sequence_sql = """
+        update product_template 
+        set product_template_order_by_name = product_template_order_view.row_number 
+        from product_template_order_view  
+        where product_template.id = product_template_order_view.id;
+        """
+        http.request.env.cr.execute(replace_view_sql)
+        http.request.env.cr.execute(reset_sequence_sql)
+
         order = {
             0: 'custom_order asc',
-            1: 'name asc',
-            2: 'name desc',
+            1: 'product_template_order_by_name asc',
+            2: 'product_template_order_by_name desc',
             3: 'list_price asc',
             4: 'list_price desc',
             5: 'so_qty asc',
@@ -510,6 +525,8 @@ class ProductTemplateCategoryExtend(models.Model):
     product_template_external_website = fields.Char(string='产品外部页面链接')
     custom_order = fields.Integer(string='产品展示自定义排序')
     description_html = fields.Html(string='产品详细介绍')
+    product_template_order_by_name = fields.Integer()
+
 
     @api.one
     @api.depends('public_categ_ids')
