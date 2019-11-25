@@ -167,8 +167,11 @@ class e2yun_supplier_info(models.Model):
     registered_capital = fields.Char('注册资金')
     registered_address = fields.Char('注册地址')
     image_company = fields.Binary('公司正门照片')
+    image_company_value = fields.Char('公司正门照片')
     organization_chart = fields.Binary('组织架构图')
+    organization_chart_value = fields.Char('组织架构图')
     image_product = fields.Binary('工厂区生产照片')
+    image_product_value = fields.Char('工厂区生产照片')
     company_profile = fields.Text('公司简介')
     # 新增银行信息
     country_bank = fields.Many2one('res.country', '开户行国家', ondelete='restrict')
@@ -183,6 +186,7 @@ class e2yun_supplier_info(models.Model):
     currency_type = fields.Many2one('res.currency', '币种')
     code_bank = fields.Char('银行代码')
     enclosure_bank = fields.Binary('开户行资料附件')
+    enclosure_bank_value = fields.Char('开户行资料附件')
     # 供应商类型
     suppliertype_ids = fields.Many2many('supplier.type',string='供应商类型')
 
@@ -202,6 +206,7 @@ class e2yun_supplier_info(models.Model):
 
     organ_code = fields.Char('组织代码')
     business_license = fields.Binary('营业执照',attachment=True)
+    business_license_value = fields.Char('营业执照')
     annual_turnover = fields.Selection([('1','1000万以下'),('2','1000万-5000万'),('3','5000万-1亿'),('4','1亿-10亿'),('5','10亿-100亿')],'年营业额')
     employees = fields.Selection([('1','500人以下'),('2','500-1000人'),('3','1000-5000人'),('4','5000-10000人')],'企业员工')
     # supply_products = fields.Selection([('1','All'),('2','All / Consumable'),('3','All / Expenses'),
