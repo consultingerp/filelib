@@ -126,17 +126,17 @@ class e2yun_customer_payment_extend(models.Model):
             trans_amount = '%.2f' % res.amount
 
         if res.customer_po:
-            cpo = res.customer_po
+            cpo = "客户PO号:%s" % res.customer_po
         else:
-            cpo = '无'
+            cpo = ''
         if res.po_num:
-            po = res.po_num
+            po = "市场合同号:%s" % res.po_num
         else:
-            po = '无'
+            po = ''
         if res.payment_voucher:
-            pv = res.payment_voucher
+            pv = "交款凭证:%s" % res.payment_voucher
         else:
-            pv = '无'
+            pv = ''
 
         dic = {'D11': '公司收现金',
                'D12': '刷卡',
@@ -177,10 +177,9 @@ class e2yun_customer_payment_extend(models.Model):
                 "value": dic[res.payment_type2]
             },
             "remark": {
-                "value": "客户PO号:%s" % cpo + ' ' +
-                         "市场合同号:%s" % po + ' ' +
-                         "交款凭证:%s" % pv,
-
+                "value": "%s" % cpo + ' ' +
+                         "%s" % po + ' ' +
+                         "%s" % pv,
             }
         }
         if res.partner_id.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
