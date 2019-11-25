@@ -12,6 +12,7 @@ class e2yun_supplier_authentication_info(models.Model):
     name = fields.Char('证书名称')
     code = fields.Char('认证编号')
     image = fields.Binary('证书图片',attachment=True)
+    image_value = fields.Char('证书图片')
     start_date = fields.Date('生效日期')
     end_date = fields.Date('失效日期')
     remark = fields.Text('备注')
