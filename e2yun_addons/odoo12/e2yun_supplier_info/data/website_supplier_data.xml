@@ -57,6 +57,11 @@
                 'enclosure_bank',
                 'suppliertype_ids',
                 'street2',
+                'business_license_value',
+                'image_company_value',
+                'organization_chart_value',
+                'image_product_value',
+                'enclosure_bank_value',
                ]"/>
         </function>
 
@@ -74,6 +79,7 @@
                 'remark',
                 'supplier_info_id',
                 'authentication_type',
+                'image_value',
             ]"/>
         </function>
 

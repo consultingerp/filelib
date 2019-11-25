@@ -21,7 +21,6 @@
         <record id="helpdesk_tickchat_uuid_view_form" model="ir.ui.view">
             <field name="name">helpdesk.livechat.uuid.view_form</field>
             <field name="model">helpdesk.livechat.uuid</field>
-            <field name="type"> </field>
             <field name="arch" type="xml">
                 <form string="Session"  duplicate="false">
                     <sheet>

@@ -71,6 +71,12 @@ class Academy(http.Controller):
             else:
                 states = http.request.env['res.country.state'].sudo().search([])
 
+            is_view = False
+            if supplier_info.state == 'approval1' or supplier_info.state == 'done':
+                is_view = True
+
+            request.session['e2yun_supplier_info_id'] = supplier_info.id
+
             return http.request.render('e2yun_supplier_info.supplier_register_base_info',{'supplier': supplier_info,
                                                                                           'countrys':countrys,
                                                                                           'states':states,
@@ -82,7 +88,9 @@ class Academy(http.Controller):
                                                                                           'name_banks':name_banks,
                                                                                           'currencys_type':currencys_type,
                                                                                           'industrys':industrys,
-                                                                                          'supplier_types': supplier_types})
+                                                                                          'supplier_types': supplier_types,
+                                                                                          'is_view':is_view
+                                                                                          })
         else:
             val = {
                 'login_name': login,
@@ -109,7 +117,9 @@ class Academy(http.Controller):
                                                                                           'name_banks': name_banks,
                                                                                           'currencys_type': currencys_type,
                                                                                           'industrys':industrys,
-                                                                                          'supplier_types': supplier_types})
+                                                                                          'supplier_types': supplier_types,
+                                                                                          'is_view': False
+                                                                                          })
 
 
 
@@ -117,7 +127,55 @@ class Academy(http.Controller):
     #认证信息
     @http.route('/supplier/register_authentication_info/', auth='public', website=True)
     def authentication_info(self, **kw):
-        return http.request.render('e2yun_supplier_info.supplier_register_authentication_info')
+        e2yun_supplier_info_id = request.session['e2yun_supplier_info_id']
+        authentication = http.request.env['e2yun.supplier.authentication.info'].sudo()
+        authentication_info = authentication.search([('supplier_info_id', '=', e2yun_supplier_info_id)])
+
+        supplier_info = http.request.env['e2yun.supplier.info'].sudo().browse(e2yun_supplier_info_id)
+        is_view = False
+        if supplier_info.state == 'approval1' or supplier_info.state == 'done':
+            is_view = True
+        if authentication_info:
+
+            val = {
+                'is_view': is_view,
+                'ISO9000_info': authentication,
+                'ISO14000_info': authentication,
+                'UL_info': authentication,
+                'CCC_info': authentication,
+                'FCC_info': authentication,
+            }
+
+            for a in authentication_info:
+                val[a.authentication_type+'_info'] = a
+
+                # if a.authentication_type == 'ISO9000':
+                #     val['ISO9000_info'] = a
+                # elif a.authentication_type == 'ISO14000':
+                #     val['ISO14000_info'] = a
+                # elif a.authentication_type == 'UL':
+                #     val['UL_info'] = a
+                # elif a.authentication_type == 'CCC':
+                #     val['CCC_info'] = a
+                # elif a.authentication_type == 'FCC':
+                #     val['FCC_info'] = a
+
+            return http.request.render('e2yun_supplier_info.supplier_register_authentication_info', val)
+        else:
+            return http.request.render('e2yun_supplier_info.supplier_register_authentication_info',{
+                'is_view':is_view,
+                'ISO9000_info': authentication,
+                'ISO14000_info': authentication,
+                'UL_info': authentication,
+                'CCC_info': authentication,
+                'FCC_info': authentication,
+            })
+
+
+
+
+
+
 
     #完成
     @http.route('/supplier/register_done/', auth='public', website=True)
