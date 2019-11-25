@@ -253,6 +253,10 @@ class e2yun_customer_payment_extend(models.Model):
     @api.model
     def create(self, vals_list):
         ctx = self._context.copy()
+        a = vals_list.get('payment_attachments')
+        if not a:
+            raise Warning(
+                _("付款附件不能为空!"))
 
         atch = vals_list['payment_attachments']  # [[],[]]
         for r in atch:  # [0,'virtual', {}]
@@ -261,11 +265,6 @@ class e2yun_customer_payment_extend(models.Model):
         if vals_list['amount'] == 0:
             raise Warning(
                 _("付款金额不能为0!"))
-
-        a = vals_list.get('payment_attachments')
-        if not a:
-            raise Warning(
-                _("付款附件不能为空!"))
 
         if not vals_list.get('journal_id', False):
             # currency_id = self.env['res.company'].browse(vals_list.get('company_id', False)).currency_id.id
