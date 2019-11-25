@@ -18,8 +18,11 @@
 
     <!-- style css -->
     <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/main.css">
-
     <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/my.css">
+
+    <script src="/e2yun_online_shop_extends/static/src/assets/js/vendor.js"></script>
+    <script type="text/javascript" src="/e2yun_online_shop_extends/static/src/assets/js/product_details.js"></script>
+
 </head>
 
 <body>
@@ -398,7 +401,7 @@
                                                 "infinite": true,
                                                 "arrows": false, 
                                                 "asNavFor": ".nav-slider"
-                                            }'>
+                                            }' id="big_image_replace">
                                                 <!--TODO:每一个figure标签定义一张图-->
                                                 <figure class="product-gallery__image zoom">
                                                     <img src="/e2yun_online_shop_extends/static/src/assets/img/products/prod-08-700x778.png" alt="Product">
@@ -471,7 +474,7 @@
                                                     "slidesToShow": 2
                                                 } 
                                             }
-                                        ]'>
+                                        ]' id="small_image_replace">
                                             <!--TODO:每一个figure一张图-->
                                             <figure class="product-gallery__nav-image--single">
                                                 <img src="/e2yun_online_shop_extends/static/src/assets/img/products/prod-08-170x195.png" alt="Products">
@@ -1385,45 +1388,7 @@
 
     <!-- ************************* JS Files ************************* -->
     <!--Ajax JS-->
-    <script>
-var current_product_template_id = sessionStorage.getItem("current_product_detail_id");
 
-window.onload=function(){
-    var get_product_template_detail_xhr = new XMLHttpRequest();
-    get_detail_url = "/online_shop/get_product_detail/" + current_product_template_id
-    get_product_template_detail_xhr.open("GET", get_detail_url, true);
-    get_product_template_detail_xhr.send();
-
-    var get_product_template_image_xhr = new XMLHttpRequest();
-    get_image_url = "/online_shop/get_product_image/" + current_product_template_id
-    get_product_template_image_xhr.open("GET", get_image_url, true);
-    get_product_template_image_xhr.send();
-
-    var get_product_description_xhr = new XMLHttpRequest();
-    get_product_description_url = "/online_shop/get_product_description/" + current_product_template_id
-    get_product_description_xhr.open("GET", get_product_description_url, true)
-    get_product_description_xhr.send();
-
-    get_product_template_detail_xhr.onreadystatechange = function(){
-        if (get_product_template_detail_xhr.readyState  === 4 && get_product_template_detail_xhr.status === 200) {
-            document.getElementById("product_detail_replace").innerHTML = get_product_template_detail_xhr.responseText;
-        }
-    }
-
-    get_product_template_image_xhr.onreadystatechange = function(){
-        if (get_product_template_image_xhr.readyState  === 4 && get_product_template_image_xhr.status === 200) {
-            document.getElementById("product_image_replace").innerHTML = get_product_template_image_xhr.responseText;
-        }
-    }
-
-    get_product_description_xhr.onreadystatechange = function(){
-        if (get_product_description_xhr.readyState  === 4 && get_product_description_xhr.status === 200) {
-            document.getElementById("product_description_replace").innerHTML = get_product_description_xhr.responseText;
-        }
-    }
-}
-
-    </script>
 
 
 
