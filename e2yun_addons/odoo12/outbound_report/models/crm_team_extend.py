@@ -8,6 +8,9 @@ class CrmTeamExtend(models.Model):
 
     def write(self, vals):
         res = super(CrmTeamExtend, self).write(vals)
+        # 验证目标设置逻辑
+        if self.use_invoices and not self.team_year:
+            raise exceptions.Warning('请选择年份')
         team_target_year = self.env['team.target.year'].search([])
         year_list = []
         for line in team_target_year:
@@ -16,7 +19,6 @@ class CrmTeamExtend(models.Model):
                 raise exceptions.Warning('%s年的年度目标已存在' % year)
             year_list.append(year)
             total_target = line.invoiced_target_year
-
             target_detail = self.env['team.target.detail'].search([('current_team_id', '=', self.id),
                                                                    ('detail_year', '=', year)])
             invoiced_target = 0
@@ -37,6 +39,13 @@ class CrmTeamExtend(models.Model):
             detail_year = detail.detail_year
             if detail_year not in year_list:
                 raise exceptions.Warning('请先设置%s年的年度目标' % detail_year)
+        # 添加context,再次编辑目标明细时，给导购做筛选
+        # member_ids = self.member_ids
+        # sale_list = []
+        # for id in member_ids._ids:
+        #     sale_list.append(id)
+        # self._context['sale_list'] = sale_list
+        # ctx = self._context.copy()
         return res
 
     @api.depends('team_year')
@@ -52,7 +61,7 @@ class CrmTeamExtend(models.Model):
         }
 
     team_year = fields.Selection([(num, str(num)) for num in range(datetime.now().year - 5, datetime.now().year + 30)],
-                                 string='年份', required=True)
+                                 string='年份')
 
     team_target = fields.One2many(
         'team.target.year',
