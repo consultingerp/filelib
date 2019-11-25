@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Beck - Furniture eCommerce Bootstrap 4 Template</title>
+    <title>商品详情</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicons -->
@@ -18,8 +18,11 @@
 
     <!-- style css -->
     <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/main.css">
-
     <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/my.css">
+
+    <script src="/e2yun_online_shop_extends/static/src/assets/js/vendor.js"></script>
+    <script type="text/javascript" src="/e2yun_online_shop_extends/static/src/assets/js/product_details.js"></script>
+
 </head>
 
 <body>
@@ -398,7 +401,7 @@
                                                 "infinite": true,
                                                 "arrows": false, 
                                                 "asNavFor": ".nav-slider"
-                                            }'>
+                                            }' id="big_image_replace">
                                                 <!--TODO:每一个figure标签定义一张图-->
                                                 <figure class="product-gallery__image zoom">
                                                     <img src="/e2yun_online_shop_extends/static/src/assets/img/products/prod-08-700x778.png" alt="Product">
@@ -471,7 +474,7 @@
                                                     "slidesToShow": 2
                                                 } 
                                             }
-                                        ]'>
+                                        ]' id="small_image_replace">
                                             <!--TODO:每一个figure一张图-->
                                             <figure class="product-gallery__nav-image--single">
                                                 <img src="/e2yun_online_shop_extends/static/src/assets/img/products/prod-08-170x195.png" alt="Products">
@@ -586,7 +589,7 @@
                                 </div>
                                 <div class="tab-content" id="product-tabContent">
                                     <div class="tab-pane fade show active" id="nav-description" role="tabpanel" aria-labelledby="nav-description-tab">
-                                        <div class="product-description">
+                                        <div class="product-description" id="product_description_replace">
                                             <!--TODO:该div下为产品详情Tab的内容-->
 <!--                                            <p>Lorem ipsum dolor sit amet, consec do eiusmod tincididunt ut labore et dolore magna aliqua. Ut enim ad minim veniaLo ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla paExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. iatis unde omnis iste natus error sit voluptatem accusantium </p>-->
 
@@ -1385,34 +1388,7 @@
 
     <!-- ************************* JS Files ************************* -->
     <!--Ajax JS-->
-    <script>
-var current_product_template_id = sessionStorage.getItem("current_product_detail_id");
 
-window.onload=function(){
-    var get_product_template_detail_xhr = new XMLHttpRequest();
-    get_detail_url = "/online_shop/get_product_detail/" + current_product_template_id
-    get_product_template_detail_xhr.open("GET", get_detail_url, true);
-    get_product_template_detail_xhr.send();
-
-    var get_product_template_image_xhr = new XMLHttpRequest();
-    get_image_url = "/online_shop/get_product_image/" + current_product_template_id
-    get_product_template_image_xhr.open("GET", get_image_url, true);
-    get_product_template_image_xhr.send();
-
-    get_product_template_detail_xhr.onreadystatechange = function(){
-        if (get_product_template_detail_xhr.readyState  === 4 && get_product_template_detail_xhr.status === 200) {
-            document.getElementById("product_detail_replace").innerHTML = get_product_template_detail_xhr.responseText;
-        }
-    }
-
-    get_product_template_image_xhr.onreadystatechange = function(){
-        if (get_product_template_image_xhr.readyState  === 4 && get_product_template_image_xhr.status === 200) {
-            document.getElementById("product_image_replace").innerHTML = get_product_template_image_xhr.responseText;
-        }
-    }
-}
-
-    </script>
 
 
 
