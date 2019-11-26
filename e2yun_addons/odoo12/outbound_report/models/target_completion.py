@@ -19,7 +19,7 @@ class TargetCompletion(models.Model):
     def open_target_table(self):
         data = self.read()[0]
         ctx = self._context.copy()
-        # 获取视图的id
+        # 获取视图的id,return时返回指定视图
         tree_view = self.env.ref('outbound_report.target_completion_report_tree_view')
         graph_view = self.env.ref('outbound_report.target_completion_report_graph_view')
 
