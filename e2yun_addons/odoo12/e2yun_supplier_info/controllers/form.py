@@ -102,9 +102,70 @@ class ContactController(WebsiteForm):
                     # supplier_info = supplier_info_obj.search([('login_name', '=', data['record']['login_name'])])
                     # 分步添加
                     supplier_info = supplier_info_obj.search([('id', '=', request.session['e2yun_supplier_info_id'])])
+                    data['record']['state'] = 'Draft'
+
+                    #保存银行信息时检查
+                    if data['record'].get('country_bank',False):
+                        if not data['record'].get('enclosure_bank', False) and data['record'].get(
+                                'enclosure_bank_value', False):
+                            data['record']['enclosure_bank'] = data['record']['enclosure_bank_value']
+                        if not data['record'].get('enclosure_bank', False):
+                            error = {
+                                'enclosure_bank': '开户行资料附件不能为空'
+                            }
+                            return json.dumps({'error_fields': error})
+
+                    #保存公司信息时检查
+                    if data['record'].get('company_name',False):
+                        if not data['record'].get('business_license', False) and data['record'].get('business_license_value',False):
+                            data['record']['business_license'] = data['record']['business_license_value']
+
+                        if not data['record'].get('image_company', False) and data['record'].get('image_company_value',False):
+                            data['record']['image_company'] = data['record']['image_company_value']
+
+                        if not data['record'].get('organization_chart', False) and data['record'].get('organization_chart_value',False):
+                            data['record']['organization_chart'] = data['record']['organization_chart_value']
+
+                        if not data['record'].get('image_product', False) and data['record'].get('image_product_value',False):
+                            data['record']['image_product'] = data['record']['image_product_value']
+
+
+
+                        if not data['record'].get('business_license',False):
+                            error = {
+                                'business_license': '营业执照不能为空'
+                            }
+                            return json.dumps({'error_fields': error})
+
+                        if not data['record'].get('image_company',False):
+                            error = {
+                                'image_company': '公司正门照片不能为空'
+                            }
+                            return json.dumps({'error_fields': error})
+
+                        if not data['record'].get('organization_chart',False):
+                            error = {
+                                'organization_chart': '组织架构图不能为空'
+                            }
+                            return json.dumps({'error_fields': error})
+
+
+
                     supplier_info.write(data['record'])
                     id_record = supplier_info.id
                 else:
+                    if model_name == 'e2yun.supplier.authentication.info':
+                        authentication = http.request.env['e2yun.supplier.authentication.info'].sudo()
+                        authentication_info = authentication.search([('supplier_info_id', '=', data['record']['supplier_info_id']),('authentication_type','=',data['record']['authentication_type'])])
+                        if authentication_info:
+                            authentication_info.unlink()
+                        if not data['record'].get('image',False) and data['record']['image_value']:
+                            data['record']['image'] = data['record']['image_value']
+
+                        supplier_info_obj = http.request.env['e2yun.supplier.info'].sudo()
+                        supplier_info = supplier_info_obj.search([('id', '=', request.session['e2yun_supplier_info_id'])])
+                        supplier_info.state = 'Draft'
+
                     id_record = self.insert_record(request, model_record, data['record'], data['custom'], data.get('meta'))
                     if id_record:
                         self.insert_attachment(model_record, id_record, data['attachments'])

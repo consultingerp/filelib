@@ -22,14 +22,15 @@ class Partner(models.Model):
     @api.model
     def create(self, vals):
         res = super(Partner, self).create(vals)
-        if res and not res.partner_code:
-            if res.customer or res.supplier:
-                if res.customer:
-                    prefix = 'CUS'
-                elif res.supplier:
-                    prefix = 'VEN'
-                name = self.env['ir.sequence'].get_next_code_info_if_no_create('res_partner', prefix, '', 7)
-                res.partner_code = name
+        if not self.env.context['install_mode']:
+            if res and not res.partner_code:
+                if res.customer or res.supplier:
+                    if res.customer:
+                        prefix = 'CUS'
+                    elif res.supplier:
+                        prefix = 'VEN'
+                    name = self.env['ir.sequence'].get_next_code_info_if_no_create('res_partner', prefix, '', 7)
+                    res.partner_code = name
         return res
 
     @api.multi
