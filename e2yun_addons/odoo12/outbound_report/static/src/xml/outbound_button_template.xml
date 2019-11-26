@@ -6,6 +6,9 @@
                 <button class="btn btn-primary create_by_outbound" type="button">查询</button>
 <!--                <button class="btn btn-primary show_outbound_view" type="button">显示图表</button>-->
             </t>
+            <t t-if="widget.displayName=='目标完成占比报表'">
+                <button class="btn btn-primary create_by_target" type="button">查询</button>
+            </t>
         </t>
 
     </t>
