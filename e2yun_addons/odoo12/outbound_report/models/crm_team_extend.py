@@ -11,13 +11,17 @@ class CrmTeamExtend(models.Model):
         # 验证目标设置逻辑
         if self.use_invoices and not self.team_year:
             raise exceptions.Warning('请选择年份')
-        team_target_year = self.env['team.target.year'].search([])
-        year_list = []
+        if self.team_year and not self.team_target:
+            raise exceptions.Warning('请填写门店目标')
+        if self.team_year and not self.invoiced_target_detail:
+            raise exceptions.Warning('请填写目标明细')
+        team_target_year = self.env['team.target.year'].search([('team_id', '=', self.id)])
+        target_year_list = []
         for line in team_target_year:
             year = line.target_year
-            if year in year_list:
+            if year in target_year_list:
                 raise exceptions.Warning('%s年的年度目标已存在' % year)
-            year_list.append(year)
+            target_year_list.append(year)
             total_target = line.invoiced_target_year
             target_detail = self.env['team.target.detail'].search([('current_team_id', '=', self.id),
                                                                    ('detail_year', '=', year)])
@@ -35,10 +39,16 @@ class CrmTeamExtend(models.Model):
             if invoiced_target > total_target:
                 raise exceptions.Warning('%s年：设定目标不能超过年度目标' % year)
         target_detail_all = self.env['team.target.detail'].search([('current_team_id', '=', self.id)])
+        detail_year_list = []
         for detail in target_detail_all:
             detail_year = detail.detail_year
-            if detail_year not in year_list:
-                raise exceptions.Warning('请先设置%s年的年度目标' % detail_year)
+            if detail_year not in target_year_list:
+                raise exceptions.Warning('请先设置%s年的目标明细' % detail_year)
+            if detail_year not in detail_year_list:
+                detail_year_list.append(detail_year)
+        for r in target_year_list:
+            if r not in detail_year_list:
+                raise exceptions.Warning('请设置%s年的年度目标' % r)
         # 添加context,再次编辑目标明细时，给导购做筛选
         # member_ids = self.member_ids
         # sale_list = []
