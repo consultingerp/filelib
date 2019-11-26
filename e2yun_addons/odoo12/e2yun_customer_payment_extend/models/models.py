@@ -253,7 +253,12 @@ class e2yun_customer_payment_extend(models.Model):
     def create(self, vals_list):
         ctx = self._context.copy()
         a = vals_list.get('payment_attachments')
-        if not a:
+
+        pos_flag = vals_list.get('pos_flag', False)
+        if pos_flag:
+            del vals_list['pos_flag']
+
+        if not a and not pos_flag:
             raise Warning(
                 _("付款附件不能为空!"))
 
@@ -278,9 +283,7 @@ class e2yun_customer_payment_extend(models.Model):
                 if journal:
                     vals_list['journal_id'] = journal.id
 
-        pos_flag = vals_list.get('pos_flag',False)
-        if pos_flag:
-            del vals_list['pos_flag']
+
         res = super(e2yun_customer_payment_extend, self).create(vals_list)
         self.env.cr.commit()
         if pos_flag and vals_list.get('create_uid',False):
