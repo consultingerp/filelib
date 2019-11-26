@@ -255,7 +255,7 @@
                 <field name="vat" position="before">
                      <label for="mobile"/>
                     <div class="o_row">
-                        <field name="mobile" widget="phone"/>
+                        <field name="mobile" widget="phone" required="1"/>
                         <button type="action" name="129" class="btn-sm btn-link mb4 fa fa-envelope-o" aria-label="Send SMS" title="Send SMS" attrs="{'invisible':[('mobile', '=', False)]}" context="{'field_name': 'mobile'}"/>
                     </div>
                     <field name="app_code"/>
