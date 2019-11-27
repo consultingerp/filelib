@@ -9,10 +9,17 @@ class TargetCompletion(models.Model):
 
     target_amount = fields.Integer('目标金额')
 
+    # 获取查询视图的view_id,在js中访问该方法获取指定该视图id
+    @api.model
+    def get_view_id(self):
+        query_view = self.env.ref('outbound_report.view_target_completion_query_report')
+        query_view_id = query_view.id
+        return query_view_id
+
     def open_target_table(self):
         data = self.read()[0]
         ctx = self._context.copy()
-        # 获取视图的id
+        # 获取视图的id,return时返回指定视图
         tree_view = self.env.ref('outbound_report.target_completion_report_tree_view')
         graph_view = self.env.ref('outbound_report.target_completion_report_graph_view')
 
@@ -69,6 +76,6 @@ class TargetCompletion(models.Model):
             'context': ctx,
             'domain': domain_list,
             # 实现视图重定向
-            # 'views': [[tree_view.id, 'tree'],
-            #           [graph_view.id, 'graph'], ],
+            'views': [[tree_view.id, 'tree'],
+                      [graph_view.id, 'graph']],
         }

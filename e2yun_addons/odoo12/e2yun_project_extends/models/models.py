@@ -127,7 +127,7 @@ class E2yunProjectSurvey(models.Model):
     _inherit = 'survey.survey'
 
     # 自动带出问卷分类
-    # @api.onchange("questionnaire_classification")
+    # @ap           i.onchange("questionnaire_classification")
     # def default_classification(self):
     #     ctx = self.env.context
         # try:
