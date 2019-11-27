@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-<!--    <template id="target_tree_button_assets_backend" name="tree button assets" inherit_id="web.assets_backend">-->
-<!--        <xpath expr="." position="inside">-->
-<!--            <script type="text/javascript" src="/outbound_report/static/src/js/target_completion.js"></script>-->
-<!--        </xpath>-->
-<!--    </template>-->
+    <template id="target_tree_button_assets_backend" name="tree button assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/outbound_report/static/src/js/target_completion.js"></script>
+        </xpath>
+    </template>
 
     <data>
         <record id="target_completion_report_graph_view" model="ir.ui.view">
@@ -76,7 +76,7 @@
         </record>
 
         <record id="target_completion_report_query_action" model="ir.actions.act_window">
-            <field name="name">目标完成占比报表查询</field>
+            <field name="name">目标完成占比报表</field>
             <field name="res_model">outbound.final</field>
             <field name="view_type">form</field>
             <field name="view_mode">form,tree,graph,dashboard</field>

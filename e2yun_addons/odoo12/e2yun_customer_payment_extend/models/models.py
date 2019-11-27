@@ -168,7 +168,7 @@ class e2yun_customer_payment_extend(models.Model):
                 "color": "#173177"
             },
             "keyword3": {
-                "value": res.related_shop.display_name
+                "value": res.related_shop.name
             },
             "keyword4": {
                 "value": res.partner_id.name

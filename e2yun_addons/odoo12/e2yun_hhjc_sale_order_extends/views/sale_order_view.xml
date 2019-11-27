@@ -10,6 +10,10 @@
                     <button name="action_sync_to_pos" type="object" string="同步到pos"/>
                     <button name="action_sync_pos_sale_order" type="object" string="同步pos订单信息"/>
                     <button name="action_unfreeze_order" type="object" string="解冻销售订单"/>
+                    <button name="action_sync_sale_state_from_pos" type="object" string="同步订单状态"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="before">
+                    <field name="crmstate" readonly="1"/>
                 </xpath>
                 <xpath expr="//field[@name='partner_shipping_id']" position="after">
                     <field name="salesorderid"></field>
