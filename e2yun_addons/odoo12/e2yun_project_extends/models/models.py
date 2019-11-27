@@ -14,10 +14,15 @@ class Questionnaire(models.Model):
     # 问卷模板
     survey_temp_id = fields.Many2one('survey.survey', string='问卷模版')
     parent_id = fields.Many2one('project.task', string='Parent Task')
+    # partner_questionnaire_classification = fields.Selection([('Internally', '对内'), ('Foreign', '对外')], string='问卷分类',
+    #                                                 related='parent_id.questionnaire_classification')
+
 
     # 动态domain筛选模板
-    @api.depends('questionnaire_scenario', 'parent_id')
-    @api.onchange('questionnaire_scenario', 'parent_id')
+    # @api.depends('questionnaire_scenario', 'partner_questionnaire_classification')
+    # @api.onchange('questionnaire_scenario', 'partner_questionnaire_classification')
+    @api.depends('questionnaire_scenario', 'parent_id.questionnaire_classification')
+    @api.onchange('questionnaire_scenario', 'parent_id.questionnaire_classification')
     def onchange_temp_id(self):
         code = self.questionnaire_scenario
         code1 = self.parent_id.questionnaire_classification
@@ -37,6 +42,12 @@ class Questionnaire(models.Model):
         else:
             self.weight = ''
 
+    # @api.onchange('parent_id.multiple_questionnaires')
+    # def _onchange_weight(self):
+    #     code = self.parent_id.multiple_questionnaires
+    #     if code == 'yes':
+
+
 class E2yunTaskInfo(models.Model):
     _inherit = 'project.task'
 
@@ -49,6 +60,15 @@ class E2yunTaskInfo(models.Model):
     multiple_questionnaires = fields.Selection([('yes', '是'), ('no', '否')], string='是否多问卷')
     # 一对多连接列表对象
     questionnaire_ids = fields.One2many('project.questionnaire', 'parent_id', string='Child Questionnaires')
+
+    # 非多问卷时只展示一行
+    @api.onchange('questionnaire_ids')
+    def _questionnaire_length_control(self):
+        if self.multiple_questionnaires == 'no':
+            if len(self.questionnaire_ids) > 1:
+                raise exceptions.Warning(_("行数超过限制！"))
+
+
     # temp_ids = fields.One2many('survey.survey', 'task_id', string='问卷模板')
     # @api.multi
     # def weight_write(self, vals):
@@ -84,29 +104,29 @@ class E2yunTaskInfo(models.Model):
 
 
     # 任务页面打开问卷页面的方法
-    # @api.multi
-    # def turn_page(self):
-    #     self.ensure_one()
-    #     # Get lead views
-    #     form_view = self.env.ref('survey.survey_form')
-    #     tree_view = self.env.ref('survey.survey_tree')
-    #     kanban_view = self.env.ref('survey.survey_kanban')
-    #     return {
-    #         'name': '新建问卷',
-    #         'res_model': 'survey.survey',
-    #         # 'domain': [('type', '=', 'lead')],
-    #         # 'res_id': self.id,
-    #         'view_id': False,
-    #         'target': 'new',
-    #         'views': [
-    #             (form_view.id, 'form'),
-    #             (tree_view.id, 'tree'),
-    #             (kanban_view.id, 'kanban')
-    #         ],
-    #         'view_type': 'tree',
-    #         'view_mode': 'tree,form,kanban',
-    #         'type': 'ir.actions.act_window',
-    #     }
+    @api.multi
+    def turn_page(self):
+        self.ensure_one()
+        # Get lead views
+        form_view = self.env.ref('survey.survey_form')
+        tree_view = self.env.ref('survey.survey_tree')
+        kanban_view = self.env.ref('survey.survey_kanban')
+        return {
+            'name': '新建问卷',
+            'res_model': 'survey.survey',
+            # 'domain': [('type', '=', 'lead')],
+            # 'res_id': self.id,
+            'view_id': False,
+            'target': 'new',
+            'views': [
+                (form_view.id, 'form'),
+                (tree_view.id, 'tree'),
+                (kanban_view.id, 'kanban')
+            ],
+            'view_type': 'tree',
+            'view_mode': 'tree,form,kanban',
+            'type': 'ir.actions.act_window',
+        }
 
     # @api.model
     # def create(self, vals):
