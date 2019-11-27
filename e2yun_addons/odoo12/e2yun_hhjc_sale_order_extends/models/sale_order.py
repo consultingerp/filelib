@@ -51,6 +51,49 @@ class SaleOrder(models.Model):
     vkorgtext = fields.Char('事业部')
     vtweg = fields.Char('分销渠道')
 
+    # 订单状态的粒度定义，或产品或产品分类定义订单状态，或是定义统一的订单状态，通过业务运行触发订单状态更新。推送消息给客户，或客户可在自己个人中心查看。
+    # 订单信息：显示已支付的总金额
+    # A
+    # .1
+    # 已接单2加工中3加工完成4部分送货 / 送货完成5（改派状态）
+    # 送货状态推送送货人信息（已推送）。
+    # 二维码不一定是具体产品，可能是系列或者类别的。
+    # 瓷砖Z101\Z106、销售订单行项目采购交货页签（加工字段有一个项目为是）
+    # 1.
+    # 确认销售单（除已关闭状态）， 2.
+    # 加工单状态是已传输
+    # .3.加工单状态是已转储。4.
+    # 部分送货有送货，销售订单所有行项目已交完货为送货完成。5.
+    # 取相应退货订单的退货原因。（有退货就显示）
+    # 备注：装运条件是空退空出的不是显示在客户的“我的订单”里
+    # 整张订单关闭不显示。
+    # 送货剩下行项目关闭，状态更新为送货完成。
+    # B
+    # .1
+    # 已接单2生产中3全部入库 / 部分入库4部分送货 / 送货完成5（改派状态）
+    # Z102\Z103\Z105, 行项目物料的是否是否定制为001，只要有一个是就是定制品
+    # 1.
+    # 确认报价单（订单状态不等于已传输与已关闭），2.
+    # 订单状态为已传输（当有关闭定制品行项目时检查是否有效的产品项目），3.
+    # 所有行项目入库就是已入库是全部入库，部分行项目入库显示部分入库。检查销售订单库存（对应物料，对应批次），允许手工修改。4.
+    # 部分送货有送货，销售订单所有行项目已交完货为送货完成。5.
+    # 取相应退货订单的退货原因。
+    # 整张订单关闭不显示。
+    # 送货剩下行项目关闭，状态更新为送货完成。
+    # C
+    # .1
+    # 已接单2部分送货 / 送货完成3（改派状态）
+    # 除A\B之外的。
+    # 1.
+    # 确认报价单（订单状态不等于已关闭），2.
+    # 部分送货有送货，销售订单所有行项目已交完货为送货完成。3.
+    # 取相应退货订单的退货原因。
+    # 任务：销售订单相关字段
+    # A.1已接单2加工中3加工完成4部分送货 / 送货完成5（改派状态）
+    # B.1已接单2生产中3全部入库/部分入库4部分送货/送货完成5（改派状态）
+    # C.1已接单2部分送货/送货完成3（改派状态）
+    crmstate = fields.Char("CRM订单状态", default="新建", help="A.1已接单2加工中3加工完成4部分送货 / 送货完成5（改派状态）\nB.1已接单2生产中3全部入库/部分入库4部分送货/送货完成5（改派状态）\nC.1已接单2部分送货/送货完成3（改派状态）")
+
     # @api.model
     # def create(self, vals):
     #     res = super(SaleOrder, self).create(vals)
@@ -65,6 +108,37 @@ class SaleOrder(models.Model):
     # def write(self, vals):
     #     res = super(SaleOrder, self).write(vals)
     #     return res
+
+    # @api.multi
+    # @api.depends('crmstate')
+    # def _compute_crmstate(self):
+    #     ICPSudo = self.env['ir.config_parameter'].sudo()
+    #     url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncSaleOrder?wsdl'  # webservice调用地址
+    #     client = suds.client.Client(url)
+    #     datajsonstring = {}
+    #     datajsonstring['salesorderid']
+    #     result = client.service.getSaleOrderCrmState(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
+    #     resultjson = json.loads(result)
+    #     sucess = resultjson['sucess']
+    #     if sucess == 'no':
+    #         raise exceptions.Warning("同步失败,返回信息：%s" % resultjson['message'])
+    #     self.crmstate = resultjson['crmstate']
+
+    def action_sync_sale_state_from_pos(self):
+        if self and self.salesorderid:
+            ICPSudo = self.env['ir.config_parameter'].sudo()
+            url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncSaleOrder?wsdl'  # webservice调用地址
+            client = suds.client.Client(url)
+            datajsonstring = {}
+            datajsonstring['salesorderid'] = self.salesorderid
+            result = client.service.getSaleOrderCrmState(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
+            resultjson = json.loads(result)
+            sucess = resultjson['sucess']
+            if sucess == 'no':
+                raise exceptions.Warning("同步失败,返回信息：%s" % resultjson['message'])
+            self.crmstate = resultjson['crmstate']
+        else:
+            raise exceptions.Warning("POS销售订单为空，不能同步pos状态！")
 
     def action_sync_sale_to_pos(self):
         res = self
@@ -114,6 +188,7 @@ class SaleOrder(models.Model):
             item['maktx'] = line.product_id.name
             item['itemtype'] = 'ZTA1'
             item['itemtypetext'] = '标准项目'
+            item['jiaohuozhuangtaitext'] = '未创建交货单'
             item['rownum'] = num
             item['kwmen'] = line.product_uom_qty
             item['vrkme'] = line.product_uom.name
@@ -136,6 +211,7 @@ class SaleOrder(models.Model):
         # item['prdhatext'] = line.product_id.layer_name
         item['itemtype'] = 'ZWOD'
         item['itemtypetext'] = '费用项目'
+        item['jiaohuozhuangtaitext'] = '无需交货'
         item['rownum'] = num
         item['kwmen'] = 1
         item['vrkme'] = 'SET'
@@ -227,7 +303,7 @@ class SaleOrder(models.Model):
                 if product:
                     date_line['product_id'] = product.id
                 else:
-                    date_line['product_id'] = 1
+                    raise exceptions.Warning("物料号：%s不存在，请检查物料是否同步了。" % (line['matnr']))
                 date_line['is_sync'] = True
                 sale_order_line.create(date_line)
         else:

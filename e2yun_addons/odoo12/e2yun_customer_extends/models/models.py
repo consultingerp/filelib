@@ -65,6 +65,8 @@ class E2yunCsutomerExtends(models.Model):
     ], string='Status', default='potential_customer', group_expand='_group_expand_stage_id')
     related_guide = fields.Many2many('res.users',  domain="[('function', '!=', False)]", readonly=True)
 
+    _sql_constraints = [('unique_app_code', 'UNIQUE(app_code)', 'app_code(客户编号)需唯一！')]
+
     @api.model
     def default_get(self, fields_list):
         res = super(E2yunCsutomerExtends, self).default_get(fields_list)
