@@ -303,7 +303,7 @@ class SaleOrder(models.Model):
                 if product:
                     date_line['product_id'] = product.id
                 else:
-                    date_line['product_id'] = 1
+                    raise exceptions.Warning("物料号：%s不存在，请检查物料是否同步了。" % (line['matnr']))
                 date_line['is_sync'] = True
                 sale_order_line.create(date_line)
         else:
