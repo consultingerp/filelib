@@ -115,22 +115,3 @@ class OutboundFinal(models.Model):
             # 'context': ctx.update({'dashboard_view_ref': 'outbound_report.outbound_report_dashboard_view'}),
         }
 
-    @api.model
-    def get_outbound_report_data(self):
-        datas = []
-        parent_obj = self.env['outbound.final']
-
-        v1 = parent_obj.search_count([('customer', '=', True)])
-        v2 = parent_obj.search_count([('customer', '=', True), ('state', 'in',
-                                                                ['intention_customer', 'intention_customer_loss',
-                                                                 'target_customer', 'target_customer_loss',
-                                                                 'contract_customers'])])
-        v3 = parent_obj.search_count([('customer', '=', True), (
-        'state', 'in', ['target_customer', 'target_customer_loss', 'contract_customers'])])
-        v4 = parent_obj.search_count([('customer', '=', True), ('state', 'in', ['contract_customers'])])
-        datas.append({'value': v1, 'name': '潜在客户'})
-        datas.append({'value': v2, 'name': '意向客户'})
-        datas.append({'value': v3, 'name': '准客户'})
-        datas.append({'value': v4, 'name': '成交客户'})
-
-        return datas
