@@ -1,0 +1,19 @@
+
+#. module: e2yun_agreement_pws_import
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_pws_import.view_agreement_pws_import
+msgid "_Import"
+msgstr "导入"
+
+
+
+#. module: e2yun_agreement_pws_import
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_pws_import.view_agreement_pws_import
+msgid "Cancel"
+msgstr "取消"
+
+
+#. module: e2yun_agreement_pws_import
+#: model_terms:ir.ui.view,arch_db:base.e2yun_agreement_pws_import.view_agreement_pws_import
+msgid "pws import"
+msgstr "PWS解析导入"
+
