@@ -20,17 +20,24 @@ odoo.define('outbound_report.target_completion_tree_view_button', function (requ
         create_data_by_target: function () {
             var self = this;
             console.log('进⼊了按钮绑定的⽅法⾥⾯！');
-            alert('目标')
-
-            return this.do_action({
-                name: '目标完成占比报表查询',
-                type: 'ir.actions.act_window',
-                view_type: 'form',
-                view_mode: 'form',
-                target: 'new',
-                views: [false, 'form']],
-                res_model: 'outbound.final',
-                context : self.initialState.context
+            // 获取指定视图id,返回指定视图
+            this._rpc({
+                    model: 'outbound.final',
+                    method: 'get_view_id',
+                    })
+            .then(function(query_view_id){
+                var view_id = query_view_id;
+                return self.do_action({
+                                name: '目标完成占比报表查询',
+                                type: 'ir.actions.act_window',
+                                view_type: 'form',
+                                view_mode: 'form',
+                                target: 'new',
+                //                views: [[2865, 'tree'],[2864, 'graph'],[false, 'form']],
+                                views: [[view_id, 'form']],
+                                res_model: 'outbound.final',
+                                context : self.initialState.context
+                            });
             });
         },
 
