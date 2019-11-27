@@ -11,10 +11,10 @@
                     <attribute name="create">0</attribute>
                 </xpath>
                 <!--增加转去问卷操作按钮，编辑时隐藏，保存时显示-->
-                <!--<xpath expr="//button[@name='%(portal.portal_share_action)d']" position="after">-->
-                    <!--<button name="turn_page" string="转去问卷操作页面" type="object" class="oe_highlight oe_read_only"-->
-                            <!--attrs="{'invisible' : [('task_mode', '=', 'common mode')]}"/>-->
-                <!--</xpath>-->
+                <xpath expr="//button[@name='%(portal.portal_share_action)d']" position="after">
+                    <button name="turn_page" string="转去调查问卷操作页面" type="object" class="oe_highlight oe_read_only"
+                            attrs="{'invisible' : [('task_mode', '=', 'common mode')]}"/>
+                </xpath>
                 <!--添加问卷分类-->
                 <xpath expr="//field[@name='user_id']" position="after">
                     <field name="questionnaire_classification"
@@ -39,6 +39,7 @@
                             <!--<field name="weight_unit" attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>-->
                             <!--去掉创建并编辑：options="{'no_create_edit':1}"-->
                             <field name="survey_temp_id" options="{'no_create_edit':1}"/>
+                            <!--<field name="partner_questionnaire_classification"/>-->
                             <!--<field name="survey_temp_id"/>-->
                         </tree>
                         <form>
