@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, exceptions, _
+import suds.client, time, logging
+
+_logger = logging.getLogger(__name__)
+
 
 class E2yunCustomerRefund(models.Model):
     _name = 'customer_refund.report'
@@ -34,7 +38,67 @@ class E2yunCustomerRefund(models.Model):
 
     mobile_phone = fields.Char('手机号')
     huming = fields.Char('户名')
+    refund_status = fields.Selection([
+        ('draft', '草稿'), ('posted', '已过帐'), ('cancelled', '取消')], '状态', default='draft')
+    shop_code = fields.Char('门店编码')
+    app_code = fields.Char('客户编码')
 
+    def write(self, vals):
+        previous_state = self.refund_status
+        new_state = vals.get('refund_status')
+        res = super(E2yunCustomerRefund, self).write(vals)
+        shop = self.env['crm.team'].search([('name', '=', self.shop_id)])
+        if shop.sent_wx_message:
+            if previous_state == 'draft':
+                if new_state == 'cancelled':
+                    self.transport_wechat_message_refund(res)
+        return res
+
+    def transport_wechat_message_refund(self, res):  # 微信消息推送--客户退款
+        flag = self.env['crm.team'].search([('shop_code', '=', self.shop_code)]).show_accept_amount
+
+        if flag:
+            trans_amount = self.customer_refund_amount
+        else:
+            trans_amount = self.refund_amount01
+        if self.customer_po:
+            cpo = "客户PO号:%s" % self.customer_po
+        else:
+            cpo = ''
+        if self.thrrd_receipt_num:
+            trn = "第三方退款编号:%s" % self.thrrd_receipt_num
+        else:
+            trn = ''
+
+        user_data = {
+            "first": {
+                "value": "退款成功通知"
+            },
+            "keyword1": {
+                "value": time.strftime('%Y.%m.%d', time.localtime(time.time()))
+            },
+            "keyword2": {
+                "value": trans_amount,
+                "color": "#173177"
+            },
+            "keyword3": {
+                "value": self.refund_amount02
+            },
+            "keyword4": {
+                "value": self.shop_id
+            },
+            "keyword5": {
+                "value": self.partner_id
+            },
+            "remark": {
+                "value": "%s" % cpo + ' ' + "%s" % trn
+            }
+        }
+
+        get_wx_user_id = self.env['res.partner'].search([('app_code', '=', self.app_code)])
+        if get_wx_user_id.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
+            get_wx_user_id.wx_user_id.send_template_message(
+                user_data, template_name='客户退款提醒', partner=self.partner_id)
     # def init_date(self, ctx):
     #
     #     rq_from = str(ctx['date_from']) or ''
@@ -79,4 +143,3 @@ class E2yunCustomerRefund(models.Model):
     #         'type': 'ir.actions.act_window',
     #         'context': ctx,
     #     }
-
