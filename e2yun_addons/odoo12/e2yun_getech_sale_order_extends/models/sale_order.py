@@ -51,10 +51,12 @@ class SaleOrder(models.Model):
     def create(self, vals):
         res = super(SaleOrder, self).create(vals)
         if res:
-            if not self.env.context['install_mode']:
+            if 'name' not in vals:
                 prefix = '%s%s' % (res.bu.code, res.project_type.code)
                 name = self.env['ir.sequence'].get_next_code_info_if_no_create('sale_order', prefix, '', 6)
                 res.name = name
+            else:
+                res.name = vals['name']
             # if res.project_ids:
             #     res.project_ids.name = name
         return res

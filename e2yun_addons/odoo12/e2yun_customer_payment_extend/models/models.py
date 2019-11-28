@@ -314,7 +314,7 @@ class e2yun_customer_payment_extend(models.Model):
             if previous_state == 'draft':
                 if new_state == 'cancelled':
                     _logger.info("退款推送测试--2")
-                    self.transport_wechat_message_refund(res)
+                    self.transport_wechat_message(res)
         return res
 
     @api.model
