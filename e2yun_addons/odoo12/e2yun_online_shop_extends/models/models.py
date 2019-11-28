@@ -263,6 +263,127 @@ class OnlineShop(http.Controller):
                 # text = text + "<p id='shop_product_product_" + str(product_template.id) + "' onclick='show_product_details(this)'>" + product_str + "</p>"
         return http.Response(response_text)
 
+    @http.route(['/online_shop/search_product_list/<string:search_key>'], type='http', auth="public")
+    def search_product_list(self, search_key, **kwargs):
+        response_text = """"""
+        product_template_pool = http.request.env['product.template'].search([('sale_ok', '=', True), ('name', 'ilike', search_key)], order='custom_order asc')
+        for product_template in product_template_pool:
+            # str_list = [str(product.id), str(product.default_code), str(product.name)]
+            # str_join = ''.join(str_list)
+            if product_template.id:
+                # 获取产品价格（所有变体中价格最低的）
+                product_template_price_float = product_template.list_price
+                # product_product_pool = http.request.env['product.product'].search(
+                #     [('product_tmpl_id', '=', product_template.id)])
+                # if product_product_pool:
+                #     product_product_price_list = []
+                #     for product_product in product_product_pool:
+                #         if product_product.lst_price:
+                #             product_product_price_list.append(product_product.lst_price)
+                #     if product_product_price_list:
+                #         product_template_price_float = min(product_product_price_list)
+
+                # TODO: 产品图片获取
+                def get_product_image(product_tmpl_id):
+                    product_template_image_object = http.request.env['product.image.ext'].search(
+                        [('product_tmpl_id', '=', product_tmpl_id), ('is_primary', '=', True)], limit=1)
+                    if product_template_image_object:
+                        return product_template_image_object.image_path
+                    else:
+                        product_template_image_object = http.request.env['product.image.ext'].search(
+                            [('product_tmpl_id', '=', product_tmpl_id)], order='order_sort asc', limit=1)
+                        if product_template_image_object:
+                            return product_template_image_object.image_path
+                        else:
+                            return "/e2yun_online_shop_extends/static/src/assets/img/products/prod-04-270x300.jpg"
+
+                product_template_image = get_product_image(product_template.id)
+
+                # product_template_image = "/e2yun_online_shop_extends/static/src/assets/img/products/prod-04-270x300.jpg"
+                # onclick='grid_image_show_product_template_detail_page(this)'
+                # onclick='grid_tittle_show_product_template_detail_page(this)'
+                # onclick='list_image_show_product_template_detail_page(this)'
+                # onclick='list_tittle_show_product_template_detail_page(this)'
+                grid_image_product_detail_id = "grid_image_shop_product_template_" + str(product_template.id)
+                grid_tittle_product_detail_id = "grid_tittle_shop_product_template_" + str(product_template.id)
+                list_image_product_detail_id = "list_image_shop_product_template_" + str(product_template.id)
+                list_tittle_product_detail_id = "list_tittle_shop_product_template_" + str(product_template.id)
+                # TODO:等待测试后删除
+                product_detail_href = ''
+                product_template_name = product_template.name
+                product_add_to_cart_href = "cart.html"
+                product_template_price_str = "¥" + str(product_template_price_float)
+                # TODO:是否需要增加产品描述字段
+                if product_template.description_sale:
+                    product_template_description = product_template.description_sale
+                else:
+                    product_template_description = ''
+                # TODO:是否添加一个字段，控制产品是否展示到在线商城
+
+                text = """
+                               <div class="col-xl-4 col-sm-6 mb--50">
+                   <!--TODO：Grid模式-->
+                   <div class="ft-product">
+                       <div class="product-inner">
+                           <div class="product-image">
+                               <figure class="product-image--holder">
+                                   <img src='""" + product_template_image + """' alt="Product">
+                               </figure>
+                               <a id='""" + grid_image_product_detail_id + """' onclick='grid_image_show_product_template_detail_page(this)' class="product-overlay"></a>
+                               <div class="product-action"></div>
+                           </div>
+                           <div class="product-info">
+                               <h3 class="product-title"><a id='""" + grid_tittle_product_detail_id + """' onclick='grid_tittle_show_product_template_detail_page(this)'>""" + product_template_name + """</a></h3>
+                               <div class="product-info-bottom">
+                                   <div class="product-price-wrapper">
+                                       <span class="money">""" + product_template_price_str + """</span>
+                                   </div>
+                                   <a href='""" + product_add_to_cart_href + """' class="add-to-cart pr--15">
+                                       <i class="la la-plus"></i>
+                                       <span>添加到购物车</span>
+                                   </a>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                   <!--TODO：列表模式-->
+                   <div class="ft-product-list">
+                       <div class="product-inner">
+                           <figure class="product-image">
+                               <a id='""" + list_image_product_detail_id + """"' onclick='list_image_show_product_template_detail_page(this)'>
+                                   <img src='""" + product_template_image + """' alt="Products">
+                               </a>
+                               <div class="product-thumbnail-action">
+                               </div>
+                           </figure>
+                           <div class="product-info">
+                               <h3 class="product-title mb--25">
+                                   <a id='""" + list_tittle_product_detail_id + """' onclick='list_tittle_show_product_template_detail_page(this)'>""" + product_template_name + """</a>
+                               </h3>
+                               <div class="product-price-wrapper mb--15 mb-sm--10">
+                                   <span class="money">""" + product_template_price_str + """</span>
+                               </div>
+                               <p class="product-short-description mb--20">""" + product_template_description + """</p>  
+                               <div class="ft-product-action-list d-flex align-items-center">
+                                   <input type='hidden' name='product_id' value='""" + str(
+                    product_template.product_variant_ids[0].id) + """'/>
+                                   <input type='hidden' name='product_template_id' value='""" + str(
+                    product_template.id) + """'/>
+                                   <!-- <input type='hidden' name='csrf_token' value='""" + http.request.csrf_token() + """'/>
+                                    <a href='""" + product_add_to_cart_href + """' class="btn btn-size-md">添加到购物车</a> -->
+                                   <a href='javascript:;' class="list_btn_add_cart btn btn-size-md">添加到购物车</a>
+                               </div>                                            
+                           </div>
+                       </div>
+                   </div>
+               </div>"""
+                response_text = response_text + text
+                # product_str = "" + str(product_template.id) + ' ' + str(product_template.default_code) + ' ' + str(product_template.name)
+                # text = text + "<p id='shop_product_product_" + str(product_template.id) + "' onclick='show_product_details(this)'>" + product_str + "</p>"
+        return http.Response(response_text)
+
+
+
     @http.route(['/online_shop/sort_product_list/<int:current_category_id>/<int:chooser_id>'])
     def sort_product_list(self, current_category_id, chooser_id, **kwargs):
         """
@@ -467,11 +588,7 @@ class OnlineShop(http.Controller):
                 product = product_product_pool[0]
                 response_text = """"""
                 header_text = """<div class="product-summary pl-lg--30 pl-md--0" id="product_detail_replace">
-    <div class="product-navigation text-right mb--20">
-        <!--TODO:产品详情中用于切换产品的左右箭头-->
-        <a href="#" class="prev"><i class="la la-angle-double-left"></i></a>
-        <a href="#" class="next"><i class="la la-angle-double-right"></i></a>
-    </div>
+    
     <!--TODO:产品名称-->
     <h3 class="product-title mb--20">"""
                 if product_template.description_sale:
