@@ -588,11 +588,7 @@ class OnlineShop(http.Controller):
                 product = product_product_pool[0]
                 response_text = """"""
                 header_text = """<div class="product-summary pl-lg--30 pl-md--0" id="product_detail_replace">
-    <div class="product-navigation text-right mb--20">
-        <!--TODO:产品详情中用于切换产品的左右箭头-->
-        <a href="#" class="prev"><i class="la la-angle-double-left"></i></a>
-        <a href="#" class="next"><i class="la la-angle-double-right"></i></a>
-    </div>
+    
     <!--TODO:产品名称-->
     <h3 class="product-title mb--20">"""
                 if product_template.description_sale:
