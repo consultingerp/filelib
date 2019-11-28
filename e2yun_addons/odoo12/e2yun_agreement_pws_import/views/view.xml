@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_agreement_pws_import" model="ir.ui.view">
+            <field name="name">pws import</field>
+            <field name="model">agreement.pws.import</field>
+            <field name="arch" type="xml">
+                <form string="Import">
+                    <group>
+                        <field name="name" />
+                        <field name="data" filename="filename"/>
+                        <field name="filename" invisible="1"/>
+                    </group>
+                    <footer>
+                        <button name="import_excel" string="_Import" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_agreement_pws_import" model="ir.actions.act_window">
+            <field name="name">pws import</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">agreement.pws.import</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+        <menuitem id="agreement_pws_import_management" name="Pws Import" parent="agreement.agreement_menu" />
+
+        <menuitem action="action_view_agreement_pws_import" id="menu_agreement_pws_import"  parent="agreement_pws_import_management"/>
+
+    </data>
+</odoo>

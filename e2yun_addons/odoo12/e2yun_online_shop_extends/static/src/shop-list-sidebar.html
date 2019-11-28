@@ -309,11 +309,11 @@
 <!--                                                        </li>-->
 <!--                                                    </ul>-->
 <!--                                                </li>-->
-                                                <li class="mainmenu__item">
-                                                    <a href="contact-us.html" class="mainmenu__link">
-                                                        <span class="mm-text">联系我们</span>
-                                                    </a>
-                                                </li>
+<!--                                                <li class="mainmenu__item">-->
+<!--                                                    <a href="contact-us.html" class="mainmenu__link">-->
+<!--                                                        <span class="mm-text">联系我们</span>-->
+<!--                                                    </a>-->
+<!--                                                </li>-->
                                             </ul>
                                         </nav>
                                     </div>
@@ -1780,8 +1780,8 @@
 <!--                                </li>-->
 <!--                            </ul>-->
                         </li>
-                        <li class="menu-item-has-children">
-                            <a href="contact-us.html">联系我们</a>
+<!--                        <li class="menu-item-has-children">-->
+<!--                            <a href="contact-us.html">联系我们</a>-->
 <!--                            <ul class="sub-menu">-->
 <!--                                <li class="menu-item-has-children">-->
 <!--                                    <a href="#">Blog</a>-->
@@ -1821,7 +1821,7 @@
 <!--                                    </ul>-->
 <!--                                </li>-->
 <!--                            </ul>-->
-                        </li>
+<!--                        </li>-->
 <!--                        <li class="menu-item-has-children">-->
 <!--                            <a href="#">Pages</a>-->
 <!--                            <ul class="sub-menu">-->
@@ -2065,8 +2065,8 @@
             <div class="searchform__body">
                 <p>Start typing and press Enter to search</p>
                 <form class="searchform">
-                    <input type="text" name="popup-search" id="popup-search" class="searchform__input" placeholder="Search Entire Store...">
-                    <button type="submit" class="searchform__submit"><i class="la la-search"></i></button>
+                    <input type="text" name="popup-search" id="popup-search" class="searchform__input" placeholder="请输入要搜索的产品名称">
+                    <button type="button" class="searchform__submit" onclick="search_product_list()"><i class="la la-search"></i></button>
                 </form>
             </div>
         </div>
@@ -2220,6 +2220,17 @@
  
 
     <!-- ************************* JS Files ************************* -->
+    <!-- jQuery JS -->
+    <script src="/e2yun_online_shop_extends/static/src/assets/js/vendor.js"></script>
+
+    <!-- 购物车相关js代码-->
+    <script src="/e2yun_online_shop_extends/static/src/assets/js/cart.js"></script>
+
+    <!-- Main JS -->
+    <script src="/e2yun_online_shop_extends/static/src/assets/js/main.js"></script>
+
+
+
     <!--Ajax JS-->
 <script>
          window.onload=function(){
@@ -2299,6 +2310,25 @@
     window.location.href="/hhjc_shop_product_details"
  }
 
+ function search_product_list(){
+    var search_word = document.getElementById('popup-search').value;
+    var current_category_id = sessionStorage.getItem("current_category_id");
+    url = "/online_shop/search_product_list/" + search_word
+    var search_product_list_xhr = new this.XMLHttpRequest();
+
+    search_product_list_xhr.open("GET", url, true)
+    search_product_list_xhr.send()
+
+    search_product_list_xhr.onreadystatechange = function(){
+        if (search_product_list_xhr.readyState == 4 && search_product_list_xhr.status ==200) {
+            document.getElementById("shop_product_list").innerHTML = search_product_list_xhr.responseText;
+            var $this = $('.btn-close')
+            $this.parents('.open').removeClass('open');
+		    $('.global-overlay').removeClass('overlay-open');
+        }
+    }
+}
+
  function sort_chooser(){
     var chooser_id = document.getElementById("sort_chooser").value
     var current_category_id = sessionStorage.getItem("current_category_id");
@@ -2314,16 +2344,11 @@
         }
     }
  }
+
+
     </script>
 
-    <!-- jQuery JS -->
-    <script src="/e2yun_online_shop_extends/static/src/assets/js/vendor.js"></script>
 
-    <!-- 购物车相关js代码-->
-    <script src="/e2yun_online_shop_extends/static/src/assets/js/cart.js"></script>
-
-    <!-- Main JS -->
-    <script src="/e2yun_online_shop_extends/static/src/assets/js/main.js"></script>
 
 
     <!--slide menu js-->
