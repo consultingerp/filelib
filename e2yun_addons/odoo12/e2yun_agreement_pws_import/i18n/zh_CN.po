@@ -13,7 +13,20 @@ msgstr "取消"
 
 
 #. module: e2yun_agreement_pws_import
-#: model_terms:ir.ui.view,arch_db:base.e2yun_agreement_pws_import.view_agreement_pws_import
-msgid "pws import"
+#: model:ir.ui.menu,name:e2yun_agreement_pws_import.menu_agreement_pws_import
+#: model:ir.ui.menu,name:e2yun_agreement_pws_import.agreement_pws_import_management
+#: model_terms:ir.actions.act_window,arch_db:e2yun_agreement_pws_import.view_agreement_pws_import
+msgid "Pws import"
 msgstr "PWS解析导入"
 
+
+#. module: e2yun_agreement_pws_import
+#: model:ir.model.fields,field_description:e2yun_agreement_pws_import.field_agreement_pws_import__name
+msgid "The import type"
+msgstr "导入类型"
+
+
+#. module: e2yun_agreement_pws_import
+#: model:ir.model.fields,field_description:e2yun_agreement_pws_import.field_agreement_pws_import__data
+msgid "File"
+msgstr "文件"
