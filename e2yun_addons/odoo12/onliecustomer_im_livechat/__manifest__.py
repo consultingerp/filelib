@@ -11,7 +11,6 @@
         'web', 'website', 'im_livechat', 'mail',
     ],
     'data': [
-        'security/helpdesk_security.xml',
         'security/ir.model.access.csv',
         'views/templates.xml',
     ],

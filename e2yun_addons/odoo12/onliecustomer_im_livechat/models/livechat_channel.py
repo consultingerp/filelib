@@ -15,7 +15,10 @@ class LivechatChannel(models.Model):
     def get_online_mail_channel(self, livechat_channel_id, anonymous_name):
         # get the avalable user of the channel
         users = self.sudo().browse(livechat_channel_id).get_available_users()
-        if len(users) == 0:
+        isonlinecustomer = True;
+        if len(users) == 0:  # 如果用户不在线 选择所有用户
+            users = self.get_wx_available_users(self.sudo().browse(livechat_channel_id).user_ids)
+        if len(users) == 0:  # 如果没设置在线客服返回
             return False
         # choose the res.users operator and get its partner id
         user = random.choice(users)
@@ -36,3 +39,7 @@ class LivechatChannel(models.Model):
         })
         mail_channel._broadcast([operator_partner_id])
         return mail_channel.sudo().with_context(im_livechat_operator_partner_id=operator_partner_id).channel_info()[0]
+
+    @api.multi
+    def get_wx_available_users(self, user_ids):
+        return user_ids.filtered(lambda user: user.wx_user_id)
