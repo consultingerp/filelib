@@ -50,7 +50,7 @@ class E2yunCustomerRefund(models.Model):
         shop = self.env['crm.team'].search([('name', '=', self.shop_id)])
         if shop.sent_wx_message:
             if previous_state == 'draft':
-                if new_state == 'cancelled':
+                if new_state == 'posted':
                     self.transport_wechat_message_refund(res)
         return res
 
