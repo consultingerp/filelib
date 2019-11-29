@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="wx_user_uuid_view_tree" model="ir.ui.view">
+            <field name="name">wx.user.uuid.view_tree</field>
+            <field name="model">wx.user.uuid</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="微信会话记录" default_order="create_date desc">
+                    <field name="uuid_user_id"/>
+                    <field name="wx_user_id"/>
+                    <field name="openid"/>
+                    <field name="uuid"/>
+                    <field name="uuid_type"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="wx_user_uuid_view_form" model="ir.ui.view">
+            <field name="name">wx.user.uuid.view_form</field>
+            <field name="model">wx.user.uuid</field>
+            <field name="arch" type="xml">
+                <form string="Session" duplicate="false">
+                    <sheet>
+                        <group>
+                            <field name="openid"/>
+                            <field name="uuid"/>
+                            <field name="uuid_type"/>
+                            <field name="uuid_user_id"/>
+                            <field name="wx_user_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="wx_user_uuid_action" model="ir.actions.act_window">
+            <field name="name">售后客户Session管理</field>
+            <field name="res_model">wx.user.uuid</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+        </record>
+
+
+        <menuitem id="wx_user_uuid_menu" name="客户会话管理" action="wx_user_uuid_action"
+                  sequence="14" parent="parent_menu_120" groups="wx_tools.group_wx_conf"/>
+
+
+    </data>
+</odoo>
