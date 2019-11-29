@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>确认订单</title>
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+        <meta content="yes" name="apple-mobile-web-app-capable"/>
+        <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+        <meta content="telephone=no" name="format-detection"/>
+        <link href="/e2yun_online_shop_extends/static/src/assets/css/order_confirm.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body style="background:#f7f7f7">
+        <section class="aui-flexView">
+            <header class="aui-navBar aui-navBar-fixed">
+                <a href="javascript:;" onClick="javascript :history.back(-1);" class="aui-navBar-item">
+                    <i class="icon icon-return"></i>
+                </a>
+                <div class="aui-center">
+                    <span class="aui-center-title">确认订单</span>
+                </div>
+                <a href="javascript:;" class="aui-navBar-item">
+                    <i class="icon icon-sys"></i>
+                </a>
+            </header>
+            <section class="aui-scrollView">
+                <div class="aui-order-box">
+                    <div class="aui-flex aui-choice-white" style="padding: 5px;">
+                        <div class="aui-flex-box">联系电话:&nbsp;<input name="phone" style="width: 80%; height:20px; background-color: #f3f1f1"/></div>
+                    </div>
+                    <div class="aui-flex aui-choice-white aui-mar10" style="padding: 5px;">
+                        <div class="aui-flex-box">收货地址:&nbsp;<input name="address" style="width: 80%; height:20px;background-color:#f3f1f1"/></div>
+                    </div>
+                    <div class="aui-flex aui-choice-white aui-mar5">
+                        <div class="aui-flex-box">
+                            <h1>商品清单<span id="total_num"></span>件</h1>
+                        </div>
+                    </div>
+                    <div id="product_list">
+
+                    </div>
+
+                    <div class="aui-flex aui-choice-white b-line">
+                        <div class="aui-flex-box">优惠券</div>
+                        <div class="aui-flex-triangle">无可用</div>
+                    </div>
+                    <!--<div class="aui-flex aui-choice-white ">-->
+                        <!--<div class="aui-flex-box">-->
+                            <!--<h2>商品总价</h2>-->
+                        <!--</div>-->
+                        <!--<div class="aui-flex-triangle aui-flex-triangle-clear">-->
+                            <!--<h4><span class="amount"></span></h4>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                </div>
+            </section>
+            <footer class="aui-bar-footer">
+                <div class="aui-flex">
+                    <div class="aui-flex-box">
+                        应付金额：<em><span class="amount"></span></em>
+                    </div>
+                    <div class="aui-btn-button">
+                        <button name="order_confirm">去支付</button>
+                    </div>
+                </div>
+            </footer>
+        </section>
+
+    <script src="/e2yun_online_shop_extends/static/src/assets/js/vendor.js"></script>
+    <script src="/e2yun_online_shop_extends/static/src/assets/js/cart_confirm.js"></script>
+    </body>
+</html>
