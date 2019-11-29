@@ -3,6 +3,13 @@ from odoo import http
 from odoo.http import request
 import json
 from odoo import fields, http, tools, _
+from odoo.osv import expression
+import jinja2
+import os
+
+BASE_DIR = os.path.dirname((os.path.dirname(__file__)))
+templateLoader = jinja2.FileSystemLoader(searchpath=BASE_DIR + "/static/src")
+env = jinja2.Environment(loader=templateLoader)
 
 class cart(http.Controller):
     @http.route('/e2yun_online_shop_extends/get_cart_info', type='http', auth="public", website=True)
@@ -32,56 +39,67 @@ class cart(http.Controller):
 
         return request.make_response(json.dumps(values))
 
+    @http.route('/e2yun_online_shop_extends/get_cart_confirm_info', type='http', auth="public", website=True)
+    def get_cart_confirm_info(self, access_token=None, revive='', **post):
+        order = request.website.sale_get_order()
+        if order and order.state != 'draft':
+            request.session['sale_order_id'] = None
+            order = request.website.sale_get_order()
+        values = {}
+        if order and order.order_line:
+            order_line = order.order_line
+            line = []
+
+            partner = order.partner_id
+            address = ''
+
+            if partner.country_id and partner.country_id.name:
+                address = address + partner.country_id.name
+
+            if partner.state_id and partner.state_id.name:
+                address = address + partner.state_id.name
+
+            if partner.city_id and partner.city_id.name:
+                address = address + partner.city_id.name
+
+            if partner.area_id and partner.area_id.name:
+                address = address + partner.area_id.name
+
+            if partner.street:
+                address = address + partner.street
+
+
+
+            partner._get_address_format() or ''
+            phone = partner.mobile or ''
+            total_num = 0
+
+
+
+            for ol in order_line:
+                line.append({
+                    'product_name': ol.product_id.name,
+                    'product_num': ol.product_uom_qty,
+                    'price': ol.price_unit,
+                    'price_total': (ol.product_uom_qty * ol.price_unit),
+                    'product_template_id': ol.product_id.product_tmpl_id.id,
+                    'product_id': ol.product_id.id,
+                    'image_url': ol.product_id.product_tmpl_id.get_primary_url()
+                })
+                total_num = total_num + ol.product_uom_qty
+            values = {
+                'total_price': order.amount_total,
+                'line': line,
+                'address':address,
+                'phone' : phone,
+                'total_num' : total_num
+            }
+
+        return request.make_response(json.dumps(values))
+
     @http.route('/e2yun_online_shop_extends/get_token', csrf=False,type='http', auth="public")
     def get_token(self,**kwargs):
         return request.make_response(json.dumps({'csrf_token':http.request.csrf_token()}))
-
-
-
-
-
-        #values['website_sale_order'].order_line
-        # if access_token:
-        #     abandoned_order = request.env['sale.order'].sudo().search([('access_token', '=', access_token)], limit=1)
-        #     if not abandoned_order:  # wrong token (or SO has been deleted)
-        #         return request.render('website.404')
-        #     if abandoned_order.state != 'draft':  # abandoned cart already finished
-        #         values.update({'abandoned_proceed': True})
-        #     elif revive == 'squash' or (revive == 'merge' and not request.session[
-        #         'sale_order_id']):  # restore old cart or merge with unexistant
-        #         request.session['sale_order_id'] = abandoned_order.id
-        #         return request.redirect('/shop/cart')
-        #     elif revive == 'merge':
-        #         abandoned_order.order_line.write({'order_id': request.session['sale_order_id']})
-        #         abandoned_order.action_cancel()
-        #     elif abandoned_order.id != request.session[
-        #         'sale_order_id']:  # abandoned cart found, user have to choose what to do
-        #         values.update({'access_token': abandoned_order.access_token})
-
-        # if order:
-        #     from_currency = order.company_id.currency_id
-        #     to_currency = order.pricelist_id.currency_id
-        #     compute_currency = lambda price: from_currency._convert(
-        #         price, to_currency, request.env.user.company_id, fields.Date.today())
-        # else:
-        #     compute_currency = lambda price: price
-        #
-        # values.update({
-        #     'website_sale_order': order,
-        #     'compute_currency': compute_currency,
-        #     'date': fields.Date.today(),
-        #     'suggested_products': [],
-        # })
-        # if order:
-        #     _order = order
-        #     if not request.env.context.get('pricelist'):
-        #         _order = order.with_context(pricelist=order.pricelist_id.id)
-        #     values['suggested_products'] = _order._cart_accessories()
-
-
-        #return request.render("website_sale.cart", values)
-
-
 
     @http.route(['/e2yun_online_shop_extends/add_cart'], type='http', auth="public", methods=['POST'], website=True, csrf=False)
     def cart_update(self, product_id, add_qty=1, set_qty=0, **kw):
@@ -108,15 +126,62 @@ class cart(http.Controller):
         )
         return request.make_response(json.dumps({'success':True}))
 
-#     @http.route('/e2yun_online_shop_extends/e2yun_online_shop_extends/objects/', auth='public')
-#     def list(self, **kw):
-#         return http.request.render('e2yun_online_shop_extends.listing', {
-#             'root': '/e2yun_online_shop_extends/e2yun_online_shop_extends',
-#             'objects': http.request.env['e2yun_online_shop_extends.e2yun_online_shop_extends'].search([]),
-#         })
+    @http.route(['/e2yun_online_shop_extends/order_confirm_page'], type='http', auth="public", website=True)
+    def order_confirm_page(self, **post):
 
-#     @http.route('/e2yun_online_shop_extends/e2yun_online_shop_extends/objects/<model("e2yun_online_shop_extends.e2yun_online_shop_extends"):obj>/', auth='public')
-#     def object(self, obj, **kw):
-#         return http.request.render('e2yun_online_shop_extends.object', {
-#             'object': obj
-#         })
+        sale_order = request.website.sale_get_order()
+        if not sale_order or not sale_order.order_line:
+            return False
+
+        template = env.get_template('order_confirm.html')
+        html = template.render()
+        return html
+
+    @http.route(['/e2yun_online_shop_extends/order_confirm'], type='http', auth="public", methods=['POST'], website=True,
+                csrf=False)
+    def order_confirm(self, phone,address, **kw):
+        sale_order = request.website.sale_get_order()
+        if sale_order.state != 'draft':
+            request.session['sale_order_id'] = None
+            sale_order = request.website.sale_get_order(force_create=True)
+
+        if sale_order:
+            sale_order.telephone = phone
+            sale_order.address = address
+            sale_order.state = 'sent'
+
+        return request.make_response(json.dumps({'success': True}))
+
+
+
+
+    def _get_shop_payment_values(self, order, **kwargs):
+        shipping_partner_id = False
+        if order:
+            shipping_partner_id = order.partner_shipping_id.id or order.partner_invoice_id.id
+
+        values = dict(
+            website_sale_order=order,
+            errors=[],
+            partner=order.partner_id.id,
+            order=order,
+            payment_action_id=request.env.ref('payment.action_payment_acquirer').id,
+            return_url='/shop/payment/validate',
+            bootstrap_formatting=True
+        )
+
+        domain = expression.AND([
+            ['&', ('website_published', '=', True), ('company_id', '=', order.company_id.id)],
+            ['|', ('website_id', '=', False), ('website_id', '=', request.website.id)],
+            ['|', ('specific_countries', '=', False), ('country_ids', 'in', [order.partner_id.country_id.id])]
+        ])
+        acquirers = request.env['payment.acquirer'].search(domain)
+
+        values['access_token'] = order.access_token
+        values['acquirers'] = [acq for acq in acquirers if (acq.payment_flow == 'form' and acq.view_template_id) or
+                               (acq.payment_flow == 's2s' and acq.registration_view_template_id)]
+        values['tokens'] = request.env['payment.token'].search(
+            [('partner_id', '=', order.partner_id.id),
+             ('acquirer_id', 'in', acquirers.ids)])
+
+        return values
