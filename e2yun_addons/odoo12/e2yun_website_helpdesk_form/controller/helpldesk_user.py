@@ -19,6 +19,7 @@ class HelpdesUser(http.Controller):
         uuid = request.session.helpdeskuuid
         request_uid = request.session.uid
         anonymous_name = None
+        isonlinecustomer = True
         if request.session.geoip:
             anonymous_name = anonymous_name + " (" + request.requestsession.geoip.get('country_name', "") + ")"
         if request.session.uid:
@@ -35,9 +36,14 @@ class HelpdesUser(http.Controller):
                 session_info = request.env["im_livechat.channel"].with_context(lang=False).get_mail_channel(channel_id, anonymous_name)
                 if session_info:  # 如果创建了session
                     uuid = session_info['uuid']
-                else:
-                    return request.render('e2yun_website_helpdesk_form.csoffline')
-
+                else:  # 没有选择到用户
+                    isonlinecustomer = False
+                    # 再次选择在客服中关联了微信用户的
+                    session_info = request.env["im_livechat.channel"].with_context(lang=False).get_online_mail_channel(channel_id, anonymous_name)
+                    if session_info:  # 再次选择到了
+                        uuid = session_info['uuid']
+                    else:
+                        return request.render('e2yun_website_helpdesk_form.csoffline')
             # localkwargs = {'weixin_id': 'web', 'wx_type': 'wx'}
             channel = request.env["mail.channel"].sudo().search([('uuid', '=', uuid)], limit=1)
             active_id = channel["id"]

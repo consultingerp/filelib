@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "web reportchart",
+    'name': "web reportchart_test",
 
     'summary': """
-        报表
+        报表测试
         """,
 
     'description': """
@@ -13,10 +13,10 @@
     'website': "",
     'category': 'Uncategorized',
     'version': '0.1',
-    'depends': ['base', 'web'],
+    'depends': ['base', 'web','helpdesk','web_reportchart'],
     'data': [
-        # 'security/ir.model.access.csv',
         'views/templates.xml',
+        'views/testreport.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
