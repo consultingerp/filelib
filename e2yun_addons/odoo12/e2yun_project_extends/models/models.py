@@ -67,6 +67,15 @@ class E2yunTaskInfo(models.Model):
         if self.multiple_questionnaires == 'no':
             if len(self.questionnaire_ids) > 1:
                 raise exceptions.Warning(_("行数超过限制！"))
+                # question_no1 = self.questionnaire_ids[0]
+                # self.questionnaire_ids = question_no1
+
+    @api.onchange('multiple_questionnaires')
+    def _on_change_multiple_questionnaires(self):
+        if self.multiple_questionnaires == 'no':
+            if len(self.questionnaire_ids) > 1:
+                question_no1 = self.questionnaire_ids[0]
+                self.questionnaire_ids = question_no1
 
 
     # temp_ids = fields.One2many('survey.survey', 'task_id', string='问卷模板')
