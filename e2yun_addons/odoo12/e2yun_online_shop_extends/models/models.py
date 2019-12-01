@@ -71,9 +71,14 @@ class OnlineShop(http.Controller):
                 category_child_pool = http.request.env['product.public.category'].search(
                     [('parent_id', '!=', False), ('parent_id', '=', category_parent.id)])
                 for category_child in category_child_pool:
-                    html_to_add = "<li><a id='shop_category_" + str(
-                        category_child.id) + "' onclick='show_goods_in_category(this)'>" + category_child.name + "</a></li>"
-                    html_body = html_body + html_to_add
+                    category_child_products = http.request.env['product.template'].search(
+                        [('public_categ_ids', 'in', category_child.id)])
+                    if category_child_products:
+                        html_to_add = "<li><a id='shop_category_" + str(
+                            category_child.id) + "' onclick='show_goods_in_category(this)'>" + category_child.name + "</a></li>"
+                        html_body = html_body + html_to_add
+                    else:
+                        continue
                 html_end = """</ul></li>"""
                 category_parent_html = html_start + html_start_2 + html_start_3 + html_start_4 + html_body + html_end
                 text = text + category_parent_html
@@ -88,9 +93,13 @@ class OnlineShop(http.Controller):
                 category_child_pool = http.request.env['product.public.category'].search(
                     [('parent_id', '!=', False), ('parent_id', '=', category_parent.id)])
                 for category_child in category_child_pool:
-                    html_to_add = "<li><a id='shop_category_" + str(
-                        category_child.id) + "' onclick='show_goods_in_category(this)'>" + category_child.name + "</a></li>"
-                    html_body = html_body + html_to_add
+                    category_child_products = http.request.env['product.template'].search([('public_categ_ids', 'in', category_child.id)])
+                    if category_child_products:
+                        html_to_add = "<li><a id='shop_category_" + str(
+                            category_child.id) + "' onclick='show_goods_in_category(this)'>" + category_child.name + "</a></li>"
+                        html_body = html_body + html_to_add
+                    else:
+                        continue
                 html_end = """</ul></li>"""
                 category_parent_html = html_start + html_start_2 + html_start_3 + html_start_4 + html_body + html_end
                 text = text + category_parent_html
