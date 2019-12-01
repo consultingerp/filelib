@@ -619,17 +619,18 @@ class OnlineShop(http.Controller):
         <!--TODO：这里有匿名函数使用js的示例-->
         <input type='hidden' name='inp_product_id' value='"""+str(product.id)+"""'/>
         <input type='hidden' name='inp_product_template_id' value='"""+str(product_template_id)+"""'/>
-        <button type="button" class="btn btn-size-sm btn-shape-square" onclick="detail_add_cart()">
+        <div>
+        <button margin='left' type="button" class="btn btn-size-sm btn-shape-square" onclick="detail_add_cart()">
             添加到购物车
         </button>"""
                 if product_template.product_template_external_website:
-                    footer_text2 = """<button type="button" class="btn btn-size-sm btn-shape-square" onclick="window.open('""" + product_template.product_template_external_website + """')" target='_blank'>
+                    footer_text2 = """<button type="button" margin='right' class="btn-blue btn-size-sm btn-shape-square" onclick="window.open('""" + product_template.product_template_external_website + """')" target='_blank'>
             产品效果图
-        </button>
+        </button></div>
                     </div>  
 </div>"""
                 else:
-                    footer_text2 = """</div>  
+                    footer_text2 = """</div></div>  
 </div>"""
 
                 response_text = header_text + product.name + middle_text + price_str + footer_text +footer_text2
