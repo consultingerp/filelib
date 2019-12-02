@@ -110,33 +110,30 @@ function load_cart(){
 		load_cart();
 	});
 
-	// window.onload = function(){
-	// 	$.post('/e2yun_online_shop_extends/get_token',{
-	// 	},function(datas) {
-     //        var d = JSON.parse(datas);
-     //        $('body').append("<input name='csrf_token2' value="+d['csrf_token']+" />");
-     //        alert($('input[name="csrf_token2"]').val());
-     //    });
-	// };
+// mui.ready(function(){
+// 	alert('mui.ready');
+//
+// 	mui.plusReady(function(){
+// 		alert('mui.plusReady');
+// 		$("#startCan").bind('tap',function(){
+//         // 扫描二维码
+//         var barScan = new plus.barcode.Barcode("scanContainer");
+//         barScan.onmarked = function(type,code,file){
+//             var result = "type"+type+"<br/>code:"+code+"<br/>file:"+file;
+//             $("#info").html(result);
+//         };
+//         //barScan.start(); 开始扫描
+//         barScan.start({conserve:true,filename:"_doc/barcode/"});// 可以配置扫描后保存的路径
+//     });
+// 	})
+// });
 
-	$(document).ready(function() {
 
-		$.post('/e2yun_online_shop_extends/get_token',{
-		},function(datas) {
-            var d = JSON.parse(datas);
-            $('body').append("<input name='csrf_token' value="+d['csrf_token']+" type='hidden' />");
-        });
+$(document).ready(function() {
+
+	$.post('/e2yun_online_shop_extends/get_token',{
+	},function(datas) {
+		var d = JSON.parse(datas);
+		$('body').append("<input name='csrf_token' value="+d['csrf_token']+" type='hidden' />");
 	});
-
-
-
-// (function($){
-//
-// 	'use strict';
-//
-//
-//
-//
-//
-//
-// })(jQuery);
+});
