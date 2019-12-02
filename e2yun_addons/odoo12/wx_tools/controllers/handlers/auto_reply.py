@@ -203,14 +203,24 @@ def main(robot):
 
         if not uuid:  # 没有会话创建会话
             anonymous_name = wx_user.nickname
-            if not partner_user_id:  # 联系在线客户
+            if not partner_user_id:  # 联系在线客户   当在线客服不在线的时候，选择其它用户
                 channel = request.env.ref('wx_tools.channel_wx')
                 channel_id = channel.id
                 # 创建一个channel
                 session_info, ret_msg = request.env["im_livechat.channel"].create_mail_channel(channel_id,
                                                                                                anonymous_name,
                                                                                                content)
-                active_id = session_info["id"]
+                if session_info:
+                    active_id = session_info["id"]
+                else:  # 如果没有选择到在线用户从客服列表中选择一个关联微信用户的
+                    session_info = request.env["im_livechat.channel"].with_context(lang=False).get_online_mail_channel(channel_id, anonymous_name)
+                    if session_info:  # 再次选择到了
+                        active_id = session_info["id"]
+                if active_id:
+                    wx_user.consultation_reminder(partner, partner_user_id.partner_id.wx_user_id.openid,
+                                                  origin_content,
+                                                  active_id)
+
             else:  # 联系客户经理
                 _logger.info('需要联系客服要，创建新的会话')
                 obj = request.env['wx.user.odoouser'].sudo().search([('openid', '=', openid)])
