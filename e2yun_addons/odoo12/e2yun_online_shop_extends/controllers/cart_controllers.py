@@ -137,51 +137,58 @@ class cart(http.Controller):
         html = template.render()
         return html
 
+    @http.route('/e2yun_online_shop_extends/get_order_done_info', type='http', auth="public", website=True)
+    def get_order_done_info(self, access_token=None, revive='', **post):
+        confirm_sale_order_id = request.session['confirm_sale_order_id']
+        values = {}
+        if confirm_sale_order_id:
+            order = request.env['sale.order'].sudo().browse(confirm_sale_order_id)
+            values = {
+                'total_price': order.amount_total,
+                'order_code': order.name
+            }
+
+        return request.make_response(json.dumps(values))
+
+    @http.route(['/e2yun_online_shop_extends/order_done_page'], type='http', auth="public", website=True)
+    def order_done_page(self, **post):
+
+        template = env.get_template('order_done.html')
+        html = template.render()
+        return html
+
     @http.route(['/e2yun_online_shop_extends/order_confirm'], type='http', auth="public", methods=['POST'], website=True,
                 csrf=False)
-    def order_confirm(self, phone,address, **kw):
+    def order_confirm(self, phone,address,coupon, **kw):
         sale_order = request.website.sale_get_order()
-        if sale_order.state != 'draft':
-            request.session['sale_order_id'] = None
-            sale_order = request.website.sale_get_order(force_create=True)
 
         if sale_order:
+            if coupon:
+                coupon_status = request.env['sale.coupon.apply.code'].sudo().apply_coupon(sale_order, coupon)
+                if coupon_status.get('error'):
+                    return request.make_response(json.dumps({'success': False}))
+
             sale_order.telephone = phone
             sale_order.address = address
             sale_order.state = 'sent'
 
+            request.session['confirm_sale_order_id'] = sale_order.id
+
         return request.make_response(json.dumps({'success': True}))
 
 
+    @http.route('/e2yun_online_shop_extends/get_coupon', type='http', auth="public", website=True)
+    def get_coupon(self, access_token=None, revive='', **post):
+        datas = []
+        coupos = request.env['sale.coupon'].search(
+            [('state', '=', 'new'), ('partner_id', '=', request.env.user.partner_id.id)])
+        for coupo in coupos:
 
+            data = {
+                'coupo_name': coupo.program_id.name,
+                'coupo_code': coupo.code
+            }
 
-    def _get_shop_payment_values(self, order, **kwargs):
-        shipping_partner_id = False
-        if order:
-            shipping_partner_id = order.partner_shipping_id.id or order.partner_invoice_id.id
+            datas.append(data)
 
-        values = dict(
-            website_sale_order=order,
-            errors=[],
-            partner=order.partner_id.id,
-            order=order,
-            payment_action_id=request.env.ref('payment.action_payment_acquirer').id,
-            return_url='/shop/payment/validate',
-            bootstrap_formatting=True
-        )
-
-        domain = expression.AND([
-            ['&', ('website_published', '=', True), ('company_id', '=', order.company_id.id)],
-            ['|', ('website_id', '=', False), ('website_id', '=', request.website.id)],
-            ['|', ('specific_countries', '=', False), ('country_ids', 'in', [order.partner_id.country_id.id])]
-        ])
-        acquirers = request.env['payment.acquirer'].search(domain)
-
-        values['access_token'] = order.access_token
-        values['acquirers'] = [acq for acq in acquirers if (acq.payment_flow == 'form' and acq.view_template_id) or
-                               (acq.payment_flow == 's2s' and acq.registration_view_template_id)]
-        values['tokens'] = request.env['payment.token'].search(
-            [('partner_id', '=', order.partner_id.id),
-             ('acquirer_id', 'in', acquirers.ids)])
-
-        return values
+        return request.make_response(json.dumps(datas))
