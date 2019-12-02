@@ -228,7 +228,7 @@ class OnlineShop(http.Controller):
                 <h3 class="product-title"><a id='""" + grid_tittle_product_detail_id +"""' onclick='grid_tittle_show_product_template_detail_page(this)'>""" + product_template_name + """</a></h3>
                 <div class="product-info-bottom">
                     <div class="product-price-wrapper">
-                        <span class="money">""" + product_template_price_str + """</span>
+                        <span class="money">""" + product_template_price_str + """</span><p>浏览量 """ + str(product_template.browse_num) + """</p><p>销量 """ + str(product_template.so_qty) + """</p>
                     </div>
                     <a href='""" + product_add_to_cart_href + """' class="add-to-cart pr--15">
                         <i class="la la-plus"></i>
@@ -253,7 +253,7 @@ class OnlineShop(http.Controller):
                     <a id='""" + list_tittle_product_detail_id + """' onclick='list_tittle_show_product_template_detail_page(this)'>""" + product_template_name + """</a>
                 </h3>
                 <div class="product-price-wrapper mb--15 mb-sm--10">
-                    <span class="money">""" + product_template_price_str + """</span>
+                    <span class="money">""" + product_template_price_str + """</span><p>浏览量 """ + str(product_template.browse_num) + """</p><p>销量 """ + str(product_template.so_qty) + """</p>
                 </div>
                 <p class="product-short-description mb--20">""" + product_template_description + """</p>  
                 <div class="ft-product-action-list d-flex align-items-center">
@@ -390,8 +390,6 @@ class OnlineShop(http.Controller):
                 # product_str = "" + str(product_template.id) + ' ' + str(product_template.default_code) + ' ' + str(product_template.name)
                 # text = text + "<p id='shop_product_product_" + str(product_template.id) + "' onclick='show_product_details(this)'>" + product_str + "</p>"
         return http.Response(response_text)
-
-
 
     @http.route(['/online_shop/sort_product_list/<int:current_category_id>/<int:chooser_id>'])
     def sort_product_list(self, current_category_id, chooser_id, **kwargs):
@@ -591,7 +589,9 @@ class OnlineShop(http.Controller):
     @http.route(['/online_shop/get_product_detail/<int:product_template_id>'], type='http', auth="public")
     def get_product_detail(self, product_template_id, **kwargs):
         product_template = http.request.env['product.template'].search([('id', '=', product_template_id)], limit=1)
-        if product_template_id:
+
+        if product_template:
+            product_template.browse_num = product_template.browse_num + 1
             product_product_pool = http.request.env['product.product'].search([('product_tmpl_id', '=', product_template_id)])
             if product_product_pool:
                 product = product_product_pool[0]
@@ -616,8 +616,10 @@ class OnlineShop(http.Controller):
                             <span class="money">"""
 
                 price_str = "¥" + str(product.lst_price)
-                footer_text = """</span>
-    </div>
+                footer_text = """</span>"""
+                browse_num_text = """<p>浏览量 """ + str(product_template.browse_num) + """</p>"""
+                so_qty_text = """<p> 销量""" + str(product_template.so_qty) + """</p>"""
+                footer_text2 = """</div>
     <div class="product-action d-flex flex-sm-row align-items-sm-center flex-column align-items-start mb--30">
         <div class="quantity-wrapper d-flex align-items-center mr--30 mr-xs--0 mb-xs--30">
             <label class="quantity-label" for="qty">数量:</label>
@@ -633,16 +635,16 @@ class OnlineShop(http.Controller):
             添加到购物车
         </button>"""
                 if product_template.product_template_external_website:
-                    footer_text2 = """<button type="button" margin='right' class="btn-blue btn-size-sm btn-shape-square" onclick="window.open('""" + product_template.product_template_external_website + """')" target='_blank'>
+                    footer_text3 = """<button type="button" margin='right' class="btn-blue btn-size-sm btn-shape-square" onclick="window.open('""" + product_template.product_template_external_website + """')" target='_blank'>
             产品效果图
         </button></div>
                     </div>  
 </div>"""
                 else:
-                    footer_text2 = """</div></div>  
+                    footer_text3 = """</div></div>  
 </div>"""
 
-                response_text = header_text + product.name + middle_text + price_str + footer_text +footer_text2
+                response_text = header_text + product.name + middle_text + price_str + footer_text + browse_num_text + so_qty_text + footer_text2 + footer_text3
                 return http.Response(response_text)
 
 class ProductTemplateCategoryExtend(models.Model):
@@ -652,7 +654,44 @@ class ProductTemplateCategoryExtend(models.Model):
     product_template_external_website = fields.Char(string='产品外部页面链接')
     custom_order = fields.Integer(string='产品展示自定义排序')
     description_html = fields.Html(string='产品详细介绍')
-    product_template_order_by_name = fields.Integer()
+    product_template_order_by_name = fields.Integer('产品按名称排序的次序')
+    so_qty = fields.Float('销售数量', compute='_compute_so_qty', store=False)
+
+    @api.one
+    def _compute_so_qty(self):
+        template_id = self.id
+        product_product_pool = self.env['product.product'].search([('product_tmpl_id', '=', template_id)])
+        if product_product_pool:
+            product_ids = product_product_pool.ids
+            sale_order_line_pool = self.env['sale.order.line'].search([('product_id', 'in', product_ids)])
+            if sale_order_line_pool:
+                qty = 0.0
+                for record in sale_order_line_pool:
+                    qty = qty + record.product_uom_qty
+                self.so_qty = qty
+            else:
+                self.so_qty = 0.0
+        else:
+            self.so_qty = 0.0
+
+    @api.multi
+    def _compute_so_qty(self):
+        for product_template in self:
+            template_id = product_template.id
+            product_product_pool = self.env['product.product'].search([('product_tmpl_id', '=', template_id)])
+            if product_product_pool:
+                product_ids = product_product_pool.ids
+                sale_order_line_pool = self.env['sale.order.line'].search([('product_id', 'in', product_ids)])
+                if sale_order_line_pool:
+                    qty = 0.0
+                    for record in sale_order_line_pool:
+                        qty = qty + record.product_uom_qty
+                    product_template.so_qty = qty
+                else:
+                    product_template.so_qty = 0.0
+            else:
+                product_template.so_qty = 0.0
+
 
 
     @api.one
