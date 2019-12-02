@@ -40,14 +40,15 @@ class wx_user(models.Model):
     user_id = fields.Many2one('res.users', '关联本系统用户')
     last_uuid_time = fields.Datetime('会话ID时间')
 
-    def update_last_uuid(self, uuid, partner_user_id, uuid_type,wx_user):
+    def update_last_uuid(self, uuid, partner_user_id, uuid_type, wx_user, partner_id):
         self.write({'last_uuid': uuid, 'last_uuid_time': fields.Datetime.now()})
         uuid_session = request.env['wx.user.uuid'].sudo().search(
-            [('uuid', '=', uuid), ('uuid_type', '=', uuid_type),('wx_user_id', '=', wx_user.id)], limit=1)
+            [('uuid', '=', uuid), ('uuid_type', '=', uuid_type), ('wx_user_id', '=', wx_user.id)], limit=1)
         if not uuid_session.exists():
             self.env['wx.user.uuid'].sudo().create({
                 'openid': self.openid, 'uuid': uuid, 'last_uuid_time': fields.Datetime.now(),
-                'uuid_type': uuid_type, 'uuid_user_id': partner_user_id, 'wx_user_id': wx_user.id
+                'uuid_type': uuid_type, 'uuid_user_id': partner_user_id, 'wx_user_id': wx_user.id,
+                'partner_id': partner_id
             })
         else:
             uuid_session.write({
@@ -266,10 +267,10 @@ class wx_user(models.Model):
                 template_id = configer_para[0].paraconfig_value
         if url_type == 'in':  # 内部URL需要登验证
             url = client.wxenv(
-                self.env).server_url + '/web/login?usercode='+usercode+'&codetype=wx&redirect=' + url
+                self.env).server_url + '/web/login?usercode=' + usercode + '&codetype=wx&redirect=' + url
         elif url_type == 'USER':  # 用户URL 直接 转到URL
             url = url
-        else:   # 其它就用当前的服务器的URL +发送URL
+        else:  # 其它就用当前的服务器的URL +发送URL
             url = client.wxenv(
                 self.env).server_url + url
         if openid:
@@ -293,14 +294,14 @@ class wx_user(models.Model):
                 client.send_template_message(self, partner_.wx_user_id.openid, template_id, data, url, url_type=url_type)
         if partner_id:
             partner_ = self.env['res.partner'].sudo().browse(partner_id)
-            self.send_template_message(data,template_id, url, partner=partner_, url_type=url_type)
+            self.send_template_message(data, template_id, url, partner=partner_, url_type=url_type)
         if user_id:
             user_ = self.env['res.users'].sudo().browse(user_id)
-            self.send_template_message(data,template_id, url, user=user_, url_type=url_type)
+            self.send_template_message(data, template_id, url, user=user_, url_type=url_type)
         return ""
 
     @api.multi
-    def consultation_reminder(self, partner, openid, message, active_id):
+    def consultation_reminder(self, partner, openid, message, active_id, reminder_type='公众号'):
         data = {
             "first": {
                 "value": "客户咨询服务提醒",
@@ -312,7 +313,7 @@ class wx_user(models.Model):
             "keyword2": {
                 "value": '微信客户'
             }, "keyword3": {
-                "value": '公众号'
+                "value": reminder_type
             }, "keyword4": {
                 "value": (datetime.datetime.now() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
             },
@@ -352,8 +353,6 @@ class wx_user(models.Model):
         now_time = datetime.datetime.utcnow()
         tz = self.env.user.tz or 'Asia/Shanghai'
         return str(now_time.replace(tzinfo=pytz.timezone(tz)))
-
-
 
 
 class wx_user_group(models.Model):
