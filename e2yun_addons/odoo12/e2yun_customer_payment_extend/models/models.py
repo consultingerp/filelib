@@ -266,7 +266,7 @@ class e2yun_customer_payment_extend(models.Model):
         atch = vals_list['payment_attachments']  # [[],[]]
         for r in atch:  # [0,'virtual', {}]
             r[2]['res_model'] = 'account.payment'
-            r[2]['name'] = uuid.uuid1()
+            r[2]['name'] = uuid.uuid4()
 
         if vals_list['amount'] == 0:
             raise Warning(
