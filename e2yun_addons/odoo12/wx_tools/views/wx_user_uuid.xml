@@ -7,7 +7,7 @@
             <field name="model">wx.user.uuid</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="微信会话记录" default_order="create_date desc">
+                <tree string="微信会话记录"  create="false" delete="true" default_order="create_date desc">
                     <field name="uuid_user_id"/>
                     <field name="wx_user_id"/>
                     <field name="openid"/>
