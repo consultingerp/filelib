@@ -42,19 +42,43 @@ function load_cart_confirm(){
 		var phone = $("input[name='phone']").val();
 		var address = $("input[name='address']").val();
 		var access_token = $("input[name='csrf_token']").val();
+		var coupon = $("select[name='coupon']").val();
 
 		$.post('/e2yun_online_shop_extends/order_confirm',{
 			'access_token' : access_token,
 			'csrf_token' : access_token,
 			'phone':phone,
-			'address':address
+			'address':address,
+			'coupon':coupon
 		},function(datas){
 			var d = JSON.parse(datas);
-			if(d['success']){
-				alert('确认成功');
-			}
-        });
+				if(!d['success']){
+					alert('确认订单异常');
+				}else{
+					window.location.href = '/e2yun_online_shop_extends/order_done_page'
+				}
 
+        });
+	}
+
+	function get_coupon(){
+		var access_token = $("input[name='csrf_token']").val();
+		$.post('/e2yun_online_shop_extends/get_coupon',{
+			'access_token' : access_token,
+			'csrf_token' : access_token
+		},function(datas){
+			var d = JSON.parse(datas);
+			if(!d || d.length == 0){
+				$("select[name='coupon']").append("<option value=''>无可用优惠券</option>");
+			}else{
+				$("select[name='coupon']").append("<option value=''>请选择优惠券</option>");
+			}
+
+			for(var i = 0;i<d.length;i++){
+				var l = d[i];
+				$("select[name='coupon']").append("<option value='"+l.coupo_code+"'>"+l.coupo_name+"</option>");
+			}
+		});
 	}
 
 
@@ -66,6 +90,7 @@ function load_cart_confirm(){
             $('body').append("<input name='csrf_token' value="+d['csrf_token']+" type='hidden' />");
 
             load_cart_confirm();
+            get_coupon();
         });
 
 		$("button[name='order_confirm']").click(function(){
