@@ -30,8 +30,10 @@ function load_order_list(){
                 "                       <h3>门店:"+order.order_team+"</h3>" +
                 "                       <h3>订单编号:"+order.order_name+"</h3>" +
                 "                   </div>" +
-                "                   <span>"+order_state_text+"</span>" +
+                "                   <span>"+order_state_text+
+                "                  </span>" +
                 "               </a>" +
+                "               " +
                 "               <div class='aui-mail-product'>";
 
             var lines = order['order_line'];
@@ -55,7 +57,10 @@ function load_order_list(){
                 "   </a>" +
                 "   <div style='padding-left: 20px;'>" +
                 "       地址:"+order.order_address+"<br/>"+
-                "       联系电话:"+order.order_phone+"<br/>"+
+                "       联系电话:"+order.order_phone+"<br/>" +
+                "<a href='/ordercontact/"+order.order_id+"' class='aui-navBar-item'>" +
+                "                                    <i class='icon icon-sys'></i>" +
+                "                                  联系客服</a>"+
                 //"       <a href='javascript:;'>再次购买</a>" +
                 //"       <a href='javascript:;' class='aui-df-color'>评价晒单</a>" +
                 //"       <a href='javascript:;' class='aui-df-color'>查看发票</a>" +
