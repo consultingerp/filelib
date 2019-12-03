@@ -20,7 +20,7 @@ from . import wx_config_model
 from . import wx_confirm_wizard
 from . import wx_media
 from . import wx_par_config
-from . import wx_sale_order
+# from . import wx_sale_order
 from . import wx_send_mass
 from . import wx_tracelog
 from . import wx_userodoouser

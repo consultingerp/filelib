@@ -22,9 +22,8 @@ class order_list(http.Controller):
     @http.route('/e2yun_online_shop_extends/get_order_list', type='http', auth="public", website=True)
     def get_order_list(self, access_token=None, revive='', **post):
         datas = []
-        orders = request.env['sale.order'].search([('state','!=','draft'),('partner_id','=',request.env.user.partner_id.id)])
+        orders = request.env['sale.order'].sudo().search([('state','!=','draft'),('partner_id','=',request.env.user.partner_id.id)])
         for order in orders:
-
 
             data = {
                 'order_name':order.name,
@@ -33,7 +32,8 @@ class order_list(http.Controller):
                 'order_team':'',
                 'order_address':order.address or '',
                 'order_phone':order.telephone or '',
-                'order_price' : order.amount_total
+                'order_price' : order.amount_total,
+                'order_id' : order.id
             }
 
             if order.team_id and order.team_id.name:
@@ -48,6 +48,7 @@ class order_list(http.Controller):
                     'line_prict': line.price_unit,
                     'image_url': line.product_id.product_tmpl_id.get_primary_url()
                 })
+
                 total_num = total_num + line.product_uom_qty
             data['order_line'] = lines
             data['total_num'] = total_num
