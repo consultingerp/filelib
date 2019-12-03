@@ -48,6 +48,7 @@
         'views/wx_tools_wx.xml',
         'views/nearby_stores_template.xml',
         'views/product_template_views.xml',
+        'views/wx_user_uuid.xml'
     ],
     'qweb': [
         "static/src/xml/wx_team.xml",

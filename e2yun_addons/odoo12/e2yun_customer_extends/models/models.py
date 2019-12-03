@@ -27,12 +27,12 @@ class E2yunCsutomerExtends(models.Model):
         return shop
 
     # 将现有字段设为必输
-    mobile = fields.Char(required=True)
-    state_id = fields.Many2one("res.country.state", required=True)
-    country_id = fields.Many2one('res.country', required=True)
-    street = fields.Char(required=True)
-    city_id = fields.Many2one('res.state.city', required=True)
-    area_id = fields.Many2one('res.city.area', required=True)
+    # mobile = fields.Char(required=True)
+    # state_id = fields.Many2one("res.country.state", required=True)
+    # country_id = fields.Many2one('res.country', required=True)
+    # street = fields.Char(required=True)
+    # city_id = fields.Many2one('res.state.city', required=True)
+    # area_id = fields.Many2one('res.city.area', required=True)
 
     app_code = fields.Char(string='', copy=False, readonly=True, default=lambda self: _('New'))
     shop_code = fields.Many2one('crm.team', string='', default=default_shop_code)
@@ -64,6 +64,8 @@ class E2yunCsutomerExtends(models.Model):
         ('contract_customers', 'Contract Customers')
     ], string='Status', default='potential_customer', group_expand='_group_expand_stage_id')
     related_guide = fields.Many2many('res.users',  domain="[('function', '!=', False)]", readonly=True)
+
+    _sql_constraints = [('unique_app_code', 'UNIQUE(app_code)', 'app_code(客户编号)需唯一！')]
 
     @api.model
     def default_get(self, fields_list):

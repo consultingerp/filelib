@@ -4,62 +4,24 @@ from odoo import api, fields, models, exceptions, tools
 
 
 class TargetCompletion(models.Model):
-    _name = 'target.completion'
+    _inherit = 'outbound.final'
     _description = '目标完成占比情况'
 
-    def default_werks(self):
-        return self.env['res.company']._company_default_get('target.completion').company_code
+    target_amount = fields.Integer('目标金额')
 
-    def default_werks_id(self):
-        return self.env['res.company']._company_default_get('target.completion').id
+    # 获取查询视图的view_id,在js中访问该方法获取指定该视图id
+    @api.model
+    def get_view_id(self):
+        query_view = self.env.ref('outbound_report.view_target_completion_query_report')
+        query_view_id = query_view.id
+        return query_view_id
 
-    def default_start_date(self):
-        ctx = self._context.copy()
-        if ctx.get('start_date', False):
-            return ctx.get('start_date')
-
-    def default_end_date(self):
-        ctx = self._context.copy()
-        if ctx.get('end_date', False):
-            return ctx.get('end_date')
-
-    def default_vkorgtext(self):
-        ctx = self._context.copy()
-        if ctx.get('vkorgtext', False):
-            return ctx.get('vkorgtext')[0]
-
-    def default_vtweg(self):
-        ctx = self._context.copy()
-        if ctx.get('vtweg', False):
-            return ctx.get('vtweg')[0]
-
-    def default_ywy(self):
-        ctx = self._context.copy()
-        if ctx.get('ywy', False):
-            return ctx.get('ywy')[0]
-
-    def default_kunnr(self):
-        ctx = self._context.copy()
-        if ctx.get('kunnr', False):
-            return ctx.get('kunnr')[0]
-
-    ID = fields.Char('ID')
-    salesorderid = fields.Char('销售订单')
-    LFADT = fields.Date('日期')
-    start_date = fields.Date('日期从', default=default_start_date)
-    end_date = fields.Date('日期到', default=default_end_date)
-    werks = fields.Char('工厂', default=default_werks, readonly=True)
-    vkorgtext = fields.Many2one('group.departments', '事业部', default=default_vkorgtext)
-    vtweg = fields.Many2one('group.channels', '分销渠道', default=default_vtweg)
-    ywy = fields.Many2one('res.users', '导购员', default=default_ywy, domain=[('function', 'in', ['店长', '店员'])])
-    kunnr = fields.Many2one('crm.team', '门店', default=default_kunnr)
-    jiesuanjine = fields.Float('结算小计')
-    xiaoshoujine = fields.Float('销售小计')
-    target = fields.Integer('目标金额')
-
-    def open_table(self):
+    def open_target_table(self):
         data = self.read()[0]
         ctx = self._context.copy()
+        # 获取视图的id,return时返回指定视图
+        tree_view = self.env.ref('outbound_report.target_completion_report_tree_view')
+        graph_view = self.env.ref('outbound_report.target_completion_report_graph_view')
 
         if data['start_date'] and data['end_date']:
             date_now = datetime.now()
@@ -104,7 +66,7 @@ class TargetCompletion(models.Model):
 
 
         return {
-            'name': '出库报表查询',
+            'name': '目标完成占比报表',
             # 'view_type': 'dashboard',
             'view_type': 'form',
             # 'view_mode': 'dashboard',
@@ -113,6 +75,7 @@ class TargetCompletion(models.Model):
             'type': 'ir.actions.act_window',
             'context': ctx,
             'domain': domain_list,
-            # 'views': [[2812, 'dashboard'], ],
-            # 'context': ctx.update({'dashboard_view_ref': 'outbound_report.outbound_report_dashboard_view'}),
+            # 实现视图重定向
+            'views': [[tree_view.id, 'tree'],
+                      [graph_view.id, 'graph']],
         }

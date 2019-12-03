@@ -10,7 +10,6 @@
     // Global State Object
     var state = {};
     window.state = state;
-    
 
 
 	// Variables
@@ -31,6 +30,8 @@
 		$dom = $('.wrapper').children(),
 		$elementCarousel = $('.element-carousel'),
 		$footer = $('.footer');
+
+
 
 
 	/**********************
@@ -439,7 +440,7 @@
 				responsive: $responsiveArray,
 			});
 
-			
+
 
 			$this.on('beforeChange', function(e, slick, currentSlide, nextSlide) {
 				removeClassFromItem($this);
@@ -593,6 +594,11 @@
 
 
 	// Button LightGallery JS
+
+
+
+
+
     var productThumb = $(".product-gallery__image img"),
         imageSrcLength = productThumb.length,
         images = [],

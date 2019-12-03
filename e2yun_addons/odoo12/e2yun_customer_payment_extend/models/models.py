@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api, exceptions, _
 from odoo.exceptions import ValidationError, Warning
+import uuid
 import suds.client, time, logging
 
 _logger = logging.getLogger(__name__)
@@ -126,17 +127,17 @@ class e2yun_customer_payment_extend(models.Model):
             trans_amount = '%.2f' % res.amount
 
         if res.customer_po:
-            cpo = res.customer_po
+            cpo = "客户PO号:%s" % res.customer_po
         else:
-            cpo = '无'
+            cpo = ''
         if res.po_num:
-            po = res.po_num
+            po = "市场合同号:%s" % res.po_num
         else:
-            po = '无'
+            po = ''
         if res.payment_voucher:
-            pv = res.payment_voucher
+            pv = "交款凭证:%s" % res.payment_voucher
         else:
-            pv = '无'
+            pv = ''
 
         dic = {'D11': '公司收现金',
                'D12': '刷卡',
@@ -168,7 +169,7 @@ class e2yun_customer_payment_extend(models.Model):
                 "color": "#173177"
             },
             "keyword3": {
-                "value": res.related_shop.display_name
+                "value": res.related_shop.name
             },
             "keyword4": {
                 "value": res.partner_id.name
@@ -177,10 +178,9 @@ class e2yun_customer_payment_extend(models.Model):
                 "value": dic[res.payment_type2]
             },
             "remark": {
-                "value": "客户PO号:%s" % cpo + ' ' +
-                         "市场合同号:%s" % po + ' ' +
-                         "交款凭证:%s" % pv,
-
+                "value": "%s" % cpo + ' ' +
+                         "%s" % po + ' ' +
+                         "%s" % pv,
             }
         }
         if res.partner_id.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
@@ -254,13 +254,19 @@ class e2yun_customer_payment_extend(models.Model):
     def create(self, vals_list):
         ctx = self._context.copy()
         a = vals_list.get('payment_attachments')
-        if not a:
+
+        pos_flag = vals_list.get('pos_flag', False)
+        if pos_flag:
+            del vals_list['pos_flag']
+
+        if not a and not pos_flag:
             raise Warning(
                 _("付款附件不能为空!"))
 
         atch = vals_list['payment_attachments']  # [[],[]]
         for r in atch:  # [0,'virtual', {}]
             r[2]['res_model'] = 'account.payment'
+            r[2]['name'] = uuid.uuid4()
 
         if vals_list['amount'] == 0:
             raise Warning(
@@ -279,9 +285,7 @@ class e2yun_customer_payment_extend(models.Model):
                 if journal:
                     vals_list['journal_id'] = journal.id
 
-        pos_flag = vals_list.get('pos_flag',False)
-        if pos_flag:
-            del vals_list['pos_flag']
+
         res = super(e2yun_customer_payment_extend, self).create(vals_list)
         self.env.cr.commit()
         if pos_flag and vals_list.get('create_uid',False):
@@ -312,7 +316,7 @@ class e2yun_customer_payment_extend(models.Model):
             if previous_state == 'draft':
                 if new_state == 'cancelled':
                     _logger.info("退款推送测试--2")
-                    self.transport_wechat_message_refund(res)
+                    self.transport_wechat_message(res)
         return res
 
     @api.model
@@ -331,10 +335,12 @@ class e2yun_customer_payment_extend(models.Model):
 class e2yun_customer_payment_extend2(models.Model):
     _inherit = 'ir.attachment'
 
-    @api.depends('datas')
-    @api.onchange('datas')
-    def _onchange_name(self):
-        self.name = self.datas_fname
+    # @api.depends('datas')
+    # @api.onchange('datas')
+    # def _onchange_name(self):
+    #     self.name = self.datas_fname
+
+    name = fields.Char('Name', required=False)
 
 class e2yun_customer_payment_res_partner(models.Model):
     _inherit = 'res.partner'
