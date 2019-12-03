@@ -18,6 +18,7 @@
 
     <!-- style css -->
     <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/main.css">
+    <!--<link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/mui.min.css">-->
     <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/my.css">
 
     <!-- slide menu css-->
@@ -49,7 +50,7 @@
                                     <div class="header__main-left">
                                         <div class="logo">
                                             <a href="/hhjc_shop_index" class="logo--normal">
-                                                <img src="/e2yun_online_shop_extends/static/src/assets/img/logo/logo.png" alt="Logo">
+                                                <img src="/e2yun_online_shop_extends/static/src/assets/img/logo/LOGOhhjc.jpeg" height="35" width="35" alt="Logo">
                                             </a>
                                         </div>
                                     </div>
@@ -58,7 +59,7 @@
                                             <ul class="mainmenu">
                                                 <li class="mainmenu__item menu-item-has-children">
                                                     <a href="/hhjc_shop_index" class="mainmenu__link">
-                                                        <span class="mm-text">商城主页</span>
+                                                        <span class="mm-text">主页</span>
                                                     </a>
 <!--                                                    <ul class="sub-menu">-->
 <!--                                                        <li>-->
@@ -337,9 +338,14 @@
                                                         <img style="width: 18px;height: 18px; float: right;" src="e2yun_online_shop_extends/static/src/assets/img/order.jpg" alt="我的订单"/>
                                                     </a>
                                                 </div>
-                                                <div class="header-toolbar__item d-block d-lg-none">
+                                                <!--<div class="header-toolbar__item d-block d-lg-none">-->
+                                                    <!--<button type="button" class="mui-btn mui-btn-blue mui-btn-block" id="startCan">开始扫描</button>-->
+                                                    <!--<div id="scanContainer" style="width:300px; height:300px; border:1px solid red; margin:0px auto;"></div>-->
+                                                    <!--<div id="info"></div>-->
+                                                <!--</div>-->
+                                                <div style="float: right;" class="header-toolbar__item d-block d-lg-none">
                                                     <a href="#categoryMenu" class="header-toolbar__btn toolbar-btn menu-btn">
-                                                        <img src="/e2yun_online_shop_extends/static/src/assets/img/plus-black.png"/>
+                                                        <img style="width: 30px;height: 30px;" src="/e2yun_online_shop_extends/static/src/assets/img/fenlei.png" alt="分类"/>
                                                     </a>
                                                 </div>
 
@@ -1688,7 +1694,7 @@
                 <nav class="offcanvas-navigation">
                     <ul class="offcanvas-menu">
                         <li class="menu-item-has-children active">
-                            <a href="/hhjc_shop_index">商城主页</a>
+                            <a href="/hhjc_shop_index">主页</a>
 <!--                            <ul class="sub-menu">-->
 <!--                                <li>-->
 <!--                                    <a href="index.html">Homepage 01</a>-->
@@ -1849,12 +1855,12 @@
 <!--                            <a href="contact-us.html">Contact Us</a>-->
 <!--                        </li>-->
                     </ul>
-                    <div class="site-info vertical">
-                        <div class="site-info__item">
-                            <a href="tel:+01223566678"><strong>+01 2235 666 78</strong></a>
-                            <a href="mailto:Support@contixs.com">Support@furtrate.com</a>
-                        </div>
-                    </div>
+<!--                    <div class="site-info vertical">-->
+<!--                        <div class="site-info__item">-->
+<!--                            <a href="tel:+01223566678"><strong>+01 2235 666 78</strong></a>-->
+<!--                            <a href="mailto:Support@contixs.com">Support@furtrate.com</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </nav>
             </div>
         </div>
@@ -2050,7 +2056,7 @@
                             <span class="ammount"></span>
                         </div>
                         <div class="mini-cart__buttons">
-                            <a href="#" class="btn btn-fullwidth btn-bg-primary mb--20">确认购物车</a>
+                            <a href="/e2yun_online_shop_extends/order_confirm_page" class="btn btn-fullwidth btn-bg-primary mb--20">确认购物车</a>
                             <!--<a href="checkout.html" class="btn btn-fullwidth btn-bg-primary">Checkout</a>  -->
                         </div>
                     </div>
@@ -2223,11 +2229,13 @@
     <!-- jQuery JS -->
     <script src="/e2yun_online_shop_extends/static/src/assets/js/vendor.js"></script>
 
-    <!-- 购物车相关js代码-->
-    <script src="/e2yun_online_shop_extends/static/src/assets/js/cart.js"></script>
-
     <!-- Main JS -->
     <script src="/e2yun_online_shop_extends/static/src/assets/js/main.js"></script>
+
+    <!--<script src="/e2yun_online_shop_extends/static/src/assets/js/mui.min.js"></script>-->
+
+    <!-- 购物车相关js代码-->
+    <script src="/e2yun_online_shop_extends/static/src/assets/js/cart.js"></script>
 
 
 
@@ -2344,7 +2352,6 @@
         }
     }
  }
-
 
     </script>
 

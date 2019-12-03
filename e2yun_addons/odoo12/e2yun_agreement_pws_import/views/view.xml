@@ -3,7 +3,7 @@
     <data>
 
         <record id="view_agreement_pws_import" model="ir.ui.view">
-            <field name="name">pws import</field>
+            <field name="name">Pws Import</field>
             <field name="model">agreement.pws.import</field>
             <field name="arch" type="xml">
                 <form string="Import">
@@ -21,7 +21,7 @@
         </record>
 
         <record id="action_view_agreement_pws_import" model="ir.actions.act_window">
-            <field name="name">pws import</field>
+            <field name="name">Pws Import</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">agreement.pws.import</field>
             <field name="view_type">form</field>
@@ -32,7 +32,7 @@
 
         <menuitem id="agreement_pws_import_management" name="Pws Import" parent="agreement.agreement_menu" />
 
-        <menuitem action="action_view_agreement_pws_import" id="menu_agreement_pws_import"  parent="agreement_pws_import_management"/>
+        <menuitem name="Pws Import" action="action_view_agreement_pws_import" id="menu_agreement_pws_import"  parent="agreement_pws_import_management"/>
 
     </data>
 </odoo>

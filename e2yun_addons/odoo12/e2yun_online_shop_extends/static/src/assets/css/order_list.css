@@ -308,9 +308,9 @@ a {
     bottom: 0;
     margin-left: -20%;
     z-index: 4;
-    background-color: #f23030;
+    background-color: #ff5151;
     border-radius: 120px;
-    border: 1px solid #f23030;
+    border: 1px solid #ff5151;
 }
 
 .tab-panel .tab-panel-item.tab-active ~ .tab-panel-item {
@@ -493,8 +493,8 @@ a {
 
 .aui-mail-button a {
     background: none;
-    border: 1px solid #f0250f;
-    color: #f0250f;
+    border: 1px solid #ff5151;
+    color: #ff5151;
     font-size: 0.8rem;
     border-radius: 40px;
     display: block;
@@ -511,6 +511,6 @@ a {
 
 .aui-well-wait {
     text-align: right;
-    color: #f0250f;
+    color: #ff5151;
     font-size: 0.8rem;
 }

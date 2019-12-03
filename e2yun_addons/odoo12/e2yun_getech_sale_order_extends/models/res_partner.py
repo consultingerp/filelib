@@ -21,7 +21,7 @@ class Partner(models.Model):
 
     @api.model
     def create(self, vals):
-        if ('parent_id' in vals or not vals['parent_id']) and ('vat' in vals and vals['vat']):
+        if ('parent_id' not in vals or not vals['parent_id']) and ('vat' in vals and vals['vat']):
             if self.search([('vat', '=', vals['vat'])]):
                 raise exceptions.Warning("统一社会信用代码已经存在，不能重复，请检查数据！")
         res = super(Partner, self).create(vals)
@@ -33,14 +33,14 @@ class Partner(models.Model):
                     prefix = 'VEN'
                 name = self.env['ir.sequence'].get_next_code_info_if_no_create('res_partner', prefix, '', 7)
                 res.partner_code = name
-        elif 'partner_code' in vals:
+        elif 'partner_code' in vals and not vals['partner_code']:
             res.partner_code = vals['partner_code']
         return res
 
     @api.multi
     def write(self, vals):
-        if ('parent_id' not in vals or not vals['parent_id']) and ('vat' in vals and vals['vat']):
-            if self.search([('vat', '=', vals['vat'])]):
+        if self and (not self.parent_id) and ('vat' in vals and vals['vat']):
+            if self.search([('id', '!=', self.id), ('vat', '=', vals['vat'])]):
                 raise exceptions.Warning("统一社会信用代码已经存在，不能重复，请检查数据！")
         res = super(Partner, self).write(vals)
         for item in self:
