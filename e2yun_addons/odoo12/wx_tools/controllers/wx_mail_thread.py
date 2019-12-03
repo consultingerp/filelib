@@ -89,59 +89,59 @@ class WXMailThread(models.AbstractModel):
                 # self.ids   self.im_status  'offline'
             if hasattr(self, "wxcorp_user_id") and self.wxcorp_user_id.userid:
                 corp_client.send_message(self, self.wxcorp_user_id.userid, body)
-        if message.model == 'sale.order' and body:
-            _logger.info('sale.order')
-            for order in self:
-                if order.state == 'draft':
-                    continue
-                to_wxid = None
-                if message.author_id.id == self.partner_id.id:
-                    to_wxid = order.create_uid  # 消息的作者是订单的供应商
-                else:
-                    to_wxid = self.partner_id
-                title = '订单提醒'
-
-                if to_wxid.wxcorp_user_id.userid:
-                    date_ref = "收到新信息:" + body
-                    data_body = "订单号:" + order.name
-                    description = "<div class=\"gray\">" + date_ref + "</div> " \
-                                                                      "<div class=\"normal\">" + data_body + "</div>" \
-                                                                                                             "<div class=\"highlight\">" + \
-                                  "时间:" + order.date_order + \
-                                  "\n联系:" + message.author_id.name + "</div>"
-                    url = corp_client.corpenv(
-                        self.env).server_url + '/web/login?usercode=saleordermessage&codetype=corp&redirect=' + order.portal_url
-                    url = corp_client.authorize_url(self, url, 'saleorder')
-                    corp_client.send_text_card(self, to_wxid.wxcorp_user_id.userid, title, description, url, "详情")
-                if to_wxid.wx_user_id.openid:
-                    data = {
-                        "first": {
-                            "value": "收到新信息:" + body,
-                            "color": "#173177"
-                        },
-                        "keyword1": {
-                            "value": order.name
-                        },
-                        "keyword2": {
-                            "value": message.author_id.name
-                        }, "keyword3": {
-                            "value": datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                            # "color": "#173177"
-                        },
-                        "remark": {
-                            "value": "产品：" + '：'.join(order.order_line.mapped('product_id.display_name'))
-                        }
-                    }
-
-                    template_id = ''
-                    configer_para = self.env["wx.paraconfig"].sudo().search([('paraconfig_name', '=', '订单提醒')])
-                    if configer_para:
-                        template_id = configer_para[0].paraconfig_value
-                    from ..controllers import client
-                    url = client.wxenv(
-                        self.env).server_url + '/web/login?usercode=saleorderwxmessage&codetype=wx&redirect=' + order.access_url
-                    client.send_template_message(self, to_wxid.wx_user_id.openid, template_id, data, url,
-                                                 'saleorder')
+        # if message.model == 'sale.order' and body:
+        #     _logger.info('sale.order')
+        #     for order in self:
+        #         if order.state == 'draft':
+        #             continue
+        #         to_wxid = None
+        #         if message.author_id.id == self.partner_id.id:
+        #             to_wxid = order.create_uid  # 消息的作者是订单的供应商
+        #         else:
+        #             to_wxid = self.partner_id
+        #         title = '订单提醒'
+        #
+        #         if to_wxid.wxcorp_user_id.userid:
+        #             date_ref = "收到新信息:" + body
+        #             data_body = "订单号:" + order.name
+        #             description = "<div class=\"gray\">" + date_ref + "</div> " \
+        #                                                               "<div class=\"normal\">" + data_body + "</div>" \
+        #                                                                                                      "<div class=\"highlight\">" + \
+        #                           "时间:" + order.date_order + \
+        #                           "\n联系:" + message.author_id.name + "</div>"
+        #             url = corp_client.corpenv(
+        #                 self.env).server_url + '/web/login?usercode=saleordermessage&codetype=corp&redirect=' + order.portal_url
+        #             url = corp_client.authorize_url(self, url, 'saleorder')
+        #             corp_client.send_text_card(self, to_wxid.wxcorp_user_id.userid, title, description, url, "详情")
+        #         if to_wxid.wx_user_id.openid:
+        #             data = {
+        #                 "first": {
+        #                     "value": "收到新信息:" + body,
+        #                     "color": "#173177"
+        #                 },
+        #                 "keyword1": {
+        #                     "value": order.name
+        #                 },
+        #                 "keyword2": {
+        #                     "value": message.author_id.name
+        #                 }, "keyword3": {
+        #                     "value": datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        #                     # "color": "#173177"
+        #                 },
+        #                 "remark": {
+        #                     "value": "产品：" + '：'.join(order.order_line.mapped('product_id.display_name'))
+        #                 }
+        #             }
+        #
+        #             template_id = ''
+        #             configer_para = self.env["wx.paraconfig"].sudo().search([('paraconfig_name', '=', '订单提醒')])
+        #             if configer_para:
+        #                 template_id = configer_para[0].paraconfig_value
+        #             from ..controllers import client
+        #             url = client.wxenv(
+        #                 self.env).server_url + '/web/login?usercode=saleorderwxmessage&codetype=wx&redirect=' + order.access_url
+        #             client.send_template_message(self, to_wxid.wx_user_id.openid, template_id, data, url,
+        #                                          'saleorder')
         if message.model == 'purchase.order' and body:
             _logger.info('purchase.order')
             for order in self:
