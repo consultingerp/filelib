@@ -39,7 +39,7 @@ class E2yunCustomerRefund(models.Model):
     mobile_phone = fields.Char('手机号')
     huming = fields.Char('户名')
     refund_status = fields.Selection([
-        ('draft', '草稿'), ('posted', '已过帐'), ('cancelled', '取消'), ('checked', '已审核')],
+        ('draft', '草稿'), ('checked', '已审核'), ('posted', '已过帐'), ('cancelled', '取消')],
         '状态', default='draft')
     shop_code = fields.Char('门店编码')
     app_code = fields.Char('客户编码')
@@ -51,10 +51,10 @@ class E2yunCustomerRefund(models.Model):
         res = super(E2yunCustomerRefund, self).write(vals)
         shop = self.env['crm.team'].search([('name', '=', self.shop_id)])
 
-        if shop.sent_wx_message and previous_state == 'draft':
-            if shop.refund_id == '第三方退款' and new_state == 'checked':
+        if shop.sent_wx_message:
+            if self.refund_id == '第三方退款' and previous_state == 'draft' and new_state == 'checked':
                 self.transport_wechat_message_refund(res)
-            if shop.refund_id != '第三方退款' and new_state == 'posted':
+            if self.refund_id != '第三方退款' and previous_state == 'checked' and new_state == 'posted':
                 self.transport_wechat_message_refund(res)
         return res
 
