@@ -32,7 +32,8 @@ class order_list(http.Controller):
                 'order_team':'',
                 'order_address':order.address or '',
                 'order_phone':order.telephone or '',
-                'order_price' : order.amount_total
+                'order_price' : order.amount_total,
+                'order_id' : order.id
             }
 
             if order.team_id and order.team_id.name:

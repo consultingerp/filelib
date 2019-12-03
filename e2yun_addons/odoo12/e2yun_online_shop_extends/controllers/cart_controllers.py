@@ -145,7 +145,8 @@ class cart(http.Controller):
             order = request.env['sale.order'].sudo().browse(confirm_sale_order_id)
             values = {
                 'total_price': order.amount_total,
-                'order_code': order.name
+                'order_code': order.name,
+                'order_id' : order.id
             }
 
         return request.make_response(json.dumps(values))

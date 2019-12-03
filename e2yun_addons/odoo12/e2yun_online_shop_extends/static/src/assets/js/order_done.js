@@ -9,9 +9,11 @@ function load_order(){
 			var d = JSON.parse(datas);
 			var total_price = d['total_price'];
 			var order_code = d['order_code'];
+			var order_id = d['order_id'];
 
 			$('.amount').text('￥'+total_price);
 			$("span[name='order_code']").text(order_code);
+			$("a[name='ordercontact']").attr('href',"/ordercontact/"+order_id);
 		});
 	}
 
