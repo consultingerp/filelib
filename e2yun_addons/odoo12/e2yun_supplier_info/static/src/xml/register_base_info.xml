@@ -55,7 +55,6 @@
                                 <input type="text" t-att-readonly="'readonly' if is_view else None" placeholder="与营业执照注册名称保持一致，可自动从注册页面带出" class="form-control o_website_form_input" t-att-value="supplier.company_name"  name="company_name" required=""/>
                               </div>
                             </div>
-
                             <div class="row form-group form-field">
                               <div class="col-md-4 text-md-right col-lg-2">
                                 <label class="col-form-label" for="website">公司网站</label>
@@ -112,22 +111,41 @@
                                      <!--height="60px" width="100px"/>-->
                               <!--</div>-->
                             </div>
-
                             <!--公司正门照片-->
-                            <div class="row form-group form-field o_website_form_required_custom">
+                            <div widget="image" class="row form-group form-field o_website_form_required_custom">
                               <div class="col-md-4 text-md-right col-lg-2">
                                 <label class="col-form-label" for="image_company"> 公司正门照片 </label>
                               </div>
                               <t t-if="is_view == False">
                                 <div class="col-lg-3 col-md-8">
-                                  <input type="file" class="form-control o_website_form_input" name="image_company"/>
+                                  <input type="file" accept="image/*" onchange="showImg(this)" class="form-control o_website_form_input" name="image_company"/>
                                   <input type="hidden" name="image_company_value" t-att-value="supplier.image_company"/>
                                 </div>
                               </t>
 
                               <div class="col-lg-5 col-md-8">
+                                <!--<img t-attf-src="data:image/png;base64,#{supplier.image_company}" alt=""-->
+                                     <!--height="60px" width="100px" id="img"/>-->
                                 <img t-attf-src="data:image/png;base64,#{supplier.image_company}" alt=""
-                                     height="60px" width="100px"/>
+                                      width="100px" id="img"/>
+                                <!--<img src="" alt=""  width="200px"/>-->
+                                  <script>
+                                      function showImg(obj) {
+                                          var file=$(obj)[0].files[0];    //获取文件信息
+                                          var imgdata='';
+                                          if(file)
+                                          {
+                                              var reader=new FileReader();  //调用FileReader
+                                              reader.readAsDataURL(file); //将文件读取为 DataURL(base64)
+                                              reader.onload=function(evt){   //读取操作完成时触发。
+                                                  $("#img").attr('src',evt.target.result)  //将img标签的src绑定为DataURL
+                                              };
+                                          }
+                                          else{
+                                              alert("上传失败");
+                                          }
+                                      }
+                                  </script>
                               </div>
                             </div>
                             <!--组织架构图-->
