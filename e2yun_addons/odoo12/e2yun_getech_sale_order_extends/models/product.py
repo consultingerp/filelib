@@ -23,11 +23,13 @@ class Product(models.Model):
     def create(self, vals):
         res = super(Product, self).create(vals)
         if res:
-            if not self.env.context['install_mode']:
+            if 'default_code' not in vals and not res.default_code:
                 if res.categ_id:
                     if res.categ_id.code:
                         default_code = self.env['ir.sequence'].get_next_code_info_if_no_create('product', res.categ_id.code, '', 7)
                         res.default_code = default_code
                     else:
                         raise exceptions.Warning('产品类别没有配置code，请配置后重试！')
+            elif 'default_code' in vals:
+                res.default_code = vals['default_code']
         return res

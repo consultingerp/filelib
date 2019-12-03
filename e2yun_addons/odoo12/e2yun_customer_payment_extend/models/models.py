@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api, exceptions, _
 from odoo.exceptions import ValidationError, Warning
+import uuid
 import suds.client, time, logging
 
 _logger = logging.getLogger(__name__)
@@ -265,6 +266,7 @@ class e2yun_customer_payment_extend(models.Model):
         atch = vals_list['payment_attachments']  # [[],[]]
         for r in atch:  # [0,'virtual', {}]
             r[2]['res_model'] = 'account.payment'
+            r[2]['name'] = uuid.uuid4()
 
         if vals_list['amount'] == 0:
             raise Warning(
@@ -314,7 +316,7 @@ class e2yun_customer_payment_extend(models.Model):
             if previous_state == 'draft':
                 if new_state == 'cancelled':
                     _logger.info("退款推送测试--2")
-                    self.transport_wechat_message_refund(res)
+                    self.transport_wechat_message(res)
         return res
 
     @api.model
@@ -333,10 +335,12 @@ class e2yun_customer_payment_extend(models.Model):
 class e2yun_customer_payment_extend2(models.Model):
     _inherit = 'ir.attachment'
 
-    @api.depends('datas')
-    @api.onchange('datas')
-    def _onchange_name(self):
-        self.name = self.datas_fname
+    # @api.depends('datas')
+    # @api.onchange('datas')
+    # def _onchange_name(self):
+    #     self.name = self.datas_fname
+
+    name = fields.Char('Name', required=False)
 
 class e2yun_customer_payment_res_partner(models.Model):
     _inherit = 'res.partner'
