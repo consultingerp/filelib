@@ -77,7 +77,7 @@ function load_cart(){
 						"                                    <i class='la la-remove'></i>\n" +
 						"                                </a>\n" +
 						"                                <div class='mini-cart__product-image'>\n" +
-						"                                    <img src='"+l.image_url+"' alt='products'>\n" +
+						"                                    <img src='/"+l.image_url+"' alt='products'>\n" +
 						"                                </div>\n" +
 						"                                <div class='mini-cart__product-content'>\n" +
 						"                                    <a id='list_image_cart_product_template_"+l.product_template_id+"' class='mini-cart__product-title' href='#'>"+l.product_name+"</a>\n" +
