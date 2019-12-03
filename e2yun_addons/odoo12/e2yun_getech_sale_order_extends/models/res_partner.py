@@ -39,8 +39,8 @@ class Partner(models.Model):
 
     @api.multi
     def write(self, vals):
-        if (not self.parent_id) and ('vat' in vals and vals['vat']):
-            if self.search([('vat', '=', vals['vat'])]):
+        if self and (not self.parent_id) and ('vat' in vals and vals['vat']):
+            if self.search([('id', '!=', self.id), ('vat', '=', vals['vat'])]):
                 raise exceptions.Warning("统一社会信用代码已经存在，不能重复，请检查数据！")
         res = super(Partner, self).write(vals)
         for item in self:
