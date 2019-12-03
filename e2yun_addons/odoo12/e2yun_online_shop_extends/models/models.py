@@ -6,6 +6,7 @@ import jinja2
 import os
 import logging
 import json
+from odoo.http import request
 
 BASE_DIR = os.path.dirname((os.path.dirname(__file__)))
 templateLoader = jinja2.FileSystemLoader(searchpath=BASE_DIR + "/static/src")
@@ -32,6 +33,7 @@ class OnlineShop(http.Controller):
     def hhjc_shop_product_details(self, **kwargs):
         template = env.get_template('product-details.html')
         html = template.render()
+        request.session['current_product_detail_id'] = ''
         return html
 
     # 如果想要不登录就可以访问，那么auth='public'
@@ -584,6 +586,20 @@ class OnlineShop(http.Controller):
                 return http.Response(' ')
         else:
             return http.Response(' ')
+
+    @http.route(['/online_shop/get_template_id'], type='http', auth="public")
+    def get_template_id(self, **kwargs):
+        template_id = request.session['current_product_detail_id']
+
+        return http.request.make_response(json.dumps({'product_template_id':template_id}))
+
+    @http.route(['/online_shop/get_product_detail_page/<int:product_template_id>'], type='http', auth="public")
+    def get_product_detail_page(self, product_template_id, **kwargs):
+        if product_template_id:
+            request.session['current_product_detail_id'] = product_template_id
+        template = env.get_template('product-details.html')
+        html = template.render()
+        return html
 
 
     @http.route(['/online_shop/get_product_detail/<int:product_template_id>'], type='http', auth="public")
