@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="scanqrcode_test" model="ir.actions.act_url">
+            <field name="name">scanQRCode_test</field>
+            <field name="url">/website/saleorder</field>
+            <field name="target">self</field>
+        </record>
+
+         <menuitem id="menu_scanqrcode_test"  name="扫码测试"
+                action="scanqrcode_test"
+                parent="sale.sale_order_menu"
+                sequence="100"/>
+
+
+        <template id="wx_sale_order.order_test" name="扫描测试">
+
+            <div class="mian">
+                <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"/>
+                <script type="text/javascript">
+                    console.log(location.href.split('#')[0]);
+                    console.log(<t t-raw="jsapi_ticket"/>);
+                    var timestamp = '<t t-raw="jsapi_ticket['timestamp']"/>';
+                    wx.config({
+                    debug: false,
+                    appId: '<t t-raw="jsapi_ticket['wx_appid']"/>',
+                    timestamp: '<t t-raw="jsapi_ticket['timestamp']"/>',
+                    nonceStr: '<t t-raw="jsapi_ticket['noncestr']"/>',
+                    signature: '<t t-raw="jsapi_ticket['signature']"/>',
+                    jsApiList: ['openLocation', 'onMenuShareAppMessage',
+                    'chooseImage','scanQRCode','getLocation','uploadImage' ]
+                    }); //end config
+                    wx.ready(function () {
+
+
+                    }); // end read
+                    wx.error(function(res){
+                    console.log('err', res)
+                    });
+
+                    function scanQRCode_test(){
+                    wx.scanQRCode({
+                    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                    scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                    success: function (res) {
+                           //在此处处理数据
+                           var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                           document.getElementById("scanQRCodeValue").innerHTML = result;
+                    }
+                    });
+
+                    }
+
+                </script>
+                <div class="order_test">
+
+                    <div id="scanQRCode_test" style="font-size:350%;"  onclick='scanQRCode_test()' class="info">扫码测试 </div>
+
+                    <div id="scanQRCodeValue"  style="font-size:350%;" >
+
+                    </div>
+
+                </div>
+            </div>
+
+        </template>
+
+    </data>
+</odoo>
