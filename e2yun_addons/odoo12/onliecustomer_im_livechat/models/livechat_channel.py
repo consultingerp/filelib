@@ -2,8 +2,10 @@
 
 import logging
 import random
+import werkzeug
+from odoo.http import request
 
-from odoo import models, api
+from odoo import models, api, fields
 
 _logger = logging.getLogger(__name__)
 
@@ -14,6 +16,8 @@ class LivechatChannel(models.Model):
     @api.model
     def get_online_mail_channel(self, livechat_channel_id, anonymous_name):
         # get the avalable user of the channel
+        if not request.session.uid:
+            return werkzeug.utils.redirect('/web/login?error=请登录然后操作')
         users = self.sudo().browse(livechat_channel_id).get_available_users()
         isonlinecustomer = True;
         if len(users) == 0:  # 如果用户不在线 选择所有用户
@@ -42,4 +46,4 @@ class LivechatChannel(models.Model):
 
     @api.multi
     def get_wx_available_users(self, user_ids):
-        return user_ids.filtered(lambda user: user.wx_user_id)
+        return user_ids.filtered(lambda user: user.wx_user_id and user.is_defaultlivechat)

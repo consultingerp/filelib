@@ -1,5 +1,5 @@
 # -*-coding:utf-8-*-
-
+import werkzeug
 from odoo import http, _
 from odoo.http import request
 from odoo import models, fields, api
@@ -44,6 +44,8 @@ class HelpdesUser(http.Controller):
                         uuid = session_info['uuid']
                     else:
                         return request.render('e2yun_website_helpdesk_form.csoffline')
+            else:
+                return werkzeug.utils.redirect('/web/login?error=请登录然后操作')
             # localkwargs = {'weixin_id': 'web', 'wx_type': 'wx'}
             channel = request.env["mail.channel"].sudo().search([('uuid', '=', uuid)], limit=1)
             active_id = channel["id"]
