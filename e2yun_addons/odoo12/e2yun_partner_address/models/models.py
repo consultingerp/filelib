@@ -18,7 +18,7 @@ class E2yunCsutomerExtends(models.Model):
 
 
     #country_id = fields.Many2one('res.country', string='Country', ondelete='restrict',default=_default_country)
-    city_id = fields.Many2one('res.state.city',string='City',domain="[('state_id','=?',state_id)]")
+    city_id = fields.Many2one('res.state.city',string='City1',domain="[('state_id','=?',state_id)]")
     area_id = fields.Many2one('res.city.area',string='Area',domain="[('city_id','=?',city_id)]")
     address_desc = fields.Text(string='地址解析')
 
