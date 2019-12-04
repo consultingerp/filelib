@@ -433,19 +433,6 @@ class e2yun_supplier_info(models.Model):
     def _get_country_name(self):
         return self.country_id.name or ''
 
-    # 添加供应商编码生成逻辑
-    def random_20char(self, string, length):
-        for i in range(length):
-            x = random.randint(1, 2)
-            if x == 1:
-                y = str(random.randint(0, 9))
-            else:
-                y = chr(random.randint(97, 122))
-            string.append(y)
-        string = ''.join(string)
-        return string
-
-
     def customer_transfer_to_normal(self):
         self.ensure_one()
         data = {}
@@ -563,7 +550,7 @@ class e2yun_supplier_info(models.Model):
                 'company_profile': self.company_profile,
                 'login_name': self.login_name,
                 'name': self.name,
-                'code': self.random_20char([], 20)
+
 
 
                 })

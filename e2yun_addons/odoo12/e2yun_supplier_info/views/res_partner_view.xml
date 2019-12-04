@@ -29,7 +29,7 @@
             </xpath>
             <xpath expr="//field[@name='lang']" position="after">
                 <field name="company_profile" attrs="{'invisible':[('supplier','=',False)]}"/>
-                <!--<field name="code" attrs="{'invisible':[('supplier','=',False)]}" readonly="1"/>-->
+                <field name="supplier_code" attrs="{'invisible':[('supplier','=',False)]}" readonly="1"/>
             </xpath>
             <!--隐藏不需要的字段-->
             <xpath expr="//field[@name='lang']" position="attributes">
