@@ -69,13 +69,30 @@
                               </div>
                               <t t-if="is_view == False">
                                 <div class="col-lg-3 col-md-8">
-                                  <input type="file" class="form-control o_website_form_input" name="business_license"/>
+                                  <input type="file" accept="image/*" onchange="showImg1(this)" class="form-control o_website_form_input" name="business_license"/>
                                   <input type="hidden" name="business_license_value" t-att-value="supplier.business_license"/>
                                 </div>
                               </t>
                               <div class="col-lg-5 col-md-8">
                                 <img t-attf-src="data:image/png;base64,#{supplier.business_license}" alt=""
-                                     height="60px" width="100px"/>
+                                     width="100px" id="img1"/>
+                                <script>
+                                  function showImg1(obj) {
+                                      var file=$(obj)[0].files[0];    //获取文件信息
+                                      var imgdata='';
+                                      if(file)
+                                      {
+                                          var reader=new FileReader();  //调用FileReader
+                                          reader.readAsDataURL(file); //将文件读取为 DataURL(base64)
+                                          reader.onload=function(evt){   //读取操作完成时触发。
+                                              $("#img1").attr('src',evt.target.result)  //将img标签的src绑定为DataURL
+                                          };
+                                      }
+                                      else{
+                                          alert("上传失败");
+                                      }
+                                  }
+                                </script>
                               </div>
                             </div>
                             <!--营业执照有效期-->
@@ -118,7 +135,7 @@
                               </div>
                               <t t-if="is_view == False">
                                 <div class="col-lg-3 col-md-8">
-                                  <input type="file" accept="image/*" onchange="showImg(this)" class="form-control o_website_form_input" name="image_company"/>
+                                  <input type="file" accept="image/*" onchange="showImg2(this)" class="form-control o_website_form_input" name="image_company"/>
                                   <input type="hidden" name="image_company_value" t-att-value="supplier.image_company"/>
                                 </div>
                               </t>
@@ -127,10 +144,10 @@
                                 <!--<img t-attf-src="data:image/png;base64,#{supplier.image_company}" alt=""-->
                                      <!--height="60px" width="100px" id="img"/>-->
                                 <img t-attf-src="data:image/png;base64,#{supplier.image_company}" alt=""
-                                      width="100px" id="img"/>
+                                      width="100px" id="img2"/>
                                 <!--<img src="" alt=""  width="200px"/>-->
                                   <script>
-                                      function showImg(obj) {
+                                      function showImg2(obj) {
                                           var file=$(obj)[0].files[0];    //获取文件信息
                                           var imgdata='';
                                           if(file)
@@ -138,7 +155,7 @@
                                               var reader=new FileReader();  //调用FileReader
                                               reader.readAsDataURL(file); //将文件读取为 DataURL(base64)
                                               reader.onload=function(evt){   //读取操作完成时触发。
-                                                  $("#img").attr('src',evt.target.result)  //将img标签的src绑定为DataURL
+                                                  $("#img2").attr('src',evt.target.result)  //将img标签的src绑定为DataURL
                                               };
                                           }
                                           else{
@@ -155,14 +172,31 @@
                               </div>
                               <t t-if="is_view == False">
                                 <div class="col-lg-3 col-md-8">
-                                  <input type="file" class="form-control o_website_form_input" t-att-value="supplier.organization_chart" name="organization_chart"/>
+                                  <input type="file" accept="image/*" onchange="showImg3(this)" class="form-control o_website_form_input" t-att-value="supplier.organization_chart" name="organization_chart"/>
                                   <input type="hidden" name="organization_chart_value" t-att-value="supplier.organization_chart"/>
                                 </div>
                               </t>
 
                               <div class="col-lg-5 col-md-8">
                                 <img t-attf-src="data:image/png;base64,#{supplier.organization_chart}" alt=""
-                                     height="60px" width="100px"/>
+                                     width="100px" id="img3"/>
+                                <script>
+                                  function showImg3(obj) {
+                                      var file=$(obj)[0].files[0];    //获取文件信息
+                                      var imgdata='';
+                                      if(file)
+                                      {
+                                          var reader=new FileReader();  //调用FileReader
+                                          reader.readAsDataURL(file); //将文件读取为 DataURL(base64)
+                                          reader.onload=function(evt){   //读取操作完成时触发。
+                                              $("#img3").attr('src',evt.target.result)  //将img标签的src绑定为DataURL
+                                          };
+                                      }
+                                      else{
+                                          alert("上传失败");
+                                      }
+                                  }
+                                </script>
                               </div>
                             </div>
                             <!--工厂生产区照片-->
@@ -172,13 +206,30 @@
                               </div>
                               <t t-if="is_view == False">
                                 <div class="col-lg-3 col-md-8">
-                                  <input type="file" class="form-control o_website_form_input" t-att-value="supplier.image_product" name="image_product"/>
+                                  <input type="file" accept="image/*" onchange="showImg4(this)" class="form-control o_website_form_input" t-att-value="supplier.image_product" name="image_product"/>
                                   <input type="hidden" name="image_product_value" t-att-value="supplier.image_product"/>
                                 </div>
                               </t>
                               <div class="col-lg-5 col-md-8">
                                 <img t-attf-src="data:image/png;base64,#{supplier.image_product}" alt=""
-                                     height="60px" width="100px"/>
+                                     width="100px" id="img4"/>
+                                <script>
+                                  function showImg4(obj) {
+                                      var file=$(obj)[0].files[0];    //获取文件信息
+                                      var imgdata='';
+                                      if(file)
+                                      {
+                                          var reader=new FileReader();  //调用FileReader
+                                          reader.readAsDataURL(file); //将文件读取为 DataURL(base64)
+                                          reader.onload=function(evt){   //读取操作完成时触发。
+                                              $("#img4").attr('src',evt.target.result)  //将img标签的src绑定为DataURL
+                                          };
+                                      }
+                                      else{
+                                          alert("上传失败");
+                                      }
+                                  }
+                                </script>
                               </div>
                             </div>
                             <!--注册资金-->
@@ -594,15 +645,35 @@
                               </div>
                               <t t-if="is_view == False">
                                 <div class="col-lg-3 col-md-8">
-                                  <input  type="file" class="form-control o_website_form_input" name="enclosure_bank"/>
+                                  <input  type="file" accept="image/*" onchange="showImg5(this)" class="form-control o_website_form_input" name="enclosure_bank"/>
                                   <input  type="hidden" class="form-control o_website_form_input" t-att-value="supplier.enclosure_bank" name="enclosure_bank_value"/>
                                 </div>
                               </t>
-                              <t t-if="supplier.enclosure_bank">
-                                <div class="col-lg-5 col-md-8">
-                                  <img t-att-src="'/e2yun_supplier_info/static/src/image/file.jpg'" alt="已上传附件" height="35px" width="35px"/>
-                                </div>
-                              </t>
+                              <!--<t t-if="supplier.enclosure_bank">-->
+                                <!--<div class="col-lg-5 col-md-8">-->
+                                  <!--<img t-att-src="'/e2yun_supplier_info/static/src/image/file.jpg'" alt="已上传附件" height="35px" width="35px"/>-->
+                                <!--</div>-->
+                              <!--</t>-->
+                              <div class="col-lg-5 col-md-8">
+                                  <img t-attf-src="data:image/png;base64,#{supplier.enclosure_bank}" alt="" width="100px" id="img5"/>
+                                    <script>
+                                      function showImg5(obj) {
+                                          var file=$(obj)[0].files[0];    //获取文件信息
+                                          var imgdata='';
+                                          if(file)
+                                          {
+                                              var reader=new FileReader();  //调用FileReader
+                                              reader.readAsDataURL(file); //将文件读取为 DataURL(base64)
+                                              reader.onload=function(evt){   //读取操作完成时触发。
+                                                  $("#img5").attr('src',evt.target.result)  //将img标签的src绑定为DataURL
+                                              };
+                                          }
+                                          else{
+                                              alert("上传失败");
+                                          }
+                                      }
+                                    </script>
+                              </div>
                             </div>
                             <div class="form-group row">
                               <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
