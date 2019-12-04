@@ -31,9 +31,8 @@
                     <field name="vtweg"/>
                     <field name="kunnr"/>
                     <field name="ywy"/>
-<!--                    <field name="jiesuanjine"/>-->
-                    <field name="jiesuan_amount"/>
                     <field name="target_amount"/>
+                    <field name="jiesuan_amount"/>
                 </tree>
             </field>
         </record>
