@@ -60,6 +60,7 @@ class E2yunCustomerRefund(models.Model):
 
     def transport_wechat_message_refund(self, res):  # 微信消息推送--客户退款
         flag = self.env['crm.team'].search([('shop_code', '=', self.shop_code)]).show_accept_amount
+        partner_id0 = self.env['res.partner'].search([('app_code', '=', self.app_code)]).app_code
 
         if flag:
             trans_amount = self.customer_refund_amount
@@ -102,7 +103,7 @@ class E2yunCustomerRefund(models.Model):
         get_wx_user_id = self.env['res.partner'].search([('app_code', '=', self.app_code)])
         if get_wx_user_id.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
             get_wx_user_id.wx_user_id.send_template_message(
-                user_data, template_name='客户退款提醒', partner=self.partner_id)
+                user_data, template_name='客户退款提醒', partner=partner_id0)
     # def init_date(self, ctx):
     #
     #     rq_from = str(ctx['date_from']) or ''
