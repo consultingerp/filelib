@@ -62,7 +62,7 @@ class res_partner(models.Model):
     city = fields.Many2one('res.city', 'City', ondelete='restrict')
     street = fields.Char('详细地址')
     website = fields.Char()
-
-
+    # 新增供应商编码
+    code = fields.Char('供应商编码')
 
 
