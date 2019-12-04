@@ -8,7 +8,7 @@
     'description': """在线客服聊天.""",
     'application': True,
     'depends': [
-        'web', 'website', 'im_livechat', 'mail',
+        'base', 'web', 'website', 'im_livechat', 'mail',
     ],
     'data': [
         'security/ir.model.access.csv',
