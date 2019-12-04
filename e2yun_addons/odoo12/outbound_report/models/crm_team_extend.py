@@ -26,15 +26,13 @@ class CrmTeamExtend(models.Model):
             target_detail = self.env['team.target.detail'].search([('current_team_id', '=', self.id),
                                                                    ('detail_year', '=', year)])
             invoiced_target = 0
-            month_list = []
-            sale_list = []
+            month_sale_dict = {}
             for target in target_detail:
                 month = target.target_month
                 sale = target.sales_member.name
-                if month in month_list and sale in sale_list:
+                if month in month_sale_dict.keys() and month_sale_dict['%s' % month] == sale:
                     raise exceptions.Warning('%s月份导购%s的目标值已存在' % (month, sale))
-                month_list.append(month)
-                sale_list.append(sale)
+                month_sale_dict.update({month: sale})
                 invoiced_target += target.team_target_monthly
             if invoiced_target > total_target:
                 raise exceptions.Warning('%s年：设定目标不能超过年度目标' % year)
@@ -121,7 +119,6 @@ class SalesNameSearch(models.Model):
     @api.model
     def name_search(self, name='', args=None, operator='ilike', limit=100):
         res = super(SalesNameSearch, self).name_search(name, args, operator, limit)
-        ctx = self.env.context
         return res
 
 

@@ -6,7 +6,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'web', 'mail', 'im_livechat', 'sale_management', 'wx_tools'],
+    'depends': ['base', 'web', 'mail', 'im_livechat', 'sale_management'],
 
     # always loaded
     'data': [
