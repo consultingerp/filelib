@@ -10,7 +10,7 @@ class TargetCompletion(models.Model):
     def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
         res = super(TargetCompletion, self).search_read(domain, fields, offset, limit, order)
         ctx = self._context.copy()
-        if ctx['new_view'] == 1:
+        if 'new_view' in ctx:
             res = [{'target_year': ctx['target_year'], 'target_month': ctx['target_month'], 'werks': ctx['werks'],
                     'vkorgtext':ctx['vkorgtext'], 'vtweg': ctx['vtweg'], 'kunnr': ctx['kunnr'], 'ywy': ctx['ywy'],
                     'jiesuan_amount': ctx['jiesuan_amount'], 'target_amount': ctx['target_amount']}]
@@ -31,8 +31,50 @@ class TargetCompletion(models.Model):
     target_month = fields.Selection(
         [('1', '一月'), ('2', '二月'), ('3', '三月'), ('4', '四月'), ('5', '五月'), ('6', '六月'), ('7', '七月'), ('8', '八月'),
          ('9', '九月'), ('10', '十月'), ('11', '十一月'), ('12', '十二月')], string='月份', default=default_target_month)
-    target_amount = fields.Integer('门店目标')
-    jiesuan_amount = fields.Integer('结算小计')
+    target_amount = fields.Integer('门店目标', compute='_compute_target_amount', store=True)
+    jiesuan_amount = fields.Integer('销售金额', compute='_compute_jiesuan_amount', store=True)
+
+    @api.depends('target_year', 'target_month', 'kunnr', 'ywy')
+    def _compute_target_amount(self):
+        for rec in self:
+            # 选择月份（展示门店/业务月度目标）
+            if rec.target_month:
+                if rec.ywy:
+                    target_detail = self.env['team.target.detail'].search([('current_team_id', '=', rec.kunnr.id),
+                                                                           ('detail_year', '=', rec.target_year),
+                                                                           ('target_month', '=?', rec.target_month),
+                                                                           ('sales_member.id', '=?', rec.ywy.id)])
+                else:
+                    target_detail = self.env['team.target.detail'].search([('current_team_id', '=', rec.kunnr.id),
+                                                                          ('detail_year', '=', rec.target_year),
+                                                                          ('target_month', '=?', rec.target_month)])
+                target_amount = 0
+                if target_detail:
+                    for detail in target_detail:
+                        target_amount += detail.team_target_monthly
+                rec.target_amount = target_amount
+            # 不选择月份（展示门店/业务年度目标）
+            else:
+                # 选择业务员,年度目标通过分配目标的取值
+                if rec.ywy:
+                    ywy = rec.ywy.id
+                    target_detail = self.env['team.target.detail'].search([('current_team_id', '=', rec.kunnr.id),
+                                                                           ('detail_year', '=', rec.target_year),
+                                                                           ('sales_member.id', '=?', ywy)])
+                    target_amount = 0
+                    if target_detail:
+                        for detail in target_detail:
+                            target_amount += detail.team_target_monthly
+                    rec.target_amount = target_amount
+                # 不选择业务员,直接取门店年度目标
+                else:
+                    target_year = self.env['team.target.year'].search([('team_id', '=', rec.kunnr.id),
+                                                                       ('target_year', '=', rec.target_year)])
+                    target_amount = 0
+                    if target_year:
+                        for target in target_year:
+                            target_amount += target.invoiced_target_year
+                    rec.target_amount = target_amount
 
     @api.depends('target_year', 'target_month', 'kunnr', 'ywy')
     def _compute_jiesuan_amount(self):
@@ -59,12 +101,64 @@ class TargetCompletion(models.Model):
                 for res in res_amount:
                     jiesuan_amount += res['jiesuanjine']
             rec.jiesuan_amount = jiesuan_amount
+
     # 获取查询视图的view_id,在js中访问该方法获取指定该视图id
     @api.model
     def get_view_id(self):
         query_view = self.env.ref('outbound_report.view_target_completion_query_report')
         query_view_id = query_view.id
-        return query_view_id
+        return query_view_id\
+
+    def open_target_table(self):
+        data = self.read()[0]
+        ctx = self._context.copy()
+        # 获取视图的id,return时返回指定视图
+        tree_view = self.env.ref('outbound_report.target_completion_report_tree_view')
+        graph_view = self.env.ref('outbound_report.target_completion_report_graph_view')
+
+        ctx['target_year'] = data['target_year']
+        ctx['target_month'] = data['target_month']
+        ctx['kunnr'] = data['kunnr']
+        ctx['ywy'] = data['ywy']
+        ctx['werks'] = data['werks']
+        ctx['vtweg'] = data['vtweg']
+        ctx['vkorgtext'] = data['vkorgtext']
+        ctx['target_amount'] = data['target_amount']
+        ctx['jiesuan_amount'] = data['jiesuan_amount']
+        ctx['new_view'] = 1
+
+        # # 获取门店目标数据
+        # if ctx['ywy']:
+        #     ywy = ctx['ywy'][0]
+        # else:
+        #     ywy = ctx['ywy']
+        # target_detail = self.env['team.target.detail'].search([('detail_year', '=', ctx['target_year']),
+        #                                                        ('target_month', '=?', ctx['target_month']),
+        #                                                        ('current_team_id', '=', ctx['kunnr'][0]),
+        #                                                        ('sales_member.id', '=?', ywy)])
+        # target_amount = 0
+        # if target_detail:
+        #     for detail in target_detail:
+        #         target_amount += detail.team_target_monthly
+        # ctx['target_amount'] = target_amount
+        # ctx['new_view'] = 1
+        # # 获取销售金额数据
+        # self.get_jiesuan_amount(ctx)
+
+        return {
+            'name': '目标完成占比报表',
+            # 'view_type': 'dashboard',
+            'view_type': 'form',
+            # 'view_mode': 'dashboard',
+            'view_mode': 'tree,graph',
+            'res_model': 'outbound.final',
+            'type': 'ir.actions.act_window',
+            'context': ctx,
+            # 'domain': domain_list,
+            # 实现视图重定向
+            'views': [[tree_view.id, 'tree'],
+                      [graph_view.id, 'graph']],
+        }
 
     def get_jiesuan_amount(self, ctx):
         kunnr_sql = "and kunnr = %s" % str(ctx['kunnr'][0])
@@ -87,52 +181,6 @@ class TargetCompletion(models.Model):
                 jiesuan_amount += res['jiesuanjine']
         ctx['jiesuan_amount'] = jiesuan_amount
         return ctx['jiesuan_amount']
-
-    def open_target_table(self):
-        data = self.read()[0]
-        ctx = self._context.copy()
-        # 获取视图的id,return时返回指定视图
-        tree_view = self.env.ref('outbound_report.target_completion_report_tree_view')
-        graph_view = self.env.ref('outbound_report.target_completion_report_graph_view')
-
-        ctx['target_year'] = data['target_year']
-        ctx['target_month'] = data['target_month']
-        ctx['kunnr'] = data['kunnr']
-        ctx['ywy'] = data['ywy']
-        ctx['werks'] = data['werks']
-        ctx['vtweg'] = data['vtweg']
-        ctx['vkorgtext'] = data['vkorgtext']
-        # 获取门店目标数据
-        if ctx['ywy']:
-            ywy = ctx['ywy'][0]
-        else:
-            ywy = ctx['ywy']
-        target_detail = self.env['team.target.detail'].search([('detail_year', '=', ctx['target_year']),
-                                                               ('target_month', '=?', ctx['target_month']),
-                                                               ('current_team_id', '=', ctx['kunnr'][0]),
-                                                               ('sales_member.id', '=?', ywy)])
-        target_amount = 0
-        if target_detail:
-            for detail in target_detail:
-                target_amount += detail.team_target_monthly
-        ctx['target_amount'] = target_amount
-        ctx['new_view'] = 1
-        # 获取销售金额数据
-        self.get_jiesuan_amount(ctx)
-
-        return {
-            'name': '目标完成占比报表',
-            # 'view_type': 'dashboard',
-            'view_type': 'form',
-            # 'view_mode': 'dashboard',
-            'view_mode': 'tree,graph',
-            'res_model': 'outbound.final',
-            'type': 'ir.actions.act_window',
-            'context': ctx,
-            # 实现视图重定向
-            'views': [[tree_view.id, 'tree'],
-                      [graph_view.id, 'graph']],
-        }
 
     def open_target_table2(self):
         data = self.read()[0]
