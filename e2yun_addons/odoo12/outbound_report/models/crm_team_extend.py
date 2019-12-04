@@ -58,30 +58,43 @@ class CrmTeamExtend(models.Model):
         # ctx = self._context.copy()
         return res
 
-    @api.depends('team_year')
-    @api.onchange('team_year')
-    def _default_domain(self):
-        team_year = self.team_year
-        domain1 = [('target_year', '=', team_year)]
-        domain2 = [('detail_year', '=', team_year)]
-        return {
-            'domain': {'team_target': domain1,
-                       'invoiced_target_detail': domain2
-                       }
-        }
+    # @api.depends('team_year')
+    # @api.onchange('team_year')
+    # def _onchange_team_year(self):
+    #     team_year = self.team_year
+    #     team_id = self.alias_parent_thread_id
+    #     y_sql_str = "select target_year, invoiced_target_year from team_target_year y where y.target_year = %s and y.team_id = %s" \
+    #                 % (team_year, team_id)
+    #     d_sql_str = "select detail_year, target_month, sales_member, team_target_monthly from team_target_detail d where d.detail_year = " \
+    #                 "%s and d.current_team_id = %s" % (team_year, team_id)
+    #     self._cr.execute(y_sql_str)
+    #     res_y = self._cr.dictfetchall()
+    #     self._cr.execute(d_sql_str)
+    #     res_d = self._cr.dictfetchall()
+    #     all_value = {
+    #         'ues_invoices': True,
+    #         'team_year': team_year,
+    #         'team_target': [],
+    #         'invoiced_target_detail': []
+    #     }
+    #     if res_y:
+    #         all_value.update({'team_target': res_y})
+    #     if res_d:
+    #         all_value.update({'invoiced_target_detail': res_d})
+    #     return {'value': all_value}
 
     team_year = fields.Selection([(num, str(num)) for num in range(datetime.now().year - 5, datetime.now().year + 30)],
-                                 string='年份')
+                                 string='年份', default=str(datetime.now().year))
 
     team_target = fields.One2many(
         'team.target.year',
         'team_id',
-        string='门店目标')
+        string='门店目标')  # domain=[('target_year', '=?', team_year)]
 
     invoiced_target_detail = fields.One2many(
         'team.target.detail',
         'current_team_id',
-        string='目标明细')
+        string='目标明细')  # domain=[('detail_year', '=?', team_year)]
 
 
 class TeamTargetYear(models.Model):
