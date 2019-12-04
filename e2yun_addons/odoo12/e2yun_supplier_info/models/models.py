@@ -3,7 +3,7 @@
 from odoo import models, fields, api
 import datetime
 import pytz
-import logging
+import logging, random
 from odoo.exceptions import UserError
 from odoo.tools.translate import _
 
