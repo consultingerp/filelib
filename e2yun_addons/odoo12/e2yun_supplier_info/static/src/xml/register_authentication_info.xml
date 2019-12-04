@@ -103,13 +103,30 @@
                               </div>
                               <t t-if="is_view == False">
                                 <div class="col-lg-3 col-md-8">
-                                  <input type="file" class="form-control o_website_form_input" name="image"/>
+                                  <input type="file" accept="image/*" onchange="showImg6(this)" class="form-control o_website_form_input" name="image"/>
                                   <input type="hidden" name="image_value" t-att-value="ISO9000_info.image"/>
                                 </div>
                               </t>
                               <div class="col-lg-5 col-md-8">
                                 <img t-attf-src="data:image/png;base64,#{ISO9000_info.image}" alt=""
-                                     height="60px" width="100px"/>
+                                     width="100px" id="img6"/>
+                                <script>
+                                  function showImg6(obj) {
+                                      var file=$(obj)[0].files[0];    //获取文件信息
+                                      var imgdata='';
+                                      if(file)
+                                      {
+                                          var reader=new FileReader();  //调用FileReader
+                                          reader.readAsDataURL(file); //将文件读取为 DataURL(base64)
+                                          reader.onload=function(evt){   //读取操作完成时触发。
+                                              $("#img6").attr('src',evt.target.result)  //将img标签的src绑定为DataURL
+                                          };
+                                      }
+                                      else{
+                                          alert("上传失败");
+                                      }
+                                  }
+                                </script>
                               </div>
                             </div>
                             <div class="row form-group form-field">
