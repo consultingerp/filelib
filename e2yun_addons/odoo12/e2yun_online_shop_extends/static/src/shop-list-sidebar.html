@@ -2244,7 +2244,7 @@
 
     <!--Ajax JS-->
 <script>
-         window.onload=function(){
+ window.onload=function(){
     var get_category_xhr = new XMLHttpRequest();
 
     get_category_xhr.open("GET", "/online_shop/get_category", true);
@@ -2255,24 +2255,35 @@
             document.getElementById("category_menu_replace").innerHTML = get_category_xhr.responseText;
         }
     }
-    var get_product_list_xhr = new this.XMLHttpRequest();
 
-        get_product_list_xhr.open("GET", "/online_shop/get_product_list_by_category/99999", true)
+
+    $.get('/online_shop/get_default_product_category',{},function(datas){
+        var d = JSON.parse(datas);
+        var category_id = 99999
+        if(d['default_product_category']){
+            category_id = d['default_product_category']
+        }
+
+        var get_product_list_xhr = new this.XMLHttpRequest();
+
+        get_product_list_xhr.open("GET", "/online_shop/get_product_list_by_category/"+category_id, true)
         get_product_list_xhr.send();
 
         get_product_list_xhr.onreadystatechange = function(){
             if (get_product_list_xhr.readyState == 4 && get_product_list_xhr.status == 200) {
                 document.getElementById("shop_product_list").innerHTML = get_product_list_xhr.responseText;
-                sessionStorage.setItem("current_category_id", 99999);
+                sessionStorage.setItem("current_category_id", category_id);
                 $('.list_btn_add_cart').click(function(e){
                     return list_btn_add_cart_click(e)
                 });
 
-
-
             }
         }
-    }
+
+    });
+
+
+}
 
      function show_goods_in_category(category_id){
      id = category_id.id.slice(14)
