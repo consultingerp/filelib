@@ -8,6 +8,15 @@ class OutboundFinal(models.Model):
     _name = 'outbound.final'
     _description = '出库报表'
 
+    @api.depends('kunnr')
+    @api.onchange('kunnr')
+    def _onchange_kunnr(self):
+        code = self.kunnr.id
+        domain = [('sale_team_id', '=', code)]
+        return {
+            'domain': {'ywy': domain}
+        }
+
     def default_werks(self):
         return self.env['res.company']._company_default_get('outbound.final').company_code
 

@@ -4,7 +4,7 @@
         <value>helpdesk.ticket</value>
         <value eval="[
             'address','user_phone','order_datetime','phone','brand','userip','ticket_type_id','u_address',
-            'j_address','is_wx_client','arktxs','matnrs'
+            'j_address','is_wx_client','arktxs','matnrs','area_id','city_id','state_id'
         ]"/>
     </function>
 </odoo>

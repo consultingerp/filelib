@@ -65,4 +65,3 @@ class res_partner(models.Model):
 
 
 
-
