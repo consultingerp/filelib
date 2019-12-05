@@ -7,6 +7,16 @@ class TargetCompletion(models.Model):
     _inherit = 'outbound.final'
     _description = '目标完成占比情况'
 
+    @api.model
+    def create(self, vals_list):
+        # 创建新(计算字段)记录之前删除数据库中原有的数据
+        final = self.env['outbound.final'].search(['|', ('jiesuan_amount', '!=', ''), ('target_amount', '!=', '')])
+        if final:
+            for rec in final:
+                rec.unlink()
+        res = super(TargetCompletion, self).create(vals_list)
+        return res
+
     # def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
     #     res = super(TargetCompletion, self).search_read(domain, fields, offset, limit, order)
     #     ctx = self._context.copy()
@@ -109,6 +119,39 @@ class TargetCompletion(models.Model):
         query_view_id = query_view.id
         return query_view_id
 
+    # 删除查询时在模板内创建的新纪录
+    def init_target_date(self, ctx):
+        if ctx['werks']:
+            werks_sql = "and werks = '%s'" % ctx['werks']
+        else:
+            werks_sql = ''
+        if ctx['vtweg']:
+            vtweg_sql = "and vtweg = '%s'" % ctx['vtweg'][0]
+        else:
+            vtweg_sql = ''
+        if ctx['vkorgtext']:
+            vkorgtext_sql = "and vkorgtext = '%s'" % ctx['vkorgtext'][0]
+        else:
+            vkorgtext_sql = ''
+        if ctx['kunnr']:
+            kunnr_sql = "and kunnr = %s" % ctx['kunnr'][0]
+        else:
+            kunnr_sql = ''
+        if ctx['ywy']:
+            ywy_sql = "and ywy = '%s'" % ctx['ywy'][0]
+        else:
+            ywy_sql = ''
+        if ctx['target_month']:
+            target_month_sql = "and target_month = '%s'" % ctx['target_month']
+        else:
+            target_month_sql = ''
+        if ctx['target_year']:
+            target_year_sql = "target_year = '%s'" % ctx['target_year']
+        else:
+            target_year_sql = ''
+        del_sql = "delete from outbound_final where %s %s %s %s %s %s %s" % (target_year_sql, target_month_sql, werks_sql, vtweg_sql, vkorgtext_sql, kunnr_sql, ywy_sql)
+        self._cr.execute(del_sql)
+
     def open_target_table(self):
         data = self.read()[0]
         ctx = self._context.copy()
@@ -149,6 +192,10 @@ class TargetCompletion(models.Model):
         if ctx['ywy']:
             ywy_query = ('ywy', '=', ctx['ywy'][0])
             domain_list.append(ywy_query)
+
+        # 在没有数据时直接删除创建的新纪录
+        if ctx['target_amount'] == 0 and ctx['jiesuan_amount'] == 0:
+            self.init_target_date(ctx)
 
         return {
             'name': '目标完成占比报表',
