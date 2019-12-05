@@ -617,7 +617,7 @@ class OnlineShop(http.Controller):
 
     @http.route(['/online_shop/get_product_detail/<int:product_template_id>'], type='http', auth="public")
     def get_product_detail(self, product_template_id, **kwargs):
-        product_template = http.request.env['product.template'].search([('id', '=', product_template_id)], limit=1)
+        product_template = http.request.env['product.template'].sudo().search([('id', '=', product_template_id)], limit=1)
 
         if product_template:
             product_template.browse_num = product_template.browse_num + 1
