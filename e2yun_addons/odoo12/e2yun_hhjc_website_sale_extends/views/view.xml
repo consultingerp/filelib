@@ -12,6 +12,9 @@
                 <field name="sz_show"/>
                 <field name="bj_show"/>
             </xpath>
+            <xpath expr="//field[@name='sequence']" position="after">
+                <field name="qrcodeimg"/>
+            </xpath>
         </field>
     </record>
 
