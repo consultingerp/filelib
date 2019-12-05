@@ -7,6 +7,7 @@ import os
 import logging
 import json
 from odoo.http import request
+import werkzeug
 
 BASE_DIR = os.path.dirname((os.path.dirname(__file__)))
 templateLoader = jinja2.FileSystemLoader(searchpath=BASE_DIR + "/static/src")
@@ -593,18 +594,30 @@ class OnlineShop(http.Controller):
 
         return http.request.make_response(json.dumps({'product_template_id':template_id}))
 
-    @http.route(['/online_shop/get_product_detail_page/<int:product_template_id>'], type='http', auth="public")
+    @http.route(['/online_shop/get_product_detail_page/<int:product_template_id>'], type='http', auth="user")
     def get_product_detail_page(self, product_template_id, **kwargs):
-        if product_template_id:
-            request.session['current_product_detail_id'] = product_template_id
-        template = env.get_template('product-details.html')
-        html = template.render()
-        return html
+        if request.session.uid:
+
+            if product_template_id:
+                request.session['current_product_detail_id'] = product_template_id
+            template = env.get_template('product-details.html')
+            html = template.render()
+            return html
+        else:
+
+            query = werkzeug.urls.url_encode({
+                'redirect': '/online_shop/get_product_detail_page/'+str(product_template_id),
+                'error' : '请登录然后操作'
+            })
+            return werkzeug.utils.redirect('/web/login?%s' % query)
+
+
+            # return werkzeug.utils.redirect('/web/login?error=请登录然后操作')
 
 
     @http.route(['/online_shop/get_product_detail/<int:product_template_id>'], type='http', auth="public")
     def get_product_detail(self, product_template_id, **kwargs):
-        product_template = http.request.env['product.template'].search([('id', '=', product_template_id)], limit=1)
+        product_template = http.request.env['product.template'].sudo().search([('id', '=', product_template_id)], limit=1)
 
         if product_template:
             product_template.browse_num = product_template.browse_num + 1
