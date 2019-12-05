@@ -70,11 +70,14 @@ class E2yunCustomerRefund(models.Model):
         else:
             trans_amount = self.refund_amount01
         if self.customer_po:
-            cpo = "客户PO号:%s" % self.customer_po
+            # cpo = "客户PO号:%s" % self.customer_po
+            cpo = self.customer_po
         else:
             cpo = ''
         if self.thrrd_receipt_num:
-            trn = "第三方退款编号:%s" % self.thrrd_receipt_num
+            # trn = "第三方退款编号:%s" % self.thrrd_receipt_num
+            trn = self.thrrd_receipt_num
+
         else:
             trn = ''
 
