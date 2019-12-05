@@ -7,14 +7,14 @@ class TargetCompletion(models.Model):
     _inherit = 'outbound.final'
     _description = '目标完成占比情况'
 
-    def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
-        res = super(TargetCompletion, self).search_read(domain, fields, offset, limit, order)
-        ctx = self._context.copy()
-        if 'new_view' in ctx:
-            res = [{'target_year': ctx['target_year'], 'target_month': ctx['target_month'], 'werks': ctx['werks'],
-                    'vkorgtext':ctx['vkorgtext'], 'vtweg': ctx['vtweg'], 'kunnr': ctx['kunnr'], 'ywy': ctx['ywy'],
-                    'jiesuan_amount': ctx['jiesuan_amount'], 'target_amount': ctx['target_amount']}]
-        return res
+    # def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
+    #     res = super(TargetCompletion, self).search_read(domain, fields, offset, limit, order)
+    #     ctx = self._context.copy()
+    #     if 'new_view' in ctx:
+    #         res = [{'target_year': ctx['target_year'], 'target_month': ctx['target_month'], 'werks': ctx['werks'],
+    #                 'vkorgtext':ctx['vkorgtext'], 'vtweg': ctx['vtweg'], 'kunnr': ctx['kunnr'], 'ywy': ctx['ywy'],
+    #                 'jiesuan_amount': ctx['jiesuan_amount'], 'target_amount': ctx['target_amount']}]
+    #     return res
 
     def default_target_year(self):
         ctx = self._context.copy()
@@ -107,7 +107,7 @@ class TargetCompletion(models.Model):
     def get_view_id(self):
         query_view = self.env.ref('outbound_report.view_target_completion_query_report')
         query_view_id = query_view.id
-        return query_view_id\
+        return query_view_id
 
     def open_target_table(self):
         data = self.read()[0]
@@ -127,23 +127,28 @@ class TargetCompletion(models.Model):
         ctx['jiesuan_amount'] = data['jiesuan_amount']
         ctx['new_view'] = 1
 
-        # # 获取门店目标数据
-        # if ctx['ywy']:
-        #     ywy = ctx['ywy'][0]
-        # else:
-        #     ywy = ctx['ywy']
-        # target_detail = self.env['team.target.detail'].search([('detail_year', '=', ctx['target_year']),
-        #                                                        ('target_month', '=?', ctx['target_month']),
-        #                                                        ('current_team_id', '=', ctx['kunnr'][0]),
-        #                                                        ('sales_member.id', '=?', ywy)])
-        # target_amount = 0
-        # if target_detail:
-        #     for detail in target_detail:
-        #         target_amount += detail.team_target_monthly
-        # ctx['target_amount'] = target_amount
-        # ctx['new_view'] = 1
-        # # 获取销售金额数据
-        # self.get_jiesuan_amount(ctx)
+        domain_list = []
+        if ctx['target_year']:
+            year_query = ('target_year', '=', ctx['target_year'])
+            domain_list.append(year_query)
+        if ctx['target_month']:
+            month_query = ('target_month', '=', ctx['target_month'])
+            domain_list.append(month_query)
+        if ctx['werks'] and ctx['werks'] != '0000':
+            werks_query = ('werks', '=', ctx['werks'])
+            domain_list.append(werks_query)
+        if ctx['vtweg']:
+            vtweg_query = ('vtweg', '=', ctx['vtweg'][0])
+            domain_list.append(vtweg_query)
+        if ctx['vkorgtext']:
+            vkorgtext_query = ('vkorgtext', 'ilike', ctx['vkorgtext'][0])
+            domain_list.append(vkorgtext_query)
+        if ctx['kunnr']:
+            kunnr_query = ('kunnr', '=', ctx['kunnr'][0])
+            domain_list.append(kunnr_query)
+        if ctx['ywy']:
+            ywy_query = ('ywy', '=', ctx['ywy'][0])
+            domain_list.append(ywy_query)
 
         return {
             'name': '目标完成占比报表',
@@ -154,7 +159,7 @@ class TargetCompletion(models.Model):
             'res_model': 'outbound.final',
             'type': 'ir.actions.act_window',
             'context': ctx,
-            # 'domain': domain_list,
+            'domain': domain_list,
             # 实现视图重定向
             'views': [[tree_view.id, 'tree'],
                       [graph_view.id, 'graph']],
