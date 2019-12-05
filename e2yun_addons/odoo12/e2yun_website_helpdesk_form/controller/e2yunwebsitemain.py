@@ -9,6 +9,7 @@ import requests
 import suds.client
 from bs4 import BeautifulSoup
 from odoo.addons.website_helpdesk_form.controller.main import WebsiteForm
+from odoo.addons.utils_tools.iptools.IpAddress import IpAddress
 
 from odoo import http
 from odoo.http import request
@@ -78,26 +79,19 @@ class E2yunWebsiteForm(WebsiteForm):
 
     @http.route('/website_form/userhelpdesk', type='http', auth="public", methods=['GET', 'POST'], website=True)
     def website_userhelpdesk(self, **kwargs):
-        # ('/helpdesk/' + slug(team) + '/submit')
+        # 用户实际IP地址 userip
         userip = request.httprequest.access_route[0]
-        url = "http://ip138.com/ips138.asp"
-        ip_check = {'ip': userip}
-        ipresult = requests.request('GET', url, params=ip_check)
-        ipresult.encoding = 'gbk'
-        iphtml = ipresult.text
-        soup = BeautifulSoup(iphtml, "html.parser")
-        soup = soup.ul
+        ipinfo = IpAddress.getregion(userip)
         team_id = None
         # print(r.request.url)
-        if soup:
-            region_user = soup.contents[0].string[5:7]
-            if region_user and region_user == '广东':
+        if ipinfo:
+            userregion = ipinfo['region']
+            if userregion and userregion == '广东':
                 region_user = '深圳'
+            else:
+                region_user = '北京'
             team_id = request.env['helpdesk.team'].search([('name', 'like', region_user)], limit=1).id
             _logger.info("地区：%s:%s" % (userip, region_user))
-            _logger.info("查询接口1：%s", soup.contents[0].string[5:])
-            _logger.info("查询接口2：%s", soup.contents[1].string[6:])
-            _logger.info("查询接口3：%s", soup.contents[2].string[6:])
         if not team_id:
             _logger.info("获取IP地址，地区失败。")
             team_id = request.env['helpdesk.team'].search([], limit=1, order='id asc').id
