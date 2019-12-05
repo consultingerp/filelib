@@ -2256,7 +2256,7 @@
         }
     }
 
-
+    var self = this;
     $.get('/online_shop/get_default_product_category',{},function(datas){
         var d = JSON.parse(datas);
         var category_id = 99999
@@ -2264,7 +2264,7 @@
             category_id = d['default_product_category']
         }
 
-        var get_product_list_xhr = new this.XMLHttpRequest();
+        var get_product_list_xhr = new self.XMLHttpRequest();
 
         get_product_list_xhr.open("GET", "/online_shop/get_product_list_by_category/"+category_id, true)
         get_product_list_xhr.send();
