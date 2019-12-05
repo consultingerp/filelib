@@ -30,13 +30,19 @@ class OnlineShop(http.Controller):
         html = template.render()
         return html
 
-    @http.route('/hhjc_shop_product_list_page', type='http', auth="public", methods=['GET'])
+    @http.route('/hhjc_shop_product_list_page/<int:product_category>', type='http', auth="user")
     def hhjc_shop_product_list_page(self,product_category, **kwargs):
-        if product_category:
-            request.session['default_product_category'] = product_category
-        template = env.get_template('shop-list-sidebar.html')
-        html = template.render()
-        return html
+        if request.session.uid:
+            if product_category:
+                request.session['default_product_category'] = product_category
+            template = env.get_template('shop-list-sidebar.html')
+            html = template.render()
+            return html
+        query = werkzeug.urls.url_encode({
+            'redirect': '/hhjc_shop_product_list_page/' + str(product_category),
+            'error': '请登录然后操作'
+        })
+        return werkzeug.utils.redirect('/web/login?%s' % query)
 
     @http.route(['/online_shop/get_default_product_category'], type='http', auth="public")
     def get_default_product_category(self, **kwargs):
