@@ -594,7 +594,7 @@ class OnlineShop(http.Controller):
 
         return http.request.make_response(json.dumps({'product_template_id':template_id}))
 
-    @http.route(['/online_shop/get_product_detail_page/<int:product_template_id>'], type='http', auth="public")
+    @http.route(['/online_shop/get_product_detail_page/<int:product_template_id>'], type='http', auth="user")
     def get_product_detail_page(self, product_template_id, **kwargs):
         if request.session.uid:
 
