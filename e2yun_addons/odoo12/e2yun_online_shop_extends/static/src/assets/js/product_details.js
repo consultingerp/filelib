@@ -13,6 +13,29 @@ function get_template_id(){
             current_product_template_id = d['product_template_id']
         }
         product_image_replace();
+
+        var get_product_template_detail_xhr = new XMLHttpRequest();
+        get_detail_url = "/online_shop/get_product_detail/" + current_product_template_id
+        get_product_template_detail_xhr.open("GET", get_detail_url, true);
+        get_product_template_detail_xhr.send();
+
+        var get_product_description_xhr = new XMLHttpRequest();
+        get_product_description_url = "/online_shop/get_product_description/" + current_product_template_id
+        get_product_description_xhr.open("GET", get_product_description_url, true)
+        get_product_description_xhr.send();
+
+        get_product_template_detail_xhr.onreadystatechange = function(){
+            if (get_product_template_detail_xhr.readyState  === 4 && get_product_template_detail_xhr.status === 200) {
+                document.getElementById("product_detail_replace").innerHTML = get_product_template_detail_xhr.responseText;
+            }
+        }
+
+        get_product_description_xhr.onreadystatechange = function(){
+            if (get_product_description_xhr.readyState  === 4 && get_product_description_xhr.status === 200) {
+                document.getElementById("product_description_replace").innerHTML = get_product_description_xhr.responseText;
+            }
+        }
+
     })
 }
 
@@ -52,26 +75,26 @@ $(document).ready(function(){
     get_template_id();
 })
 
-window.onload=setTimeout(function(){
-    var get_product_template_detail_xhr = new XMLHttpRequest();
-    get_detail_url = "/online_shop/get_product_detail/" + current_product_template_id
-    get_product_template_detail_xhr.open("GET", get_detail_url, true);
-    get_product_template_detail_xhr.send();
-
-    var get_product_description_xhr = new XMLHttpRequest();
-    get_product_description_url = "/online_shop/get_product_description/" + current_product_template_id
-    get_product_description_xhr.open("GET", get_product_description_url, true)
-    get_product_description_xhr.send();
-
-    get_product_template_detail_xhr.onreadystatechange = function(){
-        if (get_product_template_detail_xhr.readyState  === 4 && get_product_template_detail_xhr.status === 200) {
-            document.getElementById("product_detail_replace").innerHTML = get_product_template_detail_xhr.responseText;
-        }
-    }
-
-    get_product_description_xhr.onreadystatechange = function(){
-        if (get_product_description_xhr.readyState  === 4 && get_product_description_xhr.status === 200) {
-            document.getElementById("product_description_replace").innerHTML = get_product_description_xhr.responseText;
-        }
-    }
-},100);
+// window.onload=setTimeout(function(){
+//     var get_product_template_detail_xhr = new XMLHttpRequest();
+//     get_detail_url = "/online_shop/get_product_detail/" + current_product_template_id
+//     get_product_template_detail_xhr.open("GET", get_detail_url, true);
+//     get_product_template_detail_xhr.send();
+//
+//     var get_product_description_xhr = new XMLHttpRequest();
+//     get_product_description_url = "/online_shop/get_product_description/" + current_product_template_id
+//     get_product_description_xhr.open("GET", get_product_description_url, true)
+//     get_product_description_xhr.send();
+//
+//     get_product_template_detail_xhr.onreadystatechange = function(){
+//         if (get_product_template_detail_xhr.readyState  === 4 && get_product_template_detail_xhr.status === 200) {
+//             document.getElementById("product_detail_replace").innerHTML = get_product_template_detail_xhr.responseText;
+//         }
+//     }
+//
+//     get_product_description_xhr.onreadystatechange = function(){
+//         if (get_product_description_xhr.readyState  === 4 && get_product_description_xhr.status === 200) {
+//             document.getElementById("product_description_replace").innerHTML = get_product_description_xhr.responseText;
+//         }
+//     }
+// },100);
