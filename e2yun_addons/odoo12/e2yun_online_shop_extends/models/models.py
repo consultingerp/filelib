@@ -30,6 +30,19 @@ class OnlineShop(http.Controller):
         html = template.render()
         return html
 
+    @http.route('/hhjc_shop_product_list_page', type='http', auth="public", methods=['GET'])
+    def hhjc_shop_product_list_page(self,product_category, **kwargs):
+        if product_category:
+            request.session['default_product_category'] = product_category
+        template = env.get_template('shop-list-sidebar.html')
+        html = template.render()
+        return html
+
+    @http.route(['/online_shop/get_default_product_category'], type='http', auth="public")
+    def get_default_product_category(self, **kwargs):
+        default_product_category = request.session['default_product_category']
+        return http.request.make_response(json.dumps({'default_product_category': default_product_category}))
+
     @http.route('/hhjc_shop_product_details', type='http', auth="public", methods=['GET'])
     def hhjc_shop_product_details(self, **kwargs):
         template = env.get_template('product-details.html')

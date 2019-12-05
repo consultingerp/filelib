@@ -3,6 +3,12 @@
 from odoo import models,fields,api,exceptions
 from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
+import os
+import qrcode
+from PIL import Image
+from odoo.modules.module import get_module_resource
+from odoo.addons.wx_tools.controllers import client
+import requests
 
 class ProductPublicCategory(models.Model):
     _name = 'product.public.category'
@@ -61,6 +67,37 @@ class ProductPublicCategory(models.Model):
     code = fields.Char('代码')
     sz_show = fields.Boolean('深圳公司显示',compute=_compute_sz_show)
     bj_show = fields.Boolean('北京公司显示',compute=_compute_bj_show)
+
+    qrcode = fields.Char(u'二维码')
+    qrcodeimg = fields.Html(compute='_get_qrcodeimg', string=u'二维码')
+
+    def _get_qrcodeimg(self):
+        entry = client.wxenv(self.env)
+        if not self.qrcode:
+            wx_file_path = get_module_resource('wx_tools', 'static/wx')
+            file_name = 'product_category%s.png' % self.id
+            url = entry.server_url + "/hhjc_shop_product_list_page/%s" % self.id
+            qr = qrcode.QRCode(
+                version=5,
+                error_correction=qrcode.constants.ERROR_CORRECT_H,
+                box_size=5,
+                border=4,
+            )
+            qr.add_data(url)
+            qr.make(fit=True)
+            # 生成图片
+            img = qr.make_image(fill_color="#FFFFFF", back_color="#000000")
+            qrcodeimg_pic = os.path.join(wx_file_path, file_name)
+            with open(qrcodeimg_pic, 'wb') as product_file:
+                img.save(product_file)
+            self.write({'qrcode': file_name})
+            self.qrcodeimg = '<img src=wx_tools/static/wx/%s width="100px" ' \
+                             'height="100px" />' % file_name
+
+        else:
+            self.qrcodeimg = '<img src=wx_tools/static/wx/%s width="100px" ' \
+                             'height="100px" />' % self.qrcode
+
 
 
 class ProductTemplate(models.Model):
