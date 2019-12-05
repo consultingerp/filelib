@@ -241,7 +241,7 @@ class OnlineShop(http.Controller):
         <div class="product-inner">
             <div class="product-image">
                 <figure class="product-image--holder">
-                    <img src='""" + product_template_image + """' alt="Product">
+                    <img src='/""" + product_template_image + """' alt="Product">
                 </figure>
                 <a id='""" + grid_image_product_detail_id + """' onclick='grid_image_show_product_template_detail_page(this)' class="product-overlay"></a>
                 <div class="product-action"></div>
@@ -252,7 +252,7 @@ class OnlineShop(http.Controller):
                     <div class="product-price-wrapper">
                         <span class="money">""" + product_template_price_str + """</span><p>浏览量 """ + str(product_template.browse_num) + """</p><p>销量 """ + str(product_template.so_qty) + """</p>
                     </div>
-                    <a href='""" + product_add_to_cart_href + """' class="add-to-cart pr--15">
+                    <a href='/""" + product_add_to_cart_href + """' class="add-to-cart pr--15">
                         <i class="la la-plus"></i>
                         <span>添加到购物车</span>
                     </a>
@@ -265,7 +265,7 @@ class OnlineShop(http.Controller):
         <div class="product-inner">
             <figure class="product-image">
                 <a id='""" + list_image_product_detail_id + """"' onclick='list_image_show_product_template_detail_page(this)'>
-                    <img src='""" + product_template_image + """' alt="Products">
+                    <img src='/""" + product_template_image + """' alt="Products">
                 </a>
                 <div class="product-thumbnail-action">
                 </div>
@@ -282,7 +282,7 @@ class OnlineShop(http.Controller):
                     <input type='hidden' name='product_id' value='"""+str(product_template.product_variant_ids[0].id)+"""'/>
                     <input type='hidden' name='product_template_id' value='"""+str(product_template.id)+"""'/>
                     <!-- <input type='hidden' name='csrf_token' value='"""+http.request.csrf_token()+"""'/>
-                     <a href='""" + product_add_to_cart_href + """' class="btn btn-size-md">添加到购物车</a> -->
+                     <a href='/""" + product_add_to_cart_href + """' class="btn btn-size-md">添加到购物车</a> -->
                     <a href='javascript:;' class="list_btn_add_cart btn btn-size-md">添加到购物车</a>
                 </div>                                            
             </div>
@@ -358,7 +358,7 @@ class OnlineShop(http.Controller):
                        <div class="product-inner">
                            <div class="product-image">
                                <figure class="product-image--holder">
-                                   <img src='""" + product_template_image + """' alt="Product">
+                                   <img src='/""" + product_template_image + """' alt="Product">
                                </figure>
                                <a id='""" + grid_image_product_detail_id + """' onclick='grid_image_show_product_template_detail_page(this)' class="product-overlay"></a>
                                <div class="product-action"></div>
@@ -369,7 +369,7 @@ class OnlineShop(http.Controller):
                                    <div class="product-price-wrapper">
                                        <span class="money">""" + product_template_price_str + """</span>
                                    </div>
-                                   <a href='""" + product_add_to_cart_href + """' class="add-to-cart pr--15">
+                                   <a href='/""" + product_add_to_cart_href + """' class="add-to-cart pr--15">
                                        <i class="la la-plus"></i>
                                        <span>添加到购物车</span>
                                    </a>
@@ -382,7 +382,7 @@ class OnlineShop(http.Controller):
                        <div class="product-inner">
                            <figure class="product-image">
                                <a id='""" + list_image_product_detail_id + """"' onclick='list_image_show_product_template_detail_page(this)'>
-                                   <img src='""" + product_template_image + """' alt="Products">
+                                   <img src='/""" + product_template_image + """' alt="Products">
                                </a>
                                <div class="product-thumbnail-action">
                                </div>
@@ -401,7 +401,7 @@ class OnlineShop(http.Controller):
                                    <input type='hidden' name='product_template_id' value='""" + str(
                     product_template.id) + """'/>
                                    <!-- <input type='hidden' name='csrf_token' value='""" + http.request.csrf_token() + """'/>
-                                    <a href='""" + product_add_to_cart_href + """' class="btn btn-size-md">添加到购物车</a> -->
+                                    <a href='/""" + product_add_to_cart_href + """' class="btn btn-size-md">添加到购物车</a> -->
                                    <a href='javascript:;' class="list_btn_add_cart btn btn-size-md">添加到购物车</a>
                                </div>                                            
                            </div>
@@ -529,7 +529,7 @@ class OnlineShop(http.Controller):
                        <div class="product-inner">
                            <div class="product-image">
                                <figure class="product-image--holder">
-                                   <img src='""" + product_template_image + """' alt="Product">
+                                   <img src='/""" + product_template_image + """' alt="Product">
                                </figure>
                                <a id='""" + grid_image_product_detail_id + """' onclick='grid_image_show_product_template_detail_page(this)' class="product-overlay"></a>
                                <div class="product-action"></div>
@@ -540,7 +540,7 @@ class OnlineShop(http.Controller):
                                    <div class="product-price-wrapper">
                                        <span class="money">""" + product_template_price_str + """</span>
                                    </div>
-                                   <a href='""" + product_add_to_cart_href + """' class="add-to-cart pr--15">
+                                   <a href='/""" + product_add_to_cart_href + """' class="add-to-cart pr--15">
                                        <i class="la la-plus"></i>
                                        <span>添加到购物车</span>
                                    </a>
@@ -553,7 +553,7 @@ class OnlineShop(http.Controller):
                        <div class="product-inner">
                            <figure class="product-image">
                                <a id='""" + list_image_product_detail_id + """"' onclick='list_image_show_product_template_detail_page(this)'>
-                                   <img src='""" + product_template_image + """' alt="Products">
+                                   <img src='/""" + product_template_image + """' alt="Products">
                                </a>
                                <div class="product-thumbnail-action">
                                </div>
@@ -572,7 +572,7 @@ class OnlineShop(http.Controller):
                                    <input type='hidden' name='product_template_id' value='""" + str(
                     product_template.id) + """'/>
                                    <!-- <input type='hidden' name='csrf_token' value='""" + http.request.csrf_token() + """'/>
-                                    <a href='""" + product_add_to_cart_href + """' class="btn btn-size-md">添加到购物车</a> -->
+                                    <a href='/""" + product_add_to_cart_href + """' class="btn btn-size-md">添加到购物车</a> -->
                                    <a href='javascript:;' class="list_btn_add_cart btn btn-size-md">添加到购物车</a>
                                </div>                                            
                            </div>
