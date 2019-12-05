@@ -127,15 +127,19 @@ class e2yun_customer_payment_extend(models.Model):
             trans_amount = '%.2f' % res.amount
 
         if res.customer_po:
-            cpo = "客户PO号:%s" % res.customer_po
+            # cpo = "客户PO号:%s" % res.customer_po
+            cpo = res.customer_po
         else:
             cpo = ''
         if res.po_num:
-            po = "市场合同号:%s" % res.po_num
+            # po = "市场合同号:%s" % res.po_num
+            po = res.po_num
+
         else:
             po = ''
         if res.payment_voucher:
-            pv = "交款凭证:%s" % res.payment_voucher
+            # pv = "交款凭证:%s" % res.payment_voucher
+            pv = res.payment_voucher
         else:
             pv = ''
 
