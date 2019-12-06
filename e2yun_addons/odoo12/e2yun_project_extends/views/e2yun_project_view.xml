@@ -35,6 +35,7 @@
                            attrs="{'invisible': [('task_mode', '=', 'common mode')]}">
                         <tree editable="bottom">
                             <field name="questionnaire_scenario"/>
+                             <!--<field name="questionnaire_classification"/>-->
                             <field name="weight" attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>
                             <!--<field name="weight_unit" attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>-->
                             <!--去掉创建并编辑：options="{'no_create_edit':1}"-->
@@ -46,8 +47,8 @@
                             <group>
                                 <group>
                                     <field name="questionnaire_scenario"/>
-                                    <field name="weight"
-                                           attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>
+                                    <!--<field name="questionnaire_classification"/>-->
+                                    <field name="weight" attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>
                                     <!--<field name="weight_unit" attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>-->
                                     <field name="survey_temp_id"/>
                                 </group>
@@ -138,8 +139,8 @@
                         <!--<create string="引用已有题库"/>-->
                     <!--</control>-->
                     <!--<button name="turn_question" string="引用已有题库按钮" type="object" class="oe_highlight oe_edit_only"/>-->
-                    <label for="reference_existing_question"/>
-                    <field name="reference_existing_question" />
+                    <label for="reference_existing_question" />
+                    <field name="reference_existing_question" readonly="1" />
                 </xpath>
                 <xpath expr="//field[@name='labels_ids']" position="before">
                     <label for="scoring_method" string="计分方式"/>
