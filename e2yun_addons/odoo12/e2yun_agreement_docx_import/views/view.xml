@@ -12,7 +12,7 @@
             report_type="qweb-pdf"/>
 
         <record id="view_agreement_import_docx" model="ir.ui.view">
-            <field name="name">Docx Import</field>
+            <field name="name">Import Doc</field>
             <field name="model">agreement.docx.import</field>
             <field name="arch" type="xml">
                 <form string="Import">
@@ -29,7 +29,7 @@
         </record>
 
         <record id="action_view_agreement_import_docx" model="ir.actions.act_window">
-            <field name="name">Docx Import</field>
+            <field name="name">Import Doc</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">agreement.docx.import</field>
             <field name="view_type">form</field>
@@ -44,6 +44,7 @@
             <field name="model">agreement.download.doc</field>
             <field name="arch" type="xml">
                 <form string="Import Doc">
+                <label for="file_path" String="文件路径"/>
                    <field name="file_path"/>
                     <footer>
                         <button name="Import_doc" string="Import Doc" type="object" class="oe_highlight"/>
@@ -92,12 +93,9 @@
 
 
 
-
-
-
         <menuitem id="menu_agreement_docx_import_management" name="Docx Import" parent="agreement.agreement_menu"/>
 
-        <menuitem action="action_view_agreement_import_docx" id="menu_agreement_docx_import"  parent="e2yun_agreement_docx_import.menu_agreement_docx_import_management"/>
+        <menuitem action="action_view_agreement_import_docx" name="Docx Import" id="menu_agreement_docx_import"  parent="e2yun_agreement_docx_import.menu_agreement_docx_import_management"/>
 
     </data>
 </odoo>
