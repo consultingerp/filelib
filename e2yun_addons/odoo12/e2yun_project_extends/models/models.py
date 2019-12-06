@@ -74,6 +74,7 @@ class E2yunTaskInfo(models.Model):
     def _on_change_multiple_questionnaires(self):
         if self.multiple_questionnaires == 'no':
             if len(self.questionnaire_ids) > 1:
+                a = self.questionnaire_ids
                 question_no1 = self.questionnaire_ids[0]
                 self.questionnaire_ids = question_no1
 
@@ -284,7 +285,7 @@ class SurveyQuestion(models.Model):
     def reference(self):
         self.question = self.reference_existing_question.question
         self.question_bank_type = self.reference_existing_question.question_bank_type
-        self.type = self.reference_existing_question.type
+        self.type_id = self.reference_existing_question.type_id
         self.scoring_method = self.reference_existing_question.scoring_method
         self.labels_ids = self.reference_existing_question.labels_ids
 
