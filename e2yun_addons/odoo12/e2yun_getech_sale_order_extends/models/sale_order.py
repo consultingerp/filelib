@@ -49,14 +49,19 @@ class SaleOrder(models.Model):
 
     @api.model
     def create(self, vals):
+        needrename = False
+        if 'name' not in vals:
+            needrename = True
         res = super(SaleOrder, self).create(vals)
         if res:
-            if 'name' not in vals:
+            if needrename:
                 prefix = '%s%s' % (res.bu.code, res.project_type.code)
                 name = self.env['ir.sequence'].get_next_code_info_if_no_create('sale_order', prefix, '', 6)
                 res.name = name
+                # res.project_name = name
             else:
                 res.name = vals['name']
+                # res.project_name = vals['name']
             # if res.project_ids:
             #     res.project_ids.name = name
         return res

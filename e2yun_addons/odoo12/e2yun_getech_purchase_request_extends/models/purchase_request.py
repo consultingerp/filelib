@@ -20,6 +20,13 @@ class PurchaseRequest(models.Model):
             if sale.project_ids:
                 self.project_id = sale.project_ids[0].id
 
+    @api.model
+    def create(self, vals):
+        res = super(PurchaseRequest, self).create(vals)
+        if not res.final_customer or not self.project_id:
+            res._on_change_po_customer()
+        return res
+
 
 class PurchaseRequestLine(models.Model):
     _inherit = "purchase.request.line"
