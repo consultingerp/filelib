@@ -6,6 +6,8 @@ import jinja2
 import os
 import logging
 import json
+from odoo.http import request
+import werkzeug
 
 BASE_DIR = os.path.dirname((os.path.dirname(__file__)))
 templateLoader = jinja2.FileSystemLoader(searchpath=BASE_DIR + "/static/src")
@@ -28,10 +30,30 @@ class OnlineShop(http.Controller):
         html = template.render()
         return html
 
+    @http.route('/hhjc_shop_product_list_page/<int:product_category>', type='http', auth="user")
+    def hhjc_shop_product_list_page(self,product_category, **kwargs):
+        if request.session.uid:
+            if product_category:
+                request.session['default_product_category'] = product_category
+            template = env.get_template('shop-list-sidebar.html')
+            html = template.render()
+            return html
+        query = werkzeug.urls.url_encode({
+            'redirect': '/hhjc_shop_product_list_page/' + str(product_category),
+            'error': '请登录然后操作'
+        })
+        return werkzeug.utils.redirect('/web/login?%s' % query)
+
+    @http.route(['/online_shop/get_default_product_category'], type='http', auth="public")
+    def get_default_product_category(self, **kwargs):
+        default_product_category = request.session['default_product_category']
+        return http.request.make_response(json.dumps({'default_product_category': default_product_category}))
+
     @http.route('/hhjc_shop_product_details', type='http', auth="public", methods=['GET'])
     def hhjc_shop_product_details(self, **kwargs):
         template = env.get_template('product-details.html')
         html = template.render()
+        request.session['current_product_detail_id'] = ''
         return html
 
     # 如果想要不登录就可以访问，那么auth='public'
@@ -71,9 +93,14 @@ class OnlineShop(http.Controller):
                 category_child_pool = http.request.env['product.public.category'].search(
                     [('parent_id', '!=', False), ('parent_id', '=', category_parent.id)])
                 for category_child in category_child_pool:
-                    html_to_add = "<li><a id='shop_category_" + str(
-                        category_child.id) + "' onclick='show_goods_in_category(this)'>" + category_child.name + "</a></li>"
-                    html_body = html_body + html_to_add
+                    category_child_products = http.request.env['product.template'].search(
+                        [('public_categ_ids', 'in', category_child.id)])
+                    if category_child_products:
+                        html_to_add = "<li><a id='shop_category_" + str(
+                            category_child.id) + "' onclick='show_goods_in_category(this)'>" + category_child.name + "</a></li>"
+                        html_body = html_body + html_to_add
+                    else:
+                        continue
                 html_end = """</ul></li>"""
                 category_parent_html = html_start + html_start_2 + html_start_3 + html_start_4 + html_body + html_end
                 text = text + category_parent_html
@@ -88,9 +115,13 @@ class OnlineShop(http.Controller):
                 category_child_pool = http.request.env['product.public.category'].search(
                     [('parent_id', '!=', False), ('parent_id', '=', category_parent.id)])
                 for category_child in category_child_pool:
-                    html_to_add = "<li><a id='shop_category_" + str(
-                        category_child.id) + "' onclick='show_goods_in_category(this)'>" + category_child.name + "</a></li>"
-                    html_body = html_body + html_to_add
+                    category_child_products = http.request.env['product.template'].search([('public_categ_ids', 'in', category_child.id)])
+                    if category_child_products:
+                        html_to_add = "<li><a id='shop_category_" + str(
+                            category_child.id) + "' onclick='show_goods_in_category(this)'>" + category_child.name + "</a></li>"
+                        html_body = html_body + html_to_add
+                    else:
+                        continue
                 html_end = """</ul></li>"""
                 category_parent_html = html_start + html_start_2 + html_start_3 + html_start_4 + html_body + html_end
                 text = text + category_parent_html
@@ -210,7 +241,7 @@ class OnlineShop(http.Controller):
         <div class="product-inner">
             <div class="product-image">
                 <figure class="product-image--holder">
-                    <img src='""" + product_template_image + """' alt="Product">
+                    <img src='/""" + product_template_image + """' alt="Product">
                 </figure>
                 <a id='""" + grid_image_product_detail_id + """' onclick='grid_image_show_product_template_detail_page(this)' class="product-overlay"></a>
                 <div class="product-action"></div>
@@ -219,9 +250,9 @@ class OnlineShop(http.Controller):
                 <h3 class="product-title"><a id='""" + grid_tittle_product_detail_id +"""' onclick='grid_tittle_show_product_template_detail_page(this)'>""" + product_template_name + """</a></h3>
                 <div class="product-info-bottom">
                     <div class="product-price-wrapper">
-                        <span class="money">""" + product_template_price_str + """</span>
+                        <span class="money">""" + product_template_price_str + """</span><p>浏览量 """ + str(product_template.browse_num) + """</p><p>销量 """ + str(product_template.so_qty) + """</p>
                     </div>
-                    <a href='""" + product_add_to_cart_href + """' class="add-to-cart pr--15">
+                    <a href='/""" + product_add_to_cart_href + """' class="add-to-cart pr--15">
                         <i class="la la-plus"></i>
                         <span>添加到购物车</span>
                     </a>
@@ -234,7 +265,7 @@ class OnlineShop(http.Controller):
         <div class="product-inner">
             <figure class="product-image">
                 <a id='""" + list_image_product_detail_id + """"' onclick='list_image_show_product_template_detail_page(this)'>
-                    <img src='""" + product_template_image + """' alt="Products">
+                    <img src='/""" + product_template_image + """' alt="Products">
                 </a>
                 <div class="product-thumbnail-action">
                 </div>
@@ -244,14 +275,14 @@ class OnlineShop(http.Controller):
                     <a id='""" + list_tittle_product_detail_id + """' onclick='list_tittle_show_product_template_detail_page(this)'>""" + product_template_name + """</a>
                 </h3>
                 <div class="product-price-wrapper mb--15 mb-sm--10">
-                    <span class="money">""" + product_template_price_str + """</span>
+                    <span class="money">""" + product_template_price_str + """</span><p>浏览量 """ + str(product_template.browse_num) + """</p><p>销量 """ + str(product_template.so_qty) + """</p>
                 </div>
                 <p class="product-short-description mb--20">""" + product_template_description + """</p>  
                 <div class="ft-product-action-list d-flex align-items-center">
                     <input type='hidden' name='product_id' value='"""+str(product_template.product_variant_ids[0].id)+"""'/>
                     <input type='hidden' name='product_template_id' value='"""+str(product_template.id)+"""'/>
                     <!-- <input type='hidden' name='csrf_token' value='"""+http.request.csrf_token()+"""'/>
-                     <a href='""" + product_add_to_cart_href + """' class="btn btn-size-md">添加到购物车</a> -->
+                     <a href='/""" + product_add_to_cart_href + """' class="btn btn-size-md">添加到购物车</a> -->
                     <a href='javascript:;' class="list_btn_add_cart btn btn-size-md">添加到购物车</a>
                 </div>                                            
             </div>
@@ -327,7 +358,7 @@ class OnlineShop(http.Controller):
                        <div class="product-inner">
                            <div class="product-image">
                                <figure class="product-image--holder">
-                                   <img src='""" + product_template_image + """' alt="Product">
+                                   <img src='/""" + product_template_image + """' alt="Product">
                                </figure>
                                <a id='""" + grid_image_product_detail_id + """' onclick='grid_image_show_product_template_detail_page(this)' class="product-overlay"></a>
                                <div class="product-action"></div>
@@ -338,7 +369,7 @@ class OnlineShop(http.Controller):
                                    <div class="product-price-wrapper">
                                        <span class="money">""" + product_template_price_str + """</span>
                                    </div>
-                                   <a href='""" + product_add_to_cart_href + """' class="add-to-cart pr--15">
+                                   <a href='/""" + product_add_to_cart_href + """' class="add-to-cart pr--15">
                                        <i class="la la-plus"></i>
                                        <span>添加到购物车</span>
                                    </a>
@@ -351,7 +382,7 @@ class OnlineShop(http.Controller):
                        <div class="product-inner">
                            <figure class="product-image">
                                <a id='""" + list_image_product_detail_id + """"' onclick='list_image_show_product_template_detail_page(this)'>
-                                   <img src='""" + product_template_image + """' alt="Products">
+                                   <img src='/""" + product_template_image + """' alt="Products">
                                </a>
                                <div class="product-thumbnail-action">
                                </div>
@@ -370,7 +401,7 @@ class OnlineShop(http.Controller):
                                    <input type='hidden' name='product_template_id' value='""" + str(
                     product_template.id) + """'/>
                                    <!-- <input type='hidden' name='csrf_token' value='""" + http.request.csrf_token() + """'/>
-                                    <a href='""" + product_add_to_cart_href + """' class="btn btn-size-md">添加到购物车</a> -->
+                                    <a href='/""" + product_add_to_cart_href + """' class="btn btn-size-md">添加到购物车</a> -->
                                    <a href='javascript:;' class="list_btn_add_cart btn btn-size-md">添加到购物车</a>
                                </div>                                            
                            </div>
@@ -381,8 +412,6 @@ class OnlineShop(http.Controller):
                 # product_str = "" + str(product_template.id) + ' ' + str(product_template.default_code) + ' ' + str(product_template.name)
                 # text = text + "<p id='shop_product_product_" + str(product_template.id) + "' onclick='show_product_details(this)'>" + product_str + "</p>"
         return http.Response(response_text)
-
-
 
     @http.route(['/online_shop/sort_product_list/<int:current_category_id>/<int:chooser_id>'])
     def sort_product_list(self, current_category_id, chooser_id, **kwargs):
@@ -500,7 +529,7 @@ class OnlineShop(http.Controller):
                        <div class="product-inner">
                            <div class="product-image">
                                <figure class="product-image--holder">
-                                   <img src='""" + product_template_image + """' alt="Product">
+                                   <img src='/""" + product_template_image + """' alt="Product">
                                </figure>
                                <a id='""" + grid_image_product_detail_id + """' onclick='grid_image_show_product_template_detail_page(this)' class="product-overlay"></a>
                                <div class="product-action"></div>
@@ -511,7 +540,7 @@ class OnlineShop(http.Controller):
                                    <div class="product-price-wrapper">
                                        <span class="money">""" + product_template_price_str + """</span>
                                    </div>
-                                   <a href='""" + product_add_to_cart_href + """' class="add-to-cart pr--15">
+                                   <a href='/""" + product_add_to_cart_href + """' class="add-to-cart pr--15">
                                        <i class="la la-plus"></i>
                                        <span>添加到购物车</span>
                                    </a>
@@ -524,7 +553,7 @@ class OnlineShop(http.Controller):
                        <div class="product-inner">
                            <figure class="product-image">
                                <a id='""" + list_image_product_detail_id + """"' onclick='list_image_show_product_template_detail_page(this)'>
-                                   <img src='""" + product_template_image + """' alt="Products">
+                                   <img src='/""" + product_template_image + """' alt="Products">
                                </a>
                                <div class="product-thumbnail-action">
                                </div>
@@ -543,7 +572,7 @@ class OnlineShop(http.Controller):
                                    <input type='hidden' name='product_template_id' value='""" + str(
                     product_template.id) + """'/>
                                    <!-- <input type='hidden' name='csrf_token' value='""" + http.request.csrf_token() + """'/>
-                                    <a href='""" + product_add_to_cart_href + """' class="btn btn-size-md">添加到购物车</a> -->
+                                    <a href='/""" + product_add_to_cart_href + """' class="btn btn-size-md">添加到购物车</a> -->
                                    <a href='javascript:;' class="list_btn_add_cart btn btn-size-md">添加到购物车</a>
                                </div>                                            
                            </div>
@@ -578,11 +607,39 @@ class OnlineShop(http.Controller):
         else:
             return http.Response(' ')
 
+    @http.route(['/online_shop/get_template_id'], type='http', auth="public")
+    def get_template_id(self, **kwargs):
+        template_id = request.session['current_product_detail_id']
+
+        return http.request.make_response(json.dumps({'product_template_id':template_id}))
+
+    @http.route(['/online_shop/get_product_detail_page/<int:product_template_id>'], type='http', auth="user")
+    def get_product_detail_page(self, product_template_id, **kwargs):
+        if request.session.uid:
+
+            if product_template_id:
+                request.session['current_product_detail_id'] = product_template_id
+            template = env.get_template('product-details.html')
+            html = template.render()
+            return html
+        else:
+
+            query = werkzeug.urls.url_encode({
+                'redirect': '/online_shop/get_product_detail_page/'+str(product_template_id),
+                'error' : '请登录然后操作'
+            })
+            return werkzeug.utils.redirect('/web/login?%s' % query)
+
+
+            # return werkzeug.utils.redirect('/web/login?error=请登录然后操作')
+
 
     @http.route(['/online_shop/get_product_detail/<int:product_template_id>'], type='http', auth="public")
     def get_product_detail(self, product_template_id, **kwargs):
-        product_template = http.request.env['product.template'].search([('id', '=', product_template_id)], limit=1)
-        if product_template_id:
+        product_template = http.request.env['product.template'].sudo().search([('id', '=', product_template_id)], limit=1)
+
+        if product_template:
+            product_template.browse_num = product_template.browse_num + 1
             product_product_pool = http.request.env['product.product'].search([('product_tmpl_id', '=', product_template_id)])
             if product_product_pool:
                 product = product_product_pool[0]
@@ -607,32 +664,28 @@ class OnlineShop(http.Controller):
                             <span class="money">"""
 
                 price_str = "¥" + str(product.lst_price)
-                footer_text = """</span>
-    </div>
+                footer_text = """</span>"""
+                browse_num_text = """<p>浏览量 """ + str(product_template.browse_num) + """</p>"""
+                so_qty_text = """<p> 销量""" + str(product_template.so_qty) + """</p>"""
+                footer_text2 = """</div>
     <div class="product-action d-flex flex-sm-row align-items-sm-center flex-column align-items-start mb--30">
-        <div class="quantity-wrapper d-flex align-items-center mr--30 mr-xs--0 mb-xs--30">
-            <label class="quantity-label" for="qty">数量:</label>
-            <div class="quantity">
-                <input type="number" class="quantity-input" name="qty" id="qty" value="1" min="1">
-            </div>
-        </div>
-        <!--TODO：这里有匿名函数使用js的示例-->
         <input type='hidden' name='inp_product_id' value='"""+str(product.id)+"""'/>
         <input type='hidden' name='inp_product_template_id' value='"""+str(product_template_id)+"""'/>
-        <button type="button" class="btn btn-size-sm btn-shape-square" onclick="detail_add_cart()">
+        <div>
+        <button margin='left' type="button" class="btn btn-size-sm btn-shape-square" onclick="detail_add_cart()">
             添加到购物车
         </button>"""
                 if product_template.product_template_external_website:
-                    footer_text2 = """<button type="button" class="btn btn-size-sm btn-shape-square" onclick="window.open('""" + product_template.product_template_external_website + """')" target='_blank'>
+                    footer_text3 = """<button type="button" margin='right' class="btn-blue btn-size-sm btn-shape-square" onclick="window.open('""" + product_template.product_template_external_website + """')" target='_blank'>
             产品效果图
-        </button>
+        </button></div>
                     </div>  
 </div>"""
                 else:
-                    footer_text2 = """</div>  
+                    footer_text3 = """</div></div>  
 </div>"""
 
-                response_text = header_text + product.name + middle_text + price_str + footer_text +footer_text2
+                response_text = header_text + product.name + middle_text + price_str + footer_text + browse_num_text + so_qty_text + footer_text2 + footer_text3
                 return http.Response(response_text)
 
 class ProductTemplateCategoryExtend(models.Model):
@@ -642,7 +695,44 @@ class ProductTemplateCategoryExtend(models.Model):
     product_template_external_website = fields.Char(string='产品外部页面链接')
     custom_order = fields.Integer(string='产品展示自定义排序')
     description_html = fields.Html(string='产品详细介绍')
-    product_template_order_by_name = fields.Integer()
+    product_template_order_by_name = fields.Integer('产品按名称排序的次序')
+    so_qty = fields.Float('销售数量', compute='_compute_so_qty', store=False)
+
+    @api.one
+    def _compute_so_qty(self):
+        template_id = self.id
+        product_product_pool = self.env['product.product'].search([('product_tmpl_id', '=', template_id)])
+        if product_product_pool:
+            product_ids = product_product_pool.ids
+            sale_order_line_pool = self.env['sale.order.line'].search([('product_id', 'in', product_ids)])
+            if sale_order_line_pool:
+                qty = 0.0
+                for record in sale_order_line_pool:
+                    qty = qty + record.product_uom_qty
+                self.so_qty = qty
+            else:
+                self.so_qty = 0.0
+        else:
+            self.so_qty = 0.0
+
+    @api.multi
+    def _compute_so_qty(self):
+        for product_template in self:
+            template_id = product_template.id
+            product_product_pool = self.env['product.product'].search([('product_tmpl_id', '=', template_id)])
+            if product_product_pool:
+                product_ids = product_product_pool.ids
+                sale_order_line_pool = self.env['sale.order.line'].search([('product_id', 'in', product_ids)])
+                if sale_order_line_pool:
+                    qty = 0.0
+                    for record in sale_order_line_pool:
+                        qty = qty + record.product_uom_qty
+                    product_template.so_qty = qty
+                else:
+                    product_template.so_qty = 0.0
+            else:
+                product_template.so_qty = 0.0
+
 
 
     @api.one

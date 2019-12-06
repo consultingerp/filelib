@@ -21,7 +21,7 @@ class ProductTemplate(models.Model):
         if not self.qrcode:
             wx_file_path = get_module_resource('wx_tools', 'static/wx')
             file_name = 'product%s.png' % self.id
-            url = entry.server_url + "/shop/product/%s" % self.id
+            url = entry.server_url + "/online_shop/get_product_detail_page/%s" % self.id
             qr = qrcode.QRCode(
                 version=5,
                 error_correction=qrcode.constants.ERROR_CORRECT_H,

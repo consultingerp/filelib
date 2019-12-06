@@ -8,6 +8,24 @@ class OutboundFinal(models.Model):
     _name = 'outbound.final'
     _description = '出库报表'
 
+    @api.depends('werks')
+    @api.onchange('werks')
+    def _onchange_werks(self):
+        code = self.werks
+        domain = [('factory', '=', code)]
+        return {
+            'domain': {'vkorgtext': domain}
+        }
+
+    @api.depends('kunnr')
+    @api.onchange('kunnr')
+    def _onchange_kunnr(self):
+        code = self.kunnr.id
+        domain = [('sale_team_id', '=', code)]
+        return {
+            'domain': {'ywy': domain}
+        }
+
     def default_werks(self):
         return self.env['res.company']._company_default_get('outbound.final').company_code
 
@@ -57,6 +75,34 @@ class OutboundFinal(models.Model):
     jiesuanjine = fields.Float('结算小计')
     xiaoshoujine = fields.Float('销售小计')
 
+    def init_outbound_date(self, ctx):
+        start_date = str(ctx['start_date']).replace('-', '')
+        end_date = str(ctx['end_date']).replace('-', '')
+        time_sql = "to_char(start_date, 'YYYYMMDD') = '%s' and to_char(end_date, 'YYYYMMDD') = '%s'" % (start_date, end_date)
+        if ctx['werks']:
+            werks_sql = "and werks = '%s'" % ctx['werks']
+        else:
+            werks_sql = ''
+        if ctx['vtweg']:
+            vtweg_sql = "and vtweg = '%s'" % ctx['vtweg'][0]
+        else:
+            vtweg_sql = ''
+        if ctx['vkorgtext']:
+            vkorgtext_sql = "and vkorgtext = '%s'" % ctx['vkorgtext'][0]
+        else:
+            vkorgtext_sql = ''
+        if ctx['kunnr']:
+            kunnr_sql = "and kunnr = '%s'" % ctx['kunnr'][0]
+        else:
+            kunnr_sql = ''
+        if ctx['ywy']:
+            ywy_sql = "and ywy = '%s'" % ctx['ywy'][0]
+        else:
+            ywy_sql = ''
+
+        del_sql = "delete from outbound_final where %s %s %s %s %s %s" % (time_sql, werks_sql, vtweg_sql, vkorgtext_sql, kunnr_sql, ywy_sql)
+        self._cr.execute(del_sql)
+
     def open_table(self):
         data = self.read()[0]
         ctx = self._context.copy()
@@ -101,11 +147,12 @@ class OutboundFinal(models.Model):
             ywy_query = ('ywy', '=', ctx['ywy'][0])
             domain_list.append(ywy_query)
 
+        # 删除查询时创建的数据行
+        self.init_outbound_date(ctx)
+
         return {
             'name': '出库报表查询',
-            # 'view_type': 'dashboard',
             'view_type': 'form',
-            # 'view_mode': 'dashboard',
             'view_mode': 'tree,graph',
             'res_model': 'outbound.final',
             'type': 'ir.actions.act_window',

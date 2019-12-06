@@ -39,34 +39,45 @@ class E2yunCustomerRefund(models.Model):
     mobile_phone = fields.Char('手机号')
     huming = fields.Char('户名')
     refund_status = fields.Selection([
-        ('draft', '草稿'), ('posted', '已过帐'), ('cancelled', '取消')], '状态', default='draft')
+        ('draft', '草稿'), ('checked', '已审核'), ('posted', '已过帐'), ('cancelled', '取消')],
+        '状态', default='draft')
     shop_code = fields.Char('门店编码')
     app_code = fields.Char('客户编码')
+    voucher_status = fields.Char('凭证状态')
 
     def write(self, vals):
         previous_state = self.refund_status
         new_state = vals.get('refund_status')
         res = super(E2yunCustomerRefund, self).write(vals)
         shop = self.env['crm.team'].search([('name', '=', self.shop_id)])
+
         if shop.sent_wx_message:
-            if previous_state == 'draft':
-                if new_state == 'posted':
-                    self.transport_wechat_message_refund(res)
+            _logger.info("推送门店")
+            if self.refund_id == '第三方退款' and previous_state == 'draft' and new_state == 'checked':
+                _logger.info("第三方退款推送")
+                self.transport_wechat_message_refund(res)
+            if self.refund_id != '第三方退款' and previous_state == 'checked' and new_state == 'posted':
+                _logger.info("其他退款推送")
+                self.transport_wechat_message_refund(res)
         return res
 
     def transport_wechat_message_refund(self, res):  # 微信消息推送--客户退款
         flag = self.env['crm.team'].search([('shop_code', '=', self.shop_code)]).show_accept_amount
+        # partner_id0 = self.env['res.partner'].search([('app_code', '=', self.app_code)]).app_code
 
         if flag:
             trans_amount = self.customer_refund_amount
         else:
             trans_amount = self.refund_amount01
         if self.customer_po:
-            cpo = "客户PO号:%s" % self.customer_po
+            # cpo = "客户PO号:%s" % self.customer_po
+            cpo = self.customer_po
         else:
             cpo = ''
         if self.thrrd_receipt_num:
-            trn = "第三方退款编号:%s" % self.thrrd_receipt_num
+            # trn = "第三方退款编号:%s" % self.thrrd_receipt_num
+            trn = self.thrrd_receipt_num
+
         else:
             trn = ''
 
@@ -97,8 +108,10 @@ class E2yunCustomerRefund(models.Model):
 
         get_wx_user_id = self.env['res.partner'].search([('app_code', '=', self.app_code)])
         if get_wx_user_id.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
+            _logger.info("进入推送")
             get_wx_user_id.wx_user_id.send_template_message(
-                user_data, template_name='客户退款提醒', partner=self.partner_id)
+                user_data, template_name='客户退款提醒', partner=get_wx_user_id)
+            _logger.info("完成推送")
     # def init_date(self, ctx):
     #
     #     rq_from = str(ctx['date_from']) or ''

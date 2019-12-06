@@ -10,6 +10,19 @@ function load_order_list(){
 
         for(var i = 0;i < d.length; i++){
             var order = d[i];
+            var order_state = order.order_state;
+
+            var order_state_text = order_state;
+            if(order_state == 'sent'){
+                order_state_text = '待确认';
+            }else if (order_state == 'sale'){
+                order_state_text = '已确认';
+            }else if (order_state == 'done'){
+                order_state_text = '已完成';
+            }else if (order_state == 'cancel'){
+                order_state_text = '已取消';
+            }
+
             var html =
                 "           <div class='tab-item'>" +
                 "               <a href='javascript:void(0);' class='aui-well-item aui-well-item-clear'>" +
@@ -17,8 +30,10 @@ function load_order_list(){
                 "                       <h3>门店:"+order.order_team+"</h3>" +
                 "                       <h3>订单编号:"+order.order_name+"</h3>" +
                 "                   </div>" +
-                "                   <span>"+order.order_state+"</span>" +
+                "                   <span>"+order_state_text+
+                "                  </span>" +
                 "               </a>" +
+                "               " +
                 "               <div class='aui-mail-product'>";
 
             var lines = order['order_line'];
@@ -42,7 +57,10 @@ function load_order_list(){
                 "   </a>" +
                 "   <div style='padding-left: 20px;'>" +
                 "       地址:"+order.order_address+"<br/>"+
-                "       联系电话:"+order.order_phone+"<br/>"+
+                "       联系电话:"+order.order_phone+"<br/>" +
+                "<a href='/ordercontact/"+order.order_id+"' class='aui-navBar-item'>" +
+                "                                    <i class='icon icon-sys'></i>" +
+                "                                  联系客服</a>"+
                 //"       <a href='javascript:;'>再次购买</a>" +
                 //"       <a href='javascript:;' class='aui-df-color'>评价晒单</a>" +
                 //"       <a href='javascript:;' class='aui-df-color'>查看发票</a>" +
@@ -53,8 +71,18 @@ function load_order_list(){
             html = html + "<div class='divHeight'></div>";
 
 
-            $('.tab-panel-item').append(html);// = html;//(html);
+            $('.all_item').append(html);// = html;//(html);
 
+            if(order_state == 'sent'){
+                $('.sent_item').append(html);
+            }else if(order_state == 'sale'){
+                $('.confirm_item').append(html);
+            }
+            else if(order_state == 'done'){
+                $('.done_item').append(html);
+            }else if(order_state == 'cancel'){
+                $('.cancel_item').append(html);
+            }
         }
 
     });
@@ -66,6 +94,10 @@ $(document).ready(function() {
         var d = JSON.parse(datas);
         $('body').append("<input name='csrf_token' value="+d['csrf_token']+" type='hidden' />");
         load_order_list();
+    });
+
+    $("a[name='btn_back']").click(function(){
+        window.location.href = '/hhjc_shop_index';
     });
 });
 

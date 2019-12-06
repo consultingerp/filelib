@@ -15,6 +15,15 @@ class e2yun_sales_report(models.Model):
             'domain': {'vkorgtext': domain}
         }
 
+    @api.depends('kunnr')
+    @api.onchange('kunnr')
+    def _onchange_kunnr(self):
+        code = self.kunnr.id
+        domain = [('sale_team_id', '=', code)]
+        return {
+            'domain': {'ywy': domain}
+        }
+
     def default_start_date(self):
         ctx = self._context.copy()
         if ctx.get('date_from1', False):

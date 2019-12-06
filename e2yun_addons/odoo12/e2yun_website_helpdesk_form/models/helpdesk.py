@@ -27,6 +27,9 @@ class HelpdeskTicket(models.Model):
     matnrs = fields.Char('物料')
     arktxs = fields.Char('物料描述')
     posserviceorderid = fields.Char('POS服务订单编号')
+    area_id = fields.Char('地区')
+    city_id = fields.Char('城市')
+    state_id = fields.Char('区县')
 
     @api.model
     def create(self, vals):

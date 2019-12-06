@@ -6,15 +6,35 @@
             <field name="inherit_id" ref="website_sale.product_template_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='public_categ_ids']" position="after">
-                    <field name="category_parents" readonly="1" widget="many2many_tags"/>
+                    <field name="category_parents" invisible="1" readonly="1" widget="many2many_tags"/>
                     <field name="product_template_external_website"/>
                     <field name="custom_order"/>
+                    <field name="browse_num" readonly="1"/>
+                    <field name="so_qty" readonly="1"/>
                 </xpath>
                 <xpath expr="//page[@name='sales']" position="after">
                     <page name="Product Description" string="产品详细介绍">
                         <field name="description_html" type="html" nolable="1"/>
                     </page>
                 </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="product_template_invisible_extend">
+            <field name="name">product.template.invisible.extend</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="website_sale.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='alternative_product_ids']" position="attributes">
+                    <attribute name="inviisble">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='accessory_product_ids']" position="attributes">
+                    <attribute name="inviisble">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_image_ids']" position="attributes">
+                    <attribute name="inviisble">1</attribute>
+                </xpath>
+
             </field>
         </record>
         <!-- explicit list view definition -->

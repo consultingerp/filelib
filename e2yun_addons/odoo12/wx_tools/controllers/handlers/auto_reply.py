@@ -140,6 +140,7 @@ def main(robot):
         cr, uid, context, db = request.cr, request.uid or odoo.SUPERUSER_ID, request.context, request.db
         uuid = ''  # 获取上次连接会话
         active_id = ''  # 会话ID用户于连接到会话
+        reminder_type = "在线客服咨询"
         wxuserinfo = request.env['wx.user'].sudo().search([('openid', '=', openid)])
         if not wxuserinfo.exists():
             info = client.wxclient.get_user_info(openid)  # 获取用户信息
@@ -151,9 +152,9 @@ def main(robot):
         if wxuseruuid:
             channel = request.env['mail.channel'].sudo().search([('uuid', '=', wxuseruuid.last_uuid)])
             if channel.exists():
-                uuid = wxuseruuid.last_uuid
+                uuid = wxuseruuid.last_uuid   # 根据微信用户找出，上次会话的
                 active_id = channel.id
-        uuid_type = None
+        uuid_type = 'USER'
 
         if partner_user_id and not partner_user_id.vacation_status:  # 上班
             if partner_user_id and uuid:  # 需要联系客服要 and  存在上次会话
@@ -183,9 +184,9 @@ def main(robot):
                     else:
                         uuid = None
             if partner_user_id and not uuid:
-                _logger.info('需要联系客服要 没有会话')
+                _logger.info('需要联系导购，没有会话')
                 entry.send_text(openid, "正在联系您的专属客户经理%s，我们将竭诚为您服务，欢迎咨询！ " % (partner_user_id.name))
-        else:  # 休假
+        else:  # 休假 或者联系客服
             _logger.info('联系客户。')
             partner_user_id = None  #
             if uuid:
@@ -200,17 +201,35 @@ def main(robot):
                         uuid = uuid_session.uuid
                     else:
                         uuid = None
+                else:
+                    partner_user_id = uuid_session.uuid_user_id
 
         if not uuid:  # 没有会话创建会话
             anonymous_name = wx_user.nickname
-            if not partner_user_id:  # 联系在线客户
+            if not partner_user_id:  # 联系在线客户   当在线客服不在线的时候，选择其它用户
                 channel = request.env.ref('wx_tools.channel_wx')
                 channel_id = channel.id
                 # 创建一个channel
                 session_info, ret_msg = request.env["im_livechat.channel"].create_mail_channel(channel_id,
                                                                                                anonymous_name,
                                                                                                content)
-                active_id = session_info["id"]
+                if session_info:
+                    active_id = session_info["id"]
+                else:  # 如果没有选择到在线用户从客服列表中选择一个关联微信用户的
+                    session_info = request.env["im_livechat.channel"].with_context(lang=False).get_online_mail_channel(channel_id, anonymous_name)
+                    if session_info:  # 再次选择到了
+                        active_id = session_info["id"]
+                if active_id:
+                    # 当前对话对应客服
+                    active_res_partner_id = session_info['operator_pid'][0]
+                    active_res_partner = request.env['res.partner'].sudo().search([('id', '=', active_res_partner_id)], limit=1)
+                    # 设置在线客服为当前服务人员
+                    partner_user_id = request.env['res.users'].sudo().search([('partner_id', '=', active_res_partner.id)], limit=1)
+                    # 发送微信信息给在线客服
+                    # wx_user.consultation_reminder(active_res_partner, active_res_partner.wx_user_id.openid,
+                    #                               origin_content,
+                    #                               active_id, reminder_type="在线客服咨询")
+
             else:  # 联系客户经理
                 _logger.info('需要联系客服要，创建新的会话')
                 obj = request.env['wx.user.odoouser'].sudo().search([('openid', '=', openid)])
@@ -225,7 +244,7 @@ def main(robot):
                 uuid = session_info['uuid']
                 entry.create_uuid_for_openid(openid, uuid)
                 # if not record_uuid:
-                wx_user.update_last_uuid(uuid, partner_user_id.id if partner_user_id else None, uuid_type, wx_user)
+                #wx_user.update_last_uuid(uuid, partner_user_id.id if partner_user_id else None, uuid_type, wx_user,partner.id)
 
         if uuid:
             if partner_user_id:
@@ -233,8 +252,8 @@ def main(robot):
                 if partner_user_id.partner_id.im_status == 'offline' and partner_user_id.partner_id.wx_user_id:
                     wx_user.consultation_reminder(partner, partner_user_id.partner_id.wx_user_id.openid,
                                                   origin_content,
-                                                  active_id)
-            wx_user.update_last_uuid(uuid, partner_user_id.id if partner_user_id else None, uuid_type, wx_user)
+                                                  active_id, reminder_type)
+            wx_user.update_last_uuid(uuid, partner_user_id.id if partner_user_id else None, uuid_type, wx_user, partner.id)
             localkwargs = {'weixin_id': openid, 'wx_type': 'wx'}
             message_type = "message"
             message_content = origin_content
