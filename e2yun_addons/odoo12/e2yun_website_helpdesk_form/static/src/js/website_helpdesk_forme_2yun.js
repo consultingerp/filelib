@@ -92,7 +92,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                 };
                 var useraddress = $('input[name=j_address]').val();
                 var is_wx_client = $('input[name=is_wx_client]').val();
-                alert(useraddress+":"+useraddress);
+                // alert(useraddress+":"+useraddress);
                 if (is_wx_client == "1" || useraddress.trim() == "") { // 如果地址为空，没有默认地址，去取定位地
                     wx.getLocation({
                         type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
@@ -124,6 +124,8 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                         }
                     }); // end getLocation
 
+                }else{
+                      user_addres_Setting('', '');
                 }
             }, 1500);
 
@@ -144,7 +146,8 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
             if (is_wx_client == '0') {   //判断是微信浏览器 不是就加载空地址让用户选择
                 this.start_addres('', '', '');
                 $('.mod_hang_appeal_show').css("display", "block");
-            }else{
+            }else{  //微信浏览器
+               // this.start_addres('', '', '');
                 // this.$target.find('.mod_hang_appeal_show').css("display", "none");
             }
 
