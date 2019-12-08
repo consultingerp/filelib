@@ -16,7 +16,6 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
             'change input[name=user_phone]': '_searchusermatnr',
             'click a[id=wximages]': '_userimag',
             'click a[id=online_customer]':'_clickteamcustomer'
-
         },
         willStart: function () {
             var def;
