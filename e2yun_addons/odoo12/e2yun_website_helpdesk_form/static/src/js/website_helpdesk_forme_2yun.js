@@ -147,7 +147,9 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                 this.start_addres('', '', '');
                 $('.mod_hang_appeal_show').css("display", "block");
             }else{  //微信浏览器
-               // this.start_addres('', '', '');
+                // this.start_addres('', '', '');
+                  $('#u_address').val("正在加载地址....");
+                  this.wxGetLocation();
                 // this.$target.find('.mod_hang_appeal_show').css("display", "none");
             }
 
@@ -190,7 +192,6 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
             // Adapt options to date-only pickers
             datepickers_options.format = time.getLangDateFormat();
             this.$target.find('.o_website_form_date').datetimepicker(datepickers_options);
-            this.wxGetLocation();
             this.$target.find('.openerp o_livechat_button d-print-none').hide();
             return this._super.apply(this, arguments);
         },
