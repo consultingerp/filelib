@@ -124,7 +124,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                     }); // end getLocation
 
                 }
-            }, 1000);
+            }, 1500);
 
         }, start: function (editable_mode) {
             if (editable_mode) {
