@@ -97,6 +97,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                     wx.getLocation({
                         type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
                         success: function (res) {
+                            $('#u_address').attr('placeholder','正在加载地址....');
                             var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
                             var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
                             var speed = res.speed; // 速度，以米/每秒计
@@ -148,7 +149,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                 $('.mod_hang_appeal_show').css("display", "block");
             }else{  //微信浏览器
                 // this.start_addres('', '', '');
-                  $('#u_address').val("正在加载地址....");
+                  //$('#u_address').val("正在加载地址....");
                   this.wxGetLocation();
                 // this.$target.find('.mod_hang_appeal_show').css("display", "none");
             }
