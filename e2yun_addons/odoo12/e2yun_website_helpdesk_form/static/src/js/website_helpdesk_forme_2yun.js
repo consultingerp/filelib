@@ -118,6 +118,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                             console.log("失败调用");
 
                         }, cancel: function (res) {
+                            user_addres_Setting('', '');
                             alert('用户拒绝授权获取地理位置');
                         }
                     }); // end getLocation
