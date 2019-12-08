@@ -144,6 +144,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                 this.start_addres('', '', '');
                 $('.mod_hang_appeal_show').css("display", "block");
             }else{
+                 this.start_addres('', '', '');
                 // this.$target.find('.mod_hang_appeal_show').css("display", "none");
             }
 
