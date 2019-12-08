@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+        <record id="app_google_maps_api_key" model="ir.config_parameter">
+            <field name="key">app_google_maps_api_key</field>
+            <field name="value">AIzaSyBOX6gJOl7cW04QxA6Foe4VL6uV68QmRC4</field>
+        </record>
+    </data>
+</openerp>

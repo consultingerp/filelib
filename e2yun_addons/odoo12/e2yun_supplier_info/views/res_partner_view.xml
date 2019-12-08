@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_form_extends" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//label[@for='street']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//div[@class='o_address_format']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='vat']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='vat']" position="before">
+                <!--<field name="supplier_code" attrs="{'invisible':[('supplier','=',False)]}"/>-->
+                <!--<field name="organ_code" attrs="{'invisible':[('supplier','=',False)]}"/>-->
+                <field name="nature_enterprise" attrs="{'invisible':[('supplier','=',False)]}"/>
+                <field name="registered_address" placeholder="与营业执照保持一致" attrs="{'invisible':[('supplier','=',False)]}"/>
+                <field name="annual_turnover" attrs="{'invisible':[('supplier','=',False)]}"/>
+                <field name="employees" attrs="{'invisible':[('supplier','=',False)]}"/>
+                <field name="listed_company" attrs="{'invisible':[('supplier','=',False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='lang']" position="before">
+                <field name="website" widget="url" placeholder="e.g. www.odoo.com"/>
+                <field name="suppliertype_ids" widget="many2many_tags"/>
+            </xpath>
+            <xpath expr="//field[@name='lang']" position="after">
+                <field name="company_profile" attrs="{'invisible':[('supplier','=',False)]}"/>
+                <field name="supplier_code" attrs="{'invisible':[('supplier','=',False)]}" readonly="1"/>
+            </xpath>
+            <!--隐藏不需要的字段-->
+            <xpath expr="//field[@name='lang']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='function']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!--<xpath expr="//label[@for='phone']" position="attributes">-->
+                <!--<attribute name="invisible">True</attribute>-->
+            <!--</xpath>-->
+            <xpath expr="//field[@name='phone']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!--<xpath expr="//label[@for='mobile']" position="attributes">-->
+                <!--<attribute name="invisible">True</attribute>-->
+            <!--</xpath>-->
+            <xpath expr="//field[@name='mobile']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='title']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!--<xpath expr="//field[@name='secondary_industry_ids']" position="attributes">-->
+                <!--<attribute name="invisible">True</attribute>-->
+            <!--</xpath>-->
+            <xpath expr="//field[@name='category_id']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='accounting']" position="replace"/>
+
+
+            <!--改动联系人&账号信息选项卡-->
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@autofocus='autofocus']" position="attributes">
+                <attribute name="string">联系人 &amp; 账号信息</attribute>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@autofocus='autofocus']" position="inside">
+                <field name="child_ids" invisible="1"/>
+                <group name="container_row_2">
+                    <group>
+                        <field name="name"/>
+                        <field name="login_name"/>
+                        <field name="mobile"/>
+                        <field name="phone"/>
+                        <!--<label for="email" string="Email(登录名)"/>-->
+                        <!--<div>-->
+                        <field name="email"/>
+                        <!--</div>-->
+                    </group>
+                    <group>
+                        <field name="function" placeholder="e.g. Sales Director"
+                            attrs="{'invisible': [('is_company','=', True)]}"/>
+                        <field name="country_id" placeholder="Country" class="o_address_country"
+                            options='{"no_open": True, "no_create": True}'
+                            attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                        <!--<field name="state_id" class="o_address_state" placeholder="State"-->
+                            <!--options='{"no_open": True}'-->
+                            <!--attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"-->
+                            <!--context="{'country_id': country_id}"/>-->
+                        <field name="state_id" class="o_address_state" placeholder="State"
+                                   options='{"no_open": True}'
+                                   attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                                   context="{'country_id': country_id}"/>
+                        <field name="city" placeholder="City" class="o_address_city"
+                            attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                        <label for="street2" string="详细地址"/>
+                        <div>
+                            <field name="street2" placeholder="Street 2..." class="o_address_street"
+                                    attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                        </div>
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@autofocus='autofocus']" position="before">
+                <!--新增公司信息选项卡-->
+                <page name='info_company' string="公司信息">
+                    <group name="container_row_2">
+                        <group>
+                            <field name="business_license" />
+                            <field name="validity_license" placeholder="与营业执照保持一致"/>
+                            <field name="vat" placeholder="与营业执照保持一致"/>
+                            <field name="registered_capital" placeholder="与营业执照保持一致"/>
+                            <field name="image_company"/>
+                        </group>
+                        <group>
+                            <field name="organization_chart"/>
+                            <field name="image_product"/>
+                        </group>
+                    </group>
+                </page>
+                <!--新增银行信息选项卡-->
+                <page name='info_bank' string="银行信息">
+                    <group>
+                        <group>
+                            <field name="country_bank"/>
+                            <field name="province_bank"/>
+                            <field name="city_bank"/>
+                            <!--<field name="region_bank"/>-->
+                            <field name="name_bank"/>
+                            <field name="name_bank_branch"/>
+                            <field name="name_banks"/>
+                        </group>
+                        <group>
+                            <field name="account_bank"/>
+                            <field name="name_account"/>
+                            <field name="currency_type"/>
+                            <field name="code_bank"/>
+                            <field name="enclosure_bank"/>
+                        </group>
+                        <!--<group>-->
+                            <!---->
+                        <!--</group>-->
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@autofocus='autofocus']" position="after">
+            <!--新增产品信息选项卡-->
+                <page name='info_product' string="产品信息">
+                    <label for="secondary_industry_ids" string="供应产品类别"/>
+                    <field name="secondary_industry_ids" widget="many2many_tags"/>
+                    <div>
+                        <label for="comment" string="备注"/>
+                        <field name="comment" placeholder="note..."/>
+                    </div>
+                </page>
+                <page name="authenitcation" string="认证信息">
+                  <field name="authenitcation_id" widget="one2many_list" context="{'authenitcation_id': authenitcation_id}">
+                    <tree editable="bottom">
+                        <field name="authentication_type"/>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="remark"/>
+                    </tree>
+                    <form>
+                        <group>
+                            <group>
+                                <field name="authentication_type"/>
+                                <field name="name"/>
+                                <field name="code"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="remark"/>
+                            </group>
+                            <group>
+                                <field name="image" widget='image' class="oe_avatar"
+                                options='{"preview_image": "image", "size": [250, 170]}'/>
+                            </group>
+                        </group>
+                    </form>
+                  </field>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+    <!--去掉供应商信息图标-->
+    <!--<record model="ir.ui.view" id="partner_form_send_sms_form_view_extends">-->
+        <!--<field name="name">res.partner.form.send.sms.extends</field>-->
+        <!--<field name="model">res.partner</field>-->
+        <!--<field name="inherit_id" ref="sms.partner_form_send_sms_form_view"/>-->
+        <!--<field name="arch" type="xml">-->
+            <!--<xpath expr="//field[@name='phone']" position="after">-->
+                <!--<attribute name="invisible">true</attribute>-->
+            <!--</xpath>-->
+            <!--<xpath expr="//button[@context='{'field_name': 'mobile'}']" position="attributes">-->
+                <!--<attribute name="invisible">true</attribute>-->
+            <!--</xpath>-->
+            <!--&lt;!&ndash;<xpath expr="//tree" position="attributes">&ndash;&gt;-->
+                <!--&lt;!&ndash;<attribute name="import">false</attribute>&ndash;&gt;-->
+            <!--&lt;!&ndash;</xpath>&ndash;&gt;-->
+        <!--</field>-->
+    <!--</record>-->
+
+</odoo>

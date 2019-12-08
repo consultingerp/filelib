@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo >
+  <record id="group_hhjc_customer_group" model="res.groups">
+    <field name="name">HH-客户权限组</field>
+  </record>
+  <record id="rule_hhjc_customer_rule" model="ir.rule">
+    <field name="name">HH-客户权限规则</field>
+    <field name="model_id" ref="model_res_partner"/>
+    <field name="groups" eval="[(4, ref('e2yun_partner_authority_extends.group_hhjc_customer_group'))]"/>
+    <field name="domain_force">['|',('teams','in',user.teams.ids),('customer','=',False)]</field>
+    <field name="perm_read" eval="True"/>
+    <field name="perm_write" eval="True"/>
+    <field name="perm_create" eval="True"/>
+    <field name="perm_unlink" eval="True"/>
+  </record>
+
+
+
+
+</odoo>

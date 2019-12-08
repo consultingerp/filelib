@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+<!--        <record id="crm_team_goal" model="ir.ui.view">-->
+<!--            <field name="model">crm.team</field>-->
+<!--            <field name="inherit_id" ref="sale.crm_team_salesteams_view_kanban"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//t[@groups='sales_team.group_sale_manager']" position="replace">-->
+<!--                    <div class="col-12 o_kanban_primary_bottom bottom_block">-->
+<!--                        <field name="invoiced" widget="progressbar" title="门店目标"-->
+<!--                        options="{'current_value': 'invoiced', 'max_value': 'invoiced_target'}"/>-->
+<!--                    </div>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+         <record id="crm_team_target" model="ir.ui.view">
+            <field name="model">crm.team</field>
+            <field name="inherit_id" ref="sale.crm_team_salesteams_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='invoicing']/field[@name='use_invoices']" position="replace">
+                    <field name="use_invoices"/>
+                    <field name="team_year" attrs="{'invisible': [('use_invoices', '=', False)]}" />
+                    <field name="team_target" attrs="{'invisible': [('use_invoices', '=', False)]}">
+                        <tree>
+                            <field name="team_id" invisible="1"/>
+                            <field name="target_year"/>
+                            <field name="invoiced_target_year"/>
+                        </tree>
+                    </field>
+                    <field name="invoiced_target_detail" attrs="{'invisible': [('use_invoices', '=', False)]}" >
+                        <tree>
+                            <field name="current_team_id" invisible="1"/>
+                            <field name="detail_year"/>
+                            <field name="target_month"/>
+                            <field name="sales_member" domain="[('id', 'in', current_team_id.member_ids.ids)]"/>
+                            <field name="team_target_monthly"/>
+                        </tree>
+                    </field>
+                </xpath>
+                <xpath expr="//group[@name='invoicing']/field[@name='invoiced_target']" position="replace"/>
+            </field>
+        </record>
+    </data>
+</odoo>

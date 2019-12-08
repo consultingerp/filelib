@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="crm_user_form_add_related_guide" model="ir.ui.view">
+            <field name="name">CRM User Form Add Related Guide</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='access_rights']" position="before">
+                    <page name="related_partner" string="Related Partner" attrs="{'invisible': [('function','=',False)]}">
+                        <field name="related_partner" widget="many2many" options="{'not_delete': True}">
+                            <kanban class="o_res_partner_kanban">
+                                <field name="id"/>
+                                <field name="color"/>
+                                <field name="display_name"/>
+                                <field name="title"/>
+                                <field name="email"/>
+                                <field name="parent_id"/>
+                                <field name="is_company"/>
+                                <field name="function"/>
+                                <field name="phone"/>
+                                <field name="street"/>
+                                <field name="street2"/>
+                                <field name="zip"/>
+                                <field name="city"/>
+                                <field name="country_id"/>
+                                <field name="mobile"/>
+                                <field name="state_id"/>
+                                <field name="category_id"/>
+                                <field name="image_small"/>
+                                <field name="type"/>
+                                <templates>
+                                    <t t-name="kanban-box">
+                                        <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban">
+                                            <t t-if="record.image_small.raw_value &amp;&amp; !record.is_company.raw_value">
+                                                <div class="o_kanban_image_fill_left d-none d-md-block"
+                                                     t-attf-style="background-image:url('#{kanban_image('res.partner', 'image_medium', record.id.raw_value)}')">
+                                                    <img class="o_kanban_image_inner_pic"
+                                                         t-if="record.parent_id.raw_value"
+                                                         t-att-alt="record.parent_id.value"
+                                                         t-att-src="kanban_image('res.partner', 'image_small', record.parent_id.raw_value)"/>
+                                                </div>
+                                                <div class="o_kanban_image rounded-circle d-md-none"
+                                                     t-attf-style="background-image:url('#{kanban_image('res.partner', 'image_small', record.id.raw_value)}')">
+                                                    <img class="o_kanban_image_inner_pic"
+                                                         t-if="record.parent_id.raw_value"
+                                                         t-att-alt="record.parent_id.value"
+                                                         t-att-src="kanban_image('res.partner', 'image_small', record.parent_id.raw_value)"/>
+                                                </div>
+                                            </t>
+                                            <t t-elif="record.is_company.raw_value">
+                                                <img class="o_kanban_image"
+                                                     t-att-src="kanban_image('res.partner', 'image_small', record.id.raw_value)"
+                                                     t-att-alt="record.display_name"/>
+                                            </t>
+                                            <t t-else="">
+                                                <t t-if="record.type.raw_value === 'delivery'">
+                                                    <img alt="Delivery"
+                                                         t-att-src="_s + &quot;/base/static/img/truck.png&quot;"
+                                                         class="o_kanban_image oe_kanban_avatar_smallbox"/>
+                                                </t>
+                                                <t t-if="record.type.raw_value === 'invoice'">
+                                                    <img alt="Invoice"
+                                                         t-att-src="_s + &quot;/base/static/img/money.png&quot;"
+                                                         class="o_kanban_image oe_kanban_avatar_smallbox"/>
+                                                </t>
+                                                <t t-if="record.type.raw_value != 'invoice' &amp;&amp; record.type.raw_value != 'delivery'">
+                                                    <t t-if="record.is_company.raw_value === true">
+                                                        <img class="o_kanban_image" alt="Logo"
+                                                             t-att-src="_s + &quot;/base/static/img/company_image.png&quot;"/>
+                                                    </t>
+                                                    <t t-if="record.is_company.raw_value === false">
+                                                        <img class="o_kanban_image" alt="Avatar"
+                                                             t-att-src="_s + &quot;/base/static/img/avatar.png&quot;"/>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                            <div class="oe_kanban_details">
+                                                <strong class="o_kanban_record_title oe_partner_heading">
+                                                    <field name="display_name"/>
+                                                </strong>
+                                                <div class="o_kanban_tags_section oe_kanban_partner_categories">
+                                                    <span class="oe_kanban_list_many2many">
+                                                        <field name="category_id" widget="many2many_tags"
+                                                               options="{'color_field': 'color'}"/>
+                                                    </span>
+                                                </div>
+                                                <ul>
+                                                    <li t-if="record.parent_id.raw_value and !record.function.raw_value">
+                                                        <field name="parent_id"/>
+                                                    </li>
+                                                    <li t-if="!record.parent_id.raw_value and record.function.raw_value">
+                                                        <field name="function"/>
+                                                    </li>
+                                                    <li t-if="record.parent_id.raw_value and record.function.raw_value">
+                                                        <field name="function"/>
+                                                        at
+                                                        <field name="parent_id"/>
+                                                    </li>
+                                                    <li t-if="record.city.raw_value and !record.country_id.raw_value">
+                                                        <field name="city"/>
+                                                    </li>
+                                                    <li t-if="!record.city.raw_value and record.country_id.raw_value">
+                                                        <field name="country_id"/>
+                                                    </li>
+                                                    <li t-if="record.city.raw_value and record.country_id.raw_value">
+                                                        <field name="city"/>,
+                                                        <field name="country_id"/>
+                                                    </li>
+                                                    <li t-if="record.email.raw_value" class="o_text_overflow">
+                                                        <field name="email"/>
+                                                    </li>
+                                                </ul>
+                                                <div class="oe_kanban_partner_links"/>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </templates>
+                            </kanban>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="crm_partner_form_change_mobile_field_place" model="ir.ui.view">
+            <field name="name">CRM Partner Form Change Mobile Field Place</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="sms.partner_form_send_sms_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='mobile']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+<!--                <xpath expr="//button[@aria-label='Send SMS']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//label[@for='mobile']" position="replace">
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="crm_partner_form_add_status_bar" model="ir.ui.view">
+            <field name="name">CRM Partner Form Add Status Bar</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <!--                        <button name="set_intention" string="Set Intention" type="object"-->
+                        <!--                                attrs="{'invisible': [('state','not in',['potential_customer'])]}"/>-->
+                        <!--                        <button name="set_intention_loss" string="Set Intention Loss" type="object"-->
+                        <!--                                attrs="{'invisible': [('state','not in',['intention_customer'])]}"/>-->
+                        <!--                        <button name="set_target" string="Set Target" type="object"-->
+                        <!--                                attrs="{'invisible': [('state','not in',['intention_customer'])]}"/>-->
+                        <!--                        <button name="set_target_loss" string="Set Target Loss" type="object"-->
+                        <!--                                attrs="{'invisible': [('state','not in',['target_customer'])]}"/>-->
+                        <!--                        <button name="set_contract" string="Set Contract" type="object"-->
+                        <!--                                attrs="{'invisible': [('state','not in',['target_customer'])]}"/>-->
+                        <field name="pos_state" invisible="1"/>
+                        <button name="sync_customer_to_pos" string="同步POS" type="object" confirm="确认同步客户到POS系统？"
+                                attrs="{'invisible': [('customer','!=',True)]}"/><!--,('pos_state','=',True)-->
+                        <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                    </header>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="crm_partner_form_user_id_readonly" model="ir.ui.view">
+            <field name="name">CRM Partner Form Add Related Guide</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page[@name='sales_purchases']/group/group[@name='sale']/field[@name='user_id']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="crm_partner_form_add_related_guide" model="ir.ui.view">
+            <field name="name">CRM Partner Form Add Related Guide</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='sales_purchases']" position="after">
+                    <page name="related_guide" string="Related Guide" attrs="{'invisible': [('customer','!=',True)]}">
+                        <field name="related_guide" widget="many2many" options="{'not_delete': True}">
+                            <kanban class="o_kanban_mobile">
+                                <field name="id"/>
+                                <field name="name"/>
+                                <field name="login"/>
+                                <field name="lang"/>
+                                <field name="active"/>
+                                <field name="login_date"/>
+                                <field name="sale_team_id"/>
+                                <templates>
+                                    <t t-name="kanban-box">
+                                        <div t-attf-class="oe_kanban_global_click">
+                                            <div class="o_kanban_image">
+                                                <img alt="Avatar"
+                                                     t-att-src="kanban_image('res.users', 'image_medium', record.id.raw_value)"/>
+                                            </div>
+                                            <div class="oe_kanban_details">
+                                                <ul>
+                                                    <li class="text-success float-right mb4"
+                                                        t-if="record.active.raw_value">
+                                                        <i class="fa fa-circle" role="img" aria-label="Ok" title="Ok"/>
+                                                    </li>
+                                                    <li class="text-danger float-right mb4"
+                                                        t-if="!record.active.raw_value">
+                                                        <i class="fa fa-circle" role="img" aria-label="Invalid"
+                                                           title="Invalid"/>
+                                                    </li>
+                                                    <li class="mb3">
+                                                        <strong>
+                                                            <field name="name"/>
+                                                        </strong>
+                                                    </li>
+                                                    <br/>
+                                                    <li class="mb4">
+                                                        <field name="sale_team_id"/>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </templates>
+                            </kanban>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!--        <record id="crm_partner_kanban_add_status_group" model="ir.ui.view">-->
+        <!--            <field name="name">CRM Partner Kanban Add Status Group</field>-->
+        <!--            <field name="model">res.partner</field>-->
+        <!--            <field name="inherit_id" ref="base.res_partner_kanban_view"/>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <xpath expr="//kanban" position="attributes">-->
+        <!--                    <attribute name="default_group_by">state</attribute>-->
+        <!--                    <attribute name="group_create" eval='True'/>-->
+        <!--                    <attribute name="group_delete" eval='True'/>-->
+        <!--                    <attribute name="group_edit" eval='True'/>-->
+        <!--                </xpath>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+
+        <record id="crm_partner_form_extend" model="ir.ui.view">
+            <field name="name">CRM Partner Form Extends</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="vat" position="before">
+                     <label for="mobile"/>
+                    <div class="o_row">
+                        <field name="mobile" widget="phone" required="1"/>
+                        <button type="action" name="129" class="btn-sm btn-link mb4 fa fa-envelope-o" aria-label="Send SMS" title="Send SMS" attrs="{'invisible':[('mobile', '=', False)]}" context="{'field_name': 'mobile'}"/>
+                    </div>
+                    <field name="app_code"/>
+                    <field name="shop_code" context="{'show_custom_name': 1,'search_owned_shop': 1}"/>
+                    <field name="shop_name"/>
+                    <field name="referrer"/>
+                    <field name="occupation"/>
+                    <field name="car_brand"/>
+                    <field name="user_nick_name"/>
+                    <field name="gender"/>
+                    <field name="customer_source" readonly="1"/>
+                </field>
+            </field>
+        </record>
+        <!--base.view_partner_tree-->
+        <record id="crm_partner_tree_extend" model="ir.ui.view">
+            <field name="name">CRM Partner Tree Extends</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="/tree" position="attributes">
+                    <attribute name="default_order">write_date desc</attribute>
+                </xpath>
+            </field>
+        </record>
+        <!--<record model="ir.actions.server" id="action_sync_customer_pos">-->
+        <!--<field name="name">同步POS</field>-->
+        <!--<field name="model_id" ref="model_res_partner"/>-->
+        <!--<field name="binding_model_id" ref="model_res_partner" />-->
+        <!--<field name="state">code</field>-->
+        <!--<field name="code">-->
+        <!--if records:-->
+        <!--action = env['res.partner.extends.batch'].sync_customer_to_pos(records)-->
+        <!--</field>-->
+        <!--</record>-->
+
+        <record id="sync_customer_pos_view" model="ir.ui.view">
+            <field name="name">确定同步客户到POS系统？</field>
+            <field name="model">res.partner.extends.batch</field>
+            <field name="arch" type="xml">
+                <form string="确定同步客户到POS系统？">
+                    <footer>
+                        <button name="sync_customer_to_pos" string="确定" type="object" class="oe_highlight"/>
+                        or
+                        <button string="取消" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <act_window name="同步POS"
+                    res_model="res.partner.extends.batch"
+                    src_model="res.partner"
+                    key2="client_action_multi"
+                    view_mode="form"
+                    view_type="form"
+                    view_id="sync_customer_pos_view"
+                    target="new"
+                    id="sync_customer_pos_mulit"/>
+
+        <record id="crm_partner_kanban_add_status_group2" model="ir.ui.view">
+            <field name="name">CRM Partner Kanban Add Status Group</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <kanban class="o_res_partner_kanban">
+                    <field name="id"/>
+                    <field name="color"/>
+                    <field name="display_name"/>
+                    <field name="title"/>
+                    <field name="email"/>
+                    <field name="parent_id"/>
+                    <field name="is_company"/>
+                    <field name="function"/>
+                    <field name="phone"/>
+                    <field name="street"/>
+                    <field name="street2"/>
+                    <field name="zip"/>
+                    <field name="city"/>
+                    <field name="country_id"/>
+                    <field name="mobile"/>
+                    <field name="opportunity_count"/>
+                    <field name="meeting_count"/>
+                    <field name="sale_order_count"/>
+                    <field name="state_id"/>
+                    <field name="category_id"/>
+                    <field name="image_small"/>
+                    <field name="type"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban">
+                                <t t-if="record.image_small.raw_value &amp;&amp; !record.is_company.raw_value">
+                                    <div class="o_kanban_image_fill_left d-none d-md-block"
+                                         t-attf-style="background-image:url('#{kanban_image('res.partner', 'image_medium', record.id.raw_value)}')">
+                                        <img class="o_kanban_image_inner_pic" t-if="record.parent_id.raw_value"
+                                             t-att-alt="record.parent_id.value"
+                                             t-att-src="kanban_image('res.partner', 'image_small', record.parent_id.raw_value)"/>
+                                    </div>
+                                    <div class="o_kanban_image rounded-circle d-md-none"
+                                         t-attf-style="background-image:url('#{kanban_image('res.partner', 'image_small', record.id.raw_value)}')">
+                                        <img class="o_kanban_image_inner_pic" t-if="record.parent_id.raw_value"
+                                             t-att-alt="record.parent_id.value"
+                                             t-att-src="kanban_image('res.partner', 'image_small', record.parent_id.raw_value)"/>
+                                    </div>
+                                </t>
+                                <t t-elif="record.is_company.raw_value">
+                                    <img class="o_kanban_image"
+                                         t-att-src="kanban_image('res.partner', 'image_small', record.id.raw_value)"
+                                         t-att-alt="record.display_name"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-if="record.type.raw_value === 'delivery'">
+                                        <img alt="Delivery" t-att-src='_s + "/base/static/img/truck.png"'
+                                             class="o_kanban_image oe_kanban_avatar_smallbox"/>
+                                    </t>
+                                    <t t-if="record.type.raw_value === 'invoice'">
+                                        <img alt="Invoice" t-att-src='_s + "/base/static/img/money.png"'
+                                             class="o_kanban_image oe_kanban_avatar_smallbox"/>
+                                    </t>
+                                    <t t-if="record.type.raw_value != 'invoice' &amp;&amp; record.type.raw_value != 'delivery'">
+                                        <t t-if="record.is_company.raw_value === true">
+                                            <img class="o_kanban_image" alt="Logo"
+                                                 t-att-src='_s + "/base/static/img/company_image.png"'/>
+                                        </t>
+                                        <t t-if="record.is_company.raw_value === false">
+                                            <img class="o_kanban_image" alt="Avatar"
+                                                 t-att-src='_s + "/base/static/img/avatar.png"'/>
+                                        </t>
+                                    </t>
+                                </t>
+                                <div class="oe_kanban_details">
+                                    <strong class="o_kanban_record_title oe_partner_heading">
+                                        <field name="display_name"/>
+                                    </strong>
+                                    <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
+                                    <ul>
+                                        <li t-if="record.parent_id.raw_value and !record.function.raw_value">
+                                            <field name="parent_id"/>
+                                        </li>
+                                        <li t-if="!record.parent_id.raw_value and record.function.raw_value">
+                                            <field name="function"/>
+                                        </li>
+                                        <li t-if="record.parent_id.raw_value and record.function.raw_value">
+                                            <field name="function"/>
+                                            at
+                                            <field name="parent_id"/>
+                                        </li>
+                                        <li t-if="record.city.raw_value and !record.country_id.raw_value">
+                                            <field name="city"/>
+                                        </li>
+                                        <li t-if="!record.city.raw_value and record.country_id.raw_value">
+                                            <field name="country_id"/>
+                                        </li>
+                                        <li t-if="record.city.raw_value and record.country_id.raw_value"><field
+                                                name="city"/>,
+                                            <field name="country_id"/>
+                                        </li>
+                                        <li t-if="record.email.raw_value" class="o_text_overflow">
+                                            <field name="email"/>
+                                        </li>
+                                    </ul>
+                                    <div class="oe_kanban_partner_links">
+                                        <span class="badge badge-pill" t-if="record.opportunity_count.value&gt;0">
+                                            <i class="fa fa-fw fa-star" aria-label="Favorites" role="img"
+                                               title="Favorites"/>
+                                            <t t-esc="record.opportunity_count.value"/>
+                                        </span>
+                                        <span class="badge badge-pill" t-if="record.meeting_count.value&gt;0">
+                                            <i class="fa fa-fw fa-calendar" aria-label="Meetings" role="img"
+                                               title="Meetings"/>
+                                            <t t-esc="record.meeting_count.value"/>
+                                        </span>
+                                        <span t-if="record.sale_order_count.value&gt;0" class="badge badge-pill">
+                                            <i class="fa fa-fw fa-usd" role="img" aria-label="Sale orders"
+                                               title="Sales orders"/>
+                                            <t t-esc="record.sale_order_count.value"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="res_partner_view_search_inherit" model="ir.ui.view">
+            <field name="name">res.partner.view.search.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="state" string="客户状态"/>
+                    <filter name="group_state" string="客户状态" context="{'group_by' : 'state'}"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="crm_customer_view_graph" model="ir.ui.view">
+            <field name="name">res.partner.graph.view</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <graph string="Customers">
+                    <field name="state" type="row"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="base.action_partner_form" model="ir.actions.act_window">
+            <field name="name">Customers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form,activity,graph</field>
+            <field name="context">{"search_default_customer":1, "show_custom_name":2, "search_owned_shop": 1}</field>
+            <field name="search_view_id" ref="base.view_res_partner_filter"/>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'sequence': '2', 'view_mode': 'kanban', 'view_id': ref('crm_partner_kanban_add_status_group2')})
+                ]"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new customer in your address book
+                </p>
+                <p>
+                    Odoo helps you easily track all activities related to a customer.
+                </p>
+            </field>
+        </record>
+
+
+
+
+        <!--        <record id="action_crm_partner_kanban_add_status_group2" model="ir.actions.act_window.view">-->
+        <!--            <field eval="10" name="sequence"/>-->
+        <!--            <field name="view_mode">kanban</field>-->
+        <!--            <field name="view_id" ref="crm_partner_kanban_add_status_group2"/>-->
+        <!--            <field name="act_window_id" ref="base.action_partner_form"/>-->
+        <!--        </record>-->
+
+
+    </data>
+</odoo>

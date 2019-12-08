@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="contactus_form" name="Contact Form" inherit_id="website_crm.contactus_form" customize_show="True">
+            <xpath expr="//form[@action='/website_form/']" position="replace">
+                <div>
+                    <form action="/website_form/" method="post" data-model_name="crm.lead" data-success_page="/contactus-thank-you" class="s_website_form container-fluid mt32" enctype="multipart/form-data" data-editable-form="false">
+                        <div class="form-group row form-field o_website_form_required_custom">
+                            <label class="col-lg-3 col-md-4 col-form-label" for="contact_name">您的姓名</label>
+                            <div class="col-lg-7 col-md-8">
+                                <input type="text" class="form-control o_website_form_input" name="name" t-att-value="request.params.get('name', '')" required=""/>
+                            </div>
+                        </div>
+                        <div class="form-group row form-field">
+                            <label class="col-lg-3 col-md-4 col-form-label" for="phone">电话号码</label>
+                            <div class="col-lg-7 col-md-8">
+                                <input type="text" class="form-control o_website_form_input" name="phone" t-att-value="request.params.get('phone', '')" />
+                            </div>
+                        </div>
+                        <div class="form-group row form-field o_website_form_required_custom">
+                            <label class="col-lg-3 col-md-4 col-form-label" for="description">您的问题</label>
+                            <div class="col-lg-7 col-md-8">
+                                <textarea class="form-control o_website_form_input" name="description" required=""><t t-esc="request.params.get('description', '')"/></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
+                                <a href="#" role="button" class="btn btn-primary btn-lg o_website_form_send">发送</a>
+                                <span id="o_website_form_result"></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+			</xpath>
+		</template>
+
+    <template id="company_description" name="Contact Form" inherit_id="website.company_description">
+            <xpath expr="//address" position="replace">
+                <address itemscope="itemscope" itemtype="http://schema.org/Organization">
+                </address>
+			</xpath>
+		</template>
+
+
+
+
+    <template id="footer_custom" inherit_id="website.layout" name="Footer">
+        <xpath expr="//div[@id='footer']" position="replace">
+            <div id="footer" class="oe_structure oe_structure_solo" t-ignore="true" t-if="not no_footer">
+                <section class="s_text_block pt16 pb8">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <h5>Our Products &amp; Services</h5>
+                                <ul class="list-unstyled">
+                                    <li><a href="/">Home</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-4" id="connect">
+                                <h5>Connect with us</h5>
+                                <ul class="list-unstyled">
+                                    <li><a href="/contactus">Contact us</a></li>
+                                    <li><i class="fa fa-phone"/> <span>北京010-87952911</span></li>
+                                    <li><i class="fa fa-phone"/> <span>深圳0755-83420359</span></li>
+                                </ul>
+                                <p>
+                                    <a t-if="website.social_facebook" t-att-href="website.social_facebook" class="btn btn-sm btn-link"><i class="fa fa-2x fa-facebook-square"/></a>
+                                    <a t-if="website.social_twitter" t-att-href="website.social_twitter" class="btn btn-sm btn-link"><i class="fa fa-2x fa-twitter"/></a>
+                                    <a t-if="website.social_linkedin" t-att-href="website.social_linkedin" class="btn btn-sm btn-link"><i class="fa fa-2x fa-linkedin"/></a>
+                                    <a t-if="website.social_youtube" t-att-href="website.social_youtube" class="btn btn-sm btn-link"><i class="fa fa-2x fa-youtube-play"/></a>
+                                    <a t-if="website.social_googleplus" t-att-href="website.social_googleplus" class="btn btn-sm btn-link" rel="publisher"><i class="fa fa-2x fa-google-plus-square"/></a>
+                                    <a t-if="website.social_github" t-att-href="website.social_github" class="btn btn-sm btn-link"><i class="fa fa-2x fa-github"/></a>
+                                    <a t-if="website.social_instagram" t-att-href="website.social_instagram" class="btn btn-sm btn-link"><i class="fa fa-2x fa-instagram"/></a>
+                                </p>
+                            </div>
+                            <div class="col-lg-4">
+                                <h5>
+                                    <span t-field="res_company.name"/>
+                                    <small> - <a href="/aboutus">About us</a></small>
+                                </h5>
+                                <p>
+                                    海以其博大，纳百川而成其浩瀚；山以其厚重，历沧桑而为之雄浑。我们正以山的浑厚、海的广博，诚信、务实的品质，敬业、创新的作风，追求卓越、实现跨越式发展的精神，为实现“打造百年企业”的企业目标，产品走向祖国的长城内外、大江南北，去搏击市场，去拥抱美好灿烂的明天。
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id='change_sales_form' model="ir.ui.view">
+            <field name="name">res.partner.change.sales</field>
+            <field name="model">change.sales</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button string="更换导购" type="object" name="old_sale_has_gone"
+                                confirm="是否确定更换导购？" class="oe_highlight"/>
+                    </header>
+                    <group>
+                        <field name="newsale"/>
+                    </group>
+
+                </form>
+            </field>
+        </record>
+
+<!--        <record id="change_sales_action" model="ir.actions.act_window">-->
+<!--            <field name="name">导购离职</field>-->
+<!--            <field name="res_model">change.sales</field>-->
+<!--            <field name="view_type">form</field>-->
+<!--            <field name="view_mode">form</field>-->
+<!--        </record>-->
+<!--        <menuitem id="change_sales_menu"-->
+<!--                  name="导购离职"-->
+<!--                  action="change_sales_action"-->
+<!--                  parent="crm.crm_menu_sales"-->
+<!--                  sequence="3"/>-->
+
+        <act_window name="更换导购"
+                    res_model="change.sales"
+                    src_model="res.partner"
+                    key2="client_action_multi"
+                    view_mode="form"
+                    view_type="form"
+                    view_id="change_sales_form"
+                    target="new"
+                    id="change_sales_action"
+                    groups="e2yun_change_sales.group_hhjc_change_sales_group"/>
+
+    </data>
+</odoo>

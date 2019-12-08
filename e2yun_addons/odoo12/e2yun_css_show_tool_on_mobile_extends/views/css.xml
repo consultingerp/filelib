@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="add_some_mobile_my_css" name="add my css" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/scss"
+                  href="/e2yun_css_show_tool_on_mobile_extends/static/src/css/my.css"/>
+        </xpath>
+    </template>
+    <template id="add_some_mobile_front_my_css" name="add my front css" inherit_id="web.assets_frontend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/scss"
+                  href="/e2yun_css_show_tool_on_mobile_extends/static/src/css/my_front.css"/>
+        </xpath>
+    </template>
+</odoo>

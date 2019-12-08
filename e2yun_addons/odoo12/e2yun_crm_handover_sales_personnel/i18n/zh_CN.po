@@ -1,0 +1,5 @@
+#. module: e2yun_crm_handover_sales_personnel
+#: model_terms:ir.ui.view,arch_db:e2yun_crm_handover_sales_personnel.view_users_form_extends
+msgid "Transfer the user"
+msgstr "销售交接用户"
+

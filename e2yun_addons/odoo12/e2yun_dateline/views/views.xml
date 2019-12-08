@@ -1,0 +1,58 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="e2yun_dateline_list">
+      <field name="name">e2yun_dateline list</field>
+      <field name="model">crm.lead</field>
+      <field name="inherit_id" ref="crm.crm_case_tree_view_leads" />
+      <field name="arch" type="xml">
+        <xpath expr="//tree" position="attributes">
+          <attribute name="default_order">write_date desc</attribute>
+        </xpath>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="e2yun_dateline.action_window">
+      <field name="name">e2yun_dateline window</field>
+      <field name="res_model">e2yun_dateline.e2yun_dateline</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="e2yun_dateline.action_server">
+      <field name="name">e2yun_dateline server</field>
+      <field name="model_id" ref="model_e2yun_dateline_e2yun_dateline"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="e2yun_dateline" id="e2yun_dateline.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="e2yun_dateline.menu_1" parent="e2yun_dateline.menu_root"/>
+    <menuitem name="Menu 2" id="e2yun_dateline.menu_2" parent="e2yun_dateline.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="e2yun_dateline.menu_1_list" parent="e2yun_dateline.menu_1"
+              action="e2yun_dateline.action_window"/>
+    <menuitem name="Server to list" id="e2yun_dateline" parent="e2yun_dateline.menu_2"
+              action="e2yun_dateline.action_server"/>
+    -->
+  </data>
+</odoo>

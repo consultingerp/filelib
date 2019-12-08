@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portal_my_home_supplier_info" name="Portal My Home : Supplier Info" inherit_id="portal.portal_my_home" priority="20">
+        <xpath expr="//div[hasclass('o_portal_my_home')]/h3" position="before">
+            <t t-if="supplier_state == 'Draft'">
+                <p style="font-size: 13px;">
+                    您的注册信息已提交，请耐心等待两个工作日，</p>
+                <p style="font-size: 13px;">审核结果我们会以邮件的方式通知给您，请注意查收！</p>
+            </t>
+            <t t-if="supplier_state == 'approval1'">
+                <p style="font-size: 13px;">
+                    您的供应商注册初审结论为：<font style="color: rgb(22, 140, 71);">已通过</font>，终审审核将在1个工作日内完成，</p>
+                <p style="font-size: 13px;">审核结果我们会以邮件的方式通知给您，请注意查收！</p>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="generate_model_access_view" model="ir.ui.view">
+            <field name="name">generate.model.access.view</field>
+            <field name="model">generate.model.access</field>
+            <field name="arch" type="xml">
+                <form string="Generate Model Access">
+                    <p class="oe_grey">
+                        You are going to generate modfel access.
+                    </p>
+                    <footer>
+                        <button string="Generate Model Access" name="batch_generate_model_access" type="object" default_focus="1" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        e2yun_user_authorization_extend
+        <act_window id="action_generate_model_access"
+            multi="True"
+            key2="client_action_multi" name="Generate Model Access"
+            res_model="generate.model.access" src_model="res.groups"
+            view_mode="form" target="new" view_type="form" />
+    </data>
+</odoo>

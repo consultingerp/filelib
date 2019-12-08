@@ -1,0 +1,89 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* friendly_website_errors
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-08-12 07:03+0000\n"
+"PO-Revision-Date: 2019-08-12 07:03+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: friendly_website_errors
+#: model_terms:ir.ui.view,arch_db:friendly_website_errors.403
+msgid "403: Forbidden"
+msgstr "403: 禁止"
+
+#. module: friendly_website_errors
+#: model_terms:ir.ui.view,arch_db:friendly_website_errors.404
+msgid "404: Page not found!"
+msgstr "404: 找不到页面!"
+
+#. module: friendly_website_errors
+#: model_terms:ir.ui.view,arch_db:friendly_website_errors.403
+#: model_terms:ir.ui.view,arch_db:friendly_website_errors.404
+msgid "Contact Us"
+msgstr "联系我们"
+
+#. module: friendly_website_errors
+#: model_terms:ir.ui.view,arch_db:friendly_website_errors.403
+#: model_terms:ir.ui.view,arch_db:friendly_website_errors.404
+#: model_terms:ir.ui.view,arch_db:friendly_website_errors.500
+msgid "Homepage"
+msgstr "主页"
+
+#. module: friendly_website_errors
+#: model_terms:ir.ui.view,arch_db:friendly_website_errors.500
+msgid "Please"
+msgstr "请"
+
+#. module: friendly_website_errors
+#: model_terms:ir.ui.view,arch_db:friendly_website_errors.403
+msgid "The page you were looking for could not be authorized."
+msgstr "你正在查找的网页可能未被授权。"
+
+#. module: friendly_website_errors
+#: model_terms:ir.ui.view,arch_db:friendly_website_errors.404
+msgid "The page you were looking for could not be found; it is possible you have\n"
+"                            typed the address incorrectly, but it has most probably been removed due\n"
+"                            to the recent website reorganisation."
+msgstr "找不到您要查找的页面；可能是您输入的地址不正确，但很可能是由于最近的网站重组而被删除。"
+
+#. module: friendly_website_errors
+#: model_terms:ir.ui.view,arch_db:friendly_website_errors.500
+msgid "The server encountered an internal server error or misconfiguration and was unable to complete\n"
+"                            your request."
+msgstr "服务器内部错误或配置错误，无法完成您的请求。"
+
+#. module: friendly_website_errors
+#: model_terms:ir.ui.view,arch_db:friendly_website_errors.404
+msgid "You can return to the"
+msgstr "你可以返回"
+
+#. module: friendly_website_errors
+#: model_terms:ir.ui.view,arch_db:friendly_website_errors.403
+msgid "You should return to the"
+msgstr "你应该返回"
+
+#. module: friendly_website_errors
+#: model_terms:ir.ui.view,arch_db:friendly_website_errors.500
+msgid "contact"
+msgstr "联系"
+
+#. module: friendly_website_errors
+#: model_terms:ir.ui.view,arch_db:friendly_website_errors.403
+#: model_terms:ir.ui.view,arch_db:friendly_website_errors.404
+msgid "or"
+msgstr "或"
+
+#. module: friendly_website_errors
+#: model_terms:ir.ui.view,arch_db:friendly_website_errors.500
+msgid "the server administrator or return to the"
+msgstr "服务器管理员或返回"
+

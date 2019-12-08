@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_helpdesk_brandtype,helpdesk.ticket.brandtype,model_helpdesk_ticket_brandtype,helpdesk.group_helpdesk_manager,1,1,1,1
+access_helpdesk_tickchat_uuid,helpdesk.livechat.uuid,model_helpdesk_livechat_uuid,helpdesk.group_helpdesk_manager,1,1,1,1

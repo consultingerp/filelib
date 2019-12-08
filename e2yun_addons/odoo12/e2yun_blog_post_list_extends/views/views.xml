@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="send_blog_pos_view" model="ir.ui.view">
+            <field name="name">确定发送信息吗？</field>
+            <field name="model">blog.post.extends.batch</field>
+            <field name="arch" type="xml">
+                <form string="确定发送信息吗？">
+                    <sheet>
+                        <group>
+                           <field name="preview_user_id"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="blog_post_send_to_preview" string="预览用户发送" type="object" class="oe_highlight"/>
+                        or
+                        <button name="blog_post_send_to_wx" string="群发" type="object" class="oe_highlight" confirm="确定群发吗？"/>
+                        or
+                        <button string="取消" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <act_window name="微信发送"
+                    res_model="blog.post.extends.batch"
+                    src_model="blog.post"
+                    key2="client_action_multi"
+                    view_mode="form"
+                    view_type="form"
+                    view_id="send_blog_pos_view"
+                    target="new"
+                    id="send_blog_pos_mulit"/>
+
+    </data>
+
+    <template id="assets_frontend" inherit_id="website.assets_frontend" name="Blog Front-end assets">
+        <xpath expr="." position="inside">
+            <!--<link rel="stylesheet" type="text/scss" href="/website_blog/static/src/scss/website_blog.scss"/>-->
+            <script type="text/javascript" src="/e2yun_blog_post_list_extends/static/src/js/blog.js"/>
+        </xpath>
+    </template>
+</odoo>

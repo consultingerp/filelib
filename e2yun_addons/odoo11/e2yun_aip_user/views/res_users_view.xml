@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- res.users -->
+        <record id="view_aip_users_form" model="ir.ui.view">
+            <field name="name">res.users.aip.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+               <page name="access_rights" position="after">
+                   <page string="AIP">
+                    <group string="AIP Config" attrs="{'invisible': [('active', '=', True)]}"  colspan='2' groups='base.group_no_one'>
+
+                       <field string="AIP User" name="aip_user_id" />
+                        <field string="AIP Status" name="aip_active" />
+                    </group>
+                   </page>
+               </page>
+            </field>
+        </record>
+
+        <record id="view_aip_users_search" model="ir.ui.view">
+            <field name="name">res.users.aip.search</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_search"/>
+            <field name="arch" type="xml">
+                <filter name="no_share" position="after">
+                    <filter name="AIP" string="AIP Users" domain="[('active','=',False),('aip_active','=',True),('aip_user_id','!=',False)]"/>
+                </filter>
+            </field>
+        </record>
+
+
+
+    </data>
+</odoo>

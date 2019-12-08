@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <!-- Add js_class in partner kanban view
+        <record id="res_partner_kanban_business_card_view" model="ir.ui.view">
+            <field name="name">res.partner.kanban.business_card.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//kanban[hasclass('o_res_partner_kanban')]" position="attributes">
+                    <attribute name="js_class">e2yun_business_card_contact_kanban</attribute>
+                </xpath>
+            </field>
+        </record>
+        -->
+
+        <!-- Add js_class in partner tree view -->
+        <record model="ir.ui.view" id="view_partner_tree">
+            <field name="name">res.partner.tree.business_card.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="js_class">e2yun_business_card_contact_tree</attribute>
+                </xpath>
+            </field>
+        </record>
+</odoo>
+

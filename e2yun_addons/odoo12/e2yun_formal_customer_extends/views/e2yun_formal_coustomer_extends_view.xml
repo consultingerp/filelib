@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+          <record id="view_for_coustomer_extends" model="ir.ui.view">
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//h1" position="before">
+                    <div class="o_form_label">
+                            <field name="customer_id"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+
+
+
+
+    </data>
+</odoo>

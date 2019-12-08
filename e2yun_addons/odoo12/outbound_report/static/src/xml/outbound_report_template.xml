@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <templates id="template" xml:space="preserve">
+        <t t-name='outbound_report_template'>
+            <div class="outbound_div" id="outbound_div"></div><!--  style="width:800px;height:500px;"-->
+        </t>
+    <!--本页面为自定义echarts跳转页面，不再使用-->
+    </templates>

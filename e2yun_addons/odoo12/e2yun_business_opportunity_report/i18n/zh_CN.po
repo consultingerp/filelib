@@ -1,0 +1,175 @@
+#. module: e2yun_business_opportunity_report
+#: model:ir.ui.menu,name:e2yun_business_opportunity_report.menu_report_crm_business_opportunity_tree
+msgid "OpportunityContractStatement"
+msgstr "机会合同报表"
+
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.actions.act_window,name:e2yun_business_opportunity_report.action_report_crm_business_opportunity
+msgid "Opportunity contract statement"
+msgstr "机会合同报表"
+
+
+
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__name_title
+msgid "Opportunity"
+msgstr "机会名称"
+
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__source_id
+msgid "Source"
+msgstr "来源"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__rec_rev
+msgid "Rec Rev"
+msgstr "收入类型"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__create_uid_lead
+msgid "Create lead"
+msgstr "创建人"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__partner_id
+msgid "Customer"
+msgstr "客户名称"
+
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__email_from
+msgid "Email"
+msgstr "邮箱"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__name_team_id
+msgid "Sales Team"
+msgstr "销售团队"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__tag_ids
+msgid "Tags"
+msgstr "机会类型"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__date_closed
+msgid "Closed Date"
+msgstr "关闭日期"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__stage_id
+msgid "Stage"
+msgstr "阶段"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__user_id
+msgid "Opportunity Owner"
+msgstr "机会所有者"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__probability
+msgid "Probability"
+msgstr "概率"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__property_product_pricelist
+msgid "Pricelist"
+msgstr "机会货币"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__amount
+msgid "Amount"
+msgstr "机会金额"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__customer_owner
+msgid "Customer Owner"
+msgstr "客户所有者"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__sf_no
+msgid "sf no"
+msgstr "SF机会编号"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__cooperate_with_partner
+msgid "Cooperate with Partner?"
+msgstr "机会是否包含产品供应商"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__code
+msgid "code"
+msgstr "机会号"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__x_studio_service_product
+msgid "x_studio_service_product"
+msgstr "服务产品线"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__x_studio_role
+msgid "x_studio_role"
+msgstr "签约角色"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__x_studio_offshore_effort_
+msgid "x_studio_offshore_effort_"
+msgstr "离岸员工数"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__x_studio_project_start_date
+msgid "x_studio_project_start_date"
+msgstr "项目开始日期"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__x_studio_project_end_date
+msgid "x_studio_project_end_date"
+msgstr "项目结束日期"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__x_studio_digital_code
+msgid "x_studio_digital_code"
+msgstr "Digital Code"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__create_date_lead
+msgid "Create Date"
+msgstr "创建日期"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__price_tax
+msgid "Total Tax"
+msgstr "含税金额"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__tax_id
+msgid "Taxes"
+msgstr "税率"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__price_subtotal
+msgid "Subtotal"
+msgstr "不含税金额"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__cgm
+msgid "CGM%"
+msgstr "CGM%"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__contract_number
+msgid "Contract Number"
+msgstr "合同号"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__name
+msgid "name"
+msgstr "描述"
+
+#. module: e2yun_business_opportunity_report
+#: model:ir.model.fields,field_description:e2yun_business_opportunity_report.field_crm_business_opportunity_report__product_id
+msgid "Product"
+msgstr "产品"

@@ -1,0 +1,5 @@
+-
+  I print Applicant fill up the interview question
+-
+  !python {model: supplier.applicant, id: e2yun_supplier_recruitment.supplier_case_programmer}: |
+    self.action_print_survey()

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="supplier_register">
+          <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty">
+              <section class="s_text_image pt32 pb32">
+                <div class="container">
+                  <div class="row align-items-center">
+                    <div class="col-lg-6 pt16 pb16">
+                      <img src="/web/image/website.s_image_text_default_image" class="img img-fluid mx-auto" alt="Pactera • 图像和文字"/>
+                    </div>
+                    <div class="col-lg-6 pt16 pb16">
+                      <h2>供应商注册 &amp;nbsp; &amp;nbsp; &amp;nbsp; <a href="/" class="btn btn-outline-primary o_default_snippet_text">了解更多</a></h2>
+                      <p>
+                        <br/>
+                      </p>
+                      <form action="/website_form/" method="post" class="s_website_form container-fluid mt32" enctype="multipart/form-data" data-model_name="e2yun.supplier.user" data-success_page="/supplier/register_index">
+                        <div class="form-group row form-field o_website_form_required">
+                          <div class="col-md-3 text-right col-lg-3">
+                            <label class="col-form-label" for="name">
+                                        登录名
+                                    </label>
+                          </div>
+                          <div class="col-md-5  col-lg-5">
+                            <input type="text" class="form-control o_website_form_input" name="name" required="1"/>
+                          </div>
+                        </div>
+                        <div class="row form-group form-field o_website_form_required">
+                          <div class="col-md-3 text-md-right col-lg-3">
+                            <label class="col-form-label" for="password">
+                                        密码
+                                    </label>
+                          </div>
+                          <div class="col-md-8 col-lg-5">
+                            <input type="password" class="form-control o_website_form_input" name="password" required="1"/>
+                          </div>
+                        </div>
+                        <div class="row form-group form-field o_website_form_required">
+                          <div class="col-md-3 text-md-right col-lg-3">
+                            <label class="col-form-label" for="confirm_password">
+                                        确认密码
+                                    </label>
+                          </div>
+                          <div class="col-md-8 col-lg-5">
+                            <input type="password" class="form-control o_website_form_input" name="confirm_password" required="1"/>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <div class="offset-md-4 col-md-8 offset-lg-3 col-lg-5">
+                            <button class="btn btn-lg btn-primary o_website_form_send" data-original-title="" title="" aria-describedby="tooltip291345">注册</button>&amp;nbsp; &amp;nbsp; &amp;nbsp;
+                                    <br/>
+                            <span id="o_website_form_result" class="text-danger ml8"/></div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </t>
+        </template>
+    </data>
+</odoo>

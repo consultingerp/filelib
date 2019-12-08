@@ -1,0 +1,86 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* e2yun_crm_pos_role_relation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-27 09:49+0000\n"
+"PO-Revision-Date: 2019-06-27 09:49+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: e2yun_crm_pos_role_relation
+#: model:ir.model.fields,field_description:e2yun_crm_pos_role_relation.field_crm_pos_role_relation__crm_role
+#: model_terms:ir.ui.view,arch_db:e2yun_crm_pos_role_relation.view_role_relation_search
+msgid "CRM Role"
+msgstr "CRM 角色"
+
+#. module: e2yun_crm_pos_role_relation
+#: model:ir.model.fields,field_description:e2yun_crm_pos_role_relation.field_crm_pos_role_relation__company_id
+#: model_terms:ir.ui.view,arch_db:e2yun_crm_pos_role_relation.view_role_relation_search
+msgid "Company"
+msgstr "公司"
+
+#. module: e2yun_crm_pos_role_relation
+#: model:ir.model.fields,field_description:e2yun_crm_pos_role_relation.field_crm_pos_role_relation__create_uid
+msgid "Created by"
+msgstr "创建人"
+
+#. module: e2yun_crm_pos_role_relation
+#: model:ir.model.fields,field_description:e2yun_crm_pos_role_relation.field_crm_pos_role_relation__create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: e2yun_crm_pos_role_relation
+#: model:ir.model.fields,field_description:e2yun_crm_pos_role_relation.field_crm_pos_role_relation__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: e2yun_crm_pos_role_relation
+#: model:ir.model.fields,field_description:e2yun_crm_pos_role_relation.field_crm_pos_role_relation__id
+msgid "ID"
+msgstr ""
+
+#. module: e2yun_crm_pos_role_relation
+#: model:ir.model.fields,field_description:e2yun_crm_pos_role_relation.field_crm_pos_role_relation____last_update
+msgid "Last Modified on"
+msgstr "最后修改日"
+
+#. module: e2yun_crm_pos_role_relation
+#: model:ir.model.fields,field_description:e2yun_crm_pos_role_relation.field_crm_pos_role_relation__write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: e2yun_crm_pos_role_relation
+#: model:ir.model.fields,field_description:e2yun_crm_pos_role_relation.field_crm_pos_role_relation__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: e2yun_crm_pos_role_relation
+#: model_terms:ir.ui.view,arch_db:e2yun_crm_pos_role_relation.view_role_relation_search
+msgid "POS Role"
+msgstr "POS 角色"
+
+#. module: e2yun_crm_pos_role_relation
+#: model:ir.model.fields,field_description:e2yun_crm_pos_role_relation.field_crm_pos_role_relation__pos_role
+msgid "Pos Role"
+msgstr "POS 角色"
+
+#. module: e2yun_crm_pos_role_relation
+#: model:ir.actions.act_window,name:e2yun_crm_pos_role_relation.action_role_relation_tree
+#: model:ir.ui.menu,name:e2yun_crm_pos_role_relation.menu_role_relation
+#: model_terms:ir.ui.view,arch_db:e2yun_crm_pos_role_relation.view_role_relation_tree
+msgid "Role Relation"
+msgstr "CRM POS 角色对应"
+
+#. module: e2yun_crm_pos_role_relation
+#: model:ir.model,name:e2yun_crm_pos_role_relation.model_crm_pos_role_relation
+msgid "crm.pos.role.relation"
+msgstr ""
+

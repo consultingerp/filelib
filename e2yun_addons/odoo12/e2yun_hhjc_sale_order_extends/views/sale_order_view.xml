@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_order_form_hhjc_extends" model="ir.ui.view">
+            <field name="name">sale.order.form.hhjc.extends</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[@name='action_unlock']" position="after">
+                    <button name="action_sync_to_pos" type="object" string="同步到pos"/>
+                    <button name="action_sync_pos_sale_order" type="object" string="同步pos订单信息"/>
+                    <button name="action_unfreeze_order" type="object" string="解冻销售订单"/>
+                    <button name="action_sync_sale_state_from_pos" type="object" string="同步订单状态"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="before">
+                    <field name="crmstate" readonly="1"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                    <field name="salesorderid"></field>
+                    <field name="vip"></field>
+                    <!--<field name="vipname"></field>-->
+                    <field name="kunnr"></field>
+                    <field name="telephone"></field>
+                    <field name="address"></field>
+                    <field name="ywy"></field>
+                    <field name="gongsishejishitext"></field>
+                    <field name="yujijiaohuoriqi"></field>
+                    <field name="po"></field>
+                    <field name="contractno"></field>
+                    <field name="orderreason"></field>
+                    <field name="elevator"></field>
+                    <field name="upstairs"></field>
+                    <field name="gongzhang"></field>
+                    <field name="shejishi"></field>
+                </xpath>
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="jiesuanjine"></field>
+                    <field name="jiangjiafei1"></field>
+                    <field name="jiangjiafei2"></field>
+                    <field name="vkorg"></field>
+                    <field name="branch"></field>
+                    <field name="werks"></field>
+                    <field name="feiyongshishou"></field>
+                    <field name="remarks"></field>
+                    <field name="orderstatustext"></field>
+                    <field name="viptypetext"></field>
+                    <field name="orderdate"></field>
+                    <field name="pricedate"></field>
+                    <field name="ordertypetext"></field>
+                    <field name="createuserid"></field>
+                    <field name="insertdatetime"></field>
+                    <field name="updater"></field>
+                    <field name="totalmoney"></field>
+                </xpath>
+                <xpath expr="//field[@name='order_line']//tree//field[@name='price_tax']" position="after">
+                    <field name="rownum"></field>
+                    <field name="matnr"></field>
+                    <field name="maktx"></field>
+                    <field name="itemtype"></field>
+                    <field name="kwmen"></field>
+                    <field name="charg"></field>
+                    <field name="xiaoshoujine"></field>
+                    <field name="jiesuanjine"></field>
+                    <field name="itemtotal"></field>
+                    <field name="itemjiesuantotal"></field>
+                    <field name="feiyongshishou"></field>
+                    <field name="feiyongyingshou"></field>
+                    <field name="jiangjiafei1"></field>
+                    <field name="jiangjiafei2"></field>
+                    <field name="tuihuoyuanyintext"></field>
+                    <field name="gongchanghetongbianhao"></field>
+                    <field name="werkstext"></field>
+                    <field name="lgorttext"></field>
+                    <field name="dongjieyuanyintext"></field>
+                    <field name="closed"></field>
+                    <field name="isthird"></field>
+                    <field name="jiagongtext"></field>
+                    <field name="shiyebu"/>
+                    <field name="qudao"/>
+                    <field name="daogou"/>
+                    <field name="mendian"/>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

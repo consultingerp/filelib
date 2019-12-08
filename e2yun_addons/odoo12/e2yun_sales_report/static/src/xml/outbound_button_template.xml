@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="tree_button_template_sale_report" xml:space="preserve">
+    <t t-extend="ListView.buttons">
+        <t t-jquery="div.o_list_buttons" t-operation="append">
+            <t t-if="widget.displayName=='销售明细报表'">
+                <button class="btn btn-primary create_by_sales_report" type="button">查询</button>
+<!--                <button class="btn btn-primary transport_to_charts" type="button">查看图表</button>-->
+            </t>
+        </t>
+
+    </t>
+
+</templates>

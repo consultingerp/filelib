@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="tree_button_template_outbound" xml:space="preserve">
+    <t t-extend="ListView.buttons">
+        <t t-jquery="div.o_list_buttons" t-operation="append">
+            <t t-if="widget.displayName=='出库报表查询'">
+                <button class="btn btn-primary create_by_outbound" type="button">查询</button>
+<!--                <button class="btn btn-primary show_outbound_view" type="button">显示图表</button>-->
+            </t>
+            <t t-if="widget.displayName=='目标完成占比报表'">
+                <button class="btn btn-primary create_by_target" type="button">查询</button>
+            </t>
+        </t>
+
+    </t>
+
+</templates>

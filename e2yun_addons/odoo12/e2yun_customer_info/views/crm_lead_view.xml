@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="crm_lead_view_form_modify" model="ir.ui.view">
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='team_id']" position="after">
+                    <field name="parent_team_id" />
+                    <field name="sf_no" />
+                </xpath>
+
+              <!--   <xpath expr="//field[@name='partner_is_blacklisted']" position="after">
+                    <field name="contract_number" />
+                    <field name="pid" />
+                 </xpath>-->
+
+                 <xpath expr="//field[@name='priority']" position="after">
+                    <field name="payment_team_id" />
+                    <field name="parent_payment_team_id" />
+                    <!--<field name="cgm" />-->
+                 </xpath>
+
+
+                <xpath expr="//button[@class='oe_highlight']" position="attributes">
+                   <attribute name="invisible">True</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="domain">"[('customer', '=', True),('parent_id','=',False)]"</attribute>
+                    <!--<field name="partner_id"-->
+                                    <!--widget="res_partner_many2one"-->
+                                    <!--string="Customer" domain="[('customer', '=', True),('parent_id','=',False)]"-->
+                                    <!--context="{'search_default_customer': 1,-->
+                                        <!--'default_name': partner_name, 'default_street': street,-->
+                                        <!--'default_street2': street2, 'default_city': city,-->
+                                        <!--'default_state_id': state_id, 'default_zip': zip,-->
+                                        <!--'default_country_id': country_id, 'default_function': function,-->
+                                        <!--'default_phone': phone, 'default_mobile': mobile,-->
+                                        <!--'default_email': email_from,-->
+                                        <!--'default_user_id': user_id, 'default_team_id': team_id, 'default_website': website,-->
+                                        <!--'show_vat': True,-->
+                                    <!--}"-->
+                                <!--/>-->
+                </xpath>
+
+            </field>
+        </record>
+
+
+         <record id="crm_case_form_view_oppor_modify" model="ir.ui.view">
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+            <field name="groups_id" eval="[(6, 0, [ref('e2yun_customer_info.groups_the_new_quotation') ])]"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='%(sale_crm.sale_action_quotations_new)d']" position="replace">
+                     <button string="New Quotation" name="%(sale_crm.sale_action_quotations_new)d" type="action" class="oe_highlight"
+                        attrs="{'invisible': ['&amp;', ('probability', '=', 0), ('active', '=', False)]}"
+                        context="{'search_default_partner_id': partner_id,
+                                  'default_partner_id': partner_id,
+                                  'default_team_id': team_id,
+                                  'default_campaign_id': campaign_id,
+                                  'default_medium_id': medium_id,
+                                  'default_origin': name,
+                                  'default_source_id': source_id}"/>
+
+                </xpath>
+
+            </field>
+        </record>
+
+
+    </data>
+</odoo>
