@@ -19,4 +19,4 @@ class e2yun_survey_question_extends(models.Model):
         ('select_box', '下拉框'),
         ('scoring', '打分'),
         ('upload attachments', '附件上传'),
-        ])
+        ], required=False)
