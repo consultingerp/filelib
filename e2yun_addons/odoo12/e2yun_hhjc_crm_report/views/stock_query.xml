@@ -19,8 +19,8 @@
                         <group>
                             <field name="werks"/>
                             <field name="werks_id" invisible="1"/>
-                            <field name="matnr_code"/>
                             <field name="matnr_code1" options='{"no_create": True}'/>
+                            <field name="matnr_code"/>
                         </group>
                         <group>
                             <field name="lgort" domain="[('company_id','=',werks_id)]" options='{"no_create": True}'/>
