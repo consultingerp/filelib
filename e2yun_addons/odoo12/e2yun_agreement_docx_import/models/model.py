@@ -4,12 +4,12 @@
 import base64
 import sys
 from odoo import api, fields, models, tools, _
-from odoo.exceptions import UserError
-from docx.shared import RGBColor
 from docx import Document
 from docx.shared import Pt,Inches
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 import re
+from win32com.client import Dispatch, DispatchEx
+import pythoncom
 
 class DocxImport(models.TransientModel):
     _name = "agreement.docx.import"
@@ -32,6 +32,21 @@ class DocxImport(models.TransientModel):
         section = self.env['agreement.section']    #章节
         appendix = self.env['agreement.appendix']  #附录
 
+
+
+
+        paragraphs = doc.paragraphs
+       #paragraphs[6].text = "小Z同学："
+        #paragraphs[6].add('some striked', strike=True)
+        val = {}
+        val['testxml'] =paragraphs[6]._element.xml
+        wdel = '<w: delw: id="0"w: author="pactera"w: date="2019-12-02T15:56:00Z"><w: rw: rsidDel="00C410A9"><w: rPr><w: rFontsw: ascii="华文中宋"w: eastAsia="华文中宋"w: hAnsi="华文中宋"w: hint="eastAsia"/><w: szw: val="32"/><w: szCsw: val="32"/></w: rPr><w: delText>北京海辉高科软件有限公司</w: delText></w: r></w: del>'
+        #num = xml.find('合同号')
+        #str(doc.element.xml).replace(str(doc.element.xml)[num], "徐初秋")
+        #paragraphs[6]._element.xml = val['testxml']
+        #doc.Comments.Add(Range=doc.paragraphs[6].Range, Text='注释') #其中我的i写的是遍历整个段落，然后匹配出需要加注释的地方
+
+        doc.save('D:\\demo1207.docx')
         vals=[]
        # 每一段的内容
         i=0
@@ -39,6 +54,8 @@ class DocxImport(models.TransientModel):
             print(i)
             val = {}
             val['no'] =i
+            if para.text=='实施服务协议':
+                print(1)
             val['text']=para.text
             val['style_font'] = para.style.font.name
             val['style_name'] = para.style.name
@@ -58,14 +75,14 @@ class DocxImport(models.TransientModel):
                 d_title = document.add_heading(val['text'], 0)
                 d_title.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
                 d_title.style=val['style']
-                d_title.style.font.size=28
-                d_title.bold = True
+                #d_title.style.font.size=28
+                #d_title.bold = True
 
             else:
               p=document.add_paragraph(val['text'])
               p.style=val['style']
 
-        #document.save('D:\\demo1203.docx')
+        document.save('D:\\demo1203.docx')
 
         return True
 
@@ -103,161 +120,44 @@ class AgreementDownloadDoc(models.Model):
 
         agreementData = agreement.browse(agreement_id)
 
-        recital = self.env['agreement.recital'] #叙述
-        recitalListData = recital.search([('agreement_id', '=', agreement_id)])
-
-        section = self.env['agreement.section'] #章节
-        sectionListData = section.search([('agreement_id', '=', agreement_id)])
-
         clause = self.env['agreement.clause']  #条款
         clauseListData = clause.search([('agreement_id', '=', agreement_id)])
 
-        appendix = self.env['agreement.appendix']  #附录
-        appendixListData = appendix.search([('agreement_id', '=', agreement_id)])
+        pythoncom.CoInitialize()
+        wordApp = Dispatch('Word.Application')  # 打开word应用程序
+        wordApp.Visible = 0  # 后台运行,不显示
+        wordApp.DisplayAlerts = 0  # 不警告
 
-        document = Document()  # 初始化文档
+        datas=self.env['ir.http'].binary_content(
+            xmlid=None, model='ir.attachment', id=3434 ,field='datas', unique=None, filename=None,
+            filename_field='datas_fname', download='true', mimetype='',
+            default_mimetype=None, related_id=None, access_mode=None,
+            access_token=None,
+            env=self.env)
+        wb_path=path+agreementData.name+".docx"
+        f = open(wb_path, "wb")
+        datass = base64.decodestring(datas[2])
+        f.write(datass)
+        f.close()
+        doc = wordApp.Documents.Open(FileName=wb_path, Encoding='gbk')
 
-        for recitalObj in recitalListData:  #叙述
-            if not recitalObj.doc_text:
-                document.add_paragraph("")
-                if recitalObj.sequence == 16:
-                    #翻页
-                    document.add_page_break()
-                continue
+        for i in range(len(doc.Paragraphs)):
+            para = doc.Paragraphs[i]
+            print(i)
+            if i == 74:
+                doc.Comments.Add(Range=doc.paragraphs[i].Range, Text='这是测试批注')
+            print(para.Range.text)
+        wordApp.Selection.Find.Execute('定义', False, False, False, False, False, True, 1, True, '这是测试修订', 2)
 
-            text = re.findall(r'[^\*"<p></p>]', recitalObj.content, re.S)
-            text = "".join(text)
-            if recitalObj.sequence==6:
-                #标题
-                p=document.add_heading("",0)
-                r=p.add_run(text)
-                p.alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
-                p.style.font.color.rgb = None
-                r.style.name = recitalObj.doc_style
-                r.font.size = Pt(28)
-                r.bold=True
-                if recitalObj.doc_font:
-                    r.style.font.name=recitalObj.doc_font
+        doc.SaveAs(r""+wb_path)
+        doc.Close()  # 关闭word文档
 
-            elif recitalObj.sequence==0:
-                #第一行
-                p = document.add_paragraph()
-                r = p.add_run(text)
-                p.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
-                r.style.name = recitalObj.doc_style
-                if recitalObj.doc_font:
-                    r.style.font.name = recitalObj.doc_font
-                r.bold = True
-
-            elif recitalObj.sequence == 11:
-                p = document.add_paragraph()
-                p.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-                r=p.add_run(agreementData.partner_id.name)
-                r.style.name = recitalObj.doc_style
-                r.font.size=Pt(18)
-                r.bold = True
-                if recitalObj.doc_font:
-                    r.style.font.name = recitalObj.doc_font
-                #p.style.font.size=Pt(28)
-                #p.style.font.color.rgb = RGBColor(0x42, 0x24, 0xE9)
+        for clauseObj in clauseListData:  # 条款
+            print(111)
 
 
-            elif recitalObj.sequence == 12:
-                p = document.add_paragraph()
-                r=p.add_run(text)
-                p.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-                r.font.size = Pt(18)
-                r.bold = True
-                r.style.name = recitalObj.doc_style
-                if recitalObj.doc_font:
-                    r.style.font.name = recitalObj.doc_font
-
-            elif recitalObj.sequence == 13:
-                p = document.add_paragraph()
-                r=p.add_run(agreementData.company_id.name)
-                r.font.size = Pt(18)
-                r.bold = True
-                p.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-                r.style.name = recitalObj.doc_style
-                if recitalObj.doc_font:
-                    r.style.font.name = recitalObj.doc_font
-
-            elif recitalObj.sequence == 14:
-                p = document.add_paragraph()
-                r=p.add_run(text)
-                r.font.size = Pt(18)
-                p.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-                r.style.name = recitalObj.doc_style
-                r.bold = True
-                if recitalObj.doc_font:
-                    p.style.font.name = recitalObj.doc_font
-
-            elif recitalObj.sequence == 17:
-                p = document.add_paragraph()
-                r = p.add_run(text)
-                r.style.name = recitalObj.doc_style
-                if recitalObj.doc_font:
-                    r.style.font.name = recitalObj.doc_font
-
-                self.add_text_default(document, "甲方：", True, 11, '宋体', '宋体')
-                document.add_paragraph()
-
-                self.add_text_default(document, "法定代表人：", True, 11, '宋体', '宋体')
-                self.add_text_default(document, "地址：", True, 11, '宋体', '宋体')
-                self.add_text_default(document, "邮编：", True, 11, '宋体', '宋体')
-                self.add_text_default(document, "电话：", True, 11, '宋体', '宋体')
-                self.add_text_default(document, "传真：", True, 11, '宋体', '宋体')
-                document.add_paragraph()
-                document.add_paragraph()
-
-                self.add_text_default(document, "乙方：", True, 11, '宋体', '宋体')
-                self.add_text_default(document, "法定代表人：", True, 11, '宋体', '宋体')
-                self.add_text_default(document, "地址：", True, 11, '宋体', '宋体')
-                self.add_text_default(document, "邮编：", True, 11, '宋体', '宋体')
-                self.add_text_default(document, "电话：", True, 11, '宋体', '宋体')
-                self.add_text_default(document, "传真：", True, 11, '宋体', '宋体')
-
-            else:
-                p = document.add_paragraph()
-                r=p.add_run(text)
-                r.style.name = recitalObj.doc_style
-                if recitalObj.doc_font:
-                    r.style.font.name = recitalObj.doc_font
-
-
-        for sectionObj in sectionListData:  #章节
-             if not sectionObj.doc_text:
-                continue
-             text = re.findall(r'[^\*"<p></p>]', sectionObj.content, re.S)
-             text = "".join(text)
-             p = document.add_paragraph()
-             r=p.add_run(sectionObj.title+".   "+text)
-             r.style.name = sectionObj.doc_style
-             r.style.name = '宋体'
-             r.style.font.size = 11
-             if sectionObj.doc_font:
-                 r.style.font.name = sectionObj.doc_font
-             for clauseObj in clauseListData:  # 条款
-                if not clauseObj.doc_text:
-                    continue
-                text = re.findall(r'[^\*"<p></p>]', clauseObj.content, re.S)
-                text = "".join(text)
-                if clauseObj.section_id.id==sectionObj.id:
-                    p = document.add_paragraph()
-                    r=p.add_run(clauseObj.title+"   "+text)
-                    paragraph_format = p.paragraph_format
-                    paragraph_format.left_indent = Inches(0.6)
-                    #paragraph_format.line_spacing=0.8
-                    r.style.name = clauseObj.doc_style
-                    r.style.font.size=11
-                    r.style.font.name ='宋体'
-
-        document.save(path+agreementData.name+".docx")
-
-        file = open(path+agreementData.name+".docx", "rb")
-
+        file = open(wb_path, "rb")
         attachment.search([('res_model', '=', 'agreement.download.doc')]).unlink()
-
         attachment = attachment.create({
             'name': agreementData.name,
             'datas': base64.encodestring(file.read()),
@@ -273,125 +173,46 @@ class AgreementDownloadDoc(models.Model):
         }
         print(111)
 
+
     def Import_doc(self):
         full_path = self.file_path
-        doc = Document(full_path)
-        agreement_id=self._context['active_id']   #读取当前合同ID
 
-        recital = self.env['agreement.recital']  # 叙述
-        section = self.env['agreement.section']  # 章节
+        pythoncom.CoInitialize()
+        wordApp = Dispatch('Word.Application')  # 打开word应用程序
+        wordApp.Visible = 0  # 后台运行,不显示
+        wordApp.DisplayAlerts = 0  # 不警告
+        doc = wordApp.Documents.Open(FileName=full_path, Encoding='gbk')
+        agreement_id=self._context['active_id']   #读取当前合同ID
         clause = self.env['agreement.clause']  # 条款
-        appendix = self.env['agreement.appendix']  # 附录
+        attachment = self.env['ir.attachment']  # 附件
+        file = open(full_path, "rb")
+        attachment.create({
+            'name': 'test',
+            'datas': base64.encodestring(file.read()),
+            'datas_fname': "test.docx",
+            'res_model': 'agreement.download.doc',
+            'res_id': agreement_id
+        })
+        file.close()
 
         vals = []
         # 每一段的内容
         i = 0
-        for para in doc.paragraphs:
+        # 利用下标遍历段落
+        for i in range(len(doc.Paragraphs)):
+            para = doc.Paragraphs[i]
             val = {}
             val['agreement_id']=agreement_id
             val['name'] = i
             val['title'] = ""
             val['sequence'] = i
-            val['content'] = para.text
-            val['doc_text'] = para.text
-            val['doc_style'] = para.style.name
-            val['doc_font'] = para.style.font.name
-            if i==13:
-                val['content'] = "xxxxxx"
-                val['doc_text'] = "xxxxx"
+            val['content'] = para.Range.text
+            val['doc_text'] =para.Range.text
             vals.append(val)
-            i = i + 1
-        recitalVals = []  #叙述 Data
-
-        sectionVals=[]   #章节 Data
-
-        clauseVals=[]    #条款  Data
-
-        section_title="" # 章节  标题
-        section_no=1  #.章节
-        for val in vals:
-            if val['sequence']<=23:
-                #叙述
-                recitalVals.append(val)
-            elif val['sequence']==24:
-                #章节  定义
-                section_title="1"
-                val['title'] = section_title
-                sectionVals.append(val)
-            elif val['sequence'] > 24 and val['sequence']<32:
-                #章节-条款   定义
-                val['title'] = section_title+"."+str(section_no)
-                val['section_id']=24
-                clauseVals.append(val)
-                section_no=section_no+1
-            elif val['sequence'] == 32:
-                # 章节  甲方责任
-                section_no=1
-                section_title = "2"
-                val['title'] = section_title
-                sectionVals.append(val)
-            elif val['sequence'] > 32 and val['sequence'] < 39:
-                # 章节-条款  甲方责任
-                val['title'] = section_title+"."+str(section_no)
-                val['section_id'] = 32
-                clauseVals.append(val)
-                section_no = section_no + 1
-
-            elif val['sequence'] == 39:
-                # 章节  乙方责任
-                section_no = 1
-                section_title = "3"
-                val['title'] = section_title
-                sectionVals.append(val)
-            elif val['sequence'] > 39 and val['sequence'] < 45:
-                # 章节-条款  乙方责任
-                val['title'] = section_title + "." + str(section_no)
-                val['section_id'] = 39
-                clauseVals.append(val)
-                section_no = section_no + 1
-            elif val['sequence'] == 45:
-                # 章节  4.	价款、付款和税金
-                section_no = 1
-                section_title = "4"
-                val['title'] = section_title
-                sectionVals.append(val)
-            elif val['sequence'] > 45 and val['sequence'] < 49:
-                # 章节-条款
-                val['title'] = section_title + "." + str(section_no)
-                val['section_id'] = 45
-                clauseVals.append(val)
-                section_no = section_no + 1
-            elif val['sequence'] == 49:
-                # 章节  实施服务
-                section_no = 1
-                section_title = "5"
-                val['title'] = section_title
-                sectionVals.append(val)
-            elif val['sequence'] > 49 and val['sequence'] < 54:
-                # 章节-条款  实施服务
-                val['title'] = section_title + "." + str(section_no)
-                val['section_id'] = 49
-                clauseVals.append(val)
-                section_no = section_no + 1
-
-            else:
-                print(1)
-
-        #叙述
-        recital.search([('agreement_id', '=', agreement_id)]).unlink()
-        recital.create(recitalVals)
-
-        #章节
-        section.search([('agreement_id', '=', agreement_id)]).unlink()
-        section.create(sectionVals)
-
         #条款
-        sectionListData=section.search([('agreement_id', '=', agreement_id)])
-        for sectionObj in sectionListData:
-            for val in clauseVals:
-                if sectionObj.sequence == val['section_id']:
-                    val['section_id']=sectionObj.id
+        clause.search([('agreement_id', '=', agreement_id)]).unlink()
+        clause.create(vals)
 
-        clause.create(clauseVals)
+
 
         return True
