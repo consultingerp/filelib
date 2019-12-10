@@ -289,7 +289,7 @@ class SurveyQuestion(models.Model):
         self.scoring_method = self.reference_existing_question.scoring_method
         self.labels_ids = self.reference_existing_question.labels_ids
 
-    # 唯一性计分分值超出则弹框提醒
+    # 唯一性计分分值超出则弹框提醒；选择性计分只能有唯一答案，但每个选项都有分数，否则弹框提醒。
     @api.multi
     def write(self, vals):
         res = super(SurveyQuestion, self).write(vals)
@@ -304,6 +304,11 @@ class SurveyQuestion(models.Model):
                     statistics = all.count(0.0)
                     if count > 2 or count == 1 or statistics > 1 or statistics == 0:
                         raise exceptions.Warning(_('唯一性计分只能给一个选项赋值，其他为0，请重新输入'))
+            elif item.scoring_method == '选择性计分':
+                if item.labels_ids:
+                    for l in item.labels_ids:
+                        if l.quizz_mark == 0:
+                            raise exceptions.Warning(_('选择性计分每个选项都有分值，请重新输入'))
         return res
 
     # ⑥创建问题保存时，系统校验 “题库大类”和“计分方式”是否选择，如果未选择，则弹出提示“计分方式未选择，请选择”；
@@ -326,4 +331,5 @@ class NewQuestionType(models.Model):
 
     name = fields.Char(string='问题类型的名称')
     type_html = fields.Html(string='问题类型的样式')
+    question_ids = fields.One2many('survey.question', 'type_id', string='问题')
 
