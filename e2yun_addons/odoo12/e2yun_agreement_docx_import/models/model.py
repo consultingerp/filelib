@@ -173,7 +173,7 @@ class AgreementDownloadDoc(models.Model):
                             print(op + "," + oldStr[af:at] + "->" + newStr[bf:bt])
                             oldStr=oldStr[af:at]
                             newStr=newStr[bf:bt]
-                            doc.paragraphs[i].Range.Find.Execute(oldStr, False, False, False, False, False, True, 0, True,
+                            doc.paragraphs[i].Range.Find.Execute(oldStr, False, False, False, False, False, False, 0, True,
                                                                  newStr, 1)
                         elif op == 'insert':
                             print(op + "," + oldStr[af:at] + "->" + newStr[bf:bt])
