@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+        <t t-name="user_center_views">
+           <section class="aui-flexView">
+	<section class="aui-scrollView">
+		<div class="aui-flex b-line">
+			<div class="aui-library-user">
+				<img src="/web_user_center/static/src/img/user.png" alt=""/>
+			</div>
+            <div class="aui-flex-box">
+				<h2>AUI素材网</h2>
+                <h3><i class="icon icon-vip"></i>普通用户</h3>
+			</div>
+            <div class="aui-right-user">
+				<button>
+					<i class="icon icon-vip-one"></i>开通VIP
+				</button>
+                <p>赠送好友VIP</p>
+			</div>
+		</div>
+        <div class="aui-palace aui-palace-one">
+			<a href="javascript:;" class="aui-palace-grid">
+				<div class="aui-palace-grid-text">
+					<h1>10</h1>
+                    <h2>消息</h2>
+				</div>
+			</a>
+            <a href="javascript:;" class="aui-palace-grid">
+				<div class="aui-palace-grid-text">
+					<h1>78</h1>
+                    <h2>订单</h2>
+				</div>
+			</a>
+            <a href="javascript:;" class="aui-palace-grid">
+				<div class="aui-palace-grid-text">
+					<h1>19.99</h1>
+                    <h2>余额</h2>
+				</div>
+			</a>
+            <a href="javascript:;" class="aui-palace-grid">
+				<div class="aui-palace-grid-text">
+					<h1 style="color:#000">60</h1>
+                    <h2>积分</h2>
+				</div>
+			</a>
+		</div>
+        <div class="divHeight"></div>
+        <div class="aui-palace aui-palace-two">
+			<a href="javascript:;" class="aui-palace-grid b-line">
+				<div class="aui-palace-grid-icon">
+					<span>HOT</span>
+                    <img src="/web_user_center/static/src/img/icon-head-01.png" alt=""/>
+				</div>
+                <div class="aui-palace-grid-text">
+					<h2>会员特权</h2>
+				</div>
+
+			</a>
+            <a href="javascript:;" class="aui-palace-grid b-line">
+				<div class="aui-palace-grid-icon">
+					<span style="background:#ff7023">NEW</span>
+                    <img src="/web_user_center/static/src/img/icon-head-02.png" alt=""/>
+				</div>
+                <div class="aui-palace-grid-text">
+					<h2>超级会员</h2>
+				</div>
+
+			</a>
+            <a href="javascript:;" class="aui-palace-grid b-line">
+				<div class="aui-palace-grid-icon">
+					<img src="/web_user_center/static/src/img/icon-head-03.png" alt=""/>
+				</div>
+                <div class="aui-palace-grid-text">
+					<h2>企业套餐</h2>
+				</div>
+
+			</a>
+            <a href="javascript:;" class="aui-palace-grid b-line">
+				<div class="aui-palace-grid-icon">
+					<img src="/web_user_center/static/src/img/icon-head-04.png" alt=""/>
+				</div>
+                <div class="aui-palace-grid-text">
+					<h2>扫一扫</h2>
+				</div>
+
+			</a>
+            <a href="javascript:;" class="aui-palace-grid b-line">
+				<div class="aui-palace-grid-icon">
+					<img src="/web_user_center/static/src/img/icon-head-05.png" alt=""/>
+				</div>
+                <div class="aui-palace-grid-text">
+					<h2>访问记录</h2>
+				</div>
+
+			</a>
+            <a href="javascript:;" class="aui-palace-grid b-line">
+				<div class="aui-palace-grid-icon">
+					<img src="/web_user_center/static/src/img/icon-head-06.png" alt=""/>
+				</div>
+                <div class="aui-palace-grid-text">
+					<h2>我的关注</h2>
+				</div>
+
+			</a>
+            <a href="javascript:;" class="aui-palace-grid b-line">
+				<div class="aui-palace-grid-icon">
+					<span>VIP</span>
+                    <img src="/web_user_center/static/src/img/icon-head-07.png" alt=""/>
+				</div>
+                <div class="aui-palace-grid-text">
+					<h2>我的监控</h2>
+				</div>
+
+			</a>
+            <a href="javascript:;" class="aui-palace-grid b-line">
+				<div class="aui-palace-grid-icon">
+					<img src="/web_user_center/static/src/img/icon-head-08.png" alt=""/>
+				</div>
+                <div class="aui-palace-grid-text">
+					<h2>我的好友</h2>
+				</div>
+
+			</a>
+            <a href="javascript:;" class="aui-palace-grid ">
+				<div class="aui-palace-grid-icon">
+					<img src="/web_user_center/static/src/img/icon-head-09.png" alt=""/>
+				</div>
+                <div class="aui-palace-grid-text">
+					<h2>我的笔记</h2>
+				</div>
+
+			</a>
+            <a href="javascript:;" class="aui-palace-grid ">
+				<div class="aui-palace-grid-icon">
+					<img src="/web_user_center/static/src/img/icon-head-10.png" alt=""/>
+				</div>
+                <div class="aui-palace-grid-text">
+					<h2>我的情报</h2>
+				</div>
+
+			</a>
+            <a href="javascript:;" class="aui-palace-grid ">
+				<div class="aui-palace-grid-icon">
+					<img src="/web_user_center/static/src/img/icon-head-11.png" alt=""/>
+				</div>
+                <div class="aui-palace-grid-text">
+					<h2>我的下载</h2>
+				</div>
+
+			</a>
+            <a href="javascript:;" class="aui-palace-grid ">
+				<div class="aui-palace-grid-icon">
+					<img src="/web_user_center/static/src/img/icon-head-12.png" alt=""/>
+				</div>
+                <div class="aui-palace-grid-text">
+					<h2>我的公司</h2>
+				</div>
+			</a>
+		</div>
+        <div class="divHeight"></div>
+        <div class="aui-mon-list">
+			<a href="javascript:;" class="aui-flex">
+				<div class="aui-flex-box">
+					<p>我的问答</p>
+				</div>
+                <div class="aui-arrow">
+					<span></span>
+				</div>
+			</a>
+            <div class="divHeight"></div>
+
+            <a href="javascript:;" class="aui-flex b-line">
+				<div class="aui-flex-box">
+					<p>优惠券</p>
+				</div>
+                <div class="aui-arrow">
+					<span>还没有优惠券哦</span>
+				</div>
+			</a>
+            <a href="javascript:;" class="aui-flex">
+				<div class="aui-flex-box">
+					<p>我的兑换码</p>
+				</div>
+                <div class="aui-arrow">
+					<span>礼品兑换码入口</span>
+				</div>
+			</a>
+            <div class="divHeight"></div>
+            <a href="javascript:;" class="aui-flex b-line">
+				<div class="aui-flex-box">
+					<p>意见反馈</p>
+				</div>
+                <div class="aui-arrow">
+					<span></span>
+				</div>
+			</a>
+            <a href="javascript:;" class="aui-flex ">
+				<div class="aui-flex-box">
+					<p>设置</p>
+				</div>
+                <div class="aui-arrow">
+					<span></span>
+				</div>
+			</a>
+		</div>
+        <div class="aui-share-box b-line">
+			<h2 class="aui-share-box-title">分享</h2>
+            <div class="aui-palace aui-palace-three">
+				<a href="javascript:;" class="aui-palace-grid">
+					<img src="/web_user_center/static/src/img/footer-001.png" alt=""/>
+				</a>
+                <a href="javascript:;" class="aui-palace-grid">
+					<img src="/web_user_center/static/src/img/footer-002.png" alt=""/>
+				</a>
+                <a href="javascript:;" class="aui-palace-grid">
+					<img src="/web_user_center/static/src/img/footer-003.png" alt=""/>
+				</a>
+                <a href="javascript:;" class="aui-palace-grid">
+					<img src="/web_user_center/static/src/img/footer-004.png" alt=""/>
+				</a>
+                <a href="javascript:;" class="aui-palace-grid">
+					<img src="/web_user_center/static/src/img/footer-005.png" alt=""/>
+				</a>
+			</div>
+		</div>
+
+	</section>
+               <footer class="aui-footer aui-footer-fixed">
+		<a href="javascript:;" class="aui-tabBar-item ">
+                <span class="aui-tabBar-item-icon">
+                    <i class="icon icon-loan"></i>
+                </span>
+            <span class="aui-tabBar-item-text">首页</span>
+		</a>
+                   <a href="javascript:;" class="aui-tabBar-item ">
+                <span class="aui-tabBar-item-icon">
+                    <i class="icon icon-credit"></i>
+                </span>
+                       <span class="aui-tabBar-item-text">搜老板</span>
+		</a>
+
+                   <a href="javascript:;" class="aui-tabBar-item aui-tabBar-item-active">
+                <span class="aui-tabBar-item-icon">
+                    <i class="icon icon-mine"></i>
+                </span>
+                       <span class="aui-tabBar-item-text">我的</span>
+		</a>
+	</footer>
+</section>
+        </t>
+
+    </templates>
