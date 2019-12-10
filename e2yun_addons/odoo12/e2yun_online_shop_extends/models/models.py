@@ -26,6 +26,7 @@ class OnlineShop(http.Controller):
     @http.route('/hhjc_shop_product_list', type='http', auth="public", methods=['GET'])
     def hhjc_shop_product_list(self, **kwargs):
         # env = http.request.env
+        request.session['default_product_category'] = ''
         template = env.get_template('shop-list-sidebar.html')
         html = template.render()
         return html
