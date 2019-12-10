@@ -27,15 +27,15 @@ class AgreementClause(models.Model):  #条款
     _inherit = "agreement.clause"
     doc_text = fields.Text('Doc Text')
     master_word_id = fields.Integer('Master Word Id')
-    #the_editor = fields.Boolean('The Editor')
+    the_editor = fields.Boolean('The Editor')
 
     # def create(self, vals_list):
     #     print(vals_list)
     #     return super(AgreementClause,self).create(vals_list)
     #
-    # def write(self, vals_list):
-    #     print(vals_list)
-    #     return super(AgreementClause,self).write(vals_list)
+    def write(self, vals_list):
+        vals_list['the_editor']=True
+        return super(AgreementClause,self).write(vals_list)
 
 
 

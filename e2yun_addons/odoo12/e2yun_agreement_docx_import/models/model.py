@@ -145,43 +145,42 @@ class AgreementDownloadDoc(models.Model):
             env=self.env)
         wb_path=path+agreementData.name+".docx"
 
-        if os.path.exists(wb_path):
-          os.remove(wb_path)
-
-
         f = open(wb_path, "wb")
         datass = base64.decodestring(datas[2])
         f.write(datass)
         f.close()
 
         doc = wordApp.Documents.Open(FileName=wb_path, Encoding='gbk')
+        try:
+              for clauseObj in clauseListData:  # 条款
+                  para = doc.Paragraphs[clauseObj.sequence]
+                  if clauseObj.the_editor==True:
+                    oldStr= re.sub('[a-zA-Z0-9’!"#$%&\'()*+,-./:;<=>?@，。?★、…【】《》？“”‘’！[\\]^_`{|}~\s]+', "", para.Range.text)
+                    newStr= re.sub('[a-zA-Z0-9’!"#$%&\'()*+,-./:;<=>?@，。?★、…【】《》？“”‘’！[\\]^_`{|}~\s]+', "", clauseObj.doc_text)
+                    if oldStr != newStr:
+                      opcodes = difflib.SequenceMatcher(None, oldStr, newStr).get_opcodes()
+                      print('change "%s" to "%s":' % (oldStr, newStr))
+                      for op, af, at, bf, bt in opcodes:
+                          if op == 'delete':
+                              #para.Range.Find.Execute(oldStr[af:at], False, False, False, False, False, True, 1, True,newStr[bf:bt], 2)
+                              print(op + "," + oldStr[af:at] + "->" + newStr[bf:bt])
+                          elif op == 'replace' and (oldStr[af:at] and newStr[bf:bt]):
+                              print(op + "," + oldStr[af:at] + "->" + newStr[bf:bt])
+                              oldStr=oldStr[af:at]
+                              newStr=newStr[bf:bt]
+                              para.Range.Find.Execute(oldStr, False, False, False, False, False, False, 0, True,
+                                                                   newStr, 1)
+                          elif op == 'insert':
+                              print(op + "," + oldStr[af:at] + "->" + newStr[bf:bt])
+              doc.SaveAs(r"" + wb_path)
+        except BaseException as e:
+            print(e)
+            if os.path.exists(wb_path):
+                os.remove(wb_path)
+            doc.Close()
 
-        for i in range(len(doc.Paragraphs)):
-            para = doc.Paragraphs[i]
-            for clauseObj in clauseListData:  # 条款
-                if i == clauseObj.sequence:
-                  oldStr= re.sub('[a-zA-Z0-9’!"#$%&\'()*+,-./:;<=>?@，。?★、…【】《》？“”‘’！[\\]^_`{|}~\s]+', "", para.Range.text)
-                  newStr= re.sub('[a-zA-Z0-9’!"#$%&\'()*+,-./:;<=>?@，。?★、…【】《》？“”‘’！[\\]^_`{|}~\s]+', "", clauseObj.doc_text)
-                  if oldStr != newStr:
-                    opcodes = difflib.SequenceMatcher(None, oldStr, newStr).get_opcodes()
-                    print('change "%s" to "%s":' % (oldStr, newStr))
-                    for op, af, at, bf, bt in opcodes:
-                        if op == 'delete':
-                            #para.Range.Find.Execute(oldStr[af:at], False, False, False, False, False, True, 1, True,newStr[bf:bt], 2)
-                            print(op + "," + oldStr[af:at] + "->" + newStr[bf:bt])
-                        elif op == 'replace' and (oldStr[af:at] and newStr[bf:bt]):
-                            print(op + "," + oldStr[af:at] + "->" + newStr[bf:bt])
-                            oldStr=oldStr[af:at]
-                            newStr=newStr[bf:bt]
-                            doc.paragraphs[i].Range.Find.Execute(oldStr, False, False, False, False, False, False, 0, True,
-                                                                 newStr, 1)
-                        elif op == 'insert':
-                            print(op + "," + oldStr[af:at] + "->" + newStr[bf:bt])
-
-
-
-        doc.SaveAs(r""+wb_path)
-        doc.Close()
+        else:
+            doc.Close()
         file = open(wb_path, "rb")
         attachment.search([('res_model', '=', 'agreement.download.doc'), ('id', '!=', master_word_id)]).unlink()  #删除无效附件
         attachmentObj=attachment.create({
@@ -192,15 +191,16 @@ class AgreementDownloadDoc(models.Model):
             'res_id': self.id
         })
         file.close()
+
+        if os.path.exists(wb_path):
+            os.remove(wb_path)
+
      finally:
        return {
              'type': 'ir.actions.act_url',
              'target': 'new',
              'url': 'web/content/%s?download=true' % (attachmentObj.id),
        }
-       f.close()
-       doc.Close()
-       file.close()
        print(111)
 
 
