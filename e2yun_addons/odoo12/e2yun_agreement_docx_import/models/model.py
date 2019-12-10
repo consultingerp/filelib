@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
 import sys
@@ -10,7 +9,8 @@ from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 import re
 from win32com.client import Dispatch, DispatchEx
 import pythoncom
-
+import os, sys
+import difflib
 class DocxImport(models.TransientModel):
     _name = "agreement.docx.import"
     _description = "agreement docx Import"
@@ -93,6 +93,7 @@ class AgreementDownloadDoc(models.Model):
 
     file_path = fields.Char('File Path')
 
+    #默认样式设置
     def chg_font(self,obj, fontname='微软雅黑', size=None):
          ## 设置字体函数
         obj.font.name = fontname
@@ -110,6 +111,7 @@ class AgreementDownloadDoc(models.Model):
 
     def download_doc(self):
 
+     try:
         path = sys.path[0]+"\\"
 
         agreement_id=self._context['active_id']
@@ -123,42 +125,66 @@ class AgreementDownloadDoc(models.Model):
         clause = self.env['agreement.clause']  #条款
         clauseListData = clause.search([('agreement_id', '=', agreement_id)])
 
+        master_word_id=0
+
+        if clauseListData:
+            master_word_id=clauseListData[0].master_word_id
+        else:
+            return  False
+
         pythoncom.CoInitialize()
         wordApp = Dispatch('Word.Application')  # 打开word应用程序
         wordApp.Visible = 0  # 后台运行,不显示
         wordApp.DisplayAlerts = 0  # 不警告
 
         datas=self.env['ir.http'].binary_content(
-            xmlid=None, model='ir.attachment', id=3434 ,field='datas', unique=None, filename=None,
+            xmlid=None, model='ir.attachment', id=master_word_id ,field='datas', unique=None, filename=None,
             filename_field='datas_fname', download='true', mimetype='',
             default_mimetype=None, related_id=None, access_mode=None,
             access_token=None,
             env=self.env)
         wb_path=path+agreementData.name+".docx"
+
+        if os.path.exists(wb_path):
+          os.remove(wb_path)
+
+
         f = open(wb_path, "wb")
         datass = base64.decodestring(datas[2])
         f.write(datass)
         f.close()
+
         doc = wordApp.Documents.Open(FileName=wb_path, Encoding='gbk')
 
         for i in range(len(doc.Paragraphs)):
             para = doc.Paragraphs[i]
-            print(i)
-            if i == 74:
-                doc.Comments.Add(Range=doc.paragraphs[i].Range, Text='这是测试批注')
-            print(para.Range.text)
-        wordApp.Selection.Find.Execute('定义', False, False, False, False, False, True, 1, True, '这是测试修订', 2)
+            for clauseObj in clauseListData:  # 条款
+                if i == clauseObj.sequence:
+                  oldStr= re.sub('[a-zA-Z0-9’!"#$%&\'()*+,-./:;<=>?@，。?★、…【】《》？“”‘’！[\\]^_`{|}~\s]+', "", para.Range.text)
+                  newStr= re.sub('[a-zA-Z0-9’!"#$%&\'()*+,-./:;<=>?@，。?★、…【】《》？“”‘’！[\\]^_`{|}~\s]+', "", clauseObj.doc_text)
+                  if oldStr != newStr:
+                    opcodes = difflib.SequenceMatcher(None, oldStr, newStr).get_opcodes()
+                    print('change "%s" to "%s":' % (oldStr, newStr))
+                    for op, af, at, bf, bt in opcodes:
+                        if op == 'delete':
+                            #para.Range.Find.Execute(oldStr[af:at], False, False, False, False, False, True, 1, True,newStr[bf:bt], 2)
+                            print(op + "," + oldStr[af:at] + "->" + newStr[bf:bt])
+                        elif op == 'replace' and (oldStr[af:at] and newStr[bf:bt]):
+                            print(op + "," + oldStr[af:at] + "->" + newStr[bf:bt])
+                            oldStr=oldStr[af:at]
+                            newStr=newStr[bf:bt]
+                            doc.paragraphs[i].Range.Find.Execute(oldStr, False, False, False, False, False, True, 0, True,
+                                                                 newStr, 1)
+                        elif op == 'insert':
+                            print(op + "," + oldStr[af:at] + "->" + newStr[bf:bt])
+
+
 
         doc.SaveAs(r""+wb_path)
-        doc.Close()  # 关闭word文档
-
-        for clauseObj in clauseListData:  # 条款
-            print(111)
-
-
+        doc.Close()
         file = open(wb_path, "rb")
-        attachment.search([('res_model', '=', 'agreement.download.doc')]).unlink()
-        attachment = attachment.create({
+        attachment.search([('res_model', '=', 'agreement.download.doc'), ('id', '!=', master_word_id)]).unlink()  #删除无效附件
+        attachmentObj=attachment.create({
             'name': agreementData.name,
             'datas': base64.encodestring(file.read()),
             'datas_fname': agreementData.name+".docx",
@@ -166,32 +192,38 @@ class AgreementDownloadDoc(models.Model):
             'res_id': self.id
         })
         file.close()
-        return {
-            'type': 'ir.actions.act_url',
-            'target': 'new',
-            'url': 'web/content/%s?download=true'  % (attachment.id,),
-        }
-        print(111)
+     finally:
+       return {
+             'type': 'ir.actions.act_url',
+             'target': 'new',
+             'url': 'web/content/%s?download=true' % (attachmentObj.id),
+       }
+       f.close()
+       doc.Close()
+       file.close()
+       print(111)
 
 
     def Import_doc(self):
         full_path = self.file_path
-
-        pythoncom.CoInitialize()
+        pythoncom.CoInitialize()  #多线程处理
         wordApp = Dispatch('Word.Application')  # 打开word应用程序
-        wordApp.Visible = 0  # 后台运行,不显示
+        wordApp.Visible = 0         # 后台运行,不显示
         wordApp.DisplayAlerts = 0  # 不警告
         doc = wordApp.Documents.Open(FileName=full_path, Encoding='gbk')
         agreement_id=self._context['active_id']   #读取当前合同ID
         clause = self.env['agreement.clause']  # 条款
         attachment = self.env['ir.attachment']  # 附件
+
+        #记录当前合同的母版word
         file = open(full_path, "rb")
-        attachment.create({
-            'name': 'test',
+        attachment.search([('res_model', '=', 'agreement.download.doc')]).unlink()
+        attachment_id=attachment.create({
+            'name': '',
             'datas': base64.encodestring(file.read()),
-            'datas_fname': "test.docx",
+            'datas_fname': "",
             'res_model': 'agreement.download.doc',
-            'res_id': agreement_id
+            'res_id': self.id
         })
         file.close()
 
@@ -208,11 +240,9 @@ class AgreementDownloadDoc(models.Model):
             val['sequence'] = i
             val['content'] = para.Range.text
             val['doc_text'] =para.Range.text
+            val['master_word_id']=attachment_id.id
             vals.append(val)
         #条款
         clause.search([('agreement_id', '=', agreement_id)]).unlink()
         clause.create(vals)
-
-
-
         return True

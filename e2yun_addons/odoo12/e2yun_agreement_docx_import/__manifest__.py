@@ -9,6 +9,7 @@
     'description': """ docx import""",
     'data': [
         'views/view.xml',
+        'views/agreement_extend.xml',
     ],
     'installable': True,
     'auto_install': False,
