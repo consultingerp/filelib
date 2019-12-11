@@ -65,8 +65,8 @@ class E2yunCsutomerExtends(models.Model):
     ], string='Status', default='potential_customer', group_expand='_group_expand_stage_id')
     related_guide = fields.Many2many('res.users',  domain="[('function', '!=', False)]", readonly=True)
 
-    real_company = fields.Many2one('res.company','实际公司')
-    shop_customer = fields.Boolean('门店客户',default=False)
+    # real_company = fields.Many2one('res.company','实际公司')
+    # shop_customer = fields.Boolean('门店客户',default=False)
 
 
     _sql_constraints = [('unique_app_code', 'UNIQUE(app_code)', 'app_code(客户编号)需唯一！')]
@@ -112,7 +112,7 @@ class E2yunCsutomerExtends(models.Model):
         if pos_flag and vals.get('shop_code',False):
             result.teams = [(6,0,[vals.get('shop_code'),])]
 
-        if not vals.get('pos_flag', False) and result.state != 'potential_customer':
+        if not vals.get('pos_flag', False) and result.state != 'potential_customer' and result.customer == True:
             result.sync_customer_to_pos()
             result.pos_state = True
 
@@ -175,7 +175,7 @@ class E2yunCsutomerExtends(models.Model):
         # add by hepeng 20191020 当更新客户微信地址时候不提交客户信息到POS
         if values.get('wxlatitude'):
             return result
-        if self.state != 'potential_customer' and not pos_flag and not values.get('pos_state',False):
+        if self.state != 'potential_customer' and not pos_flag and not values.get('pos_state',False) and self.customer == True:
             self.sync_customer_to_pos()
             self.pos_state = True
         return result
