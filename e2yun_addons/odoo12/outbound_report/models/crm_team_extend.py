@@ -54,7 +54,7 @@ class CrmTeamExtend(models.Model):
         #     val['team_target_store'] = val['team_target']
         # if 'invoiced_target_detail' in val:
         #     val['invoiced_target_detail_store'] = val['invoiced_target_detail']
-        # return res
+        return res
 
     # @api.depends('team_year')
     # @api.onchange('team_year')
