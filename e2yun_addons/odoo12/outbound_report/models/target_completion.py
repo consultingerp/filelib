@@ -15,16 +15,20 @@ class TargetCompletion(models.Model):
             for rec in final:
                 rec.unlink()
         res = super(TargetCompletion, self).create(vals_list)
-        return res
-
-    # def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
-    #     res = super(TargetCompletion, self).search_read(domain, fields, offset, limit, order)
-    #     ctx = self._context.copy()
-    #     if 'new_view' in ctx:
-    #         res = [{'target_year': ctx['target_year'], 'target_month': ctx['target_month'], 'werks': ctx['werks'],
-    #                 'vkorgtext':ctx['vkorgtext'], 'vtweg': ctx['vtweg'], 'kunnr': ctx['kunnr'], 'ywy': ctx['ywy'],
-    #                 'jiesuan_amount': ctx['jiesuan_amount'], 'target_amount': ctx['target_amount']}]
-    #     return res
+        new_val_list = []
+        if res.jiesuan_amount:
+            jiesuan_dict = vals_list.copy()
+            jiesuan_dict.update({'completion': res.jiesuan_amount, 'stage_id': 1})
+            new_val_list.append(jiesuan_dict)
+        if res.target_amount:
+            target_dict = vals_list.copy()
+            target_dict.update({'completion': res.target_amount, 'stage_id': 2})
+            new_val_list.append(target_dict)
+        aa = super(TargetCompletion, self).create(new_val_list)
+        if aa:
+            kk = aa[0]
+            res.unlink()
+            return kk
 
     def default_target_year(self):
         ctx = self._context.copy()
@@ -43,6 +47,8 @@ class TargetCompletion(models.Model):
          ('9', '九月'), ('10', '十月'), ('11', '十一月'), ('12', '十二月')], string='月份', default=default_target_month)
     target_amount = fields.Integer('门店目标', compute='_compute_target_amount', store=True)
     jiesuan_amount = fields.Integer('销售金额', compute='_compute_jiesuan_amount', store=True)
+    completion = fields.Integer('目标完成占比')
+    stage_id = fields.Many2one('target.stage', '数据来源')
 
     @api.depends('target_year', 'target_month', 'kunnr', 'ywy')
     def _compute_target_amount(self):
@@ -268,3 +274,10 @@ class TargetCompletion(models.Model):
             'views': [[tree_view.id, 'tree'],
                       [graph_view.id, 'graph']],
                 }
+
+
+class TargetStage(models.Model):
+    _name = 'target.stage'
+    _description = '目标完成占比数据来源'
+
+    name = fields.Char('来源')
