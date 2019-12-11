@@ -41,12 +41,12 @@ class CrmTeamExtend(models.Model):
         for detail in target_detail_all:
             detail_year = detail.detail_year
             if detail_year not in target_year_list:
-                raise exceptions.Warning('请先设置%s年的目标明细' % detail_year)
+                raise exceptions.Warning('请先设置%s年的年度目标' % detail_year)
             if detail_year not in detail_year_list:
                 detail_year_list.append(detail_year)
         for r in target_year_list:
             if r not in detail_year_list:
-                raise exceptions.Warning('请设置%s年的年度目标' % r)
+                raise exceptions.Warning('请设置%s年的目标明细' % r)
 
         # # 数据拷贝到相应的store模型中
         # val = vals.copy()
