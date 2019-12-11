@@ -47,14 +47,14 @@ class CrmTeamExtend(models.Model):
         for r in target_year_list:
             if r not in detail_year_list:
                 raise exceptions.Warning('请设置%s年的年度目标' % r)
-        # 添加context,再次编辑目标明细时，给导购做筛选
-        # member_ids = self.member_ids
-        # sale_list = []
-        # for id in member_ids._ids:
-        #     sale_list.append(id)
-        # self._context['sale_list'] = sale_list
-        # ctx = self._context.copy()
-        return res
+
+        # # 数据拷贝到相应的store模型中
+        # val = vals.copy()
+        # if 'team_target' in val:
+        #     val['team_target_store'] = val['team_target']
+        # if 'invoiced_target_detail' in val:
+        #     val['invoiced_target_detail_store'] = val['invoiced_target_detail']
+        # return res
 
     # @api.depends('team_year')
     # @api.onchange('team_year')
@@ -80,19 +80,29 @@ class CrmTeamExtend(models.Model):
     #     if res_d:
     #         all_value.update({'invoiced_target_detail': res_d})
     #     return {'value': all_value}
+    #
+    # @api.depends('use_invoices')
+    # @api.onchange('use_invoices')
+    # def onchange_team_year(self):
+    #     if self.use_invoices:
+    #         self.team_year = datetime.now().year
+    #
+    # @api.model
+    # def _default_year(self):
+    #     return datetime.now().year
 
     team_year = fields.Selection([(num, str(num)) for num in range(datetime.now().year - 5, datetime.now().year + 30)],
-                                 string='年份', default=str(datetime.now().year))
+                                 string='年份')
 
     team_target = fields.One2many(
         'team.target.year',
         'team_id',
-        string='门店目标')  # domain=[('target_year', '=?', team_year)]
+        string='门店目标')
 
     invoiced_target_detail = fields.One2many(
         'team.target.detail',
         'current_team_id',
-        string='目标明细')  # domain=[('detail_year', '=?', team_year)]
+        string='目标明细')
 
 
 class TeamTargetYear(models.Model):
