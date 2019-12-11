@@ -32,7 +32,7 @@
                                    context="{'default_is_company': True, 'default_supplier': payment_type == 'outbound',
                                              'default_customer': payment_type == 'inbound', 'show_custom_name': 8}"
                                    string="终端客户"/>
-                            <field name="related_shop" context="{'show_custom_name': 1}" attrs="{'readonly': [('receipt_Num', '!=', False)]}"/>
+                            <field name="related_shop" context="{'show_custom_name': 1, 'show_user_shops': 4399}" attrs="{'readonly': [('receipt_Num', '!=', False)]}"/>
                             <field name="payment_status" attrs="{'readonly': [('receipt_Num', '!=', False)]}"/>
                             <field name="po_num"
                                    attrs="{'required': [('payment_type2', 'in', ['C11','C12','C14','C15','C16'])],
