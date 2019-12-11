@@ -159,19 +159,20 @@ class AgreementDownloadDoc(models.Model):
                     newStr= re.sub('[a-zA-Z0-9’!"#$%&\'()*+,-./:;<=>?@，。?★、…【】《》？“”‘’！[\\]^_`{|}~\s]+', "", clauseObj.doc_text)
                     if oldStr != newStr:
                       opcodes = difflib.SequenceMatcher(None, oldStr, newStr).get_opcodes()
-                      print('change "%s" to "%s":' % (oldStr, newStr))
                       for op, af, at, bf, bt in opcodes:
                           if op == 'delete':
                               #para.Range.Find.Execute(oldStr[af:at], False, False, False, False, False, True, 1, True,newStr[bf:bt], 2)
-                              print(op + "," + oldStr[af:at] + "->" + newStr[bf:bt])
+                              para.Range.Find.Execute(oldStr, False, False, False, False, False, False, 0, True,
+                                                      newStr, 1)
                           elif op == 'replace' and (oldStr[af:at] and newStr[bf:bt]):
-                              print(op + "," + oldStr[af:at] + "->" + newStr[bf:bt])
                               oldStr=oldStr[af:at]
                               newStr=newStr[bf:bt]
                               para.Range.Find.Execute(oldStr, False, False, False, False, False, False, 0, True,
                                                                    newStr, 1)
                           elif op == 'insert':
-                              print(op + "," + oldStr[af:at] + "->" + newStr[bf:bt])
+                              para.Range.Find.Execute(oldStr, False, False, False, False, False, False, 0, True,
+                                                      newStr, 1)
+
               doc.SaveAs(r"" + wb_path)
         except BaseException as e:
             print(e)
