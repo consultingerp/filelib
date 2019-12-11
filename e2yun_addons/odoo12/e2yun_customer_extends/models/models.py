@@ -65,8 +65,8 @@ class E2yunCsutomerExtends(models.Model):
     ], string='Status', default='potential_customer', group_expand='_group_expand_stage_id')
     related_guide = fields.Many2many('res.users',  domain="[('function', '!=', False)]", readonly=True)
 
-    # real_company = fields.Many2one('res.company','实际公司')
-    # shop_customer = fields.Boolean('门店客户',default=False)
+    real_company = fields.Many2one('res.company','实际公司')
+    shop_customer = fields.Boolean('门店客户',default=False)
 
 
     _sql_constraints = [('unique_app_code', 'UNIQUE(app_code)', 'app_code(客户编号)需唯一！')]
