@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-12 10:00+0000\n"
-"PO-Revision-Date: 2019-12-12 18:03+0800\n"
+"PO-Revision-Date: 2019-12-12 23:09+0800\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -219,7 +219,7 @@ msgstr ""
 #: code:addons/odoo_website_marketplace/static/src/js/seller_review_ratting.js:99
 #, python-format
 msgid "  Your review has been submitted successfully. Thank you!"
-msgstr "  您的审核已经提交成功。谢谢！"
+msgstr "  您的评价已经提交成功。谢谢！"
 
 #. module: odoo_website_marketplace
 #: model:ir.actions.act_window,name:odoo_website_marketplace.action_seller_non_approve_product
@@ -238,14 +238,14 @@ msgstr "请添加您的评价!!"
 #: code:addons/odoo_website_marketplace/static/src/js/seller_review_ratting.js:62
 #, python-format
 msgid " Review is required field."
-msgstr " 评审是必填项。"
+msgstr " 评价是必填项。"
 
 #. module: odoo_website_marketplace
 #. openerp-web
 #: code:addons/odoo_website_marketplace/static/src/js/seller_review_ratting.js:53
 #, python-format
 msgid " Review title is required field."
-msgstr " 评审标题是必填项。"
+msgstr " 评价标题是必填项。"
 
 #. module: odoo_website_marketplace
 #: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.view_sale_order_line_kanban
@@ -315,7 +315,7 @@ msgstr "<span class=\"o_label\">待处理</span>"
 #. module: odoo_website_marketplace
 #: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
 msgid "<span class=\"review_class_rating\">Reviewed by</span>"
-msgstr "<span class=\"review_class_rating\">已评审 </span>"
+msgstr "<span class=\"review_class_rating\">已评价 </span>"
 
 #. module: odoo_website_marketplace
 #: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
@@ -844,7 +844,7 @@ msgstr "抬头URL"
 #. module: odoo_website_marketplace
 #: model:ir.module.category,description:odoo_website_marketplace.module_category_marketplace_management
 msgid "Helps you handle your marketplace seller."
-msgstr "帮助您处理您的商场卖家。"
+msgstr "帮助您处理您的供应平台卖家。"
 
 #. module: odoo_website_marketplace
 #: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_payment__id
@@ -985,31 +985,31 @@ msgstr "管理员"
 #. module: odoo_website_marketplace
 #: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_dashboard__name
 msgid "Market Place Dashboard"
-msgstr "商城仪表板"
+msgstr "供应平台仪表板"
 
 #. module: odoo_website_marketplace
 #: model:ir.module.category,name:odoo_website_marketplace.module_category_marketplace_management
 #: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.marketplace_product_template_inherit_bi_form_view
 #: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.marketplace_res_partner_inherit_form_view
 msgid "Marketplace"
-msgstr "商城"
+msgstr "供应平台"
 
 #. module: odoo_website_marketplace
 #: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller
 msgid "Marketplace Features"
-msgstr "商城特点"
+msgstr "供应平台特点"
 
 #. module: odoo_website_marketplace
 #: model:ir.model.fields,field_description:odoo_website_marketplace.field_sale_order_line__seller_id
 msgid "Marketplace Seller"
-msgstr "商城卖家"
+msgstr "供应平台卖家"
 
 #. module: odoo_website_marketplace
 #: model:product.product,name:odoo_website_marketplace.event_3_product_x
 #: model:product.template,name:odoo_website_marketplace.event_3_product_x_product_template
 #: model:product.template,name:odoo_website_marketplace.product_template_quote_x
 msgid "Marketplace Seller Payment"
-msgstr "商城卖家付款"
+msgstr "供应平台卖家付款"
 
 #. module: odoo_website_marketplace
 #: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_partner__max_withdraw_amount
@@ -1047,7 +1047,7 @@ msgstr "消息"
 #. module: odoo_website_marketplace
 #: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.my_marketplace_link
 msgid "My Marketplace"
-msgstr "我的商城"
+msgstr "供应平台"
 
 #. module: odoo_website_marketplace
 #: model:ir.actions.act_window,name:odoo_website_marketplace.action_my_seller_profile
@@ -1433,7 +1433,7 @@ msgstr "审查"
 #. module: odoo_website_marketplace
 #: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_review__name
 msgid "Review Title"
-msgstr " 评审标题"
+msgstr " 评价标题"
 
 #. module: odoo_website_marketplace
 #: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.marketplace_res_partner_inherit_form_view
@@ -1499,7 +1499,7 @@ msgstr "卖家佣金"
 #: model:ir.ui.menu,name:odoo_website_marketplace.seller_dashboard_menu
 #: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller
 msgid "Seller Dashboard"
-msgstr "网上商城"
+msgstr "供应平台"
 
 #. module: odoo_website_marketplace
 #: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.show_sale_count_in_product_page
@@ -1671,7 +1671,7 @@ msgstr "卖家简介"
 #. module: odoo_website_marketplace
 #: model:ir.ui.menu,name:odoo_website_marketplace.seller_review_menu
 msgid "Sellers Review"
-msgstr "卖家审核"
+msgstr "卖家评价"
 
 #. module: odoo_website_marketplace
 #: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.res_config_settings_view_form_marketplace
@@ -2050,7 +2050,7 @@ msgstr "网上沟通记录"
 #. module: odoo_website_marketplace
 #: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller
 msgid "Welcome to Marketplace"
-msgstr "欢迎来到商城"
+msgstr "欢迎来到供应平台"
 
 #. module: odoo_website_marketplace
 #: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
@@ -2160,12 +2160,12 @@ msgstr "请求数量"
 #. module: odoo_website_marketplace
 #: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
 msgid "review"
-msgstr "审核"
+msgstr "评价"
 
 #. module: odoo_website_marketplace
 #: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
 msgid "reviews"
-msgstr "审核"
+msgstr "评价"
 
 #. module: odoo_website_marketplace
 #: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__seller_id
@@ -2188,7 +2188,7 @@ msgstr "卖方付款"
 #. module: odoo_website_marketplace
 #: model:ir.model,name:odoo_website_marketplace.model_seller_review
 msgid "seller.review"
-msgstr "卖方审核"
+msgstr "卖方评价"
 
 #. module: odoo_website_marketplace
 #: model:ir.model,name:odoo_website_marketplace.model_seller_shop
@@ -2198,7 +2198,7 @@ msgstr "卖方店铺"
 #. module: odoo_website_marketplace
 #: model:res.groups,comment:odoo_website_marketplace.group_market_place_seller
 msgid "the user will have access to all records of Seller in the MarketPlace application."
-msgstr "用户将可以访问商城应用中卖家的所有记录。"
+msgstr "用户将可以访问供应平台应用中卖家的所有记录。"
 
 #. module: odoo_website_marketplace
 #: model:res.groups,comment:odoo_website_marketplace.group_market_place_pending_seller
@@ -2208,7 +2208,7 @@ msgstr "用户只能访问自己数据"
 #. module: odoo_website_marketplace
 #: model:res.groups,comment:odoo_website_marketplace.group_market_place_manager
 msgid "the user will have an access to the Market Place configuration as well as statistic reports."
-msgstr "此用户将可以访问商城配置以及统计报表。"
+msgstr "此用户将可以访问供应平台配置以及统计报表。"
 
 #. module: odoo_website_marketplace
 #: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
