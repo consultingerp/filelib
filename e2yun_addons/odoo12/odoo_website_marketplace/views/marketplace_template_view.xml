@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+    <!-- Layout add nav and footer -->
+    <!-- <template id="marketplace_header_footer_custom" inherit_id="website.footer_custom" name="Footer Seller Link">
+        <xpath expr="//ul[@id='connect']" position="before">
+            <li><a t-attf-href="/seller">Seller</a></li>
+        </xpath>
+    </template> -->
+    
+    <!-- Seller page -->
+    <template id="seller" name="Seller">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="oe_structure">
+                     <section class="jumbotron well set-image">
+                        <div class="container">
+                            <h2>Welcome to Marketplace</h2>
+                            <p>
+                                Become a Seller, Sell Online Easily.
+                            </p>
+                            <p>
+                                <a class="btn btn-primary btn-lg" href="/seller/signup">
+                                    Join With us
+                                </a>
+                            </p>
+                        </div>
+                    </section>
+                    <div style="height:2vh;" />
+                    <section class="s_feature_grid">
+                        <div class="container">
+                            <div class="text-center">
+                                <h3 class="blog_header" style="text-align: center;">Marketplace Features</h3>
+                            </div>
+                            <hr/>
+                            <div class="row" style="display: flex;">
+                                <div class="card card-primary col-md-4">
+                                    <div class="card-header">Seller Dashboard</div>
+                                    <div class="card-block xblock">
+                                        <div class="row" style="flex-wrap: nowrap;">
+                                            <div class="col-xs-4">
+                                                <i class="fa fa-tachometer fa-6x" style="color:teal;"></i>
+                                            </div>
+                                            <div class="col-xs-8 set-new">
+                                                <span>Seller can track data easily with dashboard.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card card-primary col-md-4">
+                                    <div class="card-header">Seller Shop</div>
+                                    <div class="card-block xblock">
+                                        <div class="row" style="flex-wrap: nowrap;">
+                                            <div class="col-xs-4">
+                                                <i class="fa fa-shopping-basket fa-6x" style="color:teal;"></i>
+                                            </div>
+                                            <div class="col-xs-8 set-new">
+                                                <span>Seller has their own shop view so then can configure it with terms and policies.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card card-primary col-md-4">
+                                    <div class="card-header">Seller Website Profile</div>
+                                    <div class="card-block xblock">
+                                        <div class="row" style="flex-wrap: nowrap;">
+                                            <div class="col-xs-4">
+                                                <i class="fa fa fa-laptop fa-6x" style="color:teal;"></i>
+                                            </div>
+                                            <div class="col-xs-8 set-new">
+                                                <span>Seller has its own website profile view with necessary data</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="display: flex;">
+                                <div class="card card-primary col-md-4">
+                                    <div class="card-header">Seller Orders</div>
+                                    <div class="card-block xblock">
+                                        <div class="row" style="flex-wrap: nowrap;">
+                                            <div class="col-xs-4">
+                                                <i class="fa fa fa-shopping-cart fa-6x" style="color:teal;"></i>
+                                            </div>
+                                            <div class="col-xs-8 set-new">
+                                                <span>Seller can track their order, approve it</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card card-primary col-md-4">
+                                    <div class="card-header">Seller Products</div>
+                                    <div class="card-block xblock">
+                                        <div class="row" style="flex-wrap: nowrap;">
+                                            <div class="col-xs-4">
+                                                <i class="fa fa-product-hunt  fa-6x" style="color:teal;"></i>
+                                            </div>
+                                            <div class="col-xs-8 set-new">
+                                                <span>Seller can create product and its valuation based on policy</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card card-primary col-md-4">
+                                    <div class="card-header">Seller Payment</div>
+                                    <div class="card-block xblock">
+                                        <div class="row" style="flex-wrap: nowrap;">
+                                            <div class="col-xs-4">
+                                                <i class="fa fa-money  fa-6x" style="color:teal;"></i>
+                                            </div>
+                                            <div class="col-xs-8 set-new">
+                                                <span>Seller payment menu for clear transient of business</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </t>
+    </template>
+    
+    
+
+    <!-- Menu backend marketplace portal -->
+    <template id="my_marketplace_link" name="Link to backend marketplace portal" inherit_id="website.layout">
+        <xpath expr="//a[@id='o_logout']" position="before">
+            <t t-if="website.env.user.partner_id.seller">
+                <a href="/marketplace" role="menuitem" class="dropdown-item">My Marketplace</a>
+            </t>
+        </xpath>
+    </template>
+        
+    
+        <!-- website_sale.product page -->
+        <template id="show_sale_count_in_product_page" inherit_id="website_sale.product">
+            
+            <xpath expr="//a[@id='add_to_cart']" position="before">
+                <!-- Seller Information Here -->
+                <t t-if="product.seller_id">
+                   <div class="card mt48">
+                        <div class="card-header">
+                            <h3 class="card-title">Seller Information</h3>
+                        </div>
+                        <div class="card-block xblock">
+                            <!--t-attf-href="/shop/product/#{slug(product)}"-->
+                            <ul><li><b>Seller :</b> <a t-attf-href="/sellers/#{ slug(product.sudo().seller_id) }" t-field="product.sudo().seller_id.name"></a> </li>
+
+                            </ul></div>
+                    </div>
+                </t>
+            </xpath>
+            
+        </template>
+
+        
+        
+    </data>
+</odoo>

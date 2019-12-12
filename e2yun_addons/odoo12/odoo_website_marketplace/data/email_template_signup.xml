@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="email_template_marketplace" model="mail.template">
+            <field name="name">Seller's Request Acknowledge Mail</field>
+            <field name="model_id" ref="base.model_res_partner" />
+            <field name="subject">Seller's Request Acknowledge Mail</field>
+            <field name="email_from">${(user.email or '')|safe}</field>
+            <field name="email_to">${(object.email or '')|safe}</field>
+            <field name="auto_delete" eval="True" />
+            <field name="body_html"><![CDATA[
+                    <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: FFF; ">
+                        <p>Dear ${object.name}</p>
+                        <p> We Receive your request as a Seller</p>
+                        <p> Thank You for being part of us.</p>
+                        <br/>
+                        <p>Here is your login details </p>
+                        <table style="border 1px solid black">
+                            <tr>
+                                <td>Login</td>
+                                <td>${object.email}</td>
+                            </tr>
+                            <tr>
+                                <td>Password</td>
+                                <td>${object.password}</td>
+                            </tr>
+                        </table>
+                    </div>
+                        ]]>
+            </field>
+        </record>
+
+        <record id="email_template_signup_seller_email" model="mail.template">
+            <field name="name">Seller's Request Acknowledge Mail</field>
+            <field name="model_id" ref="base.model_res_partner" />
+            <field name="subject">Seller's Request Acknowledge Mail</field>
+            <field name="auto_delete" eval="True" />
+        </record>
+
+        <record id="email_template_payment_request_seller_email" model="mail.template">
+            <field name="name">Seller's Request for Payment</field>
+            <field name="model_id" ref="base.model_res_partner" />
+            <field name="subject">Seller's Request for Payment</field>
+            <field name="auto_delete" eval="True" />
+        </record>
+
+
+        <record id="email_template_marketplace_approve" model="mail.template">
+            <field name="name">Seller's Request to Approve Shop</field>
+            <field name="model_id" ref="base.model_res_partner" />
+            <field name="subject">Seller's Request to Approve Shop</field>
+            <field name="email_from">${(object.email or '')|safe}</field>
+            <field name="email_to">${(user.email or '')|safe}</field>
+            <field name="auto_delete" eval="True" />
+            <field name="body_html"><![CDATA[
+                    <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: FFF; ">
+                        <p>Dear Admin</p>
+                        <p> Approve My Request As a Seller.</p>
+                        <p> Thank You</p>
+                    </div>
+                ]]>
+            </field>
+        </record>
+
+        <record id="email_template_marketplace_approved" model="mail.template">
+            <field name="name">Seller's Request is Approved Shop</field>
+            <field name="model_id" ref="base.model_res_partner" />
+            <field name="subject">Seller's Request is Approved for Shop</field>
+            <field name="email_from">${(user.email or '')|safe}</field>
+            <field name="email_to">${(object.email or '')|safe}</field>
+            <field name="auto_delete" eval="True" />
+            <field name="body_html"><![CDATA[
+                    <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: FFF; ">
+                        <p>Dear ${object.name}</p>
+                        <p>Request is Approved As a Seller.</p>
+                        <p> Thank You</p>
+                    </div>
+                    <p>Here is your login details </p>
+                    <table style="border 1px solid black">
+                        <tr>
+                            <td>Login</td>
+                            <td>${object.email}</td>
+                        </tr>
+                        <tr>
+                            <td>Password</td>
+                            <td>${object.password}</td>
+                        </tr>
+                    </table>
+                ]]>
+            </field>
+        </record>
+
+        <record id="email_template_marketplace_rejected" model="mail.template">
+            <field name="name">Seller's Request Rejected  </field>
+            <field name="model_id" ref="product.model_res_partner" />
+            <field name="subject">Seller's Request Rejected </field>
+            <field name="email_from">${(user.partner_id.email or '')|safe}</field>
+            <field name="email_to">${(object.email or '')|safe}</field>
+            <field name="auto_delete" eval="True" />
+            <field name="body_html"><![CDATA[
+                    <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: FFF; ">
+                        <p>Dear ${object.name}</p>
+                        <p>Request is Rejected As a Seller.</p>
+                        <p> Contact administration to more info. </p>
+                        <p> Thank You</p>
+                    </div>
+                ]]>
+            </field>
+        </record>
+
+
+        <record id="email_template_marketplace_approve_product" model="mail.template">
+            <field name="name">Seller's Request to Approve Shop Product</field>
+            <field name="model_id" ref="product.model_product_template" />
+            <field name="subject">Seller's Request to Approve Shop Product</field>
+            <field name="email_from">${(object.seller_id.email or '')|safe}</field>
+            <field name="email_to">${(user.email or '')|safe}</field>
+            <field name="auto_delete" eval="True" />
+            <field name="body_html"><![CDATA[
+                    <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: FFF; ">
+                        <p>Dear Admin</p>
+                        <p> Approve My Request for a Product ${object.name}.</p>
+                        <p> Thank You</p>
+                    </div>
+                ]]>
+            </field>
+        </record>
+
+        <record id="email_template_marketplace_approved_product" model="mail.template">
+            <field name="name">Seller's Product Request is Approved for Shop</field>
+            <field name="model_id" ref="product.model_product_template" />
+            <field name="subject">Seller's Product Request is Approved for Shop </field>
+            <field name="email_from">${(user.email or '')|safe}</field>
+            <field name="email_to">${(object.seller_id.email or '')|safe}</field>
+            <field name="auto_delete" eval="True" />
+            <field name="body_html"><![CDATA[
+                    <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: FFF; ">
+                        <p>Dear ${object.seller_id.name}</p>
+                        <p> Approved Request for a Product ${object.name}.</p>
+                        <p> Thank You</p>
+                    </div>
+                ]]>
+            </field>
+        </record>
+
+        <record id="email_template_marketplace_reject_product" model="mail.template">
+            <field name="name">Seller's Product Request Rejected On Shop </field>
+            <field name="model_id" ref="product.model_product_template" />
+            <field name="subject">Seller's Product Request Rejected On Shop</field>
+            <field name="email_from">${(user.email or '')|safe}</field>
+            <field name="email_to">${(object.seller_id.email or '')|safe}</field>
+            <field name="auto_delete" eval="True" />
+            <field name="body_html"><![CDATA[
+                    <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: FFF; ">
+                        <p>Dear ${object.seller_id.name}</p>
+                        <p> Your Request for a Product ${object.name} id Rejected.</p>
+                        <p> Contact administration to more info. </p>
+                        <p> Thank You</p>
+                    </div>
+                ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

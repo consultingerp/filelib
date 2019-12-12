@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem id= "seller_dashboard_menu" name= "Seller Dashboard" />
+
+        <record id="res_partner_filter_inherit_form" model="ir.ui.view">
+            <field name="name">res.partner.select</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[1]" position="inside">
+                    <filter string="State" name="state" context="{'group_by': 'state'}"/>
+                    <filter string="Seller" name="seller_id" context="{'group_by': 'seller_id'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="marketplace_res_partner_inherit_form_view">
+            <field name="name">marketplace.res.partner.inherit.bi.form.view</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/*" position="before">
+                    <header>
+                        <button name="set_to_draft" string="Set to Draft" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'denied')]}" groups="odoo_website_marketplace.group_market_place_manager"/>
+                        <button name="ask_to_approve" string="Ask to Approve" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="approve_partner" string="Approve" type="object" class="btn-primary" groups="odoo_website_marketplace.group_market_place_manager" attrs="{'invisible': [('state', 'in',('draft','approve','denied'))]}"/>
+                        <button name="deny_partner" string="Deny" type="object" groups="odoo_website_marketplace.group_market_place_manager" attrs="{'invisible': [('state', 'in', ('draft','denied'))]}"/>
+                        <button name="action_view_product_rating"  string="Reviews" type="object" />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,waiting,approve,denied" />
+                    </header>
+                </xpath>
+
+              <!--   <button name="toggle_active" position="before">
+                    <button type="object" name="partner_credit" attrs="{'invisible':[('seller', '!=', True)]}" class="oe_stat_button" icon="fa-money">
+                        <field name="seller_credit" widget="statinfo" string="Credit"/>
+                        <field name="last_payment_date" invisible="1"/>
+                    </button>
+                </button> -->
+
+                <notebook position="inside">
+                    <page name="shop_policies" string="Shop">
+                        <group string="Shop Details">    
+                            <group>
+                                <field name="shop_name" 
+                                attrs="{'required':[('state','=','waiting')]}"/>
+                                <field name="seller_shop_id" readonly="1" attrs="{'invisible': [('state', '!=',('approve'))]}"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                            
+                        <group string="Shop Tagline">
+                            <field name="url_handler" placeholder="Uniq name for Shop Url On website" options="{'no_create_edit': True,}" readonly="1" widget="url"/>
+                            <field name="tag_line" attrs="{'required':[('state','=','waiting')]}"/>
+                        </group>
+
+                        <group string="Shop User">
+                            <group>
+                                <field name="seller_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="password" password="True" invisible="0"/>
+                                <field name="website_true" invisible="1" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <group name="Marketplace" string="Marketplace">
+                            <field name="seller" attrs="    {'readonly':[('website_true','=','True')]}"/>
+                            <field name="profile_detail" />
+                        </group>
+
+                        <group string="Seller Payment" attrs="{'invisible':[('state','!=','approve')]}">
+                            <group>
+                                <field name="overwrite_setting" attrs="{'invisible':[('state','!=','approve')]}"/>
+                                <field name="seller_commission" attrs="{'invisible':[('state','!=','approve')],'readonly':[('overwrite_setting','!=',True)]}"/>
+                                <span attrs="{'invisible': [('overwrite_setting', '!=', True)]}" class="oe_inline">&amp;nbsp;%</span>
+                            </group>
+                        </group>
+
+
+                        <group>
+                            <field name="partner_rate" invisible="1"/>
+                            <field name="message_count" invisible="1"/>
+                            <field name="website_message_ids" invisible="1"/>
+                        </group>
+                    </page>
+                </notebook>
+
+            </field>
+        </record>
+
+<!--         <record model="ir.ui.view" id="res_partner_view_bi">
+            <field name="name">Partner Kanban View</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <kanban class="o_res_partner_kanban" default_group_by="state">
+                    <field name="id"/>
+                    <field name="color"/>
+                    <field name="display_name"/>
+                    <field name="title"/>
+                    <field name="email"/>
+                    <field name="parent_id"/>
+                    <field name="is_company"/>
+                    <field name="function"/>
+                    <field name="phone"/>
+                    <field name="street"/>
+                    <field name="street2"/>
+                    <field name="zip"/>
+                    <field name="city"/>
+                    <field name="country_id"/>
+                    <field name="mobile"/>
+                    <field name="state_id"/>
+                    <field name="category_id"/>
+                    <field name="image"/>
+                    <field name="state"/>
+                    <field name="type"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban">
+                                <div class="o_kanban_image">
+                                    <t t-if="record.image_small.raw_value">
+                                        <img t-att-src="kanban_image('res.partner', 'image', record.id.raw_value)" alt="Partner"/>
+                                    </t>
+                                    <t t-if="!record.image_small.raw_value">
+                                        <t t-if="record.type.raw_value === 'delivery'">
+                                            <img t-att-src='_s + "/base/static/src/img/truck.png"' class="o_kanban_image oe_kanban_avatar_smallbox" alt="Partner"/>
+                                        </t>
+                                        <t t-if="record.type.raw_value === 'invoice'">
+                                            <img t-att-src='_s + "/base/static/src/img/money.png"' class="o_kanban_image oe_kanban_avatar_smallbox" alt="Partner"/>
+                                         </t>
+                                        <t t-if="record.type.raw_value != 'invoice' &amp;&amp; record.type.raw_value != 'delivery'">
+                                            <t t-if="record.is_company.raw_value === true">
+                                                <img t-att-src='_s + "/base/static/src/img/company_image.png"' alt="Partner"/>
+                                            </t>
+                                            <t t-if="record.is_company.raw_value === false">
+                                                <img t-att-src='_s + "/base/static/src/img/avatar.png"' alt="Partner"/>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <strong class="o_kanban_record_title oe_partner_heading"><field name="display_name"/></strong>
+                                    <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
+                                    <ul>
+                                        <li t-if="record.parent_id.raw_value and !record.function.raw_value"><field name="parent_id"/></li>
+                                        <li t-if="!record.parent_id.raw_value and record.function.raw_value"><field name="function"/></li>
+                                        <li t-if="record.parent_id.raw_value and record.function.raw_value"><field name="function"/> at <field name="parent_id"/></li>
+                                        <li t-if="record.city.raw_value and !record.country_id.raw_value"><field name="city"/></li>
+                                        <li t-if="!record.city.raw_value and record.country_id.raw_value"><field name="country_id"/></li>
+                                        <li t-if="record.city.raw_value and record.country_id.raw_value"><field name="city"/>, <field name="country_id"/></li>
+                                        <li t-if="record.email.raw_value" class="o_text_overflow"><field name="email"/></li>
+                                    </ul>
+                                    <div class="oe_kanban_partner_links"/>
+                                </div>
+                            </div>
+
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record> -->
+
+
+        <record model="ir.ui.view" id="res_partner_view_bi">
+            <field name="name">res.partner.kanban</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <kanban class="o_res_partner_kanban" default_group_by="state">
+                    <field name="id"/>
+                    <field name="color"/>
+                    <field name="display_name"/>
+                    <field name="title"/>
+                    <field name="email"/>
+                    <field name="parent_id"/>
+                    <field name="is_company"/>
+                    <field name="function"/>
+                    <field name="phone"/>
+                    <field name="street"/>
+                    <field name="street2"/>
+                    <field name="zip"/>
+                    <field name="city"/>
+                    <field name="country_id"/>
+                    <field name="mobile"/>
+                    <field name="state_id"/>
+                    <field name="category_id"/>
+                    <field name="image"/>
+                    <field name="type"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban">
+                                <t t-if="!record.is_company.raw_value">
+                                    <t t-if="record.type.raw_value === 'delivery'" t-set="placeholder" t-value="'/base/static/img/truck.png'"/>
+                                    <t t-elif="record.type.raw_value === 'invoice'" t-set="placeholder" t-value="'/base/static/img/money.png'"/>
+                                    <t t-else="" t-set="placeholder" t-value="'/base/static/img/avatar_grey.png'"/>
+                                    <div class="o_kanban_image_fill_left d-none d-md-block" t-attf-style="background-image:url('#{kanban_image('res.partner', 'image', record.id.raw_value,  placeholder)}')">
+                                        <img class="o_kanban_image_inner_pic" t-if="record.parent_id.raw_value" t-att-alt="record.parent_id.value" t-att-src="kanban_image('res.partner', 'image', record.parent_id.raw_value)"/>
+                                    </div>
+                                    <div class="o_kanban_image rounded-circle d-md-none" t-attf-style="background-image:url('#{kanban_image('res.partner', 'image', record.id.raw_value,  placeholder)}')">
+                                        <img class="o_kanban_image_inner_pic" t-if="record.parent_id.raw_value" t-att-alt="record.parent_id.value" t-att-src="kanban_image('res.partner', 'image', record.parent_id.raw_value)"/>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <t t-set="placeholder" t-value="'/base/static/img/company_image.png'"/>
+                                    <div class="o_kanban_image_fill_left o_kanban_image_full" t-attf-style="background-image: url(#{kanban_image('res.partner', 'image', record.id.raw_value, placeholder)})" role="img"/>
+                                </t>
+                                <div class="oe_kanban_details">
+                                    <strong class="o_kanban_record_title oe_partner_heading"><field name="display_name"/></strong>
+                                    <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
+                                    <ul>
+                                        <li t-if="record.parent_id.raw_value and !record.function.raw_value"><field name="parent_id"/></li>
+                                        <li t-if="!record.parent_id.raw_value and record.function.raw_value"><field name="function"/></li>
+                                        <li t-if="record.parent_id.raw_value and record.function.raw_value"><field name="function"/> at <field name="parent_id"/></li>
+                                        <li t-if="record.city.raw_value and !record.country_id.raw_value"><field name="city"/></li>
+                                        <li t-if="!record.city.raw_value and record.country_id.raw_value"><field name="country_id"/></li>
+                                        <li t-if="record.city.raw_value and record.country_id.raw_value"><field name="city"/>, <field name="country_id"/></li>
+                                        <li t-if="record.email.raw_value" class="o_text_overflow"><field name="email"/></li>
+                                    </ul>
+                                    <div class="oe_kanban_partner_links"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>        
+
+
+
+        
+        <record id="action_seller_profile" model="ir.actions.act_window">
+            <field name="name">Sellers Profile</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="context">{"search_default_state":1,}</field>
+            <field name="domain">[('seller','=',True)]</field>
+            <field name="search_view_id" ref="base.view_res_partner_filter"/>
+            <field name="view_id" ref="odoo_website_marketplace.res_partner_view_bi"/>
+        </record>
+
+
+        <record id="seller_review_form_view" model="ir.ui.view">
+            <field name="name">seller.review.form.view</field>
+            <field name="model">seller.review</field>
+            <field name="arch" type="xml">
+                <form string="Seller Review">
+                    <header>
+                        <button name="website_publish_button" class="oe_highlight"
+                            string="Publish On Website" states="un_published" icon="fa-globe"
+                            type="object" />
+                        <button name="website_unpublish_button" class="oe_highlight"
+                            string="Unpublish On Website" states="published" type="object"
+                            icon="fa-globe" />
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" />
+                                <field name="seller_id"/>
+                            </group>
+                            <group>
+                                <field name="rating_num" />
+                            </group>
+                        </group>
+                        <label for="Rating Message"/>
+                        <field name="rating_msg" />
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="seller_review_view" model="ir.ui.view">
+            <field name="name">seller.review.tree.view</field>
+            <field name="model">seller.review</field>
+            <field name="arch" type="xml">
+                <tree string="Seller Review">
+                    <field name="seller_id" />
+                    <field name="name" />
+                    <field name="rating_num" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_seller_review" model="ir.actions.act_window">
+            <field name="name">Seller Review</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">seller.review</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_my_seller_profile" model="ir.actions.act_window">
+            <field name="name">My Profile</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('user_id','=',uid),('seller','=',True)]</field>
+        </record>
+
+        <menuitem id= "seller_menu" parent= "seller_dashboard_menu" name= "Seller/Vendor" sequence="1" />
+
+
+        <menuitem id= "my_profile_menu" parent= "seller_menu" name= "My Profile" 
+            action="action_my_seller_profile" sequence="1" groups="odoo_website_marketplace.group_market_place_pending_seller"/>
+        
+        <menuitem id= "all_profile_menu" parent= "seller_menu" name= "Sellers Profile" 
+            action="action_seller_profile" sequence="2" groups="odoo_website_marketplace.group_market_place_manager"/>
+
+        <menuitem id="seller_review_menu" parent="seller_menu" name="Sellers Review" 
+            action="action_seller_review" groups="odoo_website_marketplace.group_market_place_seller" sequence="5"/>
+
+        
+        <menuitem id= "configuration_menu" parent="seller_dashboard_menu" name="Configuration"  groups="odoo_website_marketplace.group_market_place_manager"/>  
+        
+        <menuitem id= "website_categories_menu" parent= "configuration_menu" name= "Website
+            Categories" action="website_sale.product_public_category_action" groups="group_market_place_manager"/>
+
+
+    </data>
+</odoo>
