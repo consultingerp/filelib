@@ -78,40 +78,21 @@ class E2yunTaskInfo(models.Model):
                 question_no1 = self.questionnaire_ids[0]
                 self.questionnaire_ids = question_no1
 
-
-    # temp_ids = fields.One2many('survey.survey', 'task_id', string='问卷模板')
-    # @api.multi
-    # def weight_write(self, vals):
-    #     print("@@@@@@@@@@@@@@@@@@@@@")
-    #     res = super(E2yunTaskInfo, self).write(vals)
-    #     for item in self:
-    #         all_score = 0
-    #         for record in item.questionnaire_ids:
-    #             str_weight = record.weight
-    #             if str_weight:
-    #                 int_weight = int(str_weight[:1])
-    #                 all_score += int_weight
-    #         if all_score > 100:
-    #             raise Warning(_('权重之和大于100%，请重新输入'))
-    #     return res
-
-    @api.multi
+    @api.one
     def write(self, vals):
         res = super(E2yunTaskInfo, self).write(vals)
-        for item in self:
-            if item.multiple_questionnaires and item.multiple_questionnaires == 'no':
-                item.questionnaire_ids.weight = '100%'
-            all_score = 0
-            for record in item.questionnaire_ids:
-                str_weight = record.weight
-                if str_weight:
-                    int_weight = int(str_weight[:-1])
-                    all_score += int_weight
-            if all_score > 100:
-                # raise Warning(_('权重之和大于100%，请重新输入'))
-                raise exceptions.Warning(_('权重之和大于100%，请重新输入'))
+        if self.multiple_questionnaires and self.multiple_questionnaires == 'no':
+            self.questionnaire_ids.weight = '100%'
+        all_score = 0
+        for record in self.questionnaire_ids:
+            str_weight = record.weight
+            if str_weight:
+                int_weight = int(str_weight[:-1])
+                all_score += int_weight
+        if all_score > 100:
+            # raise Warning(_('权重之和大于100%，请重新输入'))
+            raise exceptions.Warning(_('权重之和大于100%，请重新输入'))
         return res
-
 
     # 任务页面打开问卷页面的方法
     @api.multi
@@ -145,13 +126,7 @@ class E2yunTaskInfo(models.Model):
     #         res.survey_id = res.survey_temp_id.copy().id
     #     return res
 
-    # @api.multi
-    # def write(self, vals):
-    #     res = super(E2yunTaskInfo, self).write(vals)
-    #     for item in self:
-    #         if not item.survey_id and item.survey_temp_id:
-    #             item.survey_id = item.survey_temp_id.copy().id
-    #     return res
+
 
 class E2yunProjectSurvey(models.Model):
     _inherit = 'survey.survey'
@@ -189,26 +164,31 @@ class E2yunProjectSurvey(models.Model):
     questionnaire_classification = fields.Selection([('Internally', '对内'), ('Foreign', '对外')], string='问卷分类')
     questionnaire_scenario = fields.Selection([('评分问卷', '评分问卷'), ('资质调查', '资质调查'), ('满意度调查', '满意度调查'),
          ('报名登记表', '报名登记表'), ('其他', '其他')], string='问卷场景')
-    # questionnaire_id = fields.Many2one('project.questionnaire', 'survey_temp_id', string='')
-    # task_id = fields.Many2one('project.task', related='questionnaire_id.', string='任务')
+
+    # @api.one
+    # def write(self, vals):
+    #     res = super(E2yunProjectSurvey, self).write(vals)
+    #     return res
 
     # 权重百分比之和为100%，超出则弹框提醒
-    @api.multi
+    @api.one
     def write(self, vals):
         res = super(E2yunProjectSurvey, self).write(vals)
-        for item in self:
-            all_weight = 0
-            for l in item.page_ids:
-                if l.weight:
-                    i = l.weight[:-1]
-                    all_weight += int(i)
-            if all_weight > 100:
-                # warnings.warn('权重之和大于100%，请重新输入')
-                # raise ValueError('权重之和大于100%，请重新输入')
-                # raise Warning(_('权重之和大于100%，请重新输入'))
-                raise exceptions.Warning(_('权重之和大于100%，请重新输入'))
+        all_weight = 0
+        for l in self.page_ids:
+            if l.weight:
+                i = l.weight[:-1]
+                all_weight += int(i)
+        if all_weight > 100:
+            # warnings.warn('权重之和大于100%，请重新输入')
+            # raise ValueError('权重之和大于100%，请重新输入')
+            # raise Warning(_('权重之和大于100%，请重新输入'))
+            raise exceptions.Warning(_('权重之和大于100%，请重新输入'))
         return res
 
+    def get_formview_id(self, access_uid=None):
+        res = super(E2yunProjectSurvey,self).get_formview_id(access_uid)
+        return res
 
 
 class SurveyPage(models.Model):
@@ -216,10 +196,10 @@ class SurveyPage(models.Model):
 
     # 调查问卷page页面添加’权重‘字段
     weight = fields.Char(string='权重')
-    # 网页标题变更为段落
-    # weight_unit = fields.Char(string='单位', default='%')
+    # 小计
+    x_studio_survey_page_sum = fields.Integer(string='小计')
     # 权重百分比
-    @api.onchange('weight')
+    @api.onchange('question_ids.')
     def _onchange_weight(self):
         if self.weight:
             if '%' in self.weight:
@@ -228,35 +208,15 @@ class SurveyPage(models.Model):
                 self.weight = str(self.weight) + '%'
         else:
             self.weight = ''
-
-    # 权重百分比之和为100%，超出则弹框提醒
-    # @api.onchange('weight')
-    # def onchange_weightt(self):
-    #     all_weight = 0
-    #     res = self.weight
-    #     # record = self.env['survey.page'].search([('weight', '=', res)])
-    #     # id = record['survey_id'].id
-    #     # records = self.env['survey.page'].search([('survey_id', '=', id)])
-    #     ctx = self.env.context
-    #     print(ctx, '*******************')
-    #     record = self.env['survey.survey'].search([('id', '=', ctx['default_survey_id'])])
-    #     print(record, '###########')
-    #     records = record.page_ids
-    #     print(records, '!!!!!!!!!!!!!1')
-    #     for item in records:
-    #         # i = item.weight[:-1]
-    #         i = item.weight
-    #         all_weight += int(i)
-    #     if all_weight > 100:
-    #         return {
-    #             'warning': {
-    #                 'title': _("检查到错误"),
-    #                 'message': _(
-    #                     "权重之和大于100%，请重新输入")
-    #             }
-    #         }
-    #     return res
-
+    # 小计逻辑
+    @api.onchange('question_ids')
+    def _onchange_page_sum(self):
+        res = self.question_ids
+        if res:
+            all_score = 0
+            for i in res:
+                all_score += int(i.highest_score)
+            self.x_studio_survey_page_sum = all_score
 
 class SurveyQuestion(models.Model):
     _inherit = 'survey.question'
