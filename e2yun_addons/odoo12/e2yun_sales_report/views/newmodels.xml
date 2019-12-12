@@ -6,7 +6,7 @@
             <field name="name">GroupDepartments</field>
             <field name="model">group.departments</field>
             <field name="arch" type="xml">
-                <tree string="事业部管理">
+                <tree string="事业部管理" editable="bottom">
                     <field name="name"/>
                     <field name="factory"/>
                 </tree>
@@ -27,7 +27,7 @@
             <field name="name">GroupChannels</field>
             <field name="model">group.channels</field>
             <field name="arch" type="xml">
-                <tree string="渠道管理">
+                <tree string="渠道管理" editable="bottom">
                     <field name="name"/>
                 </tree>
             </field>
