@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="seller_signup" name="Seller">
+            <t t-call="website.layout">
+                <!-- Sign Up form -->
+                <div style="height:1vh;" />
+                <div class="container">
+                    <div class="col-sm-6" style="margin: 0 auto;float:none;">
+                        <div class="jumbotron jumbotron-fluid" style="box-shadow: 10px 10px 5px grey;height: 650px;padding-top: 5px;" >
+                            <div class="card-header"><h3 class="text-center" style="    color: white;">Sign Up to your seller account</h3>
+                            </div>
+                            
+                            <div class="form-white">
+                                <form t-attf-action="/seller/signup/thanks" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <!-- <t t-if="request.params.get('email_msg')">
+                                        <div class='alert alert-warning alert-dismissible fade in' role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                <t t-esc="request.params.get('email_msg')"/>
+                                        </div>
+                                    </t> -->
+
+                                    <div t-if="request.params.get('email_msg')" class="form-group alert alert-danger" role="alert" style="margin: 15px;">
+                                        <t t-esc="request.params.get('email_msg')"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label style="margin-left: 25px;" for="name">Name</label>
+                                        <input type="text" class="forms-controls" id="name" name="name" placeholder="Name" required="True" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="margin-left: 25px;" for="username">Shop Name</label>
+                                        <input type="text" class="forms-controls" id="shopname" name="shopname" placeholder="Shop Name" required="True" />
+                                        <p class="text-muted" style="font-size: smaller;margin-left: 25px;">Enter Shop Name.</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="margin-left: 25px;" for="email">Email address</label>
+                                        <input type="email" class="forms-controls" id="email" placeholder="Enter email" name="email" required="True" />
+
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label style="margin-left: 25px;" for="tagline">Shop TagLine</label>
+                                        <input type="text" class="forms-controls" id="tagline" placeholder="Enter Shop TagLine" name="tagline" required="True" />
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label style="margin-left: 25px;" for="password2">Password</label>
+                                                <input type="password" class="forms-controls" id="password2" name="password2" placeholder="Password" required="True" />
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label style="margin-left: 25px;" for="password3">Repeat password</label>
+                                                <input type="password" class="forms-controls" id="password3" name="password3" placeholder="Confirm Password" required="True" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <p class="alert alert-danger" t-if="error">
+                                        <t t-esc="error"/>
+                                    </p>
+                                    
+                                    <div class="text-center form-group" style="margin-top:25px">
+                                        <button type="submit" class="btn btn-color" style="background-color:#949494;">Create an account</button>
+                                    </div>
+                                </form>
+                                <br/>
+                                <br/>
+                                <br/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="height:2vh;" />
+            </t>
+        </template>
+        
+        <template id="seller_thank_you" name="Seller Thank You">
+            <t t-call="website.layout">
+                <br/>
+                <br/>
+                <div id="wrapsss" class="oe_structure oe_empty">
+                    <section>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12 panel-info">
+                                    <h1 class="text-center">Thank You</h1>
+                                    <h3 class="text-muted text-center">We will get back to you shortly</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

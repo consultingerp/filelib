@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<!-- Open Tickets view -->
+	<record id="action_product_template_waiting" model="ir.actions.act_window">
+		<field name="name">Products In Waiting</field>
+		<field name="res_model">product.template</field>
+		
+		<field name="view_mode">kanban,form</field>
+		<field name="context">{
+			'search_default_group_by_state':1,
+			'default_seller_id': active_id,
+			'search_default_seller_id':[active_id],}</field>
+		<field name="domain">[('state', '=', 'waiting')]</field>
+		<field name="view_id" ref="product.product_template_kanban_view"/>
+		<field name="search_view_id" ref="product.product_template_search_view"/>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Create a Product
+			</p><p>
+				
+			</p>
+		</field>
+	</record>
+	<record id="action_product_template_approve" model="ir.actions.act_window">
+		<field name="name">Approved Products</field>
+		<field name="res_model">product.template</field>
+		
+		<field name="view_mode">kanban,form</field>
+		<field name="context">{
+			'search_default_group_by_state':1,
+			'default_seller_id': active_id,
+			'search_default_seller_id':[active_id],}</field>
+		<field name="domain">[('state', '=', 'approve')]</field>
+		<field name="view_id" ref="product.product_template_kanban_view"/>
+		<field name="search_view_id" ref="product.product_template_search_view"/>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Create a Product
+			</p><p>
+				
+			</p>
+		</field>
+	</record>
+
+	<record id="action_product_template_cancel" model="ir.actions.act_window">
+		<field name="name">Cancelled Products</field>
+		<field name="res_model">product.template</field>
+		
+		<field name="view_mode">kanban,form</field>
+		<field name="context">{
+			'search_default_group_by_state':1,
+			'default_seller_id': active_id,
+			'search_default_seller_id':[active_id],}</field>
+		<field name="domain">[('state', '=', 'cancel')]</field>
+		<field name="view_id" ref="product.product_template_kanban_view"/>
+		<field name="search_view_id" ref="product.product_template_search_view"/>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Create a Product
+			</p><p>
+				
+			</p>
+		</field>
+	</record>
+
+
+	<record id="action_res_partner_waiting" model="ir.actions.act_window">
+		<field name="name">Partners In Waiting</field>
+		<field name="res_model">res.partner</field>
+		
+		<field name="view_mode">kanban,form</field>
+		<field name="context">{'search_default_group_by_state':1,}</field>
+		<field name="domain">[('state', '=', 'waiting')]</field>
+		<field name="view_id" ref="res_partner_view_bi"/>
+		<field name="search_view_id" ref="res_partner_filter_inherit_form"/>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Create a Partner
+			</p><p>
+				
+			</p>
+		</field>
+	</record>
+	<record id="action_res_partner_approve" model="ir.actions.act_window">
+		<field name="name">Approved Partners</field>
+		<field name="res_model">res.partner</field>
+		
+		<field name="view_mode">kanban,form</field>
+		<field name="context">{
+			'search_default_group_by_state':1,}</field>
+		<field name="domain">[('state', '=', 'approve')]</field>
+		<field name="view_id" ref="res_partner_view_bi"/>
+		<field name="search_view_id" ref="res_partner_filter_inherit_form"/>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Create a Partner
+			</p><p>
+				
+			</p>
+		</field>
+	</record>
+
+	<record id="action_res_partner_cancel" model="ir.actions.act_window">
+		<field name="name">Cancelled Partners</field>
+		<field name="res_model">res.partner</field>
+		
+		<field name="view_mode">kanban,form</field>
+		<field name="context">{'search_default_group_by_state':1,}</field>
+		<field name="domain">[('state', '=', 'denied')]</field>
+		<field name="view_id" ref="res_partner_view_bi"/>
+		<field name="search_view_id" ref="res_partner_filter_inherit_form"/>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Create a Partner
+			</p><p>
+			</p>
+		</field>
+	</record>
+
+	<record id="action_sale_order_approve" model="ir.actions.act_window">
+		<field name="name">Approved Sale Order</field>
+		<field name="res_model">sale.order.line</field>
+		
+		<field name="view_mode">kanban,form</field>
+		<field name="context">{'search_default_order_state':1,}</field>
+		<field name="domain">[('order_state', '=', 'approved')]</field>
+		<field name="view_id" ref="view_sale_order_line_kanban"/>
+		<field name="search_view_id" ref="seller_orders_filters"/>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				No Orders are Approved yet
+			</p><p>
+			</p>
+		</field>
+	</record>
+
+	<record id="action_sale_order_shipped" model="ir.actions.act_window">
+		<field name="name">Shipped Orders</field>
+		<field name="res_model">sale.order.line</field>
+		
+		<field name="view_mode">kanban,form</field>
+		<field name="context">{'search_default_order_state':1,}</field>
+		<field name="domain">[('order_state', '=', 'shipped')]</field>
+		<field name="view_id" ref="view_sale_order_line_kanban"/>
+		<field name="search_view_id" ref="seller_orders_filters"/>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				No Orders are Shipped yet
+			</p><p>
+			</p>
+		</field>
+	</record>
+
+	<record id="action_sale_order_draft" model="ir.actions.act_window">
+		<field name="name">Shipped Orders</field>
+		<field name="res_model">sale.order.line</field>
+		
+		<field name="view_mode">kanban,form</field>
+		<field name="context">{'search_default_order_state':1,}</field>
+		<field name="domain">[('order_state', '=', 'draft')]</field>
+		<field name="view_id" ref="view_sale_order_line_kanban"/>
+		<field name="search_view_id" ref="seller_orders_filters"/>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				No Orders are in Draft state
+			</p><p>
+			</p>
+		</field>
+	</record>
+
+
+	<record id="action_seller_payment_waiting" model="ir.actions.act_window">
+		<field name="name">Payments In Waiting</field>
+		<field name="res_model">seller.payment</field>
+		
+		<field name="view_mode">kanban,form</field>
+		<field name="context">{'search_default_state':1,}</field>
+		<field name="domain">[('state', '=', 'requested')]</field>
+		<field name="view_id" ref="view_seller_payment_kanban"/>
+		<field name="search_view_id" ref="seller_payments_filters"/>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Request a Payment
+			</p><p>
+				
+			</p>
+		</field>
+	</record>
+
+	<record id="action_seller_payment_approve" model="ir.actions.act_window">
+		<field name="name">Approved Payments</field>
+		<field name="res_model">seller.payment</field>
+		
+		<field name="view_mode">kanban,form</field>
+		<field name="context">{ 'search_default_state':1,}</field>
+		<field name="domain">[('state', '=', 'confirm')]</field>
+		<field name="view_id" ref="view_seller_payment_kanban"/>
+		<field name="search_view_id" ref="seller_payments_filters"/>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Request a Payment
+			</p><p>
+				
+			</p>
+		</field>
+	</record>
+
+	<record id="action_seller_payment_cancel" model="ir.actions.act_window">
+		<field name="name">Cancelled Payments</field>
+		<field name="res_model">seller.payment</field>
+		
+		<field name="view_mode">kanban,form</field>
+		<field name="context">{'search_default_state':1,}</field>
+		<field name="domain">[('state', '=', 'cancel')]</field>
+		<field name="view_id" ref="view_seller_payment_kanban"/>
+		<field name="search_view_id" ref="seller_payments_filters"/>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Request a Payment
+			</p><p>
+				
+			</p>
+		</field>
+	</record>
+
+</odoo>
