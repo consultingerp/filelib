@@ -2,14 +2,14 @@
 <odoo>
     <data>
 
-
+        <!--
           <report
             id="partner_agreement_contract_docx"
             model="agreement"
             string="Contract Docx"
             name="agreement_legal.report_agreement_document"
             file="agreement_legal.report_agreement_document"
-            report_type="qweb-pdf"/>
+            report_type="qweb-pdf"/> -->
 
         <record id="view_agreement_import_docx" model="ir.ui.view">
             <field name="name">Import Doc</field>
