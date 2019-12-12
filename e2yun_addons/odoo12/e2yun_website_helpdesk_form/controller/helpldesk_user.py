@@ -66,9 +66,10 @@ class HelpdesUser(http.Controller):
                          message_type='comment', subtype='mail.mt_comment')
 
         wxuserinfo = request.env['wx.user'].sudo().search([('id', '=', channel_partner_name.wx_user_id.id)])
-        channel_partner_name.wx_user_id.consultation_reminder(request.env.user.partner_id, wxuserinfo.openid,
-                                                              userbody,
-                                                              active_id, reminder_type='售后客服咨询')
+        if wxuserinfo:
+            channel_partner_name.wx_user_id.consultation_reminder(request.env.user.partner_id, wxuserinfo.openid,
+                                                                  userbody,
+                                                                  active_id, reminder_type='售后客服咨询')
 
         request.session.helpdeskuuid = uuid
         action = request.env.ref('mail.action_discuss').id

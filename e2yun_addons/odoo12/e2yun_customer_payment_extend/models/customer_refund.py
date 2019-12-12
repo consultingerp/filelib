@@ -34,7 +34,7 @@ class E2yunCustomerRefund(models.Model):
     receipt_num = fields.Char('收据号')
     customer_po = fields.Char('客户PO号')
     customer_refund_amount = fields.Char('客户退款金额')
-    refund_num = fields.Char('退款单编号')
+    # refund_num = fields.Char('退款单编号')
 
     mobile_phone = fields.Char('手机号')
     huming = fields.Char('户名')
@@ -44,6 +44,17 @@ class E2yunCustomerRefund(models.Model):
     shop_code = fields.Char('门店编码')
     app_code = fields.Char('客户编码')
     voucher_status = fields.Char('凭证状态')
+    related_shop = fields.Many2one('crm.team', compute='get_crm_team', store=True)
+
+    @api.model
+    def get_crm_team(self):
+        for r in self:
+            if not r.shop_code:
+                try:
+                    shopcode = self.env['crm.team'].search([('name', '=', r.shop_id)]).shop_code
+                    r.related_shop = self.env['crm.team'].search([('shop_code', '=', shopcode)])
+                except Exception as e:
+                    _logger.exception(e)
 
     def write(self, vals):
         previous_state = self.refund_status
