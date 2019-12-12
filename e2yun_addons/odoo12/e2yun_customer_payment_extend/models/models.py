@@ -375,6 +375,20 @@ class e2yun_customer_payment_res_partner(models.Model):
         else:
             return super(e2yun_customer_payment_res_partner, self).name_get()
 
+class e2yun_customer_payment_crm_team(models.Model):
+    _inherit = 'crm.team'
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        flag = self.env.context.get('show_user_shops', False)
+        user_shop = self.env.user.teams.ids
+        shops =self.search([('id', 'in', user_shop)])
+        # res = super(e2yun_customer_payment_crm_team, self).name_search(name, args, operator, limit)
+        if flag == 4399:
+            return shops.name_get()
+        else:
+            return super(e2yun_customer_payment_crm_team, self).name_search(name, args, operator, limit)
+
 class e2yun_customer_payment_bank_info(models.Model):
     _name = 'payment_bank.info'
     _description = '银行帐号信息管理'

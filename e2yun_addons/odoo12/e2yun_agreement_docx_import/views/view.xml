@@ -2,14 +2,14 @@
 <odoo>
     <data>
 
-
+        <!--
           <report
             id="partner_agreement_contract_docx"
             model="agreement"
             string="Contract Docx"
             name="agreement_legal.report_agreement_document"
             file="agreement_legal.report_agreement_document"
-            report_type="qweb-pdf"/>
+            report_type="qweb-pdf"/> -->
 
         <record id="view_agreement_import_docx" model="ir.ui.view">
             <field name="name">Import Doc</field>
@@ -92,10 +92,11 @@
                     id="act_window_download_doc"/>
 
 
-
+        <!--
         <menuitem id="menu_agreement_docx_import_management" name="Docx Import" parent="agreement.agreement_menu"/>
 
         <menuitem action="action_view_agreement_import_docx" name="Docx Import" id="menu_agreement_docx_import"  parent="e2yun_agreement_docx_import.menu_agreement_docx_import_management"/>
+        -->
 
     </data>
 </odoo>
