@@ -125,3 +125,16 @@ class e2yun_sales_report(models.Model):
             'domain': [('order_id', 'in', domain_list)],
             'context': ctx,
         }
+
+# class e2yun_sales_report_form_crm_team(models.Model):
+#     _inherit = 'crm.team'
+#
+#     @api.model
+#     def name_search(self, name='', args=None, operator='ilike', limit=100):
+#         flag = self.env.context.get('show_user_shops', False)
+#         user_shop = self.env.user.teams.ids
+#         shops =self.search([('id', 'in', user_shop)])
+#         if flag == 4399:
+#             return shops.name_get()
+#         else:
+#             return super(e2yun_sales_report_form_crm_team, self).name_search(name, args, operator, limit)

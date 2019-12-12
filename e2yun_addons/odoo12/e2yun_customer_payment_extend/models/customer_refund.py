@@ -50,8 +50,11 @@ class E2yunCustomerRefund(models.Model):
     def get_crm_team(self):
         for r in self:
             if not r.shop_code:
-                r.shop_code = self.env['crm.team'].search([('name', '=', self.shop_id)]).shop_code
-            r.related_shop = self.env['crm.team'].search([('shop_code', '=', r.shop_code)])
+                try:
+                    shopcode = self.env['crm.team'].search([('name', '=', r.shop_id)]).shop_code
+                    r.related_shop = self.env['crm.team'].search([('shop_code', '=', shopcode)])
+                except Exception as e:
+                    _logger.exception(e)
 
     def write(self, vals):
         previous_state = self.refund_status
