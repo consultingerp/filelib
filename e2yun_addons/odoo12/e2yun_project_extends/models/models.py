@@ -81,6 +81,8 @@ class E2yunTaskInfo(models.Model):
     @api.one
     def write(self, vals):
         res = super(E2yunTaskInfo, self).write(vals)
+        if self.multiple_questionnaires == 'no' and len(self.questionnaire_ids) == 0:
+            raise exceptions.Warning(_('请先填写问卷场景，权重和问卷模板'))
         if self.multiple_questionnaires and self.multiple_questionnaires == 'no':
             self.questionnaire_ids.weight = '100%'
         all_score = 0
@@ -93,10 +95,6 @@ class E2yunTaskInfo(models.Model):
             # raise Warning(_('权重之和大于100%，请重新输入'))
             raise exceptions.Warning(_('权重之和大于100%，请重新输入'))
         return res
-
-    # @api.multi
-    # def create(self, vals):
-
 
     # 任务页面打开问卷页面的方法
     @api.multi
