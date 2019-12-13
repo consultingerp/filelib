@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+   <record id="agreement_form_view_view_extend" model="ir.ui.view">
+      <field name="name">agreement.form.extend</field>
+      <field name="model">agreement</field>
+      <field name="inherit_id" ref="agreement_legal.partner_agreement_form_view"/>
+      <field name="arch" type="xml">
+
+
+        <field name="name" position="before">
+                    <field name="agreement_code" class="oe_inline"/>
+                    <label for="agreement_code" string="  " class="oe_inline"/>
+        </field>
+      </field>
+   </record>
+
+
+    <record id="agreement_subtype_form_view_extend" model="ir.ui.view">
+       <field name="name">Agreement Sub Type Form Extend</field>
+       <field name="model">agreement.subtype</field>
+       <field name="inherit_id" ref="agreement_legal.partner_agreement_subtype_form_view"/>
+       <field name="arch" type="xml">
+         <xpath expr="//field[@name='agreement_type_id']" position="before">
+                <field name="for_code" />
+        </xpath>
+      </field>
+   </record>
+
+
+
+
+
+</odoo>

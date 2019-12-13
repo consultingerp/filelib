@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="seller_shop_form_view" model="ir.ui.view">
+            <field name="name">seller.shop.form.view</field>
+            <field name="model">seller.shop</field>
+            <field name="arch" type="xml">
+                <form string="Seller Shop" >
+                    <sheet>
+                        <div class="oe_right oe_button_box" style="width: 300px;" name="buttons">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive" string="Active"/>                           
+                        </div>
+                        <div class="oe_left" style="width: 500px;">
+                            <field name="shop_logo" widget="image" class="oe_avatar oe_left"/>
+                            <div class="oe_title" style="width: 390px;">
+                                <label class="oe_edit_only" for="name" string="Shop Name"/>
+                                <h1><field name="name" class="oe_inline"/></h1>
+                            </div>
+                        </div>
+                        <group>
+                            <field name="url_handler" readonly="1" widget="url"/>
+                        </group>
+                        <group>
+                            <field name="banner" widget="image" class="oe_avatar" />
+                        </group>
+                        <group>
+                            <field name="tag_line"  placeholder="Tag line for shop..."/>
+                            <field name="description"/>
+                            <field name="seller_id"  widget="selection" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <group>
+                                <label for="street" string="Address"/>
+                                <div class="o_address_format">
+                                    <field name="street" placeholder="Street..." class="o_address_street"/>
+                                    <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                    <field name="city" placeholder="City" class="o_address_city"/>
+                                    <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True}"/>
+                                    <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                    <field name="country_id" placeholder="Country" class="o_address_country" options="{'no_open': True, 'no_create': True}"/>
+                                </div>
+                            </group>
+                            <group>
+                                <field name="phone"/>
+                                <field name="email" widget="email"/>
+                                <field name="fax"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="seller_products" string="Products">
+                                <field name="seller_product_ids" widget="many2many_kanban">
+                                    <!-- <kanban quick_create="false" create="true"> -->
+                                    <kanban>
+                                        <field name="id"/>
+                                        <!-- <field name="image_small"/> -->
+                                        <field name="lst_price"/>
+                                        <field name="product_variant_count"/>
+                                        <field name="currency_id"/>
+                                        <field name="type"/>
+                                        <field name="state"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div class="oe_kanban_global_click">
+                                                    <div class="o_kanban_image">
+                                                        <img t-att-src="kanban_image('product.template', 'image_128', record.id.raw_value)" alt="Profile"/>
+                                                    </div>
+                                                    <div class="oe_kanban_details">
+                                                        <strong class="o_kanban_record_title">
+                                                            <field name="name"/>
+                                                            <small t-if="record.default_code.value">[<field name="default_code"/>]</small>
+                                                        </strong>
+                                                        <div t-if="record.product_variant_count.value &gt; 1" groups="product.group_product_variant">
+                                                            <strong>
+                                                                <t t-esc="record.product_variant_count.value"/> Variants
+                                                            </strong>
+                                                        </div>
+                                                        <div name="tags"/>
+                                                        <ul>
+                                                            <li>Price: <field name="lst_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}">
+                                                                </field>
+                                                            </li>
+                                                            <li t-if="record.type.raw_value == 'product'">On hand: <field name="qty_available"/> <field name="uom_id"/></li>
+                                                            <li t-if="record.state.raw_value == 'draft'">State: <strong style="color:#212121;"><field name="state"/></strong></li>
+                                                            <li t-if="record.state.raw_value == 'waiting'">State: <strong style="color:#205493;"><field name="state"/></strong></li>
+                                                            <li t-if="record.state.raw_value == 'approve'">State: <strong style="color:green;"><field name="state"/></strong></li>
+                                                            <li t-if="record.state.raw_value == 'cancel'">State: <strong style="color:red;"><field name="state"/></strong></li>
+                                                            <li t-if="record.seller_id.raw_value">Seller: <strong style="color:#212121;"><field name="seller_id"/></strong></li>
+                                                        </ul>
+
+                                                        <div name="tags"/>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                 </field>
+                            </page>
+                            <page name="terms_con_seller" string="Terms &amp; Conditions">
+                                <field name="terms_con_seller"/>
+                            </page>
+                            <page name="Policy" string="Policy">
+                                <separator string="Return Policy" />
+                                <group>
+                                    <field name="return_polocy" nolabel="1"/>
+                                </group>
+                                <separator string="Shop Policy" />
+                                <group>
+                                    <field name="shipping_policy" nolabel="1"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            
+            </field>
+        </record>
+        
+        <record id="seller_shop_view_tree" model="ir.ui.view">
+            <field name="name">seller.shop.tree</field>
+            <field name="model">seller.shop</field>
+            <field name="arch" type="xml">
+                <tree string="Seller's Shop">
+                    <field name="name"/>
+                    <field name="seller_id"/>
+                    <field name="tag_line"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="seller_shop_view">
+            <field name="name">Seller Shop Kanban View</field>
+            <field name="model">seller.shop</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" >
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="shop_logo"/>
+                    <field name="banner"/>
+                    <field name="description"/>
+                    <field name="tag_line"/>
+                    <field name="seller_id"/>
+                    <field name="color"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_global_click" style="width: 15%;">
+                                <div class="o_dropdown_kanban dropdown">                            
+                                    <div class="dropdown-menu" role="menu">
+                                        <t t-if="widget.editable"><a role="menuitem" type="edit" class="dropdown-item">Edit Contract</a></t>
+                                        <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                                        <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                    </div>
+                                </div>
+                                <div style="height:1vh;" />
+                                <div class="o_kanban_image" style="width:100px;">
+                                    <img t-att-src="kanban_image('seller.shop', 'banner', record.id.value)" t-att-title="record.banner.value" alt="Profile"/>
+                                </div>
+                                <div class="oe_kanban_details" style="float: inherit;">
+                                    <ul style="float:left;margin:10px;">
+                                        <li style="font-size: larger;color: teal;"><field name="name"/></li>
+                                        <li style="font-size: larger;color: teal;"><b>Products: </b><field name="total_product"/></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="action_my_seller_shops" model="ir.actions.act_window">
+            <field name="name">Seller's Shop</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">seller.shop</field>
+            
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+         
+
+        <menuitem id= "my_shop_menu" parent= "seller_menu" name= "Seller's Shop" action="action_my_seller_shops" sequence="3" groups="odoo_website_marketplace.group_market_place_seller"/>
+
+    </data>
+</odoo>

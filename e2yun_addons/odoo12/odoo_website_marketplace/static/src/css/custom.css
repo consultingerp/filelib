@@ -1,0 +1,188 @@
+
+.popover_products_item {
+    display: none;
+    height: 65px;
+    width: 200px;
+    font: bold 15px Sans-Serif;
+    color: white;
+    text-align: center;
+    background-color: #337ab7;
+    z-index: 99;
+    position: relative;
+    padding: 7px 0;
+    margin-left: 75px;
+    margin-top: -75px;
+}
+
+a:hover + .popover_products_item {
+    display: block;
+}
+
+
+.nav-tabs a {
+    color: #FFFFFF;
+    text-decoration: none
+}
+
+
+
+.panel-heading{
+	background-color: #337ab7;
+    height: 50px;
+    padding: 10px 1px;
+}
+
+
+
+.profile-bg {
+  width: 300px;
+  height: 100%;
+  background-color: white;
+  text-align: center;
+  margin: 0 auto;
+  padding: 0px;
+}
+
+.profile-bg img {
+  width: 200px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+
+
+.image_align {
+  width: 400px;
+  max-height: 200px; 
+  overflow: hidden; 
+  display: inline-flex; 
+  margin: 5px;
+ }
+
+
+
+body
+{
+    font-family: 'Open Sans', sans-serif;
+}
+
+.fb-profile img.fb-image-lg{
+    z-index: 0;
+    width: 100%;  
+    margin-bottom: 10px;
+    max-height: 400px;
+    overflow: hidden;
+}
+
+.fb-image-profile
+{
+    margin: -90px 10px 0px 50px;
+    z-index: 9;
+    width: 19%; 
+}
+
+@media (max-width:768px)
+{
+    
+  .fb-profile-text>h1{
+      font-weight: 700;
+      font-size:16px;
+  }
+
+  .fb-image-profile
+  {
+      margin: -45px 10px 0px 25px;
+      z-index: 9;
+      width: 20%; 
+  }
+}
+
+.set-image {
+  color: white;
+  background: teal;
+  text-align: center;
+}
+
+.set-new {
+    padding: 10px;
+    font-size: large;
+    margin-left: 15px;
+    color: black;
+}
+
+.card-header {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: teal;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.xblock {
+  margin: 25px;
+  padding: 10px;
+}
+
+
+.button{
+    width: 100%;
+    height: 50px;
+    border: none;
+    outline: none;
+    background: #03A9F4;
+    color: #fff;
+}
+
+.forms-controls {
+    display: block;
+    width: 80%;
+    height: calc(2.0625rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    font-weight: 600;
+    color: black;
+    background-color: white;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-left: 25px;
+}
+
+
+section {
+    padding: 60px 0;
+}
+
+section .section-title {
+    text-align: center;
+    color: #007b5e;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+}
+#tabs{
+  background: white;
+    color: black;
+    width: 100%;
+    font-weight: 600;
+}
+#tabs h6.section-title{
+    color: #eee;
+}
+
+#tabs .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #f3f3f3;
+    background-color: transparent;
+    border-color: transparent transparent #f3f3f3;
+    border-bottom: 4px solid !important;
+    font-size: 20px;
+    font-weight: bold;
+}
+#tabs .nav-tabs .nav-link {
+    border: 1px solid transparent;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    color: black;
+    font-size: 20px;
+}
+

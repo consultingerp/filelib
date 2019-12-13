@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data noupdate="1">
+    <record id="agreement_purchase_code" model="ir.sequence">
+        <field name="name">采购合同编码</field>
+        <field name="code">agreement.purchase.code</field>
+        <field name="prefix">NSHS-GG-%(year)s%(month)s</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False" />
+    </record>
+
+        <record id="agreement_sale_code" model="ir.sequence">
+        <field name="name">销售合同编码</field>
+        <field name="code">agreement.sale.code</field>
+        <field name="prefix">NSHS-XS-%(year)s%(month)s</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False" />
+    </record>
+
+
+</data>
+</odoo>
