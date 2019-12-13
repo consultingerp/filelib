@@ -30,7 +30,7 @@ class RequestPayment(models.TransientModel):
                     })
         return res
 
-
+    @api.multi
     def request_payment(self):
         for pay in self:
             if pay.request > pay.credit:
@@ -106,6 +106,7 @@ class RequestQty(models.TransientModel):
     update_qty = fields.Float(string='Update Qty', default=0.00)
     product_tmpl_id = fields.Many2one('product.template', string="product")
 
+    @api.multi
     def request_qty(self):
         company_id = self.env.user.company_id.id
 

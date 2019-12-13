@@ -12,6 +12,7 @@ class order_line_seller(models.Model):
     _inherit = 'sale.order.line'
 
     @api.depends('order_id.picking_ids')
+    @api.multi
     def _compute_picking_ids(self):
         for line in self:
 
@@ -32,6 +33,7 @@ class order_line_seller(models.Model):
 
 
     @api.onchange('product_id')
+    @api.multi
     def product_id_change(self):
         result = super(order_line_seller, self).product_id_change()
         for line in self:
@@ -53,6 +55,7 @@ class order_line_seller(models.Model):
     payment_acquirer_id = fields.Many2one('payment.acquirer', string='Payment Acquirer', store=True)
     pay_done = fields.Boolean('Done Payment',default=False)
 
+    @api.multi
     def approve_order(self):
         for line in self:
             if line.product_id.type == 'product':
@@ -63,7 +66,7 @@ class order_line_seller(models.Model):
             line.order_state = 'approved'
         return True
 
-
+    @api.multi
     def ship_order_view(self):
         '''
         This function returns an action that display existing delivery orders
@@ -101,6 +104,7 @@ class order_line_seller(models.Model):
 
 
     @api.depends('move_ids.state', 'move_ids.scrapped', 'move_ids.product_uom_qty', 'move_ids.product_uom')
+    @api.multi
     def _compute_qty_delivered(self):
         super(order_line_seller, self)._compute_qty_delivered()
 
@@ -117,57 +121,77 @@ class order_line_seller(models.Model):
                 if line.qty_delivered == line.product_uom_qty:
                     line.write({'order_state' :'shipped' })
 
-    def _action_launch_stock_rule(self, previous_product_uom_qty=False):
-        """
-        Launch procurement group run method with required/custom fields genrated by a
-        sale order line. procurement group will launch '_run_pull', '_run_buy' or '_run_manufacture'
-        depending on the sale order line product rule.
-        """
-        precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
-        procurements = []
-        for line in self:
-            if line.state != 'sale' or not line.product_id.type in ('consu','product'):
-                continue
-            qty = line._get_qty_procurement(previous_product_uom_qty)
-            if float_compare(qty, line.product_uom_qty, precision_digits=precision) >= 0:
-                continue
-            group_id = None
-            group_id = line._get_procurement_group()
-            
-            group_id = self.env['procurement.group'].create(line._prepare_procurement_group_vals())
-            line.order_id.procurement_group_id = group_id
-            
-            # In case the procurement group is already created and the order was
-            # cancelled, we need to update certain values of the group.
-        
-            updated_vals = {}
-        
-            if group_id.partner_id != line.order_id.partner_shipping_id:
-                updated_vals.update({'partner_id': line.order_id.partner_shipping_id.id})
-            if group_id.move_type != line.order_id.picking_policy:
-                updated_vals.update({'move_type': line.order_id.picking_policy})
-            if updated_vals:
-                group_id.write(updated_vals)
 
-            values = line._prepare_procurement_values(group_id=group_id)
-            product_qty = line.product_uom_qty - qty
 
-            line_uom = line.product_uom
-            quant_uom = line.product_id.uom_id
-            product_qty, procurement_uom = line_uom._adjust_uom_quantities(product_qty, quant_uom)
-            procurements.append(self.env['procurement.group'].Procurement(
-                line.product_id, product_qty, procurement_uom,
-                line.order_id.partner_shipping_id.property_stock_customer,
-                line.name, line.order_id.name, line.order_id.company_id, values))
-        if procurements:
-            self.env['procurement.group'].run(procurements)
-        return True
+    # @api.multi
+    # def _action_launch_stock_rule(self):
+    #     """
+    #     Launch procurement group run method with required/custom fields genrated by a
+    #     sale order line. procurement group will launch '_run_pull', '_run_buy' or '_run_manufacture'
+    #     depending on the sale order line product rule.
+    #     """
+    #     precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
+    #
+    #     errors = []
+    #     for line in self:
+    #         if line.state != 'sale' or not line.product_id.type in ('consu','product'):
+    #             continue
+    #         #qty = line._get_qty_procurement(previous_product_uom_qty)
+    #         qty = line._get_qty_procurement()
+    #         if float_compare(qty, line.product_uom_qty, precision_digits=precision) >= 0:
+    #             continue
+    #         #group_id = None
+    #         #group_id = line._get_procurement_group()
+    #
+    #         group_id = self.env['procurement.group'].create({
+    #             'name': line.order_id.name, 'move_type': line.order_id.picking_policy,
+    #             'sale_id': line.order_id.id,
+    #             'partner_id': line.order_id.partner_shipping_id.id,
+    #         })
+    #
+    #         line.order_id.procurement_group_id = group_id
+    #
+    #         # In case the procurement group is already created and the order was
+    #         # cancelled, we need to update certain values of the group.
+    #
+    #         updated_vals = {}
+    #
+    #         if group_id.partner_id != line.order_id.partner_shipping_id:
+    #             updated_vals.update({'partner_id': line.order_id.partner_shipping_id.id})
+    #         if group_id.move_type != line.order_id.picking_policy:
+    #             updated_vals.update({'move_type': line.order_id.picking_policy})
+    #         if updated_vals:
+    #             group_id.write(updated_vals)
+    #
+    #         values = line._prepare_procurement_values(group_id=group_id)
+    #         product_qty = line.product_uom_qty - qty
+    #
+    #         #line_uom = line.product_uom
+    #
+    #         procurement_uom = line.product_uom
+    #         quant_uom = line.product_id.uom_id
+    #         get_param = self.env['ir.config_parameter'].sudo().get_param
+    #         if procurement_uom.id != quant_uom.id and get_param('stock.propagate_uom') != '1':
+    #             product_qty = line.product_uom._compute_quantity(product_qty, quant_uom, rounding_method='HALF-UP')
+    #             procurement_uom = quant_uom
+    #         #product_qty, procurement_uom = line_uom._adjust_uom_quantities(product_qty, quant_uom)
+    #             try:
+    #                 self.env['procurement.group'].run(line.product_id, product_qty, procurement_uom,
+    #                                                   line.order_id.partner_shipping_id.property_stock_customer,
+    #                                                   line.name, line.order_id.name, values)
+    #             except UserError as error:
+    #                 errors.append(error.name)
+    #     if errors:
+    #         raise UserError('\n'.join(errors))
+    #
+    #     return True
 
-class order_seller(models.Model):
-    _inherit = 'sale.order'
-
-    def _action_confirm(self):
-        super(order_seller, self)._action_confirm()
-        for line in self.order_line:
-            line._action_launch_stock_rule()
+# class order_seller(models.Model):
+#     _inherit = 'sale.order'
+#
+#     @api.multi
+#     def _action_confirm(self):
+#         super(order_seller, self)._action_confirm()
+#         for line in self.order_line:
+#             line._action_launch_stock_rule()
 

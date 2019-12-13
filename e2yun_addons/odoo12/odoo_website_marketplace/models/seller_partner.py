@@ -13,6 +13,7 @@ class ResPartner(models.Model):
     def _message_count(self):
         self.message_count = self.website_message_ids and len( self.website_message_ids ) or 0
 
+    @api.multi
     def _get_partner_rate(self):
         for obj in self:
             partner_rate = 0.0
@@ -50,7 +51,7 @@ class ResPartner(models.Model):
     last_payment_date = fields.Date('Last Payment Date',)
     overwrite_setting = fields.Boolean('Overwrite Default Commission Setting',default=False,copy=False)
 
-
+    @api.multi
     def action_view_product_rating(self):
         tree_view = self.env.ref('mail.view_message_tree', False)
         form_view = self.env.ref('mail.view_message_form', False)
@@ -65,7 +66,7 @@ class ResPartner(models.Model):
             'domain': "[('id','in',[" + str( self.website_message_ids.ids ).strip( "[]" ) + "]),('website_message','=',True)]",
         }
 
-
+    @api.multi
     def ask_to_approve(self):
         for record in self:
 
@@ -89,6 +90,7 @@ class ResPartner(models.Model):
             record.state = 'waiting'
         return True
 
+    @api.multi
     def approve_partner(self):
         for record in self:
             context = None
@@ -159,6 +161,7 @@ class ResPartner(models.Model):
 
         return True
 
+    @api.multi
     def deny_partner(self):
         for record in self:
             template_id = self.env.ref('odoo_website_marketplace.email_template_marketplace_rejected')
@@ -168,11 +171,13 @@ class ResPartner(models.Model):
             record.seller_shop_id = False
         return True
 
+    @api.multi
     def set_to_draft(self):
         for record in self:
             record.state = 'draft'
         return True
 
+    @api.multi
     def partner_credit(self):
         '''
         This function returns an action that display payment history of customer.
@@ -181,7 +186,7 @@ class ResPartner(models.Model):
         action['domain'] = [('seller_id', '=', self.id)]
         return action
 
-
+    @api.multi
     def unlink(self):
         for partner in self:
             if partner.state not in ('draft', 'denied'):

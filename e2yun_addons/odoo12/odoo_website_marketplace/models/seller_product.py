@@ -34,6 +34,7 @@ class product_template(models.Model):
         result = super(product_template, self).create(val)
         return result
 
+    @api.multi
     def write(self, val):
         res = super(product_template, self).write(val)
         if self.type != 'service':
@@ -49,11 +50,13 @@ class product_template(models.Model):
                                 raise UserError(_('Your product is not Approved!! You can not publish it'))
         return res
 
+    @api.multi
     def set_to_draft(self):
         for record in self:
             record.state = 'draft'
         return True
 
+    @api.multi
     def request_approve(self):
         for record in self:            
             template_id = self.env.ref('odoo_website_marketplace.email_template_marketplace_approve_product')
@@ -64,6 +67,7 @@ class product_template(models.Model):
                     record.seller_id.seller_shop_id.seller_products()
         return True
 
+    @api.multi
     def approve_product(self):
         for record in self:
             template_id = self.env.ref('odoo_website_marketplace.email_template_marketplace_approved_product')
@@ -76,6 +80,7 @@ class product_template(models.Model):
             record.active = True
         return True
 
+    @api.multi
     def reject_product(self):
         for record in self:
             template_id = self.env.ref('odoo_website_marketplace.email_template_marketplace_reject_product')
@@ -91,6 +96,7 @@ class product_template(models.Model):
 class website(models.Model):
     _inherit = 'website'
 
+    @api.multi
     def get_seller_products(self, seller):
         user_ids=self.env['res.users'].search([('partner_id','=',seller.id)])
         prod_ids=self.env['product.template'].search([('seller_id','=',user_ids.partner_id.id)])
@@ -100,6 +106,7 @@ class website(models.Model):
 class Inventory(models.Model):
     _inherit = "stock.inventory"
 
+    @api.multi
     def action_validate(self):
         if not self.exists():
             return

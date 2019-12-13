@@ -5,6 +5,7 @@ class marketplace_inventory(models.Model):
     _name = 'seller.dashboard'
 
     # @api.depends('name','state')
+    @api.multi
     def _count(self):
         for count in self:
             product_obj = self.env['product.template']
