@@ -2,9 +2,315 @@
 <odoo>
     <data>
 
-        <record id="user_center_action" model="ir.actions.client">
-            <field name="name">我的个人中心</field>
-            <field name="tag">web_user_center.user_center</field>
+          <record id="user_center_action" model="ir.actions.act_url">
+            <field name="name">个人中心</field>
+            <field name="url">/usercenter</field>
+            <field name="target">self</field>
         </record>
+
+
+        <menuitem
+                id="menu_user_center"
+                name="我的个人中心"
+                parent="web_user_center.menu_user_center_conf"
+                action="user_center_action"
+                sequence="100"/>
+
+
+
+        <template id="web_user_center.miancenter" name="个人中心">
+            <t t-call="website.layout">
+                <t t-call="web_user_center.userinfo">
+                </t>
+            </t>
+        </template>
+
+        <template id="aui_flex_b_line" name="个人中心头部信息">
+            <div class="aui-flex b-line">
+                <div class="aui-library-user">
+                    <span t-field="user_id.image" t-options="{'widget': 'image'}" role="img" t-att-aria-label="'Logo of %s' % res_company.name" t-att-title="res_company.name"/>
+                </div>
+                <div class="aui-flex-box">
+                    <h2>
+                        <span t-esc="user_id.name[:23] + '...' if user_id.name and len(user_id.name) &gt; 25 else user_id.name"/>
+                    </h2>
+                    <h3>
+                        <i class="icon icon-vip"></i>
+                        <span t-esc="user_id.function if  user_id.function else 'VIP会员'"></span>
+                    </h3>
+                </div>
+                <div class="aui-right-user">
+                    <a href="/user-center/my-info">
+                        <button>
+                            <i class="icon icon-vip-one"></i>设置
+                        </button>
+                    </a>
+                    <p>&amp;nbsp;</p>
+                </div>
+            </div>
+        </template>
+
+        <template id="aui_palace_aui_palace_one" name="个人中心第一行信息">
+            <div class="aui-palace aui-palace-one">
+                 <t t-set="menu_num" t-value="1"/>
+                 <t t-foreach="usercenter_menu" t-as="menu">
+                    <t t-if="menu.display_Position == 'one' and menu.is_visible  and  menu_num &lt; 5 ">
+                        <t t-set="is_auth" t-value="False"/> <!--权限判断如果系统菜单判断系统权限，没有判断菜单权限-->
+                        <t t-if="menu.sys_menu and menu.sys_menu.groups_id">
+                             <t t-foreach="menu.sys_menu.groups_id" t-as="menugroups_id">
+                                 <t t-if="menugroups_id in request.env.user.groups_id">
+                                       <t t-set="is_auth" t-value="True"/>
+                                 </t>
+                             </t>
+                        </t>
+                        <t t-elif="menu.groups_id">  <!--菜单权限检查-->
+                             <t t-foreach="menu.groups_id" t-as="menugroups_id">
+                                 <t t-if="menugroups_id in request.env.user.groups_id">
+                                       <t t-set="is_auth" t-value="True"/>
+                                 </t>
+                             </t>
+                        </t>
+                        <t t-else="">
+                            <t t-set="is_auth" t-value="True"/>
+                        </t>
+                        <t t-if="is_auth">
+                            <t t-set="menu_num" t-value="menu_num+1"/>
+                            <t t-if="menu.sys_menu  and menu.sys_menu.action">
+                                <t t-set="url" t-value="'/web#menu_id=' + str(menu.sys_menu.id) + '&amp;action=' + str(menu.sys_menu.action.id) +''"/>
+                                 <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
+                                 <t t-set="url" t-value="'/structure_iframe_page?url='+str(url)+''"></t>
+                            </t>
+                            <t t-elif="menu.url">
+                                <t t-set="url" t-value="menu.url"/>
+                                 <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
+                               <t t-set="url" t-value="'/structure_iframe_page?url='+str(url)+''"></t>
+                            </t>
+                            <t t-else="">
+                                <t t-set="url">javascript:;</t>
+                            </t>
+                            <a t-attf-href="#{url}" class="aui-palace-grid">
+                                <div class="aui-palace-grid-text">
+                                    <h1 t-esc="execute_code(menu.code)"></h1>
+                                    <h2 t-esc="menu.name"></h2>
+                                </div>
+                            </a>
+                        </t>
+                    </t>
+                </t>
+            </div>
+
+        </template>
+
+        <template id="list_aui_flex_box" name="list">
+            <div class="aui-flex-box">
+                <p t-esc="menu.name"/>
+            </div>
+            <div class="aui-arrow">
+                <span t-esc="menu.title"/>
+            </div>
+
+        </template>
+
+        <template id="aui_mon_list" name="列表菜单">
+            <div class="aui-mon-list">
+                <t t-foreach="usercenter_menu" t-as="menu">
+                    <t t-if="menu.display_Position == 'list' and menu.is_visible ">
+                        <t t-set="is_auth" t-value="False"/>  <!--权限判断如果系统菜单判断系统权限，没有判断菜单权限-->
+                        <t t-if="menu.sys_menu and menu.sys_menu.groups_id"> <!--系统菜单权限检查-->
+                             <t t-foreach="menu.sys_menu.groups_id" t-as="menugroups_id">
+                                 <t t-if="menugroups_id in request.env.user.groups_id">
+                                       <t t-set="is_auth" t-value="True"/>
+                                 </t>
+                             </t>
+                        </t>
+                        <t t-elif="menu.groups_id">  <!--菜单权限检查-->
+                             <t t-foreach="menu.groups_id" t-as="menugroups_id">
+                                 <t t-if="menugroups_id in request.env.user.groups_id">
+                                       <t t-set="is_auth" t-value="True"/>
+                                 </t>
+                             </t>
+                        </t>
+                        <t t-else="">
+                            <t t-set="is_auth" t-value="True"/>
+                        </t>
+                        <t t-if="is_auth">
+                                <t t-if="menu.sys_menu  and menu.sys_menu.action">
+                                    <t t-set="url" t-value="'/web#menu_id=' + str(menu.sys_menu.id) + '&amp;action=' + str(menu.sys_menu.action.id) +''"/>
+                                     <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
+                                    <t t-set="url" t-value="'/structure_iframe_page?url='+str(url)+''"></t>
+                                </t>
+                                <t t-elif="menu.url">
+                                    <t t-set="url" t-value="menu.url"/>
+                                     <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
+                                    <t t-set="url" t-value="'/structure_iframe_page?url='+str(url)+''"></t>
+                                </t>
+                                <t t-else="">
+                                    <t t-set="url">javascript:;</t>
+                                </t>
+
+                                <a t-attf-href="#{url}"
+                                   class="aui-flex b-line">
+                                     <t t-call="web_user_center.list_aui_flex_box"></t>
+                                </a>
+                                <div class="divHeight" t-if="menu.is_divHeight"></div>
+                         </t>
+                    </t>
+                </t>
+            </div>
+        </template>
+
+
+        <template id="aui_palace_aui_palace_two" name="第二列">
+            <div class="aui-palace aui-palace-two">
+                <t t-foreach="usercenter_menu" t-as="menu">
+                    <t t-if="menu.display_Position == 'two' and menu.is_visible">
+                        <t t-set="is_auth" t-value="False"/> <!--权限判断如果系统菜单判断系统权限，没有判断菜单权限-->
+                        <t t-if="menu.sys_menu and menu.sys_menu.groups_id">
+                             <t t-foreach="menu.sys_menu.groups_id" t-as="menugroups_id">
+                                 <t t-if="menugroups_id in request.env.user.groups_id">
+                                       <t t-set="is_auth" t-value="True"/>
+                                 </t>
+                             </t>
+                        </t>
+                        <t t-elif="menu.groups_id">  <!--菜单权限检查-->
+                             <t t-foreach="menu.groups_id" t-as="menugroups_id">
+                                 <t t-if="menugroups_id in request.env.user.groups_id">
+                                       <t t-set="is_auth" t-value="True"/>
+                                 </t>
+                             </t>
+                        </t>
+                        <t t-else="">
+                            <t t-set="is_auth" t-value="True"/>
+                        </t>
+                        <t t-if="is_auth">
+
+                                <t t-if="menu.sys_menu  and menu.sys_menu.action">
+                                    <t t-set="url" t-value="'/web#menu_id=' + str(menu.sys_menu.id) + '&amp;action=' + str(menu.sys_menu.action.id) +''"/>
+                                     <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
+                                     <t t-set="url" t-value="'/structure_iframe_page?url='+str(url)+''"></t>
+                                </t>
+                                <t t-elif="menu.url">
+                                    <t t-set="url" t-value="menu.url"/>
+                                     <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
+                                     <t t-set="url" t-value="'/structure_iframe_page?url='+str(url)+''"></t>
+                                </t>
+                                <t t-else="">
+                                    <t t-set="url">javascript:;</t>
+                                </t>
+                                <a t-attf-href="#{url}" class="aui-palace-grid b-line">
+                                    <div class="aui-palace-grid-icon">
+                                        <span t-if="menu.key_word" t-esc="menu.key_word"/>
+                                        <img t-if="menu.sys_menu.web_icon_data" t-attf-src="data:image/png;base64,#{menu.sys_menu.web_icon_data}" alt=""/>
+                                        <img t-elif="menu.web_icon_data" t-attf-src="data:image/png;base64,#{menu.web_icon_data}" alt=""/>
+                                        <img t-else="" src="/web_user_center/static/src/img/icon-head-01.png" alt=""/>
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2 t-esc="menu.name"/>
+                                    </div>
+                                </a>
+                        </t>
+                    </t>
+                </t>
+            </div>
+        </template>
+
+        <template id="aui_share_box_b_line" name="分享页面">
+            <div class="aui-share-box b-line">
+                <h2 class="aui-share-box-title">分享</h2>
+                <div class="aui-palace aui-palace-three">
+                    <a href="javascript:;" class="aui-palace-grid">
+                        <img src="/web_user_center/static/src/img/footer-001.png" alt=""/>
+                    </a>
+                    <a href="javascript:;" class="aui-palace-grid">
+                        <img src="/web_user_center/static/src/img/footer-002.png" alt=""/>
+                    </a>
+                    <a href="javascript:;" class="aui-palace-grid">
+                        <img src="/web_user_center/static/src/img/footer-003.png" alt=""/>
+                    </a>
+                    <a href="javascript:;" class="aui-palace-grid">
+                        <img src="/web_user_center/static/src/img/footer-004.png" alt=""/>
+                    </a>
+                    <a href="javascript:;" class="aui-palace-grid">
+                        <img src="/web_user_center/static/src/img/footer-005.png" alt=""/>
+                    </a>
+                </div>
+            </div>
+        </template>
+
+
+        <template id="web_user_center.userinfo" name="userinfo">
+            <section class="aui-flexView">
+                <section class="aui-scrollView">
+                    <t t-call="web_user_center.aui_flex_b_line"/>
+                    <t t-call="web_user_center.aui_palace_aui_palace_one"/>
+                    <div class="divHeight"></div>
+                    <t t-call="web_user_center.aui_palace_aui_palace_two"></t>
+                    <div class="divHeight"></div>
+                    <t t-call="web_user_center.aui_mon_list"></t>
+                </section>
+                <t t-call="web_user_center.aui-footer">
+                </t>
+            </section>
+
+
+        </template>
+
+        <template id="aui-footer" name="aui-footer">
+            <footer class="aui-footer aui-footer-fixed">
+                <t t-set="menu_num" t-value="1"/>
+                <t t-foreach="usercenter_menu" t-as="menu">
+                    <t t-if="menu.display_Position == 'footer' and menu.is_visible  and  menu_num &lt; 6 ">
+                        <t t-set="is_auth" t-value="False"/>  <!--权限判断如果系统菜单判断系统权限，没有判断菜单权限-->
+                        <t t-if="menu.sys_menu and menu.sys_menu.groups_id"> <!--系统菜单权限检查-->
+                             <t t-foreach="menu.sys_menu.groups_id" t-as="menugroups_id">
+                                 <t t-if="menugroups_id in request.env.user.groups_id">
+                                       <t t-set="is_auth" t-value="True"/>
+                                 </t>
+                             </t>
+                        </t>
+                        <t t-elif="menu.groups_id">  <!--菜单权限检查-->
+                             <t t-foreach="menu.groups_id" t-as="menugroups_id">
+                                 <t t-if="menugroups_id in request.env.user.groups_id">
+                                       <t t-set="is_auth" t-value="True"/>
+                                 </t>
+                             </t>
+                        </t>
+                        <t t-else="">
+                            <t t-set="is_auth" t-value="True"/>
+                        </t>
+                        <t t-if="is_auth">
+                             <t t-set="menu_num" t-value="menu_num+1"/>
+                            <t t-if="menu.sys_menu  and menu.sys_menu.action">
+                                <t t-set="url" t-value="'/web#menu_id=' + str(menu.sys_menu.id) + '&amp;action=' + str(menu.sys_menu.action.id) +''"/>
+                                <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
+                                <t t-if="not menu.new_window">
+                                      <t t-set="url" t-value="'/structure_iframe_page?url='+str(url)+''"></t>
+                                </t>
+                            </t>
+                            <t t-elif="menu.url">
+                                <t t-set="url" t-value="menu.url"/>
+                                <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
+                                <t t-if="not menu.new_window">
+                                    <t t-set="url" t-value="'/structure_iframe_page?url='+str(url)+''"></t>
+                                </t>
+                            </t>
+                            <t t-else="">
+                                <t t-set="url">javascript:;</t>
+                            </t>
+                            <a  t-attf-href="#{url}" class="aui-tabBar-item aui-tabBar-item-active">
+                                <span class="aui-tabBar-item-icon">
+                                    <i t-if="menu.sys_menu.web_icon_data" t-attf-style="width: 22px;height: 22px;display: block;border: none;float: left;background-size: 22px;background-repeat: no-repeat;;background-image:url(data:image/png;base64,#{menu.sys_menu.web_icon_data})"/>
+                                    <i t-elif="menu.web_icon_data" t-attf-style="width: 22px;height: 22px;display: block;border: none;float: left;background-size: 22px;background-repeat: no-repeat;;background-image:url(data:image/png;base64,#{menu.web_icon_data})"/>
+                                    <i t-else=""  class="icon icon-mine"/>
+                                </span>
+                                <span class="aui-tabBar-item-text"  t-esc="menu.name"/>
+                            </a>
+                         </t>
+                    </t>
+                </t>
+            </footer>
+
+        </template>
+
     </data>
 </odoo>
