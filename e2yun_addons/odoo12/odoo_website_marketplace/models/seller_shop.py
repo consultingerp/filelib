@@ -8,6 +8,7 @@ class sellers_shop(models.Model):
     _inherit = ['mail.thread']
     
     @api.depends('name','seller_id')
+    @api.multi
     def seller_products(self):
         for product in self:
             product_ids = self.env['product.template'].search([('seller_id','=',product.seller_id.sudo().partner_id.id)])
@@ -15,6 +16,7 @@ class sellers_shop(models.Model):
         return True
 
     @api.depends('seller_product_ids','seller_id')
+    @api.multi
     def count_product(self):
         for count in self:
             count.total_product = len(count.seller_product_ids)
@@ -68,7 +70,7 @@ class sellers_shop(models.Model):
         ('name_seller_shop_unique', 'UNIQUE(seller_id)', 'Seller Name Must Be unique! \n Seller you\'re trying to use is already has been taken!!'),
     ]
 
-
+    @api.multi
     def toggle_active(self):
         for record in self:
             record.active = True

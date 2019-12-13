@@ -2,7 +2,7 @@
 # Part of BrowseInfo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields, api, _
-from odoo.exceptions import Warning
+from odoo.exceptions import ValidationError, UserError, Warning
 
 class payment_seller(models.Model):
     _name = 'seller.payment'
@@ -46,11 +46,13 @@ class payment_seller(models.Model):
             
         return super(payment_seller, self).create(vals)
 
+    @api.multi
     def send_request(self):
         for payment in self:
             payment.state = 'requested'
         return True
 
+    @api.multi
     def validate_request(self):
         for payment in self:
             inv_obj = self.env['account.invoice']
@@ -129,6 +131,7 @@ class payment_seller(models.Model):
             updated_amount = partner.seller_credit - payment.payable_amount
             partner.write({'seller_credit' : updated_amount,'last_payment_date':fields.Date.context_today(self)})
 
+    @api.multi
     def view_invoice(self):
         
         action = self.env.ref('account.action_move_out_invoice_type')
@@ -146,6 +149,7 @@ class payment_seller(models.Model):
         }
         return result
 
+    @api.multi
     def unlink(self):
         for partner in self:
             if partner.state not in ('draft', 'cancel'):
@@ -173,7 +177,7 @@ class StockMove(models.Model):
 class AccountInvoiceInherit(models.Model):
     _inherit = 'account.invoice'
 
-
+    @api.multi
     def action_invoice_paid(self):
         # lots of duplicate calls to action_invoice_paid, so we remove those already paid
         res = super(AccountInvoiceInherit, self).action_invoice_paid()
