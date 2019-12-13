@@ -9,6 +9,9 @@
                     <field name="category_parents" invisible="1" readonly="1" widget="many2many_tags"/>
                     <field name="product_template_external_website"/>
                     <field name="custom_order"/>
+                    <field name="recommend"/>
+                    <field name="recommend_text"/>
+                    <field name="sell_well"/>
                     <field name="browse_num" readonly="1"/>
                     <field name="so_qty" readonly="1"/>
                 </xpath>
@@ -93,5 +96,27 @@
         <menuitem name="Server to list" id="e2yun_online_shop_extends" parent="e2yun_online_shop_extends.menu_2"
                   action="e2yun_online_shop_extends.action_server"/>
         -->
+
+        <record model="ir.ui.view" id="online_partner_list">
+          <field name="name">online_partner list</field>
+          <field name="model">online.partner</field>
+          <field name="arch" type="xml">
+            <tree>
+              <field name="name"/>
+              <field name="logo_image" widget='image' class="oe_avatar" options='{"preview_image": "image_medium", "size": [100, 100]}'/>
+              <field name="sort"/>
+            </tree>
+          </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="online_partner_action">
+          <field name="name">电商合作伙伴</field>
+          <field name="res_model">online.partner</field>
+          <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="电商合作伙伴" id="online_partner_menu" parent="sale.prod_config_main"
+                  action="online_partner_action"/>
+
     </data>
 </odoo>

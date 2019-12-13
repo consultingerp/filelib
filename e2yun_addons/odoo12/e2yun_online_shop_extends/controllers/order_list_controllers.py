@@ -22,13 +22,13 @@ class order_list(http.Controller):
     @http.route('/e2yun_online_shop_extends/get_order_list', type='http', auth="public", website=True)
     def get_order_list(self, access_token=None, revive='', **post):
         datas = []
-        orders = request.env['sale.order'].sudo().search([('state','!=','draft'),('partner_id','=',request.env.user.partner_id.id)])
+        orders = request.env['sale.order'].sudo().search([('partner_id','=',request.env.user.partner_id.id)])#('state','!=','draft'),
         for order in orders:
 
             data = {
                 'order_name':order.name,
                 'order_date':order.date_order,
-                'order_state':order.state,
+                'order_state':order.crmstate,
                 'order_team':'',
                 'order_address':order.address or '',
                 'order_phone':order.telephone or '',
