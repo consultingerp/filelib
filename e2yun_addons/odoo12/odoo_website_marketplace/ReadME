@@ -1,0 +1,15 @@
+version info:-
+13.0.0.1 :- remove installation warning, solve issue.
+
+
+version info:-
+13.0.0.2 :- 1. while giving review rating to a seller.. 
+
+13.0.0.3 :-
+
+1) Solve picking issue for seller.
+2) Solve product qty issue for seller.
+3) Solve compute method issue for seller.
+
+13.0.0.4 :-
+-> Add seller in product only when partner is seller otherwise it will be blank.

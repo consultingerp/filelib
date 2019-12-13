@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <template id="assets_backend" name="account assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/odoo_website_marketplace/static/src/css/kanban.css"/>
+        </xpath>
+    </template>
+    
+    <record id="seller_dashboard_kanban_dashboard" model="ir.ui.view">
+        <field name="name">seller.dashboard.kanban</field>
+        <field name="model">seller.dashboard</field>
+        <field name="arch" type="xml">
+            <kanban class="oe_background_grey o_kanban_dashboard o_salesteam_kanban" create="0">
+                <field name="color"/>
+                <field name="name"/>
+                <field name="state"/>
+                <field name="waiting_product"/>
+                <field name="approved_product"/>
+                <field name="rejected_product"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_content o_kanban_get_form" style="width:20%;">
+                            <div class="o_has_icon">
+                                <div t-attf-class="o_kanban_card_header">
+                                    <div class="o_kanban_card_header_title">
+                                        <div class="o_primary" style="color:teal;font-weight: bold;">
+                                            <div t-if="record.name.raw_value == 'All Sellers'">
+                                                <field name="name" groups="odoo_website_marketplace.group_market_place_manager"/>
+                                            </div>
+                                            <div t-else="">
+                                                <field name="name" groups="odoo_website_marketplace.group_market_place_seller"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="container o_kanban_card_content">
+                                    <div class="row" style="flex-wrap: nowrap;">
+                                        <div class="col-xs-6 o_kanban_primary_left">
+                                            <div t-if="record.state.raw_value =='product'" style="color:teal;margin-left: 30px;">
+                                                <i class="fa fa-product-hunt fa-5x"/>
+                                                <h3>Products</h3>
+                                            </div>
+                                            <div t-if="record.state.raw_value =='seller'" style="color:teal;margin-left: 30px;" groups="odoo_website_marketplace.group_market_place_manager">
+                                                <left><i class="fa fa-users fa-5x"/>
+                                                <h3>Sellers</h3></left>
+                                            </div><div t-if="record.state.raw_value =='order'" style="color:teal;margin-left: 30px;">
+                                                <left><i class="fa fa-shopping-cart fa-5x"/>
+                                                <h3>Orders</h3></left>
+                                            </div>
+                                            <div t-if="record.state.raw_value =='payment'" style="color:teal;margin-left: 30px;">
+                                                <left><i class="fa fa-money fa-5x"/>
+                                                <h3>Payments</h3></left>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6 o_kanban_primary_right">
+                                            <div t-if="record.state.raw_value =='product'">
+                                                <a class="bg-custom button-box text-white " name="%(action_product_template_waiting)d" type="action">
+                                                    <span class="o_value"><t t-esc="record.waiting_product.raw_value"/></span>
+                                                    <span class="o_label">Waiting</span>
+                                                </a>
+                                                <a class="button-box text-white" name="%(action_product_template_approve)d" type="action" style="background-color:teal">
+                                                    <span class="o_value"><t t-esc="record.approved_product.raw_value"/></span>
+                                                    <span class="o_label">Approved</span>
+                                                </a>
+                                                <a class="button-box text-white" name="%(action_product_template_cancel)d" type="action" style="background-color:#C42222">
+                                                    <span class="o_value"><t t-esc="record.rejected_product.raw_value"/></span>
+                                                    <span class="o_label">Rejected</span>
+                                                </a>
+                                            </div>
+
+                                            <div t-if="record.state.raw_value == 'seller'" groups="odoo_website_marketplace.group_market_place_manager">
+                                                <a class="bg-custom button-box text-white pending_seller_tooltip" name="%(action_res_partner_waiting)d" type="action">
+                                                    <span class="o_value"><t t-esc="record.waiting_product.raw_value"/></span>
+                                                    <span class="o_label">Waiting</span>
+                                                </a>
+                                                <a class="button-box text-white" name="%(action_res_partner_approve)d" type="action" style="background-color:teal">
+                                                    <span class="o_value"><t t-esc="record.approved_product.raw_value"/></span>
+                                                    <span class="o_label">Approved</span>
+                                                </a>
+                                                <a class="button-box text-white" name="%(action_res_partner_cancel)d" type="action" style="background-color:#C42222">
+                                                    <span class="o_value"><t t-esc="record.rejected_product.raw_value"/></span>
+                                                    <span class="o_label">Rejected</span>
+                                                </a>
+                                            </div>
+
+                                            <div t-if="record.state.raw_value =='order'">
+                                                <a class="bg-custom button-box text-white" name="%(action_sale_order_draft)d" type="action" style="background-color:slategrey;">
+                                                    <span class="o_value"><t t-esc="record.rejected_product.raw_value"/></span>
+                                                    <span class="o_label">Draft Order</span>
+                                                </a>
+                                                <a class="bg-custom button-box text-white" name="%(action_sale_order_approve)d" type="action">
+                                                    <span class="o_value"><t t-esc="record.waiting_product.raw_value"/></span>
+                                                    <span class="o_label">Sales Order</span>
+                                                </a>
+                                                <a class="button-box text-white" name="%(action_sale_order_shipped)d" type="action" style="background-color:teal">
+                                                    <span class="o_value"><t t-esc="record.approved_product.raw_value"/></span>
+                                                    <span class="o_label">Done</span>
+                                                </a>
+                                            </div>
+
+                                            <div t-if="record.state.raw_value =='payment'">
+                                                <a class="bg-custom button-box text-white " name="%(action_seller_payment_waiting)d" type="action">
+                                                    <span class="o_value"><t t-esc="record.waiting_product.raw_value"/></span>
+                                                    <span class="o_label">Waiting</span>
+                                                </a>
+                                                <a class="button-box text-white" name="%(action_seller_payment_approve)d" type="action" style="background-color:teal">
+                                                    <span class="o_value"><t t-esc="record.approved_product.raw_value"/></span>
+                                                    <span class="o_label">Approved</span>
+                                                </a>
+                                                <a class="button-box text-white" name="%(action_seller_payment_cancel)d" type="action" style="background-color:#C42222">
+                                                    <span class="o_value"><t t-esc="record.rejected_product.raw_value"/></span>
+                                                    <span class="o_label">Rejected</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+    <record id="seller_kanban_dashboard_action" model="ir.actions.act_window">
+        <field name="name">Seller's Dashboard</field>
+        <field name="res_model">seller.dashboard</field>
+        <field name="type">ir.actions.act_window</field>
+        
+        <field name="view_mode">kanban,form</field>
+        <field name="view_id" ref="seller_dashboard_kanban_dashboard"/>
+        <field name="usage">menu</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+            </p>
+        </field>
+    </record>
+
+    <menuitem action="seller_kanban_dashboard_action" id="seller_kanban_dashboard_view"
+        parent="seller_dashboard_menu" sequence="0" name="Dashboard"/>
+</odoo>
