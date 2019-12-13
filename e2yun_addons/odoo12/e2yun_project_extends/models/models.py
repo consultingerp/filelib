@@ -94,6 +94,10 @@ class E2yunTaskInfo(models.Model):
             raise exceptions.Warning(_('权重之和大于100%，请重新输入'))
         return res
 
+    # @api.multi
+    # def create(self, vals):
+
+
     # 任务页面打开问卷页面的方法
     @api.multi
     def turn_page(self):
@@ -257,13 +261,15 @@ class SurveyQuestion(models.Model):
         for item in self:
             if item.scoring_method == '唯一性计分':
                 if item.labels_ids:
-                    count = 0
+                    # count = 0
                     all = []
                     for l in item.labels_ids:
-                        count += 1
-                        all.append(l.quizz_mark)
-                    statistics = all.count(0.0)
-                    if count > 2 or count == 1 or statistics > 1 or statistics == 0:
+                        # count += 1
+                        if l.quizz_mark > 0.0:
+                            all.append(l.quizz_mark)
+                    if len(all) >= 2:
+                    # statistics = all.count(0.0)
+                    # if count > 2 or count == 1 or statistics == 0:
                         raise exceptions.Warning(_('唯一性计分只能给一个选项赋值，其他为0，请重新输入'))
             elif item.scoring_method == '选择性计分':
                 if item.labels_ids:
@@ -278,13 +284,14 @@ class SurveyQuestion(models.Model):
         res = super(SurveyQuestion, self).create(vals)
         if res.scoring_method == '唯一性计分':
             if res.labels_ids:
-                count = 0
+                # count = 0
                 all = []
                 for l in self.labels_ids:
-                    count += 1
-                    all.append(l.quizz_mark)
-                statistics = all.count(0.0)
-                if count > 2 or count == 1 or statistics > 1 or statistics == 0:
+                    if l.quizz_mark > 0.0:
+                        all.append(l.quizz_mark)
+                # statistics = all.count(0.0)
+                # if count > 2 or count == 1 or statistics > 1 or statistics == 0:
+                if len(all) >= 2:
                     raise exceptions.Warning(_('唯一性计分只能给一个选项赋值，其他为0，请重新输入'))
         elif res.scoring_method == '选择性计分':
             if res.labels_ids:
