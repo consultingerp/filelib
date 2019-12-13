@@ -184,11 +184,12 @@ class E2yunProjectSurvey(models.Model):
             # raise ValueError('权重之和大于100%，请重新输入')
             # raise Warning(_('权重之和大于100%，请重新输入'))
             raise exceptions.Warning(_('权重之和大于100%，请重新输入'))
+        # self.copy()
         return res
 
-    def get_formview_id(self, access_uid=None):
-        res = super(E2yunProjectSurvey,self).get_formview_id(access_uid)
-        return res
+    # def get_formview_id(self, access_uid=None):
+    #     res = super(E2yunProjectSurvey,self).get_formview_id(access_uid)
+    #     return res
 
 
 class SurveyPage(models.Model):
@@ -199,7 +200,7 @@ class SurveyPage(models.Model):
     # 小计
     x_studio_survey_page_sum = fields.Integer(string='小计')
     # 权重百分比
-    @api.onchange('question_ids.')
+    @api.onchange('weight')
     def _onchange_weight(self):
         if self.weight:
             if '%' in self.weight:
@@ -271,20 +272,28 @@ class SurveyQuestion(models.Model):
                             raise exceptions.Warning(_('选择性计分每个选项都有分值，请重新输入'))
         return res
 
-    # ⑥创建问题保存时，系统校验 “题库大类”和“计分方式”是否选择，如果未选择，则弹出提示“计分方式未选择，请选择”；
+    # ⑥创建问题保存时，系统校验 “题库大类”和“计分方式”是否选择，如果未选择，则弹出提示“计分方式未选择，请选择”；# 唯一性计分分值超出则弹框提醒；选择性计分只能有唯一答案，但每个选项都有分数，否则弹框提醒。
     @api.model
     def create(self, vals):
         res = super(SurveyQuestion, self).create(vals)
+        if res.scoring_method == '唯一性计分':
+            if res.labels_ids:
+                count = 0
+                all = []
+                for l in self.labels_ids:
+                    count += 1
+                    all.append(l.quizz_mark)
+                statistics = all.count(0.0)
+                if count > 2 or count == 1 or statistics > 1 or statistics == 0:
+                    raise exceptions.Warning(_('唯一性计分只能给一个选项赋值，其他为0，请重新输入'))
+        elif res.scoring_method == '选择性计分':
+            if res.labels_ids:
+                for l in res.labels_ids:
+                    if l.quizz_mark == 0:
+                        raise exceptions.Warning(_('选择性计分每个选项都有分值，请重新输入'))
         if not res.question_bank_type or not res.scoring_method:
             raise exceptions.Warning(_('题库大类或计分方式未选择，请选择'))
         return res
-
-    # @api.depends('new_type')
-    # @api.onchange('new_type')
-    # def onchange_question_type(self):
-    #     code = self.new_type.name
-    #     if code != '单选题' or code != '多选' or code != '矩阵':
-    #         self.labels_ids = int()
 
 class NewQuestionType(models.Model):
     _name = 'question.type'
