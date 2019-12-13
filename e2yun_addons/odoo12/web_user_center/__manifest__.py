@@ -8,13 +8,17 @@
     'description': """个人中心.""",
     'application': True,
     'depends': [
-        'base', 'web', 'website', 'mail',
+        'base', 'web', 'website',
     ],
     'data': [
+        'security/user_center_security.xml',
         'security/ir.model.access.csv',
         'views/web_user_center_templates.xml',
+        'views/user_center_menus.xml',
         'views/user_center.xml',
-        'views/user_center_menus.xml'
+        'views/usercenter_menu.xml',
+        'views/usercenter_menu_seq.xml',
+        'views/structure_iframe_page.xml',
     ],
     'qweb': [
         'static/src/xml/*.xml',

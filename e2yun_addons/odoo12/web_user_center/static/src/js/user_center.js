@@ -21,7 +21,7 @@ odoo.define('web_user_center.user_center', function (require) {
         },
         start: function () {
             var self = this;
-            //QWeb.add_template("/web_user_center/static/src/xml/user_center_base.xml");
+            QWeb.add_template("/web_user_center/static/src/xml/user_center_base.xml");
             if (config.device.isMobile) {
                 this.isMobile = config.device.isMobile;
             } else {

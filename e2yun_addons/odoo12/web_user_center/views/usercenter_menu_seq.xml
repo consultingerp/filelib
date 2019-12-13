@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="usercenter_menu_seq_view_tree" model="ir.ui.view">
+        <field name="name">usercenter.menu.seq.tree</field>
+        <field name="model">usercenter.menu</field>
+        <field name="arch" type="xml">
+            <tree editable="top" string="usercenter" create="0" delete="0">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="is_visible"/>
+                 <field name="display_Position" invisible="False"/>
+                <field name="is_divHeight"  attrs="{'invisible': [('display_Position', '!=', 'list')]}"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="usercenter_menu_seq_action" model="ir.actions.act_window">
+        <field name="name">菜单排序</field>
+        <field name="res_model">usercenter.menu</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="usercenter_menu_seq_view_tree"/>
+    </record>
+
+    <menuitem id="usercenter_menu_seq_menu" name="菜单顺序调整" action="usercenter_menu_seq_action"
+              sequence="2" parent="menu_user_center_conf"/>
+
+</odoo>
