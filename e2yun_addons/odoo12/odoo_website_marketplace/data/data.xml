@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <data noupdate="0">
+        
+        <record id="menu_seller" model="website.menu">
+            <field name="name">Seller</field>
+            <field name="url">/seller</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">20</field>
+        </record>
+
+        <record id="product_template_quote_x" model="product.template">
+            <field name="name">Marketplace Seller Payment</field>
+            <!-- <field name="categ_id" ref="product.product_category_3"/> -->
+            <field name="standard_price">1.0</field>
+            <field name="list_price">1.0</field>
+            <field name="type">service</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="uom_po_id" ref="uom.product_uom_unit"/>
+            <field name="description_sale">Seller Payment Product</field>
+        </record>
+
+        <record id="event_3_product_x" model="product.product">
+            <field name="name">Marketplace Seller Payment</field>
+            <!-- <field name="categ_id" ref="product.product_category_3"/> -->
+            <field name="type">service</field>
+            <field name="list_price">1.0</field>
+            <field name="standard_price">1.0</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="uom_po_id" ref="uom.product_uom_unit"/>
+        </record>
+
+
+        <record id="menu_dashboard_product" model="seller.dashboard">
+            <field name="name">Seller's Products</field>
+            <field name="state">product</field>
+            <field name="group_id" ref="odoo_website_marketplace.group_market_place_seller"/>
+        </record>
+
+        <record id="menu_dashboard_orders" model="seller.dashboard">
+            <field name="name">Seller's Orders</field>
+            <field name="state">order</field>
+            <field name="group_id" ref="odoo_website_marketplace.group_market_place_seller"/>
+        </record>
+
+        <record id="menu_dashboard_payments" model="seller.dashboard">
+            <field name="name">Seller's Payments</field>
+            <field name="state">payment</field>
+            <field name="group_id" ref="odoo_website_marketplace.group_market_place_seller"/>
+        </record>
+
+        <record id="menu_dashboard_sellers" model="seller.dashboard">
+            <field name="name">All Sellers</field>
+            <field name="state">seller</field>
+            <field name="group_id" ref="odoo_website_marketplace.group_market_place_manager"/>
+        </record>
+
+        <record id="sequence_seller_payment" model="ir.sequence">
+            <field name="name">Routing</field>
+            <field name="code">seller.payment</field>
+            <field name="prefix">Pay/</field>
+            <field name="padding">3</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+    </data>
+</odoo>

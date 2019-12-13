@@ -12,7 +12,8 @@
             <field name="model">outbound.final</field>
             <field name="arch" type="xml">
                 <graph string="目标完成占比报表">
-                    <field name="jiesuan_amount" type="measure"/>
+                    <field name="completion" type="measure"/>
+                    <field name="stage_id" type="col"/>
                 </graph>
             </field>
         </record>
@@ -31,8 +32,10 @@
                     <field name="vtweg"/>
                     <field name="kunnr"/>
                     <field name="ywy"/>
-                    <field name="target_amount"/>
-                    <field name="jiesuan_amount"/>
+<!--                    <field name="target_amount"/>-->
+<!--                    <field name="jiesuan_amount"/>-->
+                    <field name="completion"/>
+                    <field name="stage_id"/>
                 </tree>
             </field>
         </record>
