@@ -14,6 +14,7 @@
         'views/outbound_report_dashboard.xml',
         'views/sales_team_goal.xml',
         'views/target_completion_report.xml',
+        'views/target_stage.xml',
     ],
     'qweb': [
         'static/src/xml/outbound_button_template.xml',

@@ -1,0 +1,2216 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* odoo_website_marketplace
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-12-12 10:00+0000\n"
+"PO-Revision-Date: 2019-12-12 23:09+0800\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: zh\n"
+"X-Generator: Poedit 1.8.12\n"
+
+#. module: odoo_website_marketplace
+#: model:mail.template,body_html:odoo_website_marketplace.email_template_marketplace
+msgid ""
+"\n"
+"                    <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: FFF; \">\n"
+"                        <p>Dear ${object.name}</p>\n"
+"                        <p> We Receive your request as a Seller</p>\n"
+"                        <p> Thank You for being part of us.</p>\n"
+"                        <br/>\n"
+"                        <p>Here is your login details </p>\n"
+"                        <table style=\"border 1px solid black\">\n"
+"                            <tr>\n"
+"                                <td>Login</td>\n"
+"                                <td>${object.email}</td>\n"
+"                            </tr>\n"
+"                            <tr>\n"
+"                                <td>Password</td>\n"
+"                                <td>${object.password}</td>\n"
+"                            </tr>\n"
+"                        </table>\n"
+"                    </div>\n"
+"                        \n"
+"            "
+msgstr ""
+"\n"
+"                    <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: FFF; \">\n"
+"                        <p>亲爱的 ${object.name}</p>\n"
+"                        <p> 我们接收到你注册为卖家申请</p>\n"
+"                        <p> 谢谢你将成为我们的一员。</p>\n"
+"                        <br/>\n"
+"                        <p>这是您的登录信息</p>\n"
+"                        <table style=\"border 1px solid black\">\n"
+"                            <tr>\n"
+"                                <td>登录账号</td>\n"
+"                                <td>${object.email}</td>\n"
+"                            </tr>\n"
+"                            <tr>\n"
+"                                <td>密码</td>\n"
+"                                <td>${object.password}</td>\n"
+"                            </tr>\n"
+"                        </table>\n"
+"                    </div>\n"
+"                        \n"
+"            "
+
+#. module: odoo_website_marketplace
+#: model:mail.template,body_html:odoo_website_marketplace.email_template_marketplace_approved
+msgid ""
+"\n"
+"                    <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: FFF; \">\n"
+"                        <p>Dear ${object.name}</p>\n"
+"                        <p>Request is Approved As a Seller.</p>\n"
+"                        <p> Thank You</p>\n"
+"                    </div>\n"
+"                    <p>Here is your login details </p>\n"
+"                    <table style=\"border 1px solid black\">\n"
+"                        <tr>\n"
+"                            <td>Login</td>\n"
+"                            <td>${object.email}</td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                            <td>Password</td>\n"
+"                            <td>${object.password}</td>\n"
+"                        </tr>\n"
+"                    </table>\n"
+"                \n"
+"            "
+msgstr ""
+"\n"
+"                    <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: FFF; \">\n"
+"                        <p>亲爱的${object.name}</p>\n"
+"                        <p>你申请成为卖家申请已经批准。</p>\n"
+"                        <p> 谢谢</p>\n"
+"                    </div>\n"
+"                    <p>这是你的登录信息 </p>\n"
+"                    <table style=\"border 1px solid black\">\n"
+"                        <tr>\n"
+"                            <td>登录账号</td>\n"
+"                            <td>${object.email}</td>\n"
+"                        </tr>\n"
+"                        <tr>\n"
+"                            <td>密码</td>\n"
+"                            <td>${object.password}</td>\n"
+"                        </tr>\n"
+"                    </table>\n"
+"                \n"
+"            "
+
+#. module: odoo_website_marketplace
+#: model:mail.template,body_html:odoo_website_marketplace.email_template_marketplace_rejected
+msgid ""
+"\n"
+"                    <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: FFF; \">\n"
+"                        <p>Dear ${object.name}</p>\n"
+"                        <p>Request is Rejected As a Seller.</p>\n"
+"                        <p> Contact administration to more info. </p>\n"
+"                        <p> Thank You</p>\n"
+"                    </div>\n"
+"                \n"
+"            "
+msgstr ""
+"\n"
+"                    <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: FFF; \">\n"
+"                        <p>亲爱的 ${object.name}</p>\n"
+"                        <p>抱歉通知你，申请成为卖家申请已经拒绝。</p>\n"
+"                        <p> 联系管理部门获取更多信息。</p>\n"
+"                        <p> 谢谢</p>\n"
+"                    </div>\n"
+"                \n"
+"            "
+
+#. module: odoo_website_marketplace
+#: model:mail.template,body_html:odoo_website_marketplace.email_template_marketplace_approved_product
+msgid ""
+"\n"
+"                    <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: FFF; \">\n"
+"                        <p>Dear ${object.seller_id.name}</p>\n"
+"                        <p> Approved Request for a Product ${object.name}.</p>\n"
+"                        <p> Thank You</p>\n"
+"                    </div>\n"
+"                \n"
+"            "
+msgstr ""
+"\n"
+"                    <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: FFF; \">\n"
+"                        <p>亲爱的 ${object.seller_id.name}</p>\n"
+"                        <p> 已批准注册产品${object.name}申请。</p>\n"
+"                        <p> 谢谢</p>\n"
+"                    </div>\n"
+"                \n"
+"            "
+
+#. module: odoo_website_marketplace
+#: model:mail.template,body_html:odoo_website_marketplace.email_template_marketplace_reject_product
+msgid ""
+"\n"
+"                    <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: FFF; \">\n"
+"                        <p>Dear ${object.seller_id.name}</p>\n"
+"                        <p> Your Request for a Product ${object.name} id Rejected.</p>\n"
+"                        <p> Contact administration to more info. </p>\n"
+"                        <p> Thank You</p>\n"
+"                    </div>\n"
+"                \n"
+"            "
+msgstr ""
+"\n"
+"                    <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: FFF; \">\n"
+"                        <p>亲爱的 ${object.seller_id.name}</p>\n"
+"                        <p> 抱歉通知，注册产品${object.name}申请被拒绝。</p>\n"
+"                        <p> 联系管理部门获取更多信息。</p>\n"
+"                        <p> 谢谢</p>\n"
+"                    </div>\n"
+"                \n"
+"            "
+
+#. module: odoo_website_marketplace
+#: model:mail.template,body_html:odoo_website_marketplace.email_template_marketplace_approve
+msgid ""
+"\n"
+"                    <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: FFF; \">\n"
+"                        <p>Dear Admin</p>\n"
+"                        <p> Approve My Request As a Seller.</p>\n"
+"                        <p> Thank You</p>\n"
+"                    </div>\n"
+"                \n"
+"            "
+msgstr ""
+"\n"
+"                    <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: FFF; \">\n"
+"                        <p>亲爱的管理方</p>\n"
+"                        <p> 请审批我注册卖家的申请</p>\n"
+"                        <p> 谢谢</p>\n"
+"                    </div>\n"
+"                \n"
+"            "
+
+#. module: odoo_website_marketplace
+#: model:mail.template,body_html:odoo_website_marketplace.email_template_marketplace_approve_product
+msgid ""
+"\n"
+"                    <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: FFF; \">\n"
+"                        <p>Dear Admin</p>\n"
+"                        <p> Approve My Request for a Product ${object.name}.</p>\n"
+"                        <p> Thank You</p>\n"
+"                    </div>\n"
+"                \n"
+"            "
+msgstr ""
+"\n"
+"                    <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: FFF; \">\n"
+"                        <p>亲爱的管理方</p>\n"
+"                        <p> 请审批我的${object.name}产品注册申请。</p>\n"
+"                        <p> 谢谢</p>\n"
+"                    </div>\n"
+"                \n"
+"            "
+
+#. module: odoo_website_marketplace
+#. openerp-web
+#: code:addons/odoo_website_marketplace/static/src/js/seller_review_ratting.js:99
+#, python-format
+msgid "  Your review has been submitted successfully. Thank you!"
+msgstr "  您的评价已经提交成功。谢谢！"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_seller_non_approve_product
+msgid " Non Approve Products"
+msgstr "未批准的产品"
+
+#. module: odoo_website_marketplace
+#. openerp-web
+#: code:addons/odoo_website_marketplace/static/src/js/seller_review_ratting.js:46
+#, python-format
+msgid " Please add your rating !!!"
+msgstr "请添加您的评价!!"
+
+#. module: odoo_website_marketplace
+#. openerp-web
+#: code:addons/odoo_website_marketplace/static/src/js/seller_review_ratting.js:62
+#, python-format
+msgid " Review is required field."
+msgstr " 评价是必填项。"
+
+#. module: odoo_website_marketplace
+#. openerp-web
+#: code:addons/odoo_website_marketplace/static/src/js/seller_review_ratting.js:53
+#, python-format
+msgid " Review title is required field."
+msgstr " 评价标题是必填项。"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.view_sale_order_line_kanban
+msgid "&amp;nbsp;&amp;nbsp;&amp;nbsp;"
+msgstr "&amp;nbsp;&amp;nbsp;&amp;nbsp;"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.view_seller_payment_kanban
+msgid "&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;"
+msgstr "&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "(Posted on"
+msgstr "(已发布"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_view
+msgid "<b>Products: </b>"
+msgstr "<b>产品:</b>"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.show_sale_count_in_product_page
+msgid "<b>Seller :</b>"
+msgstr "<b>卖家:</b>"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.res_config_settings_view_form_marketplace
+msgid "<span attrs=\"{'invisible': [('is_commission','=',False)]}\" class=\"oe_inline\">&amp;nbsp;%</span>"
+msgstr "<span attrs=\"{'invisible': [('is_commission','=',False)]}\" class=\"oe_inline\">&amp;nbsp;%</span>"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.marketplace_res_partner_inherit_form_view
+msgid "<span attrs=\"{'invisible': [('overwrite_setting', '!=', True)]}\" class=\"oe_inline\">&amp;nbsp;%</span>"
+msgstr "<span attrs=\"{'invisible': [('overwrite_setting', '!=', True)]}\" class=\"oe_inline\">&amp;nbsp;%</span>"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_dashboard_kanban_dashboard
+msgid "<span class=\"o_label\">Approved</span>"
+msgstr "<span class=\"o_label\">已批准</span>"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_dashboard_kanban_dashboard
+msgid "<span class=\"o_label\">Done</span>"
+msgstr "<span class=\"o_label\">完成</span>"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_dashboard_kanban_dashboard
+msgid "<span class=\"o_label\">Draft Order</span>"
+msgstr "<span class=\"o_label\">草稿订单</span>"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_dashboard_kanban_dashboard
+msgid "<span class=\"o_label\">Rejected</span>"
+msgstr "<span class=\"o_label\">已拒绝</span>"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_dashboard_kanban_dashboard
+msgid "<span class=\"o_label\">Sales Order</span>"
+msgstr "<span class=\"o_label\">销售订单</span>"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_dashboard_kanban_dashboard
+msgid "<span class=\"o_label\">Waiting</span>"
+msgstr "<span class=\"o_label\">待处理</span>"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "<span class=\"review_class_rating\">Reviewed by</span>"
+msgstr "<span class=\"review_class_rating\">已评价 </span>"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid ""
+"<span style=\"font-size:10px;color:black;\">\n"
+"                                    (Be the first one to rate)\n"
+"                                </span>"
+msgstr ""
+"<span style=\"font-size:10px;color:black;\">\n"
+"                                    (做第一个评价的人)\n"
+"                                </span>"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.view_sale_order_line_kanban
+msgid "<span/>&amp;nbsp;&amp;nbsp;&amp;nbsp;"
+msgstr "<span/>&amp;nbsp;&amp;nbsp;&amp;nbsp;"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller
+msgid "<span>Seller can create product and its valuation based on policy</span>"
+msgstr "<span>卖家可以根据政策维护产品和价格</span>"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller
+msgid "<span>Seller can track data easily with dashboard.</span>"
+msgstr "<span>卖家可以通过仪表板很容易地跟踪数据。</span>"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller
+msgid "<span>Seller can track their order, approve it</span>"
+msgstr "<span>卖家可以跟踪并审批他们的订单</span>"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller
+msgid "<span>Seller has its own website profile view with necessary data</span>"
+msgstr "<span>卖家有自己的网站概要视图，包含关键的数据</span>"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller
+msgid "<span>Seller has their own shop view so then can configure it with terms and policies.</span>"
+msgstr "<span>卖家拥有自己的店铺视图，可以配置使用条款和政策。</span>"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller
+msgid "<span>Seller payment menu for clear transient of business</span>"
+msgstr "<span>卖家付款菜单</span>"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "About"
+msgstr "关于"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__currency_id
+msgid "Account Currency"
+msgstr "科目币种"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__message_needaction
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__message_needaction
+msgid "Action Needed"
+msgstr "需要采取行动"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__active
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_form_view
+msgid "Active"
+msgstr "有效"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_form_view
+msgid "Address"
+msgstr "地址"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_payment__already_requested
+msgid "Already Requested"
+msgstr "已申请"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.payment_seller_form_view
+msgid "Applied Commission Rate"
+msgstr "应用的佣金比率"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_config_settings__is_commission
+msgid "Apply Global Commission"
+msgstr "应用全局佣金比率"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.marketplace_product_template_inherit_bi_form_view
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.marketplace_res_partner_inherit_form_view
+msgid "Approve"
+msgstr "批准"
+
+#. module: odoo_website_marketplace
+#: model:ir.ui.menu,name:odoo_website_marketplace.pending_seller_approve_product_menu
+msgid "Approve Product"
+msgstr "审批产品"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_seller_approve_product
+msgid "Approve Products"
+msgstr "审批产品"
+
+#. module: odoo_website_marketplace
+#: selection:product.template,state:0 selection:res.partner,state:0
+#: selection:sale.order.line,order_state:0
+msgid "Approved"
+msgstr "已批准"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_dashboard__approved_product
+msgid "Approved Count"
+msgstr "已批准数量"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_res_partner_approve
+msgid "Approved Partners"
+msgstr "已批准业务伙伴"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_seller_payment_approve
+msgid "Approved Payments"
+msgstr "批准的付款"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_product_template_approve
+msgid "Approved Products"
+msgstr "已批准产品"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_sale_order_approve
+msgid "Approved Sale Order"
+msgstr "已批准销售订单"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.marketplace_res_partner_inherit_form_view
+msgid "Ask to Approve"
+msgstr "申请审批"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__message_attachment_count
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__message_attachment_count
+msgid "Attachment Count"
+msgstr "附件数量"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__banner
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "Banner"
+msgstr "横幅标语"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller
+msgid "Become a Seller, Sell Online Easily."
+msgstr "成为卖家，享受在线销售"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.gen_payment_request_form
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.gen_qty_request_form
+msgid "Cancel"
+msgstr "取消"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "Cancel Rating"
+msgstr "取消评价"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.payment_seller_form_view
+msgid "Cancel Request"
+msgstr "取消申请"
+
+#. module: odoo_website_marketplace
+#: selection:product.template,state:0 selection:seller.payment,payment_mode:0
+#: selection:seller.payment,state:0
+msgid "Cancelled"
+msgstr "已取消"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_res_partner_cancel
+msgid "Cancelled Partners"
+msgstr "已取消业务伙伴"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_seller_payment_cancel
+msgid "Cancelled Payments"
+msgstr "已取消付款"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_product_template_cancel
+msgid "Cancelled Products"
+msgstr "已取消产品"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_form_view
+msgid "City"
+msgstr "城市"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.actions.act_window,help:odoo_website_marketplace.action_seller_approve_product
+#: model_terms:ir.actions.act_window,help:odoo_website_marketplace.action_seller_non_approve_product
+msgid "Click to define a new product."
+msgstr "单击添加一个新产品"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_dashboard__color
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__color
+msgid "Color"
+msgstr "颜色"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_config_settings__commission_value
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_partner__seller_commission
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_users__seller_commission
+msgid "Commission"
+msgstr "佣金"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_sale_order_line__commission_amount
+msgid "Commission Amount"
+msgstr "佣金金额"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__company_id
+msgid "Company"
+msgstr "公司"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,help:odoo_website_marketplace.field_seller_payment__company_id
+msgid "Company related to this journal"
+msgstr "日记账相关的公司"
+
+#. module: odoo_website_marketplace
+#: model:ir.model,name:odoo_website_marketplace.model_res_config_settings
+msgid "Config Settings"
+msgstr "配置设定"
+
+#. module: odoo_website_marketplace
+#: model:ir.ui.menu,name:odoo_website_marketplace.configuration_menu
+msgid "Configuration"
+msgstr "基础配置"
+
+#. module: odoo_website_marketplace
+#: selection:seller.payment,state:0
+msgid "Confirm"
+msgstr "确认"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_signup
+msgid "Confirm Password"
+msgstr "确认密码"
+
+#. module: odoo_website_marketplace
+#: model:ir.model,name:odoo_website_marketplace.model_res_partner
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "Contact"
+msgstr "联系人"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__country_id
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_form_view
+msgid "Country"
+msgstr "国家/地区"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_create_product
+#: model:ir.ui.menu,name:odoo_website_marketplace.create_new_product_menu
+msgid "Create New Product"
+msgstr "创建产品"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.actions.act_window,help:odoo_website_marketplace.action_res_partner_approve
+#: model_terms:ir.actions.act_window,help:odoo_website_marketplace.action_res_partner_cancel
+#: model_terms:ir.actions.act_window,help:odoo_website_marketplace.action_res_partner_waiting
+msgid "Create a Partner"
+msgstr "创建业务伙伴"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.actions.act_window,help:odoo_website_marketplace.action_product_template_approve
+#: model_terms:ir.actions.act_window,help:odoo_website_marketplace.action_product_template_cancel
+#: model_terms:ir.actions.act_window,help:odoo_website_marketplace.action_product_template_waiting
+msgid "Create a Product"
+msgstr "创建产品"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_signup
+msgid "Create an account"
+msgstr "板创建账户"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_payment__create_uid
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_qty__create_uid
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_dashboard__create_uid
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__create_uid
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment_method__create_uid
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_review__create_uid
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__create_uid
+msgid "Created by"
+msgstr "创建人"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_payment__create_date
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_qty__create_date
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_dashboard__create_date
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__create_date
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment_method__create_date
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_review__create_date
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__create_date
+msgid "Created on"
+msgstr "创建日期"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_sale_order_line__create_date
+msgid "Creation Date"
+msgstr "创建日期"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_payment__credit
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_partner__seller_credit
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_users__seller_credit
+#: selection:seller.payment,payment_type:0
+msgid "Credit"
+msgstr "贷方"
+
+#. module: odoo_website_marketplace
+#: model:ir.ui.menu,name:odoo_website_marketplace.seller_kanban_dashboard_view
+msgid "Dashboard"
+msgstr "仪表板"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__date
+msgid "Date"
+msgstr "日期"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,help:odoo_website_marketplace.field_sale_order_line__create_date
+msgid "Date on which sales order is created."
+msgstr "销售订单创建日期"
+
+#. module: odoo_website_marketplace
+#: selection:seller.payment,payment_type:0
+msgid "Debit"
+msgstr "借方"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_view
+msgid "Delete"
+msgstr "刪除"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_sale_order_line__delivery_count
+msgid "Delivery Orders"
+msgstr "出库单"
+
+#. module: odoo_website_marketplace
+#: selection:res.partner,state:0
+msgid "Denied"
+msgstr "已拒绝"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.marketplace_product_template_inherit_bi_form_view
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.marketplace_res_partner_inherit_form_view
+msgid "Deny"
+msgstr "拒绝"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__description
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.payment_seller_form_view
+msgid "Description"
+msgstr "说明"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_payment__display_name
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_qty__display_name
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_dashboard__display_name
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__display_name
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment_method__display_name
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_review__display_name
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_account_invoice_line__pay_done
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_sale_order_line__pay_done
+msgid "Done Payment"
+msgstr "完成付款"
+
+#. module: odoo_website_marketplace
+#: selection:product.template,state:0 selection:res.partner,state:0
+#: selection:sale.order.line,order_state:0 selection:seller.payment,state:0
+msgid "Draft"
+msgstr "草稿"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_view
+msgid "Edit Contract"
+msgstr "编辑合同"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__email
+msgid "Email"
+msgstr "电子邮箱"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_review__email
+msgid "Email Address"
+msgstr "电子邮箱地址"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_signup
+msgid "Email address"
+msgstr "电子邮箱地址"
+
+#. module: odoo_website_marketplace
+#: code:addons/odoo_website_marketplace/controllers/main.py:236
+#, python-format
+msgid "Email is Already Used."
+msgstr "电子邮箱已被使用"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_signup
+msgid "Enter Shop Name."
+msgstr "输入店铺名称"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_signup
+msgid "Enter Shop TagLine"
+msgstr "输入店铺品牌标语"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_signup
+msgid "Enter email"
+msgstr "输入电子邮箱"
+
+#. module: odoo_website_marketplace
+#: code:addons/odoo_website_marketplace/models/seller_partner.py:98
+#, python-format
+msgid "Error! Email value is incorrect. Enter valid email to process!"
+msgstr "错误！电子邮箱地址不正确。请重新输入！"
+
+#. module: odoo_website_marketplace
+#: code:addons/odoo_website_marketplace/models/seller_partner.py:82
+#, python-format
+msgid "Error! Please Enter Make Partner a Seller for Approval!"
+msgstr "错误！请输入用以申请成为卖家的合作伙伴！"
+
+#. module: odoo_website_marketplace
+#: code:addons/odoo_website_marketplace/models/seller_partner.py:79
+#, python-format
+msgid "Error! Please Enter Valid Password!"
+msgstr "错误！请输入有效密码！"
+
+#. module: odoo_website_marketplace
+#: code:addons/odoo_website_marketplace/models/seller_partner.py:73
+#, python-format
+msgid "Error! Please Enter Valid Shop Name!"
+msgstr "错误！请输入有效店铺名称！"
+
+#. module: odoo_website_marketplace
+#: code:addons/odoo_website_marketplace/models/seller_partner.py:76
+#, python-format
+msgid "Error! Please Enter Valid Tag Line!"
+msgstr "错误！请输入有效品牌标语！"
+
+#. module: odoo_website_marketplace
+#. openerp-web
+#: code:addons/odoo_website_marketplace/static/src/js/seller_review_ratting.js:35
+#, python-format
+msgid "Excellent"
+msgstr "优秀"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__fax
+msgid "Fax"
+msgstr "传真"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__message_follower_ids
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__message_follower_ids
+msgid "Followers"
+msgstr "关注者"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__message_channel_ids
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "关注者(渠道)"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__message_partner_ids
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "关注者(业务伙伴)"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.res_config_settings_view_form_marketplace
+msgid "Global Commission"
+msgstr "全局佣金"
+
+#. module: odoo_website_marketplace
+#. openerp-web
+#: code:addons/odoo_website_marketplace/static/src/js/seller_review_ratting.js:35
+#, python-format
+msgid "Good"
+msgstr "良好"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_dashboard__group_id
+msgid "Group"
+msgstr "群组"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_orders_filters
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_payments_filters
+msgid "Group By"
+msgstr "分组"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__header_url
+msgid "Header URL"
+msgstr "抬头URL"
+
+#. module: odoo_website_marketplace
+#: model:ir.module.category,description:odoo_website_marketplace.module_category_marketplace_management
+msgid "Helps you handle your marketplace seller."
+msgstr "帮助您处理您的供应平台卖家。"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_payment__id
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_qty__id
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_dashboard__id
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__id
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment_method__id
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_review__id
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__id
+msgid "ID"
+msgstr "ID"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,help:odoo_website_marketplace.field_seller_payment__message_unread
+#: model:ir.model.fields,help:odoo_website_marketplace.field_seller_shop__message_unread
+msgid "If checked new messages require your attention."
+msgstr "查看是否有需要留意的新信息。"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,help:odoo_website_marketplace.field_seller_payment__message_needaction
+#: model:ir.model.fields,help:odoo_website_marketplace.field_seller_shop__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "如果勾选此项，有新消息会提醒你。"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,help:odoo_website_marketplace.field_seller_payment__message_has_error
+#: model:ir.model.fields,help:odoo_website_marketplace.field_seller_shop__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "如果勾选此项， 某些信息将会产生传递错误。"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.gen_payment_request_form
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.gen_qty_request_form
+msgid "Import Invoice"
+msgstr "导入发票"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.payment_seller_form_view
+msgid "Information About Payment"
+msgstr "付款信息"
+
+#. module: odoo_website_marketplace
+#: model:ir.model,name:odoo_website_marketplace.model_stock_inventory
+msgid "Inventory"
+msgstr "库存"
+
+#. module: odoo_website_marketplace
+#: model:ir.model,name:odoo_website_marketplace.model_account_invoice
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__invoice_id
+msgid "Invoice"
+msgstr "发票"
+
+#. module: odoo_website_marketplace
+#: model:ir.model,name:odoo_website_marketplace.model_account_invoice_line
+msgid "Invoice Line"
+msgstr "发票行"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__invoice_line_ids
+msgid "Invoice Lines"
+msgstr "发票明细行"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_partner__seller
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_users__seller
+msgid "Is A Seller?? "
+msgstr "是卖家？"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__message_is_follower
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__message_is_follower
+msgid "Is Follower"
+msgstr "是关注者"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_account_invoice_send__website_message
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_mail_compose_message__website_message
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_mail_mail__website_message
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_mail_message__website_message
+msgid "Is Website Message"
+msgstr "是网站消息"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller
+msgid "Join With us"
+msgstr "加入我们"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_payment____last_update
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_qty____last_update
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_dashboard____last_update
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment____last_update
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment_method____last_update
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_review____last_update
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop____last_update
+msgid "Last Modified on"
+msgstr "最后修改日"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_partner__last_payment_date
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_users__last_payment_date
+msgid "Last Payment Date"
+msgstr "最后付款日期"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_payment__write_uid
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_qty__write_uid
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_dashboard__write_uid
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__write_uid
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment_method__write_uid
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_review__write_uid
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__write_uid
+msgid "Last Updated by"
+msgstr "最后更新人"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_payment__write_date
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_qty__write_date
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_dashboard__write_date
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__write_date
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment_method__write_date
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_review__write_date
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__message_main_attachment_id
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "附件"
+
+#. module: odoo_website_marketplace
+#: model:res.groups,name:odoo_website_marketplace.group_market_place_manager
+msgid "Manager"
+msgstr "管理员"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_dashboard__name
+msgid "Market Place Dashboard"
+msgstr "供应平台仪表板"
+
+#. module: odoo_website_marketplace
+#: model:ir.module.category,name:odoo_website_marketplace.module_category_marketplace_management
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.marketplace_product_template_inherit_bi_form_view
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.marketplace_res_partner_inherit_form_view
+msgid "Marketplace"
+msgstr "供应平台"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller
+msgid "Marketplace Features"
+msgstr "供应平台特点"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_sale_order_line__seller_id
+msgid "Marketplace Seller"
+msgstr "供应平台卖家"
+
+#. module: odoo_website_marketplace
+#: model:product.product,name:odoo_website_marketplace.event_3_product_x
+#: model:product.template,name:odoo_website_marketplace.event_3_product_x_product_template
+#: model:product.template,name:odoo_website_marketplace.product_template_quote_x
+msgid "Marketplace Seller Payment"
+msgstr "供应平台卖家付款"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_partner__max_withdraw_amount
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_users__max_withdraw_amount
+msgid "Maximum Withdraw Amount"
+msgstr "最大提款金额"
+
+#. module: odoo_website_marketplace
+#: model:ir.model,name:odoo_website_marketplace.model_mail_message
+msgid "Message"
+msgstr "消息"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__message_has_error
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__message_has_error
+msgid "Message Delivery error"
+msgstr "消息递送错误"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_account_invoice_send__message_rate
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_mail_compose_message__message_rate
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_mail_mail__message_rate
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_mail_message__message_rate
+msgid "Message Rating"
+msgstr "消息评价"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_partner__message_count
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_users__message_count
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__message_ids
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__message_ids
+msgid "Messages"
+msgstr "消息"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.my_marketplace_link
+msgid "My Marketplace"
+msgstr "供应平台"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_my_seller_profile
+#: model:ir.ui.menu,name:odoo_website_marketplace.my_profile_menu
+msgid "My Profile"
+msgstr "我的简介"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_signup
+msgid "Name"
+msgstr "名称"
+
+#. module: odoo_website_marketplace
+#: code:addons/odoo_website_marketplace/models/seller_payment.py:11
+#: code:addons/odoo_website_marketplace/models/seller_payment.py:39
+#: code:addons/odoo_website_marketplace/models/seller_payment.py:43
+#: code:addons/odoo_website_marketplace/models/seller_payment.py:45
+#, python-format
+msgid "New"
+msgstr "新建"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.actions.act_window,help:odoo_website_marketplace.action_sale_order_approve
+msgid "No Orders are Approved yet"
+msgstr "还没有订单被批准"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.actions.act_window,help:odoo_website_marketplace.action_sale_order_shipped
+msgid "No Orders are Shipped yet"
+msgstr "还没有已交货的订单"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.actions.act_window,help:odoo_website_marketplace.action_sale_order_draft
+msgid "No Orders are in Draft state"
+msgstr "没有草稿状态订单"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "No product defined."
+msgstr "没有定义的产品。"
+
+#. module: odoo_website_marketplace
+#: model:ir.ui.menu,name:odoo_website_marketplace.pending_seller_product_menu
+msgid "Non Approve Product"
+msgstr "没有待批准的产品"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__message_needaction_counter
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__message_needaction_counter
+msgid "Number of Actions"
+msgstr "行动数量"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__message_has_error_counter
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__message_has_error_counter
+msgid "Number of error"
+msgstr "错误数"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,help:odoo_website_marketplace.field_seller_payment__message_needaction_counter
+#: model:ir.model.fields,help:odoo_website_marketplace.field_seller_shop__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "需要行动消息的数量"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,help:odoo_website_marketplace.field_seller_payment__message_has_error_counter
+#: model:ir.model.fields,help:odoo_website_marketplace.field_seller_shop__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "递送错误的消息数量"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,help:odoo_website_marketplace.field_seller_payment__message_unread_counter
+#: model:ir.model.fields,help:odoo_website_marketplace.field_seller_shop__message_unread_counter
+msgid "Number of unread messages"
+msgstr "未读消息的数量"
+
+#. module: odoo_website_marketplace
+#. openerp-web
+#: code:addons/odoo_website_marketplace/static/src/js/seller_review_ratting.js:35
+#, python-format
+msgid "Ok"
+msgstr "Ok"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_form_view
+msgid "On hand:"
+msgstr "在手："
+
+#. module: odoo_website_marketplace
+#: code:addons/odoo_website_marketplace/models/seller_product.py:110
+#, python-format
+msgid "Only a stock manager can validate an inventory adjustment."
+msgstr "只有库存管理员可以验证库存调整。"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_seller_order_line
+#: model:ir.ui.menu,name:odoo_website_marketplace.orders_menu
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_dashboard_kanban_dashboard
+#: selection:seller.dashboard,state:0
+msgid "Orders"
+msgstr "订单"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_partner__overwrite_setting
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_users__overwrite_setting
+msgid "Overwrite Default Commission Setting"
+msgstr "覆盖默认的佣金设置"
+
+#. module: odoo_website_marketplace
+#: selection:seller.payment,payment_mode:0
+msgid "Paid"
+msgstr "已支付"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_payment__partner_id
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "Partner"
+msgstr "业务伙伴"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_partner__partner_rate
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_users__partner_rate
+msgid "Partner Rate"
+msgstr "业务伙伴评价"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_res_partner_waiting
+msgid "Partners In Waiting"
+msgstr "标记为等待的业务伙伴"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_partner__password
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_signup
+msgid "Password"
+msgstr "密码"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__payable_amount
+msgid "Payable Amount"
+msgstr "应付总计"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_sale_order_line__payment_acquirer_id
+msgid "Payment Acquirer"
+msgstr "付款收款人"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_payment__description
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__payment_description
+msgid "Payment Description"
+msgstr "付款描述"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.payment_seller_form_view
+msgid "Payment Details"
+msgstr "付款详细信息"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__payment_method_id
+msgid "Payment Method"
+msgstr "付款方法"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.payment_seller_form_view
+msgid "Payment Method For Seller"
+msgstr "卖家付款方式"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_partner__payment_method_ids
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_users__payment_method_ids
+msgid "Payment Methods"
+msgstr "付款方式"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__payment_mode
+msgid "Payment Mode"
+msgstr "付款模式"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment_method__name
+msgid "Payment Ref Name"
+msgstr "付款参考名称"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.bi_payment_request_action
+msgid "Payment Request"
+msgstr "付款申请"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__payment_type
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_payments_filters
+msgid "Payment Type"
+msgstr "付款类型"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_dashboard_kanban_dashboard
+#: selection:seller.dashboard,state:0
+msgid "Payments"
+msgstr "付款"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_partner_seller_payment_
+msgid "Payments History"
+msgstr "付款历史"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_seller_payment_waiting
+msgid "Payments In Waiting"
+msgstr "标记为等待的付款"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_dashboard__waiting_product
+msgid "Pending Count"
+msgstr "待定数量"
+
+#. module: odoo_website_marketplace
+#: model:res.groups,name:odoo_website_marketplace.group_market_place_pending_seller
+msgid "Pending Seller"
+msgstr "待定卖家"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__phone
+msgid "Phone"
+msgstr "电话"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "Please"
+msgstr "请"
+
+#. module: odoo_website_marketplace
+#: code:addons/odoo_website_marketplace/models/seller_payment.py:94
+#, python-format
+msgid "Please Define Type Purchase Journal !!"
+msgstr "请定义采购分类帐类型!!"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_form_view
+msgid "Policy"
+msgstr "政策"
+
+#. module: odoo_website_marketplace
+#. openerp-web
+#: code:addons/odoo_website_marketplace/static/src/js/seller_review_ratting.js:35
+#, python-format
+msgid "Poor"
+msgstr "差"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_form_view
+msgid "Price:"
+msgstr "价格:"
+
+#. module: odoo_website_marketplace
+#: model:ir.ui.menu,name:odoo_website_marketplace.product_menu
+msgid "Product"
+msgstr "产品"
+
+#. module: odoo_website_marketplace
+#: code:addons/odoo_website_marketplace/models/seller_partner.py:59
+#, python-format
+msgid "Product Rating"
+msgstr "产品评价"
+
+#. module: odoo_website_marketplace
+#: model:ir.model,name:odoo_website_marketplace.model_product_template
+msgid "Product Template"
+msgstr "产品模板"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_dashboard_kanban_dashboard
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_form_view
+#: selection:seller.dashboard,state:0
+msgid "Products"
+msgstr "产品"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_product_template_waiting
+msgid "Products In Waiting"
+msgstr "标记为等待的产品"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_form_view
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_view
+msgid "Profile"
+msgstr "简介"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_partner__profile_detail
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_users__profile_detail
+msgid "Profile Details"
+msgstr "简介详细信息"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_review_form_view
+msgid "Publish On Website"
+msgstr "发布到网站"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_tree_view
+msgid "Qty"
+msgstr "数量"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_review__rating_num
+msgid "Rating"
+msgstr "评价"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_review__rating_msg
+msgid "Rating Message"
+msgstr "评价消息"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__name
+msgid "Reference"
+msgstr "参考"
+
+#. module: odoo_website_marketplace
+#: selection:seller.payment,payment_mode:0
+msgid "Refund"
+msgstr "退款"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_dashboard__rejected_product
+msgid "Rejected Count"
+msgstr "拒绝数量"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_signup
+msgid "Repeat password"
+msgstr "重复输入密码"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.marketplace_product_template_inherit_bi_form_view
+msgid "Request For Approve"
+msgstr "审批申请"
+
+#. module: odoo_website_marketplace
+#: model:ir.ui.menu,name:odoo_website_marketplace.seller_payment_request
+msgid "Request For Payment"
+msgstr "付款申请"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_payment__request
+msgid "Request Money"
+msgstr "申请金额"
+
+#. module: odoo_website_marketplace
+#: model:ir.model,name:odoo_website_marketplace.model_request_payment
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.gen_payment_request_form
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.payment_seller_form_view
+msgid "Request Payment"
+msgstr "付款申请"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.actions.act_window,help:odoo_website_marketplace.action_partner_seller_payment_
+#: model_terms:ir.actions.act_window,help:odoo_website_marketplace.action_seller_payment_approve
+#: model_terms:ir.actions.act_window,help:odoo_website_marketplace.action_seller_payment_cancel
+#: model_terms:ir.actions.act_window,help:odoo_website_marketplace.action_seller_payment_waiting
+msgid "Request a Payment"
+msgstr "付款申请"
+
+#. module: odoo_website_marketplace
+#: selection:seller.payment,state:0
+msgid "Requested"
+msgstr "已申请"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__return_polocy
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_form_view
+msgid "Return Policy"
+msgstr "退货政策"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "Review"
+msgstr "审查"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_review__name
+msgid "Review Title"
+msgstr " 评价标题"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.marketplace_res_partner_inherit_form_view
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "Reviews"
+msgstr "审查"
+
+#. module: odoo_website_marketplace
+#: model:ir.model,name:odoo_website_marketplace.model_sale_order
+msgid "Sale Order"
+msgstr "销售订单"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_orders_filters
+msgid "Sale Order Line Filters"
+msgstr "销售订单行过滤"
+
+#. module: odoo_website_marketplace
+#: model:ir.ui.menu,name:odoo_website_marketplace.sales_menu
+msgid "Sales"
+msgstr "销售"
+
+#. module: odoo_website_marketplace
+#: model:ir.model,name:odoo_website_marketplace.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "销售订单行"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_tree_view
+msgid "Sales Order Lines"
+msgstr "销售订单明细"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_product_product__seller_id
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_product_template__seller_id
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_partner__seller_shop_id
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_users__seller_shop_id
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_review__seller_id
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.res_partner_filter_inherit_form
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_orders_filters
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_payments_filters
+#: model:res.groups,name:odoo_website_marketplace.group_market_place_seller
+#: model:website.menu,name:odoo_website_marketplace.menu_seller
+msgid "Seller"
+msgstr "卖家"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_sale_order_line__seller_amount
+msgid "Seller Amount"
+msgstr "卖家合计"
+
+#. module: odoo_website_marketplace
+#: model:ir.ui.menu,name:odoo_website_marketplace.seller_bills_menu
+msgid "Seller Bills"
+msgstr "卖家发票"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__seller_commission
+msgid "Seller Commission"
+msgstr "卖家佣金"
+
+#. module: odoo_website_marketplace
+#: model:ir.ui.menu,name:odoo_website_marketplace.seller_dashboard_menu
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller
+msgid "Seller Dashboard"
+msgstr "供应平台"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.show_sale_count_in_product_page
+msgid "Seller Information"
+msgstr "卖家信息"
+
+#. module: odoo_website_marketplace
+#: sql_constraint:seller.shop:0
+msgid ""
+"Seller Name Must Be unique! \n"
+" Seller you're trying to use is already has been taken!!"
+msgstr ""
+"卖家名称必须唯一！\n"
+"您要使用的卖家名称已经被使用！！"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller
+msgid "Seller Orders"
+msgstr "卖家订单"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.marketplace_res_partner_inherit_form_view
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller
+#: selection:seller.payment,payment_mode:0
+msgid "Seller Payment"
+msgstr "卖家付款"
+
+#. module: odoo_website_marketplace
+#: model:ir.model,name:odoo_website_marketplace.model_seller_payment_method
+msgid "Seller Payment Method"
+msgstr "卖家付款方式"
+
+#. module: odoo_website_marketplace
+#: model:product.template,description_sale:odoo_website_marketplace.product_template_quote_x
+msgid "Seller Payment Product"
+msgstr "卖家付款产品"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_payment_seller
+#: model:ir.ui.menu,name:odoo_website_marketplace.seller_payment_menu
+msgid "Seller Payments"
+msgstr "卖家付款"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_payments_filters
+msgid "Seller Payments Filters"
+msgstr "卖家付款过滤"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__seller_product_ids
+msgid "Seller Product"
+msgstr "卖家产品"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller
+msgid "Seller Products"
+msgstr "卖家产品"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_seller_review
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_review_form_view
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_review_view
+msgid "Seller Review"
+msgstr "卖家审查"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_form_view
+msgid "Seller Shop"
+msgstr "卖家店铺"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller
+msgid "Seller Website Profile"
+msgstr "卖家网站简介"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.view_sale_order_line_kanban
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.view_seller_payment_kanban
+msgid "Seller&amp;nbsp;&amp;nbsp;:&amp;nbsp;"
+msgstr "卖家&amp;nbsp;&amp;nbsp;:&amp;nbsp;"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.seller_kanban_dashboard_action
+msgid "Seller's Dashboard"
+msgstr "卖家仪表板"
+
+#. module: odoo_website_marketplace
+#: model:mail.template,subject:odoo_website_marketplace.email_template_marketplace_reject_product
+msgid "Seller's Product Request Rejected On Shop"
+msgstr "卖家店铺中被拒绝产品申请"
+
+#. module: odoo_website_marketplace
+#: model:mail.template,subject:odoo_website_marketplace.email_template_marketplace_approved_product
+msgid "Seller's Product Request is Approved for Shop "
+msgstr "卖家店铺中已批准产品申请"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "Seller's Products:"
+msgstr "卖家产品"
+
+#. module: odoo_website_marketplace
+#: model:mail.template,subject:odoo_website_marketplace.email_template_marketplace
+#: model:mail.template,subject:odoo_website_marketplace.email_template_signup_seller_email
+msgid "Seller's Request Acknowledge Mail"
+msgstr "卖家申请确认邮件"
+
+#. module: odoo_website_marketplace
+#: model:mail.template,subject:odoo_website_marketplace.email_template_marketplace_rejected
+msgid "Seller's Request Rejected "
+msgstr "卖家申请被拒绝"
+
+#. module: odoo_website_marketplace
+#: model:mail.template,subject:odoo_website_marketplace.email_template_payment_request_seller_email
+msgid "Seller's Request for Payment"
+msgstr "卖家付款申请"
+
+#. module: odoo_website_marketplace
+#: model:mail.template,subject:odoo_website_marketplace.email_template_marketplace_approved
+msgid "Seller's Request is Approved for Shop"
+msgstr "卖家店铺中已批准申请"
+
+#. module: odoo_website_marketplace
+#: model:mail.template,subject:odoo_website_marketplace.email_template_marketplace_approve
+msgid "Seller's Request to Approve Shop"
+msgstr "卖家店铺中待批准申请"
+
+#. module: odoo_website_marketplace
+#: model:mail.template,subject:odoo_website_marketplace.email_template_marketplace_approve_product
+msgid "Seller's Request to Approve Shop Product"
+msgstr "卖家店铺中待批准产品申请"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_my_seller_shops
+#: model:ir.ui.menu,name:odoo_website_marketplace.my_shop_menu
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_view_tree
+msgid "Seller's Shop"
+msgstr "卖家店铺"
+
+#. module: odoo_website_marketplace
+#: model:ir.ui.menu,name:odoo_website_marketplace.seller_menu
+msgid "Seller/Vendor"
+msgstr "卖家/供应商"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.product_template_kanban_seller_view
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_form_view
+msgid "Seller:"
+msgstr "卖家："
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_dashboard_kanban_dashboard
+#: selection:seller.dashboard,state:0
+msgid "Sellers"
+msgstr "卖家"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.payment_seller_tree_view
+msgid "Sellers Payment Method"
+msgstr "卖家付款方式"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_seller_profile
+#: model:ir.ui.menu,name:odoo_website_marketplace.all_profile_menu
+msgid "Sellers Profile"
+msgstr "卖家简介"
+
+#. module: odoo_website_marketplace
+#: model:ir.ui.menu,name:odoo_website_marketplace.seller_review_menu
+msgid "Sellers Review"
+msgstr "卖家评价"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.res_config_settings_view_form_marketplace
+msgid "Set commission rate for all partners."
+msgstr "设置业务伙伴佣金比例"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.marketplace_product_template_inherit_bi_form_view
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.marketplace_res_partner_inherit_form_view
+msgid "Set to Draft"
+msgstr "设为草稿"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_marketplace_config_settings
+#: model:ir.ui.menu,name:odoo_website_marketplace.menu_marketplace_general_settings
+msgid "Settings"
+msgstr "设置"
+
+#. module: odoo_website_marketplace
+#: selection:sale.order.line,order_state:0
+msgid "Shipped"
+msgstr "已交货"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_sale_order_draft
+#: model:ir.actions.act_window,name:odoo_website_marketplace.action_sale_order_shipped
+msgid "Shipped Orders"
+msgstr "交货的订单"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__shipping_policy
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "Shipping Policy"
+msgstr "送货政策"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.marketplace_res_partner_inherit_form_view
+msgid "Shop"
+msgstr "店铺"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.marketplace_res_partner_inherit_form_view
+msgid "Shop Details"
+msgstr "店铺简介"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__shop_logo
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "Shop Logo"
+msgstr "店铺品牌"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_partner__shop_name
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_users__shop_name
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__name
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_form_view
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_signup
+msgid "Shop Name"
+msgstr "店铺名称"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_form_view
+msgid "Shop Policy"
+msgstr "店铺政策"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_partner__tag_line
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_users__tag_line
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__tag_line
+msgid "Shop Tag Line"
+msgstr "店铺品牌标语"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_signup
+msgid "Shop TagLine"
+msgstr "输入店铺品牌标语"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.marketplace_res_partner_inherit_form_view
+msgid "Shop Tagline"
+msgstr "店铺品牌标语"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_partner__seller_id
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_users__seller_id
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.marketplace_res_partner_inherit_form_view
+msgid "Shop User"
+msgstr "店铺员工"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_account_invoice_send__short_description
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_mail_compose_message__short_description
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_mail_mail__short_description
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_mail_message__short_description
+msgid "Short Description"
+msgstr "短描述"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_signup
+msgid "Sign Up to your seller account"
+msgstr "注册你的卖家账户"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "Sign in"
+msgstr "注册"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_dashboard__state
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__state
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__state_id
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.res_partner_filter_inherit_form
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_orders_filters
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_payments_filters
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_form_view
+msgid "State"
+msgstr "状态"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_form_view
+msgid "State:"
+msgstr "状态："
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_sale_order_line__order_state
+msgid "States"
+msgstr "状态"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_product_product__state
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_product_template__state
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_partner__state
+msgid "Status"
+msgstr "状态"
+
+#. module: odoo_website_marketplace
+#: model:ir.model,name:odoo_website_marketplace.model_stock_move
+msgid "Stock Move"
+msgstr "库存移动"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__street
+msgid "Street"
+msgstr "街道"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_form_view
+msgid "Street 2..."
+msgstr "街道2..."
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_form_view
+msgid "Street..."
+msgstr "街道..."
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__street2
+msgid "Street2"
+msgstr "街道 2"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "Submit Your Review"
+msgstr "提交您的审查"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "Submit your review about this Seller"
+msgstr "提交您的关于卖家审查"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_form_view
+msgid "Tag line for shop..."
+msgstr "店铺品牌标语..."
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__terms_con_seller
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_form_view
+msgid "Terms & Conditions"
+msgstr "条款及条件"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "Terms &amp; Conditions"
+msgstr "条款&amp; 条件"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_thank_you
+msgid "Thank You"
+msgstr "谢谢"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.actions.act_window,help:odoo_website_marketplace.action_seller_approve_product
+#: model_terms:ir.actions.act_window,help:odoo_website_marketplace.action_seller_non_approve_product
+msgid "The product form contains information to simplify the sale process: price, notes in the quotation, accounting data, procurement methods, etc."
+msgstr ""
+"产品表单中的信息可以简化销售流程:\n"
+"价格，询价单中的注释，会计信息，补货方式等等."
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,help:odoo_website_marketplace.field_seller_payment__currency_id
+msgid "The related account currency if not equal to the company one."
+msgstr "相关账户货币不等于公司货币"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_tree_view
+msgid "Total"
+msgstr "总计"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.payment_seller_form_view
+msgid "Total Amount"
+msgstr "金额总计"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__total_product
+msgid "Total Product"
+msgstr "产品合计"
+
+#. module: odoo_website_marketplace
+#: code:addons/odoo_website_marketplace/models/seller_product.py:121
+#, python-format
+msgid "Tracked Products in Inventory Adjustment"
+msgstr "库存调整中已跟踪的产品"
+
+#. module: odoo_website_marketplace
+#: model:ir.model,name:odoo_website_marketplace.model_stock_picking
+msgid "Transfer"
+msgstr "调拨"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__shop_url
+msgid "URL"
+msgstr "网址"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_partner__url_handler
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_users__url_handler
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__url_handler
+msgid "URL Handler"
+msgstr "URL 处理"
+
+#. module: odoo_website_marketplace
+#: sql_constraint:seller.shop:0
+msgid ""
+"URL Name Must Be unique! \n"
+" URL you're trying to use is already has been taken!!"
+msgstr ""
+"URL 名称必须唯一! \n"
+" 您要使用的URL 已经被使用!!"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.marketplace_res_partner_inherit_form_view
+msgid "Uniq name for Shop Url On website"
+msgstr "网站上唯一的店铺URL名称"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_tree_view
+msgid "Unit of Measure"
+msgstr "单位"
+
+#. module: odoo_website_marketplace
+#: model:product.product,uom_name:odoo_website_marketplace.event_3_product_x
+#: model:product.template,uom_name:odoo_website_marketplace.event_3_product_x_product_template
+#: model:product.template,uom_name:odoo_website_marketplace.product_template_quote_x
+msgid "Unit(s)"
+msgstr "件"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_review_form_view
+msgid "Unpublish On Website"
+msgstr "未发布到网站"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__message_unread
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__message_unread
+msgid "Unread Messages"
+msgstr "未读消息"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__message_unread_counter
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "未读消息计数器"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.marketplace_product_template_inherit_bi_form_view
+msgid "Update Product Quantity"
+msgstr "更新产品数量"
+
+#. module: odoo_website_marketplace
+#: model:ir.actions.act_window,name:odoo_website_marketplace.bi_qty_request_action
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_qty__update_qty
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.gen_qty_request_form
+msgid "Update Qty"
+msgstr "更新数量"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.view_picking_withcarrier_out_form
+msgid "Validate"
+msgstr "验证"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.payment_seller_form_view
+msgid "Validate Payment"
+msgstr "验证付款"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_form_view
+msgid "Variants"
+msgstr "变体"
+
+#. module: odoo_website_marketplace
+#. openerp-web
+#: code:addons/odoo_website_marketplace/static/src/js/seller_review_ratting.js:35
+#, python-format
+msgid "Very Good"
+msgstr "非常好"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.payment_seller_form_view
+msgid "View Invoice"
+msgstr "查看发票"
+
+#. module: odoo_website_marketplace
+#: selection:product.template,state:0 selection:res.partner,state:0
+msgid "Waiting"
+msgstr "正在等待"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_thank_you
+msgid "We will get back to you shortly"
+msgstr "我们很快给你答复"
+
+#. module: odoo_website_marketplace
+#: model:ir.model,name:odoo_website_marketplace.model_website
+msgid "Website"
+msgstr "网站"
+
+#. module: odoo_website_marketplace
+#: model:ir.ui.menu,name:odoo_website_marketplace.website_categories_menu
+msgid "Website             Categories"
+msgstr "网站             目录"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_partner__website_message_ids
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_users__website_message_ids
+msgid "Website Comments"
+msgstr "网站说明"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__website_message_ids
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__website_message_ids
+msgid "Website Messages"
+msgstr "网站消息"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__published_website
+msgid "Website Published"
+msgstr "网站已发布"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_partner__website_true
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_res_users__website_true
+msgid "Website True"
+msgstr "网站 真"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,help:odoo_website_marketplace.field_res_partner__website_message_ids
+#: model:ir.model.fields,help:odoo_website_marketplace.field_res_users__website_message_ids
+#: model:ir.model.fields,help:odoo_website_marketplace.field_seller_payment__website_message_ids
+#: model:ir.model.fields,help:odoo_website_marketplace.field_seller_shop__website_message_ids
+msgid "Website communication history"
+msgstr "网上沟通记录"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller
+msgid "Welcome to Marketplace"
+msgstr "欢迎来到供应平台"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "Write long Description..."
+msgstr "写长描述..."
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "Write your overall feelings about this Partner."
+msgstr "写下你对这个业务伙伴的整体感觉."
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "Write your overall feelings about this Partner.."
+msgstr "写下你对这个业务伙伴的整体感觉.."
+
+#. module: odoo_website_marketplace
+#: code:addons/odoo_website_marketplace/wizard/request_payment.py:37
+#, python-format
+msgid "You can not request more than credit amount."
+msgstr "你不能申请超出信用额度。"
+
+#. module: odoo_website_marketplace
+#: code:addons/odoo_website_marketplace/models/seller_product.py:112
+#, python-format
+msgid "You can't validate the inventory '%s', maybe this inventory has been already validated or isn't ready."
+msgstr "无法验证库存 '%s', 也许库存已经过验证或者还没有准备好."
+
+#. module: odoo_website_marketplace
+#: code:addons/odoo_website_marketplace/models/seller_partner.py:188
+#, python-format
+msgid "You cannot delete an partner which is not draft or cancelled."
+msgstr "不能删除业务伙伴，因为不在草稿和失效状态。"
+
+#. module: odoo_website_marketplace
+#: code:addons/odoo_website_marketplace/models/seller_payment.py:152
+#, python-format
+msgid "You cannot delete an payment which is not draft or cancelled."
+msgstr "不能删除这笔付款，因为不在草稿和失效状态。"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.actions.act_window,help:odoo_website_marketplace.action_seller_approve_product
+#: model_terms:ir.actions.act_window,help:odoo_website_marketplace.action_seller_non_approve_product
+msgid "You must define a product for everything you sell, whether it's a physical product, a consumable or a service you offer to  customers."
+msgstr "您必须为您销售的所有商品都定义一个产品，无论它是一个实体产品、一个消耗品或者是您提供给客户的服务。"
+
+#. module: odoo_website_marketplace
+#: code:addons/odoo_website_marketplace/models/seller_order.py:60
+#, python-format
+msgid ""
+"You plan to sell %s but you only have %s available \n"
+"                         You can not approve order right now. Please make sure you had enough qty available"
+msgstr ""
+"您打算出售%s，但只有%s可用\n"
+"                   您目前无法批准订单。请确保您有足够的数量"
+
+#. module: odoo_website_marketplace
+#: code:addons/odoo_website_marketplace/wizard/request_payment.py:24
+#, python-format
+msgid "Your previous request is pending! you can not request right now!!!"
+msgstr "您先前的申请正在处理中！您现在不能申请！！！"
+
+#. module: odoo_website_marketplace
+#: code:addons/odoo_website_marketplace/models/seller_product.py:45
+#: code:addons/odoo_website_marketplace/models/seller_product.py:49
+#, python-format
+msgid "Your product is not Approved!! You can not publish it"
+msgstr "你的产品请求未批准！！ 你不能发布"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_shop_form_view
+msgid "ZIP"
+msgstr "邮编"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__zip
+msgid "Zip"
+msgstr "邮政编码"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.res_partner_view_bi
+msgid "at"
+msgstr "在"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__city
+msgid "city"
+msgstr "城市"
+
+#. module: odoo_website_marketplace
+#: model:product.product,weight_uom_name:odoo_website_marketplace.event_3_product_x
+#: model:product.template,weight_uom_name:odoo_website_marketplace.event_3_product_x_product_template
+#: model:product.template,weight_uom_name:odoo_website_marketplace.product_template_quote_x
+msgid "kg"
+msgstr "公斤"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_qty__product_tmpl_id
+msgid "product"
+msgstr "产品"
+
+#. module: odoo_website_marketplace
+#: model:ir.model,name:odoo_website_marketplace.model_request_qty
+msgid "request.qty"
+msgstr "请求数量"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "review"
+msgstr "评价"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "reviews"
+msgstr "评价"
+
+#. module: odoo_website_marketplace
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_payment__seller_id
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_seller_shop__seller_id
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_stock_move__seller_id
+#: model:ir.model.fields,field_description:odoo_website_marketplace.field_stock_picking__seller_id
+msgid "seller"
+msgstr "卖家"
+
+#. module: odoo_website_marketplace
+#: model:ir.model,name:odoo_website_marketplace.model_seller_dashboard
+msgid "seller.dashboard"
+msgstr "卖方仪表板"
+
+#. module: odoo_website_marketplace
+#: model:ir.model,name:odoo_website_marketplace.model_seller_payment
+msgid "seller.payment"
+msgstr "卖方付款"
+
+#. module: odoo_website_marketplace
+#: model:ir.model,name:odoo_website_marketplace.model_seller_review
+msgid "seller.review"
+msgstr "卖方评价"
+
+#. module: odoo_website_marketplace
+#: model:ir.model,name:odoo_website_marketplace.model_seller_shop
+msgid "seller.shop"
+msgstr "卖方店铺"
+
+#. module: odoo_website_marketplace
+#: model:res.groups,comment:odoo_website_marketplace.group_market_place_seller
+msgid "the user will have access to all records of Seller in the MarketPlace application."
+msgstr "用户将可以访问供应平台应用中卖家的所有记录。"
+
+#. module: odoo_website_marketplace
+#: model:res.groups,comment:odoo_website_marketplace.group_market_place_pending_seller
+msgid "the user will have access to to see his/her own data."
+msgstr "用户只能访问自己数据"
+
+#. module: odoo_website_marketplace
+#: model:res.groups,comment:odoo_website_marketplace.group_market_place_manager
+msgid "the user will have an access to the Market Place configuration as well as statistic reports."
+msgstr "此用户将可以访问供应平台配置以及统计报表。"
+
+#. module: odoo_website_marketplace
+#: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_detail
+msgid "to rate this Partner"
+msgstr "业务伙伴评级"
