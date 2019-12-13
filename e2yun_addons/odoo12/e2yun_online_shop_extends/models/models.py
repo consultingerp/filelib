@@ -8,10 +8,19 @@ import logging
 import json
 from odoo.http import request
 import werkzeug
+import numpy as np
 
 BASE_DIR = os.path.dirname((os.path.dirname(__file__)))
 templateLoader = jinja2.FileSystemLoader(searchpath=BASE_DIR + "/static/src")
 env = jinja2.Environment(loader=templateLoader)
+
+class MyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        elif isinstance(obj, bytes):
+            return str(obj, encoding='utf-8')
+        return json.JSONEncoder.default(self, obj)
 
 
 class OnlineShop(http.Controller):
@@ -595,6 +604,64 @@ class OnlineShop(http.Controller):
 
         return http.request.make_response(json.dumps(datas, default=date_utils.json_default))
 
+    @http.route(['/online_shop/get_index_data'], type='http', auth="public")
+    def get_index_data(self, **kwargs):
+        #推荐产品
+        product_template = http.request.env['product.template'].search(
+            [('recommend', '=', True)])
+        recommend_datas = []
+        for pt in product_template:
+            recommend_datas.append({
+                'product_id':pt.id,
+                'product_image':pt.get_primary_url(),
+                'product_name':pt.name,
+                'recommend_text' : pt.recommend_text or ''
+            })
+        # 热销产品
+        product_template = http.request.env['product.template'].search(
+            [('sell_well', '=', True)])
+        sell_well_datas = []
+        for pt in product_template:
+            sell_well_datas.append({
+                'product_id': pt.id,
+                'product_image': pt.get_primary_url(),
+                'product_name': pt.name
+            })
+
+        # #合作伙伴logo
+        # logo_partner = http.request.env['online.partner'].search([])
+        # logo_partner_datas = []
+        # for lp in logo_partner:
+        #     logo_partner_datas.append({
+        #         'logo_image': lp.logo_image,
+        #     })
+
+
+        datas = {
+            'recommend_datas':recommend_datas,
+            'sell_well_datas':sell_well_datas,
+            # 'logo_partner_datas':logo_partner_datas
+        }
+        return http.request.make_response(json.dumps(datas,cls=MyEncoder, ensure_ascii=False, indent=4))
+
+    @http.route(['/online_shop/get_index_logo_data'], type='http', auth="public")
+    def get_index_logo_data(self, **kwargs):
+
+        # 合作伙伴logo
+        logo_partner = http.request.env['online.partner'].search([])
+        logo_partner_datas = []
+        text = """"""
+        for lp in logo_partner:
+            text = text + """<div class='item'>
+                      <figure>
+                        <img src='data:image/png;base64,"""+lp.logo_image.decode()+"""' alt='Logo' style='max-height:70px;' class='mx-auto'>
+                      </figure>
+                    </div>
+            """
+
+        return http.Response(text)
+
+
     # get_product_description
     @http.route(['/online_shop/get_product_description/<int:product_template_id>'], type='http', auth="public")
     def get_product_description(self, product_template_id, **kwargs):
@@ -689,6 +756,16 @@ class OnlineShop(http.Controller):
                 response_text = header_text + product.name + middle_text + price_str + footer_text + browse_num_text + so_qty_text + footer_text2 + footer_text3
                 return http.Response(response_text)
 
+class online_partner(models.Model):
+    _name = 'online.partner'
+    _description = '电商合作伙伴'
+    _order = 'sort'
+
+    name = fields.Char('名称')
+    logo_image = fields.Binary('Logo 图片')
+    sort = fields.Integer('排序')
+
+
 class ProductTemplateCategoryExtend(models.Model):
     _inherit = 'product.template'
 
@@ -698,6 +775,10 @@ class ProductTemplateCategoryExtend(models.Model):
     description_html = fields.Html(string='产品详细介绍')
     product_template_order_by_name = fields.Integer('产品按名称排序的次序')
     so_qty = fields.Float('销售数量', compute='_compute_so_qty', store=False)
+    recommend = fields.Boolean('推荐产品',default=False)
+    recommend_text = fields.Char('推荐描述')
+    sell_well = fields.Boolean('热销产品',default=False)
+
 
     @api.one
     def _compute_so_qty(self):
