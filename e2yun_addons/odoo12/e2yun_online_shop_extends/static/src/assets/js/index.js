@@ -15,7 +15,7 @@ function load_index_data(){
             var p = recommend_datas[i];
 
             var html = "<div class='item'>\n" +
-            "          <div class='single-slide d-flex align-items-center bg-color' data-bg-color='#dbf3f2'>\n" +
+            "          <div class='single-slide d-flex align-items-center bg-color' data-bg-color='#F0F0F0'>\n" +
             "             <div class='row align-items-center no-gutters w-100'>\n" +
             "                <div class='col-xl-7 col-md-6 mb-sm--50'>\n" +
             "                   <figure data-animation='fadeInUp' data-duration='.3s' data-delay='.3s' class='plr--15'>\n" +
@@ -44,7 +44,7 @@ function load_index_data(){
         for(var i = 0;i<sell_well_datas.length;i++) {
             var p = sell_well_datas[i];
             var html = "<div class='item'>\n"+
-                "          <div class='ft-product bg-color align-items-center' data-bg-color='#dbf3f2'>\n" +
+                "          <div class='ft-product bg-color align-items-center' data-bg-color='#F0F0F0'>\n" +
                 "             <div class='product-inner'>\n" +
                 "                <div class='product-image'>\n" +
                 "                   <figure class='product-image--holder' style='padding-top:30px;'>\n" +
