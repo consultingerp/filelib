@@ -15,13 +15,13 @@
                     type="object"/>
                 <button name="restart_validation"
                     string="Restart Validation"
-                    class="btn btn-primary"
                     attrs="{'invisible': ['|',('review_ids', '=', []),('stage_id','&gt;',4)]}"
                     type="object"/>
-                  <button name="turn_down"
+                  <button name="reject_tier"
                     string="驳回"
-                    class="btn btn-primary"
-                    type="object"/>
+                    attrs="{'invisible': ['|',('review_ids', '=', []),('stage_id','&gt;',4)]}"
+                    class="btn btn-icon btn-danger"
+                    type="object"/>                   <!-- class="btn btn-primary"-->
 
             </button>
             <header position="after">
