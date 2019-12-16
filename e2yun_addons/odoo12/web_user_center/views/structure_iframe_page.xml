@@ -3,7 +3,7 @@
     <data>
         <template id="web_user_center.structure_iframe_page" name="">
             <t t-call="website.layout">
-                <t t-call="web_user_center.iframe_page"> <!-- ifrmae 页面-->
+                <t t-call="web_user_center.iframe_page">
                 </t>
             </t>
         </template>
