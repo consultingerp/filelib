@@ -57,6 +57,7 @@ class AgreementWordData(models.Model):  #条款
         content_new=vals_list['content']
         newStr = re.sub('[a-zA-Z0-9’!"#$%&\'()*+,-./:;<=>?@，。?★、…【】《》？“”‘’！[\\]^_`{|}~\s]+', "", content_new)
         if oldStr != newStr:
+            agreement_word_data = self.env['agreement.word.data']  # wordData
             opcodes = difflib.SequenceMatcher(None, oldStr, newStr).get_opcodes()
             for op, af, at, bf, bt in opcodes:
                 if op == 'delete':
@@ -71,12 +72,23 @@ class AgreementWordData(models.Model):  #条款
                 elif op == 'replace' and (oldStr[af:at] and newStr[bf:bt]):
                     oldStr = oldStr[af:at]
                     newStr = newStr[bf:bt]
-                    refind1 = re.findall(r"id(.+?)" + str(newStr) + "", content_new)
+                    refind1 = re.findall(r""+str(newStr) +"(.+?);", content_new)
                     if refind1 and refind1[0]:
                         refind2 = re.findall(r"=(.+?) ", refind1[0])  #
                         if refind2 and refind2[0]:
                             sql="update agreement_word_data set edit_type=%s ,old_text=%s, new_text=%s,the_editor=True where agreement_id=%s and detail=False and sequence=%s"
-                            self.env.cr.execute(sql, ('replace',oldStr,newStr,self.agreement_id,refind2[0].replace('"', '')))
+                            up_id=int(refind2[0].replace('"', ''))
+                            w=1
+                            while w<10:
+                                clauseListData = agreement_word_data.search(
+                                    [('agreement_id', '=', self.agreement_id), ('sequence', '=', up_id-w)])
+                                if clauseListData[0] and clauseListData[0].content:
+                                    print(clauseListData[0].content)
+                                    up_id=up_id-w
+                                    break
+                                w=w+1
+
+                            self.env.cr.execute(sql, ('replace',oldStr,newStr,self.agreement_id,up_id))
                 elif op == 'insert':
                     oldStr = oldStr[af:at]
                     newStr = newStr[bf:bt]
@@ -99,7 +111,7 @@ class AgreementWordData(models.Model):  #条款
           if clauseObj.content and clauseObj.content!="":
             text = re.findall(r'[^\*"<p></p>]', clauseObj.content, re.S)
             text = "".join(text)
-            font_size=float(clauseObj.font_size)+2
+            font_size=16
             if clauseObj.alignment=='CENTER (1)':
                 p = "<p id=" + str(clauseObj.sequence) + " style = 'text-align:center; font-size: " + str(font_size) + "px;'>"
             elif clauseObj.alignment=='2':

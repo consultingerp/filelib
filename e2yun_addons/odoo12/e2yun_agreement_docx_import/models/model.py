@@ -84,6 +84,8 @@ class AgreementDownloadDoc(models.Model):
     _name = "agreement.download.doc"
 
     file_path = fields.Char('File Path')
+    data = fields.Binary('File')
+    filename = fields.Char('File Name')
 
     #默认样式设置
     def chg_font(self,obj, fontname='微软雅黑', size=None):
@@ -186,7 +188,17 @@ class AgreementDownloadDoc(models.Model):
 
 
     def Import_doc(self):
-        full_path = self.file_path
+
+        path = sys.path[0] + "\\"
+
+        wb_path=path+"test20191216.docx"
+
+        f = open(wb_path, "wb")
+        datass = base64.decodestring(self.data)
+        f.write(datass)
+        f.close()
+
+        full_path = wb_path
 
 
         doc = Document(full_path)
@@ -218,9 +230,7 @@ class AgreementDownloadDoc(models.Model):
             val['agreement_id']=agreement_id
             val['sequence'] = i
             if para.text or  para.text!="":
-                font_size=11
-                if font_size>20:
-                    font_size=16
+                font_size=16
                 val['alignment'] = str(para.alignment)  # 0,1,2 分别对应左对齐、居中、右对齐
                 val['font_Name'] = para.style.font.name
                 val['font_size'] = font_size
@@ -250,4 +260,6 @@ class AgreementDownloadDoc(models.Model):
         vals=[]
         vals.append(val)
         agreement_word_data.create(vals)
+        if os.path.exists(wb_path):
+            os.remove(wb_path)
         return True
