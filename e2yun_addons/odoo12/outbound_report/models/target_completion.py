@@ -53,7 +53,6 @@ class TargetCompletion(models.Model):
     target_amount = fields.Integer('门店目标', compute='_compute_target_amount', store=True)
     jiesuan_amount = fields.Integer('销售金额', compute='_compute_jiesuan_amount', store=True)
     completion = fields.Integer('目标完成占比')
-    stage_id = fields.Many2one('target.stage', '数据来源')
     sale_id = fields.Many2one('sale.source', '占比类型')
     target_id = fields.Many2one('target.source', '目标数据')
 
@@ -68,7 +67,7 @@ class TargetCompletion(models.Model):
                         target_detail = self.env['team.target.detail'].search([('current_team_id', '=', rec.kunnr.id),
                                                                                ('detail_year', '=', rec.target_year),
                                                                                ('target_month', '=?', rec.target_month),
-                                                                               ('sales_member.id', '=?', rec.ywy.id)])
+                                                                               ('sales_member.id', '=?', rec.ywy)])
                     else:
                         target_detail = self.env['team.target.detail'].search([('current_team_id', '=', rec.kunnr.id),
                                                                               ('detail_year', '=', rec.target_year),
@@ -289,13 +288,6 @@ class TargetCompletion(models.Model):
             'views': [[tree_view.id, 'tree'],
                       [graph_view.id, 'graph']],
                 }
-
-
-class TargetStage(models.Model):
-    _name = 'target.stage'
-    _description = '目标完成占比数据来源'
-
-    name = fields.Char('数据来源')
 
 
 class SaleSource(models.Model):
