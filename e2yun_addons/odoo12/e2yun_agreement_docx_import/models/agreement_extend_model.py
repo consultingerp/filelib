@@ -96,11 +96,11 @@ class AgreementWordData(models.Model):  #条款
         allContent=""
         content=""
         for clauseObj in clauseListData:
-          if  clauseObj.content or clauseObj.content!="":
+          if clauseObj.content and clauseObj.content!="":
             text = re.findall(r'[^\*"<p></p>]', clauseObj.content, re.S)
             text = "".join(text)
             font_size=float(clauseObj.font_size)+2
-            if clauseObj.alignment=='1':
+            if clauseObj.alignment=='CENTER (1)':
                 p = "<p id=" + str(clauseObj.sequence) + " style = 'text-align:center; font-size: " + str(font_size) + "px;'>"
             elif clauseObj.alignment=='2':
                 p = "<p id=" + str(clauseObj.sequence) + " style = 'text-align:right; font-size: " + str(font_size)  + "px;'>"
