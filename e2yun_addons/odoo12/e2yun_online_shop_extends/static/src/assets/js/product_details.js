@@ -49,25 +49,29 @@ function product_image_replace(){
         for(var i=0;i < d.length; i++){
             var image = d[i]
             var big_image_html =
-            "<figure class='product-gallery__image zoom' " +
-            "<img src='" + image + "'  alt='Product'>" +
+            "<figure class='product-gallery__image zoom'>" +
+            "   <img style='max-height: 320px; ' src='/" + image + "'  alt='Product'/>" +
 
-                "<img role='presentation' alt='' src='/" + image + "' class='zoomImg' />" +
+                // "<img role='presentation' style='max-height: 500px;max-width: 800px;' alt='' src='/" + image + "' class='zoomImg' />" +
             "</figure>";
 
             $('#big_image_replace').append(big_image_html);
 
             var small_image_html =
             "<figure class='product-gallery__nav-image--single'>" +
-            "<img src='/" + image + "'alt='Products'>" +
+            "<img style='max-height: 120px; ' src='/" + image + "'alt='Products'>" +
             "</figure>";
             $('#small_image_replace').append(small_image_html);
 
         }
 
-        jQuery.getScript("/e2yun_online_shop_extends/static/src/assets/js/main.js?_="+ get_timestamp(),function(){
+        setTimeout(function(){
+            jQuery.getScript("/e2yun_online_shop_extends/static/src/assets/js/main.js?_="+ get_timestamp(),function(){
             $('.ft-preloader').removeClass("active");
         })
+        },300);
+
+
     });
 }
 

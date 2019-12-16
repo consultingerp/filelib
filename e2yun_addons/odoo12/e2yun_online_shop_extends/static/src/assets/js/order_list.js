@@ -12,16 +12,16 @@ function load_order_list(){
             var order = d[i];
             var order_state = order.order_state;
 
-            var order_state_text = order_state;
-            if(order_state == 'sent'){
-                order_state_text = '待确认';
-            }else if (order_state == 'sale'){
-                order_state_text = '已确认';
-            }else if (order_state == 'done'){
-                order_state_text = '已完成';
-            }else if (order_state == 'cancel'){
-                order_state_text = '已取消';
-            }
+            // var order_state_text = order_state;
+            // if(order_state == 'sent'){
+            //     order_state_text = '待确认';
+            // }else if (order_state == 'sale'){
+            //     order_state_text = '已确认';
+            // }else if (order_state == 'done'){
+            //     order_state_text = '已完成';
+            // }else if (order_state == 'cancel'){
+            //     order_state_text = '已取消';
+            // }
 
             var html =
                 "           <div class='tab-item'>" +
@@ -30,7 +30,7 @@ function load_order_list(){
                 "                       <h3>门店:"+order.order_team+"</h3>" +
                 "                       <h3>订单编号:"+order.order_name+"</h3>" +
                 "                   </div>" +
-                "                   <span>"+order_state_text+
+                "                   <span>"+order_state+
                 "                  </span>" +
                 "               </a>" +
                 "               " +
@@ -73,15 +73,17 @@ function load_order_list(){
 
             $('.all_item').append(html);// = html;//(html);
 
-            if(order_state == 'sent'){
-                $('.sent_item').append(html);
-            }else if(order_state == 'sale'){
+            if(order_state == '新建'){
+                $('.new_item').append(html);
+            }else if(order_state == '已接单'
+                || order_state == '加工中' || order_state == '加工完成'
+                || order_state == '生产中' || order_state == '生产完成'
+                || order_state == '全部入库' || order_state == '部分入库' || order_state == '部分送货'){
                 $('.confirm_item').append(html);
-            }
-            else if(order_state == 'done'){
+            }else if(order_state == '送货完成'){
                 $('.done_item').append(html);
-            }else if(order_state == 'cancel'){
-                $('.cancel_item').append(html);
+            }else if(order_state == '改派状态'){
+                $('.gp_item').append(html);
             }
         }
 
