@@ -26,7 +26,7 @@
             <field name="name">usercenter.menu.view_form</field>
             <field name="model">usercenter.menu</field>
             <field name="arch" type="xml">
-                <form string="usercenter">
+                <form string="usercenter" duplicate="false">
                     <sheet>
                         <group>
                             <group>
@@ -34,9 +34,9 @@
                                 <field name="title"/>
                                 <field name="display_Position"/>
                                 <field name="sys_menu"/>
-                                <field name="key_word" attrs="{'invisible': [('display_Position', '!=', 'two')]}"/>
+                                <field name="key_word" attrs="{'invisible': [('display_Position', '!=', 'two'),('display_Position', '!=', 'top')]}"/>
                                 <field name="url"   attrs="{'invisible': [('sys_menu', '!=', False)]}"/>
-                                <field name="web_icon_data" attrs="{'invisible': [('display_Position', 'not in', ['two','footer'])]}"/>
+                                <field name="web_icon_data" attrs="{'invisible': [('display_Position', 'not in', ['two','footer','top'])]}"/>
                             </group>
                             <group>
                                 <field name="sequence"/>
@@ -47,11 +47,11 @@
                         </group>
 
                         <notebook>
-                            <page string="权限配置" attrs="{'invisible':[('sys_menu','!=',False)]}">
+                            <page string="权限配置" attrs="{'invisible':['|','|',('sys_menu','!=',False),('display_Position','==','top')]}">
                                 <field name="groups_id"/>
                             </page>
                              <page string="执行Python代码" name='code' autofocus="autofocus"
-                                    attrs="{'invisible': [('display_Position', '!=', 'one')]}">
+                                    attrs="{'invisible': [('display_Position', '!=', 'one'),('display_Position', '!=', 'top')]}">
                                 <field name="code" widget="ace" options="{'mode': 'python'}" placeholder="Enter Python code here. Help about Python expression is available in the help tab of this document."/>
                             </page>
                         </notebook>
@@ -69,6 +69,7 @@
                 <search string="Search">
                     <field name="display_Position" string="显示位置"/>
                       <field name="is_visible"/>
+                    <filter string="头部" domain="[('display_Position','=','top')]" name="头部" help="头部"/>
                     <filter string="显示位置第一行" domain="[('display_Position','=','one')]" name="显示第一行" help="第一行显示"/>
                     <filter string="显示位置第二行" domain="[('display_Position','=','two')]" name="显示第二行" help="第二行显示"/>
                     <filter string="显示位置列表" domain="[('display_Position','=','list')]" name="显示位置列表" help="显示位置列表"/>
@@ -106,7 +107,7 @@
 
 
         <menuitem id="usercenter_menumenu" name="个人中心菜单" action="usercenter_menuaction"
-                  sequence="1" parent="menu_user_center_conf"/>
+                  sequence="1" parent="menu_user_center_conf"  groups="web_user_center.user_center_manager"/>
 
 
     </data>

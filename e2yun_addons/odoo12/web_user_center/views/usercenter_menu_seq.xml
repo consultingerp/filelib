@@ -24,6 +24,6 @@
     </record>
 
     <menuitem id="usercenter_menu_seq_menu" name="菜单顺序调整" action="usercenter_menu_seq_action"
-              sequence="2" parent="menu_user_center_conf"/>
+              sequence="2" parent="menu_user_center_conf"  groups="web_user_center.user_center_manager"/>
 
 </odoo>
