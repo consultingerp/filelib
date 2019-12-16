@@ -109,6 +109,12 @@ class cart(http.Controller):
             request.session['sale_order_id'] = None
             sale_order = request.website.sale_get_order(force_create=True)
 
+        if sale_order.user_id and not sale_order.team_id:
+            team_user = request.env['res.users'].sudo().search([('id','=',sale_order.user_id.id)])
+            sale_order.team_id = team_user.sale_team_id.id
+
+            # request.env['crm.team'].sudo().search([('')])
+
         product_custom_attribute_values = None
         if kw.get('product_custom_attribute_values'):
             product_custom_attribute_values = json.loads(kw.get('product_custom_attribute_values'))
