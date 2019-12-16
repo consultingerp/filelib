@@ -12,6 +12,12 @@
                 id="menu_user_center_conf"
                 name="配置"
                 parent="menu_user_center_top"
+                sequence="0"/>
+
+          <menuitem
+                id="menu_user_center"
+                name="个人中心"
+                parent="menu_user_center_top"
                 sequence="2"/>
 
 

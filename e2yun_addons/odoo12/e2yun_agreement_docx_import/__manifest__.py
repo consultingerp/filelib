@@ -10,6 +10,8 @@
     'data': [
         'views/view.xml',
         'views/agreement_extend.xml',
+        'views/agreement_word_data.xml',
+
     ],
     'installable': True,
     'auto_install': False,

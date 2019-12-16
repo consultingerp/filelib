@@ -289,6 +289,9 @@ class e2yun_customer_payment_extend(models.Model):
                 if journal:
                     vals_list['journal_id'] = journal.id
 
+        check_accept_amount = self.env['crm.team'].browse(vals_list['related_shop']).show_accept_amount
+        if not check_accept_amount:
+            vals_list['accept_amount'] = 0
 
         res = super(e2yun_customer_payment_extend, self).create(vals_list)
         self.env.cr.commit()

@@ -7,6 +7,48 @@ class CrmTeamExtend(models.Model):
     _inherit = 'crm.team'
 
     def write(self, vals):
+        # if 'use_invoices' not in vals:
+        #     vals = {'use_invoices': False}
+        #     return super(CrmTeamExtend, self).write(vals)
+        # use_invoices = vals['use_invoices']
+        # if use_invoices:
+        #     if 'team_year' not in vals:
+        #         raise exceptions.Warning('请选择年份')
+        #     if 'team_target' not in vals:
+        #         raise exceptions.Warning('请填写门店目标')
+        #     if 'invoiced_target_detail' not in vals:
+        #         raise exceptions.Warning('请填写门店目标')
+        #     # 检查门店目标是否有重复值
+        #     target_year_list = vals['team_target']
+        #     year_list = []
+        #     for line in target_year_list:
+        #         year = line[2]['target_year']
+        #         if year != vals['team_year']:
+        #             raise exceptions.Warning('当前仅设置%s年的年度目标' % vals['team_year'])
+        #         if year in year_list:
+        #             raise exceptions.Warning('%s年的年度目标已存在' % year)
+        #         year_list.append(year)
+        #         total_target = line[2]['invoiced_target_year']
+        #         # 检查目标明细是否有重复值
+        #         target_detail_list = vals['invoiced_target_detail']
+        #         invoiced_target = 0
+        #         month_sale_dict = {}
+        #         for target in target_detail_list:
+        #             detail_year = target[2]['detail_year']
+        #             month = target[2]['target_month']
+        #             sale = target[2]['sales_member']
+        #             team_target_monthly = target[2]['team_target_monthly']
+        #             if detail_year != vals['team_year']:
+        #                 raise exceptions.Warning('当前仅设置%s年的目标明细' % year)
+        #             if month in month_sale_dict.keys() and month_sale_dict['%s' % month] == sale:
+        #                 raise exceptions.Warning('%s月份导购的目标值重复' % month)
+        #             month_sale_dict.update({month: sale})
+        #             invoiced_target += team_target_monthly
+        #         if invoiced_target > total_target:
+        #             raise exceptions.Warning('%s年：设定目标不能超过年度目标' % year)
+        #     res = super(CrmTeamExtend, self).write(vals)
+        #     return res
+
         res = super(CrmTeamExtend, self).write(vals)
         # 验证目标设置逻辑
         if self.use_invoices and not self.team_year:
