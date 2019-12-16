@@ -20,7 +20,7 @@ class Agreement(models.Model):
 
 
     def write(self, vals):
-        if vals['agreement_subtype_id']:
+        if 'agreement_subtype_id' in vals.keys() and vals['agreement_subtype_id']:
           agreement_subtype_obj = self.env['agreement.subtype'].browse(vals['agreement_subtype_id'])
           if agreement_subtype_obj.for_code:
             sequence_obj = self.env['ir.sequence']
@@ -43,3 +43,5 @@ class AgreementSubtype(models.Model):
     _inherit = "agreement.subtype"
 
     for_code = fields.Char(string="For Code", required=True)
+
+
