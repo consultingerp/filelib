@@ -87,7 +87,7 @@ class DocxImport(models.TransientModel):
 class AgreementDownloadDoc(models.Model):
     _name = "agreement.download.doc"
 
-    file_path = fields.Char('File Path',required=True)
+    file_path = fields.Char('File Path')
 
     #默认样式设置
     def chg_font(self,obj, fontname='微软雅黑', size=None):
@@ -127,7 +127,9 @@ class AgreementDownloadDoc(models.Model):
         if clauseListData:
             master_word_id=clauseListData[0].master_word_id
         else:
-            return  False
+            clauseListData = agreement_word_data.search(
+                [('agreement_id', '=', agreement_id), ('detail', '=', False)])
+            master_word_id = clauseListData[0].master_word_id
 
         pythoncom.CoInitialize()
         wordApp = Dispatch('Word.Application')  # 打开word应用程序
@@ -238,16 +240,19 @@ class AgreementDownloadDoc(models.Model):
             val['agreement_id']=agreement_id
             val['sequence'] = i
             if para.Range.text or  para.Range.text!="":
+                font_size=para.Range.Font.Size;
+                if font_size>20:
+                    font_size=11
                 val['alignment'] = para.Range.ParagraphFormat.Alignment  # 0,1,2 分别对应左对齐、居中、右对齐
                 val['font_Name'] = para.Range.Font.Name
-                val['font_size'] = para.Range.Font.Size
+                val['font_size'] = font_size
                 val['content'] = para.Range.text
                 if para.Range.ParagraphFormat.Alignment==1:
-                    p = "<p id=" + str(i) + " style = 'text-align: center; font-size: "+str(para.Range.Font.Size)+"px;'>"
+                    p = "<p id=" + str(i) + " style = 'text-align: center; font-size: "+str(font_size)+"px;'>"
                 elif  para.Range.ParagraphFormat.Alignment==2:
-                    p = "<p id=" + str(i) + " style = 'text-align: center; font-size: " + str(para.Range.Font.Size) + "px;'>"
+                    p = "<p id=" + str(i) + " style = 'text-align: center; font-size: " + str(font_size) + "px;'>"
                 else:
-                    p = "<p id=" + str(i) + " style ='font-size: " + str(para.Range.Font.Size) + "px;'>"
+                    p = "<p id=" + str(i) + " style ='font-size: " + str(font_size) + "px;'>"
                 content = p + para.Range.text + "</p>"
             else:
                 content="<br/>"

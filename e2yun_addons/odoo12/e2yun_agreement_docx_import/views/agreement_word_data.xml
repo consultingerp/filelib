@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="agreement_word_data_list_view">
+        <field name="name">Agreement Word Data</field>
+        <field name="model">agreement.word.data</field>
+        <field name="arch" type="xml">
+            <tree string="Word Data" default_order='agreement_id, sequence'>
+                <field name="sequence" widget="handle"/>
+                <field name="agreement_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Agreement Clause Form View -->
+    <record model="ir.ui.view" id="agreement_word_data_form_view">
+        <field name="name">Agreement Word Data Form</field>
+        <field name="model">agreement.word.data</field>
+        <field name="arch" type="xml">
+            <form string="Word Data">
+                <field name="content" widget="html" /> <!--options="{'style-inline': true}" -->
+            </form>
+        </field>
+    </record>
+
+     <record id="action_agreement_word_data_form" model="ir.actions.act_window">
+            <field name="name">Agreement Word Data</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">agreement.word.data</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    <!--
+      <menuitem id="agreement_word_data_management" name="Agreement Word Data" parent="agreement.agreement_menu" />
+
+       <menuitem name="Agreement Word Data" action="action_agreement_word_data_form" id="menu_agreement_word_data"  parent="agreement_word_data_management"/>
+        -->
+</odoo>
