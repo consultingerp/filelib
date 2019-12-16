@@ -45,7 +45,7 @@ class WebCenterController(http.Controller):
         result = localdict['result']
         return result
 
-    @http.route('/structure_iframe_page', type='http', auth='user', methods=['GET', 'POST'], website=True)
+    @http.route('/structure_page', type='http', auth='user', methods=['GET', 'POST'], website=True)
     def structure_iframe_page(self, **kwargs):
         usercenter_menu = request.env['usercenter.menu'].sudo().search([], order='display_Position,sequence')
         usercenter_menu_used = usercenter_menu
