@@ -5,7 +5,6 @@ from odoo import api, fields, models, tools, _
 from docx import Document
 from docx.shared import Pt,Inches
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
-import pythoncom
 import os, sys
 
 class DocxImport(models.TransientModel):
@@ -188,7 +187,7 @@ class AgreementDownloadDoc(models.Model):
 
     def Import_doc(self):
         full_path = self.file_path
-        pythoncom.CoInitialize()  #多线程处理
+
 
         doc = Document(full_path)
 
