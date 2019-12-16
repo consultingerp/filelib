@@ -35,7 +35,7 @@ class UserCenterMenu(models.Model):
     url = fields.Char('URL', default='')
     new_window = fields.Boolean('新窗口')
     sequence = fields.Integer(default=_default_sequence, string='排序')
-    display_Position = fields.Selection([('footer', '底部'), ('one', '第一行'), ('two', '第二行'), ('list', '列表')], default='list', string='显示位置')
+    display_Position = fields.Selection([('top', '顶部'), ('footer', '底部'), ('one', '第一行'), ('two', '第二行'), ('list', '列表')], default='list', string='显示位置')
     is_visible = fields.Boolean(string='是否显示', default=True)
     is_divHeight = fields.Boolean(string='分格显示')
     sys_menu = fields.Many2one('ir.ui.menu', string='关联系统菜单')
