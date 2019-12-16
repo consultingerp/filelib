@@ -13,7 +13,6 @@
             <field name="arch" type="xml">
                 <graph string="目标完成占比报表">
                     <field name="completion" type="measure"/>
-<!--                    <field name="stage_id" type="col"/>-->
                     <field name="sale_id" type="col"/>
                     <field name="target_id" type="row"/>
                 </graph>
@@ -37,7 +36,6 @@
 <!--&lt;!&ndash;                    <field name="target_amount"/>&ndash;&gt;-->
 <!--&lt;!&ndash;                    <field name="jiesuan_amount"/>&ndash;&gt;-->
 <!--                    <field name="completion"/>-->
-<!--&lt;!&ndash;                    <field name="stage_id"/>&ndash;&gt;-->
 <!--                    <field name="sale_id"/>-->
 <!--                    <field name="target_id"/>-->
 <!--                </tree>-->
