@@ -9,10 +9,12 @@
                   web_icon="web_user_center,static/description/icon.png"/>
 
         <menuitem
-            id="menu_user_center"
-            name="个人中心"
-            action="user_center_action"
-            parent="web_user_center.menu_user_center_top"
-            sequence="1"/>
+                id="menu_user_center_conf"
+                name="配置"
+                parent="menu_user_center_top"
+                sequence="2"/>
+
+
+
     </data>
 </odoo>

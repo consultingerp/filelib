@@ -15,16 +15,25 @@ class TargetCompletion(models.Model):
             for rec in final:
                 rec.unlink()
         res = super(TargetCompletion, self).create(vals_list)
-        return res
-
-    # def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
-    #     res = super(TargetCompletion, self).search_read(domain, fields, offset, limit, order)
-    #     ctx = self._context.copy()
-    #     if 'new_view' in ctx:
-    #         res = [{'target_year': ctx['target_year'], 'target_month': ctx['target_month'], 'werks': ctx['werks'],
-    #                 'vkorgtext':ctx['vkorgtext'], 'vtweg': ctx['vtweg'], 'kunnr': ctx['kunnr'], 'ywy': ctx['ywy'],
-    #                 'jiesuan_amount': ctx['jiesuan_amount'], 'target_amount': ctx['target_amount']}]
-    #     return res
+        # 判断是查询目标完成占比报表,生成两条数据
+        if 'target_year' in vals_list:
+            new_val_list = []
+            if res.jiesuan_amount:
+                jiesuan_dict = vals_list.copy()
+                jiesuan_dict.update({'completion': res.jiesuan_amount, 'stage_id': 1})
+                new_val_list.append(jiesuan_dict)
+            if res.target_amount:
+                target_dict = vals_list.copy()
+                target_dict.update({'completion': res.target_amount, 'stage_id': 2})
+                new_val_list.append(target_dict)
+            aa = super(TargetCompletion, self).create(new_val_list)
+            if aa:
+                kk = aa[0]
+                res.unlink()
+                return kk
+        # 不是,直接返回
+        else:
+            return res
 
     def default_target_year(self):
         ctx = self._context.copy()
@@ -43,74 +52,84 @@ class TargetCompletion(models.Model):
          ('9', '九月'), ('10', '十月'), ('11', '十一月'), ('12', '十二月')], string='月份', default=default_target_month)
     target_amount = fields.Integer('门店目标', compute='_compute_target_amount', store=True)
     jiesuan_amount = fields.Integer('销售金额', compute='_compute_jiesuan_amount', store=True)
+    completion = fields.Integer('目标完成占比')
+    stage_id = fields.Many2one('target.stage', '数据来源')
 
     @api.depends('target_year', 'target_month', 'kunnr', 'ywy')
     def _compute_target_amount(self):
         for rec in self:
-            # 选择月份（展示门店/业务月度目标）
-            if rec.target_month:
-                if rec.ywy:
-                    target_detail = self.env['team.target.detail'].search([('current_team_id', '=', rec.kunnr.id),
-                                                                           ('detail_year', '=', rec.target_year),
-                                                                           ('target_month', '=?', rec.target_month),
-                                                                           ('sales_member.id', '=?', rec.ywy.id)])
-                else:
-                    target_detail = self.env['team.target.detail'].search([('current_team_id', '=', rec.kunnr.id),
-                                                                          ('detail_year', '=', rec.target_year),
-                                                                          ('target_month', '=?', rec.target_month)])
-                target_amount = 0
-                if target_detail:
-                    for detail in target_detail:
-                        target_amount += detail.team_target_monthly
-                rec.target_amount = target_amount
-            # 不选择月份（展示门店/业务年度目标）
-            else:
-                # 选择业务员,年度目标通过分配目标的取值
-                if rec.ywy:
-                    ywy = rec.ywy.id
-                    target_detail = self.env['team.target.detail'].search([('current_team_id', '=', rec.kunnr.id),
-                                                                           ('detail_year', '=', rec.target_year),
-                                                                           ('sales_member.id', '=?', ywy)])
+            # 确认是查询目标完成占比报表
+            if rec.target_year:
+                # 选择月份（展示门店/业务月度目标）
+                if rec.target_month:
+                    if rec.ywy:
+                        target_detail = self.env['team.target.detail'].search([('current_team_id', '=', rec.kunnr.id),
+                                                                               ('detail_year', '=', rec.target_year),
+                                                                               ('target_month', '=?', rec.target_month),
+                                                                               ('sales_member.id', '=?', rec.ywy.id)])
+                    else:
+                        target_detail = self.env['team.target.detail'].search([('current_team_id', '=', rec.kunnr.id),
+                                                                              ('detail_year', '=', rec.target_year),
+                                                                              ('target_month', '=?', rec.target_month)])
                     target_amount = 0
                     if target_detail:
                         for detail in target_detail:
                             target_amount += detail.team_target_monthly
                     rec.target_amount = target_amount
-                # 不选择业务员,直接取门店年度目标
+                # 不选择月份（展示门店/业务年度目标）
                 else:
-                    target_year = self.env['team.target.year'].search([('team_id', '=', rec.kunnr.id),
-                                                                       ('target_year', '=', rec.target_year)])
-                    target_amount = 0
-                    if target_year:
-                        for target in target_year:
-                            target_amount += target.invoiced_target_year
-                    rec.target_amount = target_amount
+                    # 选择业务员,年度目标通过分配目标的取值
+                    if rec.ywy:
+                        ywy = rec.ywy.id
+                        target_detail = self.env['team.target.detail'].search([('current_team_id', '=', rec.kunnr.id),
+                                                                               ('detail_year', '=', rec.target_year),
+                                                                               ('sales_member.id', '=?', ywy)])
+                        target_amount = 0
+                        if target_detail:
+                            for detail in target_detail:
+                                target_amount += detail.team_target_monthly
+                        rec.target_amount = target_amount
+                    # 不选择业务员,直接取门店年度目标
+                    else:
+                        target_year = self.env['team.target.year'].search([('team_id', '=', rec.kunnr.id),
+                                                                           ('target_year', '=', rec.target_year)])
+                        target_amount = 0
+                        if target_year:
+                            for target in target_year:
+                                target_amount += target.invoiced_target_year
+                        rec.target_amount = target_amount
+            else:
+                pass
 
     @api.depends('target_year', 'target_month', 'kunnr', 'ywy')
     def _compute_jiesuan_amount(self):
         for rec in self:
-            if rec.kunnr:
-                kunnr_sql = "and kunnr = %s" % rec.kunnr.id
+            # 确认是查询目标完成占比报表
+            if rec.target_year:
+                if rec.kunnr:
+                    kunnr_sql = "and kunnr = %s" % rec.kunnr.id
+                else:
+                    kunnr_sql = ''
+                if rec.ywy:
+                    ywy_sql = "and ywy = '%s'" % rec.ywy.id
+                else:
+                    ywy_sql = ""
+                if rec.target_month:
+                    month = '%02d' % int(rec.target_month)
+                    time_sql = "TO_CHAR(\"LFADT\", 'YYYYMM') = '%s'" % (str(rec.target_year) + str(month))
+                    sql_str = "select * from outbound_final where %s %s %s" % (time_sql, kunnr_sql, ywy_sql)
+                else:
+                    time_sql = "TO_CHAR(\"LFADT\", 'YYYY') = '%s'" % (str(rec.target_year))
+                    sql_str = "select * from outbound_final where %s %s %s" % (time_sql, kunnr_sql, ywy_sql)
+                rec._cr.execute(sql_str)
+                res_amount = rec._cr.dictfetchall()
+                jiesuan_amount = 0
+                if res_amount:
+                    for res in res_amount:
+                        jiesuan_amount += res['jiesuanjine']
+                rec.jiesuan_amount = jiesuan_amount
             else:
-                kunnr_sql = ''
-            if rec.ywy:
-                ywy_sql = "and ywy = '%s'" % rec.ywy.id
-            else:
-                ywy_sql = ""
-            if rec.target_month:
-                month = '%02d' % int(rec.target_month)
-                time_sql = "TO_CHAR(\"LFADT\", 'YYYYMM') = '%s'" % (str(rec.target_year) + str(month))
-                sql_str = "select * from outbound_final where %s %s %s" % (time_sql, kunnr_sql, ywy_sql)
-            else:
-                time_sql = "TO_CHAR(\"LFADT\", 'YYYY') = '%s'" % (str(rec.target_year))
-                sql_str = "select * from outbound_final where %s %s %s" % (time_sql, kunnr_sql, ywy_sql)
-            rec._cr.execute(sql_str)
-            res_amount = rec._cr.dictfetchall()
-            jiesuan_amount = 0
-            if res_amount:
-                for res in res_amount:
-                    jiesuan_amount += res['jiesuanjine']
-            rec.jiesuan_amount = jiesuan_amount
+                pass
 
     # 获取查询视图的view_id,在js中访问该方法获取指定该视图id
     @api.model
@@ -268,3 +287,10 @@ class TargetCompletion(models.Model):
             'views': [[tree_view.id, 'tree'],
                       [graph_view.id, 'graph']],
                 }
+
+
+class TargetStage(models.Model):
+    _name = 'target.stage'
+    _description = '目标完成占比数据来源'
+
+    name = fields.Char('来源')
