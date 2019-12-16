@@ -12,5 +12,19 @@
             <field name="key">e2yun.pos_sync_pageSize</field>
             <field name="value">20</field>
         </record>
+
+         <record id="ir_cron_sync_data_from_pos_for_crm_state" model="ir.cron">
+            <field name="name">同步销售订单状态全部入库/部分入库作业</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="state">code</field>
+            <field name="code">model.action_sync_pos_status_for_stock_status()</field>
+            <field name="active" eval="True"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">30</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+        </record>
+
     </data>
 </odoo>
