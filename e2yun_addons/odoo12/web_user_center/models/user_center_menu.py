@@ -43,10 +43,7 @@ class UserCenterMenu(models.Model):
     code = fields.Text(string='Python Code', groups='base.group_system',
                        help="Write Python code that the action will execute. Some variables are "
                             "available for use; help about python expression is given in the help tab.")
-    groups_id = fields.Many2many('res.groups', 'ir_ui_menu_group_rel',
-                                 'menu_id', 'gid', string='Groups',
-                                 help="If you have groups, the visibility of this menu will be based on these groups. " \
-                                      "If this field is empty, Odoo will compute visibility based on the related object's read access.")
+    groups_id = fields.Many2many('res.groups', string='Groups')
 
     @api.onchange('display_Position')
     def _onchange_action(self):
