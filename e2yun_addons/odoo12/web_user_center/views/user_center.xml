@@ -74,12 +74,16 @@
                             <t t-if="menu.sys_menu  and menu.sys_menu.action">
                                 <t t-set="url" t-value="'/web#menu_id=' + str(menu.sys_menu.id) + '&amp;action=' + str(menu.sys_menu.action.id) +''"/>
                                 <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
-                                <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                                <t t-if="not menu.new_window">
+                                    <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                                </t>
                             </t>
                             <t t-elif="menu.url">
                                 <t t-set="url" t-value="menu.url"/>
                                 <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
-                                <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                                <t t-if="not menu.new_window">
+                                    <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                                </t>
                             </t>
                             <t t-else="">
                                 <t t-set="url">javascript:;</t>
@@ -130,12 +134,16 @@
                             <t t-if="menu.sys_menu  and menu.sys_menu.action">
                                 <t t-set="url" t-value="'/web#menu_id=' + str(menu.sys_menu.id) + '&amp;action=' + str(menu.sys_menu.action.id) +''"/>
                                 <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
-                                <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                                <t t-if="not menu.new_window">
+                                    <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                                </t>
                             </t>
                             <t t-elif="menu.url">
                                 <t t-set="url" t-value="menu.url"/>
                                 <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
-                                <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                                <t t-if="not menu.new_window">
+                                    <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                                </t>
                             </t>
                             <t t-else="">
                                 <t t-set="url">javascript:;</t>
@@ -191,12 +199,16 @@
                             <t t-if="menu.sys_menu  and menu.sys_menu.action">
                                 <t t-set="url" t-value="'/web#menu_id=' + str(menu.sys_menu.id) + '&amp;action=' + str(menu.sys_menu.action.id) +''"/>
                                 <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
-                                <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                                <t t-if="not menu.new_window">
+                                    <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                                </t>
                             </t>
                             <t t-elif="menu.url">
                                 <t t-set="url" t-value="menu.url"/>
                                 <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
-                                <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                                <t t-if="not menu.new_window">
+                                    <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                                </t>
                             </t>
                             <t t-else="">
                                 <t t-set="url">javascript:;</t>
