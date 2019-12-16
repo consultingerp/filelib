@@ -10,6 +10,9 @@
     'data': [
         'views/view.xml',
         'views/agreement_extend.xml',
+        'qweb/agreement_word_edit.xml',
+        'views/agreement_word_data.xml',
+
     ],
     'installable': True,
     'auto_install': False,

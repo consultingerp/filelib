@@ -7,5 +7,5 @@ from odoo import models
 class Agreement(models.Model):
     _name = "agreement"
     _inherit = ['agreement', 'tier.validation']
-    _state_from = ['draft', 'active', 'inactive']
-    _state_to = ['active', 'inactive']
+    _stage_id_from = ['1', '2', '3']
+    _stage_id_to = ['4']

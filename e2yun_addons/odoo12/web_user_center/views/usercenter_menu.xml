@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="usercenter_menuview_tree" model="ir.ui.view">
+            <field name="name">usercenter.menu.view_tree</field>
+            <field name="model">usercenter.menu</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="菜单列表"   default_order="display_Position,sequence">
+                    <field name="name"/>
+                    <field name="title"/>
+                    <field name="sys_menu"/>
+                    <field name="sequence"/>
+                    <field name="key_word"/>
+                    <field name="url"/>
+                    <field name="groups_id"/>
+                    <field name="new_window"/>
+                    <field name="display_Position"/>
+                    <field name="is_visible"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="usercenter_menuview_form" model="ir.ui.view">
+            <field name="name">usercenter.menu.view_form</field>
+            <field name="model">usercenter.menu</field>
+            <field name="arch" type="xml">
+                <form string="usercenter" duplicate="false">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="title"/>
+                                <field name="display_Position"/>
+                                <field name="sys_menu"/>
+                                <field name="key_word" attrs="{'invisible': [('display_Position', '!=', 'two'),('display_Position', '!=', 'top')]}"/>
+                                <field name="url"   attrs="{'invisible': [('sys_menu', '!=', False)]}"/>
+                                <field name="web_icon_data" attrs="{'invisible': [('display_Position', 'not in', ['two','footer','top'])]}"/>
+                            </group>
+                            <group>
+                                <field name="sequence"/>
+                                <field name="new_window"/>
+                                <field name="is_visible">True</field>
+                                <field name="is_divHeight"  attrs="{'invisible': [('display_Position', '!=', 'list')]}"/>
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <page string="权限配置" attrs="{'invisible':['|','|',('sys_menu','!=',False),('display_Position','==','top')]}">
+                                <field name="groups_id"/>
+                            </page>
+                             <page string="执行Python代码" name='code' autofocus="autofocus"
+                                    attrs="{'invisible': [('display_Position', '!=', 'one'),('display_Position', '!=', 'top')]}">
+                                <field name="code" widget="ace" options="{'mode': 'python'}" placeholder="Enter Python code here. Help about Python expression is available in the help tab of this document."/>
+                            </page>
+                        </notebook>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="menu_view_search" model="ir.ui.view">
+            <field name="name">usercenter.menu.search</field>
+            <field name="model">usercenter.menu</field>
+            <field name="arch" type="xml">
+                <search string="Search">
+                    <field name="display_Position" string="显示位置"/>
+                      <field name="is_visible"/>
+                    <filter string="头部" domain="[('display_Position','=','top')]" name="头部" help="头部"/>
+                    <filter string="显示位置第一行" domain="[('display_Position','=','one')]" name="显示第一行" help="第一行显示"/>
+                    <filter string="显示位置第二行" domain="[('display_Position','=','two')]" name="显示第二行" help="第二行显示"/>
+                    <filter string="显示位置列表" domain="[('display_Position','=','list')]" name="显示位置列表" help="显示位置列表"/>
+                    <filter string="显示位Footer" domain="[('display_Position','=','footer')]" name="Footer" help="Footer"/>
+                    <separator/>
+                     <group expand="0" string="Group By">
+                        <filter string="显示位置" name="显示位置" domain="[]" context="{'group_by':'display_Position'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="action_usercenter_menu_graph">
+        <field name="name">usercenter.menu.graph</field>
+        <field name="model">usercenter.menu</field>
+        <field name="arch" type="xml">
+            <graph string="Deferred Revenue Analysis">
+                <field name="name" type="row"/>
+                <field name="display_Position" type="col"/>
+                <!--<field name="key_word" type="measure"/>-->
+            </graph>
+        </field>
+    </record>
+
+
+        <record id="usercenter_menuaction" model="ir.actions.act_window">
+            <field name="name">个人中心菜单管理</field>
+            <field name="res_model">usercenter.menu</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="menu_view_search"/>
+            <field name="view_mode">tree,graph,form</field>
+            <field name="target">current</field>
+            <field name="view_id" ref="usercenter_menuview_tree"/>
+        </record>
+
+
+        <menuitem id="usercenter_menumenu" name="个人中心菜单" action="usercenter_menuaction"
+                  sequence="1" parent="menu_user_center_conf"  groups="web_user_center.user_center_manager"/>
+
+
+    </data>
+</odoo>
