@@ -29,14 +29,14 @@ class Project(models.Model):
                         id_need_reduce.pop(0)
 
         return {
-            "name": _("WBS Structure View"),
+            "name": _("合约规划"),
             "type": 'ir.actions.act_window',
             "res_model": 'project.project',
             # "views": [[self.env.ref('e2yun_cge_project_wbs_extends.project_project_tree_view').id, "tree"]],
             "views": [[self.env.ref('e2yun_cge_project_wbs_extends.project_project_tree_view').id, "tree"]],
             # "target": 'new',
             "domain": [['id', '=', ids]],
-            "context": {"create": False},
+            "context": {"create": False, 'edit': False},
         }
 
     # return {

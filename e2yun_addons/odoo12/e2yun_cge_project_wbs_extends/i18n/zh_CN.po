@@ -15,5 +15,3 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: zh_CN\n"
 "X-Generator: Poedit 1.8.12\n"
-
-
