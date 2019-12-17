@@ -21,8 +21,9 @@
 
     <!--<template id="selection" name="Selection">-->
         <!--<select>-->
-            <!--<option value="值">选项内容</option>-->
-            <!--<option value="值">选项内容</option>-->
+            <!--<t t-foreach='question.labels_ids' t-as='label'>-->
+                <!--<option t-att-value='label.id'><t t-esc='label.value'/></option>-->
+            <!--</t>-->
         <!--</select>-->
     <!--</template>-->
 </data>

@@ -56,6 +56,14 @@ class AgreementDownloadDoc(http.Controller):
                     elif op == 'insert':
                         oldStr = oldStr[af:at]
                         newStr = newStr[bf:bt]
+                        clauseListData = agreement_word_data.search(
+                            [('id', '=', content_id)])
+                        up_val = {}
+                        up_val['edit_type'] = "insert"
+                        up_val['old_text'] = content_old
+                        up_val['new_text'] = content_new
+                        up_val['the_editor'] = True
+                        clauseListData[0].write(up_val)
 
 
         agreement_word_data = request.env['agreement.word.data']  # wordData
