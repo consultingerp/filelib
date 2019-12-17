@@ -11,6 +11,7 @@
         'views/view.xml',
         'views/agreement_extend.xml',
         'views/agreement_word_data.xml',
+        'qweb/agreement_word_edit.xml',
 
     ],
     'installable': True,

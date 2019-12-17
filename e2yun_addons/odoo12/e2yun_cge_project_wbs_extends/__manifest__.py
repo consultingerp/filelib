@@ -4,7 +4,7 @@
     'version': '0.1',
     'sequence': '10',
     'category': 'base',
-    'depends': ['project', 'analytic'],
+    'depends': ['project', 'analytic', 'project_wbs'],
     'author': 'Feng Zhou',
     'website': 'http://e2yun.cn',
     'summary': 'E2yun CGE Project Extends',
