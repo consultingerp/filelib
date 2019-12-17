@@ -11,7 +11,7 @@
             <field name="name">target.completion.report.graph.view</field>
             <field name="model">outbound.final</field>
             <field name="arch" type="xml">
-                <graph string="目标完成占比报表">
+                <graph>
                     <field name="completion" type="measure"/>
                     <field name="sale_id" type="col"/>
                     <field name="target_id" type="row"/>
@@ -19,28 +19,28 @@
             </field>
         </record>
 
-<!--        <record id="target_completion_report_tree_view" model="ir.ui.view">-->
-<!--            <field name="name">target.completion.report.tree.view</field>-->
-<!--            <field name="model">outbound.final</field>-->
-<!--            <field name="arch" type="xml">-->
-<!--                <tree js_class="target_completion_tree_view_button" string="查询" create="false" delete="false" editable="bottom">-->
-<!--                    <field name="target_year"/>-->
-<!--                    <field name="target_month"/>-->
-<!--&lt;!&ndash;                    <field name="salesorderid"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <field name="LFADT"/>&ndash;&gt;-->
-<!--                    <field name="werks"/>-->
-<!--                    <field name="vkorgtext"/>-->
-<!--                    <field name="vtweg"/>-->
-<!--                    <field name="kunnr"/>-->
-<!--                    <field name="ywy"/>-->
-<!--&lt;!&ndash;                    <field name="target_amount"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <field name="jiesuan_amount"/>&ndash;&gt;-->
-<!--                    <field name="completion"/>-->
+        <record id="target_completion_report_tree_view" model="ir.ui.view">
+            <field name="name">target.completion.report.tree.view</field>
+            <field name="model">outbound.final</field>
+            <field name="arch" type="xml">
+                <tree js_class="target_completion_tree_view_button" string="查询" create="false" delete="false" editable="bottom">
+                    <field name="target_year"/>
+                    <field name="target_month"/>
+<!--                    <field name="salesorderid"/>-->
+<!--                    <field name="LFADT"/>-->
+                    <field name="werks"/>
+                    <field name="vkorgtext"/>
+                    <field name="vtweg"/>
+                    <field name="kunnr"/>
+                    <field name="ywy"/>
+<!--                    <field name="target_amount"/>-->
+<!--                    <field name="jiesuan_amount"/>-->
+                    <field name="completion"/>
 <!--                    <field name="sale_id"/>-->
-<!--                    <field name="target_id"/>-->
-<!--                </tree>-->
-<!--            </field>-->
-<!--        </record>-->
+                    <field name="target_id"/>
+                </tree>
+            </field>
+        </record>
 
 <!--        <record id="target_completion_report_search_view" model="ir.ui.view">-->
 <!--            <field name="name">Target Completion Report Search</field>-->
