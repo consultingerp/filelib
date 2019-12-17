@@ -82,7 +82,7 @@ class E2yunTaskInfo(models.Model):
     def write(self, vals):
         res = super(E2yunTaskInfo, self).write(vals)
         if self.multiple_questionnaires == 'no' and len(self.questionnaire_ids) == 0:
-            raise exceptions.Warning(_('请先填写问卷场景，权重和问卷模板'))
+            raise exceptions.Warning(_('请先维护行信息！'))
         if self.multiple_questionnaires and self.multiple_questionnaires == 'no':
             self.questionnaire_ids.weight = '100%'
         all_score = 0
@@ -231,6 +231,7 @@ class SurveyQuestion(models.Model):
     page_id = fields.Many2one('survey.page', string='Survey page',
                               ondelete='cascade', required=False, default=lambda self: self.env.context.get('page_id'))
     type_id = fields.Many2one('question.type', string='问题类型')
+    type_name = fields.Char(string='问题类型', related='type_id.name')
 
     @api.onchange('labels_ids')
     def _onchange_score(self):
