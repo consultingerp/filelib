@@ -11,6 +11,22 @@ class Project(models.Model):
 
     account_analytic_task_id = fields.Many2one('account.analytic.tag', '分析帐号包')
 
+    sort_code = fields.Char('排序字段', compute='_compute_sort_code', store=True)
+
+    @api.multi
+    @api.depends('complete_wbs_code')
+    def _compute_sort_code(self):
+        for project in self:
+            if project.complete_wbs_code:
+                sort_code = project.complete_wbs_code
+                sort_code = sort_code.replace('[', '')
+                sort_code = sort_code.replace(']', '')
+                while sort_code.find('/') != -1:
+                    sort_code = sort_code.replace('/', '')
+                while sort_code.find(' ') != -1:
+                    sort_code = sort_code.replace(' ', '')
+                project.sort_code = sort_code
+
     @api.multi
     def action_show_structure(self):
         ids = []
@@ -35,7 +51,7 @@ class Project(models.Model):
             # "views": [[self.env.ref('e2yun_cge_project_wbs_extends.project_project_tree_view').id, "tree"]],
             "views": [[self.env.ref('e2yun_cge_project_wbs_extends.project_project_tree_view').id, "tree"]],
             # "target": 'new',
-            "domain": [['id', '=', ids]],
+            "domain": [['id', 'in', ids]],
             "context": {"create": False, 'edit': False},
         }
 
