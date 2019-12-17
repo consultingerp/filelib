@@ -28,11 +28,11 @@ CREATE OR REPLACE VIEW mis_analytic AS (
         'account.analytic.line' AS res_model,
         aa.id AS account_id,
         CASE
-          WHEN (aal.amount)::decimal(16,2) >= 0.0 THEN aal.amount
+          WHEN (aal.amount)::decimal(16,2) < 0.0 THEN aal.amount
           ELSE 0.0
         END AS debit,
         CASE
-          WHEN (aal.amount)::decimal(16,2)  < 0 THEN aal.amount * -1
+          WHEN (aal.amount)::decimal(16,2) >= 0 THEN aal.amount * -1
           ELSE 0.0
         END AS credit
         FROM account_analytic_line aal
