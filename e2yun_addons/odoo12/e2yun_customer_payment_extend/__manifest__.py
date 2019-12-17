@@ -28,5 +28,6 @@
         'views/bank_info.xml',
         'views/customer_refund.xml',
         'views/button_to_payment.xml',
+        'data/sequence_data.xml'
     ],
 }

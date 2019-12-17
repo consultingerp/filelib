@@ -256,6 +256,7 @@ class e2yun_customer_payment_extend(models.Model):
 
     @api.model
     def create(self, vals_list):
+        vals_list['name'] = self.env['ir.sequence'].next_by_code('seq_account_payment.seq_customer') or '/'
         ctx = self._context.copy()
         a = vals_list.get('payment_attachments')
 
@@ -269,7 +270,7 @@ class e2yun_customer_payment_extend(models.Model):
 
         atch = vals_list['payment_attachments']  # [[],[]]
         for r in atch:  # [0,'virtual', {}]
-            r[2]['res_name'] = r[2]['datas_fname']
+            # r[2]['res_name'] = r[2]['datas_fname']
             r[2]['res_model'] = 'account.payment'
             r[2]['name'] = uuid.uuid4()
             r[2]['active'] = True
@@ -296,6 +297,8 @@ class e2yun_customer_payment_extend(models.Model):
             vals_list['accept_amount'] = 0
 
         res = super(e2yun_customer_payment_extend, self).create(vals_list)
+        # for a in res.payment_attachments:
+        #     a.res_name = a.display_name
         self.env.cr.commit()
         if pos_flag and vals_list.get('create_uid',False):
             sql = """update account_payment set create_uid = """ + str(vals_list.get('create_uid')) + """ where id = """ + str(res.id)
@@ -351,10 +354,10 @@ class e2yun_customer_payment_extend2(models.Model):
 
     name = fields.Char('Name', required=False)
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        res = super(e2yun_customer_payment_extend2, self).create(vals_list)
-        return res
+    # @api.model_create_multi
+    # def create(self, vals_list):
+    #     res = super(e2yun_customer_payment_extend2, self).create(vals_list)
+    #     return res
 
 
 class e2yun_customer_payment_res_partner(models.Model):
