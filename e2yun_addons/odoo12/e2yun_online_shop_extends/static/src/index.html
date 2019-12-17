@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/vendor.css">
 
     <!-- style css -->
-    <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/main.css">
+    <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/main.css?version=0.1">
 
     <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/my.css">
 </head>
@@ -115,7 +115,8 @@
                             <div class="element-carousel slick-right-bottom recommend_product"
                                 data-slick-options='{
                                 "slidesToShow": 1, 
-                                "arrows": true,
+                                "autoplay": true,
+                                "autoplaySpeed":5000,
                                 "prevArrow": {"buttonClass": "slick-btn slick-prev", "iconClass": "la la-arrow-left" },
                                 "nextArrow": {"buttonClass": "slick-btn slick-next", "iconClass": "la la-arrow-right" }
                             }' 
@@ -142,7 +143,8 @@
                             <div class="element-carousel sell_well_datas"
                             data-slick-options='{
                                 "spaceBetween": 30,
-                                "slidesToShow": 3
+                                "slidesToShow": 3,
+                                "autoplay": true
                             }'
                             data-slick-responsive='[
                                 {"breakpoint": 768, "settings": {"slidesToShow": 2}},
