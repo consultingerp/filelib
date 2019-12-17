@@ -15,7 +15,7 @@
         <field name="inherit_id" ref="project.edit_project"/>
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
-                <button name="action_show_structure" string="WBS结构清单" type="object"/>
+                <button name="action_show_structure" string="合约规划" type="object"/>
             </xpath>
         </field>
     </record>
