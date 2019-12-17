@@ -25,7 +25,7 @@ class LoginHome(Home):
         if not request.session.uid:
             return web_
         try:
-            if request.httprequest.referrer and 'structure_page'  in  request.httprequest.referrer:
+            if request.httprequest.referrer and 'structure_page' in request.httprequest.referrer:
                 context = request.env['ir.http'].webclient_rendering_context()
                 response = request.render('web.webclient_bootstrap', qcontext=context)
                 response.headers['X-Frame-Options'] = 'SAMEORIGIN'
