@@ -152,6 +152,7 @@ class AgreementDownloadDoc(models.Model):
                          #                         clauseObj.new_text, 1)
                          #para.text=clauseObj.new_text
                          para.text.replace(clauseObj.old_text,clauseObj.new_text,1)
+                         para.text=para.text.replace(clauseObj.old_text,clauseObj.new_text,1)
 
 
               doc.save(wb_path)
@@ -189,11 +190,11 @@ class AgreementDownloadDoc(models.Model):
 
     def Import_doc(self):
 
-        path = sys.path[0] + "\\"
+        path = sys.path[3]
 
-        wb_path=path+"test20191216.docx"
+        wb_path=path+"/test20191216.docx"
 
-        f = open(wb_path, "wb")
+        f = open(wb_path, r"wb" )
         datass = base64.decodestring(self.data)
         f.write(datass)
         f.close()
@@ -223,7 +224,6 @@ class AgreementDownloadDoc(models.Model):
         # 每一段的内容
         i = 0
         # 利用下标遍历段落
-        allContent=""
         for i in range(len(doc.paragraphs)):
             para = doc.paragraphs[i]
             val = {}
@@ -235,30 +235,9 @@ class AgreementDownloadDoc(models.Model):
                 val['font_Name'] = para.style.font.name
                 val['font_size'] = font_size
                 val['content'] = para.text
-                if str(para.alignment)=="CENTER (1)":
-                    p = "<p id=" + str(i) + " style = 'text-align: center; font-size: "+str(font_size)+"px;'>"
-                elif  str(para.alignment)=="CENTER (1)":
-                    p = "<p id=" + str(i) + " style = 'text-align: center; font-size: " + str(font_size) + "px;'>"
-                else:
-                    p = "<p id=" + str(i) + " style ='font-size: " + str(font_size) + "px;'>"
-                content = p + para.text + "</p>"
-            else:
-                content="<br/>"
-            allContent=allContent+content
             val['master_word_id']=attachment_id.id
             vals.append(val)
-
-
-
-
         agreement_word_data.search([('agreement_id', '=', agreement_id)]).unlink()
-        agreement_word_data.create(vals)
-        val=vals[0]
-        val['sequence'] = 99999
-        val['content']=allContent
-        val['detail'] = True
-        vals=[]
-        vals.append(val)
         agreement_word_data.create(vals)
         if os.path.exists(wb_path):
             os.remove(wb_path)
