@@ -54,7 +54,7 @@ class TargetCompletion(models.Model):
     jiesuan_amount = fields.Integer('销售金额', compute='_compute_jiesuan_amount', store=True)
     completion = fields.Integer('目标完成占比')
     sale_id = fields.Many2one('sale.source', '占比类型')
-    target_id = fields.Many2one('target.source', '目标数据')
+    target_id = fields.Many2one('target.source', '数据来源')
 
     @api.depends('target_year', 'target_month', 'kunnr', 'ywy')
     def _compute_target_amount(self):
