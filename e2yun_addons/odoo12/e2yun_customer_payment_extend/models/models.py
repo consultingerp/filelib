@@ -269,8 +269,10 @@ class e2yun_customer_payment_extend(models.Model):
 
         atch = vals_list['payment_attachments']  # [[],[]]
         for r in atch:  # [0,'virtual', {}]
+            r[2]['res_name'] = r[2]['datas_fname']
             r[2]['res_model'] = 'account.payment'
             r[2]['name'] = uuid.uuid4()
+            r[2]['active'] = True
 
         if vals_list['amount'] == 0:
             raise Warning(
@@ -348,6 +350,12 @@ class e2yun_customer_payment_extend2(models.Model):
     #     self.name = self.datas_fname
 
     name = fields.Char('Name', required=False)
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super(e2yun_customer_payment_extend2, self).create(vals_list)
+        return res
+
 
 class e2yun_customer_payment_res_partner(models.Model):
     _inherit = 'res.partner'
