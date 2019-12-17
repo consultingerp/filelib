@@ -20,9 +20,14 @@
         <field name="inherit_id" ref="project_wbs.view_project"/>
         <field name="field_parent">project_child_complete_ids</field>
         <field name="arch" type="xml">
-            <tree position="attributes">
-                <attribute name="default_order">id asc</attribute>
+            <tree position="inside">
+                <field name="id" invisible="1"></field>
+                <field name="parent_id" invisible="1"></field>
             </tree>
+            <tree position="attributes">
+                <attribute name="default_order">parent_id asc, id asc</attribute>
+            </tree>
+
         </field>
     </record>
 
