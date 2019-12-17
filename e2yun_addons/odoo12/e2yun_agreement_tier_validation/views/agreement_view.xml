@@ -11,12 +11,18 @@
             <button name="create_new_agreement" position="before">
                 <button name="request_validation"
                     string="Request Validation"
-                    attrs="{'invisible': ['|','|',('need_validation', '!=', True),('rejected','=',True),('state','not in',['draft','active','inactive'])]}"
+                    attrs="{'invisible': ['|','|',('need_validation', '!=', True),('rejected','=',True)]}"
                     type="object"/>
                 <button name="restart_validation"
                     string="Restart Validation"
-                    attrs="{'invisible': ['|',('review_ids', '=', []),('state','not in',['draft','active','inactive'])]}"
+                    attrs="{'invisible': ['|',('review_ids', '=', [])]}"
                     type="object"/>
+                  <button name="reject_tier"
+                    string="驳回"
+                    attrs="{'invisible': ['|',('review_ids', '=', [])]}"
+                    class="btn btn-icon btn-danger"
+                    type="object"/>                   <!-- class="btn btn-primary"-->
+
             </button>
             <header position="after">
                 <field name="need_validation" invisible="1"/>
@@ -25,7 +31,7 @@
                 <div class="alert alert-warning"
                      role="alert"
                      attrs="{'invisible': ['|', '|', '|',
-                     ('validated', '=', True), ('state', 'not in', ['draft','active','inactive']),
+                     ('validated', '=', True),
                      ('rejected', '=', True), ('review_ids', '=', [])]}"
                      style="margin-bottom:0px;">
                     <p><i class="fa fa-info-circle"/>This Agreement needs to be
@@ -47,13 +53,13 @@
                 </div>
                 <div class="alert alert-success"
                      role="alert"
-                     attrs="{'invisible': ['|', '|', ('validated', '!=', True), ('state', 'not in', ['draft','active','inactive']), ('review_ids', '=', [])]}"
+                     attrs="{'invisible': ['|', '|', ('validated', '!=', True), ('review_ids', '=', [])]}"
                      style="margin-bottom:0px;">
                     <p><i class="fa fa-thumbs-up"/> Operation has been <b>validated</b>!</p>
                 </div>
                 <div class="alert alert-danger"
                      role="alert"
-                     attrs="{'invisible': ['|', '|', ('rejected', '!=', True), ('state', 'not in', ['draft','active','inactive']), ('review_ids', '=', [])]}"
+                     attrs="{'invisible': ['|', '|', ('rejected', '!=', True), ('review_ids', '=', [])]}"
                      style="margin-bottom:0px;">
                     <p><i class="fa fa-thumbs-down"/> Operation has been <b>rejected</b>.</p>
                 </div>
@@ -70,8 +76,8 @@
         <field name="arch" type="xml">
             <search string="Search Agreement">
                 <filter name="needs_review" string="Needs my Review"
-                        domain="[('reviewer_ids','in',uid), ('state', 'not in', ['done', 'cancel'])]"
-                        help="My Agreement to review"/>
+                        domain="[('reviewer_ids','in',uid)]"
+                        help="My Agreement to review"/>  <!--'&lt;'-->
                 <filter name="tier_validated" string="Validated"
                         domain="[('validated', '=', True)]"
                         help="Agreement validated and ready to be confirmed"/>

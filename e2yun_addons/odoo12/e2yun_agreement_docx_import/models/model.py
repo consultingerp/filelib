@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import base64
-import sys
 from odoo import api, fields, models, tools, _
 from docx import Document
 from docx.shared import Pt,Inches
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
-import re
-from win32com.client import Dispatch, DispatchEx
-import pythoncom
 import os, sys
-import difflib
+
 class DocxImport(models.TransientModel):
     _name = "agreement.docx.import"
     _description = "agreement docx Import"
@@ -64,10 +60,6 @@ class DocxImport(models.TransientModel):
             vals.append(val)
             i=i+1
 
-
-        # 每一段的编号、内容
-        #for i in range(len(doc.paragraphs)):
-        #    print(str(i), doc.paragraphs[i].text)
         document = Document() # 初始化文档
         for val in vals:
             print(val)
@@ -92,6 +84,8 @@ class AgreementDownloadDoc(models.Model):
     _name = "agreement.download.doc"
 
     file_path = fields.Char('File Path')
+    data = fields.Binary('File')
+    filename = fields.Char('File Name')
 
     #默认样式设置
     def chg_font(self,obj, fontname='微软雅黑', size=None):
@@ -122,20 +116,19 @@ class AgreementDownloadDoc(models.Model):
 
         agreementData = agreement.browse(agreement_id)
 
-        clause = self.env['agreement.clause']  #条款
-        clauseListData = clause.search([('agreement_id', '=', agreement_id)])
+        agreement_word_data = self.env['agreement.word.data']  # wordData
+
+        clauseListData = agreement_word_data.search([('agreement_id', '=', agreement_id),('detail','=',False),('the_editor','=',True)])
 
         master_word_id=0
 
         if clauseListData:
             master_word_id=clauseListData[0].master_word_id
         else:
-            return  False
+            clauseListData = agreement_word_data.search(
+                [('agreement_id', '=', agreement_id), ('detail', '=', False)])
+            master_word_id = clauseListData[0].master_word_id
 
-        pythoncom.CoInitialize()
-        wordApp = Dispatch('Word.Application')  # 打开word应用程序
-        wordApp.Visible = 0  # 后台运行,不显示
-        wordApp.DisplayAlerts = 0  # 不警告
 
         datas=self.env['ir.http'].binary_content(
             xmlid=None, model='ir.attachment', id=master_word_id ,field='datas', unique=None, filename=None,
@@ -150,38 +143,27 @@ class AgreementDownloadDoc(models.Model):
         f.write(datass)
         f.close()
 
-        doc = wordApp.Documents.Open(FileName=wb_path, Encoding='gbk')
+        doc = Document(wb_path)
         try:
               for clauseObj in clauseListData:  # 条款
-                  para = doc.Paragraphs[clauseObj.sequence]
+                  para = doc.paragraphs[clauseObj.sequence]
                   if clauseObj.the_editor==True:
-                    oldStr= re.sub('[a-zA-Z0-9’!"#$%&\'()*+,-./:;<=>?@，。?★、…【】《》？“”‘’！[\\]^_`{|}~\s]+', "", para.Range.text)
-                    newStr= re.sub('[a-zA-Z0-9’!"#$%&\'()*+,-./:;<=>?@，。?★、…【】《》？“”‘’！[\\]^_`{|}~\s]+', "", clauseObj.doc_text)
-                    if oldStr != newStr:
-                      opcodes = difflib.SequenceMatcher(None, oldStr, newStr).get_opcodes()
-                      for op, af, at, bf, bt in opcodes:
-                          if op == 'delete':
-                              #para.Range.Find.Execute(oldStr[af:at], False, False, False, False, False, True, 1, True,newStr[bf:bt], 2)
-                              para.Range.Find.Execute(oldStr, False, False, False, False, False, False, 0, True,
-                                                      newStr, 1)
-                          elif op == 'replace' and (oldStr[af:at] and newStr[bf:bt]):
-                              oldStr=oldStr[af:at]
-                              newStr=newStr[bf:bt]
-                              para.Range.Find.Execute(oldStr, False, False, False, False, False, False, 0, True,
-                                                                   newStr, 1)
-                          elif op == 'insert':
-                              para.Range.Find.Execute(oldStr, False, False, False, False, False, False, 0, True,
-                                                      newStr, 1)
+                         # para.Range.Find.Execute(clauseObj.old_text, False, False, False, False, False, False, 0, True,
+                         #                         clauseObj.new_text, 1)
+                         #para.text=clauseObj.new_text
+                         para.text.replace(clauseObj.old_text,clauseObj.new_text,1)
 
-              doc.SaveAs(r"" + wb_path)
+
+              doc.save(wb_path)
         except BaseException as e:
             print(e)
             if os.path.exists(wb_path):
                 os.remove(wb_path)
-            doc.Close()
+            #doc.close()
 
         else:
-            doc.Close()
+            print(2)
+            #doc.close()
         file = open(wb_path, "rb")
         attachment.search([('res_model', '=', 'agreement.download.doc'), ('id', '!=', master_word_id)]).unlink()  #删除无效附件
         attachmentObj=attachment.create({
@@ -206,14 +188,23 @@ class AgreementDownloadDoc(models.Model):
 
 
     def Import_doc(self):
-        full_path = self.file_path
-        pythoncom.CoInitialize()  #多线程处理
-        wordApp = Dispatch('Word.Application')  # 打开word应用程序
-        wordApp.Visible = 0         # 后台运行,不显示
-        wordApp.DisplayAlerts = 0  # 不警告
-        doc = wordApp.Documents.Open(FileName=full_path, Encoding='gbk')
+
+        path = sys.path[0] + "\\"
+
+        wb_path=path+"test20191216.docx"
+
+        f = open(wb_path, "wb")
+        datass = base64.decodestring(self.data)
+        f.write(datass)
+        f.close()
+
+        full_path = wb_path
+
+
+        doc = Document(full_path)
+
         agreement_id=self._context['active_id']   #读取当前合同ID
-        clause = self.env['agreement.clause']  # 条款
+        agreement_word_data = self.env['agreement.word.data']  # wordData
         attachment = self.env['ir.attachment']  # 附件
 
         #记录当前合同的母版word
@@ -232,18 +223,43 @@ class AgreementDownloadDoc(models.Model):
         # 每一段的内容
         i = 0
         # 利用下标遍历段落
-        for i in range(len(doc.Paragraphs)):
-            para = doc.Paragraphs[i]
+        allContent=""
+        for i in range(len(doc.paragraphs)):
+            para = doc.paragraphs[i]
             val = {}
             val['agreement_id']=agreement_id
-            val['name'] = i
-            val['title'] = ""
             val['sequence'] = i
-            val['content'] = para.Range.text
-            val['doc_text'] =para.Range.text
+            if para.text or  para.text!="":
+                font_size=16
+                val['alignment'] = str(para.alignment)  # 0,1,2 分别对应左对齐、居中、右对齐
+                val['font_Name'] = para.style.font.name
+                val['font_size'] = font_size
+                val['content'] = para.text
+                if str(para.alignment)=="CENTER (1)":
+                    p = "<p id=" + str(i) + " style = 'text-align: center; font-size: "+str(font_size)+"px;'>"
+                elif  str(para.alignment)=="CENTER (1)":
+                    p = "<p id=" + str(i) + " style = 'text-align: center; font-size: " + str(font_size) + "px;'>"
+                else:
+                    p = "<p id=" + str(i) + " style ='font-size: " + str(font_size) + "px;'>"
+                content = p + para.text + "</p>"
+            else:
+                content="<br/>"
+            allContent=allContent+content
             val['master_word_id']=attachment_id.id
             vals.append(val)
-        #条款
-        clause.search([('agreement_id', '=', agreement_id)]).unlink()
-        clause.create(vals)
+
+
+
+
+        agreement_word_data.search([('agreement_id', '=', agreement_id)]).unlink()
+        agreement_word_data.create(vals)
+        val=vals[0]
+        val['sequence'] = 99999
+        val['content']=allContent
+        val['detail'] = True
+        vals=[]
+        vals.append(val)
+        agreement_word_data.create(vals)
+        if os.path.exists(wb_path):
+            os.remove(wb_path)
         return True

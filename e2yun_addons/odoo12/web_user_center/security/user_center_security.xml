@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="module_user_center" model="ir.module.category">
+        <field name="name">个人中心</field>
+        <field name="description">个人中心</field>
+        <field name="sequence">100</field>
+    </record>
+
+
+    <record id="user_center_manager" model="res.groups">
+        <field name="name">个人中心</field>
+        <field name="category_id" ref="module_user_center"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+
+    <record id="user_center_rule_set" model="ir.rule">
+        <field name="name">个人中心rule</field>
+        <field name="model_id" ref="model_usercenter_menu"/>
+         <field name="groups" eval="[
+                (4, ref('web_user_center.user_center_manager'))
+            ]"/>
+        <field name="global" eval="True"/>
+    </record>
+
+</odoo>

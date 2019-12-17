@@ -56,3 +56,9 @@ msgstr "文件路径"
 #: model:ir.model.fields,field_description:e2yun_agreement_docx_import.field_agreement_clause__doc_text
 msgid "Doc Text"
 msgstr "Word 内容"
+
+
+#. module: e2yun_agreement_docx_import
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_docx_import.agreement_form_view_doc_extend
+msgid "word Edit"
+msgstr "Word 编辑"

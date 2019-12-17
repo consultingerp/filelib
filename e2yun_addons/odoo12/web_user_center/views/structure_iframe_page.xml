@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="web_user_center.structure_iframe_page" name=" ">
+            <t t-call="website.layout">
+                <t t-call="web_user_center.iframe_page">
+                </t>
+            </t>
+        </template>
+
+
+         <template id="web_user_center.iframe_page" name="iframe页面">
+            <section class="aui-flexView">
+                <section class="aui-scrollView">
+                    <t t-set="url" t-value="url"/>
+                    <div class="main-container" id="main" style="width:100%">
+                         <iframe width="100%"   height="100%" onload="changeFrameHeight(this)" frameborder="0" t-att-src="url"/>
+                    </div>
+                    <script>
+                        function changeFrameHeight(that){
+                            //电脑屏幕高度-iframe上面其他组件的高度
+                            //例:我这里iframe上面还有其他一些div组件，一共的高度是60，则减去60
+                            $(that).height(document.documentElement.clientHeight - 44);
+                         }
+                    </script>
+
+                </section>
+                <t t-call="web_user_center.aui-footer">
+                </t>
+            </section>
+        </template>
+
+
+    </data>
+</odoo>
