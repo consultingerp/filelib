@@ -18,6 +18,7 @@
     ],
     'qweb': [
         'static/src/xml/outbound_button_template.xml',
+        # 'static/src/xml/completion_button_template.xml',
              ],
     'installable': True,
     'application': True,

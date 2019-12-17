@@ -176,7 +176,7 @@ class TargetCompletion(models.Model):
         data = self.read()[0]
         ctx = self._context.copy()
         # 获取视图的id,return时返回指定视图
-        # tree_view = self.env.ref('outbound_report.target_completion_report_tree_view')
+        tree_view = self.env.ref('outbound_report.target_completion_report_tree_view')
         graph_view = self.env.ref('outbound_report.target_completion_report_graph_view')
 
         ctx['target_year'] = data['target_year']
@@ -228,7 +228,7 @@ class TargetCompletion(models.Model):
             'context': ctx,
             'domain': domain_list,
             # 实现视图重定向
-            'views': [ # [tree_view.id, 'tree'],
+            'views': [ [tree_view.id, 'tree'],
                       [graph_view.id, 'graph']],
         }
 
