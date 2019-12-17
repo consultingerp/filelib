@@ -2,76 +2,7 @@
 <odoo>
 
     <!--
-   <record id="agreement_clause_list_view_extend" model="ir.ui.view">
-     <field name="model">agreement.clause</field>
-        <field name="inherit_id" ref="agreement_legal.partner_agreement_clause_list_view"/>
-        <field name="arch" type="xml">
-            <xpath expr="//tree" position="replace">
-                <tree string="Clauses" default_order='agreement_id, sequence'>
-                    <field name="sequence"/>
-                    <field name="content"/>
-                    <field name="doc_text"/>
-                    <field name="active" invisible="1"/>
-                </tree>
-            </xpath>
-        </field>
-   </record>
-
-
-   <record id="agreement_clause_form_view_extend" model="ir.ui.view">
-     <field name="model">agreement.clause</field>
-        <field name="inherit_id" ref="agreement_legal.partner_agreement_clause_form_view"/>
-        <field name="arch" type="xml">
-            <xpath expr="//form" position="replace">
-               <form string="Clause">
-                <sheet>
-                    <div class="oe_button_box" name="button_box">
-                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
-                            <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
-                        </button>
-                    </div>
-                    <div class="oe_title" invisible="1">
-                        <label for="name" class="oe_edit_only"/>
-                        <h1><field name="name"/></h1>
-                    </div>
-                    <group>
-                        <group invisible="1">
-                            <field name="title" />
-                            <field name="agreement_id" />
-                            <field name="section_id" domain="[('agreement_id', '=', agreement_id)]"/>
-                        </group>
-                        <group>
-                            <field name="sequence" readonly="1"/>
-                        </group>
-                    </group>
-                    <field name="content" widget="html"/>
-                    <group class="oe_edit_only" invisible="1" >
-                        <field name="field_domain" widget="domain" nolabel="1"
-                               options="{'model': 'agreement.clause',
-                                             'partial_use': True}" />
-                        <group>
-                            <field name="default_value"/>
-                            <field name="copyvalue"/>
-                        </group>
-                        <p>
-                            This section (on the left) allows you to add dynamic fields inside the content.
-                            <ol>
-                                <li>Select the field using the popup</li>
-                                <li>Enter the default value if the field is empty</li>
-                                <li>Copy and paste the placeholder expression in the content</li>
-                            </ol>
-                        </p>
-                    </group>
-                </sheet>
-            </form>
-            </xpath>
-
-        </field>
-   </record>
-       -->
-
-
-  <record id="agreement_form_view_doc_extend" model="ir.ui.view">
+ <record id="agreement_form_view_doc_extend" model="ir.ui.view">
         <field name="model">agreement</field>
         <field name="inherit_id" ref="agreement_legal.partner_agreement_form_view"/>
         <field name="arch" type="xml">
@@ -85,6 +16,15 @@
 
            </xpath>
 
+        </field> -->
+
+     <record id="agreement_form_view_doc_extend" model="ir.ui.view">
+        <field name="model">agreement</field>
+        <field name="inherit_id" ref="agreement_legal.partner_agreement_form_view"/>
+        <field name="arch" type="xml">
+              <xpath expr="//header/button[@name='create_new_agreement']" position="before">
+                    <button name="wordEdit" string="word Edit" type="object" class="oe_highlight"/>
+              </xpath>
         </field>
    </record>
 

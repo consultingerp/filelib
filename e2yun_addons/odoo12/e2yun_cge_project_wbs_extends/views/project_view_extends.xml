@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="edit_project_extends" model="ir.ui.view">
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='subtask_project_id']" position="after">
+                <field name="account_analytic_task_id" options="{'no_create_edit': True}"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="project_project_view_form" model="ir.ui.view">
+        <field name="name">project.project.form.inherit</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_show_structure" string="合约规划" type="object"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="project_project_tree_view" model="ir.ui.view">
+        <field name="name">Project level Tree</field>
+        <field name="model">project.project</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="project_wbs.view_project"/>
+        <field name="field_parent">project_child_complete_ids</field>
+        <field name="arch" type="xml">
+            <tree position="attributes">
+                <attribute name="default_order">id asc</attribute>
+            </tree>
+        </field>
+    </record>
+
+</odoo>
