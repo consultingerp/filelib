@@ -1,6 +1,27 @@
 <odoo>
     <data>
 
+        <record id="view_sale_order_cart_filter" model="ir.ui.view">
+            <field name="name">sale.order.search</field>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <search string="Search Sales Order">
+                    <field name="name" string="Sales Order" filter_domain="['|','|',('name','ilike',self),('client_order_ref','ilike',self),('partner_id','child_of',self)]"/>
+                    <field name="partner_id" operator="child_of"/>
+                    <field name="user_id"/>
+                    <field name="team_id" string="门店"/>
+                    <field name="order_line" string="产品" filter_domain="[('order_line.product_id', 'ilike', self)]"/>
+                    <filter string="我的订单" domain="[('user_id','=',uid)]" name="my_sale_orders_filter"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="导购" name="salesperson" domain="[]" context="{'group_by':'user_id'}"/>
+                        <filter name="Customer" string="客户" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="订单日期" name="order_month" domain="[]" context="{'group_by':'date_order'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+
         <record id="view_sale_order_filter" model="ir.ui.view">
             <field name="name">sale.order.search</field>
             <field name="model">sale.order</field>
@@ -13,9 +34,7 @@
                     <field name="order_line" string="产品" filter_domain="[('order_line.product_id', 'ilike', self)]"/>
                     <filter string="我的订单" domain="[('user_id','=',uid)]" name="my_sale_orders_filter"/>
                     <separator/>
-                    <filter string="购物车" name="cart" domain="[('state', '=', 'draft')]"/>
-                    <separator/>
-                    <filter string="已提交未同步" name="unsync" domain="[('state', '=', 'sent'),('salesorderid','=',False)]"/>
+                    <filter string="未同步" name="unsync" domain="[('salesorderid','=',False)]"/>
                     <separator/>
                     <filter string="已同步" name="sync" domain="[('salesorderid', '!=', False)]"/>
                     <separator/>
@@ -28,6 +47,19 @@
             </field>
         </record>
 
+        <record id="action_e2yun_sale_order_cart_form" model="ir.actions.act_window">
+            <field name="name">购物车</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+            <field name="view_id" ref="sale.view_order_tree"/>
+            <field name="search_view_id" ref="view_sale_order_cart_filter"/>
+            <field name="domain">[('state','=','draft')]</field>
+            <field name="context">{'search_default_my_sale_orders_filter':1}
+            </field>
+        </record>
+
         <record id="action_e2yun_sale_order_form" model="ir.actions.act_window">
             <field name="name">销售订单</field>
             <field name="type">ir.actions.act_window</field>
@@ -36,11 +68,16 @@
             <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
             <field name="view_id" ref="sale.view_order_tree"/>
             <field name="search_view_id" ref="view_sale_order_filter"/>
-            <field name="domain">[]</field>
+            <field name="domain">[('state','!=','draft')]</field>
             <field name="context">{'search_default_my_sale_orders_filter':1}
             </field>
         </record>
 
+
+        <menuitem id="e2yun_sale_order_cart_menu"
+                  parent="crm.crm_menu_sales"
+                  action="action_e2yun_sale_order_cart_form"
+                  sequence="5"/>
 
         <menuitem id="e2yun_sale_order_menu"
                   parent="crm.crm_menu_sales"
