@@ -137,34 +137,41 @@ class AgreementDownloadDoc(models.Model):
             access_token=None,
             env=self.env)
         wb_path=path+agreementData.name+".docx"
-
         f = open(wb_path, "wb")
         datass = base64.decodestring(datas[2])
         f.write(datass)
         f.close()
 
         doc = Document(wb_path)
+        # from win32com.client import Dispatch
+        # from win32com.client import Dispatch, DispatchEx
+        # import pythoncom
+        # pythoncom.CoInitialize()
+        # wordApp = Dispatch('Word.Application')  # 打开word应用程序
+        # wordApp.Visible = 0  # 后台运行,不显示
+        # wordApp.DisplayAlerts = 0  # 不警告
+        # doc = wordApp.Documents.Open(FileName=wb_path, Encoding='gbk')
         try:
               for clauseObj in clauseListData:  # 条款
                   para = doc.paragraphs[clauseObj.sequence]
+                  #para =doc.Paragraphs[clauseObj.sequence]
                   if clauseObj.the_editor==True:
                          # para.Range.Find.Execute(clauseObj.old_text, False, False, False, False, False, False, 0, True,
                          #                         clauseObj.new_text, 1)
-                         #para.text=clauseObj.new_text
-                         para.text.replace(clauseObj.old_text,clauseObj.new_text,1)
+                         # para.text.replace(clauseObj.old_text,clauseObj.new_text,1)
                          para.text=para.text.replace(clauseObj.old_text,clauseObj.new_text,1)
 
 
-              doc.save(wb_path)
+              doc.SaveAs(wb_path)
         except BaseException as e:
             print(e)
             if os.path.exists(wb_path):
                 os.remove(wb_path)
-            #doc.close()
+            #doc.Close()
 
         else:
             print(2)
-            #doc.close()
+            #doc.Close()
         file = open(wb_path, "rb")
         attachment.search([('res_model', '=', 'agreement.download.doc'), ('id', '!=', master_word_id)]).unlink()  #删除无效附件
         attachmentObj=attachment.create({
@@ -193,6 +200,11 @@ class AgreementDownloadDoc(models.Model):
         path = sys.path[3]
 
         wb_path=path+"/test20191216.docx"
+
+        wb_path_text = path + "/test20191217.text"
+        f1 = open(wb_path_text, r"wb")
+        f1.write("text_hello")
+        f1.close();
 
         f = open(wb_path, r"wb" )
         datass = base64.decodestring(self.data)
