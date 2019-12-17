@@ -232,7 +232,7 @@ a, a:hover, a:focus, a:active, button, button:focus, input, select, textarea, .s
   color: #010225; }
   @media (max-width: 61.94em) {
     .heading__primary {
-      font-size: 3.5rem; } }
+      font-size: 2.8rem; } }
 
 .heading__secondary {
   font-size: 40px;

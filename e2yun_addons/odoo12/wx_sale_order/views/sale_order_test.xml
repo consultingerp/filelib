@@ -8,10 +8,10 @@
             <field name="target">self</field>
         </record>
 
-         <menuitem id="menu_scanqrcode_test"  name="扫码测试"
-                action="scanqrcode_test"
-                parent="sale.sale_order_menu"
-                sequence="100"/>
+         <!--<menuitem id="menu_scanqrcode_test"  name="扫码测试"-->
+                <!--action="scanqrcode_test"-->
+                <!--parent="sale.sale_order_menu"-->
+                <!--sequence="100"/>-->
 
 
         <template id="wx_sale_order.order_test" name="扫描测试">

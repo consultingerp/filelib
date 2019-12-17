@@ -2,7 +2,7 @@
 <odoo>
     <data>
 
-          <record id="user_center_action" model="ir.actions.act_url">
+        <record id="user_center_action" model="ir.actions.act_url">
             <field name="name">个人中心</field>
             <field name="url">/usercenter</field>
             <field name="target">self</field>
@@ -15,7 +15,6 @@
                 parent="web_user_center.menu_user_center"
                 action="user_center_action"
                 sequence="100"/>
-
 
 
         <template id="web_user_center.miancenter" name="个人中心">
@@ -75,12 +74,16 @@
                             <t t-if="menu.sys_menu  and menu.sys_menu.action">
                                 <t t-set="url" t-value="'/web#menu_id=' + str(menu.sys_menu.id) + '&amp;action=' + str(menu.sys_menu.action.id) +''"/>
                                 <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
-                                <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                                <t t-if="not menu.new_window">
+                                    <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                                </t>
                             </t>
                             <t t-elif="menu.url">
                                 <t t-set="url" t-value="menu.url"/>
                                 <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
-                                <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                                <t t-if="not menu.new_window">
+                                    <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                                </t>
                             </t>
                             <t t-else="">
                                 <t t-set="url">javascript:;</t>
@@ -93,7 +96,9 @@
                                     <t t-esc="menu.name"/>
                                 </button>
                             </a>
-                              <p> <t t-esc="menu.title"/></p>
+                            <p>
+                                <t t-esc="menu.title"/>
+                            </p>
                         </t>
 
                     </t>
@@ -103,23 +108,23 @@
 
         <template id="aui_palace_aui_palace_one" name="个人中心第一行信息">
             <div class="aui-palace aui-palace-one">
-                 <t t-set="menu_num" t-value="1"/>
-                 <t t-foreach="usercenter_menu" t-as="menu">
+                <t t-set="menu_num" t-value="1"/>
+                <t t-foreach="usercenter_menu" t-as="menu">
                     <t t-if="menu.display_Position == 'one' and menu.is_visible  and  menu_num &lt; 5 ">
                         <t t-set="is_auth" t-value="False"/> <!--权限判断如果系统菜单判断系统权限，没有判断菜单权限-->
                         <t t-if="menu.sys_menu and menu.sys_menu.groups_id">
-                             <t t-foreach="menu.sys_menu.groups_id" t-as="menugroups_id">
-                                 <t t-if="menugroups_id in request.env.user.groups_id">
-                                       <t t-set="is_auth" t-value="True"/>
-                                 </t>
-                             </t>
+                            <t t-foreach="menu.sys_menu.groups_id" t-as="menugroups_id">
+                                <t t-if="menugroups_id in request.env.user.groups_id">
+                                    <t t-set="is_auth" t-value="True"/>
+                                </t>
+                            </t>
                         </t>
                         <t t-elif="menu.groups_id">  <!--菜单权限检查-->
-                             <t t-foreach="menu.groups_id" t-as="menugroups_id">
-                                 <t t-if="menugroups_id in request.env.user.groups_id">
-                                       <t t-set="is_auth" t-value="True"/>
-                                 </t>
-                             </t>
+                            <t t-foreach="menu.groups_id" t-as="menugroups_id">
+                                <t t-if="menugroups_id in request.env.user.groups_id">
+                                    <t t-set="is_auth" t-value="True"/>
+                                </t>
+                            </t>
                         </t>
                         <t t-else="">
                             <t t-set="is_auth" t-value="True"/>
@@ -128,13 +133,17 @@
                             <t t-set="menu_num" t-value="menu_num+1"/>
                             <t t-if="menu.sys_menu  and menu.sys_menu.action">
                                 <t t-set="url" t-value="'/web#menu_id=' + str(menu.sys_menu.id) + '&amp;action=' + str(menu.sys_menu.action.id) +''"/>
-                                 <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
-                                 <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                                <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
+                                <t t-if="not menu.new_window">
+                                    <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                                </t>
                             </t>
                             <t t-elif="menu.url">
                                 <t t-set="url" t-value="menu.url"/>
-                                 <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
-                               <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                                <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
+                                <t t-if="not menu.new_window">
+                                    <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                                </t>
                             </t>
                             <t t-else="">
                                 <t t-set="url">javascript:;</t>
@@ -170,43 +179,47 @@
                     <t t-if="menu.display_Position == 'list' and menu.is_visible ">
                         <t t-set="is_auth" t-value="False"/>  <!--权限判断如果系统菜单判断系统权限，没有判断菜单权限-->
                         <t t-if="menu.sys_menu and menu.sys_menu.groups_id"> <!--系统菜单权限检查-->
-                             <t t-foreach="menu.sys_menu.groups_id" t-as="menugroups_id">
-                                 <t t-if="menugroups_id in request.env.user.groups_id">
-                                       <t t-set="is_auth" t-value="True"/>
-                                 </t>
-                             </t>
+                            <t t-foreach="menu.sys_menu.groups_id" t-as="menugroups_id">
+                                <t t-if="menugroups_id in request.env.user.groups_id">
+                                    <t t-set="is_auth" t-value="True"/>
+                                </t>
+                            </t>
                         </t>
                         <t t-elif="menu.groups_id">  <!--菜单权限检查-->
-                             <t t-foreach="menu.groups_id" t-as="menugroups_id">
-                                 <t t-if="menugroups_id in request.env.user.groups_id">
-                                       <t t-set="is_auth" t-value="True"/>
-                                 </t>
-                             </t>
+                            <t t-foreach="menu.groups_id" t-as="menugroups_id">
+                                <t t-if="menugroups_id in request.env.user.groups_id">
+                                    <t t-set="is_auth" t-value="True"/>
+                                </t>
+                            </t>
                         </t>
                         <t t-else="">
                             <t t-set="is_auth" t-value="True"/>
                         </t>
                         <t t-if="is_auth">
-                                <t t-if="menu.sys_menu  and menu.sys_menu.action">
-                                    <t t-set="url" t-value="'/web#menu_id=' + str(menu.sys_menu.id) + '&amp;action=' + str(menu.sys_menu.action.id) +''"/>
-                                     <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
+                            <t t-if="menu.sys_menu  and menu.sys_menu.action">
+                                <t t-set="url" t-value="'/web#menu_id=' + str(menu.sys_menu.id) + '&amp;action=' + str(menu.sys_menu.action.id) +''"/>
+                                <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
+                                <t t-if="not menu.new_window">
                                     <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
                                 </t>
-                                <t t-elif="menu.url">
-                                    <t t-set="url" t-value="menu.url"/>
-                                     <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
+                            </t>
+                            <t t-elif="menu.url">
+                                <t t-set="url" t-value="menu.url"/>
+                                <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
+                                <t t-if="not menu.new_window">
                                     <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
                                 </t>
-                                <t t-else="">
-                                    <t t-set="url">javascript:;</t>
-                                </t>
+                            </t>
+                            <t t-else="">
+                                <t t-set="url">javascript:;</t>
+                            </t>
 
-                                <a t-attf-href="#{url}"
-                                   class="aui-flex b-line">
-                                     <t t-call="web_user_center.list_aui_flex_box"></t>
-                                </a>
-                                <div class="divHeight" t-if="menu.is_divHeight"></div>
-                         </t>
+                            <a t-attf-href="#{url}"
+                               class="aui-flex b-line">
+                                <t t-call="web_user_center.list_aui_flex_box"></t>
+                            </a>
+                            <div class="divHeight" t-if="menu.is_divHeight"></div>
+                        </t>
                     </t>
                 </t>
             </div>
@@ -219,48 +232,52 @@
                     <t t-if="menu.display_Position == 'two' and menu.is_visible">
                         <t t-set="is_auth" t-value="False"/> <!--权限判断如果系统菜单判断系统权限，没有判断菜单权限-->
                         <t t-if="menu.sys_menu and menu.sys_menu.groups_id">
-                             <t t-foreach="menu.sys_menu.groups_id" t-as="menugroups_id">
-                                 <t t-if="menugroups_id in request.env.user.groups_id">
-                                       <t t-set="is_auth" t-value="True"/>
-                                 </t>
-                             </t>
+                            <t t-foreach="menu.sys_menu.groups_id" t-as="menugroups_id">
+                                <t t-if="menugroups_id in request.env.user.groups_id">
+                                    <t t-set="is_auth" t-value="True"/>
+                                </t>
+                            </t>
                         </t>
                         <t t-elif="menu.groups_id">  <!--菜单权限检查-->
-                             <t t-foreach="menu.groups_id" t-as="menugroups_id">
-                                 <t t-if="menugroups_id in request.env.user.groups_id">
-                                       <t t-set="is_auth" t-value="True"/>
-                                 </t>
-                             </t>
+                            <t t-foreach="menu.groups_id" t-as="menugroups_id">
+                                <t t-if="menugroups_id in request.env.user.groups_id">
+                                    <t t-set="is_auth" t-value="True"/>
+                                </t>
+                            </t>
                         </t>
                         <t t-else="">
                             <t t-set="is_auth" t-value="True"/>
                         </t>
                         <t t-if="is_auth">
 
-                                <t t-if="menu.sys_menu  and menu.sys_menu.action">
-                                    <t t-set="url" t-value="'/web#menu_id=' + str(menu.sys_menu.id) + '&amp;action=' + str(menu.sys_menu.action.id) +''"/>
-                                     <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
-                                     <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                            <t t-if="menu.sys_menu  and menu.sys_menu.action">
+                                <t t-set="url" t-value="'/web#menu_id=' + str(menu.sys_menu.id) + '&amp;action=' + str(menu.sys_menu.action.id) +''"/>
+                                <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
+                                <t t-if="not menu.new_window">
+                                    <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
                                 </t>
-                                <t t-elif="menu.url">
-                                    <t t-set="url" t-value="menu.url"/>
-                                     <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
-                                     <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                            </t>
+                            <t t-elif="menu.url">
+                                <t t-set="url" t-value="menu.url"/>
+                                <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
+                                <t t-if="not menu.new_window">
+                                    <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
                                 </t>
-                                <t t-else="">
-                                    <t t-set="url">javascript:;</t>
-                                </t>
-                                <a t-attf-href="#{url}" class="aui-palace-grid b-line">
-                                    <div class="aui-palace-grid-icon">
-                                        <span t-if="menu.key_word" t-esc="menu.key_word"/>
-                                        <img t-if="menu.sys_menu.web_icon_data" t-attf-src="data:image/png;base64,#{menu.sys_menu.web_icon_data}" alt=""/>
-                                        <img t-elif="menu.web_icon_data" t-attf-src="data:image/png;base64,#{menu.web_icon_data}" alt=""/>
-                                        <img t-else="" src="/web_user_center/static/src/img/icon-head-01.png" alt=""/>
-                                    </div>
-                                    <div class="aui-palace-grid-text">
-                                        <h2 t-esc="menu.name"/>
-                                    </div>
-                                </a>
+                            </t>
+                            <t t-else="">
+                                <t t-set="url">javascript:;</t>
+                            </t>
+                            <a t-attf-href="#{url}" class="aui-palace-grid b-line">
+                                <div class="aui-palace-grid-icon">
+                                    <span t-if="menu.key_word" t-esc="menu.key_word"/>
+                                    <img t-if="menu.sys_menu.web_icon_data" t-attf-src="data:image/png;base64,#{menu.sys_menu.web_icon_data}" alt=""/>
+                                    <img t-elif="menu.web_icon_data" t-attf-src="data:image/png;base64,#{menu.web_icon_data}" alt=""/>
+                                    <img t-else="" src="/web_user_center/static/src/img/icon-head-01.png" alt=""/>
+                                </div>
+                                <div class="aui-palace-grid-text">
+                                    <h2 t-esc="menu.name"/>
+                                </div>
+                            </a>
                         </t>
                     </t>
                 </t>
@@ -315,29 +332,29 @@
                     <t t-if="menu.display_Position == 'footer' and menu.is_visible  and  menu_num &lt; 6 ">
                         <t t-set="is_auth" t-value="False"/>  <!--权限判断如果系统菜单判断系统权限，没有判断菜单权限-->
                         <t t-if="menu.sys_menu and menu.sys_menu.groups_id"> <!--系统菜单权限检查-->
-                             <t t-foreach="menu.sys_menu.groups_id" t-as="menugroups_id">
-                                 <t t-if="menugroups_id in request.env.user.groups_id">
-                                       <t t-set="is_auth" t-value="True"/>
-                                 </t>
-                             </t>
+                            <t t-foreach="menu.sys_menu.groups_id" t-as="menugroups_id">
+                                <t t-if="menugroups_id in request.env.user.groups_id">
+                                    <t t-set="is_auth" t-value="True"/>
+                                </t>
+                            </t>
                         </t>
                         <t t-elif="menu.groups_id">  <!--菜单权限检查-->
-                             <t t-foreach="menu.groups_id" t-as="menugroups_id">
-                                 <t t-if="menugroups_id in request.env.user.groups_id">
-                                       <t t-set="is_auth" t-value="True"/>
-                                 </t>
-                             </t>
+                            <t t-foreach="menu.groups_id" t-as="menugroups_id">
+                                <t t-if="menugroups_id in request.env.user.groups_id">
+                                    <t t-set="is_auth" t-value="True"/>
+                                </t>
+                            </t>
                         </t>
                         <t t-else="">
                             <t t-set="is_auth" t-value="True"/>
                         </t>
                         <t t-if="is_auth">
-                             <t t-set="menu_num" t-value="menu_num+1"/>
+                            <t t-set="menu_num" t-value="menu_num+1"/>
                             <t t-if="menu.sys_menu  and menu.sys_menu.action">
                                 <t t-set="url" t-value="'/web#menu_id=' + str(menu.sys_menu.id) + '&amp;action=' + str(menu.sys_menu.action.id) +''"/>
                                 <t t-set="url" t-value="urllib.parse.quote_plus(url)"></t>
                                 <t t-if="not menu.new_window">
-                                      <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
+                                    <t t-set="url" t-value="'/structure_page?url='+str(url)+''"></t>
                                 </t>
                             </t>
                             <t t-elif="menu.url">
@@ -350,15 +367,15 @@
                             <t t-else="">
                                 <t t-set="url">javascript:;</t>
                             </t>
-                            <a  t-attf-href="#{url}" class="aui-tabBar-item aui-tabBar-item-active">
+                            <a t-attf-href="#{url}" class="aui-tabBar-item aui-tabBar-item-active">
                                 <span class="aui-tabBar-item-icon">
                                     <i t-if="menu.sys_menu.web_icon_data" t-attf-style="width: 22px;height: 22px;display: block;border: none;float: left;background-size: 22px;background-repeat: no-repeat;;background-image:url(data:image/png;base64,#{menu.sys_menu.web_icon_data})"/>
                                     <i t-elif="menu.web_icon_data" t-attf-style="width: 22px;height: 22px;display: block;border: none;float: left;background-size: 22px;background-repeat: no-repeat;;background-image:url(data:image/png;base64,#{menu.web_icon_data})"/>
-                                    <i t-else=""  class="icon icon-mine"/>
+                                    <i t-else="" class="icon icon-mine"/>
                                 </span>
-                                <span class="aui-tabBar-item-text"  t-esc="menu.name"/>
+                                <span class="aui-tabBar-item-text" t-esc="menu.name"/>
                             </a>
-                         </t>
+                        </t>
                     </t>
                 </t>
             </footer>
