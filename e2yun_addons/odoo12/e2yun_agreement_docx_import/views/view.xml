@@ -45,7 +45,9 @@
             <field name="arch" type="xml">
                 <form string="Import Doc">
                 <label for="file_path" String="文件路径"/>
-                   <field name="file_path"/>
+                   <field name="data" filename="filename"/>
+                    <field name="filename" invisible="1"/>
+
                     <footer>
                         <button name="Import_doc" string="Import Doc" type="object" class="oe_highlight"/>
                         or

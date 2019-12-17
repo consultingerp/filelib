@@ -22,7 +22,7 @@
         <field name="model">agreement</field>
         <field name="inherit_id" ref="agreement_legal.partner_agreement_form_view"/>
         <field name="arch" type="xml">
-              <xpath expr="//header/button[@name='create_new_agreement']" position="after">
+              <xpath expr="//header/button[@name='create_new_agreement']" position="before">
                     <button name="wordEdit" string="word Edit" type="object" class="oe_highlight"/>
               </xpath>
         </field>
