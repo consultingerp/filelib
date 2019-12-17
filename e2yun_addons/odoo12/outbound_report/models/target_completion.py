@@ -18,14 +18,14 @@ class TargetCompletion(models.Model):
         # 判断是查询目标完成占比报表,生成两条数据
         if 'target_year' in vals_list:
             new_val_list = []
-            if res.jiesuan_amount:
-                jiesuan_dict = vals_list.copy()
-                jiesuan_dict.update({'completion': res.jiesuan_amount, 'sale_id': 1, 'target_id': 2})
-                new_val_list.append(jiesuan_dict)
-            if res.target_amount:
-                target_dict = vals_list.copy()
-                target_dict.update({'completion': res.target_amount, 'sale_id': 1, 'target_id': 1})
-                new_val_list.append(target_dict)
+            # if res.jiesuan_amount:
+            jiesuan_dict = vals_list.copy()
+            jiesuan_dict.update({'completion': res.jiesuan_amount, 'sale_id': 1, 'target_id': 2})
+            new_val_list.append(jiesuan_dict)
+            # if res.target_amount:
+            target_dict = vals_list.copy()
+            target_dict.update({'completion': res.target_amount, 'sale_id': 1, 'target_id': 1})
+            new_val_list.append(target_dict)
             aa = super(TargetCompletion, self).create(new_val_list)
             if aa:
                 kk = aa[0]
@@ -54,7 +54,7 @@ class TargetCompletion(models.Model):
     jiesuan_amount = fields.Integer('销售金额', compute='_compute_jiesuan_amount', store=True)
     completion = fields.Integer('目标完成占比')
     sale_id = fields.Many2one('sale.source', '占比类型')
-    target_id = fields.Many2one('target.source', '目标数据')
+    target_id = fields.Many2one('target.source', '数据来源')
 
     @api.depends('target_year', 'target_month', 'kunnr', 'ywy')
     def _compute_target_amount(self):
