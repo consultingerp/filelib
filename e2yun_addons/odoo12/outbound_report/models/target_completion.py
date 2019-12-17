@@ -18,14 +18,14 @@ class TargetCompletion(models.Model):
         # 判断是查询目标完成占比报表,生成两条数据
         if 'target_year' in vals_list:
             new_val_list = []
-            if res.jiesuan_amount:
-                jiesuan_dict = vals_list.copy()
-                jiesuan_dict.update({'completion': res.jiesuan_amount, 'sale_id': 1, 'target_id': 2})
-                new_val_list.append(jiesuan_dict)
-            if res.target_amount:
-                target_dict = vals_list.copy()
-                target_dict.update({'completion': res.target_amount, 'sale_id': 1, 'target_id': 1})
-                new_val_list.append(target_dict)
+            # if res.jiesuan_amount:
+            jiesuan_dict = vals_list.copy()
+            jiesuan_dict.update({'completion': res.jiesuan_amount, 'sale_id': 1, 'target_id': 2})
+            new_val_list.append(jiesuan_dict)
+            # if res.target_amount:
+            target_dict = vals_list.copy()
+            target_dict.update({'completion': res.target_amount, 'sale_id': 1, 'target_id': 1})
+            new_val_list.append(target_dict)
             aa = super(TargetCompletion, self).create(new_val_list)
             if aa:
                 kk = aa[0]
