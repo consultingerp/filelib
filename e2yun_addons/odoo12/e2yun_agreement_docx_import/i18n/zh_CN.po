@@ -19,13 +19,13 @@ msgstr "取消"
 #: model:ir.actions.act_window,name:e2yun_agreement_docx_import.act_window_import_doc
 #: model_terms:ir.ui.view,arch_db:e2yun_agreement_docx_import.view_action_agreement_import_doc
 msgid "Import Doc"
-msgstr "合同DOC文件导入"
+msgstr "协议文件导入"
 
 
 #. module: e2yun_agreement_docx_import
 #: model:ir.model.fields,field_description:e2yun_agreement_docx_import.field_agreement_docx_import__agreement_id
 msgid "Agreement"
-msgstr "合同"
+msgstr "协议"
 
 
 #. module: e2yun_agreement_docx_import
@@ -43,7 +43,7 @@ msgstr "导入"
 #: model:ir.actions.act_window,name:e2yun_agreement_docx_import.act_window_download_doc
 #: model_terms:ir.ui.view,arch_db:e2yun_agreement_docx_import.view_agreement_download_doc
 msgid "Download Doc"
-msgstr "合同DOC文件下载"
+msgstr "协议文件下载"
 
 
 

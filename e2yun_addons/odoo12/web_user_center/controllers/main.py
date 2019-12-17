@@ -22,6 +22,8 @@ class LoginHome(Home):
     @http.route('/web', type='http', auth="none")
     def web_client(self, s_action=None, **kw):
         web_ = super(LoginHome, self).web_client(s_action, **kw)
+        if not request.session.uid:
+            return web_
         try:
             context = request.env['ir.http'].webclient_rendering_context()
             response = request.render('web.webclient_bootstrap', qcontext=context)
