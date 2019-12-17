@@ -80,6 +80,16 @@
                     <field name="daogou"/>
                     <field name="mendian"/>
                 </xpath>
+                <xpath expr="//page[@name='other_information']" position="after">
+                    <page string="crm状态流" name="crm_state_flow_information">
+                        <field name="crmstate_flow">
+                            <tree>
+                                <field name="crmstate"></field>
+                                <field name="create_date" string="时间"></field>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
             </field>
         </record>
 
