@@ -9,7 +9,7 @@
             <xpath expr="//notebook" position="inside">
                 <page name="agreement_milestone" string="里程碑">
                     <group col="4">
-                        <field name="amount"/>
+                        <field name="amount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
                         <field name="currency_id"/>
                     </group>
                     <field name="agreement_milestone">
