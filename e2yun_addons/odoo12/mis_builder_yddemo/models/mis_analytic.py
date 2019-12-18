@@ -11,8 +11,8 @@ class account_analytic_line(models.Model):
     _name = "account.analytic.line"
     _inherit = "account.analytic.line"
 
-    milestone = fields.Many2one("project.milestone", 'Milestone', domain="[('project_id','=',project_id)]")
-    state = fields.Selection([('draft', 'Unposted'), ('posted', 'Posted')], string='Status',
+    milestone = fields.Many2one("project.milestone", '里程碑', domain="[('project_id','=',project_id)]")
+    state = fields.Selection([('draft', '草稿'), ('posted', '过账')], string='状态',
                              required=True, copy=False, default='draft',
                              help='All manually created new journal entries are usually in the status \'Unposted\', '
                                   'but you can set the option to skip that status on the related journal. '
