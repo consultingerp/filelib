@@ -271,6 +271,14 @@ class SurveyQuestion(models.Model):
     # 唯一性计分分值超出则弹框提醒；选择性计分只能有唯一答案，但每个选项都有分数，否则弹框提醒。
     @api.multi
     def write(self, vals):
+        if 'type_id' in vals:
+            type_id = vals.get('type_id')
+            question_type_item = self.env['question.type'].browse(type_id)
+            if question_type_item:
+                question_type_name = question_type_item.name
+                if question_type_name in ['file', 'pull_down', 'score']:
+                    question_type_name = 'free_text'
+                vals['type'] = question_type_name
         res = super(SurveyQuestion, self).write(vals)
         for item in self:
             if item.scoring_method == '唯一性计分':
@@ -295,6 +303,14 @@ class SurveyQuestion(models.Model):
     # ⑥创建问题保存时，系统校验 “题库大类”和“计分方式”是否选择，如果未选择，则弹出提示“计分方式未选择，请选择”；# 唯一性计分分值超出则弹框提醒；选择性计分只能有唯一答案，但每个选项都有分数，否则弹框提醒。
     @api.model
     def create(self, vals):
+        if 'type_id' in vals:
+            type_id = vals.get('type_id')
+            question_type_item = self.env['question.type'].browse(type_id)
+            if question_type_item:
+                question_type_name = question_type_item.name
+                if question_type_name in ['file', 'pull_down', 'score']:
+                    question_type_name = 'free_text'
+                vals['type'] = question_type_name
         res = super(SurveyQuestion, self).create(vals)
         if res.scoring_method == '唯一性计分':
             if res.labels_ids:
@@ -320,8 +336,8 @@ class SurveyQuestion(models.Model):
 class NewQuestionType(models.Model):
     _name = 'question.type'
 
-    name = fields.Char(string='问题类型的名称')
-    display_name_chs = fields.Char(string='问题类型中文名称')
+    name = fields.Char(string='问题类型的名称', required=True)
+    display_name_chs = fields.Char(string='问题类型中文名称', required=True)
     type_html = fields.Html(string='问题类型的样式')
     question_ids = fields.One2many('survey.question', 'type_id', string='问题')
 
