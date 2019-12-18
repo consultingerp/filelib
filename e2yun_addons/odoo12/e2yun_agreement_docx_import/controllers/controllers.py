@@ -89,7 +89,23 @@ class AgreementDownloadDoc(http.Controller):
                             [('id', '=', agreement_id)])
         agreementVal={}
         agreementVal['write_date']=datetime.now()
+
         agreementObj[0].write(up_val)
 
 
         return request.render('e2yun_agreement_docx_import.qweb_agreement_word_edit', values)
+
+
+    @http.route([
+        "/agreement/preview/<int:agreement_id>",
+        "/agreement/preview/<int:agreement_id>/<string:debug>"
+    ], type='http', auth="public")
+    def preview(self,agreement_id,debug):
+      print(agreement_id)
+      agreement_obj = request.env['agreement']
+      docs = agreement_obj.search(
+            [('id', '=', agreement_id)])
+      values = {
+         'docs':docs,
+      }
+      return request.render('e2yun_agreement_docx_import.qweb_agreement_word_preview', values)

@@ -107,4 +107,108 @@
         </t>
     </template>
 
+
+
+   <template id="qweb_agreement_word_preview">
+        <t t-name="e2yun_agreement_docx_import.qweb_agreement_word_preview">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <ol>
+                                                <li t-foreach="doc.recital_ids" t-as="r">
+                                                    <t t-if="r.title">
+                                                        <h3 t-field="r.title"/>
+                                                    </t>
+                                                    <p t-field="r.dynamic_content"/>
+                                                </li>
+                                            </ol>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-condensed">
+                                <tbody class="section_tbody">
+                                    <tr>
+                                        <td>
+                                            <ol>
+                                                <li t-foreach="doc.sections_ids" t-as="s">
+                                                    <t t-if="s.title">
+                                                        <h3 t-field="s.title"/>
+                                                    </t>
+                                                    <p t-field="s.dynamic_content"/>
+                                                    <ol>
+                                                        <li t-foreach="s.clauses_ids" t-as="c">
+                                                            <t t-if="c.title">
+                                                                <h4 t-field="c.title"/>
+                                                            </t>
+                                                            <p t-field="c.dynamic_content"/>
+                                                        </li>
+                                                    </ol>
+                                                </li>
+                                            </ol>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <t t-if="doc.special_terms">
+                                <h2>Special Terms</h2>
+                                <div name="special_term">
+                                    <p t-field="doc.dynamic_special_terms"/>
+                                </div>
+                            </t>
+                            <h2>Signatures</h2>
+                            <table class="table table-condensed">
+                                <theader>
+                                    <tr>
+                                        <th>Partner</th>
+                                        <th>Company</th>
+                                    </tr>
+                                </theader>
+                                <tbody class="section_tbody">
+                                    <tr>
+                                        <td>
+                                            <p t-field="doc.partner_id"/>
+                                            <p>By: </p>
+                                            <p>
+                                                Name: <span t-field="doc.partner_contact_id.name"/>
+                                            </p>
+                                            <p>
+                                                Title: <span t-field="doc.partner_contact_id.function"/>
+                                            </p>
+                                            <p>Date: </p>
+                                        </td>
+                                        <td>
+                                            <p t-field="doc.company_id.partner_id"/>
+                                            <p>By: </p>
+                                            <p>
+                                                Name: <span t-field="doc.company_contact_id.name"/>
+                                            </p>
+                                            <p>
+                                                Title: <span t-field="doc.company_contact_id.function"/>
+                                            </p>
+                                            <p>Date: </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div t-foreach="doc.appendix_ids" t-as="a">
+                            <div class="page">
+                                <h1 t-field="a.title"
+                                    style="page-break-before: always;"/>
+                                <p t-field="a.dynamic_content"/>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+
 </odoo>
