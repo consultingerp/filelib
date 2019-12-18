@@ -454,15 +454,15 @@
 
                                     <group name="container_row_2">
                                         <group>
-                                            <field name="business_license" />
+                                            <field name="business_license" widget="image" options='{"size": [90, 90]}'/>
                                             <field name="validity_license" placeholder="与营业执照保持一致"/>
                                             <field name="vat" placeholder="与营业执照保持一致"/>
                                             <field name="registered_capital" placeholder="与营业执照保持一致"/>
-                                            <field name="image_company" required='True'/>
+                                            <field name="image_company" required='True' widget="image" options='{"size": [90, 90]}'/>
                                         </group>
                                         <group>
-                                            <field name="organization_chart" required='True'/>
-                                            <field name="image_product"/>
+                                            <field name="organization_chart" required='True' widget="image" options='{"size": [90, 90]}'/>
+                                            <field name="image_product" widget="image" options='{"size": [90, 90]}'/>
                                         </group>
                                     </group>
 
@@ -487,7 +487,7 @@
                                         </group>
                                         <group>
                                             <field name="code_bank"/>
-                                            <field name="enclosure_bank"/>
+                                            <field name="enclosure_bank" widget="image" options='{"size": [90, 90]}'/>
                                         </group>
                                     </group>
 
