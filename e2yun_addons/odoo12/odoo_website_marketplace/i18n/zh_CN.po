@@ -605,7 +605,7 @@ msgstr "创建产品"
 #. module: odoo_website_marketplace
 #: model_terms:ir.ui.view,arch_db:odoo_website_marketplace.seller_signup
 msgid "Create an account"
-msgstr "板创建账户"
+msgstr "创建账户"
 
 #. module: odoo_website_marketplace
 #: model:ir.model.fields,field_description:odoo_website_marketplace.field_request_payment__create_uid
