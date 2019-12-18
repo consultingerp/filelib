@@ -8,7 +8,7 @@ from odoo.tools.translate import _
 class AgreementMilestone(models.Model):
     _name = 'agreement.milestone'
 
-    agreement_id = fields.Many2one('agreement', '合同编号')
+    agreement_id = fields.Many2one('agreement', '合同')
     project_id = fields.Many2one('project.project', '合约编号')
     name = fields.Char("里程碑")
     milestone_date = fields.Datetime("里程碑时间")
