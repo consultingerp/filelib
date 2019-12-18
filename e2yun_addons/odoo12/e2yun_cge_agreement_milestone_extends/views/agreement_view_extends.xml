@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="agreement_milestone_order_form_view" model="ir.ui.view">
+        <field name="name">agreement.form.milestone.order.view</field>
+        <field name="model">agreement</field>
+        <field name="inherit_id" ref="agreement_legal.partner_agreement_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="agreement_milestone" string="里程碑">
+                    <group col="4">
+                        <field name="amount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                        <field name="currency_id"/>
+                    </group>
+                    <field name="agreement_milestone">
+                        <tree>
+                            <field name="name"/>
+                            <field name="plan_finish_date"/>
+                            <field name="payment_rate"/>
+                            <field name="payment_amount"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
