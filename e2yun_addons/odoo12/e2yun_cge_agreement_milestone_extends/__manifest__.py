@@ -10,6 +10,7 @@
     'summary': 'E2yun CGE Agreement Milestone Extends',
     'description': """E2yun CGE Agreement Milestone Extends""",
     'data': [
+        'views/agreement_milestone_view_extends.xml',
         'views/agreement_view_extends.xml',
         'views/project_view_extends.xml',
     ],
