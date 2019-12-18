@@ -32,6 +32,7 @@ class Project(models.Model):
 
     agreement_milestone = fields.One2many('agreement.milestone', 'agreement_id', string="里程碑")
     amount = fields.Float("合同金额")
+    currency_id = fields.Many2one("res.currency", string="Currency", default=lambda self: self.env.user.company_id.currency_id)
 
 
 class Project(models.Model):
@@ -39,5 +40,3 @@ class Project(models.Model):
     _inherit = 'project.project'
 
     agreement_milestone = fields.One2many('agreement.milestone', 'project_id', string="合同")
-
-
