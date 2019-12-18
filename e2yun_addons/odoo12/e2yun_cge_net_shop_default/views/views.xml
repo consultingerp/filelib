@@ -1,0 +1,19 @@
+<odoo>
+  <data>
+<!--    <record id="view_partner_form_set_default_user_supplier" model="ir.ui.view">-->
+<!--            <field name="name">view_partner_form_set_default_user_supplier</field>-->
+<!--            <field name="model">res.partner</field>-->
+<!--            <field name="inherit_id" ref="base.view_partner_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//field[@name='image']" position="attributes">-->
+<!--                    <attribute name="context">{'cge_set_default_user_id': 439901}</attribute>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+    <record id="odoo_website_marketplace.action_my_seller_profile" model="ir.actions.act_window">
+        <field name="context">{"cge_set_default_user_id":439901,"default_seller": True}</field>
+    </record>
+
+  </data>
+</odoo>
