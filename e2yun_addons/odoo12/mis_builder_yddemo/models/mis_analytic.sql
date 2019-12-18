@@ -22,7 +22,7 @@ CREATE OR REPLACE VIEW mis_analytic AS (
         'account analytic' AS line_type,
                 aal.company_id AS company_id,
         aal.name AS name,
-        aal.milestone AS milestone,
+        pm.name AS milestone,
         aal.state AS state,
         aal.date as date,
         aal.account_id as analytic_account_id,
@@ -38,6 +38,7 @@ CREATE OR REPLACE VIEW mis_analytic AS (
           ELSE 0.0
         END AS credit
         FROM account_analytic_line aal
+            LEFT JOIN project_milestone pm ON aal.milestone = pm.id
             LEFT JOIN account_analytic_account aa on aa.id = aal.account_id
             LEFT JOIN currency_rate cur on (cur.currency_id = aal.currency_id and
                 cur.company_id = aal.company_id and
