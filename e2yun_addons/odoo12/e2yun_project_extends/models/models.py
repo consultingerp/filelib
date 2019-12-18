@@ -325,3 +325,13 @@ class NewQuestionType(models.Model):
     type_html = fields.Html(string='问题类型的样式')
     question_ids = fields.One2many('survey.question', 'type_id', string='问题')
 
+    @api.multi
+    def name_get(self):
+        res = []
+        for question_type in self:
+            name = question_type.display_name_chs
+            res.append((question_type.id, name))
+        return res
+
+
+
