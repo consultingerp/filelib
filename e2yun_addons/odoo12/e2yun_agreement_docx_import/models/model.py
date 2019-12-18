@@ -6,6 +6,8 @@ from docx import Document
 from docx.shared import Pt,Inches
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 import os, sys
+import platform
+from docx.shared import RGBColor
 
 class DocxImport(models.TransientModel):
     _name = "agreement.docx.import"
@@ -106,7 +108,11 @@ class AgreementDownloadDoc(models.Model):
     def download_doc(self):
 
      try:
-        path = sys.path[0]+"\\"
+        platform_ = platform.system()
+        if platform_ == "Windows":
+            path = sys.path[0] + "\\"
+        else:
+            path = "/tmp/"
 
         agreement_id=self._context['active_id']
 
@@ -137,12 +143,14 @@ class AgreementDownloadDoc(models.Model):
             access_token=None,
             env=self.env)
         wb_path=path+agreementData.name+".docx"
-        f = open(wb_path, "wb")
+        f = open(wb_path, r"wb")
         datass = base64.decodestring(datas[2])
         f.write(datass)
         f.close()
 
+
         doc = Document(wb_path)
+        #doc = DocxTemplate(wb_path)
         # from win32com.client import Dispatch
         # from win32com.client import Dispatch, DispatchEx
         # import pythoncom
@@ -159,12 +167,16 @@ class AgreementDownloadDoc(models.Model):
                          # para.Range.Find.Execute(clauseObj.old_text, False, False, False, False, False, False, 0, True,
                          #                         clauseObj.new_text, 1)
                          # para.text.replace(clauseObj.old_text,clauseObj.new_text,1)
-                         para.text=para.text.replace(clauseObj.old_text,clauseObj.new_text,1)
+                        if clauseObj.edit_type=='replace':
+                            para.text=para.text.replace(clauseObj.old_text,clauseObj.new_text,1)
+                        else:
+                            para.text=clauseObj.new_text
+                        #rt = para.add_run(clauseObj.new_text)
+                        #rt.font.color.rgb = RGBColor(0x42, 0x24, 0xE9)
+                        #rt.strike=True
 
-
-              doc.SaveAs(wb_path)
+              doc.save(wb_path)
         except BaseException as e:
-            print(e)
             if os.path.exists(wb_path):
                 os.remove(wb_path)
             #doc.Close()
@@ -186,33 +198,30 @@ class AgreementDownloadDoc(models.Model):
         if os.path.exists(wb_path):
             os.remove(wb_path)
 
-     finally:
-       return {
-             'type': 'ir.actions.act_url',
-             'target': 'new',
-             'url': 'web/content/%s?download=true' % (attachmentObj.id),
-       }
-       print(111)
+        return {
+            'type': 'ir.actions.act_url',
+            'target': 'new',
+            'url': 'web/content/%s?download=true' % (attachmentObj.id),
+        }
+
+     except BaseException as e:
+         print(e)
+
 
 
     def Import_doc(self):
 
-        path = sys.path[3]
+        platform_ = platform.system()
+        if platform_ == "Windows":
+            wb_path = ""+str(sys.path[0]) +"/agreementTemp.docx"
+        else:
+            wb_path = "/tmp/agreementTemp.docx"
 
-        wb_path=path+"/test20191216.docx"
-
-        wb_path_text = path + "/test20191217.txt"
-        f1 = open(wb_path_text, r"wb")
-        f1.write("text_hello")
-        f1.close();
-
-        f = open(wb_path, r"wb" )
+        f = open(wb_path, r"wb")
         datass = base64.decodestring(self.data)
         f.write(datass)
         f.close()
-
         full_path = wb_path
-
 
         doc = Document(full_path)
 

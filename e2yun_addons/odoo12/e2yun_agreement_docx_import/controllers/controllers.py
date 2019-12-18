@@ -4,6 +4,7 @@ import base64
 from odoo.http import request
 import re
 import difflib
+from datetime import datetime, timedelta
 class AgreementDownloadDoc(http.Controller):
 
     @http.route('/e2yun/agreement/download/doc/<string:id>',  type='http', auth="public")
@@ -11,9 +12,10 @@ class AgreementDownloadDoc(http.Controller):
         print(id)
 
     @http.route([
-        "/agreement/wordEdit/<int:agreement_id>"
+        "/agreement/wordEdit/<int:agreement_id>",
+        "/agreement/wordEdit/<int:agreement_id>/<string:debug>"
     ], type='http', auth="public")
-    def wordEdit(self,agreement_id):
+    def wordEdit(self,agreement_id,debug):
         #order = request.env['purchase.order'].sudo().browse(order_id)
 
         agreement_word_data = request.env['agreement.word.data']  # wordData
@@ -40,7 +42,17 @@ class AgreementDownloadDoc(http.Controller):
                 opcodes = difflib.SequenceMatcher(None, oldStr, newStr).get_opcodes()
                 for op, af, at, bf, bt in opcodes:
                     if op == 'delete':
-                        print(1)
+                        oldStr = oldStr[af:at]
+                        newStr = newStr[bf:bt]
+                        clauseListData = agreement_word_data.search(
+                            [('id', '=', content_id)])
+                        up_val = {}
+                        up_val['edit_type'] = "delete"
+                        up_val['old_text'] = ""
+                        up_val['new_text'] = content_new
+                        up_val['the_editor'] = True
+                        clauseListData[0].write(up_val)
+
                     elif op == 'replace' and (oldStr[af:at] and newStr[bf:bt]):
                         oldStr = oldStr[af:at]
                         newStr = newStr[bf:bt]
@@ -60,7 +72,7 @@ class AgreementDownloadDoc(http.Controller):
                             [('id', '=', content_id)])
                         up_val = {}
                         up_val['edit_type'] = "insert"
-                        up_val['old_text'] = content_old
+                        up_val['old_text'] = ""
                         up_val['new_text'] = content_new
                         up_val['the_editor'] = True
                         clauseListData[0].write(up_val)
@@ -73,5 +85,11 @@ class AgreementDownloadDoc(http.Controller):
             'agreement_id': agreement_id,
             'content': clauseListData,
         }
+        agreementObj = request.env['agreement'].search(
+                            [('id', '=', agreement_id)])
+        agreementVal={}
+        agreementVal['write_date']=datetime.now()
+        agreementObj[0].write(up_val)
+
 
         return request.render('e2yun_agreement_docx_import.qweb_agreement_word_edit', values)

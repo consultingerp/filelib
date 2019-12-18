@@ -25,10 +25,11 @@ class LoginHome(Home):
         if not request.session.uid:
             return web_
         try:
-            context = request.env['ir.http'].webclient_rendering_context()
-            response = request.render('web.webclient_bootstrap', qcontext=context)
-            response.headers['X-Frame-Options'] = 'SAMEORIGIN'
-            return response
+            if request.httprequest.referrer and 'structure_page' in request.httprequest.referrer:
+                context = request.env['ir.http'].webclient_rendering_context()
+                response = request.render('web.webclient_bootstrap', qcontext=context)
+                response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+                return response
         except AccessError:
             return werkzeug.utils.redirect('/web/login?error=access')
         return web_

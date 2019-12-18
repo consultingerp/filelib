@@ -357,6 +357,7 @@
             <field name="model">question.type</field>
             <field name="arch" type="xml">
                 <tree string="Question Type">
+                    <field name="display_name_chs"/>
                     <field name="name"/>
                     <field name="type_html"/>
                 </tree>
@@ -368,6 +369,7 @@
             <field name="model">question.type</field>
             <field name="arch" type="xml">
                 <form string="Question Type">
+                    <field name="display_name_chs"/>
                     <field name="name"/>
                     <field name="type_html"/>
                 </form>

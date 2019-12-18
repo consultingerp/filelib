@@ -200,7 +200,8 @@ class Academy(http.Controller):
     def base_info_form(self, **kw):
         return True
 
-    # @http.route('/website_form/<string:model_name>', type='http', auth="public", methods=['POST'], website=True)
-    # def website_form(self, model_name, **kwargs):
+    # @http.route('/', auth="public", website=True)
+    # def website_home(self, **kw):
+    #     return http.request.render('e2yun_supplier_info.website_homepage')
 
 

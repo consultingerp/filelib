@@ -22,17 +22,19 @@ CREATE OR REPLACE VIEW mis_analytic AS (
         'account analytic' AS line_type,
                 aal.company_id AS company_id,
         aal.name AS name,
+        aal.milestone AS milestone,
+        aal.state AS state,
         aal.date as date,
         aal.account_id as analytic_account_id,
         aal.id AS res_id,
         'account.analytic.line' AS res_model,
         aa.id AS account_id,
         CASE
-          WHEN (aal.amount)::decimal(16,2) < 0.0 THEN aal.amount
+          WHEN (aal.amount)::decimal(16,2) >= 0.0 THEN aal.amount
           ELSE 0.0
         END AS debit,
         CASE
-          WHEN (aal.amount)::decimal(16,2) >= 0 THEN aal.amount * -1
+          WHEN (aal.amount)::decimal(16,2) < 0 THEN aal.amount * -1
           ELSE 0.0
         END AS credit
         FROM account_analytic_line aal

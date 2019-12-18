@@ -13,7 +13,7 @@
             </xpath>
         </field>
     </record>
-    <record id="project_project_tree_view" model="ir.ui.view">
+    <record id="project_wbs_tree_view" model="ir.ui.view">
         <field name="name">Project level Tree</field>
         <field name="model">project.project</field>
         <field name="type">tree</field>
@@ -21,13 +21,34 @@
         <field name="field_parent">project_child_complete_ids</field>
         <field name="arch" type="xml">
             <tree position="inside">
-                <field name="id" invisible="1"></field>
-                <field name="parent_id" invisible="1"></field>
+                <field name="sort_code" invisible="1"/>
             </tree>
             <tree position="attributes">
-                <attribute name="default_order">parent_id asc, id asc</attribute>
+                <attribute name="default_order">sort_code asc</attribute>
             </tree>
 
+        </field>
+    </record>
+    <record id="project_status_tree_view" model="ir.ui.view">
+        <field name="name">Project level Tree</field>
+        <field name="model">project.project</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="project_status.view_project"/>
+        <field name="arch" type="xml">
+            <field name="project_status" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+        </field>
+    </record>
+    <record id="project_project_tree_view" model="ir.ui.view">
+        <field name="name">Project level Tree</field>
+        <field name="model">project.project</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="project.view_project"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
         </field>
     </record>
 
