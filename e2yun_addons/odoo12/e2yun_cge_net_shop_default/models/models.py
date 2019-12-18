@@ -5,6 +5,8 @@ from odoo import models, fields, api
 class e2yun_cge_net_shop_default(models.Model):
     _inherit = 'res.partner'
 
+    is_company = fields.Boolean(default=True)
+
     # @api.model
     # def _set_cge_user_id(self):
     #     flag = self.env.context.get('cge_set_default_user_id', False)
