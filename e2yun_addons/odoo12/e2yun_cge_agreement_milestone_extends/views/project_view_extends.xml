@@ -9,7 +9,7 @@
             <xpath expr="//notebook" position="inside">
                 <page name="agreement_milestone" string="合同">
                     <field name="agreement_milestone">
-                        <tree>
+                        <tree edit="0" create="0">
                             <field name="code"/>
                             <field name="plan_start_date"/>
                             <field name="plan_finish_date"/>

@@ -8,10 +8,7 @@
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page name="agreement_milestone" string="里程碑">
-                    <group col="8">
-                        <field name="amount"/>
-                        <field name="currency_id"/>
-                    </group>
+                    <field name="amount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
                     <field name="agreement_milestone">
                         <tree>
                             <field name="name"/>
