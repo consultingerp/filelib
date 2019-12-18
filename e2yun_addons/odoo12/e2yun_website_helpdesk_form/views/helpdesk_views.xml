@@ -73,6 +73,20 @@
     </record>
 
 
+    <record id="helpdesk_tickets_view_tree_extend" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.tree</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_tickets_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="order_datetime" widget='date'/>
+                <field name="phone"/>
+            </xpath>
+        </field>
+    </record>
+
+
+
     <!--the js code to initialize the LiveSupport object -->
     <template id="e2yun_website_helpdesk_form_loader" inherit_id="im_livechat.loader" name="my_load">
     <xpath expr="//t[@t-translation='off']" position="replace">
