@@ -235,7 +235,7 @@ class SurveyQuestion(models.Model):
     page_id = fields.Many2one('survey.page', string='Survey page',
                               ondelete='cascade', required=False, default=lambda self: self.env.context.get('page_id'))
     type_id = fields.Many2one('question.type', string='问题类型')
-    type_name = fields.Char(string='问题类型', related='type_id.name')
+    type_name = fields.Char(string='问题类型', related='type_id.display_name_chs')
 
     @api.multi
     def validate_question(self, post, answer_tag):
@@ -324,4 +324,14 @@ class NewQuestionType(models.Model):
     display_name_chs = fields.Char(string='问题类型中文名称')
     type_html = fields.Html(string='问题类型的样式')
     question_ids = fields.One2many('survey.question', 'type_id', string='问题')
+
+    @api.multi
+    def name_get(self):
+        res = []
+        for question_type in self:
+            name = question_type.display_name_chs
+            res.append((question_type.id, name))
+        return res
+
+
 
