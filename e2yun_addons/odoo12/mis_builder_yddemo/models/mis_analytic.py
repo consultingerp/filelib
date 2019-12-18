@@ -7,8 +7,21 @@ from os.path import join as opj
 from odoo import api, fields, models, tools
 
 
-class MisCommittedPurchase(models.Model):
+class account_analytic_line(models.Model):
+    _name = "account.analytic.line"
+    _inherit = "account.analytic.line"
 
+    milestone = fields.Many2one("project.milestone", 'Milestone', domain="[('project_id','=',project_id)]")
+    state = fields.Selection([('draft', 'Unposted'), ('posted', 'Posted')], string='Status',
+                             required=True, copy=False, default='draft',
+                             help='All manually created new journal entries are usually in the status \'Unposted\', '
+                                  'but you can set the option to skip that status on the related journal. '
+                                  'In that case, they will behave as journal entries automatically created by the '
+                                  'system on document validation (invoices, bank statements...) and will be created '
+                                  'in \'Posted\' status.')
+
+
+class MisCommittedPurchase(models.Model):
     _name = "mis.analytic"
     _description = "MIS Analytic"
     _auto = False
@@ -27,6 +40,9 @@ class MisCommittedPurchase(models.Model):
     # resource can be purchase.order.line or account.invoice.line
     res_id = fields.Integer(string="Resource ID")
     res_model = fields.Char(string="Resource Model Name")
+
+    milestone = fields.Char("Milestone")
+    state = fields.Char("State")
 
     analytic_tag_ids = fields.Many2many(
         comodel_name="account.analytic.tag",

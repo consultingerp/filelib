@@ -22,6 +22,8 @@ CREATE OR REPLACE VIEW mis_analytic AS (
         'account analytic' AS line_type,
                 aal.company_id AS company_id,
         aal.name AS name,
+        aal.milestone AS milestone,
+        aal.state AS state,
         aal.date as date,
         aal.account_id as analytic_account_id,
         aal.id AS res_id,
