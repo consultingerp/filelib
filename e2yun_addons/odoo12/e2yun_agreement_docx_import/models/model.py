@@ -199,9 +199,8 @@ class AgreementDownloadDoc(models.Model):
 
         path = sys.path[3]
 
-        wb_path=path+"/test20191216.docx"
-
-        wb_path_text = path + "/test20191217.txt"
+        wb_path="/tmp/test20191216.docx"
+        wb_path_text = "/tmp/test20191217.txt"
         f1 = open(wb_path_text, r"wb")
         f1.write("text_hello")
         f1.close();
