@@ -144,7 +144,9 @@ class OdooWebsiteMarketplace(http.Controller):
         seller_manager_user = user_brw.env.ref('odoo_website_marketplace.group_market_place_manager')
         menu_brw = False
         if (seller_manager_user.id in group_id) or (seller_account_user.id in group_id) or (seller_pending_user.id in group_id):
-            menu_id = request.env['ir.ui.menu'].search([('name', '=','Seller Dashboard')],limit=1)
+            # menu_id = request.env['ir.ui.menu'].search([('name', '=','Seller Dashboard')],limit=1)
+            #使用外部标识去取菜单信息。
+            menu_id = user_brw.env.ref('odoo_website_marketplace.seller_dashboard_menu')
             menu_brw = request.env['ir.ui.menu'].browse(menu_id.id)
 
         market = '/web#menu_id=' + str(menu_brw.id)

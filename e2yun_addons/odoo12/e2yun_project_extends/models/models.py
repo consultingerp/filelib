@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api, _, exceptions
+import logging
+_logger = logging.getLogger(__name__)
+
+
 import warnings
 
 class Questionnaire(models.Model):
@@ -231,7 +235,18 @@ class SurveyQuestion(models.Model):
     page_id = fields.Many2one('survey.page', string='Survey page',
                               ondelete='cascade', required=False, default=lambda self: self.env.context.get('page_id'))
     type_id = fields.Many2one('question.type', string='问题类型')
-    type_name = fields.Char(string='问题类型', related='type_id.name')
+    type_name = fields.Char(string='问题类型', related='type_id.display_name_chs')
+
+    @api.multi
+    def validate_question(self, post, answer_tag):
+        self.ensure_one()
+        try:
+            checker = getattr(self, 'validate_' + self.type_id.name)
+        except AttributeError:
+            _logger.warning(self.type + ": This type of question has no validation method")
+            return {}
+        else:
+            return checker(post, answer_tag)
 
     @api.onchange('labels_ids')
     def _onchange_score(self):
@@ -301,10 +316,22 @@ class SurveyQuestion(models.Model):
             raise exceptions.Warning(_('题库大类或计分方式未选择，请选择'))
         return res
 
+
 class NewQuestionType(models.Model):
     _name = 'question.type'
 
     name = fields.Char(string='问题类型的名称')
+    display_name_chs = fields.Char(string='问题类型中文名称')
     type_html = fields.Html(string='问题类型的样式')
     question_ids = fields.One2many('survey.question', 'type_id', string='问题')
+
+    @api.multi
+    def name_get(self):
+        res = []
+        for question_type in self:
+            name = question_type.display_name_chs
+            res.append((question_type.id, name))
+        return res
+
+
 

@@ -558,6 +558,14 @@
                                         </div>
                                     </div>
                                     <div class="col-md-7">
+                                        <div class="product-ordering">
+                                                <!--TODO:地区选择-->
+                                                <select class="product-ordering__select nice-select" id="area_chooser" onchange="area_chooser()">
+                                                    <option value="0">当前地区</option>
+                                                    <option value="1">广东地区</option>
+                                                    <option value="2">北京地区</option>
+                                                </select>
+                                            </div>
                                         <div class="shop-toolbar__right d-flex justify-content-md-end justify-content-start flex-sm-row flex-column">
 <!--                                            <p class="product-pages">Showing Result  08 Among  72</p>-->
                                             <div class="product-view-mode ml--50 ml-xs--0">
@@ -575,6 +583,7 @@
                             </div>
                             <div class="shop-products list">
                                 <div class="row" id="shop_product_list">
+
 <!--                                    &lt;!&ndash;TODO: 产品列表(Grid模式和列表模式结合的)&ndash;&gt;-->
 <!--                                    <div class="col-xl-4 col-sm-6 mb&#45;&#45;50">-->
 <!--                                        &lt;!&ndash;TODO：Grid模式&ndash;&gt;-->
@@ -2366,6 +2375,22 @@
         }
     }
  }
+
+ function area_chooser() {
+    var area_id = document.getElementById("area_chooser").value
+    sessionStorage.setItem("current_area_id", area_id);
+    sessionStorage.setItem("current_category_id", '99999');
+
+    url = "/online_shop/get_product_list_by_category/99999"
+    var get_product_list_by_area_xhr = new this.XMLHttpRequest();
+    get_product_list_by_area_xhr.open("GET", url, true)
+    get_product_list_by_area_xhr.send()
+    get_product_list_by_area_xhr.onreadystatechange = function(){
+        if (get_product_list_by_area_xhr.readyState == 4 && get_product_list_by_area_xhr.status == 200) {
+            document.getElementById("shop_product_list").innerHTML = get_product_list_by_area_xhr.responseText;
+        }
+    }
+}
 
     </script>
 
