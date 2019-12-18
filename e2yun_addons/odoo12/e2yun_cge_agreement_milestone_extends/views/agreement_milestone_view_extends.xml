@@ -12,14 +12,14 @@
                             <field name="milestone_date"/>
                             <field name="code"/>
                             <field name="plan_start_date"/>
-                            <field name="project_id" readonly="1"/>
+                            <field name="project_id"/>
                         </group>
                         <group>
                             <field name="plan_finish_date"/>
                             <field name="payment_rate"/>
                             <field name="payment_date"/>
                             <field name="payment_amount"/>
-                            <field name="agreement_id" readonly="1"/>
+                            <field name="agreement_id"/>
                         </group>
                     </group>
                 </sheet>
