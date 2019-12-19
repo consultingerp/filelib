@@ -103,12 +103,12 @@ class Agreement(models.Model):  #合同
 
                   p = doc.add_paragraph(paragraph.text)
 
-                  if i==1 and j==5:
-                      p.text = p.text.replace("XXXXXX", "中国远大", 1)
-                      from docx.shared import RGBColor
-                      test = p.runs[0]
-                      font = test.font
-                      font.color.rgb = RGBColor(220, 20, 60)
+                  # if i==1 and j==5:
+                  #     p.text = p.text.replace("XXXXXX", "中国远大", 1)
+                  #     from docx.shared import RGBColor
+                  #     test = p.runs[0]
+                  #     font = test.font
+                  #     font.color.rgb = RGBColor(220, 20, 60)
 
 
                   p._element = paragraph._element
