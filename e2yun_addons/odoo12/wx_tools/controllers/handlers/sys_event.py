@@ -58,6 +58,7 @@ def main(robot):
         wxuserinfo = None
         scene_userinfo = None  # 被扫描人员
         company_id = None  # 公司ID
+        real_company = None # 记录公司
         guide = ["店长", "店员"]
         ret_msg = ""
         if not rs.exists():  # 不存在微信用户在
@@ -75,7 +76,7 @@ def main(robot):
                 entry.send_text(openid, ret_msg)
                 befocus_username = ''
                 eventkey = message.EventKey.split('|')
-                if eventkey[0] == 'qrscene_USERS':
+                if eventkey[0] == 'qrscene_USERS':  # 用户二维码
                     scene_userinfo = env['res.users'].sudo().search([('id', '=', int(eventkey[1]))], limit=1)
                     befocus_username = scene_userinfo.name
                     tracelog_type = 'qrscene_USERS'
@@ -85,7 +86,7 @@ def main(robot):
                     ret_msg = "正在联系您的专属客户经理%s。\n" \
                               "请点击屏幕下方左侧小键盘打开对话框与您的客户经理联系。\n我们将竭诚为您服务，欢迎咨询！" % (befocus_username)
                     entry.send_text(openid, ret_msg)
-                    ret_msg=''
+                    ret_msg = ''
                     user_id = eventkey[1]
                     users_ids.append(user_id)
                     team_id = env['crm.team'].sudo().search([('member_ids', 'in', [int(eventkey[1])])], limit=1)
@@ -139,10 +140,10 @@ def main(robot):
                 else:
                     ret_msg = "您终于来了！欢迎关注"
             _data = get_img_data(str(info['headimgurl']))
-            #if not company_id:
-            company = env['res.company']._get_main_company();
+            real_company = company_id;
+            company = env['res.company']._get_main_company();  # 公司设置为默认公司
             company_id = company.id
-            if not iscompanyuser:
+            if not iscompanyuser:    # 不是内部用户
                 if not resuser.exists():  # 如果用户不存在查询用户的微信字段以前有没有用，是不是从门店同步过来的
                     resuser = env['res.users'].sudo().search([('wx_id', '=', info['openid'])], limit=1)
                 if not resuser.exists():  # 不存在odoo用户 而且不是扫描公司二给码进入的，公司二维码进不不用创建用户
@@ -157,7 +158,8 @@ def main(robot):
                         "email": 'HH',
                         "wx_id": info['openid'],
                         'company_ids': [(6, 0, [company_id])],
-                        'company_id': company_id
+                        'company_id': company_id,
+                        'real_company': real_company,
                     })
                     res_guideorreferrer = env['res.users'].sudo().search([('id', '=', user_id)], limit=1)
                     if res_guideorreferrer.function in guide or max_goal_user:  # 导购 或者 排名导购
@@ -172,7 +174,8 @@ def main(robot):
                             "image": base64.b64encode(_data),
                             "customer_source": tracelog_type,
                             'related_guide': [(6, 0, users_ids)],
-                            'company_id': company_id
+                            'company_id': company_id,
+                            'real_company': real_company,
                         })
                     elif tracelog_type == 'qrscene_USERS':  # 推荐人
                         guideorreferrer = 'referrer'
@@ -187,7 +190,8 @@ def main(robot):
                             "image": base64.b64encode(_data),
                             "customer_source": tracelog_type,
                             "referrer": user_id,
-                            'company_id': company_id
+                            'company_id': company_id,
+                            'real_company': real_company,
                         })
                     else:
                         tracelog_title = "关注了公众号,微信用户%s" % (str(info['nickname']))
@@ -211,7 +215,8 @@ def main(robot):
                     resuser.write({
                         "wx_user_id": wxuserinfo.id,
                         "image": base64.b64encode(_data),
-                        "company_id":company_id,
+                        "company_id": company_id,
+                        'real_company': real_company,
                         'company_ids': [(6, 0, company_ids)],
                     })
                     res_guideorreferrer = env['res.users'].sudo().search([('id', '=', user_id)], limit=1)
@@ -227,7 +232,8 @@ def main(robot):
                             "customer_source": tracelog_type,
                             "image": base64.b64encode(_data),
                             'related_guide': [(6, 0, users_ids)],
-                            'company_id': company_id
+                            'company_id': company_id,
+                            'real_company': real_company,
                         })
                     elif tracelog_type == 'qrscene_USERS':  # 推荐人
                         guideorreferrer = 'referrer'
@@ -241,7 +247,8 @@ def main(robot):
                             "image": base64.b64encode(_data),
                             "customer_source": tracelog_type,
                             "referrer": user_id,
-                            'company_id': company_id
+                            'company_id': company_id,
+                            'real_company': real_company,
                         })
                     else:
                         tracelog_title = "关注了公众号,微信用户%s" % (str(info['nickname']))
@@ -253,6 +260,7 @@ def main(robot):
                             "wx_user_id": wxuserinfo.id,
                             "image": base64.b64encode(_data),
                             "customer_source": tracelog_type,
+                            'real_company': real_company,
                         })
                 # 记录微信用户到 微信用户与odoo用户映射关系
                 odoo_user = env['wx.user.odoouser'].sudo().search([('openid', '=', openid)], limit=1)
@@ -401,7 +409,7 @@ def main(robot):
             users_ids = resuser.partner_id.related_guide.ids
             befocus_username = ''
             company_id = None  # 公司ID
-            if eventkey[0] == 'USERS':
+            if eventkey[0] == 'USERS': # 来源是用户
                 _logger.info('USERS')
                 scene_userinfo = env['res.users'].sudo().search([('id', '=', int(eventkey[1]))], limit=1)
                 befocus_username = scene_userinfo.name
@@ -443,7 +451,7 @@ def main(robot):
                             "customer_source": tracelog_type,
                             "referrer": user_id if not resuser.partner_id.user_id else resuser.partner_id.user_id.id
                         })
-            elif eventkey[0] == 'TEAM':
+            elif eventkey[0] == 'TEAM':  # 来源是团队
                 tracelog_type = 'qrscene_TEAM'
                 crm_team = env['crm.team'].sudo().search([('id', '=',  int(eventkey[1]))], limit=1)
                 eventkey[2] = crm_team.name
@@ -453,6 +461,7 @@ def main(robot):
                 ret_msg = ''
                 max_goal_user = crm_team.tearm_high_goal()  # 获取销售团队下面评分最高用户
                 users_ids.append(int(max_goal_user.user_id.id))
+                company_id = crm_team.company_id.id
                 if resuser.exists() and max_goal_user:
                     traceuser_id = resuser
                     ismail_channel = True
@@ -476,10 +485,11 @@ def main(robot):
                     })
 
                 _logger.info('TEAM')
-            elif eventkey[0] == 'COMPANY':
+            elif eventkey[0] == 'COMPANY':  #如果来源是公司
                 tracelog_type = 'qrscene_COMPANY'
                 company = env['res.company'].sudo().search([('id', '=',  int(eventkey[1]))], limit=1)
                 eventkey[2] = company.name
+                company_id = company.id
                 tracelog_title = "扫描公司%s二维码进入公众号,微信用户%s" % (eventkey[2], str(info['nickname']))
                 _logger.info('TEAM')
                 ret_msg = "%s欢迎您：\n 我们将竭诚为您服务，欢迎咨询！" % (eventkey[2])
@@ -490,7 +500,7 @@ def main(robot):
                     resuser.partner_id.write({
                         "customer_source": tracelog_type,
                     })
-            elif eventkey[0] == 'COMPANYEXTERNAL':
+            elif eventkey[0] == 'COMPANYEXTERNAL':  # 外部二维码进入公众号
                 company = env['res.company'].sudo().search([('id', '=', int(eventkey[1]))], limit=1)
                 eventkey[2] = company.name
                 tracelog_type = 'qrscene_COMPANYEXTERNAL'
