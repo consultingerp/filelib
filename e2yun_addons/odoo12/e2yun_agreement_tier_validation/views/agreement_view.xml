@@ -43,11 +43,17 @@
                                 type="object"
                                 class="oe_inline oe_button btn-success"
                                 icon="fa-thumbs-up"/>
+                        <button name="rebut_tier"
+                                string="Rebut"
+                                attrs="{'invisible': [('can_review', '=', False)]}"
+                                type="object"
+                                class="btn-icon btn-danger"
+                                icon="fa-thumbs-down"/>
                         <button name="reject_tier"
                                 string="Reject"
                                 attrs="{'invisible': [('can_review', '=', False)]}"
                                 type="object"
-                                class="btn-icon btn-danger"
+                                class="btn-icon btn-warning"
                                 icon="fa-thumbs-down"/>
                     </p>
                 </div>

@@ -56,6 +56,11 @@ msgstr "拒绝"
 
 #. module: e2yun_agreement_tier_validation
 #: model_terms:ir.ui.view,arch_db:e2yun_agreement_tier_validation.agreement_form_view_extend
+msgid "Rebut"
+msgstr "驳回"
+
+#. module: e2yun_agreement_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_tier_validation.agreement_form_view_extend
 msgid "Request Validation"
 msgstr "请求验证"
 
