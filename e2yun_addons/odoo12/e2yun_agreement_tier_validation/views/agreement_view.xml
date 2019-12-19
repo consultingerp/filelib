@@ -17,11 +17,11 @@
                     string="Restart Validation"
                     attrs="{'invisible': ['|',('review_ids', '=', [])]}"
                     type="object"/>
-                  <button name="reject_tier"
+                  <!--<button name="reject_tier"
                     string="驳回"
                     attrs="{'invisible': ['|',('review_ids', '=', [])]}"
                     class="btn btn-icon btn-danger"
-                    type="object"/>                   <!-- class="btn btn-primary"-->
+                    type="object"/>                    --> <!-- class="btn btn-primary"-->
 
             </button>
             <header position="after">
