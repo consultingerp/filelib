@@ -313,6 +313,13 @@ msgid "Status"
 msgstr "状态"
 
 #. module: base_tier_validation
+#. openerp-web
+#: code:addons/base_tier_validation/static/src/xml/tier_review_template.xml:26
+#, python-format
+msgid "Comments"
+msgstr "审批意见"
+
+#. module: base_tier_validation
 #: code:addons/base_tier_validation/models/tier_validation.py:138
 #, python-format
 msgid "The operation is under validation."

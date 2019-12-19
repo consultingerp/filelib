@@ -27,4 +27,4 @@ class ModelName (models.Model):
                 # 'default': partner_id
             }
         else:
-            raise Warning(_('%s') % result)
+            raise Warning(_('客户状态不正确，请检查pos状态-%s') % result)

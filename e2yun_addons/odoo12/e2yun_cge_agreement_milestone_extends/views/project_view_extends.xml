@@ -15,6 +15,7 @@
                             <field name="plan_finish_date"/>
                             <field name="name"/>
                             <field name="milestone_date"/>
+                            <field name="payment_rate"/>
                             <field name="payment_amount"/>
                         </tree>
                     </field>
