@@ -187,10 +187,14 @@ class e2yun_customer_payment_extend(models.Model):
                          "%s" % pv,
             }
         }
+
+        # action_xmlid = 'e2yun_customer_payment_extend.account_payment_form_view_extend'
+        # /web?#id=150&action=209&model=account.payment&view_type=form&menu_id=138
+        action_url = '/web#id=%s&action=209&model=account.payment&view_type=form&menu_id=138' % (str(res.id))
         if res.partner_id.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
             try:
                 res.partner_id.wx_user_id.send_template_message(
-                    user_data, template_name='客户收款提醒', partner=res.partner_id)
+                    user_data, template_name='客户收款提醒', partner=res.partner_id, url=action_url)
             except Exception as e:
                 res.wx_message_error = e
 
@@ -275,7 +279,8 @@ class e2yun_customer_payment_extend(models.Model):
         partner_code = self.env['res.partner'].browse(vals_list['partner_id']).app_code
         result = client.service.getSAPState(partner_code or '')
         if result != 'S':
-            raise Warning(_('%s') % result)
+            raise Warning(_('客户状态不正确，请检查pos状态-%s') % result)
+        # del result
 
         atch = vals_list['payment_attachments']  # [[],[]]
         for r in atch:  # [0,'virtual', {}]
