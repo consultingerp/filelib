@@ -219,6 +219,7 @@ class AgreementDownloadDoc(models.Model):
         file.close()
 
         vals = []
+        agreement_word_data_vals = []
         # 每一段的内容
         i = 0
         # 利用下标遍历段落
@@ -233,8 +234,19 @@ class AgreementDownloadDoc(models.Model):
                 if para.style.font.size:
                     font_size = para.style.font.size
                 else:
-                    font_size=11
+                    font_size=14
+                # 全局
+                agreement_word_data_val = {}
+                agreement_word_data_val['agreement_id'] = agreement_id
+                agreement_word_data_val['sequence'] = i
+                agreement_word_data_val['alignment'] = str(para.alignment)  # 0,1,2 分别对应左对齐、居中、右对齐
+                agreement_word_data_val['font_name'] = para.style.font.name
+                agreement_word_data_val['font_size'] = font_size
+                agreement_word_data_val['content'] = para.text
+                agreement_word_data_vals.append(agreement_word_data_val)
+
                 text = "<p style= 'font-size: " + str(font_size) + "px; "
+
                 if str(para.alignment)=="CENTER (1)":
                     text=text+" text-align:center; "
 
@@ -252,10 +264,15 @@ class AgreementDownloadDoc(models.Model):
         # vals.append(val)
 
         val['name'] = "概述"
+        val['title'] = "概述"
         val['content']=all_content
         vals.append(val)
         agreement_recital_obj.search([('agreement_id', '=', agreement_id)]).unlink()
         agreement_recital_obj.create(vals)
+
+        agreement_word_data = self.env['agreement.word.data']
+        agreement_word_data.search([('agreement_id', '=', agreement_id)]).unlink()
+        agreement_word_data.create(agreement_word_data_vals)
 
         if os.path.exists(wb_path):
             os.remove(wb_path)
@@ -293,7 +310,7 @@ class AgreementDownloadDoc(models.Model):
             'res_id': self.id
         })
         file.close()
-
+        agreement_word_data_vals = []
         vals = []
         val = {}
         val['agreement_id'] = agreement_id
@@ -306,8 +323,19 @@ class AgreementDownloadDoc(models.Model):
                 if para.style.font.size:
                     font_size = para.style.font.size
                 else:
-                    font_size = 11
+                    font_size = 14
+                # 全局
+                agreement_word_data_val = {}
+                agreement_word_data_val['agreement_id'] = agreement_id
+                agreement_word_data_val['sequence'] = i
+                agreement_word_data_val['alignment'] = str(para.alignment)  # 0,1,2 分别对应左对齐、居中、右对齐
+                agreement_word_data_val['font_name'] = para.style.font.name
+                agreement_word_data_val['font_size'] = font_size
+                agreement_word_data_val['content'] = para.text
+                agreement_word_data_vals.append(agreement_word_data_val)
+
                 text = "<p style= 'font-size: " + str(font_size) + "px; "
+
                 if str(para.alignment) == "CENTER (1)":
                     text = text + " text-align:center; "
 
@@ -324,11 +352,16 @@ class AgreementDownloadDoc(models.Model):
         # val['content'] = html
 
         val['name'] = "章节-条款"
+        val['title'] = "章节-条款"
         val['content'] = all_content
 
         vals.append(val)
         agreement_section_obj.search([('agreement_id', '=', agreement_id)]).unlink()
         agreement_section_obj.create(vals)
+
+        agreement_word_data = self.env['agreement.word.data']
+        agreement_word_data.search([('agreement_id', '=', agreement_id)]).unlink()
+        agreement_word_data.create(agreement_word_data_vals)
 
         if os.path.exists(wb_path):
             os.remove(wb_path)
@@ -366,6 +399,7 @@ class AgreementDownloadDoc(models.Model):
         file.close()
 
         vals = []
+        agreement_word_data_vals=[]
         # 每一段的内容
         i = 0
         # 利用下标遍历段落
@@ -380,7 +414,18 @@ class AgreementDownloadDoc(models.Model):
                 if para.style.font.size:
                     font_size = para.style.font.size
                 else:
-                    font_size = 11
+                    font_size = 14
+
+                 #全局
+                agreement_word_data_val = {}
+                agreement_word_data_val['agreement_id'] = agreement_id
+                agreement_word_data_val['sequence'] = i
+                agreement_word_data_val['alignment'] = str(para.alignment)  # 0,1,2 分别对应左对齐、居中、右对齐
+                agreement_word_data_val['font_name'] = para.style.font.name
+                agreement_word_data_val['font_size'] = font_size
+                agreement_word_data_val['content'] = para.text
+                agreement_word_data_vals.append(agreement_word_data_val)
+
                 text = "<p style= 'font-size: " + str(font_size) + "px; "
                 if str(para.alignment) == "CENTER (1)":
                     text = text + " text-align:center; "
@@ -399,6 +444,10 @@ class AgreementDownloadDoc(models.Model):
         vals.append(val)
         agreement_appendix_obj.search([('agreement_id', '=', agreement_id)]).unlink()
         agreement_appendix_obj.create(vals)
+
+        agreement_word_data = self.env['agreement.word.data']
+        agreement_word_data.search([('agreement_id', '=', agreement_id)]).unlink()
+        agreement_word_data.create(agreement_word_data_vals)
 
         if os.path.exists(wb_path):
             os.remove(wb_path)
