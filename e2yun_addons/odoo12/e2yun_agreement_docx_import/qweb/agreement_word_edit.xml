@@ -1,59 +1,15 @@
 <?xml version="1.0"?>
 <odoo>
 
-<!--
-  <template id="qweb_agreement_word_edit1">
-     	<link rel="stylesheet" type="text/css" href="/e2yun_agreement_docx_import/bootstrap-3.3.5/css/bootstrap.min.css"/>
-	    <link rel="stylesheet" type="text/css" href="/e2yun_agreement_docx_import/bootstrap-3.3.5/css/bootstrap-theme.min.css"/>
-	    <link rel="stylesheet" type="text/css" href="/e2yun_agreement_docx_import/dist/bootstrap3-wysihtml5.min.css"/>
-  </template>
-
-     <template id="qweb_agreement_word_edit2">
-	    <script src="/e2yun_agreement_docx_import/js/jquery-2.1.1.min.js"></script>
-	    <script src="/e2yun_agreement_docx_import/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-	    <script src="/e2yun_agreement_docx_import/dist/bootstrap3-wysihtml5.all.min.js"></script>
-	    <script type="text/javascript" src="/e2yun_agreement_docx_import/dist/locales/bootstrap-wysihtml5.zh-CN.js"></script>
-  </template>
-
--->
-     <template id="qweb_agreement_word_edit3">
-         <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet"/>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-        <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet"/>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
-    </template>
-
-
-
     <template id="qweb_agreement_word_edit" >
         <t t-name="agreement.qweb_agreement_word_edit">
             <t t-call="web.html_container">
-
-
 &lt;!DOCTYPE html&gt;
 <html lang="zh">
 <head>
 
-    <!-- <t t-call-assets="e2yun_agreement_docx_import.qweb_agreement_word_edit1"/> -->
-
-    <t t-call-assets="e2yun_agreement_docx_import.qweb_agreement_word_edit3"/>
-
-	<style type="text/css" media="screen">
-	  .btn.jumbo {
-	    font-size: 20px;
-	    font-weight: normal;
-	    padding: 14px 24px;
-	    margin-right: 10px;
-	    -webkit-border-radius: 6px;
-	    -moz-border-radius: 6px;
-	    border-radius: 6px;
-	  }
-	</style>
 </head>
 <body>
-
-      <div id="summernote"><t t-esc="content"/></div>
 
             <div>
                         <div>
@@ -61,33 +17,81 @@
                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                <!-- <input type="hidden" id="hidden_content" name="hidden_content" t-att-value="content"/>
                               <t t-esc="content"/> -->
-                            <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
-                              <h4 class="modal-title">编辑 Word</h4>
-                            </div>
 
-                            <div class="modal-body">
-                            <!--
-                            <textarea id="content" class="note-codable"
-                                      style="width: 100%; height:1000px; font-size: 14px; line-height: 20px;"  cols="20" rows="100"
-                             />-->
+                          <div class="modal-body">
+
+                          <table class="table table-condensed">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <ol>
+                                                <t t-foreach="content" t-as="c">
+                                                    <t t-if="c.alignment=='CENTER (1)'" >
+                                                        <div style="text-align: center;">
+                                                             <p t-att-id="c.id"> <t t-esc="c.content"/></p>
+                                                      </div>
+                                                    </t>
+                                                    <t t-else="">
+                                                     <p t-att-id="c.id"> <t t-esc="c.content"/></p>
+                                                         <del style='color: rgb(255, 0, 0);' t-esc="c.old_text" />
+                                                         <font style="color: rgb(255, 0, 0); font-size: 14px;" t-esc="c.new_text" />
+                                                      <!--   <p  t-att-id="c.sequence" t-att-value="c.content"/>  -->
+                                                    </t>
+                                                </t>
+                                            </ol>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                          </table>
 
                           </div>
-                            <div class="modal-footer">
+                            <div class="modal-footer" aria-hidden="true">
                                 <button type="submit"  class="btn btn-primary">Reject</button> or
                                 <button type="button" class="btn btn-link" data-dismiss="modal" style="padding: 0">Cancel</button>
                             </div>
                           </form>
                         </div>
+
                   </div>
 
+                  <div class="modal fade" id="modelaccept" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <form id="accept" method="POST"
+                                t-attf-action="/agreement/wordSubmit/#{agreement_id}"
+                                class="js_accept_json modal-content" style=" width: 800px; height: 360px;">
+                          <input type="hidden" id='csrf_token' name="csrf_token" t-att-value="request.csrf_token()"/>
+                          <input type="hidden" id='content_id' name="content_id" />
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
+                              <h4 class="modal-title">编辑选中Word内容</h4>
+                            </div>
+                            <div class="modal-body" id="sign-dialog">
+                             <input type="hidden" id="content_old" name="content_old"  />
+
+                             <textarea id="content" name="content" class="note-codable"
+                                      style="width: 760px; height:190px; font-size: 14px; line-height: 20px;"  />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" t-attf-class="btn btn-primary">确定</button> or
+                                <button type="button" class="btn btn-link" data-dismiss="modal" style="padding: 0">Cancel</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
 
  <!--   <t t-call-assets="e2yun_agreement_docx_import.qweb_agreement_word_edit2"/>-->
 
     <script>
-        $(document).ready(function() {
-        $('#summernote').summernote();
-        });
+
+    $("p").click(function(){
+        debugger
+        var text=document.getElementById(this.id).innerText
+        document.getElementById("content").innerText=""
+        document.getElementById("content").innerText=text
+        document.getElementById("content_old").value=text
+        document.getElementById("content_id").value=this.id
+        $('#modelaccept').modal('show');
+       })
     </script>
  <!--
 	<script>
@@ -99,6 +103,110 @@
 
 
 
+            </t>
+        </t>
+    </template>
+
+
+
+   <template id="qweb_agreement_word_preview">
+        <t t-name="e2yun_agreement_docx_import.qweb_agreement_word_preview">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <ol>
+                                                <li t-foreach="doc.recital_ids" t-as="r">
+                                                    <t t-if="r.title">
+                                                        <h3 t-field="r.title"/>
+                                                    </t>
+                                                    <p t-field="r.dynamic_content"/>
+                                                </li>
+                                            </ol>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-condensed">
+                                <tbody class="section_tbody">
+                                    <tr>
+                                        <td>
+                                            <ol>
+                                                <li t-foreach="doc.sections_ids" t-as="s">
+                                                    <t t-if="s.title">
+                                                        <h3 t-field="s.title"/>
+                                                    </t>
+                                                    <p t-field="s.dynamic_content"/>
+                                                    <ol>
+                                                        <li t-foreach="s.clauses_ids" t-as="c">
+                                                            <t t-if="c.title">
+                                                                <h4 t-field="c.title"/>
+                                                            </t>
+                                                            <p t-field="c.dynamic_content"/>
+                                                        </li>
+                                                    </ol>
+                                                </li>
+                                            </ol>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <t t-if="doc.special_terms">
+                                <h2>Special Terms</h2>
+                                <div name="special_term">
+                                    <p t-field="doc.dynamic_special_terms"/>
+                                </div>
+                            </t>
+                            <h2>Signatures</h2>
+                            <table class="table table-condensed">
+                                <theader>
+                                    <tr>
+                                        <th>Partner</th>
+                                        <th>Company</th>
+                                    </tr>
+                                </theader>
+                                <tbody class="section_tbody">
+                                    <tr>
+                                        <td>
+                                            <p t-field="doc.partner_id"/>
+                                            <p>By: </p>
+                                            <p>
+                                                Name: <span t-field="doc.partner_contact_id.name"/>
+                                            </p>
+                                            <p>
+                                                Title: <span t-field="doc.partner_contact_id.function"/>
+                                            </p>
+                                            <p>Date: </p>
+                                        </td>
+                                        <td>
+                                            <p t-field="doc.company_id.partner_id"/>
+                                            <p>By: </p>
+                                            <p>
+                                                Name: <span t-field="doc.company_contact_id.name"/>
+                                            </p>
+                                            <p>
+                                                Title: <span t-field="doc.company_contact_id.function"/>
+                                            </p>
+                                            <p>Date: </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div t-foreach="doc.appendix_ids" t-as="a">
+                            <div class="page">
+                                <h1 t-field="a.title"
+                                    style="page-break-before: always;"/>
+                                <p t-field="a.dynamic_content"/>
+                            </div>
+                        </div>
+                    </t>
+                </t>
             </t>
         </t>
     </template>

@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api, _, exceptions
+import logging
+_logger = logging.getLogger(__name__)
+
+
 import warnings
 
 class Questionnaire(models.Model):
@@ -82,7 +86,7 @@ class E2yunTaskInfo(models.Model):
     def write(self, vals):
         res = super(E2yunTaskInfo, self).write(vals)
         if self.multiple_questionnaires == 'no' and len(self.questionnaire_ids) == 0:
-            raise exceptions.Warning(_('请先填写问卷场景，权重和问卷模板'))
+            raise exceptions.Warning(_('请先维护行信息！'))
         if self.multiple_questionnaires and self.multiple_questionnaires == 'no':
             self.questionnaire_ids.weight = '100%'
         all_score = 0
@@ -231,6 +235,18 @@ class SurveyQuestion(models.Model):
     page_id = fields.Many2one('survey.page', string='Survey page',
                               ondelete='cascade', required=False, default=lambda self: self.env.context.get('page_id'))
     type_id = fields.Many2one('question.type', string='问题类型')
+    type_name = fields.Char(string='问题类型', related='type_id.display_name_chs')
+
+    @api.multi
+    def validate_question(self, post, answer_tag):
+        self.ensure_one()
+        try:
+            checker = getattr(self, 'validate_' + self.type_id.name)
+        except AttributeError:
+            _logger.warning(self.type + ": This type of question has no validation method")
+            return {}
+        else:
+            return checker(post, answer_tag)
 
     @api.onchange('labels_ids')
     def _onchange_score(self):
@@ -255,6 +271,14 @@ class SurveyQuestion(models.Model):
     # 唯一性计分分值超出则弹框提醒；选择性计分只能有唯一答案，但每个选项都有分数，否则弹框提醒。
     @api.multi
     def write(self, vals):
+        if 'type_id' in vals:
+            type_id = vals.get('type_id')
+            question_type_item = self.env['question.type'].browse(type_id)
+            if question_type_item:
+                question_type_name = question_type_item.name
+                if question_type_name in ['file', 'pull_down', 'score']:
+                    question_type_name = 'free_text'
+                vals['type'] = question_type_name
         res = super(SurveyQuestion, self).write(vals)
         for item in self:
             if item.scoring_method == '唯一性计分':
@@ -279,6 +303,14 @@ class SurveyQuestion(models.Model):
     # ⑥创建问题保存时，系统校验 “题库大类”和“计分方式”是否选择，如果未选择，则弹出提示“计分方式未选择，请选择”；# 唯一性计分分值超出则弹框提醒；选择性计分只能有唯一答案，但每个选项都有分数，否则弹框提醒。
     @api.model
     def create(self, vals):
+        if 'type_id' in vals:
+            type_id = vals.get('type_id')
+            question_type_item = self.env['question.type'].browse(type_id)
+            if question_type_item:
+                question_type_name = question_type_item.name
+                if question_type_name in ['file', 'pull_down', 'score']:
+                    question_type_name = 'free_text'
+                vals['type'] = question_type_name
         res = super(SurveyQuestion, self).create(vals)
         if res.scoring_method == '唯一性计分':
             if res.labels_ids:
@@ -300,10 +332,22 @@ class SurveyQuestion(models.Model):
             raise exceptions.Warning(_('题库大类或计分方式未选择，请选择'))
         return res
 
+
 class NewQuestionType(models.Model):
     _name = 'question.type'
 
-    name = fields.Char(string='问题类型的名称')
+    name = fields.Char(string='问题类型的名称', required=True)
+    display_name_chs = fields.Char(string='问题类型中文名称', required=True)
     type_html = fields.Html(string='问题类型的样式')
     question_ids = fields.One2many('survey.question', 'type_id', string='问题')
+
+    @api.multi
+    def name_get(self):
+        res = []
+        for question_type in self:
+            name = question_type.display_name_chs
+            res.append((question_type.id, name))
+        return res
+
+
 

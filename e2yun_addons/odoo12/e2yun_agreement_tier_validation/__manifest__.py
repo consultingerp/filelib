@@ -17,6 +17,7 @@
         "base_tier_validation",
     ],
     "data": [
+        "views/base_tier_validation_view.xml",
         "views/agreement_view.xml",
     ],
 }

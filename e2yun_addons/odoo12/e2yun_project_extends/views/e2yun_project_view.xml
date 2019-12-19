@@ -141,13 +141,14 @@
                     <!--<button name="turn_question" string="引用已有题库按钮" type="object" class="oe_highlight oe_edit_only"/>-->
                     <label for="reference_existing_question" class="oe_read_only"/>
                     <field name="reference_existing_question" />
+                    <field name="type_name" invisible="1"/>
                 </xpath>
                 <xpath expr="//field[@name='labels_ids']" position="before">
                     <label for="scoring_method" string="计分方式"/>
                     <field name="scoring_method" string="Scoring Method"/>
                 </xpath>
                 <xpath expr="//field[@name='labels_ids']" position="replace">
-                    <field name="labels_ids" string="Type of answers" context="{'default_question_id': active_id}" attrs="{'invisible': [('type', 'not in', ['simple_choice', 'multiple_choice', 'matrix'])]}">
+                    <field name="labels_ids" string="Type of answers" context="{'default_question_id': active_id}" attrs="{'invisible': [('type_name', 'not in', ['选择题：只允许选择一个答案', '多选：允许选择多个答案', '矩阵'])]}">
                         <tree editable="bottom">
                             <field name="sequence" widget="handle"/>
                             <field name="value" string="选项"/>
@@ -162,83 +163,83 @@
                     <attribute name="invisible">True</attribute>
                 </xpath>
                 <xpath expr="//field[@name='labels_ids']" position="attributes">
-                    <attribute name="attrs">{'invisible': [('type_id', 'not in', [9, 10, 11])]}</attribute>
+                    <attribute name="attrs">{'invisible': [('type_name', 'not in', ['选择题：只允许选择一个答案', '多选：允许选择多个答案', '矩阵'])]}</attribute>
                 </xpath>
                 <xpath expr="//label[@for='labels_ids_2']" position="attributes">
-                    <attribute name="attrs">{'invisible': [('type_id', '!=', 11)]}</attribute>
+                    <attribute name="attrs">{'invisible': [('type_name', '!=', '矩阵')]}</attribute>
                 </xpath>
                 <xpath expr="//field[@name='labels_ids_2']" position="attributes">
-                    <attribute name="attrs">{'invisible': [('type_id', '!=', 11)]}</attribute>
+                    <attribute name="attrs">{'invisible': [('type_name', '!=', '矩阵')]}</attribute>
                 </xpath>
                 <!--问题页面继承选项-->
                 <xpath expr="//notebook/page[2]/group[1]/div" position="attributes">
-                    <attribute name="attrs">{'invisible': [('type_id', 'not in', [5,6,8])]}</attribute>
+                    <attribute name="attrs">{'invisible': [('type_name', 'not in', ['多行文本框','单行文本框','日期'])]}</attribute>
                 </xpath>
                 <xpath expr="//field[@name='validation_required']" position="attributes">
-                    <attribute name="attrs">{'invisible': [('validation_email', '=', True), ('type_id', '=', 6)]}</attribute>
+                    <attribute name="attrs">{'invisible': [('validation_email', '=', True), ('type_name', '=', '单行文本框')]}</attribute>
                 </xpath>
                 <xpath expr="//notebook/page[2]/group[1]/div/group[2]" position="replace">
-                    <field name="validation_length_min" attrs="{'invisible': [('type_id', '!=', 6)]}"/>
-                    <field name="validation_length_max" attrs="{'invisible': [('type_id', '!=', 6)]}"/>
-                    <field name="validation_min_float_value" attrs="{'invisible': [('type_id', '!=', 5)]}"/>
-                    <field name="validation_max_float_value" attrs="{'invisible': [('type_id', '!=', 5)]}"/>
-                    <field name="validation_min_date" attrs="{'invisible': [('type_id', '!=', 8)]}"/>
-                    <field name="validation_max_date" attrs="{'invisible': [('type_id', '!=', 8)]}"/>
+                    <field name="validation_length_min" attrs="{'invisible': [('type_name', '!=', '单行文本框')]}"/>
+                    <field name="validation_length_max" attrs="{'invisible': [('type_name', '!=', '单行文本框')]}"/>
+                    <field name="validation_min_float_value" attrs="{'invisible': [('type_name', '!=', '多行文本框')]}"/>
+                    <field name="validation_max_float_value" attrs="{'invisible': [('type_name', '!=', '多行文本框')]}"/>
+                    <field name="validation_min_date" attrs="{'invisible': [('type_name', '!=', '日期')]}"/>
+                    <field name="validation_max_date" attrs="{'invisible': [('type_name', '!=', '日期')]}"/>
                     <field name="validation_error_msg" colspan="4"/>
                 </xpath>
                 <xpath expr="//field[@name='matrix_subtype']" position="attributes">
-                    <attribute name="attrs">{'invisible':[('type_id','!=',11)]}</attribute>
+                    <attribute name="attrs">{'invisible':[('type_name','!=','矩阵')]}</attribute>
                 </xpath>
                 <xpath expr="//notebook/page[2]/group[2]" position="attributes">
-                    <attribute name="attrs">{'invisible':[('type_id','not in',[6, 5])]}</attribute>
+                    <attribute name="attrs">{'invisible':[('type_name','not in',['单行文本框', '多行文本框'])]}</attribute>
                 </xpath>
                 <xpath expr="//field[@name='display_mode']" position="attributes">
-                    <attribute name="attrs">{'invisible':[('type_id','not in',[9])],'required':[('type_id','=',9)]}</attribute>
+                    <attribute name="attrs">{'invisible':[('type_name','not in',['选择题：只允许选择一个答案'])],'required':[('type_name','=','选择题：只允许选择一个答案')]}</attribute>
                 </xpath>
                 <xpath expr="//field[@name='column_nb']" position="attributes">
-                    <attribute name="attrs">{'invisible':[('display_mode','=','dropdown'), ('type_id','=',9)]}</attribute>
+                    <attribute name="attrs">{'invisible':[('display_mode','=','dropdown'), ('type_name','=','选择题：只允许选择一个答案')]}</attribute>
                 </xpath>
                 <xpath expr="//notebook/page[2]/group[3]" position="attributes">
-                    <attribute name="attrs">{'invisible':[('type_id','not in',[9,10,11])]}</attribute>
+                    <attribute name="attrs">{'invisible':[('type_name','not in',['选择题：只允许选择一个答案','多选：允许选择多个答案','矩阵'])]}</attribute>
                 </xpath>
                 <xpath expr="//field[@name='comment_count_as_answer']" position="attributes">
-                    <attribute name="attrs">{'invisible': ['|', ('comments_allowed', '=', False), ('type_id', 'in', [11])]}</attribute>
+                    <attribute name="attrs">{'invisible': ['|', ('comments_allowed', '=', False), ('type_name', 'in', ['矩阵'])]}</attribute>
                 </xpath>
                 <!--样式继承-->
                 <xpath expr="//form/sheet/group/group[2]/div" position="replace">
                     <div class="col-lg-6 offset-lg-3 o_preview_questions">
                         <!-- Multiple Lines Text Zone -->
-                        <div attrs="{'invisible': [('type_id', '!=', 5)]}">
+                        <div attrs="{'invisible': [('type_name', '!=', '多行文本框')]}">
                             <i class="fa fa-align-justify fa-4x" role="img" aria-label="Multiple lines" title="Multiple Lines"/>
                         </div>
                         <!-- Single Line Text Zone -->
-                        <div attrs="{'invisible': [('type_id', '!=', 6)]}">
+                        <div attrs="{'invisible': [('type_name', '!=', '单行文本框')]}">
                             <i class="fa fa-minus fa-4x" role="img" aria-label="Single Line" title="Single Line"/>
                         </div>
                         <!-- Numerical Value -->
-                        <div attrs="{'invisible': [('type_id', '!=', 7)]}">
+                        <div attrs="{'invisible': [('type_name', '!=', '数值')]}">
                             <i class="fa fa-2x" role="img" aria-label="Numeric" title="Numeric">123..</i>
                         </div>
                         <!-- Date and Time -->
-                        <div attrs="{'invisible': [('type_id', '!=', 8)]}">
+                        <div attrs="{'invisible': [('type_name', '!=', '日期')]}">
                             <p class="o_datetime">YYYY-MM-DD
                                 <i class="fa fa-calendar fa-2x" role="img" aria-label="Calendar" title="Calendar"/>
                             </p>
                         </div>
                         <!-- Multiple choice: only one answer -->
-                        <div attrs="{'invisible': [('type_id', '!=', 9)]}" role="img" aria-label="Multiple choice with one answer" title="Multiple choice with one answer">
+                        <div attrs="{'invisible': [('type_name', '!=', '选择题：只允许选择一个答案')]}" role="img" aria-label="Multiple choice with one answer" title="Multiple choice with one answer">
                             <div class="row"><i class="fa fa-circle-o  fa-lg"/> answer</div>
                             <div class="row"><i class="fa fa-dot-circle-o fa-lg"/> answer</div>
                             <div class="row"><i class="fa fa-circle-o  fa-lg"/> answer</div>
                         </div>
                         <!-- Multiple choice: multiple answers allowed -->
-                        <div attrs="{'invisible': [('type_id', '!=', 10)]}" role="img" aria-label="Multiple choice with multiple answers" title="Multiple choice with multiple answers">
+                        <div attrs="{'invisible': [('type_name', '!=', '多选：允许选择多个答案')]}" role="img" aria-label="Multiple choice with multiple answers" title="Multiple choice with multiple answers">
                             <div class="row"><i class="fa fa-square-o fa-lg"/> answer</div>
                             <div class="row"><i class="fa fa-check-square-o fa-lg"/> answer</div>
                             <div class="row"><i class="fa fa-square-o fa-lg"/> answer</div>
                         </div>
                         <!-- Matrix -->
-                        <div attrs="{'invisible': [('type_id', '!=', 11)]}">
+                        <div attrs="{'invisible': [('type_name', '!=', '矩阵')]}">
                             <div class="row o_matrix_head">
                                 <div class="col-lg-3"></div>
                                 <div class="col-lg-3">ans</div>
@@ -264,12 +265,12 @@
                                 <div class="col-lg-3"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
                             </div>
                         </div>
-                        <div attrs="{'invisible': [('type_id', '!=', 12)]}" role="img" aria-label="Select choice" title="Select choice">
+                        <div attrs="{'invisible': [('type_name', '!=', '下拉框')]}" role="img" aria-label="Select choice" title="Select choice">
                             <div class="row"><i/> 请选择 v</div>
                             <div class="row"><i/> 选项一</div>
                             <div class="row"><i/> 选项二</div>
                         </div>
-                        <div attrs="{'invisible': [('type_id', '!=', 13)]}">
+                        <div attrs="{'invisible': [('type_name', '!=', '打分')]}">
                             <div class="row o_matrix_head">
                                 <div class="col-lg-2"></div>
                                 <div class="col-lg-2">非常不满意</div>
@@ -303,7 +304,7 @@
                                 <div class="col-lg-2"><i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/></div>
                             </div>
                         </div>
-                        <div attrs="{'invisible': [('type_id', '!=', 14)]}" role="img" aria-label="upload attachments" title="upload attachments">
+                        <div attrs="{'invisible': [('type_name', '!=', '附件上传')]}" role="img" aria-label="upload attachments" title="upload attachments">
                             <div class="row"><i/> 请选择文件(30Mb以内)</div>
                         </div>
                     </div>
@@ -356,6 +357,7 @@
             <field name="model">question.type</field>
             <field name="arch" type="xml">
                 <tree string="Question Type">
+                    <field name="display_name_chs"/>
                     <field name="name"/>
                     <field name="type_html"/>
                 </tree>
@@ -367,6 +369,7 @@
             <field name="model">question.type</field>
             <field name="arch" type="xml">
                 <form string="Question Type">
+                    <field name="display_name_chs"/>
                     <field name="name"/>
                     <field name="type_html"/>
                 </form>

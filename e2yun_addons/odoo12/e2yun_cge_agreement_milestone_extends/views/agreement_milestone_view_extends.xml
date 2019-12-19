@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="agreement_milestone_form_view" model="ir.ui.view">
+        <field name="name">agreement.milestone.form</field>
+        <field name="model">agreement.milestone</field>
+        <field name="arch" type="xml">
+            <form string="里程碑">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="milestone_date"/>
+                            <field name="code"/>
+                            <field name="plan_start_date"/>
+                            <field name="project_id"/>
+                        </group>
+                        <group>
+                            <field name="plan_finish_date"/>
+                            <field name="payment_rate"/>
+                            <field name="payment_date"/>
+                            <field name="payment_amount"/>
+                            <field name="agreement_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

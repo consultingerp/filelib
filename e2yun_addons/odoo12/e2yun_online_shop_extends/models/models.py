@@ -9,6 +9,7 @@ import json
 from odoo.http import request
 import werkzeug
 import numpy as np
+from odoo.addons.utils_tools.iptools.IpAddress import IpAddress
 
 BASE_DIR = os.path.dirname((os.path.dirname(__file__)))
 templateLoader = jinja2.FileSystemLoader(searchpath=BASE_DIR + "/static/src")
@@ -24,6 +25,16 @@ class MyEncoder(json.JSONEncoder):
 
 
 class OnlineShop(http.Controller):
+
+    def get_current_area_by_ip(self):
+        userip = request.httprequest.access_route[0]
+        ipinfo = IpAddress.getregion(userip)
+        if ipinfo:
+            userregion = ipinfo['region']
+            if userregion and userregion == '广东':
+                region_user = '深圳'
+            else:
+                region_user = '北京'
 
     @http.route('/hhjc_shop_index', type='http', auth="public", methods=['GET'])
     def hhjc_shop_index(self, **kwargs):
@@ -179,7 +190,8 @@ class OnlineShop(http.Controller):
     @http.route(['/online_shop/get_product_list_by_category/<int:category_id>'], type='http', auth="public")
     def get_product_list_by_category(self, category_id, **kwargs):
         product_template_pool = http.request.env['product.template']
-        response_text = """"""
+        response_text = """<p>地区显示测试</p>"""
+        current_session = request.session
         if category_id == 99999:
             # product_pool = http.request.env['product.product'].search([('id', 'in', [45])])
             product_template_pool = http.request.env['product.template'].search([('sale_ok', '=', True)])

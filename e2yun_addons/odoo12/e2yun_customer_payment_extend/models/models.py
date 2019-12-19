@@ -187,6 +187,10 @@ class e2yun_customer_payment_extend(models.Model):
                          "%s" % pv,
             }
         }
+
+        # action_xmlid = 'e2yun_customer_payment_extend.account_payment_form_view_extend'
+        #             /web?#id=150&action=209&model=account.payment&view_type=form&menu_id=138
+        # action_url = '/web#id=%s&action=209&model=account.payment&view_type=form&menu_id=138' % (str(res.id))
         if res.partner_id.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
             try:
                 res.partner_id.wx_user_id.send_template_message(
@@ -256,6 +260,7 @@ class e2yun_customer_payment_extend(models.Model):
 
     @api.model
     def create(self, vals_list):
+        vals_list['name'] = self.env['ir.sequence'].next_by_code('seq_account_payment.seq_customer') or '/'
         ctx = self._context.copy()
         a = vals_list.get('payment_attachments')
 
@@ -267,10 +272,22 @@ class e2yun_customer_payment_extend(models.Model):
             raise Warning(
                 _("付款附件不能为空!"))
 
+        #检查客户的pos状态是否已经同步SAP
+        ICPSudo = self.env['ir.config_parameter'].sudo()
+        url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncMember?wsdl'  # webservice调用地址
+        client = suds.client.Client(url)
+        partner_code = self.env['res.partner'].browse(vals_list['partner_id']).app_code
+        result = client.service.getSAPState(partner_code or '')
+        if result != 'S':
+            raise Warning(_('客户状态不正确，请检查pos状态-%s') % result)
+        # del result
+
         atch = vals_list['payment_attachments']  # [[],[]]
         for r in atch:  # [0,'virtual', {}]
+            # r[2]['res_name'] = r[2]['datas_fname']
             r[2]['res_model'] = 'account.payment'
             r[2]['name'] = uuid.uuid4()
+            r[2]['active'] = True
 
         if vals_list['amount'] == 0:
             raise Warning(
@@ -294,6 +311,8 @@ class e2yun_customer_payment_extend(models.Model):
             vals_list['accept_amount'] = 0
 
         res = super(e2yun_customer_payment_extend, self).create(vals_list)
+        # for a in res.payment_attachments:
+        #     a.res_name = a.display_name
         self.env.cr.commit()
         if pos_flag and vals_list.get('create_uid',False):
             sql = """update account_payment set create_uid = """ + str(vals_list.get('create_uid')) + """ where id = """ + str(res.id)
@@ -348,6 +367,12 @@ class e2yun_customer_payment_extend2(models.Model):
     #     self.name = self.datas_fname
 
     name = fields.Char('Name', required=False)
+
+    # @api.model_create_multi
+    # def create(self, vals_list):
+    #     res = super(e2yun_customer_payment_extend2, self).create(vals_list)
+    #     return res
+
 
 class e2yun_customer_payment_res_partner(models.Model):
     _inherit = 'res.partner'

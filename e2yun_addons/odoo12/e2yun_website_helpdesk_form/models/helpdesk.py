@@ -247,6 +247,8 @@ class HelpdeskTicket(models.Model):
         # datajsonstring['store'] = self.partner_id.shop_code.shop_code
         store = '100002002' if bukrs == '1000' else '200002002'
         datajsonstring['store'] = store
+        datajsonstring['matnrs'] = self.matnrs
+        datajsonstring['arktxs'] = self.arktxs
         result = client.service.synServiceOrderFromCrm(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
 
         resultjson = json.loads(result)
