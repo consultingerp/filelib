@@ -24,7 +24,7 @@
                     <th class="text-left">Requested by</th>
                     <th class="text-right">Description</th>
                     <th class="text-right">Status</th>
-                    <th class="text-right">Comments</th>
+                    <th class="text-right">审批意见</th>
                     <th class="text-right">Done by</th>
                     <th class="text-right">Validation Date</th>
                 </tr>
