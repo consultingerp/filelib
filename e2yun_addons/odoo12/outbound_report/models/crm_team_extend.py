@@ -49,6 +49,7 @@ class CrmTeamExtend(models.Model):
         # 数据拷贝到相应的store模型中
         val = vals.copy()
         val['team_target_store'] = val['team_target']
+        del val['team_target']
         team_target_year_store = self.env['team.target.year.store'].search([('team_id', '=', self.id)])
         for line in team_target_year_store:
             year = line.target_year
@@ -59,6 +60,7 @@ class CrmTeamExtend(models.Model):
 
             line.unlink()
         val['invoiced_target_detail_store'] = val['invoiced_target_detail']
+        del val['invoiced_target_detail']
         team_target_detail_store = self.env['team.target.detail.store'].search([('current_team_id', '=', self.id)])
         for line in team_target_detail_store:
             year = line.detail_year
@@ -117,15 +119,15 @@ class CrmTeamExtend(models.Model):
         #         raise exceptions.Warning('请设置%s年的目标明细' % r)
         # return res
 
-    @api.depends('team_year')
+    @api.multi
     @api.onchange('team_year')
     def _onchange_team_year(self):
         team_year = self.team_year
         team_id = self.alias_parent_thread_id
-        year_data = self.env['team.target.year'].search([('team_id', '=', self.id)])
+        year_data = self.env['team.target.year'].search([('team_id', '=', team_id)])
         if year_data:
             year_data.unlink()
-        detail_data = self.env['team.target.detail'].search([('current_team_id', '=', self.id)])
+        detail_data = self.env['team.target.detail'].search([('current_team_id', '=', team_id)])
         if detail_data:
             detail_data.unlink()
         y_sql_str = "select target_year, invoiced_target_year from team_target_year_store y where y.target_year = %s and y.team_id = %s" \
@@ -142,11 +144,29 @@ class CrmTeamExtend(models.Model):
             'team_target': [],
             'invoiced_target_detail': []
         }
+        self.ues_invoices = True
+        self.team_year = team_year
         if res_y:
             all_value.update({'team_target': res_y})
+            target_list = []
+            for res in res_y:
+                target_list.append({'team_id': team_id,
+                                    'target_year': res['target_year'],
+                                    'invoiced_target_year': res['invoiced_target_year']})
+            self.env['team.target.year'].create(target_list)
+            #     self.team_target.target_year = res['target_year']
+            #     self.team_target.invoiced_target_year = res['invoiced_target_year']
         if res_d:
             all_value.update({'invoiced_target_detail': res_d})
-        return {'value': all_value}
+            detail_list = []
+            for res in res_d:
+                detail_list.append({'current_team_id': team_id,
+                                    'detail_year': res['detail_year'],
+                                    'target_month': res['target_month'],
+                                    'sales_member': res['sales_member'],
+                                    'team_target_monthly': res['team_target_monthly']})
+            self.env['team.target.detail'].create(detail_list)
+        # return {'value': all_value}
 
     # @api.depends('use_invoices')
     # @api.onchange('use_invoices')
