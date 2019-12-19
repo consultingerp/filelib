@@ -162,12 +162,18 @@ class LoginHome(Home):
                         })
                     wxuserinfo = request.env['wx.user'].sudo().search([('openid', '=', wx_user_info['UserId'])])
                     wx_user_info['wx_user_id'] = wxuserinfo.id
-                    request.env['wx.user.odoouser'].sudo().write(wx_user_info)
+                    if not wxuserinfo:  # 微信用户不存
+                        error_message = "登录错误，请重新登录。"
+                        return werkzeug.utils.redirect('/web/login?error=%s' % error_message)
+                    request.env['wx.user.odoouser'].sudo().write(wx_user_info)  # 写入关联表
                     odoouser = userinfo.write(wx_user_info)
                 else:
                     wxuserinfo = request.env['wx.user'].sudo().search([('openid', '=', wx_user_info['UserId'])])
+                    if not wxuserinfo:  # 微信用户不存
+                        error_message = "登录错误，请重新登录。"
+                        return werkzeug.utils.redirect('/web/login?error=%s' % error_message)
                     wx_user_info['wx_user_id'] = wxuserinfo.id
-                    odoouser = request.env['wx.user.odoouser'].sudo().create(wx_user_info)
+                    odoouser = request.env['wx.user.odoouser'].sudo().create(wx_user_info)  # 写入关联表
                     resuser = request.env['res.users'].sudo().search([('id', '=', uid)], limit=1)
                     if resuser:
                         _data = client.get_img_data(str(wx_user_info['headimgurl']))

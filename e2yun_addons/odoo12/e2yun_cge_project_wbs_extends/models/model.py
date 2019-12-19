@@ -52,7 +52,7 @@ class Project(models.Model):
             "views": [[self.env.ref('e2yun_cge_project_wbs_extends.project_project_tree_view').id, "tree"]],
             # "target": 'new',
             "domain": [['id', 'in', ids]],
-            "context": {"create": False, 'edit': False},
+            "context": {"create": False},
         }
 
     # return {

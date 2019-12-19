@@ -7,8 +7,6 @@ from docx.shared import Pt,Inches
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 import os, sys
 import platform
-from docx.shared import RGBColor
-
 class DocxImport(models.TransientModel):
     _name = "agreement.docx.import"
     _description = "agreement docx Import"
@@ -105,14 +103,17 @@ class AgreementDownloadDoc(models.Model):
         r.style.name =sytle_name
         r.style.font.name=font_name
 
-    def download_doc(self):
-
-     try:
+    def wb_path(self,name):
         platform_ = platform.system()
         if platform_ == "Windows":
-            path = sys.path[0] + "\\"
+            wb_path = "" + str(sys.path[0]) + "/"+str(name)+"Temp.docx"
         else:
-            path = "/tmp/"
+            wb_path = "/tmp/"+str(name)+"Temp.docx"
+        return  wb_path
+
+    def download_doc(self):
+     try:
+        wb_path = self.wb_path('download_doc')
 
         agreement_id=self._context['active_id']
 
@@ -124,7 +125,8 @@ class AgreementDownloadDoc(models.Model):
 
         agreement_word_data = self.env['agreement.word.data']  # wordData
 
-        clauseListData = agreement_word_data.search([('agreement_id', '=', agreement_id),('detail','=',False),('the_editor','=',True)])
+        clauseListData = agreement_word_data.search([('agreement_id', '=', agreement_id),
+                                                     ('detail','=',False),('the_editor','=',True)])
 
         master_word_id=0
 
@@ -136,62 +138,38 @@ class AgreementDownloadDoc(models.Model):
             master_word_id = clauseListData[0].master_word_id
 
 
-        datas=self.env['ir.http'].binary_content(
-            xmlid=None, model='ir.attachment', id=master_word_id ,field='datas', unique=None, filename=None,
-            filename_field='datas_fname', download='true', mimetype='',
-            default_mimetype=None, related_id=None, access_mode=None,
-            access_token=None,
-            env=self.env)
-        wb_path=path+agreementData.name+".docx"
+        word_data=self.env['ir.http'].binary_content(
+            xmlid=None, model='ir.attachment', id=master_word_id ,field='datas')
+
         f = open(wb_path, r"wb")
-        datass = base64.decodestring(datas[2])
-        f.write(datass)
+        f.write(base64.decodestring(word_data[2]))
         f.close()
-
-
         doc = Document(wb_path)
-        #doc = DocxTemplate(wb_path)
-        # from win32com.client import Dispatch
-        # from win32com.client import Dispatch, DispatchEx
-        # import pythoncom
-        # pythoncom.CoInitialize()
-        # wordApp = Dispatch('Word.Application')  # 打开word应用程序
-        # wordApp.Visible = 0  # 后台运行,不显示
-        # wordApp.DisplayAlerts = 0  # 不警告
-        # doc = wordApp.Documents.Open(FileName=wb_path, Encoding='gbk')
+
         try:
               for clauseObj in clauseListData:  # 条款
                   para = doc.paragraphs[clauseObj.sequence]
-                  #para =doc.Paragraphs[clauseObj.sequence]
                   if clauseObj.the_editor==True:
-                         # para.Range.Find.Execute(clauseObj.old_text, False, False, False, False, False, False, 0, True,
-                         #                         clauseObj.new_text, 1)
-                         # para.text.replace(clauseObj.old_text,clauseObj.new_text,1)
                         if clauseObj.edit_type=='replace':
                             para.text=para.text.replace(clauseObj.old_text,clauseObj.new_text,1)
                         else:
                             para.text=clauseObj.new_text
-                        #rt = para.add_run(clauseObj.new_text)
-                        #rt.font.color.rgb = RGBColor(0x42, 0x24, 0xE9)
-                        #rt.strike=True
-
               doc.save(wb_path)
         except BaseException as e:
             if os.path.exists(wb_path):
                 os.remove(wb_path)
-            #doc.Close()
 
-        else:
-            print(2)
-            #doc.Close()
+
         file = open(wb_path, "rb")
-        attachment.search([('res_model', '=', 'agreement.download.doc'), ('id', '!=', master_word_id)]).unlink()  #删除无效附件
+        attachment.search([('res_model', '=', 'agreement.download.doc'),('res_id', '=',agreement_id),
+                           ('res_name', '=','download_doc')]).unlink()  #删除无效附件
         attachmentObj=attachment.create({
             'name': agreementData.name,
             'datas': base64.encodestring(file.read()),
             'datas_fname': agreementData.name+".docx",
             'res_model': 'agreement.download.doc',
-            'res_id': self.id
+            'res_id': agreement_id,
+            'res_name':'download_doc'
         })
         file.close()
 
@@ -209,7 +187,234 @@ class AgreementDownloadDoc(models.Model):
 
 
 
+    def import_recital(self):
+        wb_path=self.wb_path('recital')
+        f = open(wb_path, r"wb")
+        datass = base64.decodestring(self.data)
+        f.write(datass)
+        f.close()
+        full_path = wb_path
+        doc = Document(full_path)
+
+        agreement_id = self._context['active_id']  # 读取当前合同ID
+
+        agreement_recital_obj = self.env['agreement.recital']  # 附录对象
+
+        attachment = self.env['ir.attachment']  # 附件
+
+        # 记录当前 概述 母版 word
+
+        file = open(full_path, "rb")
+        attachment.search([('res_model', '=', 'agreement.download.doc'),
+                           ('res_id', '=',self.id),('res_name', '=','agreement.recital')]).unlink()
+
+        attachment_id = attachment.create({
+            'name': '',
+            'datas': base64.encodestring(file.read()),
+            'datas_fname': "",
+            'res_model': 'agreement.download.doc',
+            'res_name': 'agreement.recital',
+            'res_id': self.id
+        })
+        file.close()
+
+        vals = []
+        # 每一段的内容
+        i = 0
+        # 利用下标遍历段落
+        all_content=""
+        val = {}
+        val['agreement_id'] = agreement_id
+        val['sequence'] = 0
+        val['master_word_id'] = attachment_id.id
+        for i in range(len(doc.paragraphs)):
+            para = doc.paragraphs[i]
+            if para.text or para.text != "":
+                if para.style.font.size:
+                    font_size = para.style.font.size
+                else:
+                    font_size=11
+                text = "<p style= 'font-size: " + str(font_size) + "px; "
+                if str(para.alignment)=="CENTER (1)":
+                    text=text+" text-align:center; "
+
+                runs_len=len(para.runs)-1
+                if para.runs[runs_len].bold and para.runs[runs_len].bold==True:
+                    text = text + " font-weight:bold; "
+
+                text = text+" ' >"+para.text+"</p>"
+
+                all_content = all_content+text
+
+        # html = PyDocX.to_html(r"" + full_path)
+        # val['name'] = self.filename
+        # val['content'] = html
+        # vals.append(val)
+
+        val['name'] = "概述"
+        val['content']=all_content
+        vals.append(val)
+        agreement_recital_obj.search([('agreement_id', '=', agreement_id)]).unlink()
+        agreement_recital_obj.create(vals)
+
+        if os.path.exists(wb_path):
+            os.remove(wb_path)
+        return True
+
+    def import_sections_articles(self):
+
+        wb_path = self.wb_path('sections_articles')
+        f = open(wb_path, r"wb")
+        datass = base64.decodestring(self.data)
+        f.write(datass)
+        f.close()
+        full_path = wb_path
+        doc = Document(full_path)
+
+        agreement_id = self._context['active_id']  # 读取当前合同ID
+
+        agreement_section_obj = self.env['agreement.section']  # 章节条款
+
+        attachment = self.env['ir.attachment']  # 附件
+
+        # 记录当前 章节条款 母版 word
+
+        file = open(full_path, "rb")
+
+        attachment.search([('res_model', '=', 'agreement.download.doc'),
+                           ('res_id', '=', self.id), ('res_name', '=', 'agreement.section')]).unlink()
+
+        attachment_id = attachment.create({
+            'name': '',
+            'datas': base64.encodestring(file.read()),
+            'datas_fname': "",
+            'res_model': 'agreement.download.doc',
+            'res_name': 'agreement.section',
+            'res_id': self.id
+        })
+        file.close()
+
+        vals = []
+        val = {}
+        val['agreement_id'] = agreement_id
+        val['sequence'] = 0
+        val['master_word_id'] = attachment_id.id
+        all_content=""
+        for i in range(len(doc.paragraphs)):
+            para = doc.paragraphs[i]
+            if para.text or para.text != "":
+                if para.style.font.size:
+                    font_size = para.style.font.size
+                else:
+                    font_size = 11
+                text = "<p style= 'font-size: " + str(font_size) + "px; "
+                if str(para.alignment) == "CENTER (1)":
+                    text = text + " text-align:center; "
+
+                runs_len = len(para.runs) - 1
+                if para.runs[runs_len].bold and para.runs[runs_len].bold == True:
+                    text = text + " font-weight:bold; "
+
+                text = text + " ' >" + para.text + "</p>"
+
+                all_content = all_content + text
+
+        # html = PyDocX.to_html(r""+full_path)
+        # val['name'] = self.filename
+        # val['content'] = html
+
+        val['name'] = "章节-条款"
+        val['content'] = all_content
+
+        vals.append(val)
+        agreement_section_obj.search([('agreement_id', '=', agreement_id)]).unlink()
+        agreement_section_obj.create(vals)
+
+        if os.path.exists(wb_path):
+            os.remove(wb_path)
+        return True
+
+    def import_appendix(self):
+        wb_path = self.wb_path('appendix')
+        f = open(wb_path, r"wb")
+        datass = base64.decodestring(self.data)
+        f.write(datass)
+        f.close()
+        full_path = wb_path
+        doc = Document(full_path)
+
+        agreement_id = self._context['active_id']  # 读取当前合同ID
+
+        agreement_appendix_obj = self.env['agreement.appendix']  # 附录对象
+
+        attachment = self.env['ir.attachment']  # 附件
+
+        # 记录当前 概述 母版 word
+
+        file = open(full_path, "rb")
+        attachment.search([('res_model', '=', 'agreement.download.doc'),
+                           ('res_id', '=', self.id), ('res_name', '=', 'agreement.appendix')]).unlink()
+
+        attachment_id = attachment.create({
+            'name': '',
+            'datas': base64.encodestring(file.read()),
+            'datas_fname': "",
+            'res_model': 'agreement.download.doc',
+            'res_name': 'agreement.appendix',
+            'res_id': self.id
+        })
+        file.close()
+
+        vals = []
+        # 每一段的内容
+        i = 0
+        # 利用下标遍历段落
+        all_content = ""
+        val = {}
+        val['agreement_id'] = agreement_id
+        val['sequence'] = 0
+        val['master_word_id'] = attachment_id.id
+        for i in range(len(doc.paragraphs)):
+            para = doc.paragraphs[i]
+            if para.text or para.text != "":
+                if para.style.font.size:
+                    font_size = para.style.font.size
+                else:
+                    font_size = 11
+                text = "<p style= 'font-size: " + str(font_size) + "px; "
+                if str(para.alignment) == "CENTER (1)":
+                    text = text + " text-align:center; "
+
+                runs_len = len(para.runs) - 1
+                if para.runs[runs_len].bold and para.runs[runs_len].bold == True:
+                    text = text + " font-weight:bold; "
+
+                text = text + " ' >" + para.text + "</p>"
+
+                all_content = all_content + text
+
+        val['title'] = "附录"
+        val['name'] = "附录"
+        val['content'] = all_content
+        vals.append(val)
+        agreement_appendix_obj.search([('agreement_id', '=', agreement_id)]).unlink()
+        agreement_appendix_obj.create(vals)
+
+        if os.path.exists(wb_path):
+            os.remove(wb_path)
+        return True
+
     def Import_doc(self):
+        # 分类型导入
+        if 'import_type' in self._context.keys():
+            import_type = self._context['import_type']
+            if import_type == 'import_recital':
+                self.import_recital()
+            elif import_type == 'import_sections_articles':
+                self.import_sections_articles()
+            elif import_type == 'import_appendix':
+                self.import_appendix()
+            return True
 
         platform_ = platform.system()
         if platform_ == "Windows":
@@ -231,13 +436,16 @@ class AgreementDownloadDoc(models.Model):
 
         #记录当前合同的母版word
         file = open(full_path, "rb")
-        attachment.search([('res_model', '=', 'agreement.download.doc')]).unlink()
+        attachment.search([('res_model', '=', 'agreement.download.doc'),
+                           ('res_id', '=',agreement_id),
+                           ('res_name', '=', 'Import_doc')]).unlink()
         attachment_id=attachment.create({
             'name': '',
             'datas': base64.encodestring(file.read()),
             'datas_fname': "",
             'res_model': 'agreement.download.doc',
-            'res_id': self.id
+            'res_id': agreement_id,
+            'res_name':'Import_doc'
         })
         file.close()
 
@@ -253,7 +461,7 @@ class AgreementDownloadDoc(models.Model):
             if para.text or  para.text!="":
                 font_size=16
                 val['alignment'] = str(para.alignment)  # 0,1,2 分别对应左对齐、居中、右对齐
-                val['font_Name'] = para.style.font.name
+                val['font_name'] = para.style.font.name
                 val['font_size'] = font_size
                 val['content'] = para.text
             val['master_word_id']=attachment_id.id
