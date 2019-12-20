@@ -2250,6 +2250,9 @@
     <script src="/e2yun_online_shop_extends/static/src/assets/js/cart.js"></script>
 
 
+    <script src="/e2yun_online_shop_extends/static/src/assets/js/user_info.js"></script>
+
+
 
     <!--Ajax JS-->
 <script>
@@ -2362,8 +2365,9 @@
 
  function sort_chooser(){
     var chooser_id = document.getElementById("sort_chooser").value
+     var area_id = document.getElementById("area_chooser").value
     var current_category_id = sessionStorage.getItem("current_category_id");
-    url = "/online_shop/sort_product_list/" + current_category_id + "/" + chooser_id
+    url = "/online_shop/sort_product_list/" + current_category_id + "/" + chooser_id+"?area_id="+area_id
     var sort_product_list_xhr = new this.XMLHttpRequest();
 
     sort_product_list_xhr.open("GET", url, true)
@@ -2381,13 +2385,17 @@
     sessionStorage.setItem("current_area_id", area_id);
     sessionStorage.setItem("current_category_id", '99999');
 
-    url = "/online_shop/get_product_list_by_category/99999"
-    var get_product_list_by_area_xhr = new this.XMLHttpRequest();
-    get_product_list_by_area_xhr.open("GET", url, true)
-    get_product_list_by_area_xhr.send()
-    get_product_list_by_area_xhr.onreadystatechange = function(){
-        if (get_product_list_by_area_xhr.readyState == 4 && get_product_list_by_area_xhr.status == 200) {
-            document.getElementById("shop_product_list").innerHTML = get_product_list_by_area_xhr.responseText;
+     var chooser_id = document.getElementById("sort_chooser").value
+    var current_category_id = sessionStorage.getItem("current_category_id");
+    url = "/online_shop/sort_product_list/" + current_category_id + "/" + chooser_id+"?area_id="+area_id;
+    var sort_product_list_xhr = new this.XMLHttpRequest();
+
+    sort_product_list_xhr.open("GET", url, true)
+    sort_product_list_xhr.send()
+
+    sort_product_list_xhr.onreadystatechange = function(){
+        if (sort_product_list_xhr.readyState == 4 && sort_product_list_xhr.status == 200) {
+            document.getElementById("shop_product_list").innerHTML = sort_product_list_xhr.responseText;
         }
     }
 }

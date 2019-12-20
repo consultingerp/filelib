@@ -6,14 +6,15 @@ import jinja2
 import os
 import logging
 import json
+from ..controllers import user_info
 from odoo.http import request
 import werkzeug
 import numpy as np
-from odoo.addons.utils_tools.iptools.IpAddress import IpAddress
 
 BASE_DIR = os.path.dirname((os.path.dirname(__file__)))
 templateLoader = jinja2.FileSystemLoader(searchpath=BASE_DIR + "/static/src")
 env = jinja2.Environment(loader=templateLoader)
+
 
 class MyEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -24,35 +25,29 @@ class MyEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, obj)
 
 
-class OnlineShop(http.Controller):
-
-    def get_current_area_by_ip(self):
-        userip = request.httprequest.access_route[0]
-        ipinfo = IpAddress.getregion(userip)
-        if ipinfo:
-            userregion = ipinfo['region']
-            if userregion and userregion == '广东':
-                region_user = '深圳'
-            else:
-                region_user = '北京'
+class OnlineShop(user_info.WebUserInfoController):
 
     @http.route('/hhjc_shop_index', type='http', auth="public", methods=['GET'])
     def hhjc_shop_index(self, **kwargs):
         # env = http.request.env
         template = env.get_template('index.html')
+        if not request.session.usronlineinfo:
+            request.session.usronlineinfo = self.get_show_userinfo()
         html = template.render()
         return html
 
     @http.route('/hhjc_shop_product_list', type='http', auth="public", methods=['GET'])
     def hhjc_shop_product_list(self, **kwargs):
         # env = http.request.env
+        if not request.session.usronlineinfo:
+            request.session.usronlineinfo = self.get_show_userinfo()
         request.session['default_product_category'] = ''
         template = env.get_template('shop-list-sidebar.html')
         html = template.render()
         return html
 
     @http.route('/hhjc_shop_product_list_page/<int:product_category>', type='http', auth="user")
-    def hhjc_shop_product_list_page(self,product_category, **kwargs):
+    def hhjc_shop_product_list_page(self, product_category, **kwargs):
         if request.session.uid:
             if product_category:
                 request.session['default_product_category'] = product_category
@@ -211,6 +206,7 @@ class OnlineShop(http.Controller):
             if product_template.id:
                 # 获取产品价格（所有变体中价格最低的）
                 product_template_price_float = product_template.list_price
+
                 # product_product_pool = http.request.env['product.product'].search([('product_tmpl_id', '=', product_template.id)])
                 # if product_product_pool:
                 #     product_product_price_list = []
@@ -233,7 +229,6 @@ class OnlineShop(http.Controller):
                             return "/e2yun_online_shop_extends/static/src/assets/img/products/prod-04-270x300.jpg"
 
                 product_template_image = get_product_image(product_template.id)
-
 
                 # product_template_image = "/e2yun_online_shop_extends/static/src/assets/img/products/prod-04-270x300.jpg"
                 # onclick='grid_image_show_product_template_detail_page(this)'
@@ -269,7 +264,7 @@ class OnlineShop(http.Controller):
                 <div class="product-action"></div>
             </div>
             <div class="product-info">
-                <h3 class="product-title"><a id='""" + grid_tittle_product_detail_id +"""' onclick='grid_tittle_show_product_template_detail_page(this)'>""" + product_template_name + """</a></h3>
+                <h3 class="product-title"><a id='""" + grid_tittle_product_detail_id + """' onclick='grid_tittle_show_product_template_detail_page(this)'>""" + product_template_name + """</a></h3>
                 <div class="product-info-bottom">
                     <div class="product-price-wrapper">
                         <span class="money">""" + product_template_price_str + """</span><p>浏览量 """ + str(product_template.browse_num) + """</p><p>销量 """ + str(product_template.so_qty) + """</p>
@@ -301,9 +296,9 @@ class OnlineShop(http.Controller):
                 </div>
                 <p class="product-short-description mb--20">""" + product_template_description + """</p>  
                 <div class="ft-product-action-list d-flex align-items-center">
-                    <input type='hidden' name='product_id' value='"""+str(product_template.product_variant_ids[0].id)+"""'/>
-                    <input type='hidden' name='product_template_id' value='"""+str(product_template.id)+"""'/>
-                    <!-- <input type='hidden' name='csrf_token' value='"""+http.request.csrf_token()+"""'/>
+                    <input type='hidden' name='product_id' value='""" + str(product_template.product_variant_ids[0].id) + """'/>
+                    <input type='hidden' name='product_template_id' value='""" + str(product_template.id) + """'/>
+                    <!-- <input type='hidden' name='csrf_token' value='""" + http.request.csrf_token() + """'/>
                      <a href='/""" + product_add_to_cart_href + """' class="btn btn-size-md">添加到购物车</a> -->
                     <a href='javascript:;' class="list_btn_add_cart btn btn-size-md">添加到购物车</a>
                 </div>                                            
@@ -326,6 +321,7 @@ class OnlineShop(http.Controller):
             if product_template.id:
                 # 获取产品价格（所有变体中价格最低的）
                 product_template_price_float = product_template.list_price
+
                 # product_product_pool = http.request.env['product.product'].search(
                 #     [('product_tmpl_id', '=', product_template.id)])
                 # if product_product_pool:
@@ -466,6 +462,12 @@ class OnlineShop(http.Controller):
         http.request.env.cr.execute(replace_view_sql)
         http.request.env.cr.execute(reset_sequence_sql)
 
+        if not request.session.userinfo_region:  # 如果没有地区获取地区
+            request.session.userinfo_region = self.get_current_area_by_ip()
+            request.session.userinfo_region['chooser_id'] = chooser_id  # 设置用户排序方式放到sesion中
+        else:  # 如果 有session存
+            request.session.userinfo_region['chooser_id'] = chooser_id  # 设置用户排序方式放到sesion中
+
         order = {
             0: 'custom_order asc',
             1: 'product_template_order_by_name asc',
@@ -481,22 +483,30 @@ class OnlineShop(http.Controller):
         }
         product_template_pool = http.request.env['product.template']
         response_text = """"""
-
+        domain = []
+        area_id = None
+        if request.params.get('area_id'):  # 如果查地区
+            area_id = request.params['area_id']
+            if area_id != '-1':
+                domain = [('pc_show_id.company_id.id', '=', area_id)]
         order_text = order[chooser_id]
         if current_category_id == 99999:
             # product_pool = http.request.env['product.product'].search([('id', 'in', [45])])
-            product_template_pool = http.request.env['product.template'].search([('sale_ok', '=', True)], order=order_text)
+            domain = domain + [('sale_ok', '=', True)]
+            product_template_pool = http.request.env['product.template'].search(domain, order=order_text)
         else:
-            product_template_pool = http.request.env['product.template'].search([('sale_ok', '=', True),
-                                                                                 '|',
-                                                                                 ('public_categ_ids', 'in', current_category_id),
-                                                                                 ('category_parents', 'in', current_category_id)], order=order_text)
+            domain = domain + [('sale_ok', '=', True),
+                               '|',
+                               ('public_categ_ids', 'in', current_category_id),
+                               ('category_parents', 'in', current_category_id)]
+            product_template_pool = http.request.env['product.template'].search(domain, order=order_text)
         for product_template in product_template_pool:
             # str_list = [str(product.id), str(product.default_code), str(product.name)]
             # str_join = ''.join(str_list)
             if product_template.id:
                 # 获取产品价格（所有变体中价格最低的）
                 product_template_price_float = product_template.list_price
+
                 # product_product_pool = http.request.env['product.product'].search(
                 #     [('product_tmpl_id', '=', product_template.id)])
                 # if product_product_pool:
@@ -618,16 +628,16 @@ class OnlineShop(http.Controller):
 
     @http.route(['/online_shop/get_index_data'], type='http', auth="public")
     def get_index_data(self, **kwargs):
-        #推荐产品
+        # 推荐产品
         product_template = http.request.env['product.template'].search(
             [('recommend', '=', True)])
         recommend_datas = []
         for pt in product_template:
             recommend_datas.append({
-                'product_id':pt.id,
-                'product_image':pt.get_primary_url(),
-                'product_name':pt.name,
-                'recommend_text' : pt.recommend_text or ''
+                'product_id': pt.id,
+                'product_image': pt.get_primary_url(),
+                'product_name': pt.name,
+                'recommend_text': pt.recommend_text or ''
             })
         # 热销产品
         product_template = http.request.env['product.template'].search(
@@ -648,13 +658,12 @@ class OnlineShop(http.Controller):
         #         'logo_image': lp.logo_image,
         #     })
 
-
         datas = {
-            'recommend_datas':recommend_datas,
-            'sell_well_datas':sell_well_datas,
+            'recommend_datas': recommend_datas,
+            'sell_well_datas': sell_well_datas,
             # 'logo_partner_datas':logo_partner_datas
         }
-        return http.request.make_response(json.dumps(datas,cls=MyEncoder, ensure_ascii=False, indent=4))
+        return http.request.make_response(json.dumps(datas, cls=MyEncoder, ensure_ascii=False, indent=4))
 
     @http.route(['/online_shop/get_index_logo_data'], type='http', auth="public")
     def get_index_logo_data(self, **kwargs):
@@ -666,13 +675,12 @@ class OnlineShop(http.Controller):
         for lp in logo_partner:
             text = text + """<div class='item'>
                       <figure>
-                        <img src='data:image/png;base64,"""+lp.logo_image.decode()+"""' alt='Logo' style='max-height:70px;' class='mx-auto'>
+                        <img src='data:image/png;base64,""" + lp.logo_image.decode() + """' alt='Logo' style='max-height:70px;' class='mx-auto'>
                       </figure>
                     </div>
             """
 
         return http.Response(text)
-
 
     # get_product_description
     @http.route(['/online_shop/get_product_description/<int:product_template_id>'], type='http', auth="public")
@@ -691,7 +699,7 @@ class OnlineShop(http.Controller):
     def get_template_id(self, **kwargs):
         template_id = request.session['current_product_detail_id']
 
-        return http.request.make_response(json.dumps({'product_template_id':template_id}))
+        return http.request.make_response(json.dumps({'product_template_id': template_id}))
 
     @http.route(['/online_shop/get_product_detail_page/<int:product_template_id>'], type='http', auth="user")
     def get_product_detail_page(self, product_template_id, **kwargs):
@@ -705,14 +713,12 @@ class OnlineShop(http.Controller):
         else:
 
             query = werkzeug.urls.url_encode({
-                'redirect': '/online_shop/get_product_detail_page/'+str(product_template_id),
-                'error' : '请登录然后操作'
+                'redirect': '/online_shop/get_product_detail_page/' + str(product_template_id),
+                'error': '请登录然后操作'
             })
             return werkzeug.utils.redirect('/web/login?%s' % query)
 
-
             # return werkzeug.utils.redirect('/web/login?error=请登录然后操作')
-
 
     @http.route(['/online_shop/get_product_detail/<int:product_template_id>'], type='http', auth="public")
     def get_product_detail(self, product_template_id, **kwargs):
@@ -749,8 +755,8 @@ class OnlineShop(http.Controller):
                 so_qty_text = """<p> 销量""" + str(product_template.so_qty) + """</p>"""
                 footer_text2 = """</div>
     <div class="product-action d-flex flex-sm-row align-items-sm-center flex-column align-items-start mb--30">
-        <input type='hidden' name='inp_product_id' value='"""+str(product.id)+"""'/>
-        <input type='hidden' name='inp_product_template_id' value='"""+str(product_template_id)+"""'/>
+        <input type='hidden' name='inp_product_id' value='""" + str(product.id) + """'/>
+        <input type='hidden' name='inp_product_template_id' value='""" + str(product_template_id) + """'/>
         <div>
         <button margin='left' type="button" class="btn btn-size-sm btn-shape-square" onclick="detail_add_cart()">
             添加到购物车
@@ -767,6 +773,7 @@ class OnlineShop(http.Controller):
 
                 response_text = header_text + product.name + middle_text + price_str + footer_text + browse_num_text + so_qty_text + footer_text2 + footer_text3
                 return http.Response(response_text)
+
 
 class online_partner(models.Model):
     _name = 'online.partner'
@@ -787,10 +794,9 @@ class ProductTemplateCategoryExtend(models.Model):
     description_html = fields.Html(string='产品详细介绍')
     product_template_order_by_name = fields.Integer('产品按名称排序的次序')
     so_qty = fields.Float('销售数量', compute='_compute_so_qty', store=False)
-    recommend = fields.Boolean('推荐产品',default=False)
+    recommend = fields.Boolean('推荐产品', default=False)
     recommend_text = fields.Char('推荐描述')
-    sell_well = fields.Boolean('热销产品',default=False)
-
+    sell_well = fields.Boolean('热销产品', default=False)
 
     @api.one
     def _compute_so_qty(self):
@@ -827,8 +833,6 @@ class ProductTemplateCategoryExtend(models.Model):
             else:
                 product_template.so_qty = 0.0
 
-
-
     @api.one
     @api.depends('public_categ_ids')
     def get_category_parents(self):
@@ -842,10 +846,6 @@ class ProductTemplateCategoryExtend(models.Model):
             # self.write({'category_parents': parent_ids_write})
 
     # # public_categ_ids
-
-
-
-
 
 # class ProductProductGetInfoExtends(models.Model):
 #     _inherit = 'product.product'
