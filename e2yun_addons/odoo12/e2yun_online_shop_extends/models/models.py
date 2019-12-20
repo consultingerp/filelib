@@ -186,6 +186,7 @@ class OnlineShop(user_info.WebUserInfoController):
     def get_product_list_by_category(self, category_id, **kwargs):
         product_template_pool = http.request.env['product.template']
         # response_text = """<p>地区显示测试</p>"""
+        response_text = """"""
         current_session = request.session
         if category_id == 99999:
             # product_pool = http.request.env['product.product'].search([('id', 'in', [45])])
