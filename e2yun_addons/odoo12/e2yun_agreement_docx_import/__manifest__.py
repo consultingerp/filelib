@@ -11,6 +11,8 @@
         'views/view.xml',
         'views/agreement_extend.xml',
         'views/agreement_word_data.xml',
+        'views/agreement_placeholder.xml',
+        'views/agreement_recital_extend.xml',
         'qweb/agreement_word_edit.xml',
 
     ],

@@ -100,7 +100,17 @@ class Agreement(models.Model):  #合同
                   if not paragraph.text or paragraph.text =="" :
                       continue
                   #list_runs = copy.deepcopy(paragraph.runs)
-                  p= doc.add_paragraph(paragraph.text)
+
+                  p = doc.add_paragraph(paragraph.text)
+
+                  # if i==1 and j==5:
+                  #     p.text = p.text.replace("XXXXXX", "中国远大", 1)
+                  #     from docx.shared import RGBColor
+                  #     test = p.runs[0]
+                  #     font = test.font
+                  #     font.color.rgb = RGBColor(220, 20, 60)
+
+
                   p._element = paragraph._element
                   p._p== paragraph._p
                   p._parent=paragraph._parent
@@ -114,12 +124,11 @@ class Agreement(models.Model):  #合同
                   # p.paragraph_format.line_spacing =Pt(9)  # 行距
 
 
-
-
                   #p.part = paragraph.part
                  # p.text = paragraph.text
                   p.add_run=paragraph.runs
                   p.style = paragraph.style
+
                   #print(p)
 
 
@@ -258,6 +267,30 @@ class AgreementRecital(models.Model):  #概述
     font_name=fields.Char()
     font_size=fields.Char()
     master_word_id = fields.Integer('Master Word Id')
+    agreement_placeholder_id=fields.Many2one('agreement.placeholder',string="占位符")
+    def write(self, vals):
+        if 'content' in vals.keys():
+            import re
+            str=vals['content']
+            n = re.findall(r"a*{(.+?)}", str)  #
+            if len(n) > 0:
+                content = ""
+            else:
+                content = str
+            strTemp = str
+            agreement_placeholder_obj= self.env['agreement.placeholder']  # wordData
+            for i, data in enumerate(n):
+                strsTemp = strTemp.split("${" + data + "}")
+                querName="${" + data + "}"
+                agreement_placeholder=agreement_placeholder_obj.search([('name' ,'=',querName)])
+                if strsTemp[0]:
+                    content = content + strsTemp[0] + agreement_placeholder.text
+                if strsTemp[1]:
+                    strTemp = strsTemp[1]
+                    if i == len(n) - 1:
+                        content = content + strTemp
+            vals['content']=content
+        return super(AgreementRecital,self).write(vals)
 
 class AgreementSection(models.Model):  #章节-条款
     _inherit = "agreement.section"
