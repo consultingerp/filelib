@@ -462,11 +462,11 @@ class OnlineShop(user_info.WebUserInfoController):
         http.request.env.cr.execute(replace_view_sql)
         http.request.env.cr.execute(reset_sequence_sql)
 
-        if not request.session.userinfo_region:  # 如果没有地区获取地区
-            request.session.userinfo_region = self.get_current_area_by_ip()
-            request.session.userinfo_region['chooser_id'] = chooser_id  # 设置用户排序方式放到sesion中
+        if not request.session.usronlineinfo:  # 如果没有地区获取地区
+            request.session.usronlineinfo = self.get_show_userinfo()
+            request.session.usronlineinfo['chooser_id'] = chooser_id  # 设置用户排序方式放到sesion中
         else:  # 如果 有session存
-            request.session.userinfo_region['chooser_id'] = chooser_id  # 设置用户排序方式放到sesion中
+            request.session.usronlineinfo['chooser_id'] = chooser_id  # 设置用户排序方式放到sesion中
 
         order = {
             0: 'custom_order asc',
