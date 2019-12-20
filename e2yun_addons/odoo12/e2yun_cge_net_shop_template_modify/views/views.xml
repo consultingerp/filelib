@@ -131,4 +131,9 @@
             </div>
         </xpath>
     </template>
+    <template id="payment_tokens_list" inherit_id="payment.payment_tokens_list">
+        <xpath expr="//div[hasclass('card-body')]//span[hasclass('payment_option_name')]" position="after">
+            <img t-attf-src="data:image/png;base64,#{acq.image}" alt="支付方式" height="50px" width="50px"/>
+        </xpath>
+    </template>
 </odoo>
