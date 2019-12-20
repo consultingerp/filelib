@@ -19,7 +19,7 @@ class WebUserInfoController(http.Controller):
     def onlineshopuserinfo(self, **kwargs):
         # request.jsonrequest   # 可以获取传入参数信息
         company = request.env['res.company'].sudo().search_read([('display_show_area', '=', True)], ['name', 'id', 'show_area_text'])
-        self.get_show_userinfo()
+        self.get_show_userinfo(refresh=True)
         rest = dict()
         rest['company'] = company
         return {
