@@ -49,6 +49,8 @@ class OnliecustomerImLivechat(http.Controller):
                 session_info = request.env["im_livechat.channel"].get_mail_channel(channel_id, anonymous_name)
                 if not session_info:  # 看是否有在线客服
                     session_info = request.env["im_livechat.channel"].with_context(lang=False).get_online_mail_channel(channel_id, anonymous_name)
+                    if not session_info:
+                        return "在线客服，联系失败,在线客服没有绑定微信，无法发出通知信息。"
             if session_info:
                 _logger.info('创建session_info成功')
                 active_id = session_info["id"]
