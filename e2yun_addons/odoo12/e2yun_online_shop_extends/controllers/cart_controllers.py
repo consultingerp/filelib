@@ -180,7 +180,7 @@ class cart(user_info.WebUserInfoController):
             website = request.env['website'].sudo().search([('company_id', '=', company_id)], limit=1)
             if website:
                 sale_order.website_id = website.id
-                sale_order.comapny_id = company_id
+                sale_order.company_id = company_id
             _logger.info("订单公司代码%s" % sale_order.comapny_id)
             _logger.info("订单网站到%s" % website.id)
 
