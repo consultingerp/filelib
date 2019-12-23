@@ -175,7 +175,7 @@ class cart(user_info.WebUserInfoController):
 
         if sale_order:
             if not request.session.usronlineinfo:
-                request.session.usronlineinfo = self.get_show_userinfo()
+                request.session.usronlineinfo = self.get_show_userinfo(refresh=True)
             company_id = request.session.usronlineinfo['company_id']
             website = request.env['website'].sudo().search([('company_id', '=', company_id)], limit=1)
             if website:
