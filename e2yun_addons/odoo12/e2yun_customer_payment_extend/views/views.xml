@@ -98,9 +98,9 @@
             <field name="model">ir.attachment</field>
             <field name="inherit_id" ref="website.view_attachment_form_inherit_website"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='website_id']" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                </xpath>
+                <!--<xpath expr="//field[@name='website_id']" position="attributes">-->
+                    <!--<attribute name="invisible">1</attribute>-->
+                <!--</xpath>-->
                 <xpath expr="//field[@name='type']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
