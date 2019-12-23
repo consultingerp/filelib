@@ -176,7 +176,11 @@ class cart(user_info.WebUserInfoController):
         if sale_order:
             if not request.session.usronlineinfo:
                 request.session.usronlineinfo = self.get_show_userinfo()
-            sale_order.comapny_id = request.session.usronlineinfo['company_id']
+            company_id = request.session.usronlineinfo['company_id']
+            website = request.env['website'].sudo().search([('company_id', '=', company_id)], limit=1)
+            if website:
+                sale_order.website_id = website.id
+                sale_order.comapny_id = company_id
             _logger.info("订单公司代码%s" % sale_order.comapny_id)
 
             if coupon:

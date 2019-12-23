@@ -53,6 +53,6 @@ class WebUserInfoController(http.Controller):
                 userinfo_region['company_id'] = company.id
                 _logger.info("地区对对应公司默认公司：%s" % company.id)
         # 要显示的公司列表
-        if not request.session.usronlineinfo:
+        if not request.session.usronlineinfo or refresh:
             request.session.usronlineinfo = userinfo_region
         return userinfo_region
