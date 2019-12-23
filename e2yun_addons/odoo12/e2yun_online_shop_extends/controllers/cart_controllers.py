@@ -181,8 +181,9 @@ class cart(user_info.WebUserInfoController):
             if website:
                 sale_order.website_id = website.id
                 sale_order.comapny_id = company_id
-            _logger.info("订单网站到%s" % website.id)
             _logger.info("订单公司代码%s" % sale_order.comapny_id)
+            _logger.info("订单网站到%s" % website.id)
+
 
             if coupon:
                 coupon_status = request.env['sale.coupon.apply.code'].sudo().apply_coupon(sale_order, coupon)
