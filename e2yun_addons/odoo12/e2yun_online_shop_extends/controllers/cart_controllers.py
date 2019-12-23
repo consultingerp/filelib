@@ -7,10 +7,13 @@ from ..controllers import user_info
 from odoo.osv import expression
 import jinja2
 import os
+import  logging
 
 BASE_DIR = os.path.dirname((os.path.dirname(__file__)))
 templateLoader = jinja2.FileSystemLoader(searchpath=BASE_DIR + "/static/src")
 env = jinja2.Environment(loader=templateLoader)
+
+_logger = logging.getLogger(__name__)
 
 class cart(user_info.WebUserInfoController):
     @http.route('/e2yun_online_shop_extends/get_cart_info', type='http', auth="public", website=True)
@@ -174,6 +177,7 @@ class cart(user_info.WebUserInfoController):
             if not request.session.usronlineinfo:
                 request.session.usronlineinfo = self.get_show_userinfo()
             sale_order.comapny_id = request.session.usronlineinfo['company_id']
+            _logger.info("订单公司代码%s" % sale_order.comapny_id)
 
             if coupon:
                 coupon_status = request.env['sale.coupon.apply.code'].sudo().apply_coupon(sale_order, coupon)

@@ -40,15 +40,18 @@ class WebUserInfoController(http.Controller):
         if ipinfo:
             userregion = ipinfo['region']
             userinfo_region['time'] = fields.datetime.now()
+            _logger.info("来源地区：%s" % userregion)
             # 根据公司配置显示用户所在公司
             user_company = request.env['res.company'].sudo().search([('area_text_mate', 'like', '%' + userregion)], limit=1)
             if user_company:
+                _logger.info("地区对对应公司：%s" % user_company.id)
                 userinfo_region['region'] = user_company.show_area_text;
                 userinfo_region['company_id'] = user_company.id
             else:  # 默认显示北京公司
                 userinfo_region['region'] = '北京'
                 company = request.env['res.company'].sudo().search([('company_code', '=', '1000')], limit=1)
                 userinfo_region['company_id'] = company.id
+                _logger.info("地区对对应公司默认公司：%s" % company.id)
         # 要显示的公司列表
         if not request.session.usronlineinfo:
             request.session.usronlineinfo = userinfo_region
