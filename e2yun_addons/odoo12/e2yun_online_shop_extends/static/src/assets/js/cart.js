@@ -12,7 +12,7 @@ function list_btn_add_cart_click(e){
 	},function(datas){
 		var d = JSON.parse(datas);
 		if(d.success){
-			$("a[href='#miniCart']").trigger("click");
+			// $("a[href='#miniCart']").trigger("click");
 		}
 	});
 
@@ -31,7 +31,7 @@ function detail_add_cart(){
 	},function(datas){
 		var d = JSON.parse(datas);
 		if(d.success){
-			$("a[href='#miniCart']").trigger("click");
+			// $("a[href='#miniCart']").trigger("click");
 		}
 	});
 }

@@ -96,4 +96,12 @@ function load_index_data(){
 
 $(document).ready(function(){
     load_index_data();
+
+
+    $('.searchform__submit').click(function(){
+        var search_key = $('#popup-search').val()
+        if(search_key){
+            window.location.href="/hhjc_shop_search_product_list_page?search_key="+search_key
+        }
+    });
 });
