@@ -77,7 +77,7 @@ function load_cart(){
 						"                                    <i class='la la-remove'></i>\n" +
 						"                                </a>\n" +
 						"                                <div class='mini-cart__product-image'>\n" +
-						"                                    <img src='/"+l.image_url+"' alt='products'>\n" +
+						"                                    <img id='image_cart_product_template_"+l.product_template_id+"' src='/"+l.image_url+"' alt='products'>\n" +
 						"                                </div>\n" +
 						"                                <div class='mini-cart__product-content'>\n" +
 						"                                    <a id='list_image_cart_product_template_"+l.product_template_id+"' class='mini-cart__product-title' href='#'>"+l.product_name+"</a>\n" +
@@ -87,7 +87,17 @@ function load_cart(){
 						"                                </div>\n" +
                     	"                            </li>");
 					$('#list_image_cart_product_template_'+l.product_template_id).click(function(){
-						return list_image_show_product_template_detail_page(this)
+
+						var id_pre = this.id.slice(33);
+						sessionStorage.setItem("current_product_detail_id", id_pre)
+    					window.location.href="/hhjc_shop_product_details"
+					});
+
+					$('#image_cart_product_template_'+l.product_template_id).click(function(){
+
+						var id_pre = this.id.slice(28);
+						sessionStorage.setItem("current_product_detail_id", id_pre)
+    					window.location.href="/hhjc_shop_product_details"
 					});
 
 
