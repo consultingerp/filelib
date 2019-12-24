@@ -20,12 +20,12 @@ class e2yun_customer_payment_extend(models.Model):
             'domain': {'bank_num': domain}
         }
 
-    # company_id = fields.Many2one('res.company', string='Company', index=True, default=lambda self: self.env.user.company_id.id)
+    company_id = fields.Many2one('res.company', string='Company', related=None, index=True, default=lambda self: self.env.user.company_id)
 
     def defalut_payment_company_id(self):
         company_id = self.env.user.company_id.id
         return company_id
-    company_id_ex = fields.Many2one('res.company', string='公司名称', default=defalut_payment_company_id)
+    # company_id_ex = fields.Many2one('res.company', string='公司名称', default=defalut_payment_company_id)
 
     payment_type2 = fields.Selection(
         [('D11', '公司收现金'), ('D12', '刷卡'),
