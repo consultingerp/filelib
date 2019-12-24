@@ -7,16 +7,17 @@
         <field name="inherit_id" ref="project.edit_project"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
-                <page name="agreement_milestone" string="合同">
+                <page name="agreement_milestone" string="里程碑">
                     <field name="agreement_milestone">
                         <tree>
-                            <field name="code"/>
-                            <field name="plan_start_date"/>
-                            <field name="plan_finish_date"/>
-                            <field name="name"/>
-                            <field name="milestone_date"/>
-                            <field name="payment_rate"/>
-                            <field name="payment_amount"/>
+                            <field name="code" string="里程碑编号"/>
+                            <field name="name" string="里程碑名称"/>
+                            <field name="plan_start_date" string="合约规划里程碑时间"/>
+                            <field name="milestone_date" string="合同里程碑时间"/>
+                            <!--
+                            <field name="plan_finish_date" string="里程碑名称"/>
+                            <field name="payment_rate" widget="percentage"/>
+                            <field name="payment_amount"/>-->
                         </tree>
                     </field>
                 </page>

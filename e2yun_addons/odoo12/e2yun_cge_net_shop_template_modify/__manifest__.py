@@ -21,11 +21,12 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'website_sale', 'payment'],
+    'depends': ['base', 'website_sale', 'payment', 'odoo_website_marketplace'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
         'views/views.xml',
     ],
+    'installable': True
 }
