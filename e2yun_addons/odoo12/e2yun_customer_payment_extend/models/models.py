@@ -355,10 +355,6 @@ class e2yun_customer_payment_extend(models.Model):
         if pos_flag:
             del vals_list['pos_flag']
 
-        if vals_list['company_id'] == 1:
-            raise Warning(
-                _("请选择其他公司!"))
-
         if not a and not pos_flag:
             raise Warning(
                 _("付款附件不能为空!"))
@@ -402,15 +398,17 @@ class e2yun_customer_payment_extend(models.Model):
             vals_list['accept_amount'] = 0
 
         res = super(e2yun_customer_payment_extend, self).create(vals_list)
+
+        #检查公司为集团是不允许保存
+        if res.company_id.id == 1:
+            raise Warning(
+                _("请选择其他公司!"))
         # for a in res.payment_attachments:
         #     a.res_name = a.display_name
         self.env.cr.commit()
         if pos_flag and vals_list.get('create_uid',False):
             sql = """update account_payment set create_uid = """ + str(vals_list.get('create_uid')) + """ where id = """ + str(res.id)
             self._cr.execute(sql)
-
-
-
 
         #pos同步的不要再次同步回去
         if(not pos_flag):
