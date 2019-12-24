@@ -27,7 +27,7 @@ function load_index_data(){
             "                       <div class='slider-content__text mb--40 mb-md--30'>\n" +
             // "                          <p class='mb--15' data-animation='fadeInUp' data-duration='.3s' data-delay='.3s'>#介绍文字</p>\n" +
             "                          <p class='mb--20' data-animation='fadeInUp' data-duration='.3s' data-delay='.3s'>"+p.recommend_text+"</p>\n" +
-            "                          <h2 class='heading__primary lh-pt7' data-animation='fadeInUp' data-duration='.3s' data-delay='.3s'>"+p.product_name+"</h2>\n" +
+            "                          <h2 class='heading__primary lh-1' data-animation='fadeInUp' data-duration='.3s' data-delay='.3s'>"+p.product_name+"</h2>\n" +
             "                        </div>\n" +
             "                        <div class='slider-content__btn'>\n" +
             "                           <a href='/online_shop/get_product_detail_page/"+p.product_id+"' class='btn btn-outline btn-brw-2' data-animation='fadeInUp' data-duration='.3s' data-delay='.6s'>现在购买</a>\n" +
