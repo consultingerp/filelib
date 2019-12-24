@@ -20,12 +20,12 @@ class e2yun_customer_payment_extend(models.Model):
             'domain': {'bank_num': domain}
         }
 
-    # company_id = fields.Many2one('res.company', string='Company', index=True, default=lambda self: self.env.user.company_id.id)
+    company_id = fields.Many2one('res.company', string='Company', related=None, index=True, default=lambda self: self.env.user.company_id)
 
     def defalut_payment_company_id(self):
         company_id = self.env.user.company_id.id
         return company_id
-    company_id_ex = fields.Many2one('res.company', string='公司名称', default=defalut_payment_company_id)
+    # company_id_ex = fields.Many2one('res.company', string='公司名称', default=defalut_payment_company_id)
 
     payment_type2 = fields.Selection(
         [('D11', '公司收现金'), ('D12', '刷卡'),
@@ -85,9 +85,9 @@ class e2yun_customer_payment_extend(models.Model):
             # json_attachments = json.dumps(attachments)
 
             try:
-                result = client.service.createPayment(r.company_id_ex.company_code,  # 公司
+                result = client.service.createPayment(r.company_id.company_code,  # 公司
                                                      r.receipt_Num or '',  # 收款编号
-                                                     r.company_id_ex.name or '',  # 公司名称
+                                                     r.company_id.name or '',  # 公司名称
                                                      r.po_num or '',  # PO
                                                      r.amount or '',  # 收款金额(收款结算金额
 
@@ -386,7 +386,7 @@ class e2yun_customer_payment_extend(models.Model):
             # journal = self.env['account.journal'].search(
             #     [('type', 'in', ('bank', 'cash')), ('currency_id', '=', currency_id)], limit=1)
             journal = self.env['account.journal'].search(
-                [('type', 'in', ('bank', 'cash')), ('company_id', '=', vals_list.get('company_id_ex', False))], limit=1)
+                [('type', 'in', ('bank', 'cash')), ('company_id', '=', vals_list.get('company_id', False))], limit=1)
             if journal:
                 vals_list['journal_id'] = journal.id
             else:
@@ -401,7 +401,7 @@ class e2yun_customer_payment_extend(models.Model):
         res = super(e2yun_customer_payment_extend, self).create(vals_list)
 
         #检查公司为集团是不允许保存
-        if res.company_id_ex.id == 1:
+        if res.company_id.id == 1:
             raise Warning(
                 _("请选择其他公司!"))
         # for a in res.payment_attachments:

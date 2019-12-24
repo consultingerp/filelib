@@ -22,7 +22,7 @@
                 <xpath expr="//group" position="after">
                     <group>
                         <group>
-                            <field name="company_id_ex" readonly="True"/>
+                            <field name="company_id" readonly="True"/>
                             <field name="payment_date" readonly="True"/>
                             <field name="payment_type2" attrs="{'readonly': [('receipt_Num', '!=', False)]}"/>
                             <field name="partner_id"
