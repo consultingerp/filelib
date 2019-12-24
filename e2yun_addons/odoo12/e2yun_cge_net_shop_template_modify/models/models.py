@@ -99,3 +99,246 @@ class WebsiteSale(ProductConfiguratorController):
             'only_services': order and order.only_services,
         }
         return request.render("website_sale.address", render_values)
+
+    @http.route(['/shop/payment'], type='http', auth="public", website=True)
+    def payment(self, **post):
+        """ Payment step. This page proposes several payment means based on available
+        payment.acquirer. State at this point :
+
+         - a draft sales order with lines; otherwise, clean context / session and
+           back to the shop
+         - no transaction in context / session, or only a draft one, if the customer
+           did go to a payment.acquirer website but closed the tab without
+           paying / canceling
+        """
+        order = request.website.sale_get_order()
+        redirection = self.checkout_redirection(order)
+        if redirection:
+            return redirection
+
+        render_values = self._get_shop_payment_values(order, **post)
+        render_values['only_services'] = order and order.only_services or False
+
+        if render_values['errors']:
+            render_values.pop('acquirers', '')
+            render_values.pop('tokens', '')
+
+        partner_id = render_values['order'].partner_id
+        # 中国，广东省res.city(1137,)，18503, 1232423414, , +1 555-555-5555
+        if not partner_id.country_id:
+            country_name = ''
+        else:
+            country_name = partner_id.country_id.name
+        if not partner_id.state_id:
+            state_name = ''
+        else:
+            state_name = partner_id.state_id.name
+        if not partner_id.city:
+            city_name = ''
+        else:
+            city_name = partner_id.city.name
+        if not partner_id.zip:
+            zip = ''
+        else:
+            zip = partner_id.zip
+        if not partner_id.street2:
+            street1 = ''
+        else:
+            street1 = partner_id.street2
+        if not partner_id.street:
+            street2 = ''
+        else:
+            street2 = partner_id.street
+        if not partner_id.phone:
+            phone = ''
+        else:
+            phone = partner_id.phone
+        render_values['address_char'] = country_name+'   '+state_name+'   '+city_name+'   '+zip+'   '+street1+'   '+street2+'   '+phone
+        return request.render("website_sale.payment", render_values)
+
+    @http.route(['/shop/confirmation'], type='http', auth="public", website=True)
+    def payment_confirmation(self, **post):
+        """ End of checkout process controller. Confirmation is basically seing
+        the status of a sale.order. State at this point :
+
+         - should not have any context / session info: clean them
+         - take a sale.order id, because we request a sale.order and are not
+           session dependant anymore
+        """
+        sale_order_id = request.session.get('sale_last_order_id')
+        if sale_order_id:
+            order = request.env['sale.order'].sudo().browse(sale_order_id)
+            partner_id = order.partner_id
+            if not partner_id.country_id:
+                country_name = ''
+            else:
+                country_name = partner_id.country_id.name
+            if not partner_id.state_id:
+                state_name = ''
+            else:
+                state_name = partner_id.state_id.name
+            if not partner_id.city:
+                city_name = ''
+            else:
+                city_name = partner_id.city.name
+            if not partner_id.zip:
+                zip = ''
+            else:
+                zip = partner_id.zip
+            if not partner_id.street2:
+                street1 = ''
+            else:
+                street1 = partner_id.street2
+            if not partner_id.street:
+                street2 = ''
+            else:
+                street2 = partner_id.street
+            if not partner_id.phone:
+                phone = ''
+            else:
+                phone = partner_id.phone
+            address_char = country_name + '   ' + state_name + '   ' + city_name + '   ' + zip + '   ' + street1 + '   ' + street2 + '   ' + phone
+            return request.render("website_sale.confirmation", {'order': order,
+                                                                'address_char': address_char})
+        else:
+            return request.redirect('/shop')
+
+from odoo.addons.http_routing.models.ir_http import unslug
+from odoo.addons.website.controllers.main import QueryURL
+import math
+PPG = 20  # Products Per Page
+PPR = 4   # Products Per Row
+
+class TableCompute(object):
+
+    def __init__(self):
+        self.table = {}
+
+    def _check_place(self, posx, posy, sizex, sizey):
+        res = True
+        for y in range(sizey):
+            for x in range(sizex):
+                if posx + x >= PPR:
+                    res = False
+                    break
+                row = self.table.setdefault(posy + y, {})
+                if row.setdefault(posx + x) is not None:
+                    res = False
+                    break
+            for x in range(PPR):
+                self.table[posy + y].setdefault(x, None)
+        return res
+
+    def process(self, products, ppg=PPG):
+        # Compute products positions on the grid
+        minpos = 0
+        index = 0
+        maxy = 0
+        x = 0
+        for p in products:
+            x = min(max(p.website_size_x, 1), PPR)
+            y = min(max(p.website_size_y, 1), PPR)
+            if index >= ppg:
+                x = y = 1
+
+            pos = minpos
+            while not self._check_place(pos % PPR, pos // PPR, x, y):
+                pos += 1
+            # if 21st products (index 20) and the last line is full (PPR products in it), break
+            # (pos + 1.0) / PPR is the line where the product would be inserted
+            # maxy is the number of existing lines
+            # + 1.0 is because pos begins at 0, thus pos 20 is actually the 21st block
+            # and to force python to not round the division operation
+            if index >= ppg and ((pos + 1.0) // PPR) > maxy:
+                break
+
+            if x == 1 and y == 1:   # simple heuristic for CPU optimization
+                minpos = pos // PPR
+
+            for y2 in range(y):
+                for x2 in range(x):
+                    self.table[(pos // PPR) + y2][(pos % PPR) + x2] = False
+            self.table[pos // PPR][pos % PPR] = {
+                'product': p, 'x': x, 'y': y,
+                'class': " ".join(x.html_class for x in p.website_style_ids if x.html_class)
+            }
+            if index <= ppg:
+                maxy = max(maxy, y + (pos // PPR))
+            index += 1
+
+        # Format table according to HTML needs
+        rows = sorted(self.table.items())
+        rows = [r[1] for r in rows]
+        for col in range(len(rows)):
+            cols = sorted(rows[col].items())
+            x += len(cols)
+            rows[col] = [r[1] for r in cols if r[1]]
+
+        return rows
+
+class OdooWebsiteMarketplace(http.Controller):
+
+    # Seller Page
+    @http.route(['/sellers/<seller_id>'], type='http', auth="public", website=True)
+    def partners_detail(self , seller_id, page=0 ,ppg=False, **post):
+        _, seller_id = unslug(seller_id)
+
+        if seller_id:
+            if ppg:
+                try:
+                    ppg = int(ppg)
+                except ValueError:
+                    ppg = PPG
+                post["ppg"] = ppg
+            else:
+                ppg = PPG
+            partner = request.env['res.partner'].sudo().browse(seller_id)
+            if partner.exists():
+                url = "/shop"
+                keep = QueryURL('/shop')
+                Product = request.env['product.template'].with_context(bin_size=True)
+                product_count = Product.search_count([('seller_id','=',partner.id),('website_published','=',True)])
+                pager = request.website.pager(url=url, total=product_count, page=page, step=ppg, scope=7, url_args=post)
+                products = Product.search([('seller_id','=',partner.id),('website_published','=',True)], limit=ppg, offset=pager['offset'])
+                total_page = (len(partner.website_message_ids) / 10) + 1
+                # partner_id = order.partner_id
+                if not partner.country_id:
+                    country_name = ''
+                else:
+                    country_name = partner.country_id.name
+                if not partner.state_id:
+                    state_name = ''
+                else:
+                    state_name = partner.state_id.name
+                if not partner.city:
+                    city_name = ''
+                else:
+                    city_name = partner.city.name
+                if not partner.zip:
+                    zip = ''
+                else:
+                    zip = partner.zip
+                if not partner.street2:
+                    street1 = ''
+                else:
+                    street1 = partner.street2
+                if not partner.street:
+                    street2 = ''
+                else:
+                    street2 = partner.street
+                address_char = country_name + '   ' + state_name + '   ' + city_name + '   ' + zip + '   ' + street1 + '   ' + street2
+                # partner['address_char'] = address_char
+                values = {
+                    'main_object': partner,
+                    'partner': partner,
+                    'edit_page': False,
+                    'products': products,
+                    'pager' : pager,
+                    'keep' : keep,
+                    'bins': TableCompute().process(products, ppg),
+                    'rows': PPR,
+                    'total_page': math.floor(total_page),
+                    'address_char': address_char
+                }
+                return request.render("odoo_website_marketplace.seller_page", values)
+        return request.not_found()
