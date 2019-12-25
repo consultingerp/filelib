@@ -89,12 +89,12 @@
         </record>
 
 
-        <menuitem
-                id="login_center"
-                name="登录"
-                parent="web_user_center.menu_user_center"
-                action="login_action"
-                sequence="10"/>
+        <!--<menuitem-->
+                <!--id="login_center"-->
+                <!--name="登录"-->
+                <!--parent="web_user_center.menu_user_center"-->
+                <!--action="login_action"-->
+                <!--sequence="10"/>-->
 
     </data>
 </odoo>
