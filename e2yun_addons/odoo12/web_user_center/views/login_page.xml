@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="web_user_center.user_login" name="登录">
+            <t t-call="website.layout">
+                <t t-call="web_user_center.user_login_page">
+                </t>
+            </t>
+        </template>
+        <template id="web_user_center.user_login_page" name="登录页面">
+            <section class="aui-flexView-login">
+                <header class="aui-navBar aui-navBar-fixed">
+                    <a href="javascript:;" class="aui-navBar-item">
+                        <i class="icon icon-return"></i>
+                    </a>
+                    <div class="aui-center">
+                        <span class="aui-center-title"></span>
+                    </div>
+                    <a href="javascript:;" class="aui-navBar-item">
+                        <i class="icon icon-info"></i>
+                    </a>
+                </header>
+                <section class="aui-scrollView">
+
+                    <div class="aui-account-title">
+                        <h1>账号登录</h1>
+                    </div>
+
+                    <div class="aui-account-input">
+                        <div class="b-line">
+                            <input type="text" placeholder="请输入手机号码" id="login_phone"></input>
+                            <label class="err err-top40" id="login_phone_text">手机号错误</label>
+                        </div>
+                        <div class="">
+                            <input type="password" placeholder="请输入密码 " id="login_password"></input>
+                            <label class="err err-top40" id="login_password_text">请输入密码</label>
+                        </div>
+                    </div>
+                    <div class="aui-account-button">
+                        <button id="login_submit">登录</button>
+                    </div>
+                    <div class="aui-account-link">
+                        <a href="javascript:;">注册账号</a> &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;
+                        <a href="javascript:;">忘记密码</a>
+                    </div>
+
+                    <div class="aui-account-footer">
+                        <div class="aui-account-footer-title">
+                            <h2>其它登录方式</h2>
+                        </div>
+                        <div class="aui-palace">
+                            <a href="javascript:;" class="aui-palace-grid">
+                                <div class="aui-palace-grid-icon">
+                                    <img src="/web_user_center/static/src/img/wx.png" alt=""></img>
+                                </div>
+                                <div class="aui-palace-grid-text">
+                                    <h2>微信</h2>
+                                </div>
+                            </a>
+                            <a href="javascript:;" class="aui-palace-grid">
+                                <div class="aui-palace-grid-icon">
+                                    <img src="/web_user_center/static/src/img/wb.png" alt=""></img>
+                                </div>
+                                <div class="aui-palace-grid-text">
+                                    <h2>微博</h2>
+                                </div>
+                            </a>
+                            <a href="javascript:;" class="aui-palace-grid">
+                                <div class="aui-palace-grid-icon">
+                                    <img src="/web_user_center/static/src/img/qq.png" alt=""></img>
+                                </div>
+                                <div class="aui-palace-grid-text">
+                                    <h2>QQ</h2>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+
+                </section>
+            </section>
+        </template>
+
+        <record id="login_action" model="ir.actions.act_url">
+            <field name="name">登录</field>
+            <field name="url">/user_login</field>
+            <field name="target">self</field>
+        </record>
+
+
+        <menuitem
+                id="login_center"
+                name="登录"
+                parent="web_user_center.menu_user_center"
+                action="login_action"
+                sequence="10"/>
+
+    </data>
+</odoo>
