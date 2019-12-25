@@ -48,7 +48,7 @@
                             </div>
                         </a>
                         <div class="divHeight"></div>
-                        <a href="javascript:void(0);" class="aui-panel-cell">
+                        <a  class="aui-panel-cell">
                             <div class="aui-panel-cell-bd">
                                 <h4>手机</h4>
                             </div>
@@ -67,7 +67,7 @@
                             </div>
                         </a>
                         <div class="divHeight"></div>
-                        <a href="javascript:void(0);" class="aui-panel-cell">
+                        <a  class="aui-panel-cell">
                             <div class="aui-panel-cell-bd">
                                 <h4>地址</h4>
                             </div>
