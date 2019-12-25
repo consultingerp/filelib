@@ -197,6 +197,7 @@
 }
 
 .aui-panel-cell-fr {
+    -webkit-user-select: auto;
     text-align: right;
 }
 

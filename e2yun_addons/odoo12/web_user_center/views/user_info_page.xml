@@ -39,7 +39,7 @@
                     </div>
                     <div class="divHeight"></div>
                     <div class="aui-card-list">
-                        <a href="javascript:void(0);" class="aui-panel-cell aui-clear-border">
+                        <a  class="aui-panel-cell aui-clear-border">
                             <div class="aui-panel-cell-bd">
                                 <h4>账号</h4>
                             </div>
