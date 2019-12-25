@@ -27,9 +27,11 @@
         'views/templates.xml',
         'views/views.xml',
         'views/order_view.xml',
+        'views/res_company_views.xml'
     ],
     # only loaded in demonstration mode
     'demo': [
         # 'demo/demo.xml',
     ],
+    'installable': True,
 }

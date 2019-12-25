@@ -3,15 +3,19 @@ from odoo import http
 from odoo.http import request
 import json
 from odoo import fields, http, tools, _
+from ..controllers import user_info
 from odoo.osv import expression
 import jinja2
 import os
+import  logging
 
 BASE_DIR = os.path.dirname((os.path.dirname(__file__)))
 templateLoader = jinja2.FileSystemLoader(searchpath=BASE_DIR + "/static/src")
 env = jinja2.Environment(loader=templateLoader)
 
-class cart(http.Controller):
+_logger = logging.getLogger(__name__)
+
+class cart(user_info.WebUserInfoController):
     @http.route('/e2yun_online_shop_extends/get_cart_info', type='http', auth="public", website=True)
     def get_cart_info(self, access_token=None, revive='', **post):
         order = request.website.sale_get_order()
@@ -170,6 +174,17 @@ class cart(http.Controller):
         sale_order = request.website.sale_get_order()
 
         if sale_order:
+            if not request.session.usronlineinfo:
+                request.session.usronlineinfo = self.get_show_userinfo(refresh=True)
+            company_id = request.session.usronlineinfo['company_id']
+            website = request.env['website'].sudo().search([('company_id', '=', company_id)], limit=1)
+            if website:
+                sale_order.website_id = website.id
+                sale_order.company_id = company_id
+            _logger.info("订单公司代码%s" % sale_order.company_id)
+            _logger.info("订单网站到%s" % website.id)
+
+
             if coupon:
                 coupon_status = request.env['sale.coupon.apply.code'].sudo().apply_coupon(sale_order, coupon)
                 if coupon_status.get('error'):
@@ -178,6 +193,7 @@ class cart(http.Controller):
             sale_order.telephone = phone
             sale_order.address = address
             sale_order.state = 'sent'
+
 
             request.session['confirm_sale_order_id'] = sale_order.id
 

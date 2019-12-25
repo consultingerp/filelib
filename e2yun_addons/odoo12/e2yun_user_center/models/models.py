@@ -13,7 +13,7 @@ class UserCenterUserExtends(models.Model):
     def button_back_to_user_center(self):
         return {
                 'type': 'ir.actions.act_url',
-                'url': '/user-center',
+                'url': '/usercenter',
                 'target': 'self',
                 'res_id': self.id,
             }

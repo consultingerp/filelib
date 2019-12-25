@@ -39,15 +39,20 @@ class OnliecustomerImLivechat(http.Controller):
         else:  # 不存在会话创建会话
             _logger.info('不存在会话创建会话')
             if order.partner_id.user_id:  # 直接联系导购
+                _logger.info('直接联系导购')
                 partners_to = [order.partner_id.user_id.partner_id.id]  # 增加导购到会话
                 session_info = request.env["mail.channel"].channel_get(partners_to)
             else:  # 联系客服
+                _logger.info('联系客服')
                 wx_channel = request.env.ref('wx_tools.channel_wx')
                 channel_id = wx_channel.id
                 session_info = request.env["im_livechat.channel"].get_mail_channel(channel_id, anonymous_name)
                 if not session_info:  # 看是否有在线客服
                     session_info = request.env["im_livechat.channel"].with_context(lang=False).get_online_mail_channel(channel_id, anonymous_name)
+                    if not session_info:
+                        return "在线客服，联系失败,在线客服没有绑定微信，无法发出通知信息。"
             if session_info:
+                _logger.info('创建session_info成功')
                 active_id = session_info["id"]
                 uuid = session_info['uuid']
                 request.env['wx.user.uuid'].sudo().create({
@@ -55,6 +60,9 @@ class OnliecustomerImLivechat(http.Controller):
                     'uuid_type': uuid_type, 'uuid_user_id': request.env.user.id, 'wx_user_id': partner.wx_user_id.id if partner.wx_user_id else None,
                     'partner_id': partner.id
                 })
+            else:
+                _logger.info('创建session_info失败')
+                return "在线客服，联系失败。"
             channel = request.env["mail.channel"].sudo().search([('uuid', '=', uuid)], limit=1)
         message = channel.sudo().with_context(mail_create_nosubscribe=True). \
             message_post(author_id=author.id, email_from=False, body=content,

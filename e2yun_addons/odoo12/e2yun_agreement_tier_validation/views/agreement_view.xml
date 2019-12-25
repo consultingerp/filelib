@@ -37,6 +37,7 @@
                     <p><i class="fa fa-info-circle"/>This Agreement needs to be
                         validated.
                         <field name="can_review" invisible="1"/>
+                        <field name="approve_sequence" invisible="1"/>
                         <button name="validate_tier"
                                 string="Validate"
                                 attrs="{'invisible': [('can_review', '=', False)]}"
@@ -45,7 +46,7 @@
                                 icon="fa-thumbs-up"/>
                         <button name="rebut_tier"
                                 string="Rebut"
-                                attrs="{'invisible': [('can_review', '=', False)]}"
+                                attrs="{'invisible': ['|', '|',('approve_sequence', '=', True),('can_review', '=', False)]}"
                                 type="object"
                                 class="btn-icon btn-danger"
                                 icon="fa-thumbs-down"/>
