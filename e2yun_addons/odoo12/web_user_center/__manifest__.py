@@ -19,6 +19,8 @@
         'views/usercenter_menu.xml',
         'views/usercenter_menu_seq.xml',
         'views/structure_iframe_page.xml',
+        'views/user_info_page.xml',
+        'views/login_page.xml'
     ],
     'qweb': [
         'static/src/xml/*.xml',
