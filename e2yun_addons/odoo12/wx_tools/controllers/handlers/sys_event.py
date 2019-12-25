@@ -403,9 +403,9 @@ def main(robot):
         if rs.exists():
             wx_user = rs[0]
             eventkey = message.EventKey.split('|')
-            resuser = env['res.users'].sudo().search([('login', '=', info['openid'])], limit=1)
+            resuser = env['res.users'].sudo().search([('wx_user_id.openid', '=', info['openid'])], limit=1)
             if not resuser.exists():  # 如果用户不存在查询绑定的微信
-                resuser = env['res.users'].sudo().search([('wx_user_id.openid', '=', info['openid'])], limit=1)
+                resuser = env['res.users'].sudo().search([('login', '=', info['openid'])], limit=1)
             users_ids = resuser.partner_id.related_guide.ids
             befocus_username = ''
             company_id = None  # 公司ID
