@@ -3,16 +3,20 @@
     <data>
         <template id="assets_backend" name="web_user_center" inherit_id="web.assets_backend">
             <xpath expr="//script[last()]" position="after">
-                <script type="text/javascript" src="/web_user_center/static/src/js/user_center.js"></script>
                 <script t-if="centerjscss" type="text/javascript" src="/web_user_center/static/src/js/user_center_layer.js"></script>
-                <link  rel="stylesheet" type="text/scss" href="/web_user_center/static/src/css/user_center_style.css"/>
+                <link rel="stylesheet" type="text/scss" href="/web_user_center/static/src/css/user_center_style.css"/>
             </xpath>
         </template>
 
         <template id="assets_frontend" inherit_id="website.assets_frontend" name="Website Helpdesk Assets">
             <xpath expr="//script[last()]" position="after">
-                <script t-if="centerjscss"  type="text/javascript" src="/web_user_center/static/src/js/user_center_layer.js"></script>
+                <script type="text/javascript" src="/web_user_center/static/src/js/user_center.js"></script>
+                <script type="text/javascript" src="/web_user_center/static/src/js/user_info.js"></script>
+                <script type="text/javascript" src="/web_user_center/static/src/js/jquey-bigic.js"></script>
+                <script t-if="centerjscss" type="text/javascript" src="/web_user_center/static/src/js/user_center_layer.js"></script>
                 <link rel="stylesheet" type="text/scss" href="/web_user_center/static/src/css/user_center_style.css"/>
+                <link rel="stylesheet" type="text/scss" href="/web_user_center/static/src/css/user_info_style.css"/>
+                <link rel="stylesheet" type="text/scss" href="/web_user_center/static/src/css/pic_show_style.css"/>
             </xpath>
         </template>
 
