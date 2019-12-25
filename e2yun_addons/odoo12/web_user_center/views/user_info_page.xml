@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="web_user_center.user_info" name="个人信息">
+            <t t-call="website.layout">
+                <t t-call="web_user_center.user_info_page">
+                </t>
+            </t>
+        </template>
+        <template id="web_user_center.user_info_page" name="个人信息">
+            <section class="aui-flexView-userinfo">
+                <header class="aui-navBar aui-navBar-fixed">
+                    <a href="javascript:history.go(-1);" class="aui-navBar-item">
+                        <i class="icon icon-return"></i>
+                    </a>
+                    <div class="aui-center">
+                        <span class="aui-center-title">个人信息</span>
+                    </div>
+                </header>
+                <section class="aui-scrollView">
+                    <div class="aui-panel">
+                        <a href="javascript:void(0);" class="aui-panel-cell">
+                            <div class="aui-panel-cell-hd">
+                                <span t-field="user_id.image" t-options="{'widget': 'image'}" role="img" t-att-aria-label="'Logo of %s' % res_company.name" t-att-title="res_company.name"/>
+
+                            </div>
+                            <div class="aui-panel-cell-bd">
+                                <h4>
+                                    <span t-esc="user_id.name[:23] + '...' if user_id.name and len(user_id.name) &gt; 25 else user_id.name"/>
+                                </h4>
+                                <p>
+                                    <span t-esc="user_id.partner_id.mobile"/>
+                                </p>
+                            </div>
+                            <div class="aui-panel-cell-fr">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="divHeight"></div>
+                    <div class="aui-card-list">
+                        <a  class="aui-panel-cell aui-clear-border">
+                            <div class="aui-panel-cell-bd">
+                                <h4>账号</h4>
+                            </div>
+                            <div class="aui-panel-cell-fr">
+                                <span t-esc="user_id.login"/>
+                            </div>
+                        </a>
+                        <div class="divHeight"></div>
+                        <a  class="aui-panel-cell">
+                            <div class="aui-panel-cell-bd">
+                                <h4>手机</h4>
+                            </div>
+                            <div class="aui-panel-cell-fr">
+                                <span t-if="user_id.partner_id.mobile" t-esc="user_id.partner_id.mobile"/>
+                                <span t-else="">还没有设置手机号</span>
+
+                            </div>
+                        </a>
+                        <a class="aui-panel-cell" id="qrcode_img" data-img="qrcode_img_src">
+                            <div class="aui-panel-cell-bd">
+                                <h4>二维码</h4>
+                            </div>
+                            <div class="aui-panel-cell-fr">
+                                <img  id="qrcode_img_src" style="width: 18px;height: 18px;" t-attf-src="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=#{user_id.qrcode_ticket}" alt="我的二维码"/>
+                            </div>
+                        </a>
+                        <div class="divHeight"></div>
+                        <a  class="aui-panel-cell">
+                            <div class="aui-panel-cell-bd">
+                                <h4>地址</h4>
+                            </div>
+                            <div class="aui-panel-cell-fr">
+                                <span t-esc="user_id.partner_id.state_id.name"/>
+                                <span t-esc="user_id.partner_id.city_id.name"/>
+                                <span t-esc="user_id.partner_id.area_id.name"/>
+                                <span t-esc="user_id.partner_id.street"/>
+                            </div>
+                        </a>
+                        <div class="divHeight"></div>
+                        <a class="aui-panel-cell" id="password_qrcode_img" data-img="password_qrcode_img_src">
+                            <div class="aui-panel-cell-bd">
+                                <h4>扫码重置密码</h4>
+                            </div>
+                            <div class="aui-panel-cell-fr">
+                                <img  id="password_qrcode_img_src" style="width: 18px;height: 18px;" t-attf-src="#{request.env['ir.config_parameter'].sudo().get_param('auth_signup_reset_password_qrcode_ticket')}" alt="重置密码"/>
+                            </div>
+                        </a>
+
+                        <div class="divHeight"></div>
+                        <a href="javascript:void(0);"   class="aui-panel-cell aui-clear-border moreset">
+                            <div class="aui-panel-cell-bd">
+                                <h4>更多设置</h4>
+                            </div>
+                            <div class="aui-panel-cell-fr">
+
+                            </div>
+                        </a>
+                    </div>
+                    <div class="aui-button">
+                        <button class="aui-btn-out">退出</button>
+                    </div>
+                </section>
+            </section>
+        </template>
+
+        <record id="user_info_action" model="ir.actions.act_url">
+            <field name="name">个人中心</field>
+            <field name="url">/user_info</field>
+            <field name="target">self</field>
+        </record>
+
+
+        <menuitem
+                id="my_info_center"
+                name="个人信息"
+                parent="web_user_center.menu_user_center"
+                action="user_info_action"
+                sequence="110"/>
+
+    </data>
+</odoo>

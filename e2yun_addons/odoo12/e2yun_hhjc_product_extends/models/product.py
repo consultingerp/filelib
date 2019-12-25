@@ -38,6 +38,19 @@ class Product(models.Model):
     browse_num = fields.Integer('浏览量')
     pc_show_id = fields.One2many('product.company.show','product_id','产品展示公司')
 
+    @api.multi
+    @api.depends('pc_show_id')
+    def _compute_company_show(self):
+        for s in self:
+            for c in s.pc_show_id:
+                if c.show_ok and c.company_id.company_code == '1000':
+                    s.bj_show = True
+                if c.show_ok and c.company_id.company_code == '2000':
+                    s.sz_show = True
+
+    sz_show = fields.Boolean(compute=_compute_company_show,store=True)
+    bj_show = fields.Boolean(compute=_compute_company_show,store=True)
+
     @api.model
     def sync_pos_matnr_to_crm(self,matnr,current_date):
 

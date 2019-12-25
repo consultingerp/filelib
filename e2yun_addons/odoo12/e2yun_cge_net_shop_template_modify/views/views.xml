@@ -138,4 +138,41 @@
             <img t-attf-src="data:image/png;base64,#{acq.image}" alt="支付方式" height="50px" width="50px"/>
         </xpath>
     </template>
+    <template id="website_sale_payment" inherit_id="website_sale.payment">
+        <xpath expr="//div[hasclass('card-body')]" position="replace">
+            <div class="card-body" id="shipping_and_billing">
+                <a class='float-right no-decoration' href='/shop/checkout'><i class="fa fa-edit"/> Edit</a>
+                <t t-set="same_shipping" t-value="bool(order.partner_shipping_id==order.partner_id or only_services)" />
+                <div>
+                    <b>Billing<t t-if="same_shipping and not only_services"> &amp; Shipping</t>: </b>
+                    <span t-esc='address_char' class="address-inline"/>
+                </div>
+                <div t-if="not same_shipping and not only_services" groups="sale.group_delivery_invoice_address">
+                    <b>Shipping: </b>
+                    <!--<span t-esc='order.partner_shipping_id' t-options="dict(widget='contact', fields=['address'], no_marker=True, separator=', ')"  class="address-inline"/>-->
+                    <span t-esc='address_char' class="address-inline"/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+    <template id="website_sale_confirmation" inherit_id="website_sale.confirmation">
+        <xpath expr="//div[hasclass('card-body')]" position="replace">
+            <div class="card-body">
+                <t t-set="same_shipping" t-value="bool(order.partner_shipping_id==order.partner_id or only_services)" />
+                <div><b>Billing <t t-if="same_shipping and not only_services"> &amp; Shipping</t>: </b><span t-esc='address_char' class="address-inline"/></div>
+                <div t-if="not same_shipping and not only_services" groups="sale.group_delivery_invoice_address"><b>Shipping: </b><span t-esc='address_char' class="address-inline"/></div>
+            </div>
+        </xpath>
+    </template>
+    <template id="odoo_website_marketplace_seller_detail" inherit_id="odoo_website_marketplace.seller_detail">
+        <xpath expr="//address[hasclass('well')]" position="replace">
+            <address class="well">
+                 <div t-esc="address_char"/>
+                 <div t-field="partner.self" t-options='{
+                     "widget": "contact",
+                     "fields": ["website", "phone", "fax", "email"]
+                 }'/>
+            </address>
+        </xpath>
+    </template>
 </odoo>

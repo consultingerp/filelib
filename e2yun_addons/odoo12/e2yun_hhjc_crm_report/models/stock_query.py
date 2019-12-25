@@ -45,8 +45,8 @@ class StockQueryCondiyion(models.Model):
         if ctx.get('mendian',False):
             return ctx.get('mendian')
 
-    matnr_code = fields.Char('物料编码1',default=default_matne_code)
-    matnr_code1 = fields.Many2one('product.product',default=default_matne_code1,string='物料编码2')
+    matnr_code = fields.Char('物料编码(模糊)',default=default_matne_code)
+    matnr_code1 = fields.Many2one('product.product',default=default_matne_code1,string='物料编码(精准)')
     werks = fields.Char('工厂',default=default_werks,readonly=True)
     werks_id = fields.Integer('工厂',default=default_werks_id,readonly=True)
     lgort = fields.Many2one('crm.warehouse','仓库',default=default_lgort)

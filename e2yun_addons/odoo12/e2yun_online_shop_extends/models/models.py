@@ -60,6 +60,15 @@ class OnlineShop(user_info.WebUserInfoController):
         })
         return werkzeug.utils.redirect('/web/login?%s' % query)
 
+    @http.route('/hhjc_shop_search_product_list_page', type='http', auth="user")
+    def hhjc_shop_search_product_list_page(self, **kwargs):
+
+        if request.params.get('search_key'):
+            request.session['default_search_key'] = request.params.get('search_key')
+        template = env.get_template('shop-list-sidebar.html')
+        html = template.render()
+        return html
+
     @http.route(['/online_shop/get_default_product_category'], type='http', auth="public")
     def get_default_product_category(self, **kwargs):
         default_product_category = request.session['default_product_category']
@@ -188,14 +197,43 @@ class OnlineShop(user_info.WebUserInfoController):
         # response_text = """<p>地区显示测试</p>"""
         response_text = """"""
         current_session = request.session
+        domain = []
+        area_id = None
+        if request.params.get('area_id'):  # 如果查地区
+            area_id = request.params['area_id']
+            if area_id == '1':
+                domain = [('sz_show', '=', True)]
+            elif area_id == '2':
+                domain = [('bj_show', '=', True)]
+            else:
+                usronlineinfo = request.session.usronlineinfo
+                if not usronlineinfo:
+                    request.session.usronlineinfo = self.get_show_userinfo()
+                    usronlineinfo = request.session.usronlineinfo
+                region = usronlineinfo.get('region',False)
+                if region and region == '北京':
+                    domain = domain + [('bj_show', '=', True)]
+                if region and region == '深圳':
+                    domain = domain + [('sz_show', '=', True)]
+
+        if request.session.get('default_search_key',False):
+            search_key = request.session['default_search_key']
+            request.session['default_search_key'] = ''
+            domain = domain + [('name', 'ilike', search_key)]
+
+
         if category_id == 99999:
+            domain = domain +[('sale_ok', '=', True)]
             # product_pool = http.request.env['product.product'].search([('id', 'in', [45])])
-            product_template_pool = http.request.env['product.template'].search([('sale_ok', '=', True)])
+            product_template_pool = http.request.env['product.template'].search(domain)
         else:
-            product_template_pool = http.request.env['product.template'].search([('sale_ok', '=', True),
-                                                                                 '|',
-                                                                                 ('public_categ_ids', 'in', category_id),
-                                                                                 ('category_parents', 'in', category_id)])
+
+            domain = domain + [('sale_ok', '=', True),
+                               '|',
+                               ('public_categ_ids', 'in', category_id),
+                               ('category_parents', 'in', category_id)]
+            product_template_pool = http.request.env['product.template'].search(domain)
+
             for product_template in product_template_pool:
                 cp = product_template.category_parents
                 message = cp.ids
@@ -267,13 +305,14 @@ class OnlineShop(user_info.WebUserInfoController):
             <div class="product-info">
                 <h3 class="product-title"><a id='""" + grid_tittle_product_detail_id + """' onclick='grid_tittle_show_product_template_detail_page(this)'>""" + product_template_name + """</a></h3>
                 <div class="product-info-bottom">
+                    <input type='hidden' name='product_id' value='""" + str(product_template.product_variant_ids[0].id) + """'/>
+                    <input type='hidden' name='product_template_id' value='""" + str(product_template.id) + """'/>
                     <div class="product-price-wrapper">
                         <span class="money">""" + product_template_price_str + """</span><p>浏览量 """ + str(product_template.browse_num) + """</p><p>销量 """ + str(product_template.so_qty) + """</p>
                     </div>
-                    <a href='/""" + product_add_to_cart_href + """' class="add-to-cart pr--15">
-                        <i class="la la-plus"></i>
-                        <span>添加到购物车</span>
-                    </a>
+                    <a href='javascript:;'  class="list_btn_add_cart btn btn-size-md">添加到购物车</a>
+                    
+                    
                 </div>
             </div>
         </div>
@@ -385,14 +424,13 @@ class OnlineShop(user_info.WebUserInfoController):
                            <div class="product-info">
                                <h3 class="product-title"><a id='""" + grid_tittle_product_detail_id + """' onclick='grid_tittle_show_product_template_detail_page(this)'>""" + product_template_name + """</a></h3>
                                <div class="product-info-bottom">
-                                   <div class="product-price-wrapper">
-                                       <span class="money">""" + product_template_price_str + """</span>
-                                   </div>
-                                   <a href='/""" + product_add_to_cart_href + """' class="add-to-cart pr--15">
-                                       <i class="la la-plus"></i>
-                                       <span>添加到购物车</span>
-                                   </a>
-                               </div>
+                                    <input type='hidden' name='product_id' value='""" + str(product_template.product_variant_ids[0].id) + """'/>
+                                    <input type='hidden' name='product_template_id' value='""" + str(product_template.id) + """'/>
+                                    <div class="product-price-wrapper">
+                                        <span class="money">""" + product_template_price_str + """</span><p>浏览量 """ + str(product_template.browse_num) + """</p><p>销量 """ + str(product_template.so_qty) + """</p>
+                                    </div>
+                                    <a href='javascript:;' class="list_btn_add_cart btn btn-size-md">添加到购物车</a>
+                                </div>
                            </div>
                        </div>
                    </div>
@@ -486,10 +524,29 @@ class OnlineShop(user_info.WebUserInfoController):
         response_text = """"""
         domain = []
         area_id = None
+
         if request.params.get('area_id'):  # 如果查地区
             area_id = request.params['area_id']
-            if area_id != '-1':
-                domain = [('pc_show_id.company_id.id', '=', area_id)]
+            if area_id == '1':
+                domain = [('sz_show', '=', True)]
+            elif area_id == '2':
+                domain = [('bj_show', '=', True)]
+            else:
+                usronlineinfo = request.session.usronlineinfo
+                if not usronlineinfo:
+                    request.session.usronlineinfo = self.get_show_userinfo()
+                    usronlineinfo = request.session.usronlineinfo
+                region = usronlineinfo.get('region',False)
+                if region and region == '北京':
+                    domain = domain + [('bj_show', '=', True)]
+                if region and region == '深圳':
+                    domain = domain + [('sz_show', '=', True)]
+
+        # if request.params.get('area_id'):  # 如果查地区
+        #     area_id = request.params['area_id']
+        #     if area_id != '-1':
+        #         domain = [('pc_show_id.company_id.id', '=', area_id)]
+
         order_text = order[chooser_id]
         if current_category_id == 99999:
             # product_pool = http.request.env['product.product'].search([('id', 'in', [45])])
@@ -570,14 +627,13 @@ class OnlineShop(user_info.WebUserInfoController):
                            <div class="product-info">
                                <h3 class="product-title"><a id='""" + grid_tittle_product_detail_id + """' onclick='grid_tittle_show_product_template_detail_page(this)'>""" + product_template_name + """</a></h3>
                                <div class="product-info-bottom">
-                                   <div class="product-price-wrapper">
-                                       <span class="money">""" + product_template_price_str + """</span>
-                                   </div>
-                                   <a href='/""" + product_add_to_cart_href + """' class="add-to-cart pr--15">
-                                       <i class="la la-plus"></i>
-                                       <span>添加到购物车</span>
-                                   </a>
-                               </div>
+                                    <input type='hidden' name='product_id' value='""" + str(product_template.product_variant_ids[0].id) + """'/>
+                                    <input type='hidden' name='product_template_id' value='""" + str(product_template.id) + """'/>
+                                    <div class="product-price-wrapper">
+                                        <span class="money">""" + product_template_price_str + """</span><p>浏览量 """ + str(product_template.browse_num) + """</p><p>销量 """ + str(product_template.so_qty) + """</p>
+                                    </div>
+                                    <a href='javascript:;' class="list_btn_add_cart btn btn-size-md">添加到购物车</a>
+                                </div>
                            </div>
                        </div>
                    </div>

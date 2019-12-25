@@ -51,7 +51,7 @@
                                                 <img src="/e2yun_online_shop_extends/static/src/assets/img/logo/LOGOhhjc.jpeg" height="35" width="35" alt="Logo">
                                             </a>
                                             <a href="/hhjc_shop_product_list" class="logo--normal">
-                                                <img src="/e2yun_online_shop_extends/static/src/assets/img/category_icon.png" height="30" width="30" alt="Homepage">
+                                                <img src="/e2yun_online_shop_extends/static/src/assets/img/category_icon.png?version=0.1" height="30" width="30" alt="Homepage">
                                             </a>
                                         </div>
                                     </div>
@@ -78,18 +78,20 @@
                                                 <!--TODO:搜索按钮-->
                                                 <div class="header-toolbar__item header-toolbar--search-btn">
                                                     <a href="#searchForm" class="header-toolbar__btn toolbar-btn">
-                                                        <i class="la la-search"></i>
+                                                        <img style="width: 20px;height: 20px; " src="/e2yun_online_shop_extends/static/src/assets/img/search.png" alt="搜索"/>
+                                                        <!--<i class="la la-search"></i>-->
                                                     </a>
                                                 </div>
                                                 <!--TODO:购物车按钮-->
                                                 <div class="header-toolbar__item header-toolbar--minicart-btn">
                                                     <a href="#miniCart" class="header-toolbar__btn toolbar-btn">
-                                                        <i class="la la-shopping-cart"></i>
+                                                        <img style="width: 20px;height: 20px; " src="/e2yun_online_shop_extends/static/src/assets/img/cart.png" alt="购物车"/>
+                                                        <!--<i class="la la-shopping-cart"></i>-->
                                                     </a>
                                                 </div>
                                                 <div class="header-toolbar__item d-block d-lg-none" style="padding-right: 10px;">
                                                     <a href="/hhjc_shop_order_list">
-                                                        <img style="width: 18px;height: 18px; " src="/e2yun_online_shop_extends/static/src/assets/img/order.jpg" alt="我的订单"/>
+                                                        <img style="width: 20px;height: 20px; " src="/e2yun_online_shop_extends/static/src/assets/img/order.png" alt="我的订单"/>
                                                     </a>
                                                 </div>
                                             </div>
@@ -250,10 +252,10 @@
         <div class="searchform__popup" id="searchForm">
             <a href="#" class="btn-close"><i class="la la-remove"></i></a>
             <div class="searchform__body">
-                <p>Start typing and press Enter to search</p>
+                <p>请输入要搜索的商品名称</p>
                 <form class="searchform">
-                    <input type="text" name="popup-search" id="popup-search" class="searchform__input" placeholder="Search Entire Store...">
-                    <button type="submit" class="searchform__submit"><i class="la la-search"></i></button>
+                    <input type="text" name="popup-search" id="popup-search" class="searchform__input" placeholder="请输入要搜索的商品名称">
+                    <button type="button" class="searchform__submit"><i class="la la-search"></i></button>
                 </form>
             </div>
         </div>
@@ -412,9 +414,9 @@
     <script src="/e2yun_online_shop_extends/static/src/assets/js/vendor.js"></script>
 
     <!-- 购物车相关js代码-->
-    <script src="/e2yun_online_shop_extends/static/src/assets/js/cart.js"></script>
+    <script src="/e2yun_online_shop_extends/static/src/assets/js/cart.js?version=0.1"></script>
 
-    <script src="/e2yun_online_shop_extends/static/src/assets/js/index.js?version=0.2"></script>
+    <script src="/e2yun_online_shop_extends/static/src/assets/js/index.js?version=0.4"></script>
 </body>
 
 </html>
