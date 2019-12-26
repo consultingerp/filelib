@@ -24,8 +24,11 @@ class Agreement(models.Model):
           agreement_subtype_obj = self.env['agreement.subtype'].browse(vals['agreement_subtype_id'])
           if agreement_subtype_obj.for_code:
             sequence_obj = self.env['ir.sequence']
-            if vals['agreement_type_id']:
+            if 'agreement_type_id' in vals.keys():
                 agreement_type_id=vals['agreement_type_id']
+            else:
+                agreement_type_id=self.agreement_type_id.id
+
             if agreement_type_id==1:
                 agreement_code=sequence_obj.next_by_code('agreement.sale.code')
             elif agreement_type_id==2:

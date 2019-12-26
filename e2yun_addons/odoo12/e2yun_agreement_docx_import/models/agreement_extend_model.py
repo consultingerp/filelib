@@ -68,28 +68,33 @@ class Agreement(models.Model):  #合同
             agreement_obj = self.env['agreement']
 
             agreementData = agreement_obj.browse(agreement_id)
-
-            master_word_id = agreementData.recital_ids[0].master_word_id
-            data_recital = self.env['ir.http'].binary_content(
-                xmlid=None, model='ir.attachment', id=master_word_id, field='datas')
-
-            master_word_id = agreementData.sections_ids[0].master_word_id
-            data_sections = self.env['ir.http'].binary_content(
-                xmlid=None, model='ir.attachment', id=master_word_id, field='datas')
-
-            master_word_id = agreementData.appendix_ids[0].master_word_id
-            data_appendix = self.env['ir.http'].binary_content(
-                xmlid=None, model='ir.attachment', id=master_word_id, field='datas')
+            data_recital=None
+            data_sections=None
+            data_appendix=None
+            if agreementData.recital_ids:
+                master_word_id = agreementData.recital_ids[0].master_word_id
+                data_recital = self.env['ir.http'].binary_content(
+                    xmlid=None, model='ir.attachment', id=master_word_id, field='datas')
+            if agreementData.sections_ids:
+                master_word_id = agreementData.sections_ids[0].master_word_id
+                data_sections = self.env['ir.http'].binary_content(
+                    xmlid=None, model='ir.attachment', id=master_word_id, field='datas')
+            if agreementData.appendix_ids:
+                master_word_id = agreementData.appendix_ids[0].master_word_id
+                data_appendix = self.env['ir.http'].binary_content(
+                    xmlid=None, model='ir.attachment', id=master_word_id, field='datas')
             doc = Document()
             i=0;
             while i<=3  :
               i=i+1
-              if i==1:
+              if i==1 and data_recital:
                 word_data=data_recital[2]
-              elif i==2:
+              elif i==2 and data_sections:
                 word_data =data_sections[2]
-              elif i==3:
+              elif i==3 and data_appendix:
                 word_data =data_appendix[2]
+              else:
+                continue
 
               f = open(wb_path, r"wb")
               f.write(base64.decodestring(word_data))
