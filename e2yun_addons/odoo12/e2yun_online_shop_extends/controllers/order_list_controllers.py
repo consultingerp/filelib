@@ -60,3 +60,30 @@ class order_list(http.Controller):
             datas.append(data)
 
         return request.make_response(json.dumps(datas, default=date_utils.json_default))
+
+    @http.route('/order_detail_page/<int:order_id>', type='http', auth='public', website=True)
+    def order_detail_page(self, order_id, **kwargs):
+        request.session['detail_order_id'] = order_id
+        template = env.get_template('order_detail.html')
+        html = template.render()
+        return html
+
+    @http.route('/e2yun_online_shop_extends/get_order_detail_data', type='http', auth="public", website=True)
+    def get_order_detail_data(self, access_token=None, revive='', **post):
+        datas = {}
+        line = []
+        if request.session.get('detail_order_id',False):
+            detail_order_id = request.session.get('detail_order_id')
+            orders = request.env['sale.order.crmstate.flow'].sudo().search(
+                [('order_id', '=', detail_order_id)],order='create_date desc')
+
+            if orders:
+                datas['order_name'] = orders[0].order_id.name
+
+            for order in orders:
+                line.append({
+                    'state': order.crmstate,
+                    'date': order.create_date,
+                })
+        datas['line'] = line
+        return request.make_response(json.dumps(datas, default=date_utils.json_default))

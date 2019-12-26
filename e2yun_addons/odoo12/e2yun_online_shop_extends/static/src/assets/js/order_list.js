@@ -60,6 +60,9 @@ function load_order_list(search_key){
                 "   <div style='padding-left: 20px;'>" +
                 "       地址:"+order.order_address+"<br/>"+
                 "       联系电话:"+order.order_phone+"<br/>" +
+                "<a href='/order_detail_page/"+order.order_id+"' style='float: right;' class='aui-navBar-item'>" +
+                "                                    <i class='icon icon-more'></i>" +
+                "                                  订单跟踪</a>"+
                 "<a href='/ordercontact/"+order.order_id+"' class='aui-navBar-item'>" +
                 "                                    <i class='icon icon-sys'></i>" +
                 "                                  联系客服</a>"+
