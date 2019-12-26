@@ -44,6 +44,18 @@ function load_cart_confirm(){
 		var access_token = $("input[name='csrf_token']").val();
 		var coupon = $("select[name='coupon']").val();
 
+		if(!phone){
+			$("input[name='phone']").css('border','1px solid red');
+		}
+		if(!address){
+			$("input[name='address']").css('border','1px solid red');
+		}
+
+		if(!phone || !address){
+			return false;
+		}
+
+
 		$.post('/e2yun_online_shop_extends/order_confirm',{
 			'access_token' : access_token,
 			'csrf_token' : access_token,

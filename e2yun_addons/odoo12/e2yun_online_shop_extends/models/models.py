@@ -71,7 +71,9 @@ class OnlineShop(user_info.WebUserInfoController):
 
     @http.route(['/online_shop/get_default_product_category'], type='http', auth="public")
     def get_default_product_category(self, **kwargs):
-        default_product_category = request.session['default_product_category']
+        default_product_category = '99999'
+        if request.session.get('default_product_category',False):
+            default_product_category = request.session['default_product_category']
         return http.request.make_response(json.dumps({'default_product_category': default_product_category}))
 
     @http.route('/hhjc_shop_product_details', type='http', auth="public", methods=['GET'])

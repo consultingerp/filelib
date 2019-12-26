@@ -7,9 +7,12 @@
         <meta content="yes" name="apple-mobile-web-app-capable"/>
         <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
         <meta content="telephone=no" name="format-detection"/>
+        <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/vendor.css?version=1.0">
+        <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/main.css?version=1.0">
         <link href="/e2yun_online_shop_extends/static/src/assets/css/order_list.css?version=0.2" rel="stylesheet" type="text/css"/>
         <script src="/e2yun_online_shop_extends/static/src/assets/js/vendor.js"></script>
-        <script type="text/javascript" src="/e2yun_online_shop_extends/static/src/assets/js/order_list.js?version=0.1"></script>
+        <script src="/e2yun_online_shop_extends/static/src/assets/js/main.js?version=1.0"></script>
+        <script type="text/javascript" src="/e2yun_online_shop_extends/static/src/assets/js/order_list.js?version=0.3"></script>
     </head>
     <body>
 
@@ -21,7 +24,20 @@
                 <div class="aui-center">
                     <span class="aui-center-title">我的订单</span>
                 </div>
+                <a href="#" name="btn_search" class="header-toolbar__btn toolbar-btn aui-navBar-item">
+                    <img style="width: 25px;height: 25px; " src="/e2yun_online_shop_extends/static/src/assets/img/search.png" alt="搜索"/>
+                </a>
             </header>
+            <div class="searchform__popup" id="searchForm">
+                <a href="#" class="btn-close"><i class="la la-remove"></i></a>
+                <div class="searchform__body">
+                    <p>请输入</p>
+                    <form class="searchform">
+                        <input type="text" name="popup-search" id="popup-search" class="searchform__input" placeholder="订单编号/商品名称/商品编码">
+                        <button type="button" class="searchform__submit"><i class="la la-search"></i></button>
+                    </form>
+                </div>
+            </div>
             <section class="aui-scrollView">
                 <div class="aui-tab" data-ydui-tab>
                     <ul class="tab-nav">
