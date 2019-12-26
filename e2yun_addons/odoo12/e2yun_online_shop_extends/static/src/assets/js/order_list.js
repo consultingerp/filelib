@@ -92,6 +92,17 @@ function load_order_list(search_key){
             }
         }
 
+        if(d && d.length > 0){
+            var show_view_id = d[0]['show_view_id'];
+            if(show_view_id){
+                $('.tab-panel-item').removeClass('tab-active');
+                $('.tab-nav-item').removeClass('tab-active');
+                $('.'+show_view_id).addClass('tab-active');
+                $('.'+show_view_id+'_nav').addClass('tab-active');
+            }
+        }
+
+
     });
 }
 

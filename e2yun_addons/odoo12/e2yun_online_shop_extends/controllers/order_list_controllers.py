@@ -15,6 +15,10 @@ class order_list(http.Controller):
 
     @http.route('/hhjc_shop_order_list', type='http', auth="public", methods=['GET'])
     def hhjc_shop_order_list(self, **kwargs):
+        if request.params.get('show_view_id',False):
+            show_view_id = request.params.get('show_view_id')
+            request.session['show_view_id'] = show_view_id
+
         template = env.get_template('order_list.html')
         html = template.render()
         return html
@@ -58,6 +62,10 @@ class order_list(http.Controller):
             data['order_line'] = lines
             data['total_num'] = total_num
             datas.append(data)
+
+        if request.session.get('show_view_id',False):
+            if datas and len(datas) > 0:
+                datas[0]['show_view_id'] = request.session.get('show_view_id')
 
         return request.make_response(json.dumps(datas, default=date_utils.json_default))
 
