@@ -23,18 +23,22 @@
             </xpath>
 
             <xpath expr="//field[@name='partner_email']" position="attributes">
-                        <attribute name="invisible">1</attribute>
+                <attribute name="invisible">1</attribute>
             </xpath>
-              <xpath expr="//field[@name='tag_ids']" position="attributes">
-                        <attribute name="invisible">1</attribute>
+            <xpath expr="//field[@name='tag_ids']" position="attributes">
+                <attribute name="invisible">1</attribute>
             </xpath>
-             <xpath expr="//field[@name='project_id']" position="attributes">
-                        <attribute name="invisible">1</attribute>
+            <xpath expr="//field[@name='project_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='name']" position="attributes">
+                  <attribute name="style">white-space: normal !important;</attribute>
             </xpath>
 
 
-             <xpath expr="//header" position="inside">
-                 <button name="synserviceorder" type="object" class="oe_link" string="同步到POS" confirm="确认要同步信息到POS，如果同步将会更新信息。"/>
+            <xpath expr="//header" position="inside">
+                <button name="synserviceorder" type="object" class="oe_link" string="同步到POS" confirm="确认要同步信息到POS，如果同步将会更新信息。"/>
             </xpath>
 
 
@@ -55,16 +59,16 @@
             </xpath>
 
             <xpath expr="//filter[@name='is_close']" position="after">
-                 <separator/>
-                  <filter string="3天预约单" name="latest_week"
-                    domain="[('order_datetime', '&gt;',  (context_today() - relativedelta(days=3)).strftime('%Y-%m-%d'))]"
-                    help="预约时间大于当前时间减少3天的服务订单"/>
-                 <filter string="一周预约单" name="latest_week"
-                    domain="[('order_datetime', '&gt;',  (context_today() - relativedelta(days=7)).strftime('%Y-%m-%d'))]"
-                    help="预约时间大于当前时间减少7天的服务订单"/>
+                <separator/>
+                <filter string="3天预约单" name="latest_week"
+                        domain="[('order_datetime', '&gt;',  (context_today() - relativedelta(days=3)).strftime('%Y-%m-%d'))]"
+                        help="预约时间大于当前时间减少3天的服务订单"/>
+                <filter string="一周预约单" name="latest_week"
+                        domain="[('order_datetime', '&gt;',  (context_today() - relativedelta(days=7)).strftime('%Y-%m-%d'))]"
+                        help="预约时间大于当前时间减少7天的服务订单"/>
                 <filter string="一月预约单" name="latest_week"
-                    domain="[('order_datetime', '&gt;',  (context_today() - relativedelta(days=30)).strftime('%Y-%m-%d'))]"
-                    help="预约时间大于当前时间减少7天的服务订单"/>
+                        domain="[('order_datetime', '&gt;',  (context_today() - relativedelta(days=30)).strftime('%Y-%m-%d'))]"
+                        help="预约时间大于当前时间减少7天的服务订单"/>
             </xpath>
 
 
@@ -86,44 +90,43 @@
     </record>
 
 
-
     <!--the js code to initialize the LiveSupport object -->
     <template id="e2yun_website_helpdesk_form_loader" inherit_id="im_livechat.loader" name="my_load">
-    <xpath expr="//t[@t-translation='off']" position="replace">
-        <t t-translation="off">
+        <xpath expr="//t[@t-translation='off']" position="replace">
+            <t t-translation="off">
 
-            <t t-if="not info">
-                <t t-set="info" t-value="request.env['im_livechat.channel'].get_livechat_info(channel)"/>
-            </t>
+                <t t-if="not info">
+                    <t t-set="info" t-value="request.env['im_livechat.channel'].get_livechat_info(channel)"/>
+                </t>
                 document.addEventListener("DOMContentLoaded", function(event) {
-                    <t t-if="web_session_required">
+                <t t-if="web_session_required">
                     odoo.define('web.session', function (require) {
-                        var Session = require('web.Session');
-                        var modules = odoo._modules;
-                        return new Session(undefined, "<t t-esc="info['server_url']"/>", {modules:modules, use_cors: false});
+                    var Session = require('web.Session');
+                    var modules = odoo._modules;
+                    return new Session(undefined, "<t t-esc="info['server_url']"/>", {modules:modules, use_cors: false});
                     });
-                    </t>
+                </t>
 
-                    odoo.define('im_livechat.livesupport', function (require) {
-            <t t-if="info['available']" t-translation="off">
-                        var rootWidget = require('root.widget');
-                        var im_livechat = require('im_livechat.im_livechat');
-                        var button = new im_livechat.LivechatButton(
-                            rootWidget,
-                            "<t t-esc="info['server_url']"/>",
-                            <t t-raw="json.dumps(info.get('options', {}))"/>
-                        );
-                        var httprequest = "<t t-esc="request.httprequest.path"/>";
-                        if (httprequest.indexOf('helpdesk') &lt; 0){
-                                button.appendTo($('body'));
-                                window.livechat_button = button;
-                        }
-            </t>
-                    });
+                odoo.define('im_livechat.livesupport', function (require) {
+                <t t-if="info['available']" t-translation="off">
+                    var rootWidget = require('root.widget');
+                    var im_livechat = require('im_livechat.im_livechat');
+                    var button = new im_livechat.LivechatButton(
+                    rootWidget,
+                    "<t t-esc="info['server_url']"/>",
+                    <t t-raw="json.dumps(info.get('options', {}))"/>
+                    );
+                    var httprequest = "<t t-esc="request.httprequest.path"/>";
+                    if (httprequest.indexOf('helpdesk') &lt; 0){
+                    button.appendTo($('body'));
+                    window.livechat_button = button;
+                    }
+                </t>
+                });
                 });
             </t>
 
-    </xpath>
+        </xpath>
 
     </template>
 
