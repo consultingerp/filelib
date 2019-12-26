@@ -28,6 +28,7 @@
             </field>
         </record>
 
+        <!--
         <record id="action_view_agreement_import_docx" model="ir.actions.act_window">
             <field name="name">Import Doc</field>
             <field name="type">ir.actions.act_window</field>
@@ -35,7 +36,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
-        </record>
+        </record> -->
 
 
 
@@ -57,7 +58,7 @@
             </field>
         </record>
 
-
+  <!--
         <act_window name="Import Doc"
                     res_model="agreement.download.doc"
                     src_model="agreement"
@@ -66,7 +67,7 @@
                     view_type="form"
                     view_id="view_action_agreement_import_doc"
                     target="new"
-                    id="act_window_import_doc"/>
+                    id="act_window_import_doc"/>-->
 
 
         <record id="view_agreement_download_doc" model="ir.ui.view">
@@ -83,6 +84,7 @@
             </field>
         </record>
 
+        <!--
         <act_window name="Download Doc"
                     res_model="agreement.download.doc"
                     src_model="agreement"
@@ -91,7 +93,7 @@
                     view_type="form"
                     view_id="view_agreement_download_doc"
                     target="new"
-                    id="act_window_download_doc"/>
+                    id="act_window_download_doc"/> -->
 
 
         <!--
