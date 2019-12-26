@@ -9,7 +9,6 @@
         </template>
 
         <template id="e2yun_website_helpdesk_form.ticket_submit_e2yun"   inherit_id="website_helpdesk_form.ticket_submit">
-            <!--<xpath expr="//div[@id='wrap']" position="replace">-->
             <xpath expr="//t[@name='Helpdesk']" position="replace">
                 <title>客户报修</title>
                 <t name="Helpdesk" priority="29" t-name="website.helpdesk">
