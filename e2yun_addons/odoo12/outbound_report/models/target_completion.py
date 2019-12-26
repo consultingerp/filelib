@@ -228,7 +228,7 @@ class TargetCompletion(models.Model):
             'context': ctx,
             'domain': domain_list,
             # 实现视图重定向
-            'views': [ [tree_view.id, 'tree'],
+            'views': [[tree_view.id, 'tree'],
                       [graph_view.id, 'graph']],
         }
 

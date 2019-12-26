@@ -88,6 +88,12 @@ class import_odbc_dbtable(models.Model):
                 elif cols[i] == 'ywy':
                     xs = self.env['res.users'].search([('name', '=', data[i])]).id
                     dict1 = {cols[i]: xs}
+                elif cols[i] == 'vkorgtext':
+                    syb = self.env['group.departments'].search([('name', 'ilike', data[i])]).id
+                    dict1 = {cols[i]: syb}
+                elif cols[i] == 'vtweg':
+                    qd = self.env['group.channels'].search([('name', 'ilike', data[i])]).id
+                    dict1 = {cols[i]: qd}
                 else:
                     dict1 = {cols[i]: data[i]}
                 data_dict.update(dict1)

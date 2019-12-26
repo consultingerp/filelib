@@ -1,10 +1,11 @@
-function load_order_list(){
+function load_order_list(search_key){
     $('.tab-panel-item').innerHTML = '';
 
     var access_token = $("input[name='csrf_token']").val();
     $.post('/e2yun_online_shop_extends/get_order_list',{
         'access_token' : access_token,
-        'csrf_token' : access_token
+        'csrf_token' : access_token,
+        'search_key' : search_key
     },function(datas) {
         var d = JSON.parse(datas);
 
@@ -27,8 +28,9 @@ function load_order_list(){
                 "           <div class='tab-item'>" +
                 "               <a href='javascript:void(0);' class='aui-well-item aui-well-item-clear'>" +
                 "                   <div class='aui-well-item-bd'> " +
-                "                       <h3>门店:"+order.order_team+"</h3>" +
-                "                       <h3>订单编号:"+order.order_name+"</h3>" +
+                "                       <h3 style='font-size: 16px;'>门店:"+order.order_team+"</h3>" +
+                "                       <h3 style='font-size: 16px;'>订单编号:"+order.order_name+"</h3>" +
+                "                       <h3 style='font-size: 16px;'>订单日期:"+order.order_date+"</h3>" +
                 "                   </div>" +
                 "                   <span>"+order_state+
                 "                  </span>" +
@@ -95,11 +97,34 @@ $(document).ready(function() {
     $.post('/e2yun_online_shop_extends/get_token',{},function(datas) {
         var d = JSON.parse(datas);
         $('body').append("<input name='csrf_token' value="+d['csrf_token']+" type='hidden' />");
-        load_order_list();
+        load_order_list('');
     });
 
     $("a[name='btn_back']").click(function(){
         window.location.href = '/hhjc_shop_index';
+    });
+    $("a[name='btn_search']").click(function(){
+        $('#popup-search').val('');
+        $('.searchform__popup').addClass('open');
+        $('.searchform__popup').css('background-color','rgba(224, 223, 223, 0.89)');
+    });
+    $('.btn-close').click(function(){
+        $('.searchform__popup').removeClass('open');
+    });
+
+    $('.searchform__submit').click(function(){
+        $('.searchform__popup').removeClass('open');
+        $('.all_item').empty();
+        $('.new_item').empty();
+        $('.confirm_item').empty();
+        $('.done_item').empty();
+        $('.gp_item').empty();
+        var popup_search = $('#popup-search').val();
+        if(popup_search){
+            load_order_list(popup_search);
+        }
+
+
     });
 });
 
