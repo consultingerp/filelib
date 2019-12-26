@@ -18,6 +18,8 @@ class order_list(http.Controller):
         if request.params.get('show_view_id',False):
             show_view_id = request.params.get('show_view_id')
             request.session['show_view_id'] = show_view_id
+        else:
+            request.session['show_view_id'] = False
 
         template = env.get_template('order_list.html')
         html = template.render()
