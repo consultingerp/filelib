@@ -41,5 +41,16 @@
                     id="change_sales_action"
                     groups="e2yun_change_sales.group_hhjc_change_sales_group"/>
 
+        <act_window name="更换导购"
+                    res_model="change.sales"
+                    src_model="sale.order"
+                    key2="client_action_multi"
+                    view_mode="form"
+                    view_type="form"
+                    view_id="change_sales_form"
+                    target="new"
+                    id="change_sales_action2"
+                    groups="e2yun_change_sales.group_hhjc_change_sales_group"/>
+
     </data>
 </odoo>
