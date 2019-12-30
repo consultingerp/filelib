@@ -7,16 +7,10 @@ odoo.define('web_user_center.user_info', function (require) {
     var core = require('web.core');
     var Widget = require('web.Widget');
     var _t = core._t;
-
-    var $o_footer = $('.o_footer')
-    $o_footer.empty()
-
-    $('.openerp o_livechat_button d-print-none').hide()
-
     $('#qrcode_img').bigic();
     $('#password_qrcode_img').bigic();
     $('.aui-btn-out').on('click', function (ev) {  //退出按钮
-        var logouturl = "/web/session/logout?redirect=/web/log"
+        var logouturl = "/web/session/logout?redirect=/web/login"
         if (self != top) {
             top.location.href = logouturl;
         } else {

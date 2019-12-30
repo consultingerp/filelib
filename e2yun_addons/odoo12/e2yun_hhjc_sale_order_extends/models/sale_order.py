@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing tailsde.
-from odoo import models, fields, api, exceptions
+from odoo import models, fields, api, exceptions,_
 import datetime
 import suds.client
 import json
@@ -14,7 +14,8 @@ class SaleOrderCrmStatusFlow(models.Model):
     _name = 'sale.order.crmstate.flow'
 
     order_id = fields.Many2one('sale.order', '销售订单')
-    crmstate = fields.Char("CRM订单状态", default="新建", help="A.1已接单2加工中3加工完成4部分送货 / 送货完成5（改派状态）\nB.1已接单2生产中3全部入库/部分入库4部分送货/送货完成5（改派状态）\nC.1已接单2部分送货/送货完成3（改派状态）")
+    crmstate = fields.Char("CRM订单状态", default="新建",
+                           help="A.1已接单2加工中3加工完成4部分送货 / 送货完成5（改派状态）\nB.1已接单2生产中3全部入库/部分入库4部分送货/送货完成5（改派状态）\nC.1已接单2部分送货/送货完成3（改派状态）")
 
 
 class SaleOrder(models.Model):
@@ -99,7 +100,8 @@ class SaleOrder(models.Model):
     # A.1已接单2加工中3加工完成4部分送货 / 送货完成5（改派状态）
     # B.1已接单2生产中3全部入库/部分入库4部分送货/送货完成5（改派状态）
     # C.1已接单2部分送货/送货完成3（改派状态）
-    crmstate = fields.Char("CRM订单状态", default="新建", help="A.1已接单2加工中3加工完成4部分送货 / 送货完成5（改派状态）\nB.1已接单2生产中3全部入库/部分入库4部分送货/送货完成5（改派状态）\nC.1已接单2部分送货/送货完成3（改派状态）")
+    crmstate = fields.Char("CRM订单状态", default="新建",
+                           help="A.1已接单2加工中3加工完成4部分送货 / 送货完成5（改派状态）\nB.1已接单2生产中3全部入库/部分入库4部分送货/送货完成5（改派状态）\nC.1已接单2部分送货/送货完成3（改派状态）")
 
     crmstate_flow = fields.One2many('sale.order.crmstate.flow', 'order_id', string='CRM状态流')
 
@@ -220,6 +222,7 @@ class SaleOrder(models.Model):
         item = {}
         item['matnr'] = '100'
         item['maktx'] = 'AZF安装费'
+        item['ismanualinsert'] = 1
         # item['spart'] = line.product_id.product_group
         # item['sparttext'] = line.product_id.product_group
         # item['prdha'] = line.product_id.layer
@@ -266,16 +269,25 @@ class SaleOrder(models.Model):
         if sucess == 'no':
             raise exceptions.Warning("同步失败,返回信息：%s" % resultjson['message'])
         res.salesorderid = resultjson['salesorderid']
+        if 'orderstatustext' in resultjson and resultjson['orderstatustext']:
+            res.orderstatustext = resultjson['orderstatustext']
         res.crmstate = '已接单'
 
     def action_unfreeze_order(self):
         # self.env['sale.order']._fields.keys()
-        ICPSudo = self.env['ir.config_parameter'].sudo()
-        url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncSaleOrder?wsdl'  # webservice调用地址
-        client = suds.client.Client(url)
-        datajsonstring = {'salesorderid': self.salesorderid}
-        result = client.service.unfreezeSaleOrder(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
-        return result
+        if self.orderstatustext == '冻结':
+            ICPSudo = self.env['ir.config_parameter'].sudo()
+            url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncSaleOrder?wsdl'  # webservice调用地址
+            client = suds.client.Client(url)
+            datajsonstring = {'salesorderid': self.salesorderid}
+            result = client.service.unfreezeSaleOrder(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
+            resultjson = json.loads(result)
+            if 'orderstatus' in resultjson and resultjson['orderstatus']:
+                self.orderstatus = resultjson['orderstatus']
+                self.orderstatustext = resultjson['orderstatustext']
+            return result
+        else:
+            raise exceptions.Warning(_("订单状态为：%s，订单无需审批！" % self.orderstatustext))
 
     @api.model
     def action_sync_pos_sale_order_pos_invoke(self, data):
@@ -373,7 +385,8 @@ class SaleOrder(models.Model):
                 date_line['is_sync'] = True
                 sale_order_line.create(date_line)
         else:
-            info = self.env['sale.order'].search([('operatedatetime', '!=', False)], order='operatedatetime desc', limit=1)
+            info = self.env['sale.order'].search([('operatedatetime', '!=', False)], order='operatedatetime desc',
+                                                 limit=1)
             if info.operatedatetime:
                 lastDate = info.operatedatetime.strftime('%Y-%m-%d %H:%M:%S')
             else:
@@ -450,7 +463,8 @@ class SaleOrder(models.Model):
             for orderline in salesorderid.order_line:
                 if orderline.charg:
                     client = suds.client.Client(url)
-                    result = client.service.stockQuery(orderline.product_id.default_code, '', '', orderline.charg, '', '')
+                    result = client.service.stockQuery(orderline.product_id.default_code, '', '', orderline.charg, '',
+                                                       '')
                     if result:
                         for item in result:
                             if item.labst == orderline.product_uom_qty:
@@ -464,7 +478,6 @@ class SaleOrder(models.Model):
                 salesorderid.crmstate = '全部入库'
             elif partdone:
                 salesorderid.crmstate = '部分入库'
-
 
 
 class SaleOrderLine(models.Model):
