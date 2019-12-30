@@ -198,7 +198,7 @@ class CrmTeamExtend(models.Model):
         shop_code = self.shop_code
         self.team_target = False
         self.invoiced_target_detail = False
-        if self.id:
+        if team_year and shop_code:
             y_sql_str = "select target_year, invoiced_target_year from team_target_year_store y where y.target_year = %s and y.shop_code = '%s'" % (
                 team_year, shop_code)
             d_sql_str = "select detail_year, target_month, sales_member, team_target_monthly from team_target_detail_store d where d.detail_year = %s and d.shop_code = '%s'" % (
