@@ -198,34 +198,34 @@ class CrmTeamExtend(models.Model):
         shop_code = self.shop_code
         self.team_target = False
         self.invoiced_target_detail = False
+        if self.id:
+            y_sql_str = "select target_year, invoiced_target_year from team_target_year_store y where y.target_year = %s and y.shop_code = '%s'" % (
+                team_year, shop_code)
+            d_sql_str = "select detail_year, target_month, sales_member, team_target_monthly from team_target_detail_store d where d.detail_year = %s and d.shop_code = '%s'" % (
+                team_year, shop_code)
+            self._cr.execute(y_sql_str)
+            res_y = self._cr.dictfetchall()
+            self._cr.execute(d_sql_str)
+            res_d = self._cr.dictfetchall()
 
-        y_sql_str = "select target_year, invoiced_target_year from team_target_year_store y where y.target_year = %s and y.shop_code = '%s'" % (
-            team_year, shop_code)
-        d_sql_str = "select detail_year, target_month, sales_member, team_target_monthly from team_target_detail_store d where d.detail_year = %s and d.shop_code = '%s'" % (
-            team_year, shop_code)
-        self._cr.execute(y_sql_str)
-        res_y = self._cr.dictfetchall()
-        self._cr.execute(d_sql_str)
-        res_d = self._cr.dictfetchall()
-
-        if res_y:
-            target_list = []
-            for res in res_y:
-                target_list.append({'shop_code': shop_code, 'get_create': True,
-                                    'target_year': res['target_year'],
-                                    'invoiced_target_year': res['invoiced_target_year']})
-            info1 = self.env['team.target.year'].create(target_list)
-            self.team_target = info1
-        if res_d:
-            detail_list = []
-            for res in res_d:
-                detail_list.append({'shop_code': shop_code, 'get_create': True,
-                                    'detail_year': res['detail_year'],
-                                    'target_month': res['target_month'],
-                                    'sales_member': res['sales_member'],
-                                    'team_target_monthly': res['team_target_monthly']})
-            info2 = self.env['team.target.detail'].create(detail_list)
-            self.invoiced_target_detail = info2
+            if res_y:
+                target_list = []
+                for res in res_y:
+                    target_list.append({'shop_code': shop_code, 'get_create': True,
+                                        'target_year': res['target_year'],
+                                        'invoiced_target_year': res['invoiced_target_year']})
+                info1 = self.env['team.target.year'].create(target_list)
+                self.team_target = info1
+            if res_d:
+                detail_list = []
+                for res in res_d:
+                    detail_list.append({'shop_code': shop_code, 'get_create': True,
+                                        'detail_year': res['detail_year'],
+                                        'target_month': res['target_month'],
+                                        'sales_member': res['sales_member'],
+                                        'team_target_monthly': res['team_target_monthly']})
+                info2 = self.env['team.target.detail'].create(detail_list)
+                self.invoiced_target_detail = info2
         # year_data = self.env['team.target.year'].search([('team_id', '=', team_id)])
         # detail_data = self.env['team.target.detail'].search([('current_team_id', '=', team_id)])
 
