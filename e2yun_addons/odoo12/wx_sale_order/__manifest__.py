@@ -13,6 +13,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/templates.xml',
+        'views/sale_order_test.xml'
     ],
     'qweb': [
 

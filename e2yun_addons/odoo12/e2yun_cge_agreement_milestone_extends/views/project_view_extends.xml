@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="project_project_view_form" model="ir.ui.view">
+        <field name="name">project.project.form.inherit</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="agreement_milestone" string="里程碑">
+                    <field name="agreement_milestone">
+                        <tree>
+                            <field name="code" string="里程碑编号"/>
+                            <field name="name" string="里程碑名称"/>
+                            <field name="plan_start_date" string="合约规划里程碑时间"/>
+                            <field name="milestone_date" string="合同里程碑时间"/>
+                            <!--
+                            <field name="plan_finish_date" string="里程碑名称"/>
+                            <field name="payment_rate" widget="percentage"/>
+                            <field name="payment_amount"/>-->
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

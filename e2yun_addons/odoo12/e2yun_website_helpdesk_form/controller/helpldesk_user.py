@@ -1,5 +1,5 @@
 # -*-coding:utf-8-*-
-
+import werkzeug
 from odoo import http, _
 from odoo.http import request
 from odoo import models, fields, api
@@ -44,6 +44,8 @@ class HelpdesUser(http.Controller):
                         uuid = session_info['uuid']
                     else:
                         return request.render('e2yun_website_helpdesk_form.csoffline')
+            else:
+                return werkzeug.utils.redirect('/web/login?error=请登录然后操作')
             # localkwargs = {'weixin_id': 'web', 'wx_type': 'wx'}
             channel = request.env["mail.channel"].sudo().search([('uuid', '=', uuid)], limit=1)
             active_id = channel["id"]
@@ -64,9 +66,10 @@ class HelpdesUser(http.Controller):
                          message_type='comment', subtype='mail.mt_comment')
 
         wxuserinfo = request.env['wx.user'].sudo().search([('id', '=', channel_partner_name.wx_user_id.id)])
-        channel_partner_name.wx_user_id.consultation_reminder(request.env.user.partner_id, wxuserinfo.openid,
-                                                              userbody,
-                                                              active_id)
+        if wxuserinfo:
+            channel_partner_name.wx_user_id.consultation_reminder(request.env.user.partner_id, wxuserinfo.openid,
+                                                                  userbody,
+                                                                  active_id, reminder_type='售后客服咨询')
 
         request.session.helpdeskuuid = uuid
         action = request.env.ref('mail.action_discuss').id

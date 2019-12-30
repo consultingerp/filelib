@@ -25,6 +25,7 @@
     'data': [
        'security/ir.model.access.csv',
        'views/e2yun_project_view.xml',
+       'views/survey_page_tempalte.xml',
 
     ],
     # only loaded in demonstration mode

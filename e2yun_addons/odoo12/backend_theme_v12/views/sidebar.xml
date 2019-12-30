@@ -13,7 +13,7 @@
 <!--                <div class="app-sidebar navbar-collapse collapse"> -->
 		    <div class="app-sidebar">
                     <ul id="sidebar" class="app-sidebar-menu">
-                        <li class="nav-item"  t-as="menu" t-foreach="menu_data['children']" >
+                        <li class="nav-item"  t-as="menu" t-foreach="menu_data and menu_data['children']" >
                             <t t-set="debug_param" t-value="''"/>
                             <a t-att-href="'/web%s#menu_id=%s&amp;action=' % (debug_param, menu['id'])"
                                t-att-class="'nav-link nav-toggle' if menu.get('children') else 'nav-link '"

@@ -1,0 +1,64 @@
+
+#. module: e2yun_agreement_docx_import
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_docx_import.view_agreement_import_docx
+msgid "_Import"
+msgstr "导入"
+
+
+
+#. module: e2yun_agreement_docx_import
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_docx_import.view_agreement_import_docx
+msgid "Cancel"
+msgstr "取消"
+
+
+#. module: e2yun_agreement_docx_import
+#: model:ir.ui.menu,name:e2yun_agreement_docx_import.menu_agreement_docx_import_management
+#: model:ir.ui.menu,name:e2yun_agreement_docx_import.menu_agreement_docx_import
+#: model_terms:ir.actions.act_window,arch_db:e2yun_agreement_docx_import.view_agreement_pws_import
+#: model:ir.actions.act_window,name:e2yun_agreement_docx_import.act_window_import_doc
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_docx_import.view_action_agreement_import_doc
+msgid "Import Doc"
+msgstr "协议文件导入"
+
+
+#. module: e2yun_agreement_docx_import
+#: model:ir.model.fields,field_description:e2yun_agreement_docx_import.field_agreement_docx_import__agreement_id
+msgid "Agreement"
+msgstr "协议"
+
+
+#. module: e2yun_agreement_docx_import
+#: model:ir.model.fields,field_description:e2yun_agreement_docx_import.field_agreement_docx_import__name
+msgid "file path"
+msgstr "文件"
+
+#. module: e2yun_agreement_docx_import
+#: view:generate.model.access:e2yun_agreement_docx_import.view_action_agreement_import_doc
+msgid "Import Doc"
+msgstr "导入"
+
+
+#. module: e2yun_agreement_docx_import
+#: model:ir.actions.act_window,name:e2yun_agreement_docx_import.act_window_download_doc
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_docx_import.view_agreement_download_doc
+msgid "Download Doc"
+msgstr "协议文件下载"
+
+
+
+#. module: e2yun_agreement_docx_import
+#: model:ir.model.fields,field_description:e2yun_agreement_docx_import.field_agreement_download_doc__file_path
+msgid "File Path"
+msgstr "文件路径"
+
+#. module: e2yun_agreement_docx_import
+#: model:ir.model.fields,field_description:e2yun_agreement_docx_import.field_agreement_clause__doc_text
+msgid "Doc Text"
+msgstr "Word 内容"
+
+
+#. module: e2yun_agreement_docx_import
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_docx_import.agreement_form_view_doc_extend
+msgid "word Edit"
+msgstr "Word 编辑"

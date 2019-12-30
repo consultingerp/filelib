@@ -15,6 +15,15 @@ class e2yun_sales_report(models.Model):
             'domain': {'vkorgtext': domain}
         }
 
+    @api.depends('kunnr')
+    @api.onchange('kunnr')
+    def _onchange_kunnr(self):
+        code = self.kunnr.id
+        domain = [('sale_team_id', '=', code)]
+        return {
+            'domain': {'ywy': domain}
+        }
+
     def default_start_date(self):
         ctx = self._context.copy()
         if ctx.get('date_from1', False):
@@ -46,9 +55,12 @@ class e2yun_sales_report(models.Model):
         if ctx.get('kunnr', False):
             return ctx.get('kunnr')[0]
 
+    def default_werks(self):
+        return self.env['res.company']._company_default_get('sales.report.form').company_code
+
     date_from1 = fields.Date('日期从', default=default_start_date)
     date_end2 = fields.Date('日期到', default=default_start_date)
-    werks = fields.Selection([('1000', "1000"), ('2000', "2000")], '工厂')
+    werks = fields.Selection([('0000', "0000"), ('1000', "1000"), ('2000', "2000")], '工厂', default=default_werks, readonly=True)
     vkorgtext = fields.Many2one('group.departments', '事业部', default=default_vkorgtext)
     vtweg = fields.Many2one('group.channels', '渠道', default=default_vtweg)
     ywy = fields.Many2one('res.users', '导购员', default=default_ywy, domain=[('function', 'in', ['店长', '店员'])])
@@ -78,7 +90,7 @@ class e2yun_sales_report(models.Model):
         domain_list = []
 
         sale_orders = self.env['sale.order'].search([])
-        if ctx['werks']:
+        if ctx['werks'] and ctx['werks'] != '0000':
             sale_orders1 = sale_orders.search([('werks', '=', ctx['werks'])])
         else:
             sale_orders1 = sale_orders
@@ -116,3 +128,16 @@ class e2yun_sales_report(models.Model):
             'domain': [('order_id', 'in', domain_list)],
             'context': ctx,
         }
+
+# class e2yun_sales_report_form_crm_team(models.Model):
+#     _inherit = 'crm.team'
+#
+#     @api.model
+#     def name_search(self, name='', args=None, operator='ilike', limit=100):
+#         flag = self.env.context.get('show_user_shops', False)
+#         user_shop = self.env.user.teams.ids
+#         shops =self.search([('id', 'in', user_shop)])
+#         if flag == 4399:
+#             return shops.name_get()
+#         else:
+#             return super(e2yun_sales_report_form_crm_team, self).name_search(name, args, operator, limit)

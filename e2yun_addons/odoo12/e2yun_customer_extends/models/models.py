@@ -65,6 +65,10 @@ class E2yunCsutomerExtends(models.Model):
     ], string='Status', default='potential_customer', group_expand='_group_expand_stage_id')
     related_guide = fields.Many2many('res.users',  domain="[('function', '!=', False)]", readonly=True)
 
+    real_company = fields.Many2one('res.company','实际公司')
+    shop_customer = fields.Boolean('门店客户',default=False)
+
+
     _sql_constraints = [('unique_app_code', 'UNIQUE(app_code)', 'app_code(客户编号)需唯一！')]
 
     @api.model
@@ -108,7 +112,7 @@ class E2yunCsutomerExtends(models.Model):
         if pos_flag and vals.get('shop_code',False):
             result.teams = [(6,0,[vals.get('shop_code'),])]
 
-        if not vals.get('pos_flag', False) and result.state != 'potential_customer':
+        if not vals.get('pos_flag', False) and result.state != 'potential_customer' and result.customer == True:
             result.sync_customer_to_pos()
             result.pos_state = True
 
@@ -171,7 +175,7 @@ class E2yunCsutomerExtends(models.Model):
         # add by hepeng 20191020 当更新客户微信地址时候不提交客户信息到POS
         if values.get('wxlatitude'):
             return result
-        if self.state != 'potential_customer' and not pos_flag and not values.get('pos_state',False):
+        if self.state != 'potential_customer' and not pos_flag and not self.pos_state and self.customer == True:
             self.sync_customer_to_pos()
             self.pos_state = True
         return result
@@ -263,46 +267,48 @@ class E2yunCsutomerExtends(models.Model):
             if r.state == 'potential_customer':
                 raise exceptions.Warning('状态为潜在客户，不能同步到POS系统')
 
-            # if r.pos_state:
-            #     raise exceptions.Warning("POS状态已传输，不能再同步哟！")
-            ICPSudo = self.env['ir.config_parameter'].sudo()
+            if not r.shop_customer:
 
-            url = ICPSudo.get_param('e2yun.pos_url') +'/esb/webservice/SyncMember?wsdl'  # webservice调用地址
-            client = suds.client.Client(url)
-            shop_code = ''
-            shop_name = ''
-            if r.shop_code:
-                shop_code = r.shop_code.shop_code
-                shop_name = r.shop_code.name
-            openid = ''
-            if r.wx_user_id:
-                openid = r.wx_user_id.openid
-            result = client.service.createMember(r.state_id.name or '',  # 省
-                                                 r.city_id.name or '',  # 城市
-                                                 r.area_id.name or '',  # 县区
-                                                 r.street or '',  # 地址
-                                                 r.name or '',  # 名称
-                                                 r.user_nick_name or '',  # 昵称
-                                                 shop_code or '',  # 门店编码
-                                                 r.mobile or '',  # 手机号码
-                                                 r.phone or '',  # 电话号码
-                                                 r.email or '',  # 邮箱
-                                                 shop_name or '',  # 门店名称
-                                                 r.occupation or '',  # 职业
-                                                 r.app_code or '',  # app编码
-                                                 self.env.user.name,# 创建人
-                                                 openid
-                                                 )
+                # if r.pos_state:
+                #     raise exceptions.Warning("POS状态已传输，不能再同步哟！")
+                ICPSudo = self.env['ir.config_parameter'].sudo()
 
-            if result != 'S':
-                raise exceptions.Warning('客户同步到POS系统出现错误，请检查输入的数据'+result)
+                url = ICPSudo.get_param('e2yun.pos_url') +'/esb/webservice/SyncMember?wsdl'  # webservice调用地址
+                client = suds.client.Client(url)
+                shop_code = ''
+                shop_name = ''
+                if r.shop_code:
+                    shop_code = r.shop_code.shop_code
+                    shop_name = r.shop_code.name
+                openid = ''
+                if r.wx_user_id:
+                    openid = r.wx_user_id.openid
+                result = client.service.createMember(r.state_id.name or '',  # 省
+                                                     r.city_id.name or '',  # 城市
+                                                     r.area_id.name or '',  # 县区
+                                                     r.street or '',  # 地址
+                                                     r.name or '',  # 名称
+                                                     r.user_nick_name or '',  # 昵称
+                                                     shop_code or '',  # 门店编码
+                                                     r.mobile or '',  # 手机号码
+                                                     r.phone or '',  # 电话号码
+                                                     r.email or '',  # 邮箱
+                                                     shop_name or '',  # 门店名称
+                                                     r.occupation or '',  # 职业
+                                                     r.app_code or '',  # app编码
+                                                     self.env.user.name,# 创建人
+                                                     openid
+                                                     )
+
+                if result != 'S':
+                    raise exceptions.Warning('客户同步到POS系统出现错误，请检查输入的数据'+result)
 
         return True
 
 
     @api.model
     def updata_customer_state(self):
-        customers = self.search([('state','in',['potential_customer','intention_customer','target_customer']),('customer','=',True)])
+        customers = self.search([('state','in',['potential_customer','intention_customer','target_customer']),('customer','=',True),('shop_customer','!=',True)])
         ICPSudo = self.env['ir.config_parameter'].sudo()
         url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncMember?wsdl'  # webservice调用地址
         lists = []
@@ -342,39 +348,41 @@ class resPartnerBatch(models.TransientModel):
 
             if r.state == 'potential_customer':
                 raise exceptions.Warning('状态为潜在客户，不能同步到POS系统')
-            ICPSudo = self.env['ir.config_parameter'].sudo()
 
-            url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncMember?wsdl'  # webservice调用地址
-            client = suds.client.Client(url)
+            if not r.shop_customer:
+                ICPSudo = self.env['ir.config_parameter'].sudo()
 
-            shop_code = ''
-            shop_name = ''
-            if r.shop_code:
-                shop_code = r.shop_code.shop_code
-                shop_name = r.shop_code.name
-            openid = ''
-            if r.wx_user_id:
-                openid = r.wx_user_id.openid
+                url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncMember?wsdl'  # webservice调用地址
+                client = suds.client.Client(url)
 
-            result = client.service.createMember(r.state_id.name or '',  # 省
-                                                 r.city_id.name or '',  # 城市
-                                                 r.area_id.name or '',  # 县区
-                                                 r.street or '',  # 地址
-                                                 r.name or '',  # 名称
-                                                 r.user_nick_name or '',  # 昵称
-                                                 shop_code or '',  # 门店编码
-                                                 r.mobile or '',  # 手机号码
-                                                 r.phone or '',  # 电话号码
-                                                 r.email or '',  # 邮箱
-                                                 shop_name or '',  # 门店名称
-                                                 r.occupation or '',  # 职业
-                                                 r.app_code or '',  # app编码
-                                                 self.env.user.name,openid)  # 创建人
+                shop_code = ''
+                shop_name = ''
+                if r.shop_code:
+                    shop_code = r.shop_code.shop_code
+                    shop_name = r.shop_code.name
+                openid = ''
+                if r.wx_user_id:
+                    openid = r.wx_user_id.openid
 
-            if result != 'S':
-                raise exceptions.Warning('客户同步到POS系统出现错误，请检查输入的数据'+result)
-            else:
-                r.pos_state = True
+                result = client.service.createMember(r.state_id.name or '',  # 省
+                                                     r.city_id.name or '',  # 城市
+                                                     r.area_id.name or '',  # 县区
+                                                     r.street or '',  # 地址
+                                                     r.name or '',  # 名称
+                                                     r.user_nick_name or '',  # 昵称
+                                                     shop_code or '',  # 门店编码
+                                                     r.mobile or '',  # 手机号码
+                                                     r.phone or '',  # 电话号码
+                                                     r.email or '',  # 邮箱
+                                                     shop_name or '',  # 门店名称
+                                                     r.occupation or '',  # 职业
+                                                     r.app_code or '',  # app编码
+                                                     self.env.user.name,openid)  # 创建人
+
+                if result != 'S':
+                    raise exceptions.Warning('客户同步到POS系统出现错误，请检查输入的数据'+result)
+                else:
+                    r.pos_state = True
 
         return True
 

@@ -13,7 +13,7 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
     sAnimation.registry.form_builder_send = sAnimation.Class.extend({
         selector: '.s_website_form_e2yun',
         events: {
-            //'change input[name=user_phone]': '_searchusermatnr',
+            'change input[name=user_phone]': '_searchusermatnr',
             'click a[id=wximages]': '_userimag',
             'click a[id=online_customer]':'_clickteamcustomer'
         },
@@ -92,10 +92,12 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                 };
                 var useraddress = $('input[name=j_address]').val();
                 var is_wx_client = $('input[name=is_wx_client]').val();
+                // alert(useraddress+":"+useraddress);
                 if (is_wx_client == "1" || useraddress.trim() == "") { // 如果地址为空，没有默认地址，去取定位地
                     wx.getLocation({
                         type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
                         success: function (res) {
+                            $('#u_address').attr('placeholder','正在加载地址....');
                             var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
                             var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
                             var speed = res.speed; // 速度，以米/每秒计
@@ -118,12 +120,15 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
                             console.log("失败调用");
 
                         }, cancel: function (res) {
+                            user_addres_Setting('', '');
                             alert('用户拒绝授权获取地理位置');
                         }
                     }); // end getLocation
 
+                }else{
+                      user_addres_Setting('', '');
                 }
-            }, 1000);
+            }, 1500);
 
         }, start: function (editable_mode) {
             if (editable_mode) {
@@ -142,9 +147,13 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
             if (is_wx_client == '0') {   //判断是微信浏览器 不是就加载空地址让用户选择
                 this.start_addres('', '', '');
                 $('.mod_hang_appeal_show').css("display", "block");
-            }else{
+            }else{  //微信浏览器
+                // this.start_addres('', '', '');
+                  //$('#u_address').val("正在加载地址....");
+                  this.wxGetLocation();
                 // this.$target.find('.mod_hang_appeal_show').css("display", "none");
             }
+
             this.start_date_controls();
             this.after_sales_tel_show();
             //this.address_resolution();
@@ -184,7 +193,6 @@ odoo.define('e2yun_website_helpdesk_form.animation', function (require) {
             // Adapt options to date-only pickers
             datepickers_options.format = time.getLangDateFormat();
             this.$target.find('.o_website_form_date').datetimepicker(datepickers_options);
-            this.wxGetLocation();
             this.$target.find('.openerp o_livechat_button d-print-none').hide();
             return this._super.apply(this, arguments);
         },

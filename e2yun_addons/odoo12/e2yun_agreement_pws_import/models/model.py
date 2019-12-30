@@ -25,6 +25,11 @@ class AgreementPwsImport(models.TransientModel):
         if self.name=='solution':
             vals=this.pws_solution(wb)
             agreement=self.env['agreement'].create(vals)
+        elif self.name=='odc':
+            vals = this.pws_odc(wb)
+            agreement = self.env['agreement'].create(vals)
+        else:
+            return  False
         return {
             'name': 'agreement',
             'view_mode': 'form',
@@ -49,8 +54,8 @@ class AgreementPwsImport(models.TransientModel):
                             if not (cell_value is None) and not (cell_value is ''):
                                 parent = self.env['res.partner'].search(
                                     [('name', 'ilike', cell_value),
-                                     ('company_id', '=', self.company_id.id)], limit=1)
-                                vals['parent_id'] = parent.id
+                                     ('company_id', '=', self.create_uid.company_id.id)], limit=1)
+                                vals['partner_id'] = parent.id
 
                             cell_value = table.cell(3, 6).value  # 客户所属BU
                             if not (cell_value is None) and not (cell_value is ''):
@@ -119,6 +124,80 @@ class AgreementPwsImport(models.TransientModel):
                     print(e)
                     pass
         return vals
+
+    def pws_odc(self,wb):
+      try:
+        vals = {}
+        vals['agreement_type_id'] = 1  # 合同类型
+        for table in wb.sheets():
+            print(table.nrows)
+            #print(table.ncols)
+            print(table.number)
+            if table.number == 5:
+                cell_value = table.cell(5, 5).value  # 合作伙伴
+                if not (cell_value is None) and not (cell_value is ''):
+                    parent = self.env['res.partner'].search(
+                        [('name', 'ilike', cell_value),
+                     ('company_id', '=', self.create_uid.company_id.id)], limit=1)
+                    vals['parent_id'] = parent.id
+
+                cell_value = table.cell(10, 5).value  # 客户所属BU
+                if not (cell_value is None) and not (cell_value is ''):
+                    vals['account_bu'] = cell_value
+
+                cell_value = table.cell(11, 5).value  # 交付所属BU
+                if not (cell_value is None) and not (cell_value is ''):
+                    vals['delivery_bu'] = cell_value
+
+                cell_value = table.cell(8, 5).value  # 合同名称
+                if not (cell_value is None) and not (cell_value is ''):
+                    vals['name'] = cell_value
+
+                cell_value = table.cell(4, 5).value  # 签约实体
+                if not (cell_value is None) and not (cell_value is ''):
+                    vals['account_bu'] = cell_value
+
+                cell_value = table.cell(16, 6).value  # 币种
+                if not (cell_value is None) and not (cell_value is ''):
+                    vals['delivery_bu'] = cell_value
+
+                cell_value = table.cell(16, 8).value  # 金额
+                if not (cell_value is None) and not (cell_value is ''):
+                    vals['delivery_bu'] = cell_value
+
+                cell_value = table.cell(2, 2).value  # 销售
+                if not (cell_value is None) and not (cell_value is ''):
+                    print(cell_value)
+                    # vals['create_uid'] = cell_value
+
+                cell_value = table.cell(2, 5).value  # 项目经理
+                if not (cell_value is None) and not (cell_value is ''):
+                    print(cell_value)
+
+                cell_value = table.cell(13, 5).value  # 项目背景
+                if not (cell_value is None) and not (cell_value is ''):
+                    vals['description'] = cell_value
+            if table.number == 10:
+               cell_value = table.cell(10, 2).value  # 订单类型
+               if not (cell_value is None) and not (cell_value is ''):
+                    vals['order_type'] = cell_value
+
+               cell_value = table.cell(21, 4).value  # 结算方式
+               if not (cell_value is None) and not (cell_value is ''):
+                     vals['payment_term_id'] = cell_value
+
+            if table.number == 6:
+                cell_value = table.cell(2, 4).value  # 合同起始日期
+                if not (cell_value is None) and not (cell_value is ''):
+                  vals['start_date'] = xlrd.xldate.xldate_as_datetime(cell_value, 0)
+                  cell_value = table.cell(2, 9).value  # 合同结束日期
+                if not (cell_value is None) and not (cell_value is ''):
+                   vals['end_date'] = xlrd.xldate.xldate_as_datetime(cell_value, 0)
+      except Exception as e:
+          print(e)
+      return vals
+
+
 # class Agreement(models.Model):
 #     _inherit = 'agreement'
 #

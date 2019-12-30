@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="assets_backend" name="web_user_center" inherit_id="web.assets_backend">
+            <xpath expr="//script[last()]" position="after">
+                <script t-if="centerjscss" type="text/javascript" src="/web_user_center/static/src/js/user_center_layer.js"></script>
+                <link rel="stylesheet" type="text/scss" href="/web_user_center/static/src/css/user_center_style.css"/>
+            </xpath>
+        </template>
+
+        <template id="assets_frontend" inherit_id="website.assets_frontend" name="Website Helpdesk Assets">
+            <xpath expr="//script[last()]" position="after">
+                <script type="text/javascript" src="/web_user_center/static/src/js/user_center.js"></script>
+                <script type="text/javascript" src="/web_user_center/static/src/js/user_info.js"></script>
+                <script type="text/javascript" src="/web_user_center/static/src/js/jquey-bigic.js"></script>
+                <script t-if="centerjscss" type="text/javascript" src="/web_user_center/static/src/js/user_center_layer.js"></script>
+                <link rel="stylesheet" type="text/scss" href="/web_user_center/static/src/css/user_center_style.css"/>
+                <link rel="stylesheet" type="text/scss" href="/web_user_center/static/src/css/user_info_style.css"/>
+                <link rel="stylesheet" type="text/scss" href="/web_user_center/static/src/css/pic_show_style.css"/>
+            </xpath>
+        </template>
+
+
+        <template id="affix_top_menu_1" inherit_id="website.layout" customize_show="True" name="Affix Top Menu">
+
+            <xpath expr="//nav[@id='oe_main_menu_navbar']" position="attributes">
+                <attribute name="t-if">not no_affix_top_menu</attribute>
+            </xpath>
+
+        </template>
+
+        <template id="affix_top_menu_2" inherit_id="website.layout" customize_show="True" name="Affix Top Menu">
+            <xpath expr="//header" position="attributes">
+                <attribute name="t-if">not no_affix_top_menu</attribute>
+            </xpath>
+
+        </template>
+
+        <template id="affix_top_menu_3" inherit_id="website.layout" customize_show="True" name="Affix Top Menu">
+            <xpath expr="//t[@t-set='body_classname']" position="after">
+                <t t-set="body_classname" t-value="'o_connected_user' if env['ir.ui.view'].user_has_groups('base.group_user') and  not no_affix_top_menu else None"/>
+            </xpath>
+        </template>
+
+
+        <record id="action_set_user_center" model="ir.actions.act_url">
+            <field name="name">set_user_center</field>
+            <field name="url">/usercenter</field>
+            <field name="target">self</field>
+        </record>
+        <record id="base.open_menu" model="ir.actions.todo">
+            <field name="action_id" ref="action_set_user_center"/>
+            <field name="state">open</field>
+        </record>
+
+
+    </data>
+</odoo>

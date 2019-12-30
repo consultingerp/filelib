@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing tailsde.
-from odoo import models, fields, api, exceptions
+from odoo import models, fields, api, exceptions,_
 import datetime
 import suds.client
 import json
@@ -8,6 +8,14 @@ from . import myjsondateencode
 import logging
 
 _logger = logging.getLogger(__name__)
+
+
+class SaleOrderCrmStatusFlow(models.Model):
+    _name = 'sale.order.crmstate.flow'
+
+    order_id = fields.Many2one('sale.order', '销售订单')
+    crmstate = fields.Char("CRM订单状态", default="新建",
+                           help="A.1已接单2加工中3加工完成4部分送货 / 送货完成5（改派状态）\nB.1已接单2生产中3全部入库/部分入库4部分送货/送货完成5（改派状态）\nC.1已接单2部分送货/送货完成3（改派状态）")
 
 
 class SaleOrder(models.Model):
@@ -92,7 +100,10 @@ class SaleOrder(models.Model):
     # A.1已接单2加工中3加工完成4部分送货 / 送货完成5（改派状态）
     # B.1已接单2生产中3全部入库/部分入库4部分送货/送货完成5（改派状态）
     # C.1已接单2部分送货/送货完成3（改派状态）
-    crmstate = fields.Char("CRM订单状态", default="新建", help="A.1已接单2加工中3加工完成4部分送货 / 送货完成5（改派状态）\nB.1已接单2生产中3全部入库/部分入库4部分送货/送货完成5（改派状态）\nC.1已接单2部分送货/送货完成3（改派状态）")
+    crmstate = fields.Char("CRM订单状态", default="新建",
+                           help="A.1已接单2加工中3加工完成4部分送货 / 送货完成5（改派状态）\nB.1已接单2生产中3全部入库/部分入库4部分送货/送货完成5（改派状态）\nC.1已接单2部分送货/送货完成3（改派状态）")
+
+    crmstate_flow = fields.One2many('sale.order.crmstate.flow', 'order_id', string='CRM状态流')
 
     # @api.model
     # def create(self, vals):
@@ -104,10 +115,16 @@ class SaleOrder(models.Model):
     #             _logger.error("同步订单到POS出现错误，对象: %s，错误信息：%s", self, e)
     #     return res
 
-    # @api.multi
-    # def write(self, vals):
-    #     res = super(SaleOrder, self).write(vals)
-    #     return res
+    @api.multi
+    def write(self, vals):
+        res = super(SaleOrder, self).write(vals)
+        if 'crmstate' in vals and vals['crmstate']:
+            for item in self:
+                self.env['sale.order.crmstate.flow'].create({
+                    'order_id': self.id,
+                    'crmstate': vals['crmstate'],
+                })
+        return res
 
     # @api.multi
     # @api.depends('crmstate')
@@ -205,6 +222,7 @@ class SaleOrder(models.Model):
         item = {}
         item['matnr'] = '100'
         item['maktx'] = 'AZF安装费'
+        item['ismanualinsert'] = 1
         # item['spart'] = line.product_id.product_group
         # item['sparttext'] = line.product_id.product_group
         # item['prdha'] = line.product_id.layer
@@ -251,15 +269,74 @@ class SaleOrder(models.Model):
         if sucess == 'no':
             raise exceptions.Warning("同步失败,返回信息：%s" % resultjson['message'])
         res.salesorderid = resultjson['salesorderid']
+        if 'orderstatustext' in resultjson and resultjson['orderstatustext']:
+            res.orderstatustext = resultjson['orderstatustext']
+        res.crmstate = '已接单'
 
     def action_unfreeze_order(self):
         # self.env['sale.order']._fields.keys()
+        if self.orderstatustext == '冻结':
+            ICPSudo = self.env['ir.config_parameter'].sudo()
+            url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncSaleOrder?wsdl'  # webservice调用地址
+            client = suds.client.Client(url)
+            datajsonstring = {'salesorderid': self.salesorderid}
+            result = client.service.unfreezeSaleOrder(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
+            resultjson = json.loads(result)
+            if 'orderstatus' in resultjson and resultjson['orderstatus']:
+                self.orderstatus = resultjson['orderstatus']
+                self.orderstatustext = resultjson['orderstatustext']
+            return result
+        else:
+            raise exceptions.Warning(_("订单状态为：%s，订单无需审批！" % self.orderstatustext))
+
+    @api.model
+    def action_sync_pos_sale_order_pos_invoke(self, data):
         ICPSudo = self.env['ir.config_parameter'].sudo()
         url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncSaleOrder?wsdl'  # webservice调用地址
+        pageSize = ICPSudo.get_param('e2yun.pos_sync_pageSize') or 20
         client = suds.client.Client(url)
-        datajsonstring = {'salesorderid': self.salesorderid}
-        result = client.service.unfreezeSaleOrder(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
-        return result
+        sale_order = self.env['sale.order']
+        sale_order_line = self.env['sale.order.line']
+
+        if data['salesorderid']:
+            result = client.service.getSaleOrderInfo(data['salesorderid'])
+            json2python = json.loads(result)
+            line = json2python['orderHead']
+            order = sale_order.search([('salesorderid', '=', line['salesorderid'])])
+            order.order_line.unlink()
+            data = {}
+            date_line = {}
+            for key in line.keys():
+                if key in sale_order._fields:
+                    data[key] = line[key]
+            partner = self.env['res.partner'].search([('app_code', '=', line['memberposid'])])
+            if partner:
+                data['partner_id'] = partner.id
+            else:
+                data['partner_id'] = 3
+            data['is_sync'] = True
+            if order:
+                order.write(data)
+                order_id = order
+            else:
+                order_id = sale_order.create(data)
+            orderitem = json2python['orderItem']
+            for line in orderitem:
+                for key in line:
+                    if key in sale_order_line._fields:
+                        date_line[key] = line[key]
+                date_line['order_id'] = order_id.id
+                date_line['name'] = line['maktx']
+                product = self.env['product.product'].search([('default_code', '=', line['matnr'])])
+                if not product:
+                    self.env['product.template'].sync_pos_matnr_to_crm(line['matnr'], '2000-01-01')
+                    product = self.env['product.product'].search([('default_code', '=', line['matnr'])])
+                if product:
+                    date_line['product_id'] = product.id
+                else:
+                    raise exceptions.Warning("物料号：%s不存在，请检查物料是否同步了。" % (line['matnr']))
+                date_line['is_sync'] = True
+                sale_order_line.create(date_line)
 
     def action_sync_pos_sale_order(self):
         # self.env['sale.order']._fields.keys()
@@ -287,6 +364,7 @@ class SaleOrder(models.Model):
             else:
                 data['partner_id'] = 3
             data['is_sync'] = True
+            data['crmstate'] = '已接单'
             order.write(data)
             order_id = order
             orderitem = json2python['orderItem']
@@ -307,7 +385,8 @@ class SaleOrder(models.Model):
                 date_line['is_sync'] = True
                 sale_order_line.create(date_line)
         else:
-            info = self.env['sale.order'].search([('operatedatetime', '!=', False)], order='operatedatetime desc', limit=1)
+            info = self.env['sale.order'].search([('operatedatetime', '!=', False)], order='operatedatetime desc',
+                                                 limit=1)
             if info.operatedatetime:
                 lastDate = info.operatedatetime.strftime('%Y-%m-%d %H:%M:%S')
             else:
@@ -366,6 +445,39 @@ class SaleOrder(models.Model):
         # except Exception as e:
         #     _logger.error("同步订单到POS出现错误，对象: %s，错误信息：%s", self, e)
         # return res
+
+    @api.model
+    def action_sync_pos_status_for_stock_status(self):
+        ICPSudo = self.env['ir.config_parameter'].sudo()
+        url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncReport?wsdl'  # webservice调用地址
+        pageSize = ICPSudo.get_param('e2yun.pos_sync_pageSize') or 20
+        client = suds.client.Client(url)
+        sale_order = self.env['sale.order']
+        sale_order_line = self.env['sale.order.line']
+
+        salesorderids = sale_order.search([('crmstate', 'in', ('生产中', '部分入库'))])
+
+        for salesorderid in salesorderids:
+            alldone = True
+            partdone = False
+            for orderline in salesorderid.order_line:
+                if orderline.charg:
+                    client = suds.client.Client(url)
+                    result = client.service.stockQuery(orderline.product_id.default_code, '', '', orderline.charg, '',
+                                                       '')
+                    if result:
+                        for item in result:
+                            if item.labst == orderline.product_uom_qty:
+                                partdone = True
+                            else:
+                                alldone = False
+                    else:
+                        alldone = False
+
+            if alldone:
+                salesorderid.crmstate = '全部入库'
+            elif partdone:
+                salesorderid.crmstate = '部分入库'
 
 
 class SaleOrderLine(models.Model):

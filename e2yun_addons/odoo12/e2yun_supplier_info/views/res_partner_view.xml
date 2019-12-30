@@ -29,6 +29,7 @@
             </xpath>
             <xpath expr="//field[@name='lang']" position="after">
                 <field name="company_profile" attrs="{'invisible':[('supplier','=',False)]}"/>
+                <field name="supplier_code" attrs="{'invisible':[('supplier','=',False)]}" readonly="1"/>
             </xpath>
             <!--隐藏不需要的字段-->
             <xpath expr="//field[@name='lang']" position="attributes">
@@ -107,15 +108,15 @@
                 <page name='info_company' string="公司信息">
                     <group name="container_row_2">
                         <group>
-                            <field name="business_license" />
+                            <field name="business_license" widget="image" options='{"size": [90, 90]}' />
                             <field name="validity_license" placeholder="与营业执照保持一致"/>
                             <field name="vat" placeholder="与营业执照保持一致"/>
                             <field name="registered_capital" placeholder="与营业执照保持一致"/>
-                            <field name="image_company"/>
+                            <field name="image_company" attrs="{'required': [('company_type', '=', 'company')]}" widget="image" options='{"size": [90, 90]}'/>
                         </group>
                         <group>
-                            <field name="organization_chart"/>
-                            <field name="image_product"/>
+                            <field name="organization_chart" attrs="{'required': [('company_type', '=', 'company')]}" widget="image" options='{"size": [90, 90]}'/>
+                            <field name="image_product" widget="image" options='{"size": [90, 90]}'/>
                         </group>
                     </group>
                 </page>
@@ -136,7 +137,7 @@
                             <field name="name_account"/>
                             <field name="currency_type"/>
                             <field name="code_bank"/>
-                            <field name="enclosure_bank"/>
+                            <field name="enclosure_bank" widget="image" options='{"size": [90, 90]}'/>
                         </group>
                         <!--<group>-->
                             <!---->

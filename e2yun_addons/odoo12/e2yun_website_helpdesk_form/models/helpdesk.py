@@ -27,6 +27,9 @@ class HelpdeskTicket(models.Model):
     matnrs = fields.Char('物料')
     arktxs = fields.Char('物料描述')
     posserviceorderid = fields.Char('POS服务订单编号')
+    area_id = fields.Char('地区')
+    city_id = fields.Char('城市')
+    state_id = fields.Char('区县')
 
     @api.model
     def create(self, vals):
@@ -244,6 +247,8 @@ class HelpdeskTicket(models.Model):
         # datajsonstring['store'] = self.partner_id.shop_code.shop_code
         store = '100002002' if bukrs == '1000' else '200002002'
         datajsonstring['store'] = store
+        datajsonstring['matnrs'] = self.matnrs
+        datajsonstring['arktxs'] = self.arktxs
         result = client.service.synServiceOrderFromCrm(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
 
         resultjson = json.loads(result)

@@ -6,7 +6,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'web', 'mail', 'im_livechat', 'sale_management', 'wx_tools'],
+    'depends': ['base', 'web', 'mail', 'im_livechat', 'sale_management'],
 
     # always loaded
     'data': [
@@ -14,9 +14,11 @@
         'views/outbound_report_dashboard.xml',
         'views/sales_team_goal.xml',
         'views/target_completion_report.xml',
+        'views/data_sources.xml',
     ],
     'qweb': [
         'static/src/xml/outbound_button_template.xml',
+        # 'static/src/xml/completion_button_template.xml',
              ],
     'installable': True,
     'application': True,

@@ -3,5 +3,34 @@
     <data>
 
 
+        <record id="online_im_livechat_channel_view_form" model="ir.ui.view">
+            <field name="name">im_livechat.channel.form</field>
+            <field name="model">im_livechat.channel</field>
+            <field name="inherit_id" ref="im_livechat.im_livechat_channel_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('o_kanban_details')]" position="inside">
+                    <span class="o_right">
+                         设置默认客服
+                        <field name="is_defaultlivechat" widget="boolean_toggle" nolabel="1" force_save="1"/>
+                    </span>
+                </xpath>
+            </field>
+        </record>
+
+    <template id="e2yun_website_helpdesk_form_loader" inherit_id="im_livechat.loader" name="my_load">
+        <xpath expr="//t[@t-if='web_session_required']" position="after">
+            var im_livechatnotusepage = '<t t-esc="request.env['ir.config_parameter'].sudo().get_param('im_livechatnotusepage')"/>';
+            var httprequest = "<t t-esc="request.httprequest.path"/>";
+            urlnotin = im_livechatnotusepage.split('|');
+            for (var i in urlnotin) {
+                     if (httprequest.indexOf(urlnotin[i])>-1 ){
+                         return;
+                     }
+            }
+        </xpath>
+
+    </template>
+
+
     </data>
 </odoo>

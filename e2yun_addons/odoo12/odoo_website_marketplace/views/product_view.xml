@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- <record id="search_view_product_template_inherit" model="ir.ui.view">
+            <field name="name">product.template.search</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='activities_upcoming_all']" position="after">
+                    
+                </xpath>
+            </field>
+        </record>
+ -->
+        <record id="product.product_template_search_view" model="ir.ui.view">
+        <field name="name">product.template.search</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <search string="Product">
+                <field name="name" string="Product" filter_domain="['|','|',('default_code','ilike',self),('name','ilike',self),('barcode','ilike',self)]"/>
+                <field name="categ_id" filter_domain="[('categ_id', 'child_of', raw_value)]"/>
+                <separator/>
+                <filter string="Services" name="services" domain="[('type','=','service')]"/>
+                <filter string="Products" name="consumable" domain="[('type', 'in', ['consu', 'product'])]"/>
+                <separator/>
+                <filter string="Can be Sold" name="filter_to_sell" domain="[('sale_ok','=',1)]"/>
+                <filter string="Can be Purchased" name="filter_to_purchase" domain="[('purchase_ok', '=', 1)]"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+                <field string="Attributes" name="attribute_line_ids" groups="product.group_product_variant"/>
+                <field name="pricelist_id" widget="selection" context="{'pricelist': self}" filter_domain="[]" groups="product.group_sale_pricelist"/> <!-- Keep widget=selection on this field to pass numeric `self` value, which is not the case for regular m2o widgets! -->
+                <separator/>
+                <filter string="Late Activities" name="activities_overdue"
+                    domain="[('activity_ids.date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
+                    help="Show all records which has next action date is before today"/>
+                <filter string="Today Activities" name="activities_today"
+                    domain="[('activity_ids.date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="Future Activities" name="activities_upcoming_all"
+                    domain="[('activity_ids.date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))
+                    ]"/>
+
+                <group expand="1" string="Group By">
+                    <filter string="state" name="state" context="{'group_by': 'state'}"/>
+                    <filter string="seller_id" name="Sellers" context="{'group_by': 'seller_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+
+        <record model="ir.ui.view" id="product_template_kanban_seller_view">
+            <field name="name">Product Template Kanban Seller</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_kanban_view"/>
+            <field name="arch" type="xml">
+                <field name="lst_price" position="after">
+                    <field name="seller_id"/>
+                </field>
+                <ul position="inside">
+                    <li t-if="record.seller_id.raw_value">Seller: <strong style="color:#212121;"><field name="seller_id"/></strong></li>
+                </ul>
+            </field>
+        </record>
+
+
+        <record id="action_seller_non_approve_product" model="ir.actions.act_window">
+            <field name="name"> Non Approve Products</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">kanban,tree,form</field>
+            
+            <field name="view_id" ref="product.product_template_kanban_view"/>
+            <field name="context">{"search_default_state":1}</field>
+            <field name="domain">[('state','in',('draft','waiting','cancel'))]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to define a new product.
+                </p><p>
+                    You must define a product for everything you sell, whether it's a physical product, a consumable or a service you offer to  customers.
+                </p><p>
+                    The product form contains information to simplify the sale process: price, notes in the quotation, accounting data, procurement methods, etc.
+                </p>
+            </field>
+        </record>
+
+        <record id="action_seller_approve_product" model="ir.actions.act_window">
+            <field name="name">Approve Products</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">kanban,tree,form</field>
+            
+            <field name="view_id" ref="product.product_template_kanban_view"/>
+            <field name="domain">[('state','=','approve')]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to define a new product.
+                </p><p>
+                    You must define a product for everything you sell, whether it's a physical product, a consumable or a service you offer to  customers.
+                </p><p>
+                    The product form contains information to simplify the sale process: price, notes in the quotation, accounting data, procurement methods, etc.
+                </p>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="marketplace_product_template_inherit_bi_form_view">
+            <field name="name">marketplace.prouct.template.inherit.bi.form.view</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <!-- <xpath expr="/form" position="inside"> -->
+                    <header position="inside">
+                        <button name="set_to_draft" string="Set to Draft" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'cancel')]}" groups="odoo_website_marketplace.group_market_place_manager"/>
+                        <button name="request_approve" string="Request For Approve" type="object" states="draft" class="btn-primary" groups="odoo_website_marketplace.group_market_place_seller"/>
+                        <button name="approve_product" string="Approve" type="object" states="waiting" class="btn-primary" groups="odoo_website_marketplace.group_market_place_manager" attrs="{'invisible': [('state', 'in',('draft','approve','cancel'))]}"/>
+                        <button name="reject_product" string="Deny" type="object" states="waiting" groups="odoo_website_marketplace.group_market_place_manager" attrs="{'invisible': [('state', 'in', ('draft','cancel'))]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,waiting,approve,cancel" />
+                        <button string="Update Product Quantity" type="action" name="%(odoo_website_marketplace.bi_qty_request_action)d" groups="odoo_website_marketplace.group_market_place_seller" attrs="{'invisible': ['|',('state', 'not in',('approve')),('type', '!=', 'product')]}"/>
+                    </header>
+                <!-- </xpath> -->
+                <notebook position="inside">
+                    <page name="market_place" string="Marketplace" groups="odoo_website_marketplace.group_market_place_manager">
+                        <group>
+                            <field name="seller_id"/>
+                        </group>
+                       <!--  <group>
+                            <field name="product_categ_ids" widget="many2many_tags"/>
+                        </group> -->
+                    </page>
+                </notebook>
+
+                <!-- <xpath expr="//button[@name='website_publish_button']" position="replace">
+                    <button class="oe_stat_button" name="website_publish_button"
+                        type="object" icon="fa-globe" attrs="{'invisible': [('sale_ok','=',False),('state','!=','approve')]}">
+                        <field name="website_published" widget="website_button"/>
+                        <field name="is_published" invisible="1"/>
+                    </button>
+                </xpath>
+ -->
+            </field>
+        </record>
+        
+<!--         <record model="ir.ui.view" id="product_template_form_view_inherit">
+            <field name="name">product.template.product.website.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="website_sale.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <header position="inside">
+                    <field name="state" widget="statusbar" invisible="0"/>
+                </header>
+                <xpath expr="//button[@name='website_publish_button']" position="replace">
+                    <button class="oe_stat_button" name="website_publish_button"
+                        type="object" icon="fa-globe" attrs="{'invisible': [('sale_ok','=',False),('state','!=','approve')]}">
+                        <field name="website_published" widget="website_button"/>
+                        <field name="is_published" invisible="1"/>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+ -->
+
+
+        <record id="action_create_product" model="ir.actions.act_window">
+            <field name="name">Create New Product</field>
+            <field name="res_model">product.template</field>
+            
+            <field name="view_mode">form</field>
+        </record>
+
+        <menuitem id="product_menu" parent="seller_dashboard_menu" name="Product" groups="odoo_website_marketplace.group_market_place_seller"/>
+
+        <menuitem id= "pending_seller_product_menu" parent= "product_menu" name= "Non Approve Product" action="action_seller_non_approve_product" />
+            
+        <menuitem id= "pending_seller_approve_product_menu" parent= "product_menu" name= "Approve Product" action="action_seller_approve_product" />
+
+        <menuitem id="create_new_product_menu" parent="product_menu" name="Create New Product" action="action_create_product" sequence="1" />
+
+    </data>
+</odoo>

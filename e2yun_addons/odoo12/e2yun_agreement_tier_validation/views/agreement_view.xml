@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Eficent Business and IT Consulting Services S.L.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record id="agreement_form_view_extend" model="ir.ui.view">
+        <field name="name">agreement.form.view</field>
+        <field name="model">agreement</field>
+        <field name="inherit_id" ref="agreement_legal.partner_agreement_form_view"/>
+        <field name="arch" type="xml">
+            <button name="create_new_agreement" position="before">
+                <button name="request_validation"
+                    string="Request Validation"
+                    attrs="{'invisible': ['|','|',('need_validation', '!=', True),('rejected','=',True)]}"
+                    type="object"/>
+                <button name="restart_validation"
+                    string="Restart Validation"
+                    attrs="{'invisible': ['|',('review_ids', '=', [])]}"
+                    type="object"/>
+                  <!--<button name="reject_tier"
+                    string="驳回"
+                    attrs="{'invisible': ['|',('review_ids', '=', [])]}"
+                    class="btn btn-icon btn-danger"
+                    type="object"/>                    --> <!-- class="btn btn-primary"-->
+
+            </button>
+            <header position="after">
+                <field name="need_validation" invisible="1"/>
+                <field name="validated" invisible="1"/>
+                <field name="rejected" invisible="1"/>
+                <div class="alert alert-warning"
+                     role="alert"
+                     attrs="{'invisible': ['|', '|', '|',
+                     ('validated', '=', True),
+                     ('rejected', '=', True), ('review_ids', '=', [])]}"
+                     style="margin-bottom:0px;">
+                    <p><i class="fa fa-info-circle"/>This Agreement needs to be
+                        validated.
+                        <field name="can_review" invisible="1"/>
+                        <field name="approve_sequence" invisible="1"/>
+                        <button name="validate_tier"
+                                string="Validate"
+                                attrs="{'invisible': [('can_review', '=', False)]}"
+                                type="object"
+                                class="oe_inline oe_button btn-success"
+                                icon="fa-thumbs-up"/>
+                        <button name="rebut_tier"
+                                string="Rebut"
+                                attrs="{'invisible': ['|', '|',('approve_sequence', '=', True),('can_review', '=', False)]}"
+                                type="object"
+                                class="btn-icon btn-danger"
+                                icon="fa-thumbs-down"/>
+                        <button name="reject_tier"
+                                string="Reject"
+                                attrs="{'invisible': [('can_review', '=', False)]}"
+                                type="object"
+                                class="btn-icon btn-warning"
+                                icon="fa-thumbs-down"/>
+                    </p>
+                </div>
+                <div class="alert alert-success"
+                     role="alert"
+                     attrs="{'invisible': ['|', '|', ('validated', '!=', True), ('review_ids', '=', [])]}"
+                     style="margin-bottom:0px;">
+                    <p><i class="fa fa-thumbs-up"/> Operation has been <b>validated</b>!</p>
+                </div>
+                <div class="alert alert-danger"
+                     role="alert"
+                     attrs="{'invisible': ['|', '|', ('rejected', '!=', True), ('review_ids', '=', [])]}"
+                     style="margin-bottom:0px;">
+                    <p><i class="fa fa-thumbs-down"/> Operation has been <b>rejected</b>.</p>
+                </div>
+            </header>
+            <xpath expr="//form/div[hasclass('oe_chatter')]" position="before">
+                <field name="review_ids" widget="tier_validation" attrs="{'invisible':[('review_ids', '=', [])]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_agreement_filter" model="ir.ui.view">
+        <field name="name">agreement.select - agreement_tier_validation</field>
+        <field name="model">agreement</field>
+        <field name="arch" type="xml">
+            <search string="Search Agreement">
+                <filter name="needs_review" string="Needs my Review"
+                        domain="[('reviewer_ids','in',uid)]"
+                        help="My Agreement to review"/>  <!--'&lt;'-->
+                <filter name="tier_validated" string="Validated"
+                        domain="[('validated', '=', True)]"
+                        help="Agreement validated and ready to be confirmed"/>
+            </search>
+        </field>
+    </record>
+
+</odoo>

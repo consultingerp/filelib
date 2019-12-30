@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api, _, exceptions
+import logging
+_logger = logging.getLogger(__name__)
+
+
 import warnings
 
 class Questionnaire(models.Model):
@@ -74,43 +78,27 @@ class E2yunTaskInfo(models.Model):
     def _on_change_multiple_questionnaires(self):
         if self.multiple_questionnaires == 'no':
             if len(self.questionnaire_ids) > 1:
+                a = self.questionnaire_ids
                 question_no1 = self.questionnaire_ids[0]
                 self.questionnaire_ids = question_no1
 
-
-    # temp_ids = fields.One2many('survey.survey', 'task_id', string='问卷模板')
-    # @api.multi
-    # def weight_write(self, vals):
-    #     print("@@@@@@@@@@@@@@@@@@@@@")
-    #     res = super(E2yunTaskInfo, self).write(vals)
-    #     for item in self:
-    #         all_score = 0
-    #         for record in item.questionnaire_ids:
-    #             str_weight = record.weight
-    #             if str_weight:
-    #                 int_weight = int(str_weight[:1])
-    #                 all_score += int_weight
-    #         if all_score > 100:
-    #             raise Warning(_('权重之和大于100%，请重新输入'))
-    #     return res
-
-    @api.multi
+    @api.one
     def write(self, vals):
         res = super(E2yunTaskInfo, self).write(vals)
-        for item in self:
-            if item.multiple_questionnaires and item.multiple_questionnaires == 'no':
-                item.questionnaire_ids.weight = '100%'
-            all_score = 0
-            for record in item.questionnaire_ids:
-                str_weight = record.weight
-                if str_weight:
-                    int_weight = int(str_weight[:-1])
-                    all_score += int_weight
-            if all_score > 100:
-                # raise Warning(_('权重之和大于100%，请重新输入'))
-                raise exceptions.Warning(_('权重之和大于100%，请重新输入'))
+        if self.multiple_questionnaires == 'no' and len(self.questionnaire_ids) == 0:
+            raise exceptions.Warning(_('请先维护行信息！'))
+        if self.multiple_questionnaires and self.multiple_questionnaires == 'no':
+            self.questionnaire_ids.weight = '100%'
+        all_score = 0
+        for record in self.questionnaire_ids:
+            str_weight = record.weight
+            if str_weight:
+                int_weight = int(str_weight[:-1])
+                all_score += int_weight
+        if all_score > 100:
+            # raise Warning(_('权重之和大于100%，请重新输入'))
+            raise exceptions.Warning(_('权重之和大于100%，请重新输入'))
         return res
-
 
     # 任务页面打开问卷页面的方法
     @api.multi
@@ -144,13 +132,7 @@ class E2yunTaskInfo(models.Model):
     #         res.survey_id = res.survey_temp_id.copy().id
     #     return res
 
-    # @api.multi
-    # def write(self, vals):
-    #     res = super(E2yunTaskInfo, self).write(vals)
-    #     for item in self:
-    #         if not item.survey_id and item.survey_temp_id:
-    #             item.survey_id = item.survey_temp_id.copy().id
-    #     return res
+
 
 class E2yunProjectSurvey(models.Model):
     _inherit = 'survey.survey'
@@ -188,26 +170,32 @@ class E2yunProjectSurvey(models.Model):
     questionnaire_classification = fields.Selection([('Internally', '对内'), ('Foreign', '对外')], string='问卷分类')
     questionnaire_scenario = fields.Selection([('评分问卷', '评分问卷'), ('资质调查', '资质调查'), ('满意度调查', '满意度调查'),
          ('报名登记表', '报名登记表'), ('其他', '其他')], string='问卷场景')
-    # questionnaire_id = fields.Many2one('project.questionnaire', 'survey_temp_id', string='')
-    # task_id = fields.Many2one('project.task', related='questionnaire_id.', string='任务')
+
+    # @api.one
+    # def write(self, vals):
+    #     res = super(E2yunProjectSurvey, self).write(vals)
+    #     return res
 
     # 权重百分比之和为100%，超出则弹框提醒
-    @api.multi
+    @api.one
     def write(self, vals):
         res = super(E2yunProjectSurvey, self).write(vals)
-        for item in self:
-            all_weight = 0
-            for l in item.page_ids:
-                if l.weight:
-                    i = l.weight[:-1]
-                    all_weight += int(i)
-            if all_weight > 100:
-                # warnings.warn('权重之和大于100%，请重新输入')
-                # raise ValueError('权重之和大于100%，请重新输入')
-                # raise Warning(_('权重之和大于100%，请重新输入'))
-                raise exceptions.Warning(_('权重之和大于100%，请重新输入'))
+        all_weight = 0
+        for l in self.page_ids:
+            if l.weight:
+                i = l.weight[:-1]
+                all_weight += int(i)
+        if all_weight > 100:
+            # warnings.warn('权重之和大于100%，请重新输入')
+            # raise ValueError('权重之和大于100%，请重新输入')
+            # raise Warning(_('权重之和大于100%，请重新输入'))
+            raise exceptions.Warning(_('权重之和大于100%，请重新输入'))
+        # self.copy()
         return res
 
+    # def get_formview_id(self, access_uid=None):
+    #     res = super(E2yunProjectSurvey,self).get_formview_id(access_uid)
+    #     return res
 
 
 class SurveyPage(models.Model):
@@ -215,8 +203,8 @@ class SurveyPage(models.Model):
 
     # 调查问卷page页面添加’权重‘字段
     weight = fields.Char(string='权重')
-    # 网页标题变更为段落
-    # weight_unit = fields.Char(string='单位', default='%')
+    # 小计
+    x_studio_survey_page_sum = fields.Integer(string='小计')
     # 权重百分比
     @api.onchange('weight')
     def _onchange_weight(self):
@@ -227,35 +215,15 @@ class SurveyPage(models.Model):
                 self.weight = str(self.weight) + '%'
         else:
             self.weight = ''
-
-    # 权重百分比之和为100%，超出则弹框提醒
-    # @api.onchange('weight')
-    # def onchange_weightt(self):
-    #     all_weight = 0
-    #     res = self.weight
-    #     # record = self.env['survey.page'].search([('weight', '=', res)])
-    #     # id = record['survey_id'].id
-    #     # records = self.env['survey.page'].search([('survey_id', '=', id)])
-    #     ctx = self.env.context
-    #     print(ctx, '*******************')
-    #     record = self.env['survey.survey'].search([('id', '=', ctx['default_survey_id'])])
-    #     print(record, '###########')
-    #     records = record.page_ids
-    #     print(records, '!!!!!!!!!!!!!1')
-    #     for item in records:
-    #         # i = item.weight[:-1]
-    #         i = item.weight
-    #         all_weight += int(i)
-    #     if all_weight > 100:
-    #         return {
-    #             'warning': {
-    #                 'title': _("检查到错误"),
-    #                 'message': _(
-    #                     "权重之和大于100%，请重新输入")
-    #             }
-    #         }
-    #     return res
-
+    # 小计逻辑
+    @api.onchange('question_ids')
+    def _onchange_page_sum(self):
+        res = self.question_ids
+        if res:
+            all_score = 0
+            for i in res:
+                all_score += int(i.highest_score)
+            self.x_studio_survey_page_sum = all_score
 
 class SurveyQuestion(models.Model):
     _inherit = 'survey.question'
@@ -267,6 +235,18 @@ class SurveyQuestion(models.Model):
     page_id = fields.Many2one('survey.page', string='Survey page',
                               ondelete='cascade', required=False, default=lambda self: self.env.context.get('page_id'))
     type_id = fields.Many2one('question.type', string='问题类型')
+    type_name = fields.Char(string='问题类型', related='type_id.display_name_chs')
+
+    @api.multi
+    def validate_question(self, post, answer_tag):
+        self.ensure_one()
+        try:
+            checker = getattr(self, 'validate_' + self.type_id.name)
+        except AttributeError:
+            _logger.warning(self.type + ": This type of question has no validation method")
+            return {}
+        else:
+            return checker(post, answer_tag)
 
     @api.onchange('labels_ids')
     def _onchange_score(self):
@@ -284,45 +264,90 @@ class SurveyQuestion(models.Model):
     def reference(self):
         self.question = self.reference_existing_question.question
         self.question_bank_type = self.reference_existing_question.question_bank_type
-        self.type = self.reference_existing_question.type
+        self.type_id = self.reference_existing_question.type_id
         self.scoring_method = self.reference_existing_question.scoring_method
         self.labels_ids = self.reference_existing_question.labels_ids
 
-    # 唯一性计分分值超出则弹框提醒
+    # 唯一性计分分值超出则弹框提醒；选择性计分只能有唯一答案，但每个选项都有分数，否则弹框提醒。
     @api.multi
     def write(self, vals):
+        if 'type_id' in vals:
+            type_id = vals.get('type_id')
+            question_type_item = self.env['question.type'].browse(type_id)
+            if question_type_item:
+                question_type_name = question_type_item.name
+                if question_type_name in ['file', 'pull_down', 'score']:
+                    question_type_name = 'free_text'
+                vals['type'] = question_type_name
         res = super(SurveyQuestion, self).write(vals)
         for item in self:
             if item.scoring_method == '唯一性计分':
                 if item.labels_ids:
-                    count = 0
+                    # count = 0
                     all = []
                     for l in item.labels_ids:
-                        count += 1
-                        all.append(l.quizz_mark)
-                    statistics = all.count(0.0)
-                    if count > 2 or count == 1 or statistics > 1 or statistics == 0:
+                        # count += 1
+                        if l.quizz_mark > 0.0:
+                            all.append(l.quizz_mark)
+                    if len(all) >= 2:
+                    # statistics = all.count(0.0)
+                    # if count > 2 or count == 1 or statistics == 0:
                         raise exceptions.Warning(_('唯一性计分只能给一个选项赋值，其他为0，请重新输入'))
+            elif item.scoring_method == '选择性计分':
+                if item.labels_ids:
+                    for l in item.labels_ids:
+                        if l.quizz_mark == 0:
+                            raise exceptions.Warning(_('选择性计分每个选项都有分值，请重新输入'))
         return res
 
-    # ⑥创建问题保存时，系统校验 “题库大类”和“计分方式”是否选择，如果未选择，则弹出提示“计分方式未选择，请选择”；
+    # ⑥创建问题保存时，系统校验 “题库大类”和“计分方式”是否选择，如果未选择，则弹出提示“计分方式未选择，请选择”；# 唯一性计分分值超出则弹框提醒；选择性计分只能有唯一答案，但每个选项都有分数，否则弹框提醒。
     @api.model
     def create(self, vals):
+        if 'type_id' in vals:
+            type_id = vals.get('type_id')
+            question_type_item = self.env['question.type'].browse(type_id)
+            if question_type_item:
+                question_type_name = question_type_item.name
+                if question_type_name in ['file', 'pull_down', 'score']:
+                    question_type_name = 'free_text'
+                vals['type'] = question_type_name
         res = super(SurveyQuestion, self).create(vals)
+        if res.scoring_method == '唯一性计分':
+            if res.labels_ids:
+                # count = 0
+                all = []
+                for l in self.labels_ids:
+                    if l.quizz_mark > 0.0:
+                        all.append(l.quizz_mark)
+                # statistics = all.count(0.0)
+                # if count > 2 or count == 1 or statistics > 1 or statistics == 0:
+                if len(all) >= 2:
+                    raise exceptions.Warning(_('唯一性计分只能给一个选项赋值，其他为0，请重新输入'))
+        elif res.scoring_method == '选择性计分':
+            if res.labels_ids:
+                for l in res.labels_ids:
+                    if l.quizz_mark == 0:
+                        raise exceptions.Warning(_('选择性计分每个选项都有分值，请重新输入'))
         if not res.question_bank_type or not res.scoring_method:
             raise exceptions.Warning(_('题库大类或计分方式未选择，请选择'))
         return res
 
-    # @api.depends('new_type')
-    # @api.onchange('new_type')
-    # def onchange_question_type(self):
-    #     code = self.new_type.name
-    #     if code != '单选题' or code != '多选' or code != '矩阵':
-    #         self.labels_ids = int()
 
 class NewQuestionType(models.Model):
     _name = 'question.type'
 
-    name = fields.Char(string='问题类型的名称')
+    name = fields.Char(string='问题类型的名称', required=True)
+    display_name_chs = fields.Char(string='问题类型中文名称', required=True)
     type_html = fields.Html(string='问题类型的样式')
+    question_ids = fields.One2many('survey.question', 'type_id', string='问题')
+
+    @api.multi
+    def name_get(self):
+        res = []
+        for question_type in self:
+            name = question_type.display_name_chs
+            res.append((question_type.id, name))
+        return res
+
+
 

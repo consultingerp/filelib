@@ -14,12 +14,12 @@
     <!-- ************************* CSS Files ************************* -->
 
     <!-- Vendor CSS -->
-    <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/vendor.css">
+    <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/vendor.css?version=1.0">
 
     <!-- style css -->
-    <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/main.css">
+    <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/main.css?version=1.0">
     <!--<link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/mui.min.css">-->
-    <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/my.css">
+    <link rel="stylesheet" href="/e2yun_online_shop_extends/static/src/assets/css/my.css?version=1.0">
 
     <!-- slide menu css-->
 <!--    <link rel="stylesheet" type="text/css" href="/e2yun_online_shop_extends/static/src/assets/slide-menu/css/style.css" />-->
@@ -51,6 +51,9 @@
                                         <div class="logo">
                                             <a href="/hhjc_shop_index" class="logo--normal">
                                                 <img src="/e2yun_online_shop_extends/static/src/assets/img/logo/LOGOhhjc.jpeg" height="35" width="35" alt="Logo">
+                                            </a>
+                                            <a href="/hhjc_shop_index" class="logo--normal">
+                                                <img src="/e2yun_online_shop_extends/static/src/assets/img/homepage.png" height="35" width="35" alt="Homepage">
                                             </a>
                                         </div>
                                     </div>
@@ -324,18 +327,20 @@
 
                                                 <div class="header-toolbar__item header-toolbar--search-btn">
                                                     <a href="#searchForm" class="header-toolbar__btn toolbar-btn">
-                                                        <i class="la la-search"></i>
+                                                        <img style="width: 20px;height: 20px; float: right;" src="/e2yun_online_shop_extends/static/src/assets/img/search.png" alt="搜索"/>
+                                                        <!--<i class="la la-search"></i>-->
                                                     </a>
                                                 </div>
                                                 <div class="header-toolbar__item header-toolbar--minicart-btn">
                                                     <a href="#miniCart" class="header-toolbar__btn toolbar-btn">
-                                                        <i class="la la-shopping-cart"></i>
+                                                        <img style="width: 20px;height: 20px; float: right;" src="/e2yun_online_shop_extends/static/src/assets/img/cart.png" alt="购物车"/>
+                                                        <!--<i class="la la-shopping-cart"></i>-->
                                                     </a>
 
                                                 </div>
                                                 <div class="header-toolbar__item d-block d-lg-none">
                                                     <a style="float: right;" href="/hhjc_shop_order_list">
-                                                        <img style="width: 18px;height: 18px; float: right;" src="e2yun_online_shop_extends/static/src/assets/img/order.jpg" alt="我的订单"/>
+                                                        <img style="width: 20px;height: 20px; float: right;" src="/e2yun_online_shop_extends/static/src/assets/img/order.png" alt="我的订单"/>
                                                     </a>
                                                 </div>
                                                 <!--<div class="header-toolbar__item d-block d-lg-none">-->
@@ -345,22 +350,22 @@
                                                 <!--</div>-->
                                                 <div style="float: right;" class="header-toolbar__item d-block d-lg-none">
                                                     <a href="#categoryMenu" class="header-toolbar__btn toolbar-btn menu-btn">
-                                                        <img style="width: 30px;height: 30px;" src="/e2yun_online_shop_extends/static/src/assets/img/fenlei.png" alt="分类"/>
+                                                        <img style="width: 20px;height: 20px;" src="/e2yun_online_shop_extends/static/src/assets/img/category_icon.png?version=0.1" alt="分类"/>
                                                     </a>
                                                 </div>
 
-                                                <div class="header-toolbar__item d-block d-lg-none">
-                                                    <a href="#offcanvasMenu" class="header-toolbar__btn toolbar-btn menu-btn">
-                                                        <div class="hamburger-icon">
-                                                            <span></span>
-                                                            <span></span>
-                                                            <span></span>
-                                                            <span></span>
-                                                            <span></span>
-                                                            <span></span>
-                                                        </div>
-                                                    </a>
-                                                </div>
+<!--                                                <div class="header-toolbar__item d-block d-lg-none">-->
+<!--                                                    <a href="#offcanvasMenu" class="header-toolbar__btn toolbar-btn menu-btn">-->
+<!--                                                        <div class="hamburger-icon">-->
+<!--                                                            <span></span>-->
+<!--                                                            <span></span>-->
+<!--                                                            <span></span>-->
+<!--                                                            <span></span>-->
+<!--                                                            <span></span>-->
+<!--                                                            <span></span>-->
+<!--                                                        </div>-->
+<!--                                                    </a>-->
+<!--                                                </div>-->
                                             </div>
                                         </div>
                                     </div>
@@ -392,7 +397,7 @@
 
         <!-- Main Content Wrapper Start -->
         <div  class="main-content-wrapper">
-            <div class="shop-page-wrapper ptb--80">
+            <div class="shop-page-wrapper ptb--20">
                 <div class="container">
                     <div class="row">
                         <!--TODO：!!!侧边栏（包括类别选择和筛选条件）-->
@@ -536,9 +541,9 @@
                                 <div class="row align-items-center">
                                     <div class="col-md-5 mb-sm--30 mb-xs--10">
                                         <div class="shop-toolbar__left">
-                                            <div class="product-ordering">
+                                            <div class="product-ordering" style="float: left;width: 120px;">
                                                 <!--TODO:列表排序方式选择-->
-                                                <select class="product-ordering__select nice-select" id="sort_chooser" onchange="sort_chooser()">
+                                                <select class="product-ordering__select nice-select" style="width: 120px;" id="sort_chooser" onchange="sort_chooser()">
                                                     <option value="0">默认排序</option>
                                                     <option value="1">名称升序</option>
                                                     <option value="2">名称降序</option>
@@ -552,11 +557,16 @@
                                                     <option value="10">上架时间降序</option>
                                                 </select>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <div class="shop-toolbar__right d-flex justify-content-md-end justify-content-start flex-sm-row flex-column">
-<!--                                            <p class="product-pages">Showing Result  08 Among  72</p>-->
+
+                                            <div class="product-ordering" style="float: left; margin-left: 30px; margin-right: 20px;">
+                                                <!--TODO:地区选择-->
+                                                <select class="product-area__select nice-select" id="area_chooser" onchange="area_chooser()">
+                                                    <option value="0">当前地区</option>
+                                                    <option value="1">广东地区</option>
+                                                    <option value="2">北京地区</option>
+                                                </select>
+                                            </div>
+
                                             <div class="product-view-mode ml--50 ml-xs--0">
                                                 <!--TODO:切换视图形式（列表or块状）-->
                                                 <a class="active" href="#" data-target="grid">
@@ -568,10 +578,12 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                             <div class="shop-products list">
                                 <div class="row" id="shop_product_list">
+
 <!--                                    &lt;!&ndash;TODO: 产品列表(Grid模式和列表模式结合的)&ndash;&gt;-->
 <!--                                    <div class="col-xl-4 col-sm-6 mb&#45;&#45;50">-->
 <!--                                        &lt;!&ndash;TODO：Grid模式&ndash;&gt;-->
@@ -2069,7 +2081,7 @@
         <div class="searchform__popup" id="searchForm">
             <a href="#" class="btn-close"><i class="la la-remove"></i></a>
             <div class="searchform__body">
-                <p>Start typing and press Enter to search</p>
+                <p>请输入要搜索的产品名称</p>
                 <form class="searchform">
                     <input type="text" name="popup-search" id="popup-search" class="searchform__input" placeholder="请输入要搜索的产品名称">
                     <button type="button" class="searchform__submit" onclick="search_product_list()"><i class="la la-search"></i></button>
@@ -2227,21 +2239,24 @@
 
     <!-- ************************* JS Files ************************* -->
     <!-- jQuery JS -->
-    <script src="/e2yun_online_shop_extends/static/src/assets/js/vendor.js"></script>
+    <script src="/e2yun_online_shop_extends/static/src/assets/js/vendor.js?version=1.0"></script>
 
     <!-- Main JS -->
-    <script src="/e2yun_online_shop_extends/static/src/assets/js/main.js"></script>
+    <script src="/e2yun_online_shop_extends/static/src/assets/js/main.js?version=1.0"></script>
 
     <!--<script src="/e2yun_online_shop_extends/static/src/assets/js/mui.min.js"></script>-->
 
     <!-- 购物车相关js代码-->
-    <script src="/e2yun_online_shop_extends/static/src/assets/js/cart.js"></script>
+    <script src="/e2yun_online_shop_extends/static/src/assets/js/cart.js?version=1.2"></script>
+
+
+    <script src="/e2yun_online_shop_extends/static/src/assets/js/user_info.js?version=1.1"></script>
 
 
 
     <!--Ajax JS-->
 <script>
-         window.onload=function(){
+ window.onload=function(){
     var get_category_xhr = new XMLHttpRequest();
 
     get_category_xhr.open("GET", "/online_shop/get_category", true);
@@ -2252,28 +2267,42 @@
             document.getElementById("category_menu_replace").innerHTML = get_category_xhr.responseText;
         }
     }
-    var get_product_list_xhr = new this.XMLHttpRequest();
 
-        get_product_list_xhr.open("GET", "/online_shop/get_product_list_by_category/99999", true)
+    var self = this;
+    $.get('/online_shop/get_default_product_category',{},function(datas){
+        var d = JSON.parse(datas);
+        var category_id = 99999
+        if(d['default_product_category']){
+            category_id = d['default_product_category']
+        }
+
+         var area_id = document.getElementById("area_chooser").value
+
+        var get_product_list_xhr = new self.XMLHttpRequest();
+
+        get_product_list_xhr.open("GET", "/online_shop/get_product_list_by_category/"+category_id+"?area_id="+area_id, true)
         get_product_list_xhr.send();
 
         get_product_list_xhr.onreadystatechange = function(){
             if (get_product_list_xhr.readyState == 4 && get_product_list_xhr.status == 200) {
                 document.getElementById("shop_product_list").innerHTML = get_product_list_xhr.responseText;
-                sessionStorage.setItem("current_category_id", 99999);
+                sessionStorage.setItem("current_category_id", category_id);
                 $('.list_btn_add_cart').click(function(e){
                     return list_btn_add_cart_click(e)
                 });
 
-
-
             }
         }
-    }
+
+    });
+
+
+}
 
      function show_goods_in_category(category_id){
      id = category_id.id.slice(14)
-     url = "/online_shop/get_product_list_by_category/" + id
+     var area_id = document.getElementById("area_chooser").value
+     url = "/online_shop/get_product_list_by_category/" + id+"?area_id="+area_id
      var get_product_list_xhr = new this.XMLHttpRequest();
 
     get_product_list_xhr.open("GET", url, true)
@@ -2284,6 +2313,9 @@
         if (get_product_list_xhr.readyState == 4 && get_product_list_xhr.status == 200) {
             document.getElementById("shop_product_list").innerHTML = get_product_list_xhr.responseText;
             sessionStorage.setItem("current_category_id", id);
+            $('.list_btn_add_cart').click(function(e){
+                    return list_btn_add_cart_click(e)
+                });
         }
     }
  }
@@ -2333,14 +2365,18 @@
             var $this = $('.btn-close')
             $this.parents('.open').removeClass('open');
 		    $('.global-overlay').removeClass('overlay-open');
+		    $('.list_btn_add_cart').click(function(e){
+                    return list_btn_add_cart_click(e)
+                });
         }
     }
 }
 
  function sort_chooser(){
     var chooser_id = document.getElementById("sort_chooser").value
+     var area_id = document.getElementById("area_chooser").value
     var current_category_id = sessionStorage.getItem("current_category_id");
-    url = "/online_shop/sort_product_list/" + current_category_id + "/" + chooser_id
+    url = "/online_shop/sort_product_list/" + current_category_id + "/" + chooser_id+"?area_id="+area_id
     var sort_product_list_xhr = new this.XMLHttpRequest();
 
     sort_product_list_xhr.open("GET", url, true)
@@ -2349,9 +2385,35 @@
     sort_product_list_xhr.onreadystatechange = function(){
         if (sort_product_list_xhr.readyState == 4 && sort_product_list_xhr.status == 200) {
             document.getElementById("shop_product_list").innerHTML = sort_product_list_xhr.responseText;
+            $('.list_btn_add_cart').click(function(e){
+                    return list_btn_add_cart_click(e)
+                });
         }
     }
  }
+
+ function area_chooser() {
+    var area_id = document.getElementById("area_chooser").value
+    sessionStorage.setItem("current_area_id", area_id);
+    sessionStorage.setItem("current_category_id", '99999');
+
+     var chooser_id = document.getElementById("sort_chooser").value
+    var current_category_id = sessionStorage.getItem("current_category_id");
+    url = "/online_shop/sort_product_list/" + current_category_id + "/" + chooser_id+"?area_id="+area_id;
+    var sort_product_list_xhr = new this.XMLHttpRequest();
+
+    sort_product_list_xhr.open("GET", url, true)
+    sort_product_list_xhr.send()
+
+    sort_product_list_xhr.onreadystatechange = function(){
+        if (sort_product_list_xhr.readyState == 4 && sort_product_list_xhr.status == 200) {
+            document.getElementById("shop_product_list").innerHTML = sort_product_list_xhr.responseText;
+            $('.list_btn_add_cart').click(function(e){
+                    return list_btn_add_cart_click(e)
+                });
+        }
+    }
+}
 
     </script>
 

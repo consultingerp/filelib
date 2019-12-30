@@ -7,6 +7,76 @@ class CrmTeamExtend(models.Model):
     _inherit = 'crm.team'
 
     def write(self, vals):
+        # if not self.use_invoices:
+        #     vals['use_invoices'] = False
+        #     return super(CrmTeamExtend, self).write(vals)
+        # else:
+        #     if 'team_year' not in vals and not self.team_year:
+        #         raise exceptions.Warning('请选择年份')
+        #     if 'team_target' not in vals:
+        #         raise exceptions.Warning('请填写门店目标')
+        #     if 'invoiced_target_detail' not in vals:
+        #         raise exceptions.Warning('请填写目标明细')
+        #     # 检查门店目标是否有重复值
+        #     target_year_list = vals['team_target']
+        #     year_list = []
+        #     for line in target_year_list:
+        #         year = line[2]['target_year']
+        #         if year != vals['team_year']:
+        #             raise exceptions.Warning('当前仅设置%s年的年度目标' % vals['team_year'])
+        #         if year in year_list:
+        #             raise exceptions.Warning('%s年的年度目标已存在' % year)
+        #         year_list.append(year)
+        #         total_target = line[2]['invoiced_target_year']
+        #         # 检查目标明细是否有重复值
+        #         target_detail_list = vals['invoiced_target_detail']
+        #         invoiced_target = 0
+        #         month_sale_dict = {}
+        #         for target in target_detail_list:
+        #             detail_year = target[2]['detail_year']
+        #             month = target[2]['target_month']
+        #             sale = target[2]['sales_member']
+        #             team_target_monthly = target[2]['team_target_monthly']
+        #             if detail_year != vals['team_year']:
+        #                 raise exceptions.Warning('当前仅设置%s年的目标明细' % year)
+        #             if month in month_sale_dict.keys() and month_sale_dict['%s' % month] == sale:
+        #                 raise exceptions.Warning('%s月份导购的目标值重复' % month)
+        #             month_sale_dict.update({month: sale})
+        #             invoiced_target += team_target_monthly
+        #         if invoiced_target > total_target:
+        #             raise exceptions.Warning('%s年：设定目标不能超过年度目标' % year)
+        #     res = super(CrmTeamExtend, self).write(vals)
+        # # 数据拷贝到相应的store模型中
+        # val = vals.copy()
+        # val['team_target_store'] = val['team_target']
+        # del val['team_target']
+        # team_target_year_store = self.env['team.target.year.store'].search([('team_id', '=', self.id)])
+        # for line in team_target_year_store:
+        #     year = line.target_year
+        #     target = line.invoiced_target_year
+        #     if val['team_year'] != year:
+        #         val['team_target_store'].append([0, 'virtual_%s' % range(100, 10000), {'target_year': year,
+        #                                                                                'invoiced_target_year': target}])
+        #
+        #     line.unlink()
+        # val['invoiced_target_detail_store'] = val['invoiced_target_detail']
+        # del val['invoiced_target_detail']
+        # team_target_detail_store = self.env['team.target.detail.store'].search([('current_team_id', '=', self.id)])
+        # for line in team_target_detail_store:
+        #     year = line.detail_year
+        #     month = line.target_month
+        #     target = line.team_target_monthly
+        #     sale = line.sales_member
+        #     if val['team_year'] != year:
+        #         val['invoiced_target_detail_store'].append([0, 'virtual_%s' % range(100, 10000),
+        #                                                     {'detail_year': year,
+        #                                                      'target_month': month,
+        #                                                      'team_target_monthly': target,
+        #                                                      'sales_member': sale}])
+        #     line.unlink()
+        # res = super(CrmTeamExtend, self).write(val)
+        # return res
+
         res = super(CrmTeamExtend, self).write(vals)
         # 验证目标设置逻辑
         if self.use_invoices and not self.team_year:
@@ -26,15 +96,13 @@ class CrmTeamExtend(models.Model):
             target_detail = self.env['team.target.detail'].search([('current_team_id', '=', self.id),
                                                                    ('detail_year', '=', year)])
             invoiced_target = 0
-            month_list = []
-            sale_list = []
+            month_sale_dict = {}
             for target in target_detail:
                 month = target.target_month
                 sale = target.sales_member.name
-                if month in month_list and sale in sale_list:
+                if month in month_sale_dict.keys() and month_sale_dict['%s' % month] == sale:
                     raise exceptions.Warning('%s月份导购%s的目标值已存在' % (month, sale))
-                month_list.append(month)
-                sale_list.append(sale)
+                month_sale_dict.update({month: sale})
                 invoiced_target += target.team_target_monthly
             if invoiced_target > total_target:
                 raise exceptions.Warning('%s年：设定目标不能超过年度目标' % year)
@@ -43,32 +111,72 @@ class CrmTeamExtend(models.Model):
         for detail in target_detail_all:
             detail_year = detail.detail_year
             if detail_year not in target_year_list:
-                raise exceptions.Warning('请先设置%s年的目标明细' % detail_year)
+                raise exceptions.Warning('请先设置%s年的年度目标' % detail_year)
             if detail_year not in detail_year_list:
                 detail_year_list.append(detail_year)
         for r in target_year_list:
             if r not in detail_year_list:
-                raise exceptions.Warning('请设置%s年的年度目标' % r)
-        # 添加context,再次编辑目标明细时，给导购做筛选
-        # member_ids = self.member_ids
-        # sale_list = []
-        # for id in member_ids._ids:
-        #     sale_list.append(id)
-        # self._context['sale_list'] = sale_list
-        # ctx = self._context.copy()
+                raise exceptions.Warning('请设置%s年的目标明细' % r)
         return res
 
-    @api.depends('team_year')
-    @api.onchange('team_year')
-    def _default_domain(self):
-        team_year = self.team_year
-        domain1 = [('target_year', '=', team_year)]
-        domain2 = [('detail_year', '=', team_year)]
-        return {
-            'domain': {'team_target': domain1,
-                       'invoiced_target_detail': domain2
-                       }
-        }
+    # @api.multi
+    # @api.onchange('team_year')
+    # def _onchange_team_year(self):
+    #     team_year = self.team_year
+    #     team_id = self.alias_parent_thread_id
+    #     year_data = self.env['team.target.year'].search([('team_id', '=', team_id)])
+    #     if year_data:
+    #         year_data.unlink()
+    #     detail_data = self.env['team.target.detail'].search([('current_team_id', '=', team_id)])
+    #     if detail_data:
+    #         detail_data.unlink()
+    #     y_sql_str = "select target_year, invoiced_target_year from team_target_year_store y where y.target_year = %s and y.team_id = %s" \
+    #                 % (team_year, team_id)
+    #     d_sql_str = "select detail_year, target_month, sales_member, team_target_monthly from team_target_detail_store d where d.detail_year = " \
+    #                 "%s and d.current_team_id = %s" % (team_year, team_id)
+    #     self._cr.execute(y_sql_str)
+    #     res_y = self._cr.dictfetchall()
+    #     self._cr.execute(d_sql_str)
+    #     res_d = self._cr.dictfetchall()
+    #     all_value = {
+    #         'use_invoices': True,
+    #         'team_year': team_year,
+    #         'team_target': [],
+    #         'invoiced_target_detail': []
+    #     }
+    #     self.use_invoices = True
+    #     self.team_year = team_year
+    #     if res_y:
+    #         all_value.update({'team_target': res_y})
+    #         target_list = []
+    #         for res in res_y:
+    #             target_list.append({'team_id': team_id,
+    #                                 'target_year': res['target_year'],
+    #                                 'invoiced_target_year': res['invoiced_target_year']})
+    #         self.env['team.target.year'].create(target_list)
+    #         #     self.team_target.target_year = res['target_year']
+    #         #     self.team_target.invoiced_target_year = res['invoiced_target_year']
+    #     if res_d:
+    #         all_value.update({'invoiced_target_detail': res_d})
+    #         detail_list = []
+    #         for res in res_d:
+    #             detail_list.append({'current_team_id': team_id,
+    #                                 'detail_year': res['detail_year'],
+    #                                 'target_month': res['target_month'],
+    #                                 'sales_member': res['sales_member'],
+    #                                 'team_target_monthly': res['team_target_monthly']})
+    #         self.env['team.target.detail'].create(detail_list)
+    #     # return {'value': all_value}
+
+    # @api.depends('use_invoices')
+    # @api.onchange('use_invoices')
+    # def onchange_team_year(self):
+    #     if self.use_invoices:
+    #         self.team_year = datetime.now().year
+    #
+    # @api.model
+    # def _default_year(self):
+    #     return datetime.now().year
 
     team_year = fields.Selection([(num, str(num)) for num in range(datetime.now().year - 5, datetime.now().year + 30)],
                                  string='年份')
@@ -108,7 +216,6 @@ class SalesNameSearch(models.Model):
     @api.model
     def name_search(self, name='', args=None, operator='ilike', limit=100):
         res = super(SalesNameSearch, self).name_search(name, args, operator, limit)
-        ctx = self.env.context
         return res
 
 

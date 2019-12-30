@@ -20,6 +20,13 @@ class e2yun_customer_payment_extend(models.Model):
             'domain': {'bank_num': domain}
         }
 
+    company_id = fields.Many2one('res.company', string='Company', index=True, default=lambda self: self.env.user.company_id)
+
+    def defalut_payment_company_id(self):
+        company_id = self.env.user.company_id.id
+        return company_id
+    # company_id_ex = fields.Many2one('res.company', string='公司名称', default=defalut_payment_company_id)
+
     payment_type2 = fields.Selection(
         [('D11', '公司收现金'), ('D12', '刷卡'),
          ('D13', '公司微信'), ('D16', '公司支付宝'),
@@ -120,6 +127,7 @@ class e2yun_customer_payment_extend(models.Model):
                 raise exceptions.Warning('同步到POS系统出现错误，请检查输入的数据'+result)
         return True
 
+    # 微信消息推送--客户付款
     def transport_wechat_message(self, res):  # 微信消息推送--客户付款
         if res.accept_amount:
             trans_amount = '%.2f' % res.accept_amount
@@ -127,15 +135,19 @@ class e2yun_customer_payment_extend(models.Model):
             trans_amount = '%.2f' % res.amount
 
         if res.customer_po:
-            cpo = "客户PO号:%s" % res.customer_po
+            # cpo = "客户PO号:%s" % res.customer_po
+            cpo = res.customer_po
         else:
             cpo = ''
         if res.po_num:
-            po = "市场合同号:%s" % res.po_num
+            # po = "市场合同号:%s" % res.po_num
+            po = res.po_num
+
         else:
             po = ''
         if res.payment_voucher:
-            pv = "交款凭证:%s" % res.payment_voucher
+            # pv = "交款凭证:%s" % res.payment_voucher
+            pv = res.payment_voucher
         else:
             pv = ''
 
@@ -183,12 +195,96 @@ class e2yun_customer_payment_extend(models.Model):
                          "%s" % pv,
             }
         }
+
+        # action_xmlid = 'e2yun_customer_payment_extend.account_payment_form_view_extend'
+        #             /web?#id=150&action=209&model=account.payment&view_type=form&menu_id=138
+        # action_url = '/web#id=%s&action=209&model=account.payment&view_type=form&menu_id=138' % (str(res.id))
         if res.partner_id.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
             try:
                 res.partner_id.wx_user_id.send_template_message(
                     user_data, template_name='客户收款提醒', partner=res.partner_id)
             except Exception as e:
                 res.wx_message_error = e
+
+    # 微信消息推送--删除客户付款
+    def transport_wechat_message2(self): # 微信消息推送--删除客户付款
+        if self.accept_amount:
+            trans_amount = '%.2f' % self.accept_amount
+        else:
+            trans_amount = '%.2f' % self.amount
+
+        if self.customer_po:
+            # cpo = "客户PO号:%s" % res.customer_po
+            cpo = self.customer_po
+        else:
+            cpo = ''
+        if self.po_num:
+            # po = "市场合同号:%s" % res.po_num
+            po = self.po_num
+
+        else:
+            po = ''
+        if self.payment_voucher:
+            # pv = "交款凭证:%s" % res.payment_voucher
+            pv = self.payment_voucher
+        else:
+            pv = ''
+
+        dic = {'D11': '公司收现金',
+               'D12': '刷卡',
+               'D13': '公司微信',
+               'D16': '公司支付宝',
+               'C11': '第三方现金',
+               'C12': '第三方刷卡',
+               'C13': '第三方支票',
+               'C14': '第三方优惠券',
+               'C15': '第三方微信',
+               'C16': '第三方支付宝',
+               'D14': '第三方电商O2O',
+               'D15': '第三方厂家O2O',
+               'K11': '电商支付宝',
+               'G11': '公司收支票',
+               'G13': '门店现金',
+               'G12': '转账',
+               'D17': '分销商定制货款'}
+
+        user_data = {
+            "first": {
+                "value": "取消付款成功通知"
+            },
+            "keyword1": {
+                "value": time.strftime('%Y.%m.%d', time.localtime(time.time()))
+            },
+            "keyword2": {
+                "value": trans_amount,
+                "color": "#173177"
+            },
+            "keyword3": {
+                "value": self.related_shop.name
+            },
+            "keyword4": {
+                "value": self.partner_id.name
+            },
+            "keyword5": {
+                "value": dic[self.payment_type2]
+            },
+            "remark": {
+                "value": "取消客户付款:" +
+                         "%s" % cpo + ' ' +
+                         "%s" % po + ' ' +
+                         "%s" % pv,
+            }
+        }
+
+        # action_xmlid = 'e2yun_customer_payment_extend.account_payment_form_view_extend'
+        #             /web?#id=150&action=209&model=account.payment&view_type=form&menu_id=138
+        # action_url = '/web#id=%s&action=209&model=account.payment&view_type=form&menu_id=138' % (str(res.id))
+        if self.partner_id.wx_user_id:  # 判断当前用户是否关联微信，关联发送微信信息
+            try:
+                self.partner_id.wx_user_id.send_template_message(
+                    user_data, template_name='客户收款提醒', partner=self.partner_id)
+            except Exception as e:
+                self.wx_message_error = e
 
     def transport_wechat_message_refund(self, res):  # 微信消息推送--客户退款
         _logger.info("退款推送测试--3")
@@ -252,6 +348,7 @@ class e2yun_customer_payment_extend(models.Model):
 
     @api.model
     def create(self, vals_list):
+        vals_list['name'] = self.env['ir.sequence'].next_by_code('seq_account_payment.seq_customer') or '/'
         ctx = self._context.copy()
         a = vals_list.get('payment_attachments')
 
@@ -263,10 +360,25 @@ class e2yun_customer_payment_extend(models.Model):
             raise Warning(
                 _("付款附件不能为空!"))
 
+        if vals_list.get('partner_id', False):
+
+            #检查客户的pos状态是否已经同步SAP
+            # vals_list['partner_id'] = False
+            ICPSudo = self.env['ir.config_parameter'].sudo()
+            url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncMember?wsdl'  # webservice调用地址
+            client = suds.client.Client(url)
+            partner_code = self.env['res.partner'].browse(vals_list.get('partner_id')).app_code
+            result = client.service.getSAPState(partner_code or '')
+            if result != 'S':
+                raise Warning(_('客户状态不正确，请检查pos状态-%s') % result)
+            # del result
+
         atch = vals_list['payment_attachments']  # [[],[]]
         for r in atch:  # [0,'virtual', {}]
+            # r[2]['res_name'] = r[2]['datas_fname']
             r[2]['res_model'] = 'account.payment'
             r[2]['name'] = uuid.uuid4()
+            r[2]['active'] = True
 
         if vals_list['amount'] == 0:
             raise Warning(
@@ -285,15 +397,22 @@ class e2yun_customer_payment_extend(models.Model):
                 if journal:
                     vals_list['journal_id'] = journal.id
 
+        check_accept_amount = self.env['crm.team'].browse(vals_list['related_shop']).show_accept_amount
+        if not check_accept_amount:
+            vals_list['accept_amount'] = 0
 
         res = super(e2yun_customer_payment_extend, self).create(vals_list)
+
+        #检查公司为集团是不允许保存
+        if res.company_id.id == 1:
+            raise Warning(
+                _("请选择其他公司!"))
+        # for a in res.payment_attachments:
+        #     a.res_name = a.display_name
         self.env.cr.commit()
         if pos_flag and vals_list.get('create_uid',False):
             sql = """update account_payment set create_uid = """ + str(vals_list.get('create_uid')) + """ where id = """ + str(res.id)
             self._cr.execute(sql)
-
-
-
 
         #pos同步的不要再次同步回去
         if(not pos_flag):
@@ -316,7 +435,7 @@ class e2yun_customer_payment_extend(models.Model):
             if previous_state == 'draft':
                 if new_state == 'cancelled':
                     _logger.info("退款推送测试--2")
-                    self.transport_wechat_message(res)
+                    self.transport_wechat_message2()
         return res
 
     @api.model
@@ -341,6 +460,12 @@ class e2yun_customer_payment_extend2(models.Model):
     #     self.name = self.datas_fname
 
     name = fields.Char('Name', required=False)
+
+    # @api.model_create_multi
+    # def create(self, vals_list):
+    #     res = super(e2yun_customer_payment_extend2, self).create(vals_list)
+    #     return res
+
 
 class e2yun_customer_payment_res_partner(models.Model):
     _inherit = 'res.partner'
@@ -370,6 +495,20 @@ class e2yun_customer_payment_res_partner(models.Model):
         #     return res
         else:
             return super(e2yun_customer_payment_res_partner, self).name_get()
+
+class e2yun_customer_payment_crm_team(models.Model):
+    _inherit = 'crm.team'
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        flag = self.env.context.get('show_user_shops', False)
+        user_shop = self.env.user.teams.ids
+        shops =self.search([('id', 'in', user_shop)])
+        # res = super(e2yun_customer_payment_crm_team, self).name_search(name, args, operator, limit)
+        if flag == 4399:
+            return shops.name_get()
+        else:
+            return super(e2yun_customer_payment_crm_team, self).name_search(name, args, operator, limit)
 
 class e2yun_customer_payment_bank_info(models.Model):
     _name = 'payment_bank.info'

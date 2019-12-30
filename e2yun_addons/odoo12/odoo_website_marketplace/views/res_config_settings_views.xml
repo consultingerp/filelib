@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_marketplace" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.marketplace</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="10"/>
+        <field name="inherit_id" ref="website_sale.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <div id="sale_pricing_settings" position="after">  
+                <h2>Global Commission</h2>
+                <div class="row mt16 o_settings_container" id="global_commission_settings">  
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="is_commission"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="is_commission"/>
+                            <div class="text-muted">
+                                Set commission rate for all partners.
+                            </div>
+                            <div class="content-group" attrs="{'invisible': [('is_commission','=',False)]}">
+                                <div class="mt16">
+                                    <field name="commission_value" />
+                                    <span attrs="{'invisible': [('is_commission','=',False)]}" class="oe_inline">&amp;nbsp;%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </field>
+    </record>
+
+
+    <record id="action_marketplace_config_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_id" ref="res_config_settings_view_form_marketplace"/>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'odoo_website_marketplace'}</field>
+    </record>
+
+    <menuitem id="menu_marketplace_general_settings"
+        name="Settings"
+        parent="configuration_menu"
+        sequence="0"
+        action="action_marketplace_config_settings"
+        groups="base.group_system"/>
+</odoo>

@@ -232,7 +232,7 @@ a, a:hover, a:focus, a:active, button, button:focus, input, select, textarea, .s
   color: #010225; }
   @media (max-width: 61.94em) {
     .heading__primary {
-      font-size: 4.2rem; } }
+      font-size: 2.8rem; } }
 
 .heading__secondary {
   font-size: 40px;
@@ -3629,7 +3629,7 @@ a, button, .item-overlay, .global-overlay, .pagination li .page-number, .scroll-
 
 .shop-toolbar .nice-select {
   background-color: #f5f5f5;
-  width: 220px;
+  width: 140px;
   height: 40px; }
   .shop-toolbar .nice-select .current {
     padding-left: 20px; }

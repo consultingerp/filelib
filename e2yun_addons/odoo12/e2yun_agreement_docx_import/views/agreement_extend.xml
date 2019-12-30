@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+     <record id="agreement_form_view_doc_extend" model="ir.ui.view">
+        <field name="model">agreement</field>
+        <field name="inherit_id" ref="agreement_legal.partner_agreement_form_view"/>
+        <field name="arch" type="xml">
+            <!---
+              <xpath expr="//header/button[@name='create_new_agreement']" position="before">
+                    <button name="wordEdit" string="word Edit" type="object" class="oe_highlight"/>
+              </xpath> -->
+
+            <xpath expr="//notebook/page[@name='structure']" position="replace">
+               <page name="structure" string="结构">
+                            <header>
+                                <button name="%(agreement_legal.partner_agreement_contract_document_preview)d" string="预览" type="action" class="oe_highlight"/>
+
+                                <button name="%(agreement_legal.partner_agreement_contract_document)d" string="打印" type="action" class="oe_highlight"/>
+
+                                <!-- <button name="preview" string="预览" type="object" class="oe_highlight"/> -->
+
+                                <button name="import_recital" string="导入概述" type="object" class="oe_highlight"/>
+                                <button name="import_sections_articles" string="导入章节与条款" type="object" class="oe_highlight"/>
+                                <button name="import_appendix" string="导入附录" type="object" class="oe_highlight"/>
+
+                                <button name="download_word" string="导出 Word" type="object" class="oe_highlight"/>
+
+                            </header>
+                            <separator string="概述"/>
+                            <field name="recital_ids"
+                                   default_order="sequence"
+                                   nolabel="1"
+                                   context="{'default_agreement': active_id}"/>
+
+                            <separator string="章节与条款"/>
+                            <field name="sections_ids"
+                                   default_order='sequence'
+                                   nolabel="1"
+                                   context="{'default_agreement': active_id}"/>
+
+                            <separator string="Clauses" invisible="1" />
+                            <field name="clauses_ids"
+                                   default_order='clause_id, sequence'
+                                   nolabel="1"
+                                   context="{'default_agreement': active_id}" invisible="1" />
+
+                            <separator string="附录"/>
+                            <field name="appendix_ids"
+                                   default_order='sequence'
+                                   nolabel="1"
+                                   context="{'default_agreement': active_id}"/>
+                        </page>
+
+           </xpath>
+        </field>
+   </record>
+
+
+
+
+
+
+</odoo>

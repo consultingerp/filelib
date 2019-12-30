@@ -33,8 +33,8 @@ class res_partner(models.Model):
     validity_license = fields.Date('营业执照有效期')
     CreditCode = fields.Char('统一社会信用代码', help="Unified Social Credit Code.")
     registered_capital = fields.Char('注册资金')
-    image_company = fields.Binary('公司正门照片', required=True)
-    organization_chart = fields.Binary('组织架构图', required=True)
+    image_company = fields.Binary('公司正门照片')
+    organization_chart = fields.Binary('组织架构图')
     image_product = fields.Binary('工厂区生产照片')
     # 新增银行信息
     country_bank = fields.Many2one('res.country', '开户行国家', required=True, ondelete='restrict')
@@ -62,7 +62,6 @@ class res_partner(models.Model):
     city = fields.Many2one('res.city', 'City', ondelete='restrict')
     street = fields.Char('详细地址')
     website = fields.Char()
-
 
 
 

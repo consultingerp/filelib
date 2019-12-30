@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--
+          <report
+            id="partner_agreement_contract_docx"
+            model="agreement"
+            string="Contract Docx"
+            name="agreement_legal.report_agreement_document"
+            file="agreement_legal.report_agreement_document"
+            report_type="qweb-pdf"/> -->
+
+        <record id="view_agreement_import_docx" model="ir.ui.view">
+            <field name="name">Import Doc</field>
+            <field name="model">agreement.docx.import</field>
+            <field name="arch" type="xml">
+                <form string="Import">
+                    <group>
+                        <field name="agreement_id" />
+                        <field name="name" />
+                    </group>
+                    <footer>
+                        <button name="import_docx" string="_Import" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!--
+        <record id="action_view_agreement_import_docx" model="ir.actions.act_window">
+            <field name="name">Import Doc</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">agreement.docx.import</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record> -->
+
+
+
+        <record id="view_action_agreement_import_doc" model="ir.ui.view">
+            <field name="name">Import Doc</field>
+            <field name="model">agreement.download.doc</field>
+            <field name="arch" type="xml">
+                <form string="Import Doc">
+                <label for="file_path" String="文件路径"/>
+                   <field name="data" filename="filename"/>
+                    <field name="filename" invisible="1"/>
+
+                    <footer>
+                        <button name="Import_doc" string="Import Doc" type="object" class="oe_highlight"/>
+                        or
+                        <button string="取消" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+  <!--
+        <act_window name="Import Doc"
+                    res_model="agreement.download.doc"
+                    src_model="agreement"
+                    key2="client_action_multi"
+                    view_mode="form"
+                    view_type="form"
+                    view_id="view_action_agreement_import_doc"
+                    target="new"
+                    id="act_window_import_doc"/>-->
+
+
+        <record id="view_agreement_download_doc" model="ir.ui.view">
+            <field name="name">Download Doc</field>
+            <field name="model">agreement.download.doc</field>
+            <field name="arch" type="xml">
+                <form string="Download Doc">
+                    <footer>
+                        <button name="download_doc" string="Download Doc" type="object" class="oe_highlight"/>
+                        or
+                        <button string="取消" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!--
+        <act_window name="Download Doc"
+                    res_model="agreement.download.doc"
+                    src_model="agreement"
+                    key2="client_action_multi"
+                    view_mode="form"
+                    view_type="form"
+                    view_id="view_agreement_download_doc"
+                    target="new"
+                    id="act_window_download_doc"/> -->
+
+
+        <!--
+        <menuitem id="menu_agreement_docx_import_management" name="Docx Import" parent="agreement.agreement_menu"/>
+
+        <menuitem action="action_view_agreement_import_docx" name="Docx Import" id="menu_agreement_docx_import"  parent="e2yun_agreement_docx_import.menu_agreement_docx_import_management"/>
+        -->
+
+    </data>
+</odoo>
