@@ -259,7 +259,7 @@ class TeamTargetYear(models.Model):
     @api.multi
     def unlink(self):
         for item in self:
-            detail_items = self.env['team.target.year.store'].search([('team_target_year_id', '=', item.id)])
+            detail_items = self.env['team.target.year.store'].search([('team_target_year_id', '=', item.id),('target_year', '=', item.team_id.team_year)])
             detail_items.unlink()
         res = super(TeamTargetYear, self).unlink()
         return res
@@ -324,7 +324,7 @@ class TeamTargetDetail(models.Model):
     @api.multi
     def unlink(self):
         for item in self:
-            detail_items = self.env['team.target.detail.store'].search([('team_target_detail_id', '=', item.id)])
+            detail_items = self.env['team.target.detail.store'].search([('team_target_detail_id', '=', item.id),('detail_year', '=', item.current_team_id.team_year)])
             detail_items.unlink()
         res = super(TeamTargetDetail, self).unlink()
         return res
