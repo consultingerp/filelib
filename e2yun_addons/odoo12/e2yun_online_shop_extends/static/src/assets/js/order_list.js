@@ -28,9 +28,9 @@ function load_order_list(search_key){
                 "           <div class='tab-item'>" +
                 "               <a href='javascript:void(0);' class='aui-well-item aui-well-item-clear'>" +
                 "                   <div class='aui-well-item-bd'> " +
-                "                       <h3 style='font-size: 16px;'>门店:"+order.order_team+"</h3>" +
-                "                       <h3 style='font-size: 16px;'>订单编号:"+order.order_name+"</h3>" +
-                "                       <h3 style='font-size: 16px;'>订单日期:"+order.order_date+"</h3>" +
+                "                       <h3 style='font-size: 15px;'>门店:"+order.order_team+"</h3>" +
+                "                       <h3 style='font-size: 15px;'>订单编号:"+order.order_name+"</h3>" +
+                "                       <h3 style='font-size: 15px;'>订单日期:"+order.order_date+"</h3>" +
                 "                   </div>" +
                 "                   <span>"+order_state+
                 "                  </span>" +

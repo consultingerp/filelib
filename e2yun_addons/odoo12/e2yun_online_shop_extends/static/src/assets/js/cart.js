@@ -12,6 +12,7 @@ function list_btn_add_cart_click(e){
 	},function(datas){
 		var d = JSON.parse(datas);
 		if(d.success){
+			get_cart_qty();
 			// $("a[href='#miniCart']").trigger("click");
 		}
 	});
@@ -32,6 +33,7 @@ function detail_add_cart(){
 		var d = JSON.parse(datas);
 		if(d.success){
 			// $("a[href='#miniCart']").trigger("click");
+			get_cart_qty();
 		}
 	});
 }
@@ -69,6 +71,8 @@ function load_cart(){
 			var total_price = d['total_price'];
 			var line = d['line'];
 
+			var cart_qty = 0
+
 			for(var i = 0;i<line.length;i++){
 				var l = line[i];
 
@@ -100,6 +104,7 @@ function load_cart(){
     					window.location.href="/hhjc_shop_product_details"
 					});
 
+					cart_qty = cart_qty + 1
 
 
 
@@ -109,8 +114,7 @@ function load_cart(){
 			}
 
 			$('.ammount').text('￥'+total_price);
-
-
+			$('#cart_qty').text(cart_qty);
 
 		});
 	}
@@ -138,6 +142,25 @@ function load_cart(){
 // 	})
 // });
 
+function get_cart_qty(){
+	if($('#cart_qty')){
+		var access_token = $("input[name='csrf_token']").val();
+		$.post('/e2yun_online_shop_extends/ger_cart_qty',{
+			'csrf_token':access_token
+		},function(qdatas){
+			var qd = JSON.parse(qdatas);
+			$('#cart_qty').text(qd['cart_qty']);
+			var d2L=document.querySelector(".cart_img").offsetLeft;
+			var d2T=document.querySelector(".cart_img").offsetTop;
+			$("#cart_qty").css({
+				 "position":"absolute",
+				 "left":d2L+10,
+				 "top":d2T-5,
+				 "display": ''
+			 })
+		});
+	}
+}
 
 $(document).ready(function() {
 
@@ -145,5 +168,7 @@ $(document).ready(function() {
 	},function(datas) {
 		var d = JSON.parse(datas);
 		$('body').append("<input name='csrf_token' value="+d['csrf_token']+" type='hidden' />");
+		get_cart_qty();
+
 	});
 });
