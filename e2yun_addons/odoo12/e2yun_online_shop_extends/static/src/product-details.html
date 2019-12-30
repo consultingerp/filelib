@@ -100,7 +100,9 @@
                                                 <div class="header-toolbar__item header-toolbar--minicart-btn">
                                                     <a href="#miniCart" class="header-toolbar__btn toolbar-btn">
                                                         <!--<i class="la la-shopping-cart"></i>-->
-                                                        <img style="width: 20px;height: 20px; " src="/e2yun_online_shop_extends/static/src/assets/img/cart.png" alt="购物车"/>
+                                                        <img class="cart_img" style="width: 20px;height: 20px; " src="/e2yun_online_shop_extends/static/src/assets/img/cart.png" alt="购物车"/>
+                                                        <span id="cart_qty" style="z-index: 9999;
+                                                        width: 15px;height: 15px;line-height: 14px;border:1px solid #dc3545;color:#dc3545; display: none;">0</span>
                                                     </a>
                                                 </div>
                                                 <div class="header-toolbar__item d-block d-lg-none" style="padding-right: 10px;">
@@ -508,7 +510,7 @@
     <!--<script src="/e2yun_online_shop_extends/static/src/assets/js/vendor.js"></script>-->
 
     <!-- 购物车相关js代码-->
-    <script src="/e2yun_online_shop_extends/static/src/assets/js/cart.js?version=0.1"></script>
+    <script src="/e2yun_online_shop_extends/static/src/assets/js/cart.js?version=0.2"></script>
 
     <!-- Main JS -->
     <!--<script src="/e2yun_online_shop_extends/static/src/assets/js/main.js"></script>-->

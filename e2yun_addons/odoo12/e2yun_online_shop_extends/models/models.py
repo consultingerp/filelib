@@ -351,6 +351,8 @@ class OnlineShop(user_info.WebUserInfoController):
                 response_text = response_text + text
                 # product_str = "" + str(product_template.id) + ' ' + str(product_template.default_code) + ' ' + str(product_template.name)
                 # text = text + "<p id='shop_product_product_" + str(product_template.id) + "' onclick='show_product_details(this)'>" + product_str + "</p>"
+        if len(product_template_pool) <= 0:
+            response_text = "<div>&nbsp;&nbsp;&nbsp;抱歉，没有找到商品额...</div>"
         return http.Response(response_text)
 
     @http.route(['/online_shop/search_product_list/<string:search_key>'], type='http', auth="public")
@@ -470,6 +472,8 @@ class OnlineShop(user_info.WebUserInfoController):
                 response_text = response_text + text
                 # product_str = "" + str(product_template.id) + ' ' + str(product_template.default_code) + ' ' + str(product_template.name)
                 # text = text + "<p id='shop_product_product_" + str(product_template.id) + "' onclick='show_product_details(this)'>" + product_str + "</p>"
+        if len(product_template_pool) <= 0:
+            response_text = "<div>&nbsp;&nbsp;&nbsp;抱歉，没有找到商品额...</div>"
         return http.Response(response_text)
 
     @http.route(['/online_shop/sort_product_list/<int:current_category_id>/<int:chooser_id>'])
