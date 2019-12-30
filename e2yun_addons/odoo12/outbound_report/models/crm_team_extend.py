@@ -179,7 +179,7 @@ class CrmTeamExtend(models.Model):
     #     return datetime.now().year
 
     team_year = fields.Selection([(num, str(num)) for num in range(datetime.now().year - 5, datetime.now().year + 30)],
-                                 string='年份')
+                                 string='年份', onchange='_onchange_team_year')
 
     team_target = fields.One2many(
         'team.target.year',
@@ -190,6 +190,44 @@ class CrmTeamExtend(models.Model):
         'team.target.detail',
         'current_team_id',
         string='目标明细')
+
+    @api.multi
+    @api.onchange('team_year')
+    def _onchange_team_year(self):
+        team_year = self.team_year
+        shop_code = self.shop_code
+        self.team_target = False
+        self.invoiced_target_detail = False
+
+        y_sql_str = "select target_year, invoiced_target_year from team_target_year_store y where y.target_year = %s and y.shop_code = '%s'" % (
+            team_year, shop_code)
+        d_sql_str = "select detail_year, target_month, sales_member, team_target_monthly from team_target_detail_store d where d.detail_year = %s and d.shop_code = '%s'" % (
+            team_year, shop_code)
+        self._cr.execute(y_sql_str)
+        res_y = self._cr.dictfetchall()
+        self._cr.execute(d_sql_str)
+        res_d = self._cr.dictfetchall()
+
+        if res_y:
+            target_list = []
+            for res in res_y:
+                target_list.append({'shop_code': shop_code, 'get_create': True,
+                                    'target_year': res['target_year'],
+                                    'invoiced_target_year': res['invoiced_target_year']})
+            info1 = self.env['team.target.year'].create(target_list)
+            self.team_target = info1
+        if res_d:
+            detail_list = []
+            for res in res_d:
+                detail_list.append({'shop_code': shop_code, 'get_create': True,
+                                    'detail_year': res['detail_year'],
+                                    'target_month': res['target_month'],
+                                    'sales_member': res['sales_member'],
+                                    'team_target_monthly': res['team_target_monthly']})
+            info2 = self.env['team.target.detail'].create(detail_list)
+            self.invoiced_target_detail = info2
+        # year_data = self.env['team.target.year'].search([('team_id', '=', team_id)])
+        # detail_data = self.env['team.target.detail'].search([('current_team_id', '=', team_id)])
 
 
 class TeamTargetYear(models.Model):
@@ -208,6 +246,35 @@ class TeamTargetYear(models.Model):
         [(num, str(num)) for num in range(datetime.now().year - 5, datetime.now().year + 30)],
         string='年份')
     invoiced_target_year = fields.Integer(string='年度目标', required=True)
+
+    @api.model
+    def create(self, vals):
+        res = super(TeamTargetYear, self).create(vals)
+        if not ('get_create' in vals and vals['get_create']):
+            vals['shop_code'] = res.team_id.shop_code
+            vals['team_target_year_id'] = res.id
+            self.env['team.target.year.store'].create(vals)
+        return res
+
+    @api.multi
+    def unlink(self):
+        for item in self:
+            detail_items = self.env['team.target.year.store'].search([('team_target_year_id', '=', item.id)])
+            detail_items.unlink()
+        res = super(TeamTargetYear, self).unlink()
+        return res
+
+    @api.multi
+    def write(self, vals):
+        res = super(TeamTargetYear, self).write(vals)
+        if 'team_id' in vals and not vals['team_id']:
+            for item in self:
+                detail_items = self.env['team.target.year.store'].search([('team_target_year_id', '=', item.id)])
+                detail_items.unlink()
+        for item in self:
+            detail_items = self.env['team.target.year.store'].search([('team_target_year_id', '=', item.id)])
+            detail_items.write(vals)
+        return res
 
 
 class SalesNameSearch(models.Model):
@@ -233,17 +300,43 @@ class TeamTargetDetail(models.Model):
         domain = [('id', 'in', member_ids._ids)]
         return {
             'domain': {'sales_member': domain},
-                }
+        }
 
     current_team_id = fields.Many2one('crm.team', '门店', readonly=True)
-    detail_year = fields.Selection([(num, str(num)) for num in range(datetime.now().year-5, datetime.now().year+20)],
-                                   string='年份')
+    detail_year = fields.Selection(
+        [(num, str(num)) for num in range(datetime.now().year - 5, datetime.now().year + 20)],
+        string='年份')
     target_month = fields.Selection(
         [('1', '一月'), ('2', '二月'), ('3', '三月'), ('4', '四月'), ('5', '五月'), ('6', '六月'), ('7', '七月'), ('8', '八月'),
          ('9', '九月'), ('10', '十月'), ('11', '十一月'), ('12', '十二月')], string='月份', required=True)
     team_target_monthly = fields.Integer('目标值', required=True)
     sales_member = fields.Many2one('res.users', string='导购', required=True)
 
+    @api.model
+    def create(self, vals):
+        res = super(TeamTargetDetail, self).create(vals)
+        if not ('get_create' in vals and vals['get_create']):
+            vals['shop_code'] = res.current_team_id.shop_code
+            vals['team_target_detail_id'] = res.id
+            self.env['team.target.detail.store'].create(vals)
+        return res
 
+    @api.multi
+    def unlink(self):
+        for item in self:
+            detail_items = self.env['team.target.detail.store'].search([('team_target_detail_id', '=', item.id)])
+            detail_items.unlink()
+        res = super(TeamTargetDetail, self).unlink()
+        return res
 
-
+    @api.multi
+    def write(self, vals):
+        res = super(TeamTargetDetail, self).write(vals)
+        if 'current_team_id' in vals and not vals['current_team_id']:
+            for item in self:
+                detail_items = self.env['team.target.detail.store'].search([('team_target_detail_id', '=', item.id)])
+                detail_items.unlink()
+        for item in self:
+            detail_items = self.env['team.target.detail.store'].search([('team_target_detail_id', '=', item.id)])
+            detail_items.write(vals)
+        return res
