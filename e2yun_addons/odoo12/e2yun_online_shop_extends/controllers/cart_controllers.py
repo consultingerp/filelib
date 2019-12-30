@@ -105,6 +105,15 @@ class cart(user_info.WebUserInfoController):
     def get_token(self,**kwargs):
         return request.make_response(json.dumps({'csrf_token':http.request.csrf_token()}))
 
+    @http.route(['/e2yun_online_shop_extends/ger_cart_qty'], type='http', auth="public", methods=['POST'], website=True,csrf=False)
+    def ger_cart_qty(self,**kw):
+        sale_order = request.website.sale_get_order(force_create=False)
+        cart_qty = 0
+        if sale_order.state == 'draft':
+            cart_qty = len(sale_order.order_line)
+
+        return request.make_response(json.dumps({'cart_qty': cart_qty}))
+
     @http.route(['/e2yun_online_shop_extends/add_cart'], type='http', auth="public", methods=['POST'], website=True, csrf=False)
     def cart_update(self, product_id, add_qty=1, set_qty=0, **kw):
         """This route is called when adding a product to cart (no options)."""
