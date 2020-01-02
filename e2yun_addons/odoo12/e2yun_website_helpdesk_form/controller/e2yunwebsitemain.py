@@ -70,6 +70,7 @@ class E2yunWebsiteForm(WebsiteForm):
         except Exception as e:
 
             _logger.error("加载微信jsapi_ticket错误。%s" % e)
+        website_helpdesk_form.qcontext['title'] = '客户报修'
         _logger.info(website_helpdesk_form.qcontext)
         return website_helpdesk_form
 
