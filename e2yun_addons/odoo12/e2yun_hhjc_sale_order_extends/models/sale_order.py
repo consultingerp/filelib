@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing tailsde.
-from odoo import models, fields, api, exceptions,_
+from odoo import models, fields, api, exceptions, _
 import datetime
 import suds.client
 import json
@@ -120,10 +120,13 @@ class SaleOrder(models.Model):
         res = super(SaleOrder, self).write(vals)
         if 'crmstate' in vals and vals['crmstate']:
             for item in self:
-                self.env['sale.order.crmstate.flow'].create({
-                    'order_id': self.id,
-                    'crmstate': vals['crmstate'],
-                })
+                flow = self.env['sale.order.crmstate.flow'].search(
+                    [('order_id', '=', self.id), ('crmstate', '=', vals['crmstate'])])
+                if not flow:
+                    self.env['sale.order.crmstate.flow'].create({
+                        'order_id': self.id,
+                        'crmstate': vals['crmstate'],
+                    })
         return res
 
     # @api.multi
@@ -327,6 +330,8 @@ class SaleOrder(models.Model):
                         date_line[key] = line[key]
                 date_line['order_id'] = order_id.id
                 date_line['name'] = line['maktx']
+                date_line['price_unit'] = line['xiaoshoujine']
+                date_line['product_uom_qty'] = line['kwmen']
                 product = self.env['product.product'].search([('default_code', '=', line['matnr'])])
                 if not product:
                     self.env['product.template'].sync_pos_matnr_to_crm(line['matnr'], '2000-01-01')
