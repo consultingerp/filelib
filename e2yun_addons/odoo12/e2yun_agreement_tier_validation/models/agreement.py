@@ -2,7 +2,8 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models, _
-
+from odoo.exceptions import ValidationError
+from ast import literal_eval
 
 class Agreement(models.Model):
     _name = "agreement"
@@ -91,5 +92,48 @@ class CommentWizard(models.TransientModel):
             rec._rebut_tier()
 
         rec._update_counter()
+
+
+
+
+class TierValidation(models.AbstractModel):
+    _inherit = "tier.validation"
+
+
+
+    @api.multi
+    def write(self, vals):
+        flag=False
+        for key in vals:
+            if 'stage_id'!=key and 'revision'!=key:
+                flag=True
+        if not flag:
+            sql="UPDATE  agreement set stage_id=%s where id=%s"
+            self._cr.execute(sql,(vals['stage_id'],self.id))
+            return True
+
+        for rec in self:
+            if (getattr(rec, self._state_field) in self._state_from and
+                    vals.get(self._state_field) in self._state_to):
+                if rec.need_validation:
+                    # try to validate operation
+                    reviews = rec.request_validation()
+                    rec._validate_tier(reviews)
+                    if not self._calc_reviews_validated(reviews):
+                        raise ValidationError(_(
+                            "This action needs to be validated for at least "
+                            "one record. \nPlease request a validation."))
+                if rec.review_ids and not rec.validated:
+                    raise ValidationError(_(
+                        "A validation process is still open for at least "
+                        "one record."))
+            if (rec.review_ids and getattr(rec, self._state_field) in
+                    self._state_from and not vals.get(self._state_field) in
+                    (self._state_to + [self._cancel_state]) and not
+                    self._check_allow_write_under_validation(vals)) and flag:
+                raise ValidationError(_("The operation is under validation."))
+        if vals.get(self._state_field) in self._state_from:
+            self.mapped('review_ids').unlink()
+        return super(TierValidation, self).write(vals)
 
 
