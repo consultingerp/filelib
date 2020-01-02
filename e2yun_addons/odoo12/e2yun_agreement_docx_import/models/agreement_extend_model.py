@@ -400,15 +400,18 @@ class AgreementRecital(models.Model):  #概述
             strTemp = str
             agreement_placeholder_obj= self.env['agreement.placeholder']  # wordData
             for i, data in enumerate(n):
-                strsTemp = strTemp.split("${" + data + "}")
+                strsTemp = strTemp.split("${" + data + "}",1)
                 querName="${" + data + "}"
                 agreement_placeholder=agreement_placeholder_obj.search([('name' ,'=',querName)])
-                if strsTemp[0]:
-                    content = content + strsTemp[0] + agreement_placeholder.text
-                if strsTemp[1]:
-                    strTemp = strsTemp[1]
-                    if i == len(n) - 1:
-                        content = content + strTemp
+                strTemp=""
+                for j,fstr in enumerate(strsTemp):
+                    if j==0:
+                        content = content + fstr + agreement_placeholder.text
+                    else:
+                        strTemp = strTemp+fstr
+                if i == len(n) - 1:
+                     content = content + strTemp
+
             vals['content']=content
         return super(AgreementRecital,self).write(vals)
 
