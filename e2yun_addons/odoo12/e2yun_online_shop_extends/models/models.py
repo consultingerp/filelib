@@ -246,7 +246,7 @@ class OnlineShop(user_info.WebUserInfoController):
             # str_join = ''.join(str_list)
             if product_template.id:
                 # 获取产品价格（所有变体中价格最低的）
-                product_template_price_float = product_template.list_price
+                product_template_price_float = product_template.pos_price
 
                 # product_product_pool = http.request.env['product.product'].search([('product_tmpl_id', '=', product_template.id)])
                 # if product_product_pool:
@@ -364,7 +364,7 @@ class OnlineShop(user_info.WebUserInfoController):
             # str_join = ''.join(str_list)
             if product_template.id:
                 # 获取产品价格（所有变体中价格最低的）
-                product_template_price_float = product_template.list_price
+                product_template_price_float = product_template.pos_price
 
                 # product_product_pool = http.request.env['product.product'].search(
                 #     [('product_tmpl_id', '=', product_template.id)])
@@ -517,8 +517,8 @@ class OnlineShop(user_info.WebUserInfoController):
             0: 'custom_order asc',
             1: 'product_template_order_by_name asc',
             2: 'product_template_order_by_name desc',
-            3: 'list_price asc',
-            4: 'list_price desc',
+            3: 'pos_price asc',
+            4: 'pos_price desc',
             5: 'so_qty asc',
             6: 'so_qty desc',
             7: 'browse_num asc',
@@ -569,7 +569,7 @@ class OnlineShop(user_info.WebUserInfoController):
             # str_join = ''.join(str_list)
             if product_template.id:
                 # 获取产品价格（所有变体中价格最低的）
-                product_template_price_float = product_template.list_price
+                product_template_price_float = product_template.pos_price
 
                 # product_product_pool = http.request.env['product.product'].search(
                 #     [('product_tmpl_id', '=', product_template.id)])
