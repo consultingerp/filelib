@@ -28,7 +28,8 @@ class WebCenterController(http.Controller):
             'usercenter_menu': usercenter_menu_used,
             'execute_code': self.execute_code,
             'urllib': urllib,
-            'centerjscss': True
+            'centerjscss': True,
+            'title': '个人中心'
         }
         return request.render("web_user_center.miancenter", values)
 
@@ -61,7 +62,8 @@ class WebCenterController(http.Controller):
             'url': url,
             'execute_code': self.execute_code,
             'urllib': urllib,
-            'centerjscss': True
+            'centerjscss': True,
+            'title': '宏华骏成'
         }
         if url == '/usercenter':
             return request.render("web_user_center.miancenter", values)

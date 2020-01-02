@@ -75,9 +75,12 @@
                 <xpath expr="//field[@name='categ_id']" position="attributes">
                     <attribute name="attrs">{'invisible': True}</attribute>
                 </xpath>
-                <!--<xpath expr="//field[@name='list_price']" position="attributes">-->
-                    <!--<attribute name="attrs">{'invisible': True}</attribute>-->
-                <!--</xpath>-->
+                <xpath expr="//field[@name='list_price']" position="attributes">
+                    <attribute name="attrs">{'invisible': True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='list_price']" position="after">
+                    <field name="pos_price"/>
+                </xpath>
 
                 <xpath expr="//field[@name='standard_price']" position="attributes">
                     <attribute name="attrs">{'invisible': True}</attribute>
@@ -94,6 +97,20 @@
               </xpath>
 
 
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="product_template_kanban_seller_view">
+            <field name="name">Product Template Kanban Seller</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_kanban_view"/>
+            <field name="arch" type="xml">
+                <field name="lst_price" position="after">
+                    <field name="pos_price"/>
+                </field>
+                <xpath expr="//kanban[1]/templates[1]/t[1]/div[1]/div[2]/ul[1]/li[1]/field[@name='lst_price']" position="replace">
+                    <field name="pos_price"/>
+                </xpath>
             </field>
         </record>
 
