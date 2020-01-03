@@ -5,3 +5,4 @@ from . import helpdesk
 from . import myjsondateencode
 from . import helpdeskticketbrandtype
 from . import helpdesklivechatuuid
+from . import rating
