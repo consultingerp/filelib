@@ -91,16 +91,19 @@ class ResConfigSettings(models.TransientModel):
             if len(qrcodedatastr) > 30:
                 qrcodedatastr = qrcodedatastr[:30]
             qrcodedata = {"action_name": "QR_LIMIT_STR_SCENE","action_info": {"scene": {"scene_str": qrcodedatastr}}}
-            qrcodeinfo = entry.wxclient.create_qrcode(qrcodedata)
-            self.write({'auth_signup_reset_password_qrcode_ticket': qrcodeinfo['ticket'],
-                        'auth_signup_reset_password_qrcode_url': qrcodeinfo['url']})
-            self.auth_signup_reset_password_qrcodeimg = '<img src=https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=%s' \
-                                                        ' width="100px" height="100px" />' % (qrcodeinfo['ticket'])
-            Param = self.env["ir.config_parameter"].sudo()
+            try:
+                qrcodeinfo = entry.wxclient.create_qrcode(qrcodedata)
+                self.write({'auth_signup_reset_password_qrcode_ticket': qrcodeinfo['ticket'],
+                            'auth_signup_reset_password_qrcode_url': qrcodeinfo['url']})
+                self.auth_signup_reset_password_qrcodeimg = '<img src=https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=%s' \
+                                                            ' width="100px" height="100px" />' % (qrcodeinfo['ticket'])
+                Param = self.env["ir.config_parameter"].sudo()
 
-            Param.set_param('auth_signup_reset_password_qrcodeimg', self.auth_signup_reset_password_qrcodeimg)
-            Param.set_param('auth_signup_reset_password_qrcode_ticket',
-                            'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=%s' % qrcodeinfo['ticket'])
+                Param.set_param('auth_signup_reset_password_qrcodeimg', self.auth_signup_reset_password_qrcodeimg)
+                Param.set_param('auth_signup_reset_password_qrcode_ticket',
+                                'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=%s' % qrcodeinfo['ticket'])
+            except Exception as e:
+                _logger.error("生成二维码失败：%s" % e)
         else:
             self.qrcodeimg = '<img src=https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=%s width="100px" ' \
                              'height="100px" />' % (self.qrcode_ticket or '/wx_tools/static/description/icon.png')
