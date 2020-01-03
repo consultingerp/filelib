@@ -279,7 +279,7 @@ class HelpdeskTicket(models.Model):
                 elif helpdesk_tick_rating.rating == 10:
                     datajsonstring['starlevel'] = 5
             else:
-                datajsonstring['starlevel'] = ''
+                datajsonstring['starlevel'] = '  '
 
             if helpdesk_tick_rating.feedback:
                 datajsonstring['appraise'] = helpdesk_tick_rating.feedback
