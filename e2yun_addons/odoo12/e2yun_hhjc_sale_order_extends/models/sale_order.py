@@ -342,6 +342,7 @@ class SaleOrder(models.Model):
                     raise exceptions.Warning("物料号：%s不存在，请检查物料是否同步了。" % (line['matnr']))
                 date_line['is_sync'] = True
                 sale_order_line.create(date_line)
+            order_id.crmstate = '已接单'
 
     def action_sync_pos_sale_order(self):
         # self.env['sale.order']._fields.keys()
