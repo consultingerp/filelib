@@ -9,7 +9,8 @@ class Rating(models.Model):
 
     @api.multi
     def write(self, values):
+        rating_super = super(Rating, self).write(values)
         if self.res_model and self.res_model == 'helpdesk.ticket':
             tickets = self.env['helpdesk.ticket'].search([('id', '=', self.res_id)])
             tickets.synserviceorderrating()
-        return super(Rating, self).write(values)
+        return rating_super
