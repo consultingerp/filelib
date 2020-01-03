@@ -128,6 +128,7 @@ class SaleOrder(models.Model):
                     kunnrs = self.env['crm.team'].search([('shop_code', '=', res.kunnr)])
                     if kunnrs:
                         res.team_id = kunnrs[0]
+                        res.company_id = res.team_id.company_id
         except Exception as e:
             _logger.error(e)
         return res
@@ -146,15 +147,17 @@ class SaleOrder(models.Model):
                     })
 
         try:
-            if self.salesorderid:
-                if 'ywy' in vals and vals['ywy']:
-                    users = self.env['res.users'].search([('name', '=', vals['ywy'])])
-                    if users:
-                        self.user_id = users[0]
-                if 'kunnr' in vals and vals['kunnr']:
-                    kunnrs = self.env['crm.team'].search([('shop_code', '=', vals['kunnr'])])
-                    if kunnrs:
-                        self.team_id = kunnrs[0]
+            for item in self:
+                if item.salesorderid:
+                    if 'ywy' in vals and vals['ywy']:
+                        users = item.env['res.users'].search([('name', '=', vals['ywy'])])
+                        if users:
+                            item.user_id = users[0]
+                    if 'kunnr' in vals and vals['kunnr']:
+                        kunnrs = item.env['crm.team'].search([('shop_code', '=', vals['kunnr'])])
+                        if kunnrs:
+                            item.team_id = kunnrs[0]
+                            item.company_id = item.team_id.company_id
         except Exception as e:
             _logger.error(e)
         return res
