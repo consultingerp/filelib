@@ -812,7 +812,7 @@ class OnlineShop(user_info.WebUserInfoController):
                         <div class="product-price-wrapper mb--25">
                             <span class="money">"""
 
-                price_str = "¥" + str(product.lst_price)
+                price_str = "¥" + str(product.pos_price)
                 footer_text = """</span>"""
                 browse_num_text = """<p>浏览量 """ + str(product_template.browse_num) + """</p>"""
                 so_qty_text = """<p> 销量""" + str(product_template.so_qty) + """</p>"""
