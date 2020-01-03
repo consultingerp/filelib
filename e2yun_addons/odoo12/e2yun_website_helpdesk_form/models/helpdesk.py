@@ -278,6 +278,11 @@ class HelpdeskTicket(models.Model):
                     datajsonstring['starlevel'] = 3
                 elif helpdesk_tick_rating.rating == 10:
                     datajsonstring['starlevel'] = 5
+            else:
+                datajsonstring['starlevel'] = ''
+
             if helpdesk_tick_rating.feedback:
                 datajsonstring['appraise'] = helpdesk_tick_rating.feedback
+            else:
+                datajsonstring['appraise'] = ''
         result = client.service.synServiceOrderRatingCrm(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
