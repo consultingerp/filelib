@@ -117,10 +117,23 @@ class cart(user_info.WebUserInfoController):
     @http.route(['/e2yun_online_shop_extends/add_cart'], type='http', auth="public", methods=['POST'], website=True, csrf=False)
     def cart_update(self, product_id, add_qty=1, set_qty=0, **kw):
         """This route is called when adding a product to cart (no options)."""
-        sale_order = request.website.sale_get_order(force_create=True)
+
+        if not request.session.usronlineinfo:
+            request.session.usronlineinfo = self.get_show_userinfo()
+        usronlineinfo = request.session.usronlineinfo
+
+        pricelist_name = ''
+        region = usronlineinfo.get('region', False)
+        if region and region == '北京':
+            pricelist_name = '北京订单价格表'
+        if region and region == '深圳':
+            pricelist_name = '深圳订单价格表'
+        pricelist = request.env['product.pricelist'].sudo().search([('name', '=', pricelist_name)])
+
+        sale_order = request.website.sale_get_order(force_create=True,force_pricelist=pricelist)
         if sale_order.state != 'draft':
             request.session['sale_order_id'] = None
-            sale_order = request.website.sale_get_order(force_create=True)
+            sale_order = request.website.sale_get_order(force_create=True,force_pricelist=pricelist)
 
         if sale_order.user_id and not sale_order.team_id:
             team_user = request.env['res.users'].sudo().search([('id','=',sale_order.user_id.id)])
