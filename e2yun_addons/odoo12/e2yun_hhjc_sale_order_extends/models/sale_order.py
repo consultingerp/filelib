@@ -139,7 +139,7 @@ class SaleOrder(models.Model):
         try:
             for item in self:
                 if item.pricelist_id.company_id != item.company_id:
-                    pricelist = self.env['product.pricelist'].search([('compnay_id', '=', item.company_id.id)], limit=1)
+                    pricelist = self.env['product.pricelist'].search([('company_id', '=', item.company_id.id)], limit=1)
                     item.pricelist_id = pricelist
         except Exception as e:
             _logger.error(e)
