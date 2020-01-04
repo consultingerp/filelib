@@ -115,6 +115,24 @@ class SaleOrder(models.Model):
     #             _logger.error("同步订单到POS出现错误，对象: %s，错误信息：%s", self, e)
     #     return res
 
+    @api.model
+    def create(self, vals):
+        res = super(SaleOrder, self).create(vals)
+        try:
+            if res.salesorderid:
+                if res.ywy:
+                    users = self.env['res.users'].search([('name', '=', res.ywy)])
+                    if users:
+                        res.user_id = users[0]
+                if res.kunnr:
+                    kunnrs = self.env['crm.team'].search([('shop_code', '=', res.kunnr)])
+                    if kunnrs:
+                        res.team_id = kunnrs[0]
+                        res.company_id = res.team_id.company_id
+        except Exception as e:
+            _logger.error(e)
+        return res
+
     @api.multi
     def write(self, vals):
         res = super(SaleOrder, self).write(vals)
@@ -127,6 +145,21 @@ class SaleOrder(models.Model):
                         'order_id': self.id,
                         'crmstate': vals['crmstate'],
                     })
+
+        try:
+            for item in self:
+                if item.salesorderid:
+                    if 'ywy' in vals and vals['ywy']:
+                        users = item.env['res.users'].search([('name', '=', vals['ywy'])])
+                        if users:
+                            item.user_id = users[0]
+                    if 'kunnr' in vals and vals['kunnr']:
+                        kunnrs = item.env['crm.team'].search([('shop_code', '=', vals['kunnr'])])
+                        if kunnrs:
+                            item.team_id = kunnrs[0]
+                            item.company_id = item.team_id.company_id
+        except Exception as e:
+            _logger.error(e)
         return res
 
     # @api.multi
