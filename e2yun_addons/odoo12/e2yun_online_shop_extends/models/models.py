@@ -862,6 +862,7 @@ class OnlineShop(user_info.WebUserInfoController):
                 footer_text = """</span>"""
                 browse_num_text = """<p>浏览量 """ + str(product_template.browse_num) + """</p>"""
                 so_qty_text = """<p> 销量""" + str(product_template.so_qty) + """</p>"""
+                right_button_text = http.request.env['ir.config_parameter'].sudo().get_param('online_shop_setup.button_right_name', '产品效果图')
                 footer_text2 = """</div>
     <div class="product-action d-flex flex-sm-row align-items-sm-center flex-column align-items-start mb--30">
         <input type='hidden' name='inp_product_id' value='""" + str(product.id) + """'/>
@@ -872,7 +873,7 @@ class OnlineShop(user_info.WebUserInfoController):
         </button>"""
                 if product_template.product_template_external_website:
                     footer_text3 = """<button type="button" margin='right' class="btn-blue btn-size-sm btn-shape-square" onclick="window.open('""" + product_template.product_template_external_website + """')" target='_blank'>
-            产品效果图
+            """+ right_button_text + """
         </button></div>
                     </div>  
 </div>"""

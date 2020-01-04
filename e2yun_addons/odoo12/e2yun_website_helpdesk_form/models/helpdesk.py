@@ -247,8 +247,9 @@ class HelpdeskTicket(models.Model):
         # datajsonstring['store'] = self.partner_id.shop_code.shop_code
         store = '100002002' if bukrs == '1000' else '200002002'
         datajsonstring['store'] = store
-        datajsonstring['matnrs'] = self.matnrs
-        datajsonstring['arktxs'] = self.arktxs
+        datajsonstring['matnrs'] = self.matnrs or ''
+        datajsonstring['arktxs'] = self.arktxs or ''
+
         result = client.service.synServiceOrderFromCrm(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
 
         resultjson = json.loads(result)
@@ -259,3 +260,29 @@ class HelpdeskTicket(models.Model):
         return {'success': True,
                 'error_message': False,
                 'warning_message': False}
+
+    @api.multi
+    def synserviceorderrating(self):
+        url = self.env['ir.config_parameter'].sudo().get_param('e2yun.pos_url') + "/esb/webservice/Serviceorder?wsdl"  # webservice调用地址
+        client = suds.client.Client(url)
+        datajsonstring = dict()
+        # 评价
+        datajsonstring['serviceorderid'] = self.posserviceorderid or ''
+        helpdesk_tick_rating = self.env['rating.rating'].sudo().search([('res_model', '=', 'helpdesk.ticket'), ('res_id', '=', self.id)])
+        if helpdesk_tick_rating:
+            datajsonstring['rating'] = 'True'
+            if helpdesk_tick_rating.rating:
+                if helpdesk_tick_rating.rating == 0:
+                    datajsonstring['starlevel'] = 1
+                elif helpdesk_tick_rating.rating == 5:
+                    datajsonstring['starlevel'] = 3
+                elif helpdesk_tick_rating.rating == 10:
+                    datajsonstring['starlevel'] = 5
+            else:
+                datajsonstring['starlevel'] = '  '
+
+            if helpdesk_tick_rating.feedback:
+                datajsonstring['appraise'] = helpdesk_tick_rating.feedback
+            else:
+                datajsonstring['appraise'] = ''
+        result = client.service.synServiceOrderRatingCrm(json.dumps(datajsonstring, cls=myjsondateencode.MyJsonEncode))
