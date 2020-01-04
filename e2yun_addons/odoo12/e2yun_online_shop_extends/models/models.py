@@ -295,7 +295,7 @@ class OnlineShop(user_info.WebUserInfoController):
                 product_detail_href = ''
                 product_template_name = product_template.name
                 product_add_to_cart_href = "cart.html"
-                product_template_price_str = "¥" + str(product_template_price_float)
+                product_template_price_str = "¥" + str(round(product_template_price_float,2))
                 # TODO:是否需要增加产品描述字段
                 if product_template.description_sale:
                     product_template_description = product_template.description_sale
@@ -427,7 +427,7 @@ class OnlineShop(user_info.WebUserInfoController):
                 product_detail_href = ''
                 product_template_name = product_template.name
                 product_add_to_cart_href = "cart.html"
-                product_template_price_str = "¥" + str(product_template_price_float)
+                product_template_price_str = "¥" + str(round(product_template_price_float,2))
                 # TODO:是否需要增加产品描述字段
                 if product_template.description_sale:
                     product_template_description = product_template.description_sale
@@ -630,7 +630,7 @@ class OnlineShop(user_info.WebUserInfoController):
                 product_detail_href = ''
                 product_template_name = product_template.name
                 product_add_to_cart_href = "cart.html"
-                product_template_price_str = "¥" + str(product_template_price_float)
+                product_template_price_str = "¥" + str(round(product_template_price_float,2))
                 # TODO:是否需要增加产品描述字段
                 if product_template.description_sale:
                     product_template_description = product_template.description_sale
@@ -823,7 +823,8 @@ class OnlineShop(user_info.WebUserInfoController):
                         pricelist_name = '深圳订单价格表'
                     elif area_id == '2':
                         pricelist_name = '北京订单价格表'
-                else:
+
+                if not request.params.get('area_id',False) or request.params['area_id'] == '0':
                     usronlineinfo = request.session.usronlineinfo
                     if not usronlineinfo:
                         request.session.usronlineinfo = self.get_show_userinfo()
@@ -858,7 +859,7 @@ class OnlineShop(user_info.WebUserInfoController):
                         <div class="product-price-wrapper mb--25">
                             <span class="money">"""
 
-                price_str = "¥" + str(product_template_price_float)
+                price_str = "¥" + str(round(product_template_price_float,2))
                 footer_text = """</span>"""
                 browse_num_text = """<p>浏览量 """ + str(product_template.browse_num) + """</p>"""
                 so_qty_text = """<p> 销量""" + str(product_template.so_qty) + """</p>"""
