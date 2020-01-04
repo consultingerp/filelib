@@ -138,7 +138,7 @@ class SaleOrder(models.Model):
         res = super(SaleOrder, self).write(vals)
         try:
             for item in self:
-                if item.pricelist_id.company_id != item.company_id:
+                if item.sudo().pricelist_id.company_id != item.company_id:
                     _logger.info('==========================开始修改价格表=============================================')
                     pricelist = self.env['product.pricelist'].search([('company_id', '=', item.company_id.id)], limit=1)
                     item.pricelist_id = pricelist
