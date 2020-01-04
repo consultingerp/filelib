@@ -119,6 +119,12 @@ class SaleOrder(models.Model):
     def create(self, vals):
         res = super(SaleOrder, self).create(vals)
         try:
+            if res.pricelist_id.company_id != res.company_id:
+                pricelist = self.env['product.pricelist'].search([('compnay_id', '=', res.company_id.id)], limit=1)
+                res.pricelist_id = pricelist
+        except Exception as e:
+            _logger.error(e)
+        try:
             if res.salesorderid:
                 if res.ywy:
                     users = self.env['res.users'].search([('name', '=', res.ywy)])
