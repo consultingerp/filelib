@@ -130,10 +130,10 @@ class cart(user_info.WebUserInfoController):
             pricelist_name = '深圳订单价格表'
         pricelist = request.env['product.pricelist'].sudo().search([('name', '=', pricelist_name)])
 
-        sale_order = request.website.sale_get_order(force_create=True,force_pricelist=pricelist)
+        sale_order = request.website.sale_get_order(force_create=True,force_pricelist=pricelist.id)
         if sale_order.state != 'draft':
             request.session['sale_order_id'] = None
-            sale_order = request.website.sale_get_order(force_create=True,force_pricelist=pricelist)
+            sale_order = request.website.sale_get_order(force_create=True,force_pricelist=pricelist.id)
 
         if sale_order.user_id and not sale_order.team_id:
             team_user = request.env['res.users'].sudo().search([('id','=',sale_order.user_id.id)])
