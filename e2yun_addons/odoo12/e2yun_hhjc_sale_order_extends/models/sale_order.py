@@ -136,6 +136,13 @@ class SaleOrder(models.Model):
     @api.multi
     def write(self, vals):
         res = super(SaleOrder, self).write(vals)
+        try:
+            for item in self:
+                if item.pricelist_id.company_id != item.company_id:
+                    pricelist = self.env['product.pricelist'].search([('company_id', '=', item.company_id.id)], limit=1)
+                    item.pricelist_id = pricelist
+        except Exception as e:
+            _logger.error(e)
         if 'crmstate' in vals and vals['crmstate']:
             for item in self:
                 flow = self.env['sale.order.crmstate.flow'].search(
