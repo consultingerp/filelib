@@ -687,7 +687,8 @@
  function search_product_list(){
     var search_word = document.getElementById('popup-search').value;
     var current_category_id = sessionStorage.getItem("current_category_id");
-    url = "/online_shop/search_product_list/" + search_word
+    var area_id = document.getElementById("area_chooser").value
+    url = "/online_shop/search_product_list/" + search_word+"?area_id="+area_id
     var search_product_list_xhr = new this.XMLHttpRequest();
 
     search_product_list_xhr.open("GET", url, true)

@@ -372,18 +372,28 @@ class OnlineShop(user_info.WebUserInfoController):
 
         domain = [('sale_ok', '=', True), ('name', 'ilike', search_key)]
 
-        usronlineinfo = request.session.usronlineinfo
         pricelist_name = ''
-        if not usronlineinfo:
-            request.session.usronlineinfo = self.get_show_userinfo()
+
+        if request.params.get('area_id',False) and request.params['area_id'] != '0':
+            area_id = request.params['area_id']
+            if area_id == '1':
+                pricelist_name = '深圳订单价格表'
+                domain = domain + [('sz_show', '=', True)]
+            elif area_id == '2':
+                domain = domain + [('bj_show', '=', True)]
+                pricelist_name = '北京订单价格表'
+        else:
             usronlineinfo = request.session.usronlineinfo
-        region = usronlineinfo.get('region', False)
-        if region and region == '北京':
-            domain = domain + [('bj_show', '=', True)]
-            pricelist_name = '北京订单价格表'
-        if region and region == '深圳':
-            domain = domain + [('sz_show', '=', True)]
-            pricelist_name = '深圳订单价格表'
+            if not usronlineinfo:
+                request.session.usronlineinfo = self.get_show_userinfo()
+                usronlineinfo = request.session.usronlineinfo
+            region = usronlineinfo.get('region', False)
+            if region and region == '北京':
+                domain = domain + [('bj_show', '=', True)]
+                pricelist_name = '北京订单价格表'
+            if region and region == '深圳':
+                domain = domain + [('sz_show', '=', True)]
+                pricelist_name = '深圳订单价格表'
 
 
         product_template_pool = http.request.env['product.template'].search(domain, order='custom_order asc')
@@ -559,9 +569,11 @@ class OnlineShop(user_info.WebUserInfoController):
             if area_id == '1':
                 domain = [('sz_show', '=', True)]
                 pricelist_name = '深圳订单价格表'
+                request.session['select_area_id'] = '1'
             elif area_id == '2':
                 domain = [('bj_show', '=', True)]
                 pricelist_name = '北京订单价格表'
+                request.session['select_area_id'] = '2'
             else:
                 usronlineinfo = request.session.usronlineinfo
                 if not usronlineinfo:
@@ -571,9 +583,11 @@ class OnlineShop(user_info.WebUserInfoController):
                 if region and region == '北京':
                     domain = domain + [('bj_show', '=', True)]
                     pricelist_name = '北京订单价格表'
+                    request.session['select_area_id'] = '2'
                 if region and region == '深圳':
                     domain = domain + [('sz_show', '=', True)]
                     pricelist_name = '深圳订单价格表'
+                    request.session['select_area_id'] = '1'
 
         # if request.params.get('area_id'):  # 如果查地区
         #     area_id = request.params['area_id']
