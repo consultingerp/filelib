@@ -131,9 +131,13 @@ class cart(user_info.WebUserInfoController):
         pricelist = request.env['product.pricelist'].sudo().search([('name', '=', pricelist_name)])
 
         sale_order = request.website.sale_get_order(force_create=False)
+
         if not sale_order or sale_order.state != 'draft':
             request.session['sale_order_id'] = None
             sale_order = request.website.sale_get_order(force_create=True,force_pricelist=pricelist.id)
+            # 设置公司为当前位置对应公司
+            if sale_order.company_id.id != usronlineinfo['company_id']:
+                sale_order.company_id = usronlineinfo['company_id']
 
         if sale_order.user_id and not sale_order.team_id:
             team_user = request.env['res.users'].sudo().search([('id','=',sale_order.user_id.id)])
