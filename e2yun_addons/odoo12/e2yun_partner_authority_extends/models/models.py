@@ -95,10 +95,34 @@ class E2yuAddRelatedTeamModel(models.TransientModel):
         current_user = self.env['res.users'].browse(current_user_id)
         if member_type == 'area_manager':
             for team in teams:
+                area_manager_id_before_modify = team.area_manager.id
+                associate_member_ids = team.associate_member_ids.ids
+                for associate_member_id in associate_member_ids:
+                    if associate_member_id == area_manager_id_before_modify:
+                        associate_member_ids.remove(area_manager_id_before_modify)
+                        break
+                    else:
+                        continue
+
                 team.area_manager = current_user
+                associate_member_ids.append(current_user_id)
+                associate_member_ids = list(set(associate_member_ids))
+                team.associate_member_ids = [(6, 0, associate_member_ids)]
         elif member_type == 'user_id':
             for team in teams:
+                user_id_id_before_modify = team.user_id.id
+                associate_member_ids = team.associate_member_ids.ids
+                for associate_member_id in associate_member_ids:
+                    if associate_member_id == user_id_id_before_modify:
+                        associate_member_ids.remove(user_id_id_before_modify)
+                        break
+                    else:
+                        continue
+
                 team.user_id = current_user
+                associate_member_ids.append(current_user_id)
+                associate_member_ids = list(set(associate_member_ids))
+                team.associate_member_ids = [(6, 0, associate_member_ids)]
         elif member_type == 'member_ids':
             if len(teams) > 1:
                 raise Warning(_('选择团队成员字段时，请勿选择多个门店'))
