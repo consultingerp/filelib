@@ -647,8 +647,11 @@
 
   function grid_image_show_product_template_detail_page(product_template_id){
      id = product_template_id.id.slice(33)
+
      url = "/online_shop/get_product_detail/" + id
      sessionStorage.setItem("current_product_detail_id", id)
+      var area_id = document.getElementById("area_chooser").value
+     sessionStorage.setItem("current_area_id", area_id)
      window.location.href="/hhjc_shop_product_details"
  }
 
@@ -656,6 +659,8 @@
     id = product_template_id.id.slice(34)
     url = "/online_shop/get_product_detail/" + id
     sessionStorage.setItem("current_product_detail_id", id)
+     var area_id = document.getElementById("area_chooser").value
+     sessionStorage.setItem("current_area_id", area_id)
     window.location.href="/hhjc_shop_product_details"
  }
 
@@ -665,6 +670,8 @@
     var id = id_pre.substring(0,endIndex);
     url = "/online_shop/get_product_detail/" + id
     sessionStorage.setItem("current_product_detail_id", id)
+     var area_id = document.getElementById("area_chooser").value
+     sessionStorage.setItem("current_area_id", area_id)
     window.location.href="/hhjc_shop_product_details"
  }
 
@@ -672,6 +679,8 @@
     id = product_template_id.id.slice(34)
     url = "/online_shop/get_product_detail/" + id
     sessionStorage.setItem("current_product_detail_id", id)
+     var area_id = document.getElementById("area_chooser").value
+     sessionStorage.setItem("current_area_id", area_id)
     window.location.href="/hhjc_shop_product_details"
  }
 

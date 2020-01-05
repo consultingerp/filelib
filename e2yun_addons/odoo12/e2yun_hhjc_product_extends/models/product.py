@@ -42,7 +42,7 @@ class Product(models.Model):
     @api.multi
     def _compute_pos_price(self):
         for s in self:
-            pricelist = self.env['product.pricelist'].search([('company_id','=',self.env['res.company']._company_default_get().id),('name','ilike','零售标价表')])
+            pricelist = self.env['product.pricelist'].search([('company_id','=',self.env['res.company']._company_default_get().id),('name','ilike','零售标价表'),('active','=',False)])
             if pricelist:
                 pricelist_item = self.env['product.pricelist.item'].search([('pricelist_id','=',pricelist.id),('product_tmpl_id','=',s.id)])
                 if pricelist_item:
