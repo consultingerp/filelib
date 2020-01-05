@@ -118,36 +118,40 @@ class cart(user_info.WebUserInfoController):
     def cart_update(self, product_id, add_qty=1, set_qty=0, **kw):
         """This route is called when adding a product to cart (no options)."""
 
-        if not request.session.usronlineinfo:
-            request.session.usronlineinfo = self.get_show_userinfo()
-        usronlineinfo = request.session.usronlineinfo
 
-        pricelist_name = ''
-        company_id = usronlineinfo['company_id']
-        if request.session.get('select_area_id',False):
-            select_area_id = request.session['select_area_id']
-            if select_area_id == '1':
-                pricelist_name = '深圳订单价格表'
-                company = request.env['res.company'].sudo().search([('company_code','=','2000')],limit=1)
-                if company:
-                    company_id = company
-            else:
-                pricelist_name = '北京订单价格表'
-                company = request.env['res.company'].sudo().search([('company_code', '=', '1000')], limit=1)
-                if company:
-                    company_id = company
-        else:
-            region = usronlineinfo.get('region', False)
-            if region and region == '北京':
-                pricelist_name = '北京订单价格表'
-            if region and region == '深圳':
-                pricelist_name = '深圳订单价格表'
-        pricelist = request.env['product.pricelist'].sudo().search([('name', '=', pricelist_name)])
 
         sale_order = request.website.sale_get_order(force_create=False)
 
         if not sale_order or sale_order.state != 'draft':
             request.session['sale_order_id'] = None
+
+            if not request.session.usronlineinfo:
+                request.session.usronlineinfo = self.get_show_userinfo()
+            usronlineinfo = request.session.usronlineinfo
+
+            pricelist_name = ''
+            company_id = usronlineinfo['company_id']
+            if request.session.get('select_area_id', False):
+                select_area_id = request.session['select_area_id']
+                request.session['select_area_id'] = ''
+                if select_area_id == '1':
+                    pricelist_name = '深圳订单价格表'
+                    company = request.env['res.company'].sudo().search([('company_code', '=', '2000')], limit=1)
+                    if company:
+                        company_id = company
+                else:
+                    pricelist_name = '北京订单价格表'
+                    company = request.env['res.company'].sudo().search([('company_code', '=', '1000')], limit=1)
+                    if company:
+                        company_id = company
+            else:
+                region = usronlineinfo.get('region', False)
+                if region and region == '北京':
+                    pricelist_name = '北京订单价格表'
+                if region and region == '深圳':
+                    pricelist_name = '深圳订单价格表'
+            pricelist = request.env['product.pricelist'].sudo().search([('name', '=', pricelist_name)])
+
             sale_order = request.website.sale_get_order(force_create=True,force_pricelist=pricelist.id)
             # 设置公司为当前位置对应公司
             if sale_order.company_id.id != company_id:
