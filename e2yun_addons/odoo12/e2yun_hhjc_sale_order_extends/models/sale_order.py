@@ -117,15 +117,27 @@ class SaleOrder(models.Model):
 
     @api.model
     def create(self, vals):
+        # if 'pricelist_id' not in vals:
+        #     pricelist_id = self.env['res.company']._company_default_get(
+        #         'sale.order').partner_id.property_product_pricelist
+        #     if pricelist_id:
+        #         vals['pricelist_id'] = pricelist_id.id
         res = super(SaleOrder, self).create(vals)
         try:
             if res.salesorderid:
                 if res.ywy:
-                    users = self.env['res.users'].search([('name', '=', res.ywy)])
+                    _logger.info('创建开始设置销售员信息=============================')
+                    users = self.sudo().env['res.users'].search([('name', '=', res.ywy)])
                     if users:
-                        res.user_id = users[0]
+                        myuser = users[0]
+                        for user in users:
+                            if not user.customer:
+                                myuser = user
+                        if myuser:
+                            res.user_id = myuser
                 if res.kunnr:
-                    kunnrs = self.env['crm.team'].search([('shop_code', '=', res.kunnr)])
+                    _logger.info('创建开始设置门店和公司信息=============================')
+                    kunnrs = self.sudo().env['crm.team'].search([('shop_code', '=', res.kunnr)])
                     if kunnrs:
                         res.team_id = kunnrs[0]
                         res.company_id = res.team_id.company_id
@@ -140,7 +152,8 @@ class SaleOrder(models.Model):
             for item in self:
                 if item.sudo().pricelist_id.company_id != item.company_id:
                     _logger.info('==========================开始修改价格表=============================================')
-                    pricelist = self.env['product.pricelist'].search([('company_id', '=', item.company_id.id)], limit=1)
+                    pricelist = self.sudo().env['product.pricelist'].search([('company_id', '=', item.company_id.id)],
+                                                                            limit=1)
                     item.pricelist_id = pricelist
                     for order_line in item.order_line:
                         order_line.product_uom_change()
@@ -160,11 +173,13 @@ class SaleOrder(models.Model):
             for item in self:
                 if item.salesorderid:
                     if 'ywy' in vals and vals['ywy']:
-                        users = item.env['res.users'].search([('name', '=', vals['ywy'])])
+                        _logger.info('更新开始设置销售员信息=============================')
+                        users = item.sudo().env['res.users'].search([('name', '=', vals['ywy'])])
                         if users:
                             item.user_id = users[0]
                     if 'kunnr' in vals and vals['kunnr']:
-                        kunnrs = item.env['crm.team'].search([('shop_code', '=', vals['kunnr'])])
+                        _logger.info('更新开始设置门店和公司信息=============================')
+                        kunnrs = item.sudo().env['crm.team'].search([('shop_code', '=', vals['kunnr'])])
                         if kunnrs:
                             item.team_id = kunnrs[0]
                             item.company_id = item.team_id.company_id
