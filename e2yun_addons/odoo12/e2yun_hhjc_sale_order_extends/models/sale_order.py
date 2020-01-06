@@ -117,11 +117,12 @@ class SaleOrder(models.Model):
 
     @api.model
     def create(self, vals):
-        # if 'pricelist_id' not in vals:
-        #     pricelist_id = self.env['res.company']._company_default_get(
-        #         'sale.order').partner_id.property_product_pricelist
-        #     if pricelist_id:
-        #         vals['pricelist_id'] = pricelist_id.id
+        if 'pricelist_id' not in vals:
+            pricelist_id = self.env['res.company']._company_default_get(
+                'sale.order').partner_id.property_product_pricelist
+            if pricelist_id:
+                vals['pricelist_id'] = pricelist_id.id
+
         res = super(SaleOrder, self).create(vals)
         try:
             if res.salesorderid:
