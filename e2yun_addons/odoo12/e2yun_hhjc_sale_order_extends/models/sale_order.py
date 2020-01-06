@@ -151,11 +151,11 @@ class SaleOrder(models.Model):
         res = super(SaleOrder, self).write(vals)
         try:
             for item in self:
-                if item.sudo().pricelist_id.company_id != item.company_id:
+                if item.sudo().pricelist_id.company_id != item.sudo().team_id.company_id:
                     _logger.info('==========================开始修改价格表=============================================')
-                    pricelist = self.sudo().env['product.pricelist'].search([('company_id', '=', item.company_id.id)],
-                                                                            limit=1)
-                    item.pricelist_id = pricelist
+                    pricelist = self.sudo().env['product.pricelist'].search([('company_id', '=', item.sudo().team_id.company_id.id)], limit=1)
+                    if pricelist:
+                        item.pricelist_id = pricelist
                     for order_line in item.order_line:
                         order_line.product_uom_change()
         except Exception as e:
