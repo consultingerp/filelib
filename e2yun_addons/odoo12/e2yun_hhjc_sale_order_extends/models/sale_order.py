@@ -125,6 +125,8 @@ class SaleOrder(models.Model):
 
         res = super(SaleOrder, self).create(vals)
         try:
+            if 'is_sync' in vals and vals['is_sync']:
+                res.state = 'sent'
             if res.salesorderid:
                 if res.ywy:
                     _logger.info('创建开始设置销售员信息=============================')
@@ -151,9 +153,13 @@ class SaleOrder(models.Model):
         res = super(SaleOrder, self).write(vals)
         try:
             for item in self:
+                if 'is_sync' in vals and vals['is_sync']:
+                    if item.state == 'draft':
+                        item.state = 'sent'
                 if item.sudo().pricelist_id.company_id != item.sudo().team_id.company_id:
                     _logger.info('==========================开始修改价格表=============================================')
-                    pricelist = self.sudo().env['product.pricelist'].search([('company_id', '=', item.sudo().team_id.company_id.id)], limit=1)
+                    pricelist = self.sudo().env['product.pricelist'].search(
+                        [('company_id', '=', item.sudo().team_id.company_id.id)], limit=1)
                     if pricelist:
                         item.pricelist_id = pricelist
                     for order_line in item.order_line:
