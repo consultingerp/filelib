@@ -67,7 +67,7 @@ class Product(models.Model):
     @api.model
     def sync_pos_matnr_to_crm(self,matnr,current_date):
 
-        if not current_date:
+        if not matnr and not current_date:
             current_date = date.today().strftime("%Y-%m-%d")
 
         ICPSudo = self.env['ir.config_parameter'].sudo()
