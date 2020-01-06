@@ -399,7 +399,7 @@ class SaleOrder(models.Model):
                 date_line['product_uom_qty'] = line['kwmen']
                 product = self.env['product.product'].search([('default_code', '=', line['matnr'])])
                 if not product:
-                    self.env['product.template'].sync_pos_matnr_to_crm(line['matnr'], '2000-01-01')
+                    self.env['product.template'].sync_pos_matnr_to_crm(line['matnr'], '')
                     product = self.env['product.product'].search([('default_code', '=', line['matnr'])])
                 if product:
                     date_line['product_id'] = product.id
@@ -408,6 +408,7 @@ class SaleOrder(models.Model):
                 date_line['is_sync'] = True
                 sale_order_line.create(date_line)
             order_id.crmstate = '已接单'
+        return True
 
     def action_sync_pos_sale_order(self):
         # self.env['sale.order']._fields.keys()
@@ -493,7 +494,10 @@ class SaleOrder(models.Model):
                     sale_order_line['is_sync'] = True
                     sale_order_line.create(date_line)
 
+
             # raise Exception('pos销售订单为空，不能同步！')
+
+        return True
 
     @api.multi
     def action_confirm(self):
