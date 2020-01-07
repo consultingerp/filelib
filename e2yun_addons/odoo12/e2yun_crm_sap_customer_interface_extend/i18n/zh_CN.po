@@ -29,3 +29,44 @@ msgstr "客户简称(汉字)"
 #: model:ir.model.fields,field_description:e2yun_crm_sap_customer_interface_extend.field_e2yun_customer_info__sap_bu_sort2
 msgid "sap bu_sort2"
 msgstr "客户简称(字母)"
+
+
+
+
+
+
+
+
+
+
+
+#. module: e2yun_crm_sap_customer_interface_extend
+#: model:ir.model.fields,field_description:e2yun_crm_sap_customer_interface_extend.field_res_partner__sap_kunnr
+msgid "sap kunnr"
+msgstr "SAP客户编号"
+
+
+
+
+#. module: e2yun_crm_sap_customer_interface_extend
+#: model:ir.model.fields,field_description:e2yun_crm_sap_customer_interface_extend.field_res_partner__sap_remark
+msgid "sap remark"
+msgstr "大客户号"
+
+
+#. module: e2yun_crm_sap_customer_interface_extend
+#: model:ir.model.fields,field_description:e2yun_crm_sap_customer_interface_extend.field_res_partner__sap_ktokd
+msgid "sap ktokd"
+msgstr "账户组"
+
+
+#. module: e2yun_crm_sap_customer_interface_extend
+#: model:ir.model.fields,field_description:e2yun_crm_sap_customer_interface_extend.field_res_partner__sap_bu_sort1
+msgid "sap bu_sort1"
+msgstr "客户简称(汉字)"
+
+
+#. module: e2yun_crm_sap_customer_interface_extend
+#: model:ir.model.fields,field_description:e2yun_crm_sap_customer_interface_extend.field_res_partner__sap_bu_sort2
+msgid "sap bu_sort2"
+msgstr "客户简称(字母)"

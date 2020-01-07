@@ -17,20 +17,7 @@ class PYRFC_CRM_CUSTOMER():
     getconn = get_pyrfc_conn.get_pyrfc_conntion()
     conn = getconn.get_conn()
     try:
-      I_INPUT={}
-      I_INPUT['ZTYPE']='1'  #事务类型  0 创建 1修改
-      I_INPUT['KTOKD']='C001'  #账户组
-      I_INPUT['KUNNR']='200682'  #客户号
-      I_INPUT['NAME_ORG1']='接口测试名称修改'    #客户名称
-      I_INPUT['BU_SORT1']='789'   #  sap客户简称
-      I_INPUT['BU_SORT2']='55566'  #sap客户简称字母
-      I_INPUT['REMARK']='接口测试修改' #大客户号
-      I_INPUT['LANGU']='zh'  #默认
-      I_INPUT['COUNTRY']='CN' #默认
-      # I_INPUT['POST_CODE1']=0
-      # I_INPUT['POST_CODE1']=0
       result = conn.call('ZCL_REST_CUSTOMER', I_INPUT=I_INPUT)
-
     except BaseException as b:
         raise exceptions.ValidationError(b)
 
