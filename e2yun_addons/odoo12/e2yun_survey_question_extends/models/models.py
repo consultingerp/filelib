@@ -14,7 +14,7 @@ class e2yun_survey_question_extends(models.Model):
     # 题库页面创建并可以保存，继承并修改：required=False
     page_id = fields.Many2one('survey.page', string='Survey page',
                               ondelete='cascade', required=False, default=lambda self: self.env.context.get('page_id'))
-    type_id = fields.Many2one('question.type', string='问题类型')
+    # type_id = fields.Many2one('question.type', string='问题类型')
     # type_name = fields.Char(string='问题类型')
     question_bank_type = fields.Selection([('供应商基本信息', '供应商基本信息'), ('人口属性', '人口属性'), ('市场调研', '市场调研')
                                               , ('用户满意度', '用户满意度'), ('联系方式', '联系方式'), ('其他', '其他')], string='题库大类', required=True)
