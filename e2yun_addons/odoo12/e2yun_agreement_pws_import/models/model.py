@@ -129,7 +129,7 @@ class AgreementPwsImport(models.TransientModel):
       if not (cell_value is None) and not (cell_value is ''):
           vals['x_studio_cpx'] = cell_value
 
-      cell_value = table.cell(15, 5).value  # 订单类型
+      cell_value = table.cell(10, 2).value  # 订单类型
       if not (cell_value is None) and not (cell_value is ''):
          # print(cell_value)
           vals['x_studio_order_type1'] = cell_value

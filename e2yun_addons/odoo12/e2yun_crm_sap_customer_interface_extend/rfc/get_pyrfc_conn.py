@@ -27,14 +27,21 @@ class get_pyrfc_conntion():
             config.read(path)
             #lists_header = config.sections()  # 配置组名
             #print(lists_header)
-            conn = pyrfc.Connection(user=config['pyrfc_conf']['user'],
-                                                    passwd=config['pyrfc_conf']['passwd'],
-                                                    ashost=config['pyrfc_conf']['ashost'],
-                                                    sysnr=config['pyrfc_conf']['sysnr'],
-                                                    client=config['pyrfc_conf']['client'],
-                                                    saprouter=config['pyrfc_conf']['saprouter'],
-                                                    lang='zh')
+            # conn = pyrfc.Connection(user=config['pyrfc_conf']['user'],
+            #                                         passwd=config['pyrfc_conf']['passwd'],
+            #                                         ashost=config['pyrfc_conf']['ashost'],
+            #                                         sysnr=config['pyrfc_conf']['sysnr'],
+            #                                         client=config['pyrfc_conf']['client'],
+            #                                         saprouter=config['pyrfc_conf']['saprouter'],
+            #                                         lang='zh')
 
+            conn = pyrfc.Connection(user='ZHOUF',
+                                                    passwd='87654321',
+                                                    ashost='172.18.3.76',
+                                                    sysnr='00',
+                                                    client='200',
+                                                    saprouter='/H/163.177.113.191/S/3299',
+                                                    lang='zh')
             return conn
         except BaseException as b:
             raise exceptions.ValidationError(" Connection SAP exception"+str(b))
