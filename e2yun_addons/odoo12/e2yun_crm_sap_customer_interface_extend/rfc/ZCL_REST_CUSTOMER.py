@@ -17,6 +17,7 @@ class PYRFC_CRM_CUSTOMER():
     getconn = get_pyrfc_conn.get_pyrfc_conntion()
     conn = getconn.get_conn()
     try:
+      self.zerofill(I_INPUT)
       result = conn.call('ZCL_REST_CUSTOMER', I_INPUT=I_INPUT)
     except BaseException as b:
         raise exceptions.ValidationError(b)
@@ -28,30 +29,15 @@ class PYRFC_CRM_CUSTOMER():
 
 
   def zerofill(self,map):
-      zerosize = 0
-      zero = "";
-      length_temp = 0;
-      if map['MATERIAL']:
-          MATERIAL=map['MATERIAL']
-          length_temp=len(MATERIAL)
-          if length_temp<18:
-              zero = ""
-              i=0
-              zerosize=18-length_temp
-              while i<zerosize:
-                  zero+="0"
-                  i=i+1
-              map["MATERIAL"]=zero+MATERIAL;
-
-      if map['PO_NUMBER']:
-          PO_NUMBER=map['PO_NUMBER']
-          length_temp=len(PO_NUMBER)
+      if 'KUNNR' in map.keys() and map['KUNNR']:
+          KUNNR=map['KUNNR']
+          length_temp=len(KUNNR)
           if length_temp<10:
-              zero=""
+              zero = ""
               i=0
               zerosize=10-length_temp
               while i<zerosize:
                   zero+="0"
                   i=i+1
-              map["PO_NUMBER"] = zero + PO_NUMBER;
+              map["KUNNR"]=zero+KUNNR;
       return  map

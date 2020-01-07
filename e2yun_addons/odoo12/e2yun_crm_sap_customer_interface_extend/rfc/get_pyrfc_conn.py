@@ -37,7 +37,6 @@ class get_pyrfc_conntion():
                                                     saprouter=config['pyrfc_conf']['saprouter'],
                                                     lang='zh')
 
-            print(conn)
             return conn
         except BaseException as b:
             raise exceptions.ValidationError(" Connection SAP exception"+str(b))
