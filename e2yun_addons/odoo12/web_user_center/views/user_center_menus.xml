@@ -18,7 +18,7 @@
                 id="menu_user_center"
                 name="个人中心"
                 parent="menu_user_center_top"
-                sequence="2"/>
+                sequence="2"  groups="web_user_center.user_center_manager"/>
 
 
 
