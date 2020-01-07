@@ -11,6 +11,7 @@ odoo.define('web_user_center.user_info', function (require) {
 
     $('#qrcode_img').bigic();
     $('#password_qrcode_img').bigic();
+    $('#qrcode_img_head_src').bigic();
     $('.aui-btn-out').on('click', function (ev) {  //退出按钮
         var logouturl = "/web/session/logout?redirect=/web/login"
         if (self != top) {
