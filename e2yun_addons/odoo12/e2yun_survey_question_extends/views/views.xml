@@ -4,9 +4,11 @@
             <field name="model">survey.question</field>
             <field name="inherit_id" ref="survey.survey_question_form"/>
             <field name="arch" type="xml">
+                <!--增加题库大类-->
                 <xpath expr="//field[@name='type']" position="before">
                     <field name="question_bank_type" widget="radio"/>
                 </xpath>
+                <!--增加样式-->
                 <xpath expr="//div[@class='col-lg-6 offset-lg-3 o_preview_questions']" position="inside">
                     <div attrs="{'invisible': [('type', '!=', 'select_box')]}" role="img" aria-label="Select choice" title="Select choice">
                         <div class="row"><i/> 请选择 v</div>
@@ -50,6 +52,75 @@
                     <div attrs="{'invisible': [('type', '!=', 'upload attachments')]}" role="img" aria-label="upload attachments" title="upload attachments">
                         <div class="row"><i/> 请选择文件(30Mb以内)</div>
                     </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="survey_question_form_extends">
+            <field name="name">Form view for survey question extends</field>
+            <field name="model">survey.question</field>
+            <field name="inherit_id" ref="survey.survey_question_form"/>
+            <field name="arch" type="xml">
+                <!--引用已有题库的按钮-->
+                <xpath expr="//div[@class='oe_title']" position="after">
+                    <label for="reference_existing_question" class="oe_read_only"/>
+                    <field name="reference_existing_question" />
+                    <!--<field name="type" invisible="1"/>-->
+                </xpath>
+                <!--添加计分方式-->
+                <xpath expr="//field[@name='labels_ids']" position="before">
+                    <label for="scoring_method" string="计分方式"/>
+                    <field name="scoring_method" string="Scoring Method"/>
+                </xpath>
+                <!--选项列表的修改-->
+                <xpath expr="//field[@name='labels_ids']" position="replace">
+                    <field name="labels_ids" string="Type of answers" context="{'default_question_id': active_id}" attrs="{'invisible': [('type', 'not in', ['simple_choice', 'multiple_choice', 'matrix'])]}">
+                        <tree editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="value" string="选项"/>
+                            <field name="quizz_mark" />
+                        </tree>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+        <!--题库页面添加创建按钮-->
+        <record model="ir.ui.view" id="survey_question_tree_create">
+            <field name="name">Tree view for survey question create</field>
+            <field name="model">survey.question</field>
+            <field name="inherit_id" ref="survey.survey_question_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree[@create='false']" position="attributes">
+                    <attribute name="create">true</attribute>
+                </xpath>
+                <xpath expr="//field[@name='question']" position="before">
+                    <!--<label for="question_bank_type" string="题库大类"/>-->
+                    <field name="question_bank_type"/>
+                </xpath>
+                <xpath expr="//field[@name='type']" position="after">
+                    <field name="type"/>
+                    <field name="scoring_method"/>
+                </xpath>
+                <xpath expr="//field[@name='page_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='survey_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='type']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+            </field>
+        </record>
+        <!--题库按题库大类分组继承问题搜索视图-->
+        <record model="ir.ui.view" id="survey_question_search_extends">
+            <field name="name">Search view for survey question extends</field>
+            <field name="model">survey.question</field>
+            <field name="inherit_id" ref="survey.survey_question_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='group_by_type']" position="after">
+                    <filter name="group_by_question_bank_type" string="题库大类" domain="[]"  context="{'group_by':'question_bank_type'}"/>
                 </xpath>
             </field>
         </record>

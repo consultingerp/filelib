@@ -22,7 +22,8 @@ odoo.define('web_user_center.user_info', function (require) {
     });
 
     $('.moreset').on('click', function (ev) {
-        var url = "/web#id=2&model=res.users&view_type=form&view_id=2065&menu_id=";
+        var user_id = $('#user_id').val();
+        var url = "/web#id="+user_id+"&model=res.users&view_type=form&view_id=2065&menu_id=";
         if (self != top) {
             top.location.href = url;
         } else {
