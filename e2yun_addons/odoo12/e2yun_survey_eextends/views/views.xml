@@ -55,32 +55,32 @@
   <!--</xpath>-->
   <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='page_ids']/tree[1]" position="after">
     <form string="Survey Page" create="false">
-      <sheet name="studio_sheet_50520a">
-        <div class="oe_title" style="width: 100%;" name="studio_div_85e208">
-          <label for="title" class="oe_edit_only"/>
-          <h1>
-            <field name="title" placeholder="Page Title"/>
-          </h1>
-        </div>
-        <group name="studio_group_QsF0z">
-          <group name="studio_group_QsF0z_left">
-            <!--<field name="x_studio_survey_page_sum" string="小计" attrs="{}" required="1"/>-->
-          </group>
-        </group>
-        <label for="weight" class="oe_edit_only"/>
-        <h1>
-          <field name="weight" placeholder="Weight" attrs="{}" required="1"/>
-        </h1>
-        <field name="question_ids" nolabel="1" mode="tree" context="{'default_page_id': active_id}">
-          <tree>
-            <field name="sequence" widget="handle"/>
-            <field name="question"/>
-            <field name="highest_score"/>
-            <field name="type"/>
-            <field name="scoring_method"/>
-            <field name="constr_mandatory"/>
-          </tree>
-          <form string="Survey Question" create="false">
+      <!--<sheet name="studio_sheet_50520a">-->
+        <!--<div class="oe_title" style="width: 100%;" name="studio_div_85e208">-->
+          <!--<label for="title" class="oe_edit_only"/>-->
+          <!--<h1>-->
+            <!--<field name="title" placeholder="Page Title"/>-->
+          <!--</h1>-->
+        <!--</div>-->
+        <!--<group name="studio_group_QsF0z">-->
+          <!--<group name="studio_group_QsF0z_left">-->
+            <!--&lt;!&ndash;<field name="x_studio_survey_page_sum" string="小计" attrs="{}" required="1"/>&ndash;&gt;-->
+          <!--</group>-->
+        <!--</group>-->
+        <!--<label for="weight" class="oe_edit_only"/>-->
+        <!--<h1>-->
+          <!--<field name="weight" placeholder="Weight" attrs="{}" required="1"/>-->
+        <!--</h1>-->
+        <!--<field name="question_ids" nolabel="1" mode="tree" context="{'default_page_id': active_id}">-->
+          <!--<tree>-->
+            <!--<field name="sequence" widget="handle"/>-->
+            <!--<field name="question"/>-->
+            <!--<field name="highest_score"/>-->
+            <!--<field name="type"/>-->
+            <!--<field name="scoring_method"/>-->
+            <!--<field name="constr_mandatory"/>-->
+          <!--</tree>-->
+          <!--<form string="Survey Question" create="false">-->
             <!--<sheet name="studio_sheet_4bf5ff">-->
               <!--<div class="oe_title" style="width: 100%;" name="studio_div_9225bd">-->
                 <!--<label for="question" string="Question name" class="oe_edit_only"/>-->
@@ -360,9 +360,9 @@
                 <!--</page>-->
               <!--</notebook>-->
             <!--</sheet>-->
-          </form>
-        </field>
-      </sheet>
+          <!--</form>-->
+        <!--</field>-->
+      <!--</sheet>-->
     </form>
   </xpath>
         </field>
