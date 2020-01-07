@@ -370,7 +370,7 @@ class SaleOrder(models.Model):
             result = client.service.getSaleOrderInfo(data['salesorderid'])
             json2python = json.loads(result)
             line = json2python['orderHead']
-            if 'vkorg' not in line or line['vkorg'] not in [1000, 2000]:
+            if 'vkorg' not in line or line['vkorg'] not in ['1000', '2000']:
                 return True
             order = sale_order.search([('salesorderid', '=', line['salesorderid'])])
             order.order_line.unlink()
@@ -383,7 +383,7 @@ class SaleOrder(models.Model):
             if partner:
                 data['partner_id'] = partner.id
             else:
-                raise exceptions.Warning("客户好：%s不存在，请检查客户是否同步了。" % (data['partner_id']))
+                raise exceptions.Warning("客户：%s不存在，请检查客户是否同步了。" % (line['memberposid']))
             data['is_sync'] = True
             if order:
                 order.write(data)
