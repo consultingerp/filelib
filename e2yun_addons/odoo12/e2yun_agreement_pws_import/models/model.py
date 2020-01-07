@@ -149,9 +149,6 @@ class AgreementPwsImport(models.TransientModel):
         vals['agreement_type_id'] = 1  # 合同类型
         vals['name']='/'
         for table in wb.sheets():
-            print(table.nrows)
-            #print(table.ncols)
-            print(table.number)
             if table.number == 5:
                 cell_value = table.cell(5, 5).value  # 客户名称
                 if not (cell_value is None) and not (cell_value is ''):
@@ -202,8 +199,8 @@ class AgreementPwsImport(models.TransientModel):
                     if parent:
                        user=self.env['res.users'].search(
                             [('partner_id', '=', parent.id)], limit=1)
-                    if user:
-                       vals['x_studio_xsdb1'] = user.id
+                       if user:
+                          vals['x_studio_xsdb1'] = user.id
 
 
                 cell_value = table.cell(2, 6).value  # 项目经理
@@ -214,8 +211,8 @@ class AgreementPwsImport(models.TransientModel):
                     if parent:
                         user = self.env['res.users'].search(
                             [('partner_id', '=', parent.id)], limit=1)
-                    if user:
-                        vals['x_studio_xmjl1'] = user.id
+                        if user:
+                            vals['x_studio_xmjl1'] = user.id
 
                 cell_value = table.cell(13, 5).value  # 项目背景
                 if not (cell_value is None) and not (cell_value is ''):
@@ -260,13 +257,5 @@ class AgreementPwsImport(models.TransientModel):
           print(e)
       return vals
 
-
-# class Agreement(models.Model):
-#     _inherit = 'agreement'
-#
-#     @api.model
-#     def create(self, vals):
-#         print(vals)
-#         return super(Agreement,self).create(vals)
 
 
