@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing tailsde.
-from odoo import models, fields, api, exceptions,_
+from odoo import models, fields, api, exceptions, _
 import datetime
 import suds.client
 import json
@@ -115,15 +115,83 @@ class SaleOrder(models.Model):
     #             _logger.error("同步订单到POS出现错误，对象: %s，错误信息：%s", self, e)
     #     return res
 
+    @api.model
+    def create(self, vals):
+        if 'pricelist_id' not in vals:
+            pricelist_id = self.env['res.company']._company_default_get(
+                'sale.order').partner_id.property_product_pricelist
+            if pricelist_id:
+                vals['pricelist_id'] = pricelist_id.id
+
+        res = super(SaleOrder, self).create(vals)
+        try:
+            if 'is_sync' in vals and vals['is_sync']:
+                res.state = 'sent'
+            if res.salesorderid:
+                if res.ywy:
+                    _logger.info('创建开始设置销售员信息=============================')
+                    users = self.sudo().env['res.users'].search([('name', '=', res.ywy)])
+                    if users:
+                        myuser = users[0]
+                        for user in users:
+                            if not user.customer:
+                                myuser = user
+                        if myuser:
+                            res.user_id = myuser
+                if res.kunnr:
+                    _logger.info('创建开始设置门店和公司信息=============================')
+                    kunnrs = self.sudo().env['crm.team'].search([('shop_code', '=', res.kunnr)])
+                    if kunnrs:
+                        res.team_id = kunnrs[0]
+                        res.company_id = res.team_id.company_id
+        except Exception as e:
+            _logger.error(e)
+        return res
+
     @api.multi
     def write(self, vals):
         res = super(SaleOrder, self).write(vals)
+        try:
+            for item in self:
+                if 'is_sync' in vals and vals['is_sync']:
+                    if item.state == 'draft':
+                        item.state = 'sent'
+                if item.sudo().pricelist_id.company_id != item.sudo().team_id.company_id:
+                    _logger.info('==========================开始修改价格表=============================================')
+                    pricelist = self.sudo().env['product.pricelist'].search(
+                        [('company_id', '=', item.sudo().team_id.company_id.id)], limit=1)
+                    if pricelist:
+                        item.pricelist_id = pricelist
+                    for order_line in item.order_line:
+                        order_line.product_uom_change()
+        except Exception as e:
+            _logger.error(e)
         if 'crmstate' in vals and vals['crmstate']:
             for item in self:
-                self.env['sale.order.crmstate.flow'].create({
-                    'order_id': self.id,
-                    'crmstate': vals['crmstate'],
-                })
+                flow = self.env['sale.order.crmstate.flow'].search(
+                    [('order_id', '=', self.id), ('crmstate', '=', vals['crmstate'])])
+                if not flow:
+                    self.env['sale.order.crmstate.flow'].create({
+                        'order_id': self.id,
+                        'crmstate': vals['crmstate'],
+                    })
+
+        try:
+            for item in self:
+                if item.salesorderid:
+                    if 'ywy' in vals and vals['ywy']:
+                        _logger.info('更新开始设置销售员信息=============================')
+                        users = item.sudo().env['res.users'].search([('name', '=', vals['ywy'])])
+                        if users:
+                            item.user_id = users[0]
+                    if 'kunnr' in vals and vals['kunnr']:
+                        _logger.info('更新开始设置门店和公司信息=============================')
+                        kunnrs = item.sudo().env['crm.team'].search([('shop_code', '=', vals['kunnr'])])
+                        if kunnrs:
+                            item.team_id = kunnrs[0]
+                            item.company_id = item.team_id.company_id
+        except Exception as e:
+            _logger.error(e)
         return res
 
     # @api.multi
@@ -327,9 +395,11 @@ class SaleOrder(models.Model):
                         date_line[key] = line[key]
                 date_line['order_id'] = order_id.id
                 date_line['name'] = line['maktx']
+                date_line['price_unit'] = line['xiaoshoujine']
+                date_line['product_uom_qty'] = line['kwmen']
                 product = self.env['product.product'].search([('default_code', '=', line['matnr'])])
                 if not product:
-                    self.env['product.template'].sync_pos_matnr_to_crm(line['matnr'], '2000-01-01')
+                    self.env['product.template'].sync_pos_matnr_to_crm(line['matnr'], '')
                     product = self.env['product.product'].search([('default_code', '=', line['matnr'])])
                 if product:
                     date_line['product_id'] = product.id
@@ -337,6 +407,8 @@ class SaleOrder(models.Model):
                     raise exceptions.Warning("物料号：%s不存在，请检查物料是否同步了。" % (line['matnr']))
                 date_line['is_sync'] = True
                 sale_order_line.create(date_line)
+            order_id.crmstate = '已接单'
+        return True
 
     def action_sync_pos_sale_order(self):
         # self.env['sale.order']._fields.keys()
@@ -422,7 +494,10 @@ class SaleOrder(models.Model):
                     sale_order_line['is_sync'] = True
                     sale_order_line.create(date_line)
 
+
             # raise Exception('pos销售订单为空，不能同步！')
+
+        return True
 
     @api.multi
     def action_confirm(self):

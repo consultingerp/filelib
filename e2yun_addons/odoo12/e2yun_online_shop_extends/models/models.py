@@ -201,12 +201,18 @@ class OnlineShop(user_info.WebUserInfoController):
         current_session = request.session
         domain = []
         area_id = None
+
+
+        pricelist_name = ''
+
         if request.params.get('area_id'):  # 如果查地区
             area_id = request.params['area_id']
             if area_id == '1':
                 domain = [('sz_show', '=', True)]
+                pricelist_name = '深圳订单价格表'
             elif area_id == '2':
                 domain = [('bj_show', '=', True)]
+                pricelist_name = '北京订单价格表'
             else:
                 usronlineinfo = request.session.usronlineinfo
                 if not usronlineinfo:
@@ -215,8 +221,10 @@ class OnlineShop(user_info.WebUserInfoController):
                 region = usronlineinfo.get('region',False)
                 if region and region == '北京':
                     domain = domain + [('bj_show', '=', True)]
+                    pricelist_name = '北京订单价格表'
                 if region and region == '深圳':
                     domain = domain + [('sz_show', '=', True)]
+                    pricelist_name = '深圳订单价格表'
 
         if request.session.get('default_search_key',False):
             search_key = request.session['default_search_key']
@@ -245,8 +253,11 @@ class OnlineShop(user_info.WebUserInfoController):
             # str_list = [str(product.id), str(product.default_code), str(product.name)]
             # str_join = ''.join(str_list)
             if product_template.id:
-                # 获取产品价格（所有变体中价格最低的）
-                product_template_price_float = product_template.list_price
+                product_template_price_float = 0
+                product = request.env['product.product'].search([('product_tmpl_id', '=', product_template.id)],limit=1)
+                pricelist = request.env['product.pricelist'].sudo().search([('name','=',pricelist_name)])
+                if product and pricelist:
+                    product_template_price_float = product.sudo().with_context(pricelist=pricelist.id).price
 
                 # product_product_pool = http.request.env['product.product'].search([('product_tmpl_id', '=', product_template.id)])
                 # if product_product_pool:
@@ -284,7 +295,7 @@ class OnlineShop(user_info.WebUserInfoController):
                 product_detail_href = ''
                 product_template_name = product_template.name
                 product_add_to_cart_href = "cart.html"
-                product_template_price_str = "¥" + str(product_template_price_float)
+                product_template_price_str = "¥" + str(round(product_template_price_float,2))
                 # TODO:是否需要增加产品描述字段
                 if product_template.description_sale:
                     product_template_description = product_template.description_sale
@@ -358,23 +369,44 @@ class OnlineShop(user_info.WebUserInfoController):
     @http.route(['/online_shop/search_product_list/<string:search_key>'], type='http', auth="public")
     def search_product_list(self, search_key, **kwargs):
         response_text = """"""
-        product_template_pool = http.request.env['product.template'].search([('sale_ok', '=', True), ('name', 'ilike', search_key)], order='custom_order asc')
+
+        domain = [('sale_ok', '=', True), ('name', 'ilike', search_key)]
+
+        pricelist_name = ''
+
+        if request.params.get('area_id',False) and request.params['area_id'] != '0':
+            area_id = request.params['area_id']
+            if area_id == '1':
+                pricelist_name = '深圳订单价格表'
+                domain = domain + [('sz_show', '=', True)]
+            elif area_id == '2':
+                domain = domain + [('bj_show', '=', True)]
+                pricelist_name = '北京订单价格表'
+        else:
+            usronlineinfo = request.session.usronlineinfo
+            if not usronlineinfo:
+                request.session.usronlineinfo = self.get_show_userinfo()
+                usronlineinfo = request.session.usronlineinfo
+            region = usronlineinfo.get('region', False)
+            if region and region == '北京':
+                domain = domain + [('bj_show', '=', True)]
+                pricelist_name = '北京订单价格表'
+            if region and region == '深圳':
+                domain = domain + [('sz_show', '=', True)]
+                pricelist_name = '深圳订单价格表'
+
+
+        product_template_pool = http.request.env['product.template'].search(domain, order='custom_order asc')
         for product_template in product_template_pool:
             # str_list = [str(product.id), str(product.default_code), str(product.name)]
             # str_join = ''.join(str_list)
             if product_template.id:
-                # 获取产品价格（所有变体中价格最低的）
-                product_template_price_float = product_template.list_price
 
-                # product_product_pool = http.request.env['product.product'].search(
-                #     [('product_tmpl_id', '=', product_template.id)])
-                # if product_product_pool:
-                #     product_product_price_list = []
-                #     for product_product in product_product_pool:
-                #         if product_product.lst_price:
-                #             product_product_price_list.append(product_product.lst_price)
-                #     if product_product_price_list:
-                #         product_template_price_float = min(product_product_price_list)
+                product_template_price_float = 0
+                product = request.env['product.product'].search([('product_tmpl_id', '=', product_template.id)],limit=1)
+                pricelist = request.env['product.pricelist'].sudo().search([('name', '=', pricelist_name)])
+                if product and pricelist:
+                    product_template_price_float = product.sudo().with_context(pricelist=pricelist.id).price
 
                 # TODO: 产品图片获取
                 def get_product_image(product_tmpl_id):
@@ -405,7 +437,7 @@ class OnlineShop(user_info.WebUserInfoController):
                 product_detail_href = ''
                 product_template_name = product_template.name
                 product_add_to_cart_href = "cart.html"
-                product_template_price_str = "¥" + str(product_template_price_float)
+                product_template_price_str = "¥" + str(round(product_template_price_float,2))
                 # TODO:是否需要增加产品描述字段
                 if product_template.description_sale:
                     product_template_description = product_template.description_sale
@@ -517,8 +549,8 @@ class OnlineShop(user_info.WebUserInfoController):
             0: 'custom_order asc',
             1: 'product_template_order_by_name asc',
             2: 'product_template_order_by_name desc',
-            3: 'list_price asc',
-            4: 'list_price desc',
+            3: 'pos_price asc',
+            4: 'pos_price desc',
             5: 'so_qty asc',
             6: 'so_qty desc',
             7: 'browse_num asc',
@@ -531,12 +563,17 @@ class OnlineShop(user_info.WebUserInfoController):
         domain = []
         area_id = None
 
+        pricelist_name = ''
         if request.params.get('area_id'):  # 如果查地区
             area_id = request.params['area_id']
             if area_id == '1':
                 domain = [('sz_show', '=', True)]
+                pricelist_name = '深圳订单价格表'
+                request.session['select_area_id'] = '1'
             elif area_id == '2':
                 domain = [('bj_show', '=', True)]
+                pricelist_name = '北京订单价格表'
+                request.session['select_area_id'] = '2'
             else:
                 usronlineinfo = request.session.usronlineinfo
                 if not usronlineinfo:
@@ -545,8 +582,12 @@ class OnlineShop(user_info.WebUserInfoController):
                 region = usronlineinfo.get('region',False)
                 if region and region == '北京':
                     domain = domain + [('bj_show', '=', True)]
+                    pricelist_name = '北京订单价格表'
+                    request.session['select_area_id'] = '2'
                 if region and region == '深圳':
                     domain = domain + [('sz_show', '=', True)]
+                    pricelist_name = '深圳订单价格表'
+                    request.session['select_area_id'] = '1'
 
         # if request.params.get('area_id'):  # 如果查地区
         #     area_id = request.params['area_id']
@@ -568,18 +609,11 @@ class OnlineShop(user_info.WebUserInfoController):
             # str_list = [str(product.id), str(product.default_code), str(product.name)]
             # str_join = ''.join(str_list)
             if product_template.id:
-                # 获取产品价格（所有变体中价格最低的）
-                product_template_price_float = product_template.list_price
-
-                # product_product_pool = http.request.env['product.product'].search(
-                #     [('product_tmpl_id', '=', product_template.id)])
-                # if product_product_pool:
-                #     product_product_price_list = []
-                #     for product_product in product_product_pool:
-                #         if product_product.lst_price:
-                #             product_product_price_list.append(product_product.lst_price)
-                #     if product_product_price_list:
-                #         product_template_price_float = min(product_product_price_list)
+                product_template_price_float = 0
+                product = request.env['product.product'].search([('product_tmpl_id', '=', product_template.id)],limit=1)
+                pricelist = request.env['product.pricelist'].sudo().search([('name', '=', pricelist_name)])
+                if product and pricelist:
+                    product_template_price_float = product.sudo().with_context(pricelist=pricelist.id).price
 
                 # TODO: 产品图片获取
                 def get_product_image(product_tmpl_id):
@@ -610,7 +644,7 @@ class OnlineShop(user_info.WebUserInfoController):
                 product_detail_href = ''
                 product_template_name = product_template.name
                 product_add_to_cart_href = "cart.html"
-                product_template_price_str = "¥" + str(product_template_price_float)
+                product_template_price_str = "¥" + str(round(product_template_price_float,2))
                 # TODO:是否需要增加产品描述字段
                 if product_template.description_sale:
                     product_template_description = product_template.description_sale
@@ -788,10 +822,37 @@ class OnlineShop(user_info.WebUserInfoController):
         product_template = http.request.env['product.template'].sudo().search([('id', '=', product_template_id)], limit=1)
 
         if product_template:
+
+            #取价格，当前选择的地区
             product_template.browse_num = product_template.browse_num + 1
             product_product_pool = http.request.env['product.product'].search([('product_tmpl_id', '=', product_template_id)])
             if product_product_pool:
                 product = product_product_pool[0]
+                pricelist_name = ''
+                product_template_price_float = 0
+
+                if request.params.get('area_id',False):
+                    area_id = request.params['area_id']
+                    if area_id == '1':
+                        pricelist_name = '深圳订单价格表'
+                    elif area_id == '2':
+                        pricelist_name = '北京订单价格表'
+
+                if not request.params.get('area_id',False) or request.params['area_id'] == '0':
+                    usronlineinfo = request.session.usronlineinfo
+                    if not usronlineinfo:
+                        request.session.usronlineinfo = self.get_show_userinfo()
+                        usronlineinfo = request.session.usronlineinfo
+                    region = usronlineinfo.get('region', False)
+                    if region and region == '北京':
+                        pricelist_name = '北京订单价格表'
+                    if region and region == '深圳':
+                        pricelist_name = '深圳订单价格表'
+
+                pricelist = request.env['product.pricelist'].sudo().search([('name', '=', pricelist_name)])
+                if product and pricelist:
+                    product_template_price_float = product.sudo().with_context(pricelist=pricelist.id).price
+
                 response_text = """"""
                 header_text = """<div class="product-summary pl-lg--30 pl-md--0" id="product_detail_replace">
     
@@ -812,10 +873,11 @@ class OnlineShop(user_info.WebUserInfoController):
                         <div class="product-price-wrapper mb--25">
                             <span class="money">"""
 
-                price_str = "¥" + str(product.lst_price)
+                price_str = "¥" + str(round(product_template_price_float,2))
                 footer_text = """</span>"""
                 browse_num_text = """<p>浏览量 """ + str(product_template.browse_num) + """</p>"""
                 so_qty_text = """<p> 销量""" + str(product_template.so_qty) + """</p>"""
+                right_button_text = http.request.env['ir.config_parameter'].sudo().get_param('online_shop_setup.button_right_name', '产品效果图')
                 footer_text2 = """</div>
     <div class="product-action d-flex flex-sm-row align-items-sm-center flex-column align-items-start mb--30">
         <input type='hidden' name='inp_product_id' value='""" + str(product.id) + """'/>
@@ -826,7 +888,7 @@ class OnlineShop(user_info.WebUserInfoController):
         </button>"""
                 if product_template.product_template_external_website:
                     footer_text3 = """<button type="button" margin='right' class="btn-blue btn-size-sm btn-shape-square" onclick="window.open('""" + product_template.product_template_external_website + """')" target='_blank'>
-            产品效果图
+            """+ right_button_text + """
         </button></div>
                     </div>  
 </div>"""

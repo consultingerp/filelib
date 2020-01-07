@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 import random
+from odoo.exceptions import Warning
+
 
 
 class E2yunCsutomerExtends(models.Model):
@@ -58,6 +60,84 @@ class E2yunUserExtends(models.Model):
                 res += team
             user.teams = res
 
+    def button_add_related_teams(self):
+        ctx = self.env.context.copy()
+        current_id = self.id
+        ctx.update({'current_res_user_id': current_id})
+        return {
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'target': 'new',
+            'res_model': 'add.related.teams',
+            'context': ctx,
+        }
+
+
+class E2yuAddRelatedTeamModel(models.TransientModel):
+    _name = 'add.related.teams'
+
+    teams = fields.Many2many('crm.team', required=True)
+    """
+    area_manager 片区长
+    user_id 店长
+    member_ids 团队成员
+    associate_member_ids 附属成员
+    """
+    member_type = fields.Selection([('area_manager', '片区长'), ('user_id', '店长'),
+                                    ('member_ids', '团队成员'), ('associate_member_ids', '附属成员')], required=True)
+
+    def add_related_teams(self):
+        ctx = self.env.context.copy()
+        teams = self.teams
+        member_type = self.member_type
+        current_user_id = ctx.get('current_res_user_id')
+        current_user = self.env['res.users'].browse(current_user_id)
+        if member_type == 'area_manager':
+            for team in teams:
+                area_manager_id_before_modify = team.area_manager.id
+                associate_member_ids = team.associate_member_ids.ids
+                for associate_member_id in associate_member_ids:
+                    if associate_member_id == area_manager_id_before_modify:
+                        associate_member_ids.remove(area_manager_id_before_modify)
+                        break
+                    else:
+                        continue
+
+                team.area_manager = current_user
+                associate_member_ids.append(current_user_id)
+                associate_member_ids = list(set(associate_member_ids))
+                team.associate_member_ids = [(6, 0, associate_member_ids)]
+        elif member_type == 'user_id':
+            for team in teams:
+                user_id_id_before_modify = team.user_id.id
+                associate_member_ids = team.associate_member_ids.ids
+                for associate_member_id in associate_member_ids:
+                    if associate_member_id == user_id_id_before_modify:
+                        associate_member_ids.remove(user_id_id_before_modify)
+                        break
+                    else:
+                        continue
+
+                team.user_id = current_user
+                associate_member_ids.append(current_user_id)
+                associate_member_ids = list(set(associate_member_ids))
+                team.associate_member_ids = [(6, 0, associate_member_ids)]
+        elif member_type == 'member_ids':
+            if len(teams) > 1:
+                raise Warning(_('选择团队成员字段时，请勿选择多个门店'))
+            for team in teams:
+                member_ids = team.member_ids.ids
+                member_ids.append(current_user_id)
+                member_ids = list(set(member_ids))
+                team.member_ids = member_ids
+        elif member_type == 'associate_member_ids':
+            for team in teams:
+                associate_member_ids = team.associate_member_ids.ids
+                associate_member_ids.append(current_user_id)
+                associate_member_ids = list(set(associate_member_ids))
+                team.associate_member_ids = [(6, 0, associate_member_ids)]
+        return 0
     # @api.multi
     # @api.depends('update_user_id_teams_flag')
     # def _compute_user_id_crm_teams(self):

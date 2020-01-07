@@ -16,6 +16,12 @@ function get_template_id(){
 
         var get_product_template_detail_xhr = new XMLHttpRequest();
         get_detail_url = "/online_shop/get_product_detail/" + current_product_template_id
+
+        var area_id = sessionStorage.getItem('current_area_id')
+        if(area_id){
+            get_detail_url = get_detail_url + "?area_id="+area_id
+        }
+
         get_product_template_detail_xhr.open("GET", get_detail_url, true);
         get_product_template_detail_xhr.send();
 

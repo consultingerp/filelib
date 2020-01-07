@@ -53,7 +53,7 @@ function load_index_data(){
                 "                   <a href='/online_shop/get_product_detail_page/" + p.product_id + "' class='product-overlay'></a>\n" +
                 "                  </div>\n" +
                 "                  <div class='product-info plr--20'>\n" +
-                "                     <h3 class='product-title'><a href='product-details.html'>" + p.product_name + "</a></h3>\n" +
+                "                     <h3 class='product-title'><a href='/online_shop/get_product_detail_page/" + p.product_id + "'>" + p.product_name + "</a></h3>\n" +
                 "                     <div class='product-info-bottom'>\n" +
                 // "                        <div class='product-price-wrapper'>\n" +
                 // "                           <span class='money'>$150</span>\n" +

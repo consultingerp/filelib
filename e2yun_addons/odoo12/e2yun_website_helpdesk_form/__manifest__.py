@@ -9,7 +9,7 @@
     'application': True,
     'depends': [
         'web', 'website', 'website_helpdesk', 'helpdesk', 'website_helpdesk_form',
-        'im_livechat', 'portal', 'mail',
+        'im_livechat', 'portal', 'mail', "rating"
     ],
     'data': [
         'security/helpdesk_security.xml',

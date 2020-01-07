@@ -10,10 +10,6 @@
         </template>
         <template id="web_user_center.user_info_page" name="个人信息">
             <section class="aui-flexView-userinfo">
-                <script>
-                    var $o_footer_copyright = $('.o_footer_copyright');
-                    $o_footer_copyright.hide();
-                </script>
                 <header class="aui-navBar aui-navBar-fixed">
                     <a href="javascript:history.go(-1);" class="aui-navBar-item">
                         <i class="icon icon-return"></i>
@@ -27,6 +23,8 @@
                         <a href="javascript:void(0);" class="aui-panel-cell">
                             <div class="aui-panel-cell-hd">
                                 <span t-field="user_id.image" t-options="{'widget': 'image'}" role="img" t-att-aria-label="'Logo of %s' % res_company.name" t-att-title="res_company.name"/>
+                                                <input type='hidden'
+                                                       name="user_id" id="user_id" t-att-value="user_id.id"/>
 
                             </div>
                             <div class="aui-panel-cell-bd">

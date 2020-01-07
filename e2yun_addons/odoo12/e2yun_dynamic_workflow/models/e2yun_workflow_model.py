@@ -20,6 +20,8 @@ from datetime import datetime, date, time, timedelta
 from lxml import etree
 import logging
 
+from odoo.tools.safe_eval import safe_eval
+
 _logger = logging.getLogger(__name__)
 
 
@@ -401,6 +403,16 @@ class E2yunWorkflowModel(models.Model):
             mail_thread_root_el.append(message_el)
             form_el.append(mail_thread_root_el)
         res['arch'] = etree.tostring(arch, encoding="utf-8")
+        if view_type == 'form':
+            doc = etree.XML(res['arch'])
+            for node in doc.xpath("//field[@name='message_ids']"):
+                # the 'Log a note' button is employee only
+                options = safe_eval(node.get('options', '{}'))
+                is_employee = self.env.user.has_group('base.group_user')
+                options['display_log_button'] = is_employee
+                # save options on the node
+                node.set('options', repr(options))
+            res['arch'] = etree.tostring(doc, encoding='unicode')
         return res
 
     def warning(self, msg):

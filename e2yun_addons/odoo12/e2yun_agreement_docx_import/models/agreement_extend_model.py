@@ -56,6 +56,121 @@ class Agreement(models.Model):  #合同
             wb_path = "/tmp/"+str(name)+"Temp.docx"
         return  wb_path
 
+    def wb_path_html(self, name):
+        platform_ = platform.system()
+        if platform_ == "Windows":
+            wb_path = "" + str(sys.path[0]) + "/" + str(name) + "Temp_html.html"
+        else:
+            wb_path = "/tmp/" + str(name) + "Temp_html.html"
+        return wb_path
+
+    def wb_path_pdf(self, name):
+        platform_ = platform.system()
+        if platform_ == "Windows":
+            wb_path = "" + str(sys.path[0]) + "/" + str(name) + "Temp_pdf.pdf"
+        else:
+            wb_path = "/tmp/" + str(name) + "Temp_pdf.pdf"
+        return wb_path
+
+    def download_pdf(self):
+
+        try:
+            wb_path = self.wb_path('download_word')
+            wb_path_html = self.wb_path_html('download_html')
+            wb_path_pdf = self.wb_path_pdf('download_pdf')
+            agreement_id = self.id
+            attachment = self.env['ir.attachment']  # 附件
+            agreement_obj = self.env['agreement']
+
+            agreementData = agreement_obj.browse(agreement_id)
+            data_recital = None
+            data_sections = None
+            data_appendix = None
+            if agreementData.recital_ids:
+                master_word_id = agreementData.recital_ids[0].master_word_id
+                data_recital = self.env['ir.http'].binary_content(
+                    xmlid=None, model='ir.attachment', id=master_word_id, field='datas')
+            if agreementData.sections_ids:
+                master_word_id = agreementData.sections_ids[0].master_word_id
+                data_sections = self.env['ir.http'].binary_content(
+                    xmlid=None, model='ir.attachment', id=master_word_id, field='datas')
+            if agreementData.appendix_ids:
+                master_word_id = agreementData.appendix_ids[0].master_word_id
+                data_appendix = self.env['ir.http'].binary_content(
+                    xmlid=None, model='ir.attachment', id=master_word_id, field='datas')
+            doc = Document()
+            i = 0;
+            while i <= 3:
+                i = i + 1
+                if i == 1 and data_recital:
+                    word_data = data_recital[2]
+                elif i == 2 and data_sections:
+                    word_data = data_sections[2]
+                elif i == 3 and data_appendix:
+                    word_data = data_appendix[2]
+                else:
+                    continue
+
+                f = open(wb_path, r"wb")
+                f.write(base64.decodestring(word_data))
+                f.close()
+                word_temp = Document(wb_path)
+                for j in range(len(word_temp.paragraphs)):
+                    paragraph = word_temp.paragraphs[j]
+                    if not paragraph.text or paragraph.text == "":
+                        continue
+                    p = doc.add_paragraph(paragraph.text)
+                    p._element = paragraph._element
+                    p._p == paragraph._p
+                    p._parent = paragraph._parent
+                    p.alignment = paragraph.alignment
+                    p.paragraph_format.alignment = paragraph.paragraph_format.alignment
+                    p.add_run = paragraph.runs
+                    p.style = paragraph.style
+                if os.path.exists(wb_path):
+                    os.remove(wb_path)
+            doc.save(wb_path)
+
+            from pydocx import PyDocX
+            import pdfkit
+
+            html = PyDocX.to_html(r"" + wb_path)
+            f = open(wb_path_html, 'w', encoding="utf-8")
+            f.write(html)
+            f.close()
+
+            pdfkit.from_file(input=wb_path_html, output_path=wb_path_pdf)
+
+            file = open(wb_path_pdf, "rb")
+
+            attachment.search(
+                [('res_model', '=', 'agreement.download.doc'), ('res_id', '=', self.id),
+                 ('res_name', '=', 'download_pdf')]).unlink()  # 删除无效附件
+            agreementData.write_date = datetime.now()
+            version = str(agreementData.version) + "." + str(agreementData.revision)
+
+            attachmentObj = attachment.create({
+                'name': agreementData.name,
+                'datas': base64.encodestring(file.read()),
+                'datas_fname': agreementData.name + "版本" + version + ".pdf",
+                'res_model': 'agreement.download.doc',
+                'res_id': self.id,
+                'res_name': 'download_pdf'
+            })
+
+            file.close()
+            if os.path.exists(wb_path):
+                os.remove(wb_path)
+
+            return {
+                'type': 'ir.actions.act_url',
+                'target': 'new',
+                'url': 'web/content/%s?download=true' % (attachmentObj.id),
+            }
+
+        except BaseException as e:
+            print(e)
+
     def download_word(self):
 
         try:
@@ -285,15 +400,18 @@ class AgreementRecital(models.Model):  #概述
             strTemp = str
             agreement_placeholder_obj= self.env['agreement.placeholder']  # wordData
             for i, data in enumerate(n):
-                strsTemp = strTemp.split("${" + data + "}")
+                strsTemp = strTemp.split("${" + data + "}",1)
                 querName="${" + data + "}"
                 agreement_placeholder=agreement_placeholder_obj.search([('name' ,'=',querName)])
-                if strsTemp[0]:
-                    content = content + strsTemp[0] + agreement_placeholder.text
-                if strsTemp[1]:
-                    strTemp = strsTemp[1]
-                    if i == len(n) - 1:
-                        content = content + strTemp
+                strTemp=""
+                for j,fstr in enumerate(strsTemp):
+                    if j==0:
+                        content = content + fstr + agreement_placeholder.text
+                    else:
+                        strTemp = strTemp+fstr
+                if i == len(n) - 1:
+                     content = content + strTemp
+
             vals['content']=content
         return super(AgreementRecital,self).write(vals)
 

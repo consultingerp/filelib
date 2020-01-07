@@ -287,11 +287,14 @@ class wx_user(models.Model):
                 client.send_template_message(self, user.partner_id.wx_user_id.openid, template_id, data, url, url_type=url_type)
             else:
                 raise UserError(u'发送失败,客户没有绑定微信')
-        if partner_appcode:
+        if partner_appcode:  # 如果从上家app发送信息。
             partner_ = self.env['res.partner'].sudo().search([('app_code', '=', partner_appcode)])
-            if partner_ and partner_.wx_user_id.openid:
+            if partner_ and partner_.wx_user_id.openid:  # 发送信息给客户
                 url = url + "&ss_wx_code=%s" % partner_.wx_user_id.openid
                 client.send_template_message(self, partner_.wx_user_id.openid, template_id, data, url, url_type=url_type)
+            if partner_ and partner_.user_id and partner_.user_id.wx_user_id:  # 发送信息给客户对应的导购
+                url = url + "&ss_wx_code=%s" % partner_.user_id.wx_user_id.openid
+                client.send_template_message(self, partner_.user_id.wx_user_id.openid, template_id, data, url, url_type=url_type)
         if partner_id:
             partner_ = self.env['res.partner'].sudo().browse(partner_id)
             self.send_template_message(data, template_id, url, partner=partner_, url_type=url_type)

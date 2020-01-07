@@ -18,7 +18,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'product', 'website_sale'],
+    'depends': ['base', 'product', 'website_sale', 'website'],
 
     # always loaded
     'data': [
@@ -27,7 +27,8 @@
         'views/templates.xml',
         'views/views.xml',
         'views/order_view.xml',
-        'views/res_company_views.xml'
+        'views/res_company_views.xml',
+        'views/res_config_views.xml'
     ],
     # only loaded in demonstration mode
     'demo': [

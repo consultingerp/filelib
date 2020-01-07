@@ -7,6 +7,8 @@ odoo.define('web_user_center.user_info', function (require) {
     var core = require('web.core');
     var Widget = require('web.Widget');
     var _t = core._t;
+    $('div.o_footer_copyright').hide();
+
     $('#qrcode_img').bigic();
     $('#password_qrcode_img').bigic();
     $('.aui-btn-out').on('click', function (ev) {  //退出按钮
@@ -20,7 +22,8 @@ odoo.define('web_user_center.user_info', function (require) {
     });
 
     $('.moreset').on('click', function (ev) {
-        var url = "/web#id=2&model=res.users&view_type=form&view_id=2065&menu_id=";
+        var user_id = $('#user_id').val();
+        var url = "/web#id="+user_id+"&model=res.users&view_type=form&view_id=2065&menu_id=";
         if (self != top) {
             top.location.href = url;
         } else {
@@ -28,6 +31,38 @@ odoo.define('web_user_center.user_info', function (require) {
         }
 
     });
+
+
+    var UserInfoRenderer = Widget.extend({
+        className: "o_footer_copyright",
+
+        /**
+         * @constructor
+         * @param {Object} fields_view
+         * @param {Object} fields_view.arch
+         * @param {Object} fields_view.fields
+         * @param {String} fields_view.model
+         */
+        init: function (parent, fields_view) {  alert("aaaa");
+            this._super.apply(this, arguments);
+            // see SearchView init
+            fields_view = this._processFieldsView(_.clone(fields_view));
+            this.arch = fields_view.arch;
+            this.fields = fields_view.fields;
+            this.model = fields_view.model;
+        },
+        /**
+         * @override
+         */
+        start: function () { alert("aaaa");
+            this.$el.addClass(this.arch.attrs.class);
+            this._render();
+            return this._super.apply(this, arguments);
+        },
+    });
+
+
+    return UserInfoRenderer;
 
 
 });

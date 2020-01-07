@@ -20,10 +20,14 @@
                                 <!-- <button name="preview" string="预览" type="object" class="oe_highlight"/> -->
 
                                 <button name="import_recital" string="导入概述" type="object" class="oe_highlight"/>
+
                                 <button name="import_sections_articles" string="导入章节与条款" type="object" class="oe_highlight"/>
+
                                 <button name="import_appendix" string="导入附录" type="object" class="oe_highlight"/>
 
                                 <button name="download_word" string="导出 Word" type="object" class="oe_highlight"/>
+
+                                <button name="download_pdf" string="导出 Pdf" type="object" class="oe_highlight"/>
 
                             </header>
                             <separator string="概述"/>
