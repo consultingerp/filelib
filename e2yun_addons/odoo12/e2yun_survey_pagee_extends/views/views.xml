@@ -1,0 +1,29 @@
+<odoo>
+  <data>
+    <record id="survey_page_extends" model="ir.ui.view">
+            <field name="name">survey_page_extends</field>
+            <field name="model">survey.page</field>
+            <field name="inherit_id" ref="survey.survey_page_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='oe_title']" position="after">
+                    <label for="weight" class="oe_edit_only"/>
+                    <h1>
+                        <field name="weight" placeholder="Weight"/>
+                    </h1>
+                </xpath>
+                <xpath expr="//field[@name='question_ids']" position="replace">
+                    <field name="question_ids" nolabel="1" mode="tree" context="{'default_page_id': active_id}">
+                        <tree>
+                            <field name="sequence" widget="handle"/>
+                            <field name="question"/>
+                            <field name="highest_score"/>
+                            <field name="type"/>
+                            <field name="scoring_method"/>
+                            <field name="constr_mandatory"/>
+                        </tree>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+  </data>
+</odoo>

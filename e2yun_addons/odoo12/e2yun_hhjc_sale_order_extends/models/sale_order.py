@@ -370,6 +370,8 @@ class SaleOrder(models.Model):
             result = client.service.getSaleOrderInfo(data['salesorderid'])
             json2python = json.loads(result)
             line = json2python['orderHead']
+            if 'vkorg' not in line or line['vkorg'] not in ['1000', '2000']:
+                return True
             order = sale_order.search([('salesorderid', '=', line['salesorderid'])])
             order.order_line.unlink()
             data = {}
@@ -381,7 +383,7 @@ class SaleOrder(models.Model):
             if partner:
                 data['partner_id'] = partner.id
             else:
-                data['partner_id'] = 3
+                raise exceptions.Warning("客户：%s不存在，请检查客户是否同步了。" % (line['memberposid']))
             data['is_sync'] = True
             if order:
                 order.write(data)
@@ -389,6 +391,7 @@ class SaleOrder(models.Model):
             else:
                 order_id = sale_order.create(data)
             orderitem = json2python['orderItem']
+            not_sync_matnr = ''
             for line in orderitem:
                 for key in line:
                     if key in sale_order_line._fields:
@@ -403,10 +406,12 @@ class SaleOrder(models.Model):
                     product = self.env['product.product'].search([('default_code', '=', line['matnr'])])
                 if product:
                     date_line['product_id'] = product.id
+                    date_line['is_sync'] = True
+                    sale_order_line.create(date_line)
                 else:
-                    raise exceptions.Warning("物料号：%s不存在，请检查物料是否同步了。" % (line['matnr']))
-                date_line['is_sync'] = True
-                sale_order_line.create(date_line)
+                    not_sync_matnr += line['matnr'] + ','
+                if not_sync_matnr:
+                    raise exceptions.Warning("物料号：%s不存在，请检查物料是否同步了。" % not_sync_matnr)
             order_id.crmstate = '已接单'
         return True
 
@@ -493,7 +498,6 @@ class SaleOrder(models.Model):
                     date_line['product_id'] = product.id
                     sale_order_line['is_sync'] = True
                     sale_order_line.create(date_line)
-
 
             # raise Exception('pos销售订单为空，不能同步！')
 

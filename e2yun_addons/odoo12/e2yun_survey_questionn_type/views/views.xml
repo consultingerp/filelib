@@ -1,0 +1,37 @@
+<odoo>
+  <data>
+    <!--新增问题类型列表-->
+        <record model="ir.ui.view" id="question_type">
+            <field name="name">Question Type</field>
+            <field name="model">question.type</field>
+            <field name="arch" type="xml">
+                <tree string="Question Type">
+                    <field name="display_name_chs"/>
+                    <field name="name"/>
+                    <field name="type_html"/>
+                </tree>
+            </field>
+        </record>
+        <!--新增问题类型表单-->
+        <record model="ir.ui.view" id="question_type">
+            <field name="name">Question Type</field>
+            <field name="model">question.type</field>
+            <field name="arch" type="xml">
+                <form string="Question Type">
+                    <field name="display_name_chs"/>
+                    <field name="name"/>
+                    <field name="type_html"/>
+                </form>
+            </field>
+        </record>
+        <!--添加视图的动作-->
+        <record model="ir.actions.act_window" id="action_question_type">
+            <field name="name">问题类型</field>
+            <field name="res_model">question.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+      <!--添加问题类型菜单-->
+        <menuitem name="新题型配置" id="new_question_type" action="action_question_type" parent="survey.menu_surveys_configuration"/>
+  </data>
+</odoo>
