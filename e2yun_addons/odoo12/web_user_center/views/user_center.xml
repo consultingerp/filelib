@@ -66,6 +66,9 @@
                     </t>
                 </div>
                 <div class="aui-right-user">
+                    <img id="qrcode_img_head_src" style="width: 30px;height: 30px;" t-attf-src="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=#{user_id.qrcode_ticket}" alt="我的二维码"/>
+                </div>
+                <div class="aui-right-user">
                     <t t-set="url">javascript:;</t>
                     <t t-set="menu_num" t-value="1"/>
                     <t t-foreach="usercenter_menu" t-as="menu">
