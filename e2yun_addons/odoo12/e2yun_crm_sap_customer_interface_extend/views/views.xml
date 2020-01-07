@@ -60,7 +60,7 @@
         </field>
 
           <field name="parent_account" position="before">
-              <field name="sap_remark"  attrs="{'readonly': [('sap_kunnr','not in',[False, ''])]}"/>
+              <field name="sap_remark" />
               <field name="sap_ktokd" attrs="{'readonly': [('sap_kunnr','not in',[False, ''])]}"/>
               <field name="sap_bu_sort1" attrs="{'readonly': [('sap_kunnr','not in',[False, ''])]}"/>
               <field name="sap_bu_sort2" attrs="{'readonly': [('sap_kunnr','not in',[False, ''])]}"/>

@@ -16,9 +16,7 @@ class get_pyrfc_conntion():
         if platform_ == "Windows":
             wb_path = "" + str(sys.path[0]) + "/filelib/e2yun_addons/odoo12/e2yun_crm_sap_customer_interface_extend/rfc/pyrfc_config.ini"
         else:
-            #wb_path = "/tmp/pyrfc_config.ini"
-            wb_path = "" + str(sys.path[
-                                   0]) + "/filelib/e2yun_addons/odoo12/e2yun_crm_sap_customer_interface_extend/rfc/pyrfc_config.ini"
+            wb_path = "/tmp/pyrfc_config.ini"
         return wb_path
 
     def get_conn(self):
