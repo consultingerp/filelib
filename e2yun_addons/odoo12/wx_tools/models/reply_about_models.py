@@ -41,7 +41,7 @@ class wx_articlesreply_article(models.Model):
             return self.img
         else:
             base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
-            picurl = '%s/web/image_user/wx.articlesreply.article/%s/img_file/%s.png/' % (base_url, self.id, self.id)
+            picurl = '%s/web/image_user/wx.articlesreply.article/%s/img_file/%s.png' % (base_url, self.id, self.id)
             _logger.info(picurl)
             return picurl
 
