@@ -106,27 +106,40 @@ def main(robot):
             origin_content = message.content
         if not origin_content:
             origin_content = ''
+        resuser = request.env['res.users'].sudo().search([('wx_user_id.openid', '=',openid)], limit=1)
 
         content = origin_content.lower()
-        wxuserinfo = request.env()['wx.autoreply'].sudo().search([])
-        for rc in wxuserinfo:
+        wxautoreply = request.env()['wx.autoreply'].sudo().search([])
+        for rc in wxautoreply:
             _key = rc.key.lower()
-            if rc.type == 1:
+            if rc.type == 1: # 完本匹配
                 if content == _key:
-                    ret_msg = rc.action.get_wx_reply()
-                    return ret_msg
-            elif rc.type == 2:
+                    if not rc.groups_id: # 不存在权限返回
+                        ret_msg = rc.action.get_wx_reply()
+                        return ret_msg
+                    if rc.groups_id and resuser and resuser.groups_id in rc.groups_id:  # 如果规则存在权限，权限在用户权限中
+                        ret_msg = rc.action.get_wx_reply()
+                        return ret_msg
+            elif rc.type == 2:  # 模糊匹配
                 if _key in content:
-                    ret_msg = rc.action.get_wx_reply()
-                    return ret_msg
-            elif rc.type == 3:
+                    if not rc.groups_id:  # 不存在权限返回
+                        ret_msg = rc.action.get_wx_reply()
+                        return ret_msg
+                    if rc.groups_id and resuser and resuser.groups_id in rc.groups_id:  # 如果规则存在权限，权限在用户权限中
+                        ret_msg = rc.action.get_wx_reply()
+                        return ret_msg
+            elif rc.type == 3:   # 正匹配
                 try:
                     flag = re.compile(_key).match(content)
                 except:
                     flag = False
                 if flag:
-                    ret_msg = rc.action.get_wx_reply()
-                    return ret_msg
+                    if not rc.groups_id:  # 不存在权限返回
+                        ret_msg = rc.action.get_wx_reply()
+                        return ret_msg
+                    if rc.groups_id and resuser and resuser.groups_id in rc.groups_id:  # 如果规则存在权限，权限在用户权限中
+                        ret_msg = rc.action.get_wx_reply()
+                        return ret_msg
 
         partner = request.env['res.partner'].sudo().search([('wx_user_id.openid', '=', openid)])
         partner_user_id = None  # 导购

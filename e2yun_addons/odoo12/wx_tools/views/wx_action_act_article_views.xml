@@ -8,13 +8,13 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="返回图文动作" version="7.0">
-			 				 				 				 				 	  <sheet>
-			 				 				 				 				 	    <group>
-			 				 				 				 				 	            <field name="name"/>
-			 				 				 				 				 	            <field name="article_ids"/>
-			 				 				 				 				 	    </group>
-			 				 				 				 				 	  </sheet>
-			 				 				 				 				 	</form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="article_ids"/>
+                        </group>
+                    </sheet>
+                </form>
             </field>
         </record>
         <record id="wx_action_act_article_view_tree" model="ir.ui.view">
@@ -23,10 +23,10 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="返回图文动作">
-			 				 				 				 	  			 	            <field name="id"/>
-			 				 				 				 				 	            <field name="name"/>
-			 				 				 				 				 	            <field name="article_ids"/>
-			 				 				 				 				 	</tree>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="article_ids"/>
+                </tree>
             </field>
         </record>
         <record id="wx_action_act_article_action" model="ir.actions.act_window">

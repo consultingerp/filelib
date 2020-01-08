@@ -8,6 +8,7 @@ from wechatpy.client import WeChatClient
 
 from odoo import models, fields, api
 from odoo.modules.module import get_module_resource
+from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
 
