@@ -34,7 +34,7 @@ class E2yunCsutomerExtends(models.Model):
     # city_id = fields.Many2one('res.state.city', required=True)
     # area_id = fields.Many2one('res.city.area', required=True)
 
-    app_code = fields.Char(string='', copy=False, readonly=True, default=lambda self: _('New'))
+    app_code = fields.Char(string='', copy=False, default=lambda self: _('New'))
     shop_code = fields.Many2one('crm.team', string='', default=default_shop_code)
     shop_name = fields.Char(string='', readonly=True, compute='_compute_shop_name', store=True)
     referrer = fields.Many2one('res.users', string='')
@@ -112,7 +112,7 @@ class E2yunCsutomerExtends(models.Model):
         if pos_flag and vals.get('shop_code',False):
             result.teams = [(6,0,[vals.get('shop_code'),])]
 
-        if not vals.get('pos_flag', False) and result.state != 'potential_customer' and result.customer == True:
+        if not vals.get('pos_flag', False) and result.state != 'potential_customer' and result.customer == True and not result.shop_customer:
             result.sync_customer_to_pos()
             result.pos_state = True
 
@@ -175,7 +175,7 @@ class E2yunCsutomerExtends(models.Model):
         # add by hepeng 20191020 当更新客户微信地址时候不提交客户信息到POS
         if values.get('wxlatitude'):
             return result
-        if self.state != 'potential_customer' and not pos_flag and not self.pos_state and self.customer == True:
+        if self.state != 'potential_customer' and not pos_flag and not self.pos_state and self.customer == True and not result.shop_customer:
             self.sync_customer_to_pos()
             self.pos_state = True
         return result
