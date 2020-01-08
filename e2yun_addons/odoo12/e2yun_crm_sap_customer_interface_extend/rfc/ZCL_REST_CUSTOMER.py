@@ -30,14 +30,17 @@ class PYRFC_CRM_CUSTOMER():
 
   def zerofill(self,map):
       if 'KUNNR' in map.keys() and map['KUNNR']:
-          KUNNR=map['KUNNR']
-          length_temp=len(KUNNR)
-          if length_temp<10:
-              zero = ""
-              i=0
-              zerosize=10-length_temp
-              while i<zerosize:
-                  zero+="0"
-                  i=i+1
-              map["KUNNR"]=zero+KUNNR;
+          KUNNR = ('%010d' % map['KUNNR'])
+          map["KUNNR"] = KUNNR
+          #
+          # KUNNR=map['KUNNR']
+          # length_temp=len(KUNNR)
+          # if length_temp<10:
+          #     zero = ""
+          #     i=0
+          #     zerosize=10-length_temp
+          #     while i<zerosize:
+          #         zero+="0"
+          #         i=i+1
+          #     map["KUNNR"]=zero+KUNNR;
       return  map
