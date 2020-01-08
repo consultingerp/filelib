@@ -4,7 +4,6 @@ try:
     from odoo import api, fields, models,exceptions
     import pyrfc
     import platform
-    import configparser
     import os, sys
 except BaseException as b:
     print(b)
@@ -21,10 +20,10 @@ class get_pyrfc_conntion():
 
     def get_conn(self):
         try:
-            config = configparser.ConfigParser()
-            path=self.path()
-            os.path.exists('pyrfc_config.ini')
-            config.read(path)
+            # config = configparser.ConfigParser()
+            # path=self.path()
+            # os.path.exists('pyrfc_config.ini')
+            # config.read(path)
             #lists_header = config.sections()  # 配置组名
             #print(lists_header)
             # conn = pyrfc.Connection(user=config['pyrfc_conf']['user'],
