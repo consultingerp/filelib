@@ -20,6 +20,9 @@ class e2yun_customer_info(models.Model):
     sap_bu_sort2 = fields.Char('sap bu_sort2',required=True) #sap客户简称 字母
 
     def customer_transfer_to_normal(self):
+        if self.sap_ktokd and self.sap_ktokd=='C002':
+            return super(e2yun_customer_info, self).customer_transfer_to_normal()
+
         I_INPUT = {}
         I_INPUT['ZTYPE'] = '0'  # 事务类型  0 创建 1修改
         I_INPUT['KTOKD'] = self.sap_ktokd
@@ -61,9 +64,9 @@ class e2yun_customer_info(models.Model):
                 if result['I_OUTPUT']['ZTYPE']=='S':
                     self.sap_kunnr=int(result['I_OUTPUT']['KUNNR'])
                 elif result['I_OUTPUT']['ZTYPE']=='E':
-                    raise exceptions.ValidationError(result['I_OUTPUT']['ZMESG'])
+                    raise exceptions.ValidationError("SAP返回消息"+str(result['I_OUTPUT']['ZMESG']))
                 else:
-                    raise exceptions.ValidationError(result['I_OUTPUT']['ZMESG'])
+                    raise exceptions.ValidationError("SAP返回消息"+str(result['I_OUTPUT']['ZMESG']))
             else:
                 raise exceptions.ValidationError("调用SAP接口失败")
         except BaseException as b:
@@ -129,7 +132,7 @@ class res_partner(models.Model):
                 result = ZCL_REST_CUSTOMER_RFC.ZCL_REST_CUSTOMER(I_INPUT)
                 if result:
                     if result['I_OUTPUT']['ZTYPE'] != 'S':
-                        raise exceptions.ValidationError(result['I_OUTPUT']['ZMESG'])
+                        raise exceptions.ValidationError("SAP返回消息" + str(result['I_OUTPUT']['ZMESG']))
                 else:
                     raise exceptions.ValidationError("调用SAP接口失败")
             except BaseException as b:
