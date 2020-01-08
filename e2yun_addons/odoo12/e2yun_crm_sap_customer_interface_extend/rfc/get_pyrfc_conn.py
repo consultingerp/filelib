@@ -7,7 +7,6 @@ try:
     import os, sys
 except BaseException as b:
     print(b)
-    pass
 class get_pyrfc_conntion():
 
     def path(self):
@@ -33,7 +32,7 @@ class get_pyrfc_conntion():
             #                                         client=config['pyrfc_conf']['client'],
             #                                         saprouter=config['pyrfc_conf']['saprouter'],
             #                                         lang='zh')
-
+            #rcfilepath = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'odoo.conf')
             conn = pyrfc.Connection(user='ZHOUF',
                                                     passwd='87654321',
                                                     ashost='172.18.3.76',
