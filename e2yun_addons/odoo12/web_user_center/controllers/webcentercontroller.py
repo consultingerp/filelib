@@ -65,6 +65,7 @@ class WebCenterController(http.Controller):
             'centerjscss': True,
             'title': '宏华骏成'
         }
-        if url == '/usercenter':
+        my_user_center_menu = request.env.ref('web_user_center.my_user_center').id
+        if url == '/usercenter' or str(my_user_center_menu) in url:
             return request.render("web_user_center.miancenter", values)
         return request.render("web_user_center.structure_iframe_page", values)

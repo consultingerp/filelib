@@ -23,6 +23,8 @@
                         <a href="javascript:void(0);" class="aui-panel-cell">
                             <div class="aui-panel-cell-hd">
                                 <span t-field="user_id.image" t-options="{'widget': 'image'}" role="img" t-att-aria-label="'Logo of %s' % res_company.name" t-att-title="res_company.name"/>
+                                                <input type='hidden'
+                                                       name="user_id" id="user_id" t-att-value="user_id.id"/>
 
                             </div>
                             <div class="aui-panel-cell-bd">

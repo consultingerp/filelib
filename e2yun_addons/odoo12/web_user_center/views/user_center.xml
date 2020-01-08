@@ -14,8 +14,7 @@
                 name="我的个人中心"
                 parent="web_user_center.menu_user_center"
                 action="user_center_action"
-                sequence="100"/>
-
+                sequence="100"  groups="web_user_center.user_center_manager"/>
 
         <template id="web_user_center.miancenter" name="个人中心">
             <t t-call="website.layout">
@@ -65,6 +64,9 @@
                         </t>
 
                     </t>
+                </div>
+                <div class="aui-right-user">
+                    <img id="qrcode_img_head_src" style="width: 30px;height: 30px;" t-attf-src="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=#{user_id.qrcode_ticket}" alt="我的二维码"/>
                 </div>
                 <div class="aui-right-user">
                     <t t-set="url">javascript:;</t>

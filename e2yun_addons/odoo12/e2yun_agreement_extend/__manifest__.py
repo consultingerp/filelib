@@ -10,6 +10,7 @@
     'data': [
         'views/agreement_extend.xml',
         'views/agreement_sequence.xml',
+        'data/mail_template_data.xml',
     ],
     'installable': True,
     'auto_install': False,
