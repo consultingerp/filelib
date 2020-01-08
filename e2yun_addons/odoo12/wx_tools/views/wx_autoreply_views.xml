@@ -13,7 +13,7 @@
                             <field name="key"/>
                             <field name="type"/>
                             <field name="action"/>
-                            <field name="groups_id"/>
+                            <field name="groups_id" domain="[('category_id', '=',56)]" />
                         </group>
                     </sheet>
                 </form>

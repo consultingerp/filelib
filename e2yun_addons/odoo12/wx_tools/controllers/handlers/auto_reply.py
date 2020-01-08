@@ -114,10 +114,10 @@ def main(robot):
             _key = rc.key.lower()
             if rc.type == 1: # 完本匹配
                 if content == _key:
-                    if not rc.groups_id: # 不存在权限返回
+                    if not rc.groups_id:  # 不存在权限返回
                         ret_msg = rc.action.get_wx_reply()
                         return ret_msg
-                    if rc.groups_id and resuser and resuser.groups_id in rc.groups_id:  # 如果规则存在权限，权限在用户权限中
+                    if rc.groups_id and resuser and rc.groups_id in resuser.groups_id:  # 如果规则存在权限，权限在用户权限中
                         ret_msg = rc.action.get_wx_reply()
                         return ret_msg
             elif rc.type == 2:  # 模糊匹配
@@ -125,7 +125,7 @@ def main(robot):
                     if not rc.groups_id:  # 不存在权限返回
                         ret_msg = rc.action.get_wx_reply()
                         return ret_msg
-                    if rc.groups_id and resuser and resuser.groups_id in rc.groups_id:  # 如果规则存在权限，权限在用户权限中
+                    if rc.groups_id and resuser and rc.groups_id in resuser.groups_id  :  # 如果规则存在权限，权限在用户权限中
                         ret_msg = rc.action.get_wx_reply()
                         return ret_msg
             elif rc.type == 3:   # 正匹配
@@ -137,11 +137,11 @@ def main(robot):
                     if not rc.groups_id:  # 不存在权限返回
                         ret_msg = rc.action.get_wx_reply()
                         return ret_msg
-                    if rc.groups_id and resuser and resuser.groups_id in rc.groups_id:  # 如果规则存在权限，权限在用户权限中
+                    if rc.groups_id and resuser and rc.groups_id in resuser.groups_id:  # 如果规则存在权限，权限在用户权限中
                         ret_msg = rc.action.get_wx_reply()
                         return ret_msg
 
-        partner = request.env['res.partner'].sudo().search([('wx_user_id.openid', '=', openid)])
+        partner = request.env['res.partner'].sudo().search([('wx_user_id.openid', '=', openid)], limit=1)
         partner_user_id = None  # 导购
         if partner.exists():  # 查询微信关联的客户
             if partner[0].user_id:  # 存在导购
