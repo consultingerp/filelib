@@ -30,6 +30,30 @@ class e2yun_customer_info(models.Model):
         I_INPUT['REMARK'] = self.sap_remark
         I_INPUT['LANGU'] = 'zh'  # 默认
         I_INPUT['COUNTRY'] = 'CN'  # 默认
+        if self.zip:
+            I_INPUT['POST_CODE1'] = self.zip  # 电话
+            STREET = ""
+            if self.street:
+                STREET = str(self.street)
+            if self.street2:
+                STREET = STREET + str(self.street2)
+
+            if STREET != "":
+                I_INPUT['STREET'] = STREET
+            if self.city:
+                I_INPUT['CITY1'] = str(self.city)
+            REGION = ""
+            if self.state_id.name:
+                REGION = str(self.state_id.name)
+            if self.country_id.name:
+                REGION = REGION + str(self.country_id.name)
+            # if REGION!="":
+            #     I_INPUT['REGION'] =REGION
+            if self.mobile:
+                I_INPUT['TEL_NUMBER'] = self.mobile  # 电话
+
+
+
         try:
             ZCL_REST_CUSTOMER_RFC=ZCL_REST_CUSTOMER.PYRFC_CRM_CUSTOMER()
             result = ZCL_REST_CUSTOMER_RFC.ZCL_REST_CUSTOMER(I_INPUT)
@@ -61,7 +85,12 @@ class res_partner(models.Model):
 
 
     def write(self, vals):
-       if 'name' in vals.keys():
+       if 'name' in vals.keys()\
+               or 'sap_remark' in vals.keys() \
+               or 'street' in vals.keys() \
+               or 'city' in vals.keys() \
+               or 'state_id' in vals.keys() \
+               or 'mobile' in vals.keys():
             I_INPUT = {}
             I_INPUT['ZTYPE'] = '1'  # 事务类型  0 创建 1修改
             I_INPUT['KUNNR'] =self.sap_kunnr
@@ -72,6 +101,29 @@ class res_partner(models.Model):
             I_INPUT['BU_SORT2'] = self.sap_bu_sort1
             I_INPUT['LANGU'] = 'zh'  # 默认
             I_INPUT['COUNTRY'] = 'CN'  # 默认
+
+            if self.zip:
+                I_INPUT['POST_CODE1'] = self.zip  # 电话
+                STREET = ""
+                if self.street:
+                    STREET = str(self.street)
+                if self.street2:
+                    STREET = STREET + str(self.street2)
+
+                if STREET != "":
+                    I_INPUT['STREET'] = STREET
+                if self.city:
+                    I_INPUT['CITY1'] = str(self.city)
+                REGION = ""
+                if self.state_id.name:
+                    REGION = str(self.state_id.name)
+                if self.country_id.name:
+                    REGION = REGION + str(self.country_id.name)
+                # if REGION!="":
+                #     I_INPUT['REGION'] =REGION
+                if self.mobile:
+                    I_INPUT['TEL_NUMBER'] = self.mobile  # 电话
+
             try:
                 ZCL_REST_CUSTOMER_RFC = ZCL_REST_CUSTOMER.PYRFC_CRM_CUSTOMER()
                 result = ZCL_REST_CUSTOMER_RFC.ZCL_REST_CUSTOMER(I_INPUT)

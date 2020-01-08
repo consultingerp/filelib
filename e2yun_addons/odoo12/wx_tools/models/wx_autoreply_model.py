@@ -16,6 +16,7 @@ class wx_autoreply(models.Model):
     type = fields.Selection( [(1,'完全匹配'),(2,'模糊匹配'),(3,'正则匹配')], '匹配方式', )
     action = fields.Reference(string='动作', selection=ACTION_OPTION)
     sequence = fields.Integer('匹配顺序', help="数字越小越先匹配")
+    groups_id = fields.Many2many('res.groups', string='组')
 
     _defaults = {
                  'type': 1,

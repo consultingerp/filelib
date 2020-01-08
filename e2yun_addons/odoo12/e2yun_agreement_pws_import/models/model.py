@@ -81,10 +81,18 @@ class AgreementPwsImport(models.TransientModel):
 
             cell_value = table.cell(16, 6).value  # 币种
             if not (cell_value is None) and not (cell_value is ''):
-                vals['x_studio_htbz'] = cell_value
+                if cell_value=='USD':
+                    vals['x_studio_usd'] = cell_value
+                    x_studio_htje='x_studio_mjhtje'
+                else:
+                    vals['x_studio_htbz'] = cell_value
+                    x_studio_htje = 'x_studio_htje'
+
             cell_value = table.cell(16, 8).value  # 金额
             if not (cell_value is None) and not (cell_value is ''):
-                vals['x_studio_htje'] = cell_value
+                vals[x_studio_htje] = ("%.2f" % float(cell_value))
+
+
 
             cell_value = table.cell(2, 2).value  # 销售
             if not (cell_value is None) and not (cell_value is ''):

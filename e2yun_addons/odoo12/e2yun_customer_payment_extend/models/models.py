@@ -360,17 +360,19 @@ class e2yun_customer_payment_extend(models.Model):
             raise Warning(
                 _("付款附件不能为空!"))
 
-        if vals_list.get('partner_id', False):
+        if vals_list.get('partner_id', False) :
 
             #检查客户的pos状态是否已经同步SAP
-            # vals_list['partner_id'] = False
-            ICPSudo = self.env['ir.config_parameter'].sudo()
-            url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncMember?wsdl'  # webservice调用地址
-            client = suds.client.Client(url)
-            partner_code = self.env['res.partner'].browse(vals_list.get('partner_id')).app_code
-            result = client.service.getSAPState(partner_code or '')
-            if result != 'S':
-                raise Warning(_('客户状态不正确，请检查pos状态-%s') % result)
+            partner = self.env['res.partner'].browse(vals_list.get('partner_id'))
+            if not partner.shop_customer:
+                partner_code = partner.app_code
+                # vals_list['partner_id'] = False
+                ICPSudo = self.env['ir.config_parameter'].sudo()
+                url = ICPSudo.get_param('e2yun.pos_url') + '/esb/webservice/SyncMember?wsdl'  # webservice调用地址
+                client = suds.client.Client(url)
+                result = client.service.getSAPState(partner_code or '')
+                if result != 'S':
+                    raise Warning(_('客户状态不正确，请检查pos状态-%s') % result)
             # del result
 
         atch = vals_list['payment_attachments']  # [[],[]]
