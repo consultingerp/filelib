@@ -10,7 +10,7 @@ class TierDefinition(models.Model):
     rebut = fields.Boolean("驳回")
     reject = fields.Boolean("拒绝")
 
-    _order = "model_id asc ,sequence desc "
+    _order = "model_id asc ,sequence asc "
     up_sequence = fields.Integer("up sequence")
 
 
