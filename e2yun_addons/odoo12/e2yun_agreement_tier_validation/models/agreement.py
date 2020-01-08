@@ -35,9 +35,12 @@ class Agreement(models.Model):
                 for review in  rec.review_ids:
                     if review.reviewer_id.id==self.env.user.id:
                         if review.up_sequence:
-                            rec.can_review=rec.review_ids.filtered(lambda r:r.cp_sequence==review.up_sequence
+                            can_review=rec.review_ids.filtered(lambda r:r.cp_sequence==review.up_sequence
                                                             and  r.status=='approved')
-                            print(rec.can_review)
+                            if can_review:
+                                rec.can_review = True
+                            else:
+                                rec.can_review = False
 
 
 
@@ -65,12 +68,24 @@ class Agreement(models.Model):
     @api.multi
     def _compute_rebut(self):
         for rec in self:
-            rec.rebut = False
+            rebut = rec.review_ids.filtered(
+                lambda r: r.rebut==True and
+                          self.env.user in r.reviewer_ids)
+            if rebut:
+              rec.rebut = True
+            else:
+              rec.rebut = False
 
     @api.multi
     def _compute_reject(self):
         for rec in self:
-            rec.reject = False
+            reject = rec.review_ids.filtered(
+                lambda r: r.reject == True and
+                          self.env.user in r.reviewer_ids)
+            if reject:
+                rec.reject = True
+            else:
+                rec.reject = False
 
     @api.multi
     def _compute_validated_rebut_tier(self, reviews):
@@ -118,6 +133,9 @@ class Agreement(models.Model):
                                 'requested_by': self.env.uid,
                                 'up_sequence': td.up_sequence,
                                 'cp_sequence':td.sequence,
+                                'rebut': td.rebut,
+                                'reject': td.reject,
+                                'w_approver':td.reviewer_id.name,
                             })
                     self._update_counter()
         self._notify_review_requested(created_trs)
@@ -250,3 +268,6 @@ class TierReview(models.Model):
 
     up_sequence = fields.Integer("up sequence")
     cp_sequence = fields.Integer("cp sequence")
+    rebut = fields.Boolean("rebut")
+    reject = fields.Boolean("reject")
+    w_approver= fields.Char("W Approver")
