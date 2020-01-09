@@ -726,8 +726,19 @@ class OnlineShop(user_info.WebUserInfoController):
     @http.route(['/online_shop/get_index_data'], type='http', auth="public")
     def get_index_data(self, **kwargs):
         # 推荐产品
-        product_template = http.request.env['product.template'].search(
-            [('recommend', '=', True)])
+        usronlineinfo = request.session.usronlineinfo
+        if not usronlineinfo:
+            request.session.usronlineinfo = self.get_show_userinfo()
+            usronlineinfo = request.session.usronlineinfo
+        area_id = None
+        if request.params.get('area_id'):  # 如果用户主动改变公司，那么显示当前公司的
+            area_id = request.params.get('area_id')
+            company = request.env['res.company'].sudo().search([('id', '=', area_id)], limit=1)
+            request.session['select_area_id'] = company.select_area_id
+        else:
+            area_id = request.session.usronlineinfo['company_id']
+        product_template = http.request.env['product.template'].sudo().search(
+            [('recommend', '=', True), ('pc_show_id.company_id.id', '=', area_id)])
         recommend_datas = []
         for pt in product_template:
             recommend_datas.append({
@@ -737,8 +748,8 @@ class OnlineShop(user_info.WebUserInfoController):
                 'recommend_text': pt.recommend_text or ''
             })
         # 热销产品
-        product_template = http.request.env['product.template'].search(
-            [('sell_well', '=', True)])
+        product_template = http.request.env['product.template'].sudo().search(
+            [('sell_well', '=', True), ('pc_show_id.company_id.id', '=', area_id)])
         sell_well_datas = []
         for pt in product_template:
             sell_well_datas.append({
