@@ -13,6 +13,80 @@ class Agreement(models.Model):
 
     rebut_tier = fields.Boolean()
 
+    can_review = fields.Boolean(compute="_compute_can_review")
+
+    @api.multi
+    def _compute_can_review(self):
+        for rec in self:
+            rec.can_review = self.env.user in rec.reviewer_ids
+
+            if rec.can_review and rec.approve_sequence:
+                sequence = rec.review_ids.filtered(
+                    lambda r: r.status in ('pending', 'rejected') and
+                              (self.env.user in r.reviewer_ids)).mapped('sequence')
+                sequence.sort()
+                my_sequence = sequence[0]
+                tier_bf = rec.review_ids.filtered(
+                    lambda r: r.status != 'approved' and r.sequence < my_sequence)
+                if tier_bf:
+                    rec.can_review = False
+
+            if rec.can_review==True:
+                for review in  rec.review_ids:
+                    if review.reviewer_id.id==self.env.user.id:
+                        if review.up_sequence:
+                            can_review=rec.review_ids.filtered(lambda r:r.cp_sequence==review.up_sequence
+                                                            and  r.status=='approved')
+                            if can_review:
+                                rec.can_review = True
+                            else:
+                                rec.can_review = False
+
+
+
+    approve_sequence = fields.Boolean(
+        compute='_compute_approve_sequence',
+    )
+
+
+    @api.multi
+    def _compute_approve_sequence(self):
+        for rec in self:
+            approve_sequence = rec.review_ids.filtered(
+                lambda r: r.status in ('pending', 'rejected') and
+                (self.env.user in r.reviewer_ids)).mapped('approve_sequence')
+
+            rec.approve_sequence = True in approve_sequence
+
+    rebut = fields.Boolean(
+        compute='_compute_rebut',
+    )
+    reject = fields.Boolean(
+        compute='_compute_reject',
+    )
+
+    @api.multi
+    def _compute_rebut(self):
+        for rec in self:
+            rebut = rec.review_ids.filtered(
+                lambda r: r.rebut==True and
+                          self.env.user in r.reviewer_ids)
+            if rebut:
+              rec.rebut = True
+            else:
+              rec.rebut = False
+
+    @api.multi
+    def _compute_reject(self):
+        for rec in self:
+            reject = rec.review_ids.filtered(
+                lambda r: r.reject == True and
+                          self.env.user in r.reviewer_ids)
+            if reject:
+                rec.reject = True
+            else:
+                rec.reject = False
+
     @api.multi
     def _compute_validated_rebut_tier(self, reviews):
         """Override for different validation policy."""
@@ -37,6 +111,37 @@ class Agreement(models.Model):
             return self._add_comment('rebut')
         self._rejected_tier()
         self._update_counter()
+
+    @api.multi
+    def request_validation(self):
+        td_obj = self.env['tier.definition']
+        tr_obj = created_trs = self.env['tier.review']
+        for rec in self:
+            if getattr(rec, self._state_field) in self._state_from:
+                if rec.need_validation:
+                    tier_definitions = td_obj.search([
+                        ('model', '=', self._name)], order="sequence asc")
+                    sequence = 0
+                    for td in tier_definitions:
+                        if rec.evaluate_tier(td):
+                            sequence += 1
+                            created_trs += tr_obj.create({
+                                'model': self._name,
+                                'res_id': rec.id,
+                                'definition_id': td.id,
+                                'sequence': sequence,
+                                'requested_by': self.env.uid,
+                                'up_sequence': td.up_sequence,
+                                'cp_sequence':td.sequence,
+                                'rebut': td.rebut,
+                                'reject': td.reject,
+                                'w_approver':td.reviewer_id.name,
+                                'tier_stage_id':td.tier_stage_id.id,
+                            })
+
+                    self._update_counter()
+        self._notify_review_requested(created_trs)
+        return created_trs
 
     def _rebut_tier(self, tiers=False):
         self.ensure_one()
@@ -74,6 +179,7 @@ class CommentWizard(models.TransientModel):
     def add_comment(self):
         self.ensure_one()
         rec = self.env[self.res_model].browse(self.res_id)
+        tier_stage_id=""
         user_reviews = self.env['tier.review'].search([
             ('model', '=', self.res_model),
             ('res_id', '=', self.res_id),
@@ -83,13 +189,17 @@ class CommentWizard(models.TransientModel):
             user_review.write({
                 'comment': self.comment,
             })
+            tier_stage_id = user_review.tier_stage_id
+
         if self.validate_reject == 'validate':
             rec._validate_tier()
         if self.validate_reject == 'reject':
             rec._rejected_tier()
-
         if self.validate_reject == 'rebut':
             rec._rebut_tier()
+
+        if tier_stage_id!="":
+            self.stage_id = tier_stage_id
 
         rec._update_counter()
 
@@ -98,8 +208,6 @@ class CommentWizard(models.TransientModel):
 
 class TierValidation(models.AbstractModel):
     _inherit = "tier.validation"
-
-
 
     @api.multi
     def write(self, vals):
@@ -137,3 +245,13 @@ class TierValidation(models.AbstractModel):
         return super(TierValidation, self).write(vals)
 
 
+class TierReview(models.Model):
+    _inherit = "tier.review"
+    _description = "Tier Review"
+
+    up_sequence = fields.Integer("up sequence")
+    cp_sequence = fields.Integer("cp sequence")
+    rebut = fields.Boolean("rebut")
+    reject = fields.Boolean("reject")
+    w_approver= fields.Char("W Approver")
+    tier_stage_id = fields.Integer("stage")

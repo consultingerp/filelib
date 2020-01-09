@@ -9,9 +9,15 @@
         <field name="inherit_id" ref="base_tier_validation.tier_definition_view_form"/>
         <field name="arch" type="xml">
             <field name="reviewer_group_id" position="after">
-                <field name="rebut"></field>
-                <field name="reject"></field>
+                <field name="tier_stage_id"/>
+                <field name="rebut"/>
+                <field name="reject"/>
             </field>
+
+            <field name="sequence" position="before">
+                <field name="up_sequence"></field>
+            </field>
+
         </field>
     </record>
 </odoo>

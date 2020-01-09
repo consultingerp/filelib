@@ -455,6 +455,8 @@
             <field name="arch" type="xml">
                 <field name="name" position="after">
                     <field name="state" string="客户状态"/>
+                    <filter name="filter_bj_partners" string="北京客户" domain="[('real_company.company_code','=','1000')]"/>
+                    <filter name="filter_sz_partners" string="深圳客户" domain="[('real_company.company_code','=','2000')]"/>
                     <filter name="group_state" string="客户状态" context="{'group_by' : 'state'}"/>
                 </field>
             </field>
