@@ -396,6 +396,7 @@ class SaleOrder(models.Model):
                 for key in line:
                     if key in sale_order_line._fields:
                         date_line[key] = line[key]
+                date_line['itemtype'] = line['itemtypetext']
                 date_line['order_id'] = order_id.id
                 date_line['name'] = line['maktx']
                 date_line['price_unit'] = line['xiaoshoujine']
@@ -449,6 +450,8 @@ class SaleOrder(models.Model):
                 for key in line:
                     if key in sale_order_line._fields:
                         date_line[key] = line[key]
+
+                date_line['itemtype'] = line['itemtypetext']
                 date_line['order_id'] = order_id.id
                 date_line['name'] = line['maktx']
                 product = self.env['product.product'].search([('default_code', '=', line['matnr'])])
