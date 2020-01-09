@@ -10,8 +10,12 @@ class TierDefinition(models.Model):
     rebut = fields.Boolean("驳回")
     reject = fields.Boolean("拒绝")
 
-    _order = "model_id asc ,sequence asc "
     up_sequence = fields.Integer("up sequence")
+    tier_stage_id=fields.Many2one(
+        "agreement.stage",
+        string="Stage",)
+
+    _order = "model_id asc ,sequence asc "
 
 
 

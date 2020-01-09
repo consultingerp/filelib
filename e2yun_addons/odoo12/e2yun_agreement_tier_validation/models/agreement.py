@@ -193,7 +193,7 @@ class CommentWizard(models.TransientModel):
 
         if self.validate_reject == 'rebut':
             rec._rebut_tier()
-
+        self.stage_id = user_review.tier_stage_id
         rec._update_counter()
 
 
@@ -238,30 +238,6 @@ class TierValidation(models.AbstractModel):
         return super(TierValidation, self).write(vals)
 
 
-    @api.multi
-    def request_validation(self):
-        td_obj = self.env['tier.definition']
-        tr_obj = created_trs = self.env['tier.review']
-        for rec in self:
-            if getattr(rec, self._state_field) in self._state_from:
-                if rec.need_validation:
-                    tier_definitions = td_obj.search([
-                        ('model', '=', self._name)], order="sequence desc")
-                    sequence = 0
-                    for td in tier_definitions:
-                        if rec.evaluate_tier(td):
-                            sequence += 1
-                            created_trs += tr_obj.create({
-                                'model': self._name,
-                                'res_id': rec.id,
-                                'definition_id': td.id,
-                                'sequence': sequence,
-                                'requested_by': self.env.uid,
-                            })
-                    self._update_counter()
-        self._notify_review_requested(created_trs)
-        return created_trs
-
 class TierReview(models.Model):
     _inherit = "tier.review"
     _description = "Tier Review"
@@ -271,3 +247,4 @@ class TierReview(models.Model):
     rebut = fields.Boolean("rebut")
     reject = fields.Boolean("reject")
     w_approver= fields.Char("W Approver")
+    tier_stage_id = fields.Integer("stage")
