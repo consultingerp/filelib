@@ -39,7 +39,10 @@ class approval_remark(models.TransientModel):
             supplier.approval_remark = self.approval_remark
             supplier.state = '拒绝'
 
-
+# class CountryState(models.Model):
+#     _inherit = 'res.country.state'
+#
+#     city_ids = fields.One2many('res.city', 'state_id', string='Citys')
 
 class e2yun_supplier_info(models.Model):
     _name = 'e2yun.supplier.info'
@@ -234,6 +237,44 @@ class e2yun_supplier_info(models.Model):
         ('name_unique', 'unique(name)', "The name you entered already exists"),
         # ('register_no_unique', 'unique(register_no)', "The Duty paragraph you entered already exists"),
     ]
+
+    # 开户行国家省联动
+    @api.onchange('country_bank')
+    def onchange_country_bank(self):
+        # 当国家改变时，清空开户行省份和市
+        self.province_bank = False
+        self.city_bank = False
+        if self.country_bank:
+            return {'domain': {'province_bank': [('country_id', '=', self.country_bank.id)]}}
+        else:
+            return {'domain': {'province_bank': []}}
+    # 开户行省城市联动
+    @api.onchange('province_bank')
+    def _onchange_province_bank(self):
+        self.city_bank = False
+        if self.province_bank:
+            return {'domain': {'city_bank': [('state_id', '=', self.province_bank.id)]}}
+        else:
+            return {'domain': {'city_bank': []}}
+
+    # 国家带出省
+    @api.onchange('country_id')
+    def _onchange_country_id(self):
+        self.state_id = False
+        self.city = False
+        if self.country_id:
+            return {'domain': {'state_id': [('country_id', '=', self.country_id.id)]}}
+        else:
+            return {'domain': {'state_id': []}}
+
+    # 省份带出城市
+    @api.onchange('state_id')
+    def _onchange_state_id(self):
+        self.city = False
+        if self.state_id:
+            return {'domain': {'city': [('state_id', '=', self.state_id.id)]}}
+        else:
+            return {'domain': {'city': []}}
 
     @api.model
     def create(self, vals):
@@ -575,7 +616,7 @@ class e2yun_supplier_info(models.Model):
     #         raise UserError('当前状态下无法操作更新，请联系管理员')
     #     return super(e2yun_supplier_info, self).write(values)
 
-    # 根据页面选择的国家带出省
+    # Qweb页面根据页面选择的国家带出省
     @api.model
     def get_states_by_country(self):
         ctx = self._context.copy()
@@ -590,7 +631,7 @@ class e2yun_supplier_info(models.Model):
                 })
         return state_ids
 
-    # 根据页面选择的省份带出城市
+    # Qweb页面根据页面选择的省份带出城市
     @api.model
     def get_citys_by_state(self):
         ctx = self._context.copy()
@@ -615,6 +656,7 @@ class e2yun_supplier_info(models.Model):
         if bank_country_id:
             # 通过国家id获取省份记录集
             states =self.env['res.country.state'].sudo().search([('country_id', '=', int(bank_country_id))])
+            bank_state_ids.append({'id': 0, 'name': '请选择'})
             for i in states:
                 bank_state_ids.append({
                     'id': i.id,
