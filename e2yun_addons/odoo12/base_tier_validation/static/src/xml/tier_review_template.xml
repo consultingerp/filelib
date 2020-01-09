@@ -39,7 +39,9 @@
                             <span t-esc="review.sequence"/>
                         </td>
                         <td class="text-left">
-                            <span t-esc="review.w_approver"/>
+                             <t t-if="review.w_approver">
+                                <span t-esc="review.w_approver"/>
+                             </t>
                         </td>
                         <td class="text-right">
                             <span t-esc="review.name"/>
