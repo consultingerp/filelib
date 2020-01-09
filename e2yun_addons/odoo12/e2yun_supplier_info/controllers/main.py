@@ -77,7 +77,7 @@ class Academy(http.Controller):
 
             request.session['e2yun_supplier_info_id'] = supplier_info.id
 
-            return http.request.render('e2yun_supplier_info.supplier_register_base_info',{'supplier': supplier_info,
+            return http.request.render('e2yun_supplier_info.supplier_register_base_info', {'supplier': supplier_info,
                                                                                           'countrys':countrys,
                                                                                           'states':states,
                                                                                           'citys':citys,

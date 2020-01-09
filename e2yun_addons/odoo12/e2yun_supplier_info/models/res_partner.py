@@ -62,6 +62,42 @@ class res_partner(models.Model):
     city = fields.Many2one('res.city', 'City', ondelete='restrict')
     street = fields.Char('详细地址')
     website = fields.Char()
+    # 修改供应商默认属性
 
+    # 国家省份联动：
+    @api.onchange('country_id')
+    def _onchange_country_id(self):
+        self.state_id = False
+        self.city = False
+        if self.country_id:
+            return {'domain': {'state_id': [('country_id', '=', self.country_id.id)]}}
+        else:
+            return {'domain': {'state_id': []}}
 
+    # 省份城市联动
+    @api.onchange('state_id')
+    def _onchange_state_id(self):
+        self.city = False
+        if self.state_id:
+            return {'domain': {'city': [('state_id', '=', self.state_id.id)]}}
+        else:
+            return {'domain': {'city': []}}
 
+    # 开户行国家省份联动：
+    @api.onchange('country_bank')
+    def _onchange_country_bank(self):
+        self.province_bank = False
+        self.city = False
+        if self.country_bank:
+            return {'domain': {'province_bank': [('country_id', '=', self.country_bank.id)]}}
+        else:
+            return {'domain': {'province_bank': []}}
+
+    # 开户行省份城市联动
+    @api.onchange('province_bank')
+    def _onchange_province_bank(self):
+        self.city_bank = False
+        if self.province_bank:
+            return {'domain': {'city_bank': [('state_id', '=', self.province_bank.id)]}}
+        else:
+            return {'domain': {'city_bank': []}}
