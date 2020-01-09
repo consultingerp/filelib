@@ -19,7 +19,8 @@ $(function () {
 
 
     $("#area_chooser").change(function () {
-        load_index_data($("#area_chooser ").val());
+        window.location.href = '/hhjc_shop_index?area_id='+$("#area_chooser ").val();
+        // load_index_data($("#area_chooser ").val());
     });
 
 

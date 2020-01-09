@@ -10,7 +10,7 @@ function load_index_data(area_id){
         var recommend_datas = d['recommend_datas'];
         var sell_well_datas = d['sell_well_datas'];
         // var logo_partner_datas = d['logo_partner_datas'];
-
+        $('.recommend_product').empty();
         for(var i = 0;i<recommend_datas.length;i++){
             var p = recommend_datas[i];
 
@@ -41,6 +41,7 @@ function load_index_data(area_id){
             $('.recommend_product').append(html);
         }
 
+        $('.sell_well_datas').empty();
         for(var i = 0;i<sell_well_datas.length;i++) {
             var p = sell_well_datas[i];
             var html = "<div class='item'>\n"+
@@ -89,8 +90,6 @@ function load_index_data(area_id){
             })
         },300)
 
-
-
     });
 }
 
@@ -101,7 +100,7 @@ $(document).ready(function(){
     $('.searchform__submit').click(function(){
         var search_key = $('#popup-search').val()
         if(search_key){
-            window.location.href="/hhjc_shop_search_product_list_page?search_key="+search_key
+            window.location.href="/hhjc_shop_search_product_list_page?search_key="+search_key+"&area_id="+$("#area_chooser ").val()
         }
     });
 });

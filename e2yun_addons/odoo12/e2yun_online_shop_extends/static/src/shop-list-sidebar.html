@@ -601,11 +601,9 @@
             category_id = d['default_product_category']
         }
 
-         var area_id = document.getElementById("area_chooser").value
-
         var get_product_list_xhr = new self.XMLHttpRequest();
 
-        get_product_list_xhr.open("GET", "/online_shop/get_product_list_by_category/"+category_id+"?area_id="+area_id, true)
+        get_product_list_xhr.open("GET", "/online_shop/get_product_list_by_category/"+category_id, true)
         get_product_list_xhr.send();
 
         get_product_list_xhr.onreadystatechange = function(){
@@ -627,7 +625,7 @@
      function show_goods_in_category(category_id){
      id = category_id.id.slice(14)
      var area_id = document.getElementById("area_chooser").value
-     url = "/online_shop/get_product_list_by_category/" + id+"?area_id="+area_id
+     url = "/online_shop/get_product_list_by_category/" + id
      var get_product_list_xhr = new this.XMLHttpRequest();
 
     get_product_list_xhr.open("GET", url, true)

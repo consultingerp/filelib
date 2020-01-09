@@ -24,7 +24,10 @@ class WebUserInfoController(http.Controller):
         self.get_show_userinfo(refresh=True)
         rest = dict()
         rest['company'] = company
-        rest['user_company'] = request.session.usronlineinfo['company_id'];
+        if request.session['area_id']:
+            rest['user_company'] = request.session['area_id']
+        else:
+            rest['user_company'] = request.session.usronlineinfo['company_id']
         return {
             'rest': rest
         }
