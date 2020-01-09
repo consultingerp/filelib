@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_target_detail_base_group_user,target_detail.base_group_user,model_team_target_detail,base.group_user,1,1,1,1
+access_target_year_base_group_user,target_year.base_group_user,model_team_target_year,base.group_user,1,1,1,1
+access_target_detail_store_base_group_user,target_detail_store.base_group_user,model_team_target_detail_store,base.group_user,1,1,1,1
+access_target_year_store_base_group_user,target_year_store.base_group_user,model_team_target_year_store,base.group_user,1,1,1,1

@@ -175,7 +175,7 @@ class E2yunCsutomerExtends(models.Model):
         # add by hepeng 20191020 当更新客户微信地址时候不提交客户信息到POS
         if values.get('wxlatitude'):
             return result
-        if self.state != 'potential_customer' and not pos_flag and not self.pos_state and self.customer == True and not result.shop_customer:
+        if self.state != 'potential_customer' and not pos_flag and not self.pos_state and self.customer == True and not self.shop_customer:
             self.sync_customer_to_pos()
             self.pos_state = True
         return result
