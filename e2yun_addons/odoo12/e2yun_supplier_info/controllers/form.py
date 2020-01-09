@@ -153,6 +153,20 @@ class ContactController(WebsiteForm):
 
                     supplier_info.write(data['record'])
                     id_record = supplier_info.id
+                #     return http.request.render('e2yun_supplier_info.supplier_register_base_info',{'supplier': supplier_info,
+                #                                                                           # 'countrys':countrys,
+                #                                                                           # 'states':states,
+                #                                                                           # 'citys':citys,
+                #                                                                           # 'bank_countrys': bank_countrys,
+                #                                                                           # 'bank_states':bank_states,
+                #                                                                           # 'bank_citys':bank_citys,
+                #                                                                           # # 'bank_regions':bank_regions,
+                #                                                                           # 'name_banks':name_banks,
+                #                                                                           # 'currencys_type':currencys_type,
+                #                                                                           # 'industrys':industrys,
+                #                                                                           # 'supplier_types': supplier_types,
+                #                                                                           # 'is_view':is_view
+                #                                                                           })
                 else:
                     if model_name == 'e2yun.supplier.authentication.info':
                         authentication = http.request.env['e2yun.supplier.authentication.info'].sudo()

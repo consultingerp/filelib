@@ -61,6 +61,7 @@
                               </div>
                               <div class="col-lg-3 col-md-8">
                                 <input type="text" t-att-readonly="'readonly' if is_view else None" placeholder="非必填项" class="form-control o_website_form_input" t-att-value="supplier.website" name="website"/>
+                                <!--<input type="text" t-att-readonly="'readonly' if is_view else None" placeholder="非必填项" class="form-control o_website_form_input" name="website"/>-->
                               </div>
                             </div>
                             <div class="row form-group form-field o_website_form_required_custom">
