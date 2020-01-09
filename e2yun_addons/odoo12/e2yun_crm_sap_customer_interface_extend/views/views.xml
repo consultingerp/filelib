@@ -2,7 +2,7 @@
 <odoo>
 
 
-   <record id="view_partner_form_extend" model="ir.ui.view">
+   <record id="e2yun_customer_info_form_extend" model="ir.ui.view">
       <field name="name">e2yun.customer.info.form</field>
       <field name="model">e2yun.customer.info</field>
       <field name="inherit_id" ref="e2yun_customer_info.view_partner_form"/>
@@ -26,10 +26,12 @@
 
           <field name="parent_account" position="before">
               <field name="sap_remark"  attrs="{'readonly': [('sap_kunnr','not in',[False, ''])]}"/>
-              <field name="sap_ktokd" attrs="{'readonly': [('sap_kunnr','not in',[False, ''])]}"/>
+              <field name="sap_ktokd"  help="请在SAP账户组栏位输入C001 或者 C002 ，外部客户输入C001，集团内客户输入C002" attrs="{'readonly': [('sap_kunnr','not in',[False, ''])]}"/>
               <field name="sap_bu_sort1" attrs="{'readonly': [('sap_kunnr','not in',[False, ''])]}"/>
               <field name="sap_bu_sort2" attrs="{'readonly': [('sap_kunnr','not in',[False, ''])]}"/>
         </field>
+
+
 
 
       </field>
@@ -39,7 +41,33 @@
 
 
 
+   <record id="view_partner_form_extend" model="ir.ui.view">
+      <field name="name">res.partner.form</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
 
+        <xpath expr="//field[@name='customer_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+        </xpath>
+
+          <xpath expr="//field[@name='parent_account']" position="attributes">
+                <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <field name="customer_id" position="before">
+            <field name="sap_kunnr" placeholder="kunnr" readonly="True" />
+        </field>
+
+          <field name="parent_account" position="before">
+              <field name="sap_remark" />
+              <field name="sap_ktokd" attrs="{'readonly': [('sap_kunnr','not in',[False, ''])]}"/>
+              <field name="sap_bu_sort1" attrs="{'readonly': [('sap_kunnr','not in',[False, ''])]}"/>
+              <field name="sap_bu_sort2" attrs="{'readonly': [('sap_kunnr','not in',[False, ''])]}"/>
+        </field>
+
+      </field>
+   </record>
 
 
 </odoo>

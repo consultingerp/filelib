@@ -61,7 +61,7 @@ class WXMailThread(models.AbstractModel):
                         _logger.info("附件")
                     if body:
                         entry.send_text(objs.openid, body)
-                    wxpartner = self.env['res.partner'].sudo().search([('wx_user_id.openid', '=', objs.openid)])
+                    wxpartner = self.env['res.partner'].sudo().search([('wx_user_id.openid', '=', objs.openid)], limit=1)
                     if wxpartner:
                         wx_attachment_ids = []
                         if message.attachment_ids.name:

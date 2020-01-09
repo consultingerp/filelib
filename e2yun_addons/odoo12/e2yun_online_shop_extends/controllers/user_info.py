@@ -19,9 +19,12 @@ class WebUserInfoController(http.Controller):
     def onlineshopuserinfo(self, **kwargs):
         # request.jsonrequest   # 可以获取传入参数信息
         company = request.env['res.company'].sudo().search_read([('display_show_area', '=', True)], ['name', 'id', 'show_area_text'])
+        if not request.session.companys:  # 将显示的公司参数加载到session
+            request.session.showcompanys = company
         self.get_show_userinfo(refresh=True)
         rest = dict()
         rest['company'] = company
+        rest['user_company'] = request.session.usronlineinfo['company_id'];
         return {
             'rest': rest
         }
@@ -45,13 +48,15 @@ class WebUserInfoController(http.Controller):
             user_company = request.env['res.company'].sudo().search([('area_text_mate', 'like', '%' + userregion)], limit=1)
             if user_company:
                 _logger.info("地区对对应公司：%s" % user_company.id)
-                userinfo_region['region'] = user_company.show_area_text;
+                userinfo_region['region'] = user_company.show_area_text
                 userinfo_region['company_id'] = user_company.id
+                request.session['select_area_id'] = user_company.select_area_id
             else:  # 默认显示北京公司
                 userinfo_region['region'] = '北京'
                 company = request.env['res.company'].sudo().search([('company_code', '=', '1000')], limit=1)
                 userinfo_region['company_id'] = company.id
                 _logger.info("地区对对应公司默认公司：%s" % company.id)
+                request.session['select_area_id'] = user_company.select_area_id
         # 要显示的公司列表
         if not request.session.usronlineinfo or refresh:
             request.session.usronlineinfo = userinfo_region

@@ -21,12 +21,12 @@
             <thead>
                 <tr>
                     <th class="text-center">Sequence</th>
-                    <th class="text-left">Requested by</th>
-                    <th class="text-right">Description</th>
-                    <th class="text-right">Status</th>
-                    <th class="text-right">审批意见</th>
-                    <th class="text-right">Done by</th>
-                    <th class="text-right">Validation Date</th>
+                    <th class="text-center">审批步骤</th>
+                    <th class="text-center">审批意见</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">审批者</th>
+                   <!-- <th class="text-right">Done by</th> -->
+                    <th class="text-center">Validation Date</th>
                 </tr>
             </thead>
             <tbody class="sale_tbody">
@@ -38,22 +38,28 @@
                         <td class="text-center">
                             <span t-esc="review.sequence"/>
                         </td>
-                        <td class="text-left">
-                            <span t-esc="review.requested_by[1]"/>
-                        </td>
-                        <td class="text-right">
+
+                        <td class="text-center">
                             <span t-esc="review.name"/>
                         </td>
-                        <td class="text-right">
+                        <td class="text-center">
+                            <t t-if="review.comment">
+                                 <span t-esc="review.comment"/>
+                            </t>
+                        </td>
+                         <td class="text-center">
                             <span t-esc="review.display_status"/>
                         </td>
-                        <td class="text-right">
-                            <span t-esc="review.comment"/>
-                        </td>
+                        <!--
                         <td class="text-right">
                             <span t-esc="review.done_by[1]"/>
+                        </td> -->
+                         <td class="text-center">
+                             <t t-if="review.w_approver">
+                                <span t-esc="review.w_approver"/>
+                             </t>
                         </td>
-                        <td class="text-right">
+                        <td class="text-center">
                             <t t-if="review.reviewed_date">
                                 <span t-esc="review.reviewed_date"/>
                             </t>

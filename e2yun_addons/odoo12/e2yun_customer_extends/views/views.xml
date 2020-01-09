@@ -258,7 +258,7 @@
                         <field name="mobile" widget="phone" required="1"/>
                         <button type="action" name="129" class="btn-sm btn-link mb4 fa fa-envelope-o" aria-label="Send SMS" title="Send SMS" attrs="{'invisible':[('mobile', '=', False)]}" context="{'field_name': 'mobile'}"/>
                     </div>
-                    <field name="app_code"/>
+                    <field name="app_code" readonly="1"/>
                     <field name="shop_code" context="{'show_custom_name': 1,'search_owned_shop': 1}"/>
                     <field name="shop_name"/>
                     <field name="referrer"/>
@@ -455,6 +455,8 @@
             <field name="arch" type="xml">
                 <field name="name" position="after">
                     <field name="state" string="客户状态"/>
+                    <filter name="filter_bj_partners" string="北京客户" domain="[('real_company.company_code','=','1000')]"/>
+                    <filter name="filter_sz_partners" string="深圳客户" domain="[('real_company.company_code','=','2000')]"/>
                     <filter name="group_state" string="客户状态" context="{'group_by' : 'state'}"/>
                 </field>
             </field>

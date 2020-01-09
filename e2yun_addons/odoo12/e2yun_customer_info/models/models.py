@@ -408,7 +408,9 @@ class e2yun_customer_info(models.Model):
     def _get_country_name(self):
         return self.country_id.name or ''
 
+
     def customer_transfer_to_normal(self):
+      try:
         self.ensure_one()
         data = {}
         UNINCLUDE_COL = ['bank_ids', 'user_ids', 'state', 'commercial_partner_id', 'child_ids', 'parent_id',
@@ -467,20 +469,8 @@ class e2yun_customer_info(models.Model):
         self.state = 'done'
         # except Exception as e:
         #     raise UserError(u'转正式客户失败，请在工作流中添加^完成^状态')
-        return False
-
-    @api.multi
-    def write(self, values):
-        # 读取按钮权限组s
-        groups_id = self.env.ref('ZCRM.Business_group').id
-        sql = 'SELECT * from res_groups_users_rel where gid=%s and uid=%s'
-        self._cr.execute(sql, (groups_id, self._uid,))
-        groups_users = self._cr.fetchone()
-
-        # 草稿状态货有商务组权限可更新数据
-        if self.state != 'Draft' and not groups_users:
-            raise UserError('当前状态下无法操作更新，请联系管理员')
-        return super(e2yun_customer_info, self).write(values)
+      finally:
+        return True
 
     @api.model
     def _get_default_image(self, partner_type, is_company, parent_id):
@@ -523,6 +513,16 @@ class e2yun_customer_info(models.Model):
 
     @api.multi
     def write(self, vals):
+        # 读取按钮权限组s
+        groups_id = self.env.ref('ZCRM.Business_group').id
+        sql = 'SELECT * from res_groups_users_rel where gid=%s and uid=%s'
+        self._cr.execute(sql, (groups_id, self._uid,))
+        groups_users = self._cr.fetchone()
+
+        # 草稿状态货有商务组权限可更新数据
+        if self.state != 'Draft' or  not groups_users:
+            raise UserError('当前状态下无法操作更新，请联系管理员')
+
         if 'image' in vals:
             tools.image_resize_images(vals, sizes={'image': (1024, None)})
         result = super(e2yun_customer_info, self).write(vals)

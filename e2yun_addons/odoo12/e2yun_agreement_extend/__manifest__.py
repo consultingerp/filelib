@@ -6,10 +6,12 @@
     'author': 'chuqiu.xu',
     'website': 'http://e2yun.cn',
     'summary': '',
-    'description': """ """,
+    'description': """内部合同项目扩展 """,
     'data': [
         'views/agreement_extend.xml',
         'views/agreement_sequence.xml',
+        'data/mail_template_data.xml',
+        'views/file_upload.xml',
     ],
     'installable': True,
     'auto_install': False,

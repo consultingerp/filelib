@@ -13,3 +13,4 @@ class OlineShopResCompnay(models.Model):
     display_show_area = fields.Boolean(string='显示地区')
     area_text_mate = fields.Char(string='地区匹配值')
     show_area_text = fields.Char(string='地区名称')
+    select_area_id = fields.Char(string='地区值ID')

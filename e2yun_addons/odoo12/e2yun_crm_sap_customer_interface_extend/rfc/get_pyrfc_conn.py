@@ -3,31 +3,43 @@
 try:
     from odoo import api, fields, models,exceptions
     import pyrfc
+    import platform
+    import os, sys
 except BaseException as b:
     print(b)
-    pass
 class get_pyrfc_conntion():
 
+    def path(self):
+        platform_ = platform.system()
+        if platform_ == "Windows":
+            wb_path = "" + str(sys.path[0]) + "/filelib/e2yun_addons/odoo12/e2yun_crm_sap_customer_interface_extend/rfc/pyrfc_config.ini"
+        else:
+            wb_path = "/tmp/pyrfc_config.ini"
+        return wb_path
 
     def get_conn(self):
         try:
-
-            import configparser
-            import os,sys
-            config = configparser.ConfigParser()
-            os.path.exists('pyrfc_config.ini')
-            config.read(r'D:\odoo12_contract\filelib\e2yun_addons\odoo12\e2yun_crm_sap_customer_interface_extend\rfc\pyrfc_config.ini')
+            # config = configparser.ConfigParser()
+            # path=self.path()
+            # os.path.exists('pyrfc_config.ini')
+            # config.read(path)
             #lists_header = config.sections()  # 配置组名
             #print(lists_header)
-            conn = pyrfc.Connection(user=config['pyrfc_conf']['user'],
-                                                    passwd=config['pyrfc_conf']['passwd'],
-                                                    ashost=config['pyrfc_conf']['ashost'],
-                                                    sysnr=config['pyrfc_conf']['sysnr'],
-                                                    client=config['pyrfc_conf']['client'],
-                                                    saprouter=config['pyrfc_conf']['saprouter'],
+            # conn = pyrfc.Connection(user=config['pyrfc_conf']['user'],
+            #                                         passwd=config['pyrfc_conf']['passwd'],
+            #                                         ashost=config['pyrfc_conf']['ashost'],
+            #                                         sysnr=config['pyrfc_conf']['sysnr'],
+            #                                         client=config['pyrfc_conf']['client'],
+            #                                         saprouter=config['pyrfc_conf']['saprouter'],
+            #                                         lang='zh')
+            #rcfilepath = os.path.join(os.path.abspath(os.path.dirname(sys.argv[0])), 'odoo.conf')
+            conn = pyrfc.Connection(user='ZHOUF',
+                                                    passwd='87654321',
+                                                    ashost='172.18.3.76',
+                                                    sysnr='00',
+                                                    client='200',
+                                                    saprouter='/H/163.177.113.191/S/3299',
                                                     lang='zh')
-
-            print(conn)
             return conn
         except BaseException as b:
             raise exceptions.ValidationError(" Connection SAP exception"+str(b))

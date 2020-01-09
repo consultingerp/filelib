@@ -4,18 +4,27 @@
 #    实现微信登录
 ##############################################################################
 
-import logging
 import base64
+import logging
 
-from odoo.addons.web.controllers.main import DataSet
+import werkzeug
+import werkzeug.exceptions
+import werkzeug.utils
+import werkzeug.wrappers
+import werkzeug.wsgi
 from odoo.addons.web.controllers.main import Home
 from odoo.addons.web.controllers.main import Session
+from odoo.addons.web.controllers.main import Binary
+from odoo.addons.web.controllers.main import binary_content
 
+
+import odoo
+import odoo.modules.registry
 from odoo import http
-import werkzeug
 from odoo.http import request
-from ..rpc import corp_client
+from odoo.tools import crop_image
 from ..controllers import client
+from ..rpc import corp_client
 
 _logger = logging.getLogger(__name__)
 
@@ -251,6 +260,61 @@ class WxSession(Session):
         return super(WxSession, self).logout(redirect)
 
 
+class WxBinary(Binary):
+
+    @http.route([
+                 '/web/image_user/<string:model>/<int:id>/<string:field>/<string:show_field>.png',
+                 ], type='http', auth="public")
+    def content_image_user(self, xmlid=None, model='ir.attachment', id=None, field='datas',
+                      filename_field='datas_fname', unique=None, filename=None, mimetype=None,
+                      download=None, width=0, height=0, crop=False, related_id=None, access_mode=None,
+                      access_token=None, avoid_if_small=False, upper_limit=False, signature=False, **kw):
+        status, headers, content = binary_content(
+            xmlid=xmlid, model=model, id=id, field=field, unique=unique, filename=filename,
+            filename_field=filename_field, download=download, mimetype=mimetype,
+            default_mimetype='image/png', related_id=related_id, access_mode=access_mode, access_token=access_token)
+        if status == 304:
+            return werkzeug.wrappers.Response(status=304, headers=headers)
+        elif status == 301:
+            return werkzeug.utils.redirect(content, code=301)
+        elif status != 200 and download:
+            return request.not_found()
+
+        if headers and dict(headers).get('Content-Type', '') == 'image/svg+xml':  # we shan't resize svg images
+            height = 0
+            width = 0
+        else:
+            height = int(height or 0)
+            width = int(width or 0)
+
+        if not content:
+            content = base64.b64encode(self.placeholder(image='placeholder.png'))
+            headers = self.force_contenttype(headers, contenttype='image/png')
+            if not (width or height):
+                suffix = field.split('_')[-1]
+                if suffix in ('small', 'medium', 'big'):
+                    content = getattr(odoo.tools, 'image_resize_image_%s' % suffix)(content)
+
+        if crop and (width or height):
+            content = crop_image(content, type='center', size=(width, height), ratio=(1, 1))
+        elif (width or height):
+            if not upper_limit:
+                # resize maximum 500*500
+                if width > 500:
+                    width = 500
+                if height > 500:
+                    height = 500
+            content = odoo.tools.image_resize_image(base64_source=content, size=(width or None, height or None),
+                                                    encoding='base64', upper_limit=upper_limit,
+                                                    avoid_if_small=avoid_if_small)
+
+        image_base64 = base64.b64decode(content)
+        headers.append(('Content-Length', len(image_base64)))
+        response = request.make_response(image_base64, headers)
+        response.status_code = status
+        return response
+
+
 # class DataSet(DataSet):
 #     @http.route(['/web/dataset/call_kw', '/web/dataset/call_kw/<path:path>'], type='json', auth="user")
 #     def call_kw(self, model, method, args, kwargs, path=None):
@@ -284,3 +348,7 @@ class WxMp(http.Controller):
     def mp_kqjidy4bloxx3vc(self, **kwargs):
         # response = http.send_file('MP_verify_xobfOnBKmFpc9HEU.txt')
         return '6KqjIDY4BloxX3Vc'
+
+
+
+
