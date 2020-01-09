@@ -4,8 +4,8 @@ function get_timestamp() {
   return tmp;
 }
 
-function load_index_data(){
-    $.get('/online_shop/get_index_data', {}, function(datas){
+function load_index_data(area_id){
+    $.get('/online_shop/get_index_data', {'area_id':area_id}, function(datas){
         var d = JSON.parse(datas);
         var recommend_datas = d['recommend_datas'];
         var sell_well_datas = d['sell_well_datas'];
