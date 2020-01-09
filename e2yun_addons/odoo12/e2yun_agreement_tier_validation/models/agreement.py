@@ -179,6 +179,7 @@ class CommentWizard(models.TransientModel):
     def add_comment(self):
         self.ensure_one()
         rec = self.env[self.res_model].browse(self.res_id)
+        tier_stage_id=""
         user_reviews = self.env['tier.review'].search([
             ('model', '=', self.res_model),
             ('res_id', '=', self.res_id),
@@ -188,14 +189,18 @@ class CommentWizard(models.TransientModel):
             user_review.write({
                 'comment': self.comment,
             })
+            tier_stage_id = user_review.tier_stage_id
+
         if self.validate_reject == 'validate':
             rec._validate_tier()
         if self.validate_reject == 'reject':
             rec._rejected_tier()
-
         if self.validate_reject == 'rebut':
             rec._rebut_tier()
-        self.stage_id = user_review.tier_stage_id
+
+        if tier_stage_id!="":
+            self.stage_id = tier_stage_id
+
         rec._update_counter()
 
 
