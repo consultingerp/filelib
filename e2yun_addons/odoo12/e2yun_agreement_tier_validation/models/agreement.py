@@ -136,7 +136,9 @@ class Agreement(models.Model):
                                 'rebut': td.rebut,
                                 'reject': td.reject,
                                 'w_approver':td.reviewer_id.name,
+                                'tier_stage_id':td.tier_stage_id.id,
                             })
+
                     self._update_counter()
         self._notify_review_requested(created_trs)
         return created_trs
