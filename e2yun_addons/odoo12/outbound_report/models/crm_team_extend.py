@@ -304,7 +304,7 @@ class TeamTargetDetail(models.Model):
 
     current_team_id = fields.Many2one('crm.team', '门店', readonly=True)
     detail_year = fields.Selection(
-        [(num, str(num)) for num in range(datetime.now().year - 5, datetime.now().year + 20)],
+        [(num, str(num)) for num in range(datetime.now().year - 5, datetime.now().year + 30)],
         string='年份')
     target_month = fields.Selection(
         [('1', '一月'), ('2', '二月'), ('3', '三月'), ('4', '四月'), ('5', '五月'), ('6', '六月'), ('7', '七月'), ('8', '八月'),

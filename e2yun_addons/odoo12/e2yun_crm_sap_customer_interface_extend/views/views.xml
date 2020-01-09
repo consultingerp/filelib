@@ -26,7 +26,7 @@
 
           <field name="parent_account" position="before">
               <field name="sap_remark"  attrs="{'readonly': [('sap_kunnr','not in',[False, ''])]}"/>
-              <field name="sap_ktokd" attrs="{'readonly': [('sap_kunnr','not in',[False, ''])]}"/>
+              <field name="sap_ktokd"  help="请在SAP账户组栏位输入C001 或者 C002 ，外部客户输入C001，集团内客户输入C002" attrs="{'readonly': [('sap_kunnr','not in',[False, ''])]}"/>
               <field name="sap_bu_sort1" attrs="{'readonly': [('sap_kunnr','not in',[False, ''])]}"/>
               <field name="sap_bu_sort2" attrs="{'readonly': [('sap_kunnr','not in',[False, ''])]}"/>
         </field>

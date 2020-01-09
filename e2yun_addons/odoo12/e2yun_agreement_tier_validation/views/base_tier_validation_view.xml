@@ -12,6 +12,11 @@
                 <field name="rebut"></field>
                 <field name="reject"></field>
             </field>
+
+            <field name="sequence" position="before">
+                <field name="up_sequence"></field>
+            </field>
+
         </field>
     </record>
 </odoo>
