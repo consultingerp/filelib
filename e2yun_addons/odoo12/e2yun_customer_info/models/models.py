@@ -514,14 +514,14 @@ class e2yun_customer_info(models.Model):
     @api.multi
     def write(self, vals):
         # 读取按钮权限组s
-        groups_id = self.env.ref('ZCRM.Business_group').id
-        sql = 'SELECT * from res_groups_users_rel where gid=%s and uid=%s'
-        self._cr.execute(sql, (groups_id, self._uid,))
-        groups_users = self._cr.fetchone()
+        # groups_id = self.env.ref('ZCRM.Business_group').id
+        # sql = 'SELECT * from res_groups_users_rel where gid=%s and uid=%s'
+        # self._cr.execute(sql, (groups_id, self._uid,))
+        # groups_users = self._cr.fetchone()
 
         # 草稿状态货有商务组权限可更新数据
-        if self.state != 'Draft' and  not groups_users:
-            raise UserError('当前状态下无法操作更新，请联系管理员')
+        # if self.state != 'Draft' and  not groups_users:
+        #     raise UserError('当前状态下无法操作更新，请联系管理员')
 
         if self.state == 'done':
             raise UserError('当前状态下无法操作更新，请联系管理员')
