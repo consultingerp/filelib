@@ -72,7 +72,7 @@ class Academy(http.Controller):
                 states = http.request.env['res.country.state'].sudo().search([])
 
             is_view = False
-            if supplier_info.state == 'approval1' or supplier_info.state == 'done':
+            if supplier_info.state == 'Draft' or supplier_info.state == 'approval1' or supplier_info.state == 'done':
                 is_view = True
 
             request.session['e2yun_supplier_info_id'] = supplier_info.id
