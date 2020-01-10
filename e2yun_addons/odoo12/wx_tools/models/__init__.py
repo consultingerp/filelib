@@ -26,3 +26,4 @@ from . import wx_tracelog
 from . import wx_userodoouser
 from . import wxuser_uuid
 from . import product
+from . import change_res_partner
