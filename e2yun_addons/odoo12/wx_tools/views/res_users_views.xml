@@ -14,17 +14,60 @@
         </record>
 
 
-        <!--<record id="res_users_wx_partner" model="ir.ui.view">-->
-            <!--<field name="name">res.users.view.form.wx_partner</field>-->
-            <!--<field name="model">res.users</field>-->
-            <!--<field name="inherit_id" ref="base.view_users_form"/>-->
-            <!--<field name="arch" type="xml">-->
-                <!--<xpath expr="//div[hasclass('oe_title')]//field[@name='partner_id']" position="replace">-->
-                    <!--<field name="partner_id"-->
-                           <!--attrs="{'invisible': [('id', '=', False)]}"/>-->
-                <!--</xpath>-->
-            <!--</field>-->
-        <!--</record>-->
+        <record id='change_partner_form' model="ir.ui.view">
+            <field name="name">res.users.view.form.change.partner</field>
+            <field name="model">change.partner</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="partner_id"/>
+                    </group>
+                    <footer>
+                        <button string="更换客户" type="object" name="userschangepartner"
+                                confirm="是否确定更换客户？" class="oe_highlight"/>
+                    </footer>
+
+                </form>
+            </field>
+        </record>
+
+
+        <act_window name="更换客户"
+                    res_model="change.partner"
+                    src_model="res.users"
+                    key2="client_action_multi"
+                    view_mode="form"
+                    view_type="form"
+                    view_id="change_partner_form"
+                    target="new"
+                    id="change_partner_action"
+                    groups="wx_tools.group_change_partner"
+        />
+
+        <record id="res_users_wx_partner" model="ir.ui.view">
+            <field name="name">res.users.view.form.wx_partner</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('oe_title')]//field[@name='partner_id']" position="after">
+                    <field name="partner_id" string="客户" readonly="1" required="0" groups="wx_tools.group_change_partner"
+                           attrs="{'invisible': [('id', '=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="res_users_searchr_customer" model="ir.ui.view">
+            <field name="name">res.users.search.customer</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='Inactive']" position="after">
+                    <filter name="customer" string="客户" domain="[('groups_id','=', 130)]"/>
+                </xpath>
+            </field>
+        </record>
+
 
         <record id="res_users_qrcodeimg" model="ir.ui.view">
             <field name="name">res.users.view.form.qrcodeimg</field>
@@ -59,14 +102,14 @@
             </field>
         </record>
 
-         <!--微信二维码重置-->
+        <!--微信二维码重置-->
         <record id="oe_reset_password_wx" model="ir.ui.view">
             <field name="name">oe.reset.password.wx</field>
             <field name="inherit_id" ref="auth_signup.reset_password"/>
             <field name="arch" type="xml">
                 <xpath expr="//input[@id='login']" position="after">
-                      <label>扫描二维码找回密码</label>
-                      <img border="0"  t-attf-src="#{auth_signup_reset_password_qrcode_ticket}" style="max-width:200px;" alt="二维码找回密码"/>
+                    <label>扫描二维码找回密码</label>
+                    <img border="0" t-attf-src="#{auth_signup_reset_password_qrcode_ticket}" style="max-width:200px;" alt="二维码找回密码"/>
                 </xpath>
             </field>
         </record>
