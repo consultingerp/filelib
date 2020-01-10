@@ -379,6 +379,8 @@ class SaleOrder(models.Model):
             for key in line.keys():
                 if key in sale_order._fields:
                     data[key] = line[key]
+            data['createuserid'] = line['createusername']
+            data['kunnr'] = line['kunnrname']
             partner = self.env['res.partner'].search([('app_code', '=', line['memberposid'])])
             if partner:
                 data['partner_id'] = partner.id
@@ -436,6 +438,8 @@ class SaleOrder(models.Model):
             for key in line.keys():
                 if key in sale_order._fields:
                     data[key] = line[key]
+            data['createuserid'] = line['createusername']
+            data['kunnr'] = line['kunnrname']
             partner = self.env['res.partner'].search([('app_code', '=', line['memberposid'])])
             if partner:
                 data['partner_id'] = partner.id
