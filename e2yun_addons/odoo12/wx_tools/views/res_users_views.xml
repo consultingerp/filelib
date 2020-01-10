@@ -41,8 +41,8 @@
                     view_id="change_partner_form"
                     target="new"
                     id="change_partner_action"
+                    groups="wx_tools.group_change_partner"
         />
-
 
         <record id="res_users_wx_partner" model="ir.ui.view">
             <field name="name">res.users.view.form.wx_partner</field>
