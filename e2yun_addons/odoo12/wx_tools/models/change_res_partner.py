@@ -7,7 +7,7 @@ class ChangeResPartner(models.Model):
     _name = 'change.partner'
     _description = '更改客户向导'
 
-    partner_id = fields.Many2one('res.partner', '新客户', domain=[('customer', '=', True)])
+    partner_id = fields.Many2one('res.partner', '更改客户', domain=[('customer', '=', True)])
 
     def userschangepartner(self):
         new_partnerid = self.partner_id.id

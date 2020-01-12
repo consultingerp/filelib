@@ -20,8 +20,7 @@
             <field name="arch" type="xml">
                 <form>
                     <group>
-                        <field name="partner_id"  widget="many2one"  domain="[('customer','!=',True), ('active', '=', True), ('parent_id', '=', False)]"
-
+                        <field name="partner_id"
                         />
                     </group>
                     <footer>
