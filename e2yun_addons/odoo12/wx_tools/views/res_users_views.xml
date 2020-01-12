@@ -20,7 +20,9 @@
             <field name="arch" type="xml">
                 <form>
                     <group>
-                        <field name="partner_id"/>
+                        <field name="partner_id"  widget="many2one"  domain="[('customer','!=',True), ('active', '=', True), ('parent_id', '=', False)]"
+
+                        />
                     </group>
                     <footer>
                         <button string="更换客户" type="object" name="userschangepartner"
