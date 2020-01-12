@@ -20,8 +20,7 @@
             <field name="arch" type="xml">
                 <form>
                     <group>
-                        <field name="partner_id"
-                        />
+                        <field name="partner_id"/>
                     </group>
                     <footer>
                         <button string="更换客户" type="object" name="userschangepartner"
