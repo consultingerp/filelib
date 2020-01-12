@@ -624,6 +624,7 @@ class e2yun_supplier_info(models.Model):
         state_ids = []
         if country_id:
             states = self.env['res.country.state'].sudo().search([('country_id','=',int(country_id))])
+            state_ids.append({'id': 0, 'name': '请选择'})
             for s in states:
                 state_ids.append({
                     'id':s.id,
@@ -646,7 +647,7 @@ class e2yun_supplier_info(models.Model):
                 })
         return city_ids
 
-    # 根据页面选择的开户行国家带出开户省份
+    # Qweb页面根据页面选择的开户行国家带出开户省份
     @api.model
     def get_bank_states_by_country(self):
         ctx = self._context.copy()
@@ -664,7 +665,7 @@ class e2yun_supplier_info(models.Model):
                 })
         return bank_state_ids
 
-    # 根据页面选择的开户行省份带出开户行城市
+    # Qweb页面根据页面选择的开户行省份带出开户行城市
     @api.model
     def get_bank_citys_by_state(self):
         ctx = self._context.copy()

@@ -96,6 +96,8 @@ class res_partner(models.Model):
                or 'mobile' in vals.keys():
             I_INPUT = {}
             I_INPUT['ZTYPE'] = '1'  # 事务类型  0 创建 1修改
+            if not self.sap_kunnr:
+                return super(res_partner, self).write(vals)
             I_INPUT['KUNNR'] =self.sap_kunnr
             I_INPUT['NAME_ORG1'] = vals['name']
             I_INPUT['KTOKD'] = self.sap_ktokd

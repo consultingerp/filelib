@@ -379,6 +379,10 @@ class SaleOrder(models.Model):
             for key in line.keys():
                 if key in sale_order._fields:
                     data[key] = line[key]
+            if 'createusername' in line:
+                data['createuserid'] = line['createusername']
+            if 'kunnrname' in line:
+                data['kunnr'] = line['kunnrname']
             partner = self.env['res.partner'].search([('app_code', '=', line['memberposid'])])
             if partner:
                 data['partner_id'] = partner.id
@@ -396,6 +400,8 @@ class SaleOrder(models.Model):
                 for key in line:
                     if key in sale_order_line._fields:
                         date_line[key] = line[key]
+                if 'itemtypetext' in line:
+                    date_line['itemtype'] = line['itemtypetext']
                 date_line['order_id'] = order_id.id
                 date_line['name'] = line['maktx']
                 date_line['price_unit'] = line['xiaoshoujine']
@@ -435,6 +441,10 @@ class SaleOrder(models.Model):
             for key in line.keys():
                 if key in sale_order._fields:
                     data[key] = line[key]
+            if 'createusername' in line:
+                data['createuserid'] = line['createusername']
+            if 'kunnrname' in line:
+                data['kunnr'] = line['kunnrname']
             partner = self.env['res.partner'].search([('app_code', '=', line['memberposid'])])
             if partner:
                 data['partner_id'] = partner.id
@@ -449,6 +459,8 @@ class SaleOrder(models.Model):
                 for key in line:
                     if key in sale_order_line._fields:
                         date_line[key] = line[key]
+                if 'itemtypetext' in line:
+                    date_line['itemtype'] = line['itemtypetext']
                 date_line['order_id'] = order_id.id
                 date_line['name'] = line['maktx']
                 product = self.env['product.product'].search([('default_code', '=', line['matnr'])])
