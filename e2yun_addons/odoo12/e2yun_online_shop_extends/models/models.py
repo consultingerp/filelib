@@ -354,10 +354,10 @@ class OnlineShop(user_info.WebUserInfoController):
         if request.session.get('select_area_id', False):  # 如果查地区
             area_id = request.session['select_area_id']
             if area_id == '1':
-                domain = [('sz_show', '=', True)]
+                domain = domain + [('sz_show', '=', True)]
                 pricelist_name = '深圳订单价格表'
             elif area_id == '2':
-                domain = [('bj_show', '=', True)]
+                domain = domain + [('bj_show', '=', True)]
                 pricelist_name = '北京订单价格表'
         else:
             usronlineinfo = request.session.usronlineinfo
@@ -726,9 +726,9 @@ class OnlineShop(user_info.WebUserInfoController):
         # 热销产品
         sell_well_domain = [('sell_well', '=', True)]
         if request.session['select_area_id'] == '1':
-            sell_well_domain = recommend_domain + [('sz_show', '=', True)]
+            sell_well_domain = sell_well_domain + [('sz_show', '=', True)]
         else:
-            sell_well_domain = recommend_domain + [('bj_show', '=', True)]
+            sell_well_domain = sell_well_domain + [('bj_show', '=', True)]
 
         product_template = http.request.env['product.template'].sudo().search(sell_well_domain)
         sell_well_datas = []
