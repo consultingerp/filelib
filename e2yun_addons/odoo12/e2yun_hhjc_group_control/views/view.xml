@@ -8,6 +8,17 @@
                 <xpath expr="//field[@name='signature']" position="before">
                     <field name="authority_group_control" groups="base.group_erp_manager"/>
                 </xpath>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='access_rights']/group[4]" position="attributes">
+                    <attribute name="groups">base.group_erp_manager</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='access_rights']/group[3]" position="attributes">
+                    <attribute name="groups">base.group_erp_manager</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='access_rights']/group[2]" position="attributes">
+                    <attribute name="groups">base.group_erp_manager</attribute>
+                </xpath>
+
+
             </field>
         </record>
 
