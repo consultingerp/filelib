@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_outbound_sync_from_pos1,outbound_sync_from_pos_final,model_outbound_sync_from_pos_final,,1,1,1,1
+access_outbound_sync_from_pos2,outbound_sync_from_pos_detail,model_outbound_sync_from_pos_detail,,1,1,1,1
