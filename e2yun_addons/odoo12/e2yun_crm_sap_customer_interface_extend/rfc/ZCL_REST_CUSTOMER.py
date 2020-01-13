@@ -30,7 +30,7 @@ class PYRFC_CRM_CUSTOMER():
 
   def zerofill(self,map):
       if 'KUNNR' in map.keys() and map['KUNNR']:
-          KUNNR = ('%010d' % map['KUNNR'])
+          KUNNR = ('%010d' % int(map['KUNNR']))
           map["KUNNR"] = KUNNR
           #
           # KUNNR=map['KUNNR']

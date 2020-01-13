@@ -15,7 +15,7 @@ class e2yun_customer_info(models.Model):
 
     sap_kunnr=fields.Char('sap kunnr' ,readonly=True) #SAP客户编号
     sap_remark = fields.Char('sap remark',required=True) #大客户号
-    sap_ktokd = fields.Char('sap ktokd',required=True)  #账户组
+    sap_ktokd = fields.Char('sap ktokd',default='C001',required=True)  #账户组
     sap_bu_sort1 = fields.Char('sap bu_sort1',required=True) #sap客户简称 汉字
     sap_bu_sort2 = fields.Char('sap bu_sort2',required=True) #sap客户简称 字母
 
