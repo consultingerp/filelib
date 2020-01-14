@@ -51,7 +51,8 @@ class SaleOrder(models.Model):
     orderdate = fields.Date('下单日期')
     pricedate = fields.Date('定价日期')
     ordertypetext = fields.Char('订单类型')
-    createuserid = fields.Char('创建人')
+    createuserid = fields.Char('创建人编号')
+    createusername = fields.Char('创建人')
     insertdatetime = fields.Date('创建时间')
     updater = fields.Char('更新人')
     totalmoney = fields.Float('总金额')
@@ -386,8 +387,8 @@ class SaleOrder(models.Model):
             for key in line.keys():
                 if key in sale_order._fields:
                     data[key] = line[key]
-            if 'createusername' in line:
-                data['createuserid'] = line['createusername']
+            # if 'createusername' in line:
+            #     data['createuserid'] = line['createusername']
             # if 'kunnrname' in line:
             #     data['kunnrid'] = line['kunnr']
             #     data['kunnr'] = line['kunnrname']
@@ -449,8 +450,8 @@ class SaleOrder(models.Model):
             for key in line.keys():
                 if key in sale_order._fields:
                     data[key] = line[key]
-            if 'createusername' in line:
-                data['createuserid'] = line['createusername']
+            # if 'createusername' in line:
+            #     data['createuserid'] = line['createusername']
             # if 'kunnrname' in line:
             #     data['kunnrid'] = line['kunnr']
             #     data['kunnr'] = line['kunnrname']

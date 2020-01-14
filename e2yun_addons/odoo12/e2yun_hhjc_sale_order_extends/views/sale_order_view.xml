@@ -49,6 +49,7 @@
                     <field name="pricedate"></field>
                     <field name="ordertypetext"></field>
                     <field name="createuserid"></field>
+                    <field name="createusername"></field>
                     <field name="insertdatetime"></field>
                     <field name="updater"></field>
                     <field name="totalmoney"></field>
