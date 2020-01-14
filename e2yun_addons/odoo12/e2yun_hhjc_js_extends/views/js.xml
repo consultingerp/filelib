@@ -3,6 +3,14 @@
     <template id="add_my_js" name="add my js" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
             <script type="text/javascript" src="/e2yun_hhjc_js_extends/static/src/js/my.js"></script>
+
         </xpath>
     </template>
+
+    <template id="assets_frontend" inherit_id="website.assets_frontend" name="Wishlist assets frontend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/scss" href="/e2yun_hhjc_js_extends/static/src/css/my.css"/>
+        </xpath>
+    </template>
+
 </odoo>
