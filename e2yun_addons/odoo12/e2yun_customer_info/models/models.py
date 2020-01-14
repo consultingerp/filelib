@@ -179,7 +179,13 @@ class e2yun_customer_info(models.Model):
          ["制造业", "pay after project is completed and project cycle>2 months"]], 'Way of settlement', track_visibility='onchange')
     x_studio_ender_customer = fields.Char('Ender Customer', track_visibility='onchange')
     x_studio_account_management = fields.Selection([["NMA", "NMA"], ["CMA", "CMA"]], 'Account Management', track_visibility='onchange')
-    x_studio_account_source = fields.Selection([["Other", "Other"]], 'Account Source', track_visibility='onchange')
+    x_studio_account_source = fields.Selection([["Other", "Other"],
+                                                ["Net", "网络"],
+                                                ["Internal_Referral", "内部推荐"],
+                                                ["External_Referral", "外部引荐"],
+                                                ["Cooperators", "合作伙伴"],
+                                                ["Public_Relations", "公共关系"],
+                                                ["Exhibition", "展会"]], 'Account Source', track_visibility='onchange')
     x_studio_registration_address = fields.Char('Registration Address', track_visibility='onchange')
     grade_id = fields.Many2one('res.partner.grade', 'Level', track_visibility='onchange')
     secondary_industry_ids = fields.Many2many(
