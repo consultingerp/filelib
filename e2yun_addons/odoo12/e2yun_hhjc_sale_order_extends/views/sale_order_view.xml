@@ -20,6 +20,7 @@
                     <field name="vip"></field>
                     <!--<field name="vipname"></field>-->
                     <field name="kunnr"></field>
+                    <field name="kunnrname"></field>
                     <field name="telephone"></field>
                     <field name="address"></field>
                     <field name="ywy"></field>
