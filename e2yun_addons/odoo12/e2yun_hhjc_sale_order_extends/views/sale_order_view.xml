@@ -20,6 +20,7 @@
                     <field name="vip"></field>
                     <!--<field name="vipname"></field>-->
                     <field name="kunnr"></field>
+                    <field name="kunnrname"></field>
                     <field name="telephone"></field>
                     <field name="address"></field>
                     <field name="ywy"></field>
@@ -48,6 +49,7 @@
                     <field name="pricedate"></field>
                     <field name="ordertypetext"></field>
                     <field name="createuserid"></field>
+                    <field name="createusername"></field>
                     <field name="insertdatetime"></field>
                     <field name="updater"></field>
                     <field name="totalmoney"></field>
