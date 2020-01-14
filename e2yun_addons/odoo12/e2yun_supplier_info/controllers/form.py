@@ -2,7 +2,7 @@
 import json
 
 from odoo import http
-from odoo.addons.website_form.controllers.main import WebsiteForm
+from addons.website_form.controllers.main import WebsiteForm
 from odoo.http import request
 from psycopg2 import IntegrityError
 from odoo.exceptions import ValidationError
@@ -31,7 +31,7 @@ class ContactController(WebsiteForm):
                     try:
                         if data['record']['name']:
                             count = request.env['res.partner'].sudo().search([('name', '=', data['record']['name'])])
-                            if count and  len(count) > 0 and count.user_ids.login != data['record']['login_name']:
+                            if count and len(count) > 0 and count.user_ids.login != data['record']['login_name']:
                                 error = {
                                     'name': '联系人名称已经存在，请重新输入'
                                 }
@@ -104,7 +104,7 @@ class ContactController(WebsiteForm):
                     supplier_info = supplier_info_obj.search([('id', '=', request.session['e2yun_supplier_info_id'])])
                     data['record']['state'] = 'Draft'
 
-                    #保存银行信息时检查
+                    # 保存银行信息时检查
                     if data['record'].get('country_bank',False):
                         if not data['record'].get('enclosure_bank', False) and data['record'].get(
                                 'enclosure_bank_value', False):
@@ -115,7 +115,7 @@ class ContactController(WebsiteForm):
                             }
                             return json.dumps({'error_fields': error})
 
-                    #保存公司信息时检查
+                    # 保存公司信息时检查
                     if data['record'].get('company_name',False):
                         if not data['record'].get('business_license', False) and data['record'].get('business_license_value',False):
                             data['record']['business_license'] = data['record']['business_license_value']
@@ -149,8 +149,6 @@ class ContactController(WebsiteForm):
                             }
                             return json.dumps({'error_fields': error})
 
-
-
                     supplier_info.write(data['record'])
                     id_record = supplier_info.id
                 else:
@@ -183,7 +181,6 @@ class ContactController(WebsiteForm):
                 request.session['e2yun_supplier_user_id'] = id_record
             elif model_name == 'e2yun.supplier.info':
                 request.session['e2yun_supplier_info_id'] = id_record
-
             return json.dumps({'id': id_record})
 
         else:
