@@ -31,7 +31,7 @@ odoo.define('outbound_report.outbound_tree_view_button', function (require) {
                 view_mode: 'form',
                 target: 'new',
                 views: [[false, 'form']],
-                res_model: 'outbound.final',
+                res_model: 'outbound_sync_from_pos.final',
                 context : self.initialState.context
             });
         },
@@ -42,7 +42,7 @@ odoo.define('outbound_report.outbound_tree_view_button', function (require) {
             return self._rpc({
                 route: '/web/action/load',
                 params: {
-                    action_id: 'outbound_report.outbound_report_echarts_view_action',
+                    action_id: 'outbound_report_echarts_view_action.outbound_report_echarts_view_action2',
                     context: self.initialState.context
                 },
             }).then(function(action){

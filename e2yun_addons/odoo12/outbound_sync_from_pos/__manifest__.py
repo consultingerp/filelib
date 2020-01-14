@@ -25,4 +25,7 @@
         'security/ir.model.access.csv',
         'views/outbound_report_dashboard.xml',
     ],
+    'qweb': [
+        'static/src/xml/outbound_pos_button_template.xml',
+             ],
 }
