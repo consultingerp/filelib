@@ -39,6 +39,10 @@ class OnlineShop(user_info.WebUserInfoController):
         else:
             request.session['area_id'] = request.session.usronlineinfo['company_id']
 
+        company = request.env['res.company'].sudo().browse(int(request.session['area_id']))
+        if company:
+            request.session['select_area_id'] = company.select_area_id
+
         html = template.render()
         return html
 
@@ -120,8 +124,8 @@ class OnlineShop(user_info.WebUserInfoController):
     @http.route('/online_shop/get_category', type='http', auth="public", methods=['GET'])
     def online_shop_get_category(self, **kwargs):
         text = ""
-        html_head = """<li>
-                            <a id='shop_category_99999' onclick='show_goods_in_category(this)'>所有类别</a>
+        html_head = """<li class="menu-item-has-children">
+                            <a href='#' id='shop_category_99999' onclick='show_goods_in_category(this)'>所有类别</a>
                         </li>"""
         text = text + html_head
         category_parent_pool = http.request.env['product.public.category'].search([('parent_id', '=', False)])
@@ -129,7 +133,7 @@ class OnlineShop(user_info.WebUserInfoController):
         for category_parent in category_parent_pool:
             if i == 0:
                 html_start = """<li class="menu-item-has-children active">"""
-                html_start_2 = "<a id='shop_category_" + str(
+                html_start_2 = "<a href='#' id='shop_category_" + str(
                     category_parent.id) + "' onclick='show_goods_in_category(this)'>" + category_parent.name + "</a>"
                 html_start_3 = """<span class="menu-expand"><i class="la la-angle-down"></i></span>"""
                 html_start_4 = """<ul class="sub-menu" style="display: none;">"""
@@ -140,7 +144,7 @@ class OnlineShop(user_info.WebUserInfoController):
                     category_child_products = http.request.env['product.template'].search(
                         [('public_categ_ids', 'in', category_child.id)])
                     if category_child_products:
-                        html_to_add = "<li><a id='shop_category_" + str(
+                        html_to_add = "<li><a href='#' id='shop_category_" + str(
                             category_child.id) + "' onclick='show_goods_in_category(this)'>" + category_child.name + "</a></li>"
                         html_body = html_body + html_to_add
                     else:
@@ -151,7 +155,7 @@ class OnlineShop(user_info.WebUserInfoController):
                 i = i + 1
             else:
                 html_start = """<li class="menu-item-has-children">"""
-                html_start_2 = "<a id='shop_category_" + str(
+                html_start_2 = "<a href='#' id='shop_category_" + str(
                     category_parent.id) + "' onclick='show_goods_in_category(this)'>" + category_parent.name + "</a>"
                 html_start_3 = """<span class="menu-expand"><i class="la la-angle-down"></i></span>"""
                 html_start_4 = """<ul class="sub-menu" style="display: none;">"""
@@ -161,7 +165,7 @@ class OnlineShop(user_info.WebUserInfoController):
                 for category_child in category_child_pool:
                     category_child_products = http.request.env['product.template'].search([('public_categ_ids', 'in', category_child.id)])
                     if category_child_products:
-                        html_to_add = "<li><a id='shop_category_" + str(
+                        html_to_add = "<li><a href='#' id='shop_category_" + str(
                             category_child.id) + "' onclick='show_goods_in_category(this)'>" + category_child.name + "</a></li>"
                         html_body = html_body + html_to_add
                     else:
@@ -354,10 +358,10 @@ class OnlineShop(user_info.WebUserInfoController):
         if request.session.get('select_area_id', False):  # 如果查地区
             area_id = request.session['select_area_id']
             if area_id == '1':
-                domain = [('sz_show', '=', True)]
+                domain = domain + [('sz_show', '=', True)]
                 pricelist_name = '深圳订单价格表'
             elif area_id == '2':
-                domain = [('bj_show', '=', True)]
+                domain = domain + [('bj_show', '=', True)]
                 pricelist_name = '北京订单价格表'
         else:
             usronlineinfo = request.session.usronlineinfo
@@ -726,9 +730,9 @@ class OnlineShop(user_info.WebUserInfoController):
         # 热销产品
         sell_well_domain = [('sell_well', '=', True)]
         if request.session['select_area_id'] == '1':
-            sell_well_domain = recommend_domain + [('sz_show', '=', True)]
+            sell_well_domain = sell_well_domain + [('sz_show', '=', True)]
         else:
-            sell_well_domain = recommend_domain + [('bj_show', '=', True)]
+            sell_well_domain = sell_well_domain + [('bj_show', '=', True)]
 
         product_template = http.request.env['product.template'].sudo().search(sell_well_domain)
         sell_well_datas = []

@@ -179,7 +179,13 @@ class e2yun_customer_info(models.Model):
          ["制造业", "pay after project is completed and project cycle>2 months"]], 'Way of settlement', track_visibility='onchange')
     x_studio_ender_customer = fields.Char('Ender Customer', track_visibility='onchange')
     x_studio_account_management = fields.Selection([["NMA", "NMA"], ["CMA", "CMA"]], 'Account Management', track_visibility='onchange')
-    x_studio_account_source = fields.Selection([["Other", "Other"]], 'Account Source', track_visibility='onchange')
+    x_studio_account_source = fields.Selection([["Other", "Other"],
+                                                ["Net", "网络"],
+                                                ["Internal_Referral", "内部推荐"],
+                                                ["External_Referral", "外部引荐"],
+                                                ["Cooperators", "合作伙伴"],
+                                                ["Public_Relations", "公共关系"],
+                                                ["Exhibition", "展会"]], 'Account Source', track_visibility='onchange')
     x_studio_registration_address = fields.Char('Registration Address', track_visibility='onchange')
     grade_id = fields.Many2one('res.partner.grade', 'Level', track_visibility='onchange')
     secondary_industry_ids = fields.Many2many(
@@ -514,13 +520,16 @@ class e2yun_customer_info(models.Model):
     @api.multi
     def write(self, vals):
         # 读取按钮权限组s
-        groups_id = self.env.ref('ZCRM.Business_group').id
-        sql = 'SELECT * from res_groups_users_rel where gid=%s and uid=%s'
-        self._cr.execute(sql, (groups_id, self._uid,))
-        groups_users = self._cr.fetchone()
+        # groups_id = self.env.ref('ZCRM.Business_group').id
+        # sql = 'SELECT * from res_groups_users_rel where gid=%s and uid=%s'
+        # self._cr.execute(sql, (groups_id, self._uid,))
+        # groups_users = self._cr.fetchone()
 
         # 草稿状态货有商务组权限可更新数据
-        if self.state != 'Draft' or  not groups_users:
+        # if self.state != 'Draft' and  not groups_users:
+        #     raise UserError('当前状态下无法操作更新，请联系管理员')
+
+        if self.state == 'done':
             raise UserError('当前状态下无法操作更新，请联系管理员')
 
         if 'image' in vals:

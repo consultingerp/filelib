@@ -11,7 +11,6 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/outbound_report_dashboard.xml',
         'views/target_completion_report.xml',
         'views/data_sources.xml',
     ],

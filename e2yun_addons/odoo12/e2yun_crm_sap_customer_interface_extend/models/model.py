@@ -15,7 +15,7 @@ class e2yun_customer_info(models.Model):
 
     sap_kunnr=fields.Char('sap kunnr' ,readonly=True) #SAP客户编号
     sap_remark = fields.Char('sap remark',required=True) #大客户号
-    sap_ktokd = fields.Char('sap ktokd',required=True)  #账户组
+    sap_ktokd = fields.Char('sap ktokd',default='C001',required=True)  #账户组
     sap_bu_sort1 = fields.Char('sap bu_sort1',required=True) #sap客户简称 汉字
     sap_bu_sort2 = fields.Char('sap bu_sort2',required=True) #sap客户简称 字母
 
@@ -96,6 +96,8 @@ class res_partner(models.Model):
                or 'mobile' in vals.keys():
             I_INPUT = {}
             I_INPUT['ZTYPE'] = '1'  # 事务类型  0 创建 1修改
+            if not self.sap_kunnr:
+                return super(res_partner, self).write(vals)
             I_INPUT['KUNNR'] =self.sap_kunnr
             I_INPUT['NAME_ORG1'] = vals['name']
             I_INPUT['KTOKD'] = self.sap_ktokd

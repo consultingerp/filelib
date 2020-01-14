@@ -10,7 +10,7 @@
             name="agreement_legal.report_agreement_document"
             file="agreement_legal.report_agreement_document"
             report_type="qweb-pdf"/> -->
-
+<!--
         <record id="view_agreement_import_docx" model="ir.ui.view">
             <field name="name">Import Doc</field>
             <field name="model">agreement.docx.import</field>
@@ -26,7 +26,7 @@
                     </footer>
                 </form>
             </field>
-        </record>
+        </record>-->
 
         <!--
         <record id="action_view_agreement_import_docx" model="ir.actions.act_window">
@@ -101,6 +101,17 @@
 
         <menuitem action="action_view_agreement_import_docx" name="Docx Import" id="menu_agreement_docx_import"  parent="e2yun_agreement_docx_import.menu_agreement_docx_import_management"/>
         -->
+
+<!--
+        <act_window name="审批过程"
+                    res_model="tier.review"
+                    src_model="agreement"
+                    key2="client_action_multi"
+                    view_mode="tree"
+
+                    view_id="base_tier_validation.tier_review_view_tree"
+                    target="new"
+                    id="act_window_tier_review"/>-->
 
     </data>
 </odoo>
