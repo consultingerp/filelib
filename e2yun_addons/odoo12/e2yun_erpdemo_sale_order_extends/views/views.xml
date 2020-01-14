@@ -1,0 +1,15 @@
+<odoo>
+  <data>
+    <record id="e2yun_erpdemo_sale_order_extends" model="ir.ui.view">
+      <field name="name">e2yun.erpdemo.sale.order.extends</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='payment_term_id']" position="after">
+          <field name="currency_id"/>
+          <field name="currency_rate"/>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

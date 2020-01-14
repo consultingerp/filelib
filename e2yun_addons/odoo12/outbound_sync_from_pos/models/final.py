@@ -80,7 +80,6 @@ class OutboundFinal2(models.Model):
     ywy2 = fields.Char('导购员')
     kunnr2 = fields.Char('门店')
 
-
     def init_outbound_date(self, ctx):
         start_date = str(ctx['start_date']).replace('-', '')
         end_date = str(ctx['end_date']).replace('-', '')
@@ -106,16 +105,13 @@ class OutboundFinal2(models.Model):
         else:
             ywy_sql = ''
 
-        del_sql = "delete from outbound_final where %s %s %s %s %s %s" % (time_sql, werks_sql, vtweg_sql, vkorgtext_sql, kunnr_sql, ywy_sql)
+        del_sql = "delete from outbound_sync_from_pos_final where %s %s %s %s %s %s" % (time_sql, werks_sql, vtweg_sql, vkorgtext_sql, kunnr_sql, ywy_sql)
         self._cr.execute(del_sql)
 
     def open_table(self):
 
         data = self.read()[0]
         ctx = self._context.copy()
-
-        # if self.search([]):
-        #     self.search([]).unlink()
 
         if data['start_date'] and data['end_date']:
             date_now = datetime.now()
@@ -129,6 +125,10 @@ class OutboundFinal2(models.Model):
             ctx['end_date'] = data['end_date']
         else:
             raise exceptions.Warning('查询日期不能为空')
+
+        # 写入数据之前清空表数据
+        clear_data_sql = 'truncate table outbound_sync_from_pos_final'
+        self._cr.execute(clear_data_sql)
 
         pos_result = self.outbound_report_sync_from_pos()
 
@@ -147,35 +147,14 @@ class OutboundFinal2(models.Model):
                              })
                 self.create(data_dict)
 
-        # ctx['werks'] = data['werks']
-        # ctx['vtweg'] = data['vtweg']
-        # ctx['vkorgtext'] = data['vkorgtext']
-        # ctx['kunnr'] = data['kunnr']
-        # ctx['ywy'] = data['ywy']
-        #
-        # domain_list = []
-        # sql1 = ('LFADT', '>=', ctx['start_date'])
-        # sql2 = ('LFADT', '<=', ctx['end_date'])
-        # domain_list.append(sql1)
-        # domain_list.append(sql2)
-        # if ctx['werks'] and ctx['werks'] != '0000':
-        #     werks_query = ('werks', '=', ctx['werks'])
-        #     domain_list.append(werks_query)
-        # if ctx['vtweg']:
-        #     vtweg_query = ('vtweg', '=', ctx['vtweg'][0])
-        #     domain_list.append(vtweg_query)
-        # if ctx['vkorgtext']:
-        #     vkorgtext_query = ('vkorgtext', 'ilike', ctx['vkorgtext'][0])
-        #     domain_list.append(vkorgtext_query)
-        # if ctx['kunnr']:
-        #     kunnr_query = ('kunnr', '=', ctx['kunnr'][0])
-        #     domain_list.append(kunnr_query)
-        # if ctx['ywy']:
-        #     ywy_query = ('ywy', '=', ctx['ywy'][0])
-        #     domain_list.append(ywy_query)
+        ctx['werks'] = data['werks']
+        ctx['vtweg'] = data['vtweg']
+        ctx['vkorgtext'] = data['vkorgtext']
+        ctx['kunnr'] = data['kunnr']
+        ctx['ywy'] = data['ywy']
 
         # 删除查询时创建的数据行
-        # self.init_outbound_date(ctx)
+        self.init_outbound_date(ctx)
 
         return {
             'name': '出库报表查询',
