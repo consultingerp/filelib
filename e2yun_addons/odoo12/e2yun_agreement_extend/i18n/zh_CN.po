@@ -12,3 +12,18 @@ msgstr "合同编号"
 msgid "For Code"
 msgstr "简写编码"
 
+
+#. module: e2yun_agreement_extend
+#: model:ir.model.fields,field_description:e2yun_agreement_extend.field_agreement_file_upload__name
+msgid "The import type"
+msgstr "导入文件类型"
+
+
+#. module: e2yun_agreement_extend
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_extend.agreement_form_view_view_extend
+msgid "Import File"
+msgstr "上传文件"
+
+
+
+

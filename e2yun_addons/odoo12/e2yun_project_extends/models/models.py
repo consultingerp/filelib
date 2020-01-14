@@ -67,6 +67,16 @@ class E2yunTaskInfo(models.Model):
                 question_no1 = self.questionnaire_ids[0]
                 self.questionnaire_ids = question_no1
 
+    @api.model
+    def create(self, vals):
+        res = super(E2yunTaskInfo, self).create(vals)
+        all = self.questionnaire_ids
+        if all:
+            for i in all:
+                if self.questionnaire_classification != i.survey_temp_id.questionnaire_classification:
+                    raise exceptions.Warning(_('问卷分类字段必须与明细行模板问卷的问卷分类保持一致，请重新选择问卷分类'))
+        return res
+
     @api.one
     def write(self, vals):
         res = super(E2yunTaskInfo, self).write(vals)
@@ -82,6 +92,11 @@ class E2yunTaskInfo(models.Model):
                 all_score += int_weight
         if all_score > 100:
             raise exceptions.Warning(_('权重之和大于100%，请重新输入'))
+        all = self.questionnaire_ids
+        if all:
+            for i in all:
+                if self.questionnaire_classification != i.survey_temp_id.questionnaire_classification:
+                    raise exceptions.Warning(_('问卷分类字段必须与明细行模板问卷的问卷分类保持一致，请重新选择问卷分类'))
         return res
 
     # 任务页面打开问卷页面的方法

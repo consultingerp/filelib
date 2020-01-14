@@ -199,7 +199,7 @@ class CommentWizard(models.TransientModel):
             rec._rebut_tier()
 
         if tier_stage_id!="":
-            self.stage_id = tier_stage_id
+            rec.stage_id = tier_stage_id
 
         rec._update_counter()
 

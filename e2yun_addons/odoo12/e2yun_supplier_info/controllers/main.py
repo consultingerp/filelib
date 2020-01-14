@@ -72,12 +72,12 @@ class Academy(http.Controller):
                 states = http.request.env['res.country.state'].sudo().search([])
 
             is_view = False
-            if supplier_info.state == 'approval1' or supplier_info.state == 'done':
+            if supplier_info.state == 'Draft' or supplier_info.state == 'approval1' or supplier_info.state == 'done':
                 is_view = True
 
             request.session['e2yun_supplier_info_id'] = supplier_info.id
 
-            return http.request.render('e2yun_supplier_info.supplier_register_base_info',{'supplier': supplier_info,
+            return http.request.render('e2yun_supplier_info.supplier_register_base_info', {'supplier': supplier_info,
                                                                                           'countrys':countrys,
                                                                                           'states':states,
                                                                                           'citys':citys,

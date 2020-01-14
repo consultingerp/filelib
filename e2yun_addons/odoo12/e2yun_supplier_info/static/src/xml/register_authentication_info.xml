@@ -103,15 +103,15 @@
                               </div>
                               <t t-if="is_view == False">
                                 <div class="col-lg-3 col-md-8">
-                                  <input type="file" accept="image/*" onchange="showImg6(this)" class="form-control o_website_form_input" name="image"/>
+                                  <input type="file" accept="image/*" onchange="showImg7(this)" class="form-control o_website_form_input" name="image"/>
                                   <input type="hidden" name="image_value" t-att-value="ISO9000_info.image"/>
                                 </div>
                               </t>
                               <div class="col-lg-5 col-md-8">
                                 <img t-attf-src="data:image/png;base64,#{ISO9000_info.image}" alt=""
-                                     width="100px" id="img6"/>
+                                     width="100px" id="img7"/>
                                 <script>
-                                  function showImg6(obj) {
+                                  function showImg7(obj) {
                                       var file=$(obj)[0].files[0];    //获取文件信息
                                       var imgdata='';
                                       if(file)
@@ -119,7 +119,7 @@
                                           var reader=new FileReader();  //调用FileReader
                                           reader.readAsDataURL(file); //将文件读取为 DataURL(base64)
                                           reader.onload=function(evt){   //读取操作完成时触发。
-                                              $("#img6").attr('src',evt.target.result)  //将img标签的src绑定为DataURL
+                                              $("#img7").attr('src',evt.target.result)  //将img标签的src绑定为DataURL
                                           };
                                       }
                                       else{
@@ -255,13 +255,30 @@
                             </div>
                             <t t-if="is_view == False">
                               <div class="col-lg-3 col-md-8">
-                                <input type="file" class="form-control o_website_form_input" name="image"/>
+                                <input type="file" accept="image/*" onchange="showImg8(this)" class="form-control o_website_form_input" name="image"/>
                                 <input type="hidden" name="image_value" t-att-value="ISO14000_info.image"/>
                               </div>
                             </t>
                             <div class="col-lg-5 col-md-8">
                                 <img t-attf-src="data:image/png;base64,#{ISO14000_info.image}" alt=""
-                                     height="60px" width="100px"/>
+                                     width="100px" id="img8"/>
+                                <script>
+                                  function showImg8(obj) {
+                                      var file=$(obj)[0].files[0];    //获取文件信息
+                                      var imgdata='';
+                                      if(file)
+                                      {
+                                          var reader=new FileReader();  //调用FileReader
+                                          reader.readAsDataURL(file); //将文件读取为 DataURL(base64)
+                                          reader.onload=function(evt){   //读取操作完成时触发。
+                                              $("#img8").attr('src',evt.target.result)  //将img标签的src绑定为DataURL
+                                          };
+                                      }
+                                      else{
+                                          alert("上传失败");
+                                      }
+                                  }
+                                </script>
                             </div>
                           </div>
                           <div class="row form-group form-field">
@@ -386,13 +403,30 @@
                             </div>
                             <t t-if="is_view == False">
                               <div class="col-lg-3 col-md-8">
-                                <input type="file" class="form-control o_website_form_input" name="image"/>
+                                <input type="file" accept="image/*" onchange="showImg9(this)" class="form-control o_website_form_input" name="image"/>
                                 <input type="hidden" name="image_value" t-att-value="UL_info.image"/>
                               </div>
                             </t>
                             <div class="col-lg-5 col-md-8">
                                 <img t-attf-src="data:image/png;base64,#{UL_info.image}" alt=""
-                                     height="60px" width="100px"/>
+                                      id="img9" width="100px"/>
+                                <script>
+                                  function showImg9(obj) {
+                                      var file=$(obj)[0].files[0];    //获取文件信息
+                                      var imgdata='';
+                                      if(file)
+                                      {
+                                          var reader=new FileReader();  //调用FileReader
+                                          reader.readAsDataURL(file); //将文件读取为 DataURL(base64)
+                                          reader.onload=function(evt){   //读取操作完成时触发。
+                                              $("#img9").attr('src',evt.target.result)  //将img标签的src绑定为DataURL
+                                          };
+                                      }
+                                      else{
+                                          alert("上传失败");
+                                      }
+                                  }
+                                </script>
                             </div>
                           </div>
                           <div class="row form-group form-field">
@@ -514,13 +548,30 @@
                             </div>
                             <t t-if="is_view == False">
                               <div class="col-lg-3 col-md-8">
-                                <input type="file" class="form-control o_website_form_input" name="image"/>
+                                <input type="file" accept="image/*" onchange="showImg10(this)" class="form-control o_website_form_input" name="image"/>
                                 <input type="hidden" name="image_value" t-att-value="CCC_info.image"/>
                               </div>
                             </t>
                             <div class="col-lg-5 col-md-8">
                                 <img t-attf-src="data:image/png;base64,#{CCC_info.image}" alt=""
-                                     height="60px" width="100px"/>
+                                      id="img10" width="100px"/>
+                                <script>
+                                  function showImg10(obj) {
+                                      var file=$(obj)[0].files[0];    //获取文件信息
+                                      var imgdata='';
+                                      if(file)
+                                      {
+                                          var reader=new FileReader();  //调用FileReader
+                                          reader.readAsDataURL(file); //将文件读取为 DataURL(base64)
+                                          reader.onload=function(evt){   //读取操作完成时触发。
+                                              $("#img10").attr('src',evt.target.result)  //将img标签的src绑定为DataURL
+                                          };
+                                      }
+                                      else{
+                                          alert("上传失败");
+                                      }
+                                  }
+                                </script>
                             </div>
                           </div>
                           <div class="row form-group form-field">
@@ -642,13 +693,30 @@
                             </div>
                             <t t-if="is_view == False">
                               <div class="col-lg-3 col-md-8">
-                                <input type="file" class="form-control o_website_form_input" name="image"/>
+                                <input type="file" accept="image/*" onchange="showImg11(this)" class="form-control o_website_form_input" name="image"/>
                                 <input type="hidden" name="image_value" t-att-value="FCC_info.image"/>
                               </div>
                             </t>
                             <div class="col-lg-5 col-md-8">
                                 <img t-attf-src="data:image/png;base64,#{FCC_info.image}" alt=""
-                                     height="60px" width="100px"/>
+                                      id="img11" width="100px"/>
+                                <script>
+                                  function showImg11(obj) {
+                                      var file=$(obj)[0].files[0];    //获取文件信息
+                                      var imgdata='';
+                                      if(file)
+                                      {
+                                          var reader=new FileReader();  //调用FileReader
+                                          reader.readAsDataURL(file); //将文件读取为 DataURL(base64)
+                                          reader.onload=function(evt){   //读取操作完成时触发。
+                                              $("#img11").attr('src',evt.target.result)  //将img标签的src绑定为DataURL
+                                          };
+                                      }
+                                      else{
+                                          alert("上传失败");
+                                      }
+                                  }
+                                </script>
                             </div>
                           </div>
                           <div class="row form-group form-field">

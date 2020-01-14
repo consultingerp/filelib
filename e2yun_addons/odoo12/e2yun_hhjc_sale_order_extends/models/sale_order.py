@@ -24,7 +24,8 @@ class SaleOrder(models.Model):
     salesorderid = fields.Char('订单编号', copy=False)
     vip = fields.Char('客户编号')
     vipname = fields.Char('客户名称')
-    kunnr = fields.Char('门店名称')
+    kunnr = fields.Char('门店代码')
+    kunnrname = fields.Char('门店名称')
     telephone = fields.Char('联系电话')
     address = fields.Char('客户地址')
     ywy = fields.Char('导购员')
@@ -50,7 +51,8 @@ class SaleOrder(models.Model):
     orderdate = fields.Date('下单日期')
     pricedate = fields.Date('定价日期')
     ordertypetext = fields.Char('订单类型')
-    createuserid = fields.Char('创建人')
+    createuserid = fields.Char('创建人编号')
+    createusername = fields.Char('创建人')
     insertdatetime = fields.Date('创建时间')
     updater = fields.Char('更新人')
     totalmoney = fields.Float('总金额')
@@ -153,6 +155,12 @@ class SaleOrder(models.Model):
         res = super(SaleOrder, self).write(vals)
         try:
             for item in self:
+                if 'kunnr' in vals and vals['kunnr']:
+                    _logger.info('创建开始设置门店和公司信息=============================')
+                    kunnrs = self.sudo().env['crm.team'].search([('shop_code', '=', vals['kunnr'])])
+                    if kunnrs:
+                        res.team_id = kunnrs[0]
+                        res.company_id = res.team_id.company_id
                 if 'is_sync' in vals and vals['is_sync']:
                     if item.state == 'draft':
                         item.state = 'sent'
@@ -379,6 +387,11 @@ class SaleOrder(models.Model):
             for key in line.keys():
                 if key in sale_order._fields:
                     data[key] = line[key]
+            # if 'createusername' in line:
+            #     data['createuserid'] = line['createusername']
+            # if 'kunnrname' in line:
+            #     data['kunnrid'] = line['kunnr']
+            #     data['kunnr'] = line['kunnrname']
             partner = self.env['res.partner'].search([('app_code', '=', line['memberposid'])])
             if partner:
                 data['partner_id'] = partner.id
@@ -396,6 +409,8 @@ class SaleOrder(models.Model):
                 for key in line:
                     if key in sale_order_line._fields:
                         date_line[key] = line[key]
+                if 'itemtypetext' in line:
+                    date_line['itemtype'] = line['itemtypetext']
                 date_line['order_id'] = order_id.id
                 date_line['name'] = line['maktx']
                 date_line['price_unit'] = line['xiaoshoujine']
@@ -435,6 +450,11 @@ class SaleOrder(models.Model):
             for key in line.keys():
                 if key in sale_order._fields:
                     data[key] = line[key]
+            # if 'createusername' in line:
+            #     data['createuserid'] = line['createusername']
+            # if 'kunnrname' in line:
+            #     data['kunnrid'] = line['kunnr']
+            #     data['kunnr'] = line['kunnrname']
             partner = self.env['res.partner'].search([('app_code', '=', line['memberposid'])])
             if partner:
                 data['partner_id'] = partner.id
@@ -449,6 +469,8 @@ class SaleOrder(models.Model):
                 for key in line:
                     if key in sale_order_line._fields:
                         date_line[key] = line[key]
+                if 'itemtypetext' in line:
+                    date_line['itemtype'] = line['itemtypetext']
                 date_line['order_id'] = order_id.id
                 date_line['name'] = line['maktx']
                 product = self.env['product.product'].search([('default_code', '=', line['matnr'])])

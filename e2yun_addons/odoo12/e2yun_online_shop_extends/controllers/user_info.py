@@ -21,10 +21,13 @@ class WebUserInfoController(http.Controller):
         company = request.env['res.company'].sudo().search_read([('display_show_area', '=', True)], ['name', 'id', 'show_area_text'])
         if not request.session.companys:  # 将显示的公司参数加载到session
             request.session.showcompanys = company
-        self.get_show_userinfo(refresh=True)
+        # self.get_show_userinfo(refresh=True)
         rest = dict()
         rest['company'] = company
-        rest['user_company'] = request.session.usronlineinfo['company_id'];
+        if request.session['area_id']:
+            rest['user_company'] = request.session['area_id']
+        else:
+            rest['user_company'] = request.session.usronlineinfo['company_id']
         return {
             'rest': rest
         }
@@ -56,7 +59,7 @@ class WebUserInfoController(http.Controller):
                 company = request.env['res.company'].sudo().search([('company_code', '=', '1000')], limit=1)
                 userinfo_region['company_id'] = company.id
                 _logger.info("地区对对应公司默认公司：%s" % company.id)
-                request.session['select_area_id'] = user_company.select_area_id
+                request.session['select_area_id'] = company.select_area_id
         # 要显示的公司列表
         if not request.session.usronlineinfo or refresh:
             request.session.usronlineinfo = userinfo_region
