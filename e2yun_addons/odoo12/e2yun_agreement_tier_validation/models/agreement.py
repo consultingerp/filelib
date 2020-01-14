@@ -125,6 +125,12 @@ class Agreement(models.Model):
                     for td in tier_definitions:
                         if rec.evaluate_tier(td):
                             sequence += 1
+                            if td.review_type=='group':
+                                w_approver=td.reviewer_group_id.name
+                                w_approver_id=""
+                            else:
+                                w_approver = td.reviewer_id.name
+                                w_approver_id = td.reviewer_id.id
                             created_trs += tr_obj.create({
                                 'model': self._name,
                                 'res_id': rec.id,
@@ -135,7 +141,8 @@ class Agreement(models.Model):
                                 'cp_sequence':td.sequence,
                                 'rebut': td.rebut,
                                 'reject': td.reject,
-                                'w_approver':td.reviewer_id.name,
+                                'w_approver':w_approver,
+                                'w_approver_id': w_approver_id,
                                 'tier_stage_id':td.tier_stage_id.id,
                             })
 
@@ -254,4 +261,7 @@ class TierReview(models.Model):
     rebut = fields.Boolean("rebut")
     reject = fields.Boolean("reject")
     w_approver= fields.Char("W Approver")
+    w_approver_id =fields.Many2one(
+        comodel_name="res.users",
+    )
     tier_stage_id = fields.Integer("stage")
