@@ -349,6 +349,13 @@ class WxMp(http.Controller):
         # response = http.send_file('MP_verify_xobfOnBKmFpc9HEU.txt')
         return '6KqjIDY4BloxX3Vc'
 
+    @http.route(['/MP_verify_uL9pEY8yQDeQXbOy.txt'], type='http', auth="public")
+    def mp_verify_ul9pey8yqdeqxboy(self, **kwargs):
+        # response = http.send_file('MP_verify_xobfOnBKmFpc9HEU.txt')
+        return 'uL9pEY8yQDeQXbOy'
+
+
+
 
 
 
