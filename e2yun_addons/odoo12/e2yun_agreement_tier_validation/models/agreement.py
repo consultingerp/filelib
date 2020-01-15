@@ -196,7 +196,8 @@ class CommentWizard(models.TransientModel):
             user_review.write({
                 'comment': self.comment,
             })
-            tier_stage_id = user_review.tier_stage_id
+            if user_review.tier_stage_id:
+                tier_stage_id = user_review.tier_stage_id
 
         if self.validate_reject == 'validate':
             rec._validate_tier()
@@ -205,7 +206,7 @@ class CommentWizard(models.TransientModel):
         if self.validate_reject == 'rebut':
             rec._rebut_tier()
 
-        if tier_stage_id!="" and tier_stage_id!=0:
+        if tier_stage_id!="":
             rec.stage_id = tier_stage_id
 
         rec._update_counter()
