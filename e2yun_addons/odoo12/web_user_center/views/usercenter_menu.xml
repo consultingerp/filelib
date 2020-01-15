@@ -48,7 +48,7 @@
 
                         <notebook>
                             <page string="权限配置" attrs="{'invisible':['|','|',('sys_menu','!=',False),('display_Position','==','top')]}">
-                                <field name="groups_id"/>
+                                <field name="groups_id"  domain="[('category_id', '=',56)]"/>
                             </page>
                              <page string="执行Python代码" name='code' autofocus="autofocus"
                                     attrs="{'invisible': [('display_Position', '!=', 'one'),('display_Position', '!=', 'top')]}">
