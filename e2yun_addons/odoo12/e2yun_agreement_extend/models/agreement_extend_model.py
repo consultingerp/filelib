@@ -38,15 +38,19 @@ class Agreement(models.Model):
         if 'x_studio_htje' in vals.keys() or 'x_studio_mjhtje' in vals.keys():
             company_id = self.company_id or self.env.user.company_id
             create_date = self.create_date or fields.Date.today()
-            queryCurrency='CNY'
-            if 'x_studio_usd' in vals.keys():
-                queryCurrency=vals['x_studio_usd']
+            queryCurrency=''
+            queryPriceList=''
+            if 'x_studio_mjhtje' in vals.keys() and vals['x_studio_mjhtje'] :
+                queryCurrency='CNY'
+                queryPriceList='USD'
                 x_studio_htje = 'x_studio_mjhtje'
-            elif 'x_studio_htbz' in vals.keys():
-                queryCurrency = vals['x_studio_htbz']
+            elif 'x_studio_htje' in vals.keys() and vals['x_studio_htje'] :
+                queryCurrency = 'USD'
+                queryPriceList = 'CNY'
                 x_studio_htje = 'x_studio_htje'
+
             currency = self.env['res.currency'].search([('name', 'like', '%'+queryCurrency+'%')])
-            property_product_pricelist = self.env['product.pricelist'].search([('name', 'like', '%'+queryCurrency+'%')])
+            property_product_pricelist = self.env['product.pricelist'].search([('name', 'like', '%'+queryPriceList+'%')])
 
             if currency and property_product_pricelist:
                 usd_currency_rate = self.env['res.currency']._get_conversion_rate(
@@ -57,6 +61,14 @@ class Agreement(models.Model):
                 elif x_studio_htje=='x_studio_mjhtje':
                     vals['x_studio_htje'] = round(float(vals['x_studio_mjhtje']) * usd_currency_rate, 2)
 
+                if 'x_studio_mjhtje' in vals.keys() and vals['x_studio_mjhtje']:
+                    vals['x_studio_mjhtje'] = ("%.2f" % float(vals['x_studio_mjhtje']))
+                if 'x_studio_htje' in vals.keys() and vals['x_studio_htje']:
+                    vals['x_studio_htje'] = ("%.2f" % float(vals['x_studio_htje']))
+
+
+        vals['x_studio_usd'] = 'USD'
+        vals['x_studio_htbz'] = 'CNY'
         return super(Agreement, self).create(vals)
 
     def write(self, vals):
@@ -89,10 +101,9 @@ class Agreement(models.Model):
             usd_currency_rate = self.env['res.currency']._get_conversion_rate(
                 property_product_pricelist.currency_id, usd_currency,
                 company_id, create_date)
-
             vals['x_studio_mjhtje'] = round(float(vals['x_studio_htje']) * usd_currency_rate, 2)
 
-        if 'x_studio_mjhtje' in vals.keys():
+        elif 'x_studio_mjhtje' in vals.keys():
             company_id = self.company_id or self.env.user.company_id
             create_date = self.create_date or fields.Date.today()
             usd_currency = self.env['res.currency'].search([('name', '=', 'CNY')])
@@ -101,6 +112,11 @@ class Agreement(models.Model):
                 property_product_pricelist.currency_id, usd_currency,
                 company_id, create_date)
             vals['x_studio_htje'] = round(float(vals['x_studio_mjhtje']) * usd_currency_rate, 2)
+
+        if 'x_studio_mjhtje' in vals.keys() and vals['x_studio_mjhtje']:
+            vals['x_studio_mjhtje'] = ("%.2f" % float(vals['x_studio_mjhtje']))
+        if 'x_studio_htje' in vals.keys() and vals['x_studio_htje']:
+            vals['x_studio_htje'] = ("%.2f" % float(vals['x_studio_htje']))
 
         return super(Agreement,self).write(vals)
 
