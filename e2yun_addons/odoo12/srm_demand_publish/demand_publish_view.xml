@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem name="Demand Publish"
+            id="menu_purchase_demand_publish"
+            parent="purchase.menu_purchase_root"/>
+
+        <record id="purchase_demand_publish_create_form_action" model="ir.actions.act_window">
+            <field name="name">Material Demand</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mat.demand.head</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_purchase_demand_publish_create_form"
+          action="purchase_demand_publish_create_form_action"
+          parent="menu_purchase_demand_publish"
+          sequence="0"/>
+
+
+        <record id="purchase_demand_publish_create_tree" model="ir.ui.view">
+            <field name="name">mat.demand.info.tree</field>
+            <field name="model">mat.demand.head</field>
+            <field name="arch" type="xml">
+                <tree string="Demand Create Tree" create="true">
+                    <field name="versi" invisible='1' />
+                    <field name="comco"/>
+                    <field name="werks"/>
+                    <field name="state" invisible='1' />
+                </tree>
+            </field>
+        </record>
+
+        <record id="purchase_demand_publish_create_form" model="ir.ui.view">
+            <field name="name">mat.demand.head.form</field>
+            <field name="model">mat.demand.head</field>
+            <field name="arch" type="xml">
+                <form string="Mat Demand Head" create="false">
+                    <header>
+                        <button name="publish_data" type="object" groups="SRM.mat_demand_publish" string="Publish" attrs="{'invisible': ['|',('history_data','=',True),('state','=','publish')]}" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="create,publish" statusbar_colors='{"publish":"blue","edit_publish":"blue"}' readonly="1" invisible='1' />
+                    </header>
+                    <sheet>
+                        <group>
+                            <group invisible='1' >
+                                <field name="versi" invisible='1'/>
+                                <field name="history_data" invisible='1'/>
+                            </group>
+                            <group>
+                                <field name="werks"/>
+                                <field name="comco" invisible="1"/>
+                                <field name="id" invisible='1'/>
+                            </group>
+                        </group>
+                        <field name="mat_demand_line_details"><!-- editable="bottom"-->
+                            <tree colors="blue:state == 'purchase_edit';grey:state == 'not_confirm';red:state == 'delete';">
+                                <field name="id" invisible="1"/>
+                                <field name="create_versi" />
+                                <field name="lifnr" />
+                                <field name="needs_no" readonly="1" />
+                                <field name="ekgrp"/>
+                                <field name="matnr"/>
+                                <field name="prnum"/>
+                                <field name="monum"/>
+                                <field name="menge"/>
+                                <field name="bmeng"/>
+                                <field name="meins"/>
+                                <field name="ddate"/>
+                                <field name="pdate"  readonly="1"/>
+                                <field name="state" readonly="1"/>
+                                <field name="publish"/>
+                                <field name="memo"/>
+                            </tree>
+                            <form>
+                                <header>
+                                    <field name="state" widget="statusbar" statusbar_visible="create,supplier_confirm,purchase_confirm" statusbar_colors='{"create":"blue","supplier_confirm":"blue","purchase_confirm":"blue","delete":"red"}' readonly="1"/>
+                                </header>
+                                <sheet>
+                                    <group>
+                                        <group>
+                                            <field name="id" invisible="1"/>
+                                            <field name="needs_no" attrs="{'readonly': [('id','!=',False)]}"  />
+                                            <field name="lifnr" readonly="1" />
+                                            <field name="ekgrp"/>
+                                            <field name="matnr"/>
+                                            <field name="prnum"/>
+                                            <field name="monum"/>
+                                        </group>
+                                        <group>
+                                            <field name="menge"/>
+                                            <field name="meins"/>
+                                            <field name="ddate" />
+                                            <field name="pdate"  readonly="1" />
+                                            <field name="memo"/>
+                                        </group>
+                                    </group>
+                                </sheet>
+                                <div class="oe_chatter">
+                                    <field name="message_follower_ids" widget="mail_followers"/>
+                                    <field name="message_ids" widget="mail_thread"/>
+                                </div>
+                            </form>
+                        </field>
+                    </sheet>
+                    <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="purchase_demand_publish_create_filter" model="ir.ui.view">
+            <field name="name">mat.demand.head.select</field>
+            <field name="model">mat.demand.head</field>
+            <field name="arch" type="xml">
+                <search string="Search Mat Demand Info">
+                    <field name="versi"/>
+
+                    <!--
+                    <filter name="create" string="Create" domain="[('state','=','create')]"/>
+                    <filter name="publish" string="Publish" domain="[('state','=','publish')]"/>
+                    <filter name="edit_publish" string="Edit Publish" domain="[('state','=','edit_publish')]"/>
+                    -->
+
+                </search>
+
+            </field>
+        </record>
+    </data>
+</odoo>

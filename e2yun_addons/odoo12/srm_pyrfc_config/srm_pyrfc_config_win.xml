@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record model="ir.actions.act_window" id="srm_pyrfc_config_window">
+            <field name="name">SRM_RFC_CONFIG</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">srm.pyrfc.config</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem name="SRM_RFC_CONFIG"
+                  id="menu_srm_sap_config"
+                  parent="base.menu_custom"/>
+
+        <menuitem id="menu_srm_sap_config_form"
+                  action="srm_pyrfc_config_window"
+                  parent="menu_srm_sap_config"
+                  sequence="0"/>
+
+        <record id="srm_sap_config_tree" model="ir.ui.view">
+            <field name="name">srm.pyrfc.config.tree</field>
+            <field name="model">srm.pyrfc.config</field>
+            <field name="arch" type="xml">
+                 <tree string="srm pyrfc Lines" create="true" editable="bottom">
+                     <field name="service_name" />
+                     <field name="user"/>
+                     <field name="passwd"/>
+                     <field name="enabled" />
+                     <field name="ret_purchase" />
+                </tree>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="srm_sap_config_search_view">
+            <field name="name">srm_sap_config.search</field>
+            <field name="model">srm.pyrfc.config</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="service_name"/>
+                </search>
+            </field>
+        </record>
+
+    <record id="view_pos_open_statement" model="ir.ui.view">
+            <field name="name">srm.pyrfc.config.test.form</field>
+            <field name="model">srm.pyrfc.config</field>
+            <field name="arch" type="xml">
+                <form>
+                <footer>
+                        <button name="pyrfc_config_test" type="object" string="确定" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+
+        <act_window
+            id="srm_pyrfc_config_test3"
+            name="Open Statements"
+            res_model="srm.pyrfc.config"
+            src_model="srm.pyrfc.config"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"/>
+
+        <record id="srm_pyrfc_config_test" model="ir.actions.act_window">
+            <field name="name">测试</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">srm.pyrfc.config</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+</odoo>

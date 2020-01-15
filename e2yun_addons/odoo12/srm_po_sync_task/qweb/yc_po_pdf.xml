@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="external_layout">
+
+            <!-- Multicompany -->
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+            <t t-call="srm_po_sync_task.external_layout_header"/>
+            <t t-raw="0"/>
+            <t t-call="srm_po_sync_task.external_layout_footer"/>
+        </template>
+
+        <template id="external_layout_header">
+            <div class="header">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo"
+                             style="max-height: 45px;"/>
+                    </div>
+                     <div t-if="o.name"
+                         style=" position: relative;min-height: 1px;padding-left: 160px;padding-right: 60px; widtd: 25%; float: left;">
+                           采购订单编号:
+                        <span t-field="o.name"/>
+                    </div>
+                    <div>
+                         <img t-if="o.sap_update_flag=='1'"
+                               src="/srm_po_sync_task/static/img/fixed_picture.jpg" style="max-height:40px;margin-top:20px"/>
+                    </div>
+
+                </div>
+            </div>
+        </template>
+
+        <template id="external_layout_footer">
+            <div class="footer"  >
+                <div class="text-center" style="border-top: 1px solid black;">
+
+
+                    <ul class="list-inline">
+
+                         <li>Page:</li>
+                        <li>
+                            <span class="page"/>
+                        </li>
+                        <li>/</li>
+                        <li>
+                            <span class="topage"/>
+                        </li>
+                         <li>备注:若无疑问请在订货合同发出两天内,签名并盖章回传确认。文件编号：PUFM005</li>
+                    </ul>
+                </div>
+            </div>
+        </template>
+
+        <template id="report_purchaseorder_yuechen_document">
+
+            <t t-call="srm_po_sync_task.external_layout">
+                <div class="page" style="font-family:微软雅黑;font-size: 15px;">
+                    <div style="text-align:center">
+                        <h1>
+                            <t t-if="o.sap_order_type=='0'or not o.sap_order_type ">
+                                  采购合同
+                            </t>
+
+                            <t t-if="o.sap_order_type!='0' and o.sap_order_type" >
+                                 <t t-esc="o.sap_order_type"/>
+                            </t>
+
+                        </h1>
+                        <div>RSR机密文件</div>
+                    </div>
+
+                    <div t-if="o.name"
+                         style=" position: relative;min-height: 1px;padding-left: 3px;padding-right: 15px; widtd: 25%; float: left;">
+                           采购订单编号:
+                        <span t-field="o.name"/>
+                    </div>
+
+                    <div t-if="o.date_order1"
+                         style=" position: relative;min-height: 1px;margin-left: 400px; widtd:25%; float: left;">
+                           下单日期:
+                        <span t-field="o.date_order1"/>
+                    </div>
+
+                    <!-- <div style="border-top: 1px solid black;"></div> -->
+                    <table class="table table-condensed" >
+                        <tdead>
+                            <!--
+                            <tr style="border-top: 1px solid black;">
+                                <th colspan="10" style="border-top: 1px solid black;"></th>
+                            </tr>-->
+                            <tr>
+                                <td style="border-top: 1px solid black;" > 需方:
+                                </td>
+                                <td style="border-top: 1px solid black;" colspan="3"   >
+                                    <span t-field="o.company_id.name"/>
+                                </td>
+                                <td style="border-top: 1px solid black;"   >
+                                       供方:
+                                </td>
+                                <td style="border-top: 1px solid black;" colspan="3">
+                                    <span t-field="o.partner_id.name"/>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="border-top: 1px solid black;"   >
+                                       联系人:
+                                </td>
+                                <td style="border-top: 1px solid black;"   >
+                                    <span t-field="o.create_uid.partner_id.name"/>
+                                </td>
+                                <td style="border-top: 1px solid black;"   >
+                                       总机:
+                                </td>
+                                <td style="border-top: 1px solid black;"   >
+                                    <span t-field="o.create_uid.partner_id.phone"/>
+                                </td>
+
+                                <td style="border-top: 1px solid black;"   >
+                                       联系人:
+                                </td>
+                                <td style="border-top: 1px solid black;">
+                                    <t t-if="o.partner_id.child_ids">
+                                    <span t-esc="o.partner_id.child_ids[0].name"/>
+                                    </t>
+
+                                </td>
+                                <td style="border-top: 1px solid black;"   >
+                                       职务:
+                                </td>
+                                <td style="border-top: 1px solid black;"   >
+                                    <t t-if="o.partner_id.child_ids">
+                                    <span t-field="o.partner_id.child_ids[0].function"/>
+                                    </t>
+                                </td>
+                            </tr>
+
+
+                         <tr>
+                               <td style="border-top: 1px solid black;"   colspan="2">
+                                       移动电话:
+                                </td>
+                                <td style="border-top: 1px solid black;" colspan="2">
+                                    <span t-field="o.create_uid.partner_id.mobile"/>
+                                </td>
+
+                                <td style="border-top: 1px solid black;"   colspan="2" >
+                                       移动电话:
+                                </td>
+                                <td style="border-top: 1px solid black;"  colspan="2">
+                                    <span t-field="o.partner_id.mobile"/>
+                                </td>
+                          </tr>
+
+                            <tr>
+                                <td style="border-top: 1px solid black;">
+                                       直线电话:
+                                </td>
+                                <td style="border-top: 1px solid black;">
+                                    <span t-field="o.create_uid.partner_id.phone"/>
+                                </td>
+
+
+                                <td style="border-top: 1px solid black;">
+                                       传真:
+                                </td>
+                                <td style="border-top: 1px solid black;">
+                                    1111
+                                </td>
+
+                                <td style="border-top: 1px solid black;"   >
+                                       办公电话:
+                                </td>
+                                <td style="border-top: 1px solid black;"   >
+                                    <span t-field="o.partner_id.phone"/>
+                                </td>
+
+                                <td style="border-top: 1px solid black;"   >传真:</td>
+                                <td style="border-top: 1px solid black;"   >
+                                    11111
+                                </td>
+
+                            </tr>
+
+
+
+
+                            <tr>
+                                <td style="border-top: 1px solid black;"   >
+                                       邮箱:
+                                </td>
+                                <td style="border-top: 1px solid black;" colspan="3">
+                                    <span t-field="o.create_uid.partner_id.email"/>
+                                </td>
+                                <td style="border-top: 1px solid black;"   >
+                                       邮箱:
+                                </td>
+                                <td style="border-top: 1px solid black;" colspan="3">
+                                    <span t-field="o.partner_id.email"/>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td style="border-top: 1px solid black;"   >
+                                       地址:
+                                </td>
+                                <td style="border-top: 1px solid black;" colspan="3">
+                                    <!--
+                                    <span t-field="o.create_uid"
+                                            t-field-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/> -->
+                                    <span t-esc="o.create_uid.partner_id.street"/>
+
+                                </td>
+                                <td style="border-top: 1px solid black;"   >
+                                       地址:
+                                </td>
+                                <td style="border-top: 1px solid black;" colspan="3">
+                                  <span t-esc="o.partner_id.street"/>
+                                 <!--  <span t-field="o.partner_id"
+                                            t-field-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>
+                                  t-field-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": true}'/> -->
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="border-top: 1px solid black;"   >
+                                       机型:
+                                </td>
+                                <td style="border-top: 1px solid black;" colspan="3">
+
+                                </td>
+                                <td style="border-top: 1px solid black;">
+                                       关联生产订单:
+                                </td>
+                                <td style="border-top: 1px solid black;" colspan="3">
+
+                                </td>
+                            </tr>
+
+                        </tdead>
+                    </table>
+
+                    <table class="table table-condensed" >
+                        <tdead>
+                            <tr>
+                                <td style="border-top: 1px solid black;">序号</td>
+
+                                <td style="border-top: 1px solid black;">
+                                       物料编码
+                                </td>
+                                <td style="border-top: 1px solid black;"    >
+                                       物料描述
+                                </td>
+                                <!--
+                                <td style="border-top: 1px solid black;">
+                                       税码
+                                </td> -->
+
+                                <td style="border-top: 1px solid black;"    class="text-center">
+                                       计划交货日期
+                                </td>
+                                <td style="border-top: 1px solid black;"    class="text-right">
+                                       订购数量
+                                </td>
+                                 <td style="border-top: 1px solid black;"    class="text-right">
+                                       单位
+                                </td>
+
+                                <td style="border-top: 1px solid black;"    class="text-right">
+                                       单价(含税)
+                                </td>
+                                <!--
+                                 <td style="border-top: 1px solid black;"    class="text-right">
+                                       单价(含税)
+                                </td> -->
+                                <td style="border-top: 1px solid black;"    class="text-right">
+                                       合计金额(含税)
+                                </td>
+                            </tr>
+                        </tdead>
+                        <tbody>
+                            <tr t-foreach="o.order_line" t-as="line">
+
+                                <td style="border-top: 1px solid black;">
+                                     <span t-esc="int(line.item)"/>
+                                </td>
+                                <td style="border-top: 1px solid black;"    >
+                                    <span t-field="line.product_id.default_code"/>
+                                </td>
+                                <td style="border-top: 1px solid black;"    >
+                                    <span t-field="line.product_id"/>
+                                </td>
+                                <!--
+                                  <td style="border-top: 1px solid black;">
+                                      <span t-esc="', '.join(map(lambda x: x.name, line.taxes_id))"/>
+                                  </td> -->
+
+                                <td style="border-top: 1px solid black;"    class="text-center">
+                                    <span t-field="line.date_planned"/>
+                                </td>
+                                <td style="border-top: 1px solid black;"    class="text-right">
+                                    <span t-field="line.sap_product_qty"/>
+                                </td>
+                                <td style="border-top: 1px solid black;"    class="text-right">
+                                    <span t-field="line.product_uom.name" groups="product.group_uom"/>
+                                </td>
+
+                                <td style="border-top: 1px solid black;"    class="text-right">
+                                    <span t-field="line.sap_price_unit"/>
+                                </td>
+
+                                <td style="border-top: 1px solid black;"    class="text-right">
+                                    <span t-field="line.sap_amount_qty"/>
+                                </td>
+
+                                <!--
+                                <td style="border-top: 1px solid black;"    class="text-right">
+                                    <span t-field="line.sap_amount_qty"/>
+                                </td>
+
+                                <td style="border-top: 1px solid black;"    class="text-right">
+                                      <span t-esc="float(line.sap_amount_qty)*float(line.sap_product_qty)"/>
+                                </td>-->
+                            </tr>
+
+                               <tr>
+                                  <td style="border-top: 1px solid black;"    colspan="6"  ></td>
+                                    <td style="border-top: 1px solid black;" class="text-right"   >
+                                         总值(含税)
+                                    </td>
+                                    <td style="border-top: 1px solid black;" class="text-right" >
+                                         <span t-field="o.sap_amount_total" />
+                                    </td>
+                                </tr>
+                              <tr>
+                                  <td style="border-top: 1px solid black;"  colspan="4" ></td>
+                                    <td style="border-top: 1px solid black;" class="text-right" >
+                                         税率
+                                    </td>
+                                    <td style="border-top: 1px solid black;" class="text-right" >
+                                        <t t-if="o.order_line">
+                                        <t t-set="amount" t-value="int(o.order_line[0].taxes_id.amount * 100)"/>
+                                        <span t-esc="str(amount)+str('%')"/>
+                                        </t>
+                                    </td>
+                                    <td style="border-top: 1px solid black;"  class="text-right"  >税额</td>
+                                    <td style="border-top: 1px solid black;"  class="text-right" >
+                                          <span t-field="o.sap_amount_tax" />
+                                    </td>
+                                </tr>
+                               <tr >
+                                   <td style="border-top: 1px solid black;" colspan="6"  >
+                                       币别:CNY
+                                    </td>
+                                    <td style="border-top: 1px solid black;"  class="text-right" >
+                                              总计(不含税)
+                                    </td>
+                                    <td style="border-top: 1px solid black;"  class="text-right">
+                                        <!--
+                                        <span t-field="o.amount_untaxed"
+                                              t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/> -->
+                                        <span t-field="o.sap_amount_untaxed" />
+                                    </td>
+                                </tr>
+
+                        </tbody>
+                    </table>
+
+                    <div>
+                        <table class="table table-condensed">
+                          <tdead>
+                            <tr></tr>
+                            <tr>
+                                <td style="border-top: 1px solid black;"><span>提示:出货时必须提供一定数量备品！并区分包装标识！</span></td>
+                            </tr>
+                            <tr>
+                                <td style="border-top: 1px solid black;">环保材质要求: √ 符合REACH √ 符合RoHS □ 其他：符合3C安规要求 </td>
+                            </tr>
+                            <tr>
+                                <td style="border-top: 1px solid black;">备注：需要提供送货单、增值税发票</td>
+                            </tr>
+                            <tr>
+                                <td style="border-top: 1px solid black;">交货地点：广东省中山市港口镇沙港东路群乐工业园A3栋 中山市悦辰电子实业有限公司</td>
+                            </tr>
+                            <tr>
+                                <td style="border-top: 1px solid black;">运输方式：供应商承担</td>
+                            </tr>
+                            <tr>
+                                <td style="border-top: 1px solid black;">包装方式：纸箱或胶箱（确保物料无损坏送达我司） 包材是否需要回收： □是   □否</td>
+                            </tr>
+                            <tr>
+                                <td style="border-top: 1px solid black;">包装标识:内外包装需标识清楚需方物料编号、名称、数量，并标贴RoHS标志 REACH标志</td>
+                            </tr>
+                           <tr><td style="border-top: 1px solid black;"></td></tr>
+                              <!--<div style="border-top: 1px solid black;"></div> -->
+                           </tdead>
+                        </table>
+                    </div>
+
+                    <div id="id1" style="widtd:100%;">
+                        <div id="id2" style="widtd:200px;height:50px;float:left;">
+                          <table  style="border-collapse:separate;border-spacing:8px;">
+                                <tr>
+                                    <td >付款条件: <span t-field="o.payment_term_id.note"/></td>
+                                </tr>
+                                <tr>
+                                    <td >需方经手人:</td>
+                                </tr>
+                                <tr>
+                                    <td >批准:</td>
+                                </tr>
+                                <tr>
+                                    <td >公司盖章:</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div id="id3" style="widtd:450px;height:20px;float:left;margin-left:-80px;margin-top:-30px ">
+
+                            <img t-if="o.create_uid.partner_id.user_signature"
+                                 t-att-src="'data:user_signature/png;base64,%s' % o.create_uid.partner_id.user_signature"
+                                 style="max-height:80px;"/>
+
+                            <img t-if="o.create_uid.partner_id.seal_of_pictures"
+                                 t-att-src="'data:seal_of_pictures/png;base64,%s' % o.create_uid.partner_id.seal_of_pictures"
+                                 style="max-height:180px;margin-top:10px"/>
+
+                        </div>
+                         <!--margin-left: 300px; -->
+                        <div id="id4" style="widtd:300px;height:20px;float:left;margin-left:300px;">
+                           <table  style="border-collapse:separate;border-spacing:8px;">
+                                <tr>
+                                    <td >结算方式:</td>
+                                </tr>
+                                <tr>
+                                    <td >供方经手人:</td>
+                                </tr>
+                                <tr>
+                                    <td >公司盖章:</td>
+                                </tr>
+                               <!--
+                               <tr>
+                                  <td style="border-top: 1px solid black;" style="border:solid black 1px;" >备注:若无疑问请在订货合同发出两天内,签名并盖章回传确认</td>
+                                </tr>
+                                 <tr><td style="border-top: 1px solid black;" style="border:solid black 1px;" >文件编号：PUFM005 </td></tr> -->
+
+
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <p t-field="o.notes"/>
+                    <div class="oe_structure"/>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="report_purchaseorder_yuechen">
+            <t t-name="srm_po_sync_task.report_purchaseorder_yuechen">
+                <t t-call="web.html_container">
+                    <t t-foreach="docs" t-as="o">
+                          <t t-call="srm_po_sync_task.report_purchaseorder_yuechen_document" t-lang="o.partner_id.lang"/>
+                </t>
+                    </t>
+           </t>
+        </template>
+    </data>
+
+
+</odoo>

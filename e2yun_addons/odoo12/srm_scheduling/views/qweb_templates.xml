@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <template id="srm_scheduling_js" name="srm scheduling js" inherit_id="web.assets_backend" >
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/srm_scheduling/static/src/css/srm_scheduling.css"/>
+                <link rel="stylesheet" href="/srm_scheduling/static/src/css/reset.css"/>
+                <link rel="stylesheet" href="/srm_scheduling/static/src/css/pagination.css"/>
+                <script type="text/javascript" src="/srm_scheduling/static/src/js/srm_scheduling.js"></script>
+                <script type="text/javascript" src="/srm_scheduling/static/src/js/pagination.js"></script>
+            </xpath>
+        </template>
+    </data>
+</odoo>

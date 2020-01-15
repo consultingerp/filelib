@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem name="对账"
+            id="menu_srm_account_order"
+            parent="purchase.menu_purchase_root" sequence="3"/>
+
+        <menuitem id="srm_account_order_rep_menu"
+            parent="menu_srm_account_order"
+            action="srm_account_order_rep_action"
+            sequence="30"/>
+
+        <menuitem id="srm_account_order_menu"
+            parent="menu_srm_account_order"
+            action="srm_account_order_action"
+            sequence="40"/>
+
+    </data>
+</odoo>

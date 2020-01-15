@@ -1,0 +1,54 @@
+
+**** Trace file opened at 2019-01-13, 06:40:16 UTC
+NW RFC Library: SDK variant, Release 750 Patch Level 0, Compiled on Nov 24 2017 21:59:13
+ CPIC library: 753.2017.11.08 version 3, NI library: 40, Kernel Release: 753 Patch Level 0
+ Current working directory: E:\odoo-8.0\custom-addons\srm_pyrfc, Program: python
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 142 Step 10), Operating_system: Windows NT 10.0
+ Hostname: CHUQIU-XU, IP address: 192.168.1.103, IPv6 address: 192.168.1.103
+
+Unable to interpret 0-1 as a number.
+
+**** Trace file opened at 2019-01-13, 06:41:11 UTC
+NW RFC Library: SDK variant, Release 750 Patch Level 0, Compiled on Nov 24 2017 21:59:13
+ CPIC library: 753.2017.11.08 version 3, NI library: 40, Kernel Release: 753 Patch Level 0
+ Current working directory: E:\odoo-8.0\custom-addons\srm_pyrfc, Program: python
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 142 Step 10), Operating_system: Windows NT 10.0
+ Hostname: CHUQIU-XU, IP address: 192.168.1.103, IPv6 address: 192.168.1.103
+
+Unable to interpret 0-1 as a number.
+
+**** Trace file opened at 2019-01-13, 07:06:27 UTC
+NW RFC Library: SDK variant, Release 750 Patch Level 0, Compiled on Nov 24 2017 21:59:13
+ CPIC library: 753.2017.11.08 version 3, NI library: 40, Kernel Release: 753 Patch Level 0
+ Current working directory: E:\odoo-8.0\custom-addons\srm_pyrfc, Program: python
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 142 Step 10), Operating_system: Windows NT 10.0
+ Hostname: CHUQIU-XU, IP address: 192.168.1.103, IPv6 address: 192.168.1.103
+
+Type conflict during structure parameter transfer at CALL FUNCTION.
+
+**** Trace file opened at 2019-01-13, 07:10:37 UTC
+NW RFC Library: SDK variant, Release 750 Patch Level 0, Compiled on Nov 24 2017 21:59:13
+ CPIC library: 753.2017.11.08 version 3, NI library: 40, Kernel Release: 753 Patch Level 0
+ Current working directory: E:\odoo-8.0\custom-addons\srm_pyrfc, Program: python
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 142 Step 10), Operating_system: Windows NT 10.0
+ Hostname: CHUQIU-XU, IP address: 192.168.1.103, IPv6 address: 192.168.1.103
+
+Type conflict during structure parameter transfer at CALL FUNCTION.
+
+**** Trace file opened at 2019-01-13, 07:27:06 UTC
+NW RFC Library: SDK variant, Release 750 Patch Level 0, Compiled on Nov 24 2017 21:59:13
+ CPIC library: 753.2017.11.08 version 3, NI library: 40, Kernel Release: 753 Patch Level 0
+ Current working directory: E:\odoo-8.0\custom-addons\srm_pyrfc, Program: python
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 142 Step 10), Operating_system: Windows NT 10.0
+ Hostname: CHUQIU-XU, IP address: 192.168.1.103, IPv6 address: 192.168.1.103
+
+connection closed without message (CM_NO_DATA_RECEIVED)
+
+**** Trace file opened at 2019-01-13, 07:27:06 UTC
+NW RFC Library: SDK variant, Release 750 Patch Level 0, Compiled on Nov 24 2017 21:59:13
+ CPIC library: 753.2017.11.08 version 3, NI library: 40, Kernel Release: 753 Patch Level 0
+ Current working directory: E:\odoo-8.0\custom-addons\srm_pyrfc, Program: python
+ Hardware: PC with Windows NT 8x AMD64 Level 6 (Mod 142 Step 10), Operating_system: Windows NT 10.0
+ Hostname: CHUQIU-XU, IP address: 192.168.1.103, IPv6 address: 192.168.1.103
+
+connection closed without message (CM_NO_DATA_RECEIVED)

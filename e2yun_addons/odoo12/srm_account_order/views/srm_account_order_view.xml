@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="srm_account_order_tree" model="ir.ui.view">
+            <field name="name">srm.account.order.tree</field>
+            <field name="model">srm.account.order</field>
+            <field name="arch" type="xml">
+                <tree string="Account Order Tree" create="false">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="done_date"/>
+                    <field name="total_tax"/>
+                    <field name="total_price"/>
+                    <field name="partner_id"/>
+                    <field name="voucher"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="srm_account_order_form" model="ir.ui.view">
+            <field name="name">srm.account.order.form</field>
+            <field name="model">srm.account.order</field>
+            <field name="arch" type="xml">
+                <form string="Account Order" create="false">
+                    <header>
+                        <button name="wkf_send_email" type="object" string="发送" class="oe_highlight" attrs="{'invisible':[('state','not in',['draft','send'])]}"/>
+                        <button name="order_confirm" type="object" string="确认" class="oe_highlight" attrs="{'invisible':[('state','!=','supplier_confirm')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,send,supplier_confirm,done" readonly="1"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" />
+                                <field name="date" />
+                                <field name="done_date"/>
+                            </group>
+                            <group>
+                                <field name="total_price"/>
+                                <field name="partner_id"/>
+                                <field name="voucher"/>
+                            </group>
+                        </group>
+                        <field name="account_lines">
+                            <tree string="Account Order Line"  create="false">
+                                <field name="product_id"/>
+                                <field name="product_uom"/>
+                                <field name="product_uom_qty" invisible="1"/>
+                                <field name="purchase_order_no" invisible="1"/>
+                                <field name="purchase_order_item" invisible="1"/>
+                                <field name="tax_code"/>
+                                <field name="date_done"/>
+                                <field name="picking_type_code"/>
+                                <field name="voucher_code"/>
+                                <field name="product_uom_qty"/>
+                                <field name="voucher_qty"/>
+                                <field name="price_total_tax" sum="Total Price Tax"/>
+                                <field name="tax_price" sum="Total Tax"/>
+                                <field name="lgort"/>
+                                <field name="dnnum"/>
+                            </tree>
+                        </field>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="srm_account_order_filter" model="ir.ui.view">
+            <field name="name">srm.account.order.select</field>
+            <field name="model">srm.account.order</field>
+            <field name="arch" type="xml">
+                <search string="Search Account Order">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="srm_account_order_action" model="ir.actions.act_window">
+            <field name="name">对账单</field>
+            <field name="res_model">srm.account.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field eval="False" name="view_id"/>
+        </record>
+
+
+
+    </data>
+</odoo>

@@ -1,0 +1,48 @@
+#. module: srm_purchase_order_workflow
+#: model:ir.ui.view,arch_db:srm_purchase_order_workflow.srm_purchase_order_workflow_form1
+#: selection:purchase.order,state:0 selection:purchase.report,state:0
+msgid "Supplier Confirmed"
+msgstr "供应商确认"
+
+#. module: srm_purchase_order_workflow
+#: selection:purchase.order,state:6
+msgid "Supplier Refuse"
+msgstr "供应商拒绝"
+
+#. module: srm_purchase_order_workflow
+#: selection:purchase.order,state:6
+msgid "Supplier Overdue"
+msgstr "供应商逾期未确认"
+
+#. module: srm_purchase_order_workflow
+#: selection:purchase.order,state:6
+msgid "Have received the goods"
+msgstr "已收货"
+
+#. module: srm_purchase_order_workflow
+#: selection:purchase.order,state:6
+msgid "Purchase Confirmed"
+msgstr "待供应商确认"
+
+#. module: srm_purchase_order_workflow
+#: model:ir.model.fields,field_description:srm_purchase_order_workflow.field_purchase_order_email_supplier
+msgid "Send Mail Supplier"
+msgstr "已发送邮件给供应商"
+
+#. module: srm_purchase_order_workflow
+#: model:ir.ui.view,arch_db:srm_purchase_order_workflow.purchase_order_workflow_form1
+msgid "Receive Products"
+msgstr "接收产品"
+
+
+#. module: srm_purchase_order_workflow
+#: model:ir.ui.view,arch_db:srm_purchase_order_workflow.purchase_order_workflow_form1
+msgid "Cancel"
+msgstr "取消"
+
+
+
+#. module: srm_purchase_order_workflow
+#: model:ir.ui.view,arch_db:srm_purchase_order_workflow.purchase_order_workflow_form1
+msgid "Cancel"
+msgstr "取消"
