@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo >
+
+  <record model="res.groups" id="group_agreement_download_pdf">
+        <field name="name">合同下载PDF权限</field>
+  </record>
+
+
+</odoo>
