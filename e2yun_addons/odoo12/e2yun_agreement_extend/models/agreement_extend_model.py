@@ -155,7 +155,7 @@ class Agreement(models.Model):
                         if (tier_review_data_temp.write_date + day) < now:
                             partner_ids = []
                             if tier_review_data.w_approver_id:
-                                partner_ids.append([6, False, tier_review_data.w_approver_id])
+                                partner_ids.append([6, False, tier_review_data.w_approver_id.id])
                                 self.emil_temp(agreement_data.id, partner_ids)
                             else:
                                 # 审批组、找到团队祖负责人
@@ -188,7 +188,20 @@ class Agreement(models.Model):
             vals['res_id'] = id
             vals['email_from'] = attachment_ids_value['value']['email_from']
             vals['subject'] = attachment_ids_value['value']['subject']
+
+            #attachment_ids = []
+
+            #attachmentObj = self.env['ir.attachment']  # 附件
+
+            #attachmentData = attachmentObj.search([('res_model', '=', 'agreement.file.upload'),
+            #                                             ('res_id', '=', self.id), ('res_name', '=', 'pdfswy')])
+
+            #attachment_ids = []
+            #attachment_ids.append([6, False, [4097]])
+            #vals['attachment_ids'] = attachment_ids
+
             emil_id = self.env['mail.compose.message'].create(vals)
+
             emil_id.action_send_mail()
 
 
@@ -267,6 +280,53 @@ class Agreement(models.Model):
             'url': 'web/content/%s?download=true' % (attachmentSqlData[0]),
         }
 
+    @api.multi
+    def action_emil_send(self):
+        self.ensure_one()
+        ir_model_data = self.env['ir.model.data']
+        try:
+            template_id = ir_model_data.get_object_reference('e2yun_agreement_extend', 'email_template_temp_agreement')[1]
+            sql="insert into email_template_attachment_rel(email_template_id,attachment_id)values (%s,%s)"
+            self._cr.execute(sql,(template_id,4097))
+
+        except ValueError:
+            template_id = False
+        try:
+            compose_form_id = ir_model_data.get_object_reference('mail', 'email_compose_message_wizard_form')[1]
+        except ValueError:
+            compose_form_id = False
+        ctx = dict(self.env.context or {})
+        ctx.update({
+            'default_model': 'agreement',
+            'default_res_id': self.ids[0],
+            'default_use_template': bool(template_id),
+            'default_template_id': template_id,
+            'default_composition_mode': 'comment',
+            'custom_layout': "mail.mail_notification_paynow",
+            'force_email': True,
+            'mark_rfq_as_sent': True,
+        })
+
+        lang = self.env.context.get('lang')
+        if {'default_template_id', 'default_model', 'default_res_id'} <= ctx.keys():
+            template = self.env['mail.template'].browse(ctx['default_template_id'])
+            if template and template.lang:
+                lang = template._render_template(template.lang, ctx['default_model'], ctx['default_res_id'])
+
+
+        ctx['model_description'] = 'TEST'
+
+        return {
+            'name': _('Compose Email'),
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'mail.compose.message',
+            'views': [(compose_form_id, 'form')],
+            'view_id': compose_form_id,
+            'target': 'new',
+            'context': ctx,
+        }
 
 
 class AgreementSubtype(models.Model):

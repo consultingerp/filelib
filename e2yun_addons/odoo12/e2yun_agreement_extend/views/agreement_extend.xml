@@ -41,6 +41,7 @@
        </xpath>
 
         <button name="create_new_version" position="after">
+             <button name="action_emil_send" string="Send by Email" type="object"  class="oe_highlight"/>
              <button string="Import File" type="object" name="import_file" class="oe_highlight" />
         </button>
 
