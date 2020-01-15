@@ -103,6 +103,7 @@
           <field name="arch" type="xml">
             <tree>
               <field name="name"/>
+              <field name="company_id"/>
               <field name="logo_image" widget='image' class="oe_avatar" options='{"preview_image": "image_medium", "size": [100, 100]}'/>
               <field name="sort"/>
             </tree>
