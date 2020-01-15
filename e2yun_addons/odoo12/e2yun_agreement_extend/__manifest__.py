@@ -8,6 +8,7 @@
     'summary': '',
     'description': """内部合同项目扩展 """,
     'data': [
+        'security/access_restricted_security.xml',
         'views/agreement_extend.xml',
         'views/agreement_sequence.xml',
         'data/mail_template_data.xml',
