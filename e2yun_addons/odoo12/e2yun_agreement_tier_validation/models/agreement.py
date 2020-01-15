@@ -205,7 +205,7 @@ class CommentWizard(models.TransientModel):
         if self.validate_reject == 'rebut':
             rec._rebut_tier()
 
-        if tier_stage_id!="":
+        if tier_stage_id!="" and tier_stage_id!=0:
             rec.stage_id = tier_stage_id
 
         rec._update_counter()
