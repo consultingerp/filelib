@@ -1,0 +1,30 @@
+
+.table-responsive {
+    overflow-x: auto;
+    min-height: 0.01%;
+   white-space: nowrap !important;
+}
+
+
+.table-condensed > thead > tr > th, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > th, .table-condensed > thead > tr > td, .table-condensed > tbody > tr > td, .table-condensed > tfoot > tr > td
+{
+   white-space: nowrap !important;
+
+}
+
+
+
+.o_main .o_main_content .o_content {
+    -ms-flex: 1 1 auto;
+    -moz-flex: 1 1 auto;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    flex: 1 1 auto;
+    height: 100%;
+    overflow: auto;
+    position: relative;
+    max-width: 1000px;
+    min-width: 100%;
+}
+
+

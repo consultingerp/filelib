@@ -1,0 +1,58 @@
+
+#. module: srm_purchase_component
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_po_number
+msgid "po_number"
+msgstr "采购订单"
+
+#. module: srm_purchase_component
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_po_item
+msgid "po_item"
+msgstr "行项目"
+
+
+
+#. module: srm_purchase_component
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_line_po_number
+msgid "po_number"
+msgstr "采购订单"
+
+#. module: srm_purchase_component
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_line_po_item
+msgid "po_item"
+msgstr "行项目"
+
+
+#. module: srm_purchase_component
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_line_material
+msgid "material"
+msgstr "物料"
+
+#. module: srm_purchase_component
+#: model:ir.model.fields,field_description:srm_purchase_component.line.field_purchase_component_line_entry_quantity
+msgid "entry_quantity"
+msgstr "需求数量"
+
+
+
+#. module: srm_purchase_component
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_line_entry_qentry_uom
+msgid "entry_uom"
+msgstr "单位"
+
+
+
+#. module: srm_purchase_component
+#: model:ir.model.fields,field_description:srm_purchase_component.line.field_purchase_component_line_entry_plant
+msgid "plant"
+msgstr "工厂"
+
+#. module: srm_purchase_component
+#: model:ir.ui.menu,name:srm_purchase_component.menu_purchase_component
+msgid "purchase component"
+msgstr "委外组件"
+
+#. module: srm_purchase_component
+#: model:ir.actions.act_window,name:srm_purchase_component.purchase_component_create_form_action
+#: model:ir.ui.menu,name:srm_purchase_component.menu_component_create_form
+msgid "Purchase component"
+msgstr "采购订单组件"

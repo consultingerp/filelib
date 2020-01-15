@@ -1,0 +1,10 @@
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_purchase_order_line_ret_item
+msgid "ret item"
+msgstr "退回项目"
+
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_purchase_order_line_item_cat
+msgid "item cat"
+msgstr "外协项目"
