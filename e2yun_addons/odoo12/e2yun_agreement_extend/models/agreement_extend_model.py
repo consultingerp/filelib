@@ -58,6 +58,7 @@ class Agreement(models.Model):
                 verse_two=agreement_code[-4:]
                 vals['agreement_code'] =verse_one+agreement_subtype_obj.for_code+verse_two
                 vals['code'] = vals['agreement_code']
+
         return super(Agreement,self).write(vals)
 
     def send_approval_warn_emlil(self,interval_time):
