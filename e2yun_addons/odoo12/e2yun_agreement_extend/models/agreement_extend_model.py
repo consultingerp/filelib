@@ -58,6 +58,7 @@ class Agreement(models.Model):
                 verse_two=agreement_code[-4:]
                 vals['agreement_code'] =verse_one+agreement_subtype_obj.for_code+verse_two
                 vals['code'] = vals['agreement_code']
+
         return super(Agreement,self).write(vals)
 
     def send_approval_warn_emlil(self,interval_time):
@@ -150,6 +151,62 @@ class Agreement(models.Model):
             }
         }
 
+    @api.multi
+    def download_pdfswy(self):
+
+        attachmentObj = self.env['ir.attachment']  # 附件
+
+        # attachmentData = attachmentObj.search([('res_model', '=', 'agreement.file.upload'),
+        #                                              ('res_id', '=', self.id), ('res_name', '=', 'pdfswy')])
+
+        sql="select id  from ir_attachment where  res_id = %s  and res_name = %s and res_model = %s "
+        self._cr.execute(sql, (self.id, 'pdfswy','agreement.file.upload'))
+        attachmentSqlData = self._cr.fetchone()
+        if not attachmentSqlData:
+            return  False
+        return {
+            'type': 'ir.actions.act_url',
+            'target': 'new',
+            'url': 'web/content/%s?download=true' % (attachmentSqlData[0]),
+        }
+
+    @api.multi
+    def download_pdfqw(self):
+
+        attachmentObj = self.env['ir.attachment']  # 附件
+
+        # attachmentData = attachmentObj.search([('res_model', '=', 'agreement.file.upload'),
+        #                                              ('res_id', '=', self.id), ('res_name', '=', 'pdfswy')])
+
+        sql = "select id  from ir_attachment where  res_id = %s  and res_name = %s and res_model = %s "
+        self._cr.execute(sql, (self.id, 'pdfqw', 'agreement.file.upload'))
+        attachmentSqlData = self._cr.fetchone()
+        if not attachmentSqlData:
+            return False
+        return {
+            'type': 'ir.actions.act_url',
+            'target': 'new',
+            'url': 'web/content/%s?download=true' % (attachmentSqlData[0]),
+        }
+
+    @api.multi
+    def download_fktj(self):
+
+        attachmentObj = self.env['ir.attachment']  # 附件
+
+        # attachmentData = attachmentObj.search([('res_model', '=', 'agreement.file.upload'),
+        #                                              ('res_id', '=', self.id), ('res_name', '=', 'pdfswy')])
+
+        sql = "select id  from ir_attachment where  res_id = %s  and res_name = %s and res_model = %s "
+        self._cr.execute(sql, (self.id, 'fktj', 'agreement.file.upload'))
+        attachmentSqlData = self._cr.fetchone()
+        if not attachmentSqlData:
+            return False
+        return {
+            'type': 'ir.actions.act_url',
+            'target': 'new',
+            'url': 'web/content/%s?download=true' % (attachmentSqlData[0]),
+        }
 
 
 

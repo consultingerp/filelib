@@ -166,17 +166,17 @@ class e2yun_customer_info(models.Model):
     x_studio_name_en_1 = fields.Char('Name_En', track_visibility='onchange')
     x_studio_account_group = fields.Char('Account Group', track_visibility='onchange')
     parent_account = fields.Many2one('res.partner', company_dependent=True, string='母公司', track_visibility='onchange')
-    x_studio_account_type = fields.Selection([["Target Client", "Target Client"], ["Active Client", "Active Client"],
-                                              ["Significant Client", "Significant Client"]], 'Account type', track_visibility='onchange')
+    x_studio_account_type = fields.Selection([["Target Client", "目标客户"], ["Active Client", "活动客户"],
+                                              ["Significant Client", "重要客户"]], 'Account type', track_visibility='onchange')
     activity_user_id = fields.Many2one('res.users', company_dependent=True, string='责任用户', track_visibility='onchange')
     x_studio__1 = fields.Selection(
         [["华中", "华中"], ["华东", "华东"], ["西南", "西南"], ["华南", "华南"], ["华北", "华北"], ["东北", "东北"], ["西北", "西北"],
          ["Greater China", "Greater China"], ["Japan", "Japan"], ["Asia Pacific", "Asia Pacific"], ["Europe", "Europe"],
          ["North America", "North America"], ["Rest of World", "Rest of World"]], 'Account Region', track_visibility='onchange')
     x_studio_ = fields.Selection(
-        [["客户类型", "T&M contract,by Month/by Quarter billing"], ["行业1", "FP by Milestone billing"],
-         ["银行", "pay after project is completed and project cycle<2 months"],
-         ["制造业", "pay after project is completed and project cycle>2 months"]], 'Way of settlement', track_visibility='onchange')
+        [["客户类型", "T&M 合约，按月/按季度计费"], ["行业1", "按里程碑计费的 FP"],
+         ["银行", "项目完成后支付工资，项目周期小于2个月"],
+         ["制造业", "项目完成后支付工资，项目周期大于2个月"]], 'Way of settlement', track_visibility='onchange')
     x_studio_ender_customer = fields.Char('Ender Customer', track_visibility='onchange')
     x_studio_account_management = fields.Selection([["NMA", "NMA"], ["CMA", "CMA"]], 'Account Management', track_visibility='onchange')
     x_studio_account_source = fields.Selection([["Other", "Other"]], 'Account Source', track_visibility='onchange')

@@ -50,7 +50,7 @@ msgstr "机会是否包含产品供应商"
 #. module: e2yun_crm_lead_extends
 #: selection:crm.lead,rec_rev:0
 msgid "DB-Day Base"
-msgstr ""
+msgstr "按日计费"
 
 #. module: e2yun_crm_lead_extends
 #: model_terms:ir.ui.view,arch_db:e2yun_crm_lead_extends.crm_case_form_view_oppor_extends
@@ -65,7 +65,7 @@ msgstr "标记赢得"
 #. module: e2yun_crm_lead_extends
 #: selection:crm.lead,rec_rev:0
 msgid "FP-Fixed price"
-msgstr ""
+msgstr "修理费"
 
 #. module: e2yun_crm_lead_extends
 #: model:ir.model,name:e2yun_crm_lead_extends.model_crm_lead_lost
@@ -75,17 +75,17 @@ msgstr "获取丢失原因"
 #. module: e2yun_crm_lead_extends
 #: selection:crm.lead,rec_rev:0
 msgid "HB-Hour Base"
-msgstr ""
+msgstr "按小时计费"
 
 #. module: e2yun_crm_lead_extends
 #: selection:crm.lead,rec_rev:0
 msgid "HG-Hardware Retail,Gross(without pass-through)"
-msgstr ""
+msgstr "硬件零售，毛额（无直通）"
 
 #. module: e2yun_crm_lead_extends
 #: selection:crm.lead,rec_rev:0
 msgid "HN-Hardware Retail,Net(pass-through)"
-msgstr ""
+msgstr "硬件零售，网络（传递）"
 
 #. module: e2yun_crm_lead_extends
 #: model:ir.model,name:e2yun_crm_lead_extends.model_crm_lead
@@ -106,12 +106,12 @@ msgstr "丢单/放弃/暂停 详细原因"
 #. module: e2yun_crm_lead_extends
 #: selection:crm.lead,rec_rev:0
 msgid "MB-Month Base"
-msgstr ""
+msgstr "按月计费"
 
 #. module: e2yun_crm_lead_extends
 #: selection:crm.lead,rec_rev:0
 msgid "MT-Maintenance"
-msgstr ""
+msgstr "维护"
 
 #. module: e2yun_crm_lead_extends
 #: model_terms:ir.ui.view,arch_db:e2yun_crm_lead_extends.crm_case_form_view_oppor_extends
@@ -181,7 +181,7 @@ msgstr "供应商提供的产品4"
 #. module: e2yun_crm_lead_extends
 #: selection:crm.lead,rec_rev:0
 msgid "RE-Reimbursements Expenses"
-msgstr ""
+msgstr "报销费用"
 
 #. module: e2yun_crm_lead_extends
 #: model:ir.model.fields,field_description:e2yun_crm_lead_extends.field_crm_lead__rec_rev
@@ -191,32 +191,32 @@ msgstr "收入类型"
 #. module: e2yun_crm_lead_extends
 #: selection:crm.lead,alliance_mode:0
 msgid "Referral"
-msgstr ""
+msgstr "转送"
 
 #. module: e2yun_crm_lead_extends
 #: selection:crm.lead,alliance_mode:0
 msgid "Resell"
-msgstr ""
+msgstr "转售"
 
 #. module: e2yun_crm_lead_extends
 #: selection:crm.lead,rec_rev:0
 msgid "SG-Software Retail,Gross(without pass-through)"
-msgstr ""
+msgstr "软件零售，毛额（无直通）"
 
 #. module: e2yun_crm_lead_extends
 #: selection:crm.lead,rec_rev:0
 msgid "SN-Software Retail,Net(pass-through)"
-msgstr ""
+msgstr "软件零售，网络（传递）"
 
 #. module: e2yun_crm_lead_extends
 #: selection:crm.lead,rec_rev:0
 msgid "SS-Self-owned Software Product Sale"
-msgstr ""
+msgstr "自有软件产品销售"
 
 #. module: e2yun_crm_lead_extends
 #: selection:crm.lead,alliance_mode:0
 msgid "Solution"
-msgstr ""
+msgstr "解决方案"
 
 #. module: e2yun_crm_lead_extends
 #: model_terms:ir.ui.view,arch_db:e2yun_crm_lead_extends.crm_case_form_view_oppor_extends
@@ -226,22 +226,22 @@ msgstr "暂停"
 #. module: e2yun_crm_lead_extends
 #: selection:crm.lead,rec_rev:0
 msgid "TF-T&M Contract,FP Calculation"
-msgstr ""
+msgstr "T&M合同，FP计算"
 
 #. module: e2yun_crm_lead_extends
 #: selection:crm.lead,rec_rev:0
 msgid "VG-Service Retail,Gross(withou pass-through)"
-msgstr ""
+msgstr "服务零售，毛额（带直通）"
 
 #. module: e2yun_crm_lead_extends
 #: selection:crm.lead,rec_rev:0
 msgid "VN-Service Retail,Net(pass-through)"
-msgstr ""
+msgstr "服务零售，网络（直通）"
 
 #. module: e2yun_crm_lead_extends
 #: selection:crm.lead,rec_rev:0
 msgid "WL-Workload"
-msgstr ""
+msgstr "工作量"
 
 
 #. module: e2yun_crm_lead_extends
