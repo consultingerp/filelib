@@ -760,9 +760,14 @@ class OnlineShop(user_info.WebUserInfoController):
 
     @http.route(['/online_shop/get_index_logo_data'], type='http', auth="public")
     def get_index_logo_data(self, **kwargs):
+        domain = []
+        if request.session['select_area_id'] == '1':
+            domain = [('company_id.company_code', '=', '2000')]
+        else:
+            domain = [('company_id.company_code', '=', '1000')]
 
         # 合作伙伴logo
-        logo_partner = http.request.env['online.partner'].search([])
+        logo_partner = http.request.env['online.partner'].sudo().search(domain)
         logo_partner_datas = []
         text = """"""
         for lp in logo_partner:
@@ -904,6 +909,7 @@ class online_partner(models.Model):
     name = fields.Char('名称')
     logo_image = fields.Binary('Logo 图片')
     sort = fields.Integer('排序')
+    company_id = fields.Many2one('res.company','公司')
 
 
 class ProductTemplateCategoryExtend(models.Model):
