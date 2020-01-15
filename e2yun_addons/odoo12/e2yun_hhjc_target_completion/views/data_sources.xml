@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="target_source_tree_view2" model="ir.ui.view">
+            <field name="name">target.source.tree.view</field>
+            <field name="model">target_data.source</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sale_source_tree_view2" model="ir.ui.view">
+            <field name="name">sale.source.tree.view</field>
+            <field name="model">proportion.type</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="target_source_tree_action2" model="ir.actions.act_window">
+            <field name="name">目标占比分组管理</field>
+            <field name="res_model">target_data.source</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <record id="sale_source_tree_action2" model="ir.actions.act_window">
+            <field name="name">占比类型管理</field>
+            <field name="res_model">proportion.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="target_source_menu2"
+                  action="target_source_tree_action2"
+                  parent="crm.crm_menu_config"/>
+
+        <menuitem id="sale_source_menu2"
+                  action="sale_source_tree_action2"
+                  parent="crm.crm_menu_config"/>
+    </data>
+</odoo>
