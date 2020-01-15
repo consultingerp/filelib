@@ -229,7 +229,7 @@ class TierValidation(models.AbstractModel):
         if not flag_stage_id:
             if vals['stage_id'] == 6 and not self.plan_sign_time:
               raise UserError(u'客户签章阶段计划回签时间必须写入')
-            
+
             if vals['stage_id'] == 7:
                 sql = "select res_name  from ir_attachment where  res_id = %s   and res_model = %s "
                 self._cr.execute(sql, (self.id, 'agreement.file.upload'))
@@ -253,7 +253,11 @@ class TierValidation(models.AbstractModel):
             return True
         if not flag_plan_sign_time:
             sql = "UPDATE  agreement set plan_sign_time=%s where id=%s"
-            self._cr.execute(sql, (vals['plan_sign_time'], self.id))
+            if vals['plan_sign_time']:
+                plan_sign_time=vals['plan_sign_time']
+            else:
+                plan_sign_time=None
+            self._cr.execute(sql, (plan_sign_time, self.id))
             return True
 
         for rec in self:
