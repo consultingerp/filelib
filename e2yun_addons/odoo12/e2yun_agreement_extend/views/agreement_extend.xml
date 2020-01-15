@@ -14,9 +14,37 @@
                     <label for="agreement_code" string="  " class="oe_inline"/>
         </field>
 
+        <field name="end_date" position="after">
+            <field name="plan_sign_time" />
+        </field>
+
+       <xpath expr="//page[@name='structure']" position="attributes">
+               <attribute name="attrs">{'invisible': True}</attribute>
+       </xpath>
+
+       <xpath expr="//page[@name='products']" position="replace">
+
+                 <page name="products" string="Products/Services">
+                            <field name="line_ids" nolabel="1">
+                                <tree editable="top">
+                                    <field name="product_id"/>
+                                    <field name="name"/>
+                                    <field name="qty"/>
+                                    <field name="uom_id" groups="uom.group_uom"/>
+                                    <field name="price_unit"/>
+                                    <field name="taxes_id" widget="many2many_tags"/>
+                                    <field name="price_subtotal"/>
+                                </tree>
+                            </field>
+                        </page>
+
+       </xpath>
+
         <button name="create_new_version" position="after">
              <button string="Import File" type="object" name="import_file" class="oe_highlight" />
         </button>
+
+
       </field>
    </record>
 

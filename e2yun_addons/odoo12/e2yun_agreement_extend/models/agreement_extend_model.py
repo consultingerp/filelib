@@ -2,12 +2,14 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, tools, _
-import time
+
 import datetime
 class Agreement(models.Model):
     _inherit = "agreement"
 
-    agreement_code=fields.Char('Agreement Code',default="/")
+    agreement_code=fields.Char('Agreement Code',default="/") #合同编码
+    plan_sign_time=fields.Datetime('Plan Sign Time') # 计划回签时间
+
 
     @api.model
     def create(self, vals):
@@ -157,3 +159,33 @@ class AgreementSubtype(models.Model):
     for_code = fields.Char(string="For Code", required=True)
 
 
+class AgreementLine(models.Model):
+    _inherit = "agreement.line"
+
+    price_unit = fields.Float(string='单价', required=True)
+    taxes_id = fields.Many2many('account.tax', string='税率', domain=['|', ('active', '=', False), ('active', '=', True)])
+    price_subtotal = fields.Float(compute='_compute_amount', string='小计', store=True)
+
+
+
+    @api.depends('qty', 'price_unit', 'taxes_id')
+    def _compute_amount(self):
+        for line in self:
+
+            vals = line._prepare_compute_all_values()
+            line.update({
+                'price_subtotal': (vals['price_unit']*vals['qty'])-(vals['price_unit']*vals['qty']*vals['amount']),
+            })
+
+    def _prepare_compute_all_values(self):
+        # Hook method to returns the different argument values for the
+        # compute_all method, due to the fact that discounts mechanism
+        # is not implemented yet on the purchase orders.
+        # This method should disappear as soon as this feature is
+        # also introduced like in the sales module.
+        self.ensure_one()
+        return {
+            'price_unit': self.price_unit,
+            'qty': self.qty,
+            'amount':self.taxes_id[0].amount/100,
+        }

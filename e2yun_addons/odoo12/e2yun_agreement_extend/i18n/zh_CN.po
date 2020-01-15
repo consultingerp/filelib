@@ -5,6 +5,10 @@ msgid "Agreement Code"
 msgstr "合同编号"
 
 
+#. module: e2yun_agreement_extend
+#: model:ir.model.fields,field_description:e2yun_agreement_extend.field_agreement__plan_sign_time
+msgid "Plan Sign Time"
+msgstr "计划回签时间"
 
 
 #. module: e2yun_agreement_extend
