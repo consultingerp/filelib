@@ -9,7 +9,7 @@ class Agreement(models.Model):
 
     agreement_code=fields.Char('Agreement Code',default="/") #合同编码
     plan_sign_time=fields.Datetime('Plan Sign Time') # 计划回签时间
-
+    property_product_pricelist = fields.Many2one('product.pricelist', string='Pricelist',default=1,)
 
     @api.model
     def create(self, vals):
@@ -35,6 +35,28 @@ class Agreement(models.Model):
                 vals['agreement_code'] =verse_one+agreement_subtype_obj.for_code+verse_two
                 vals['code'] = vals['agreement_code']
 
+        if 'x_studio_htje' in vals.keys() or 'x_studio_mjhtje' in vals.keys():
+            company_id = self.company_id or self.env.user.company_id
+            create_date = self.create_date or fields.Date.today()
+            queryCurrency='CNY'
+            if 'x_studio_usd' in vals.keys():
+                queryCurrency=vals['x_studio_usd']
+                x_studio_htje = 'x_studio_mjhtje'
+            elif 'x_studio_htbz' in vals.keys():
+                queryCurrency = vals['x_studio_htbz']
+                x_studio_htje = 'x_studio_htje'
+            currency = self.env['res.currency'].search([('name', 'like', '%'+queryCurrency+'%')])
+            property_product_pricelist = self.env['product.pricelist'].search([('name', 'like', '%'+queryCurrency+'%')])
+
+            if currency and property_product_pricelist:
+                usd_currency_rate = self.env['res.currency']._get_conversion_rate(
+                    property_product_pricelist.currency_id, currency,
+                    company_id, create_date)
+                if x_studio_htje=='x_studio_htje':
+                    vals['x_studio_mjhtje']= round(float(vals['x_studio_htje']) * usd_currency_rate,2)
+                elif x_studio_htje=='x_studio_mjhtje':
+                    vals['x_studio_htje'] = round(float(vals['x_studio_mjhtje']) * usd_currency_rate, 2)
+
         return super(Agreement, self).create(vals)
 
     def write(self, vals):
@@ -58,6 +80,27 @@ class Agreement(models.Model):
                 verse_two=agreement_code[-4:]
                 vals['agreement_code'] =verse_one+agreement_subtype_obj.for_code+verse_two
                 vals['code'] = vals['agreement_code']
+
+        if 'x_studio_htje' in vals.keys():
+            company_id = self.company_id or self.env.user.company_id
+            create_date = self.create_date or fields.Date.today()
+            usd_currency = self.env['res.currency'].search([('name', '=', 'USD')])
+            property_product_pricelist = self.env['product.pricelist'].search([('name', 'like', '%CNY%')])
+            usd_currency_rate = self.env['res.currency']._get_conversion_rate(
+                property_product_pricelist.currency_id, usd_currency,
+                company_id, create_date)
+
+            vals['x_studio_mjhtje'] = round(float(vals['x_studio_htje']) * usd_currency_rate, 2)
+
+        if 'x_studio_mjhtje' in vals.keys():
+            company_id = self.company_id or self.env.user.company_id
+            create_date = self.create_date or fields.Date.today()
+            usd_currency = self.env['res.currency'].search([('name', '=', 'CNY')])
+            property_product_pricelist = self.env['product.pricelist'].search([('name', 'like', '%USD%')])
+            usd_currency_rate = self.env['res.currency']._get_conversion_rate(
+                property_product_pricelist.currency_id, usd_currency,
+                company_id, create_date)
+            vals['x_studio_htje'] = round(float(vals['x_studio_mjhtje']) * usd_currency_rate, 2)
 
         return super(Agreement,self).write(vals)
 
@@ -228,11 +271,11 @@ class AgreementLine(models.Model):
     @api.depends('qty', 'price_unit', 'taxes_id')
     def _compute_amount(self):
         for line in self:
-
-            vals = line._prepare_compute_all_values()
-            line.update({
-                'price_subtotal': (vals['price_unit']*vals['qty'])-(vals['price_unit']*vals['qty']*vals['amount']),
-            })
+            if line.taxes_id:
+                vals = line._prepare_compute_all_values()
+                line.update({
+                    'price_subtotal': (vals['price_unit']*vals['qty'])-(vals['price_unit']*vals['qty']*vals['amount']),
+                })
 
     def _prepare_compute_all_values(self):
         # Hook method to returns the different argument values for the
