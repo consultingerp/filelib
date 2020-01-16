@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="delivery_order_line_tree_action" model="ir.actions.act_window">
+            <field name="name">Select</field>
+            <field name="res_model">delivery.order.line.report</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <record id="delivery_order_line_tree_view" model="ir.ui.view">
+            <field name="name">delivery.order.line.tree</field>
+            <field name="model">delivery.order.line.report</field>
+            <field name="arch" type="xml">
+                <tree create="false" edit="false" delete="false">
+                    <field name="dnnum"/>
+                    <field name="state"/>
+                    <field name="prefix_code"/>
+                    <field name="dnmng"/>
+                    <field name="sdmng"/>
+                    <field name="admng"/>
+                    <field name="ponum"/>
+                    <field name="pline"/>
+                    <field name="menge"/>
+                    <field name="prnum"/>
+                    <field name="datoo"/>
+                    <field name="senddate"/>
+                    <field name="matnrname"/>
+                    <field name="meins"/>
+                    <field name="werks"/>
+                    <field name="supplier_code"/>
+                    <field name="supplier_name"/>
+                    <field name="isinvalid"/>
+                    <field name="dline"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="purchase_delivery_order_line_filter" model="ir.ui.view">
+            <field name="name">delivery.order.line.select</field>
+            <field name="model">delivery.order.line.report</field>
+            <field name="arch" type="xml">
+                <search string="Search Delivety Order Line">
+                    <field name="dnnum"/>
+                    <field name="prefix_code"/>
+                    <field name="ponum"/>
+                    <field name="prnum"/>
+                    <field name="senddate"/>
+                </search>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="srm_packing_form_action" model="ir.actions.act_window">
+            <field name="name">Packing</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">srm.pack</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_srm_packing_form"
+          action="srm_packing_form_action"
+          parent="srm_delivery_order.menu_srm_delivery_order"
+          sequence="3"/>
+
+        <record id="srm_packing_tree" model="ir.ui.view">
+            <field name="name">srm.pack.tree</field>
+            <field name="model">srm.pack</field>
+            <field name="arch" type="xml">
+                <tree string="Packing Tree" create="false">
+                    <field name="name"/>
+                    <field name="dnnum"/>
+                    <field name="matnr"/>
+                    <field name="werks"/>
+
+                   <!--  <field name="prnum"/>
+                    <field name="monum"/>
+                    <field name="ponum"/>
+                    <field name="matnr"/>-->
+                    <field name="state"/>
+                    <field name="serial_num"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="srm_pack_form" model="ir.ui.view">
+            <field name="name">srm.pack.form</field>
+            <field name="model">srm.pack</field>
+            <field name="arch" type="xml">
+                <form string="Packing" create="false" edit="false">
+                    <header>
+                        <button name="print_order" type="object" string="Print" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="create,print" statusbar_colors='{"print":"blue"}' readonly="1"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="matnr"/>
+                            <field name="prnum" />
+                            <field name="werks"  invisible='1'/>
+                            <field name="id" invisible='1'/>
+                        </group>
+
+                        <field name="srm_pack_line"><!-- editable="bottom"-->
+                            <tree create="false" editable="bottom" delete="false">
+                                <field name="id" invisible="1"/>
+                                <field name="matnr" readonly="1" force_save="1"/>
+                                <field name="dnnum" readonly="1"  force_save="1"/>
+                                <field name="prnum" readonly="1"  force_save="1"/>
+                                <field name="monum" readonly="1"  force_save="1"/>
+                              <!--  <field name="ponum" />
+                                <field name="pline"/>-->
+                                <field name="packnum"/>
+                                <field name="menge"/>
+                                <field name="usmeg" readonly="1"  force_save="1"/>
+                                <field name="pdate" widget="date" readonly="1"  force_save="1"/>
+                                <field name="datec" readonly="1"  force_save="1"/>
+                                <field name="order_line_id" invisible="1"/>
+                                <field name="batch_line_id" invisible="1"/>
+                                <field name="dnnum_line_id" invisible="1"/>
+                            </tree>
+                        </field>
+                    </sheet>
+                    <!--<div class="oe_chatter">-->
+                    <!--<field name="message_follower_ids" widget="mail_followers"/>-->
+                    <!--<field name="message_ids" widget="mail_thread"/>-->
+                    <!--</div>-->
+                </form>
+            </field>
+        </record>
+
+        <record id="srm_pack_filter" model="ir.ui.view">
+            <field name="name">srm.pack.select</field>
+            <field name="model">srm.pack</field>
+            <field name="arch" type="xml">
+                <search string="Search SRM Packing">
+                    <field name = 'name'/>
+                    <field name = 'dnnum'/>
+                    <field name = 'matnr'/>
+                    <filter name="create" string="Create" domain="[('state','=','create')]"/>
+                    <filter name="print" string="Print" domain="[('state','=','print')]"/>
+
+                </search>
+            </field>
+        </record>
+
+
+        <!--
+        <record id="srm_pack_batch_print" model="ir.ui.view">
+            <field name="name">批量打印</field>
+            <field name="model">srm.pack</field>
+            <field name="arch" type="xml">
+                <form string="批量打印">
+                    <h5>
+                        是否确认批量打印?
+                    </h5>
+                    <footer>
+                        <button name="batch_print_orders" string="确定" type="object" class="oe_highlight"/>
+                        or
+                        <button string="取消" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="batch_pack_print_action" model="ir.actions.act_window">
+            <field name="name">批量打印</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">srm.pack</field>
+            <field name="src_model">srm.pack</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="srm_pack_batch_print"/>
+            <field name="target">new</field>
+            <field name="multi">True</field>
+        </record>
+
+        <record model="ir.values" id="srm_pack_batch_print1">
+            <field name="name">批量打印</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value"
+                   eval="'ir.actions.act_window,' + str(ref('srm_pack.batch_pack_print_action'))"/>
+            <field name="key">action</field>
+            <field name="model">srm.pack</field>
+        </record>
+
+        <record model="ir.actions.server" id="batch_print_packs_action">
+            <field name="name">批量打印</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_srm_pack"/>
+            <field name="state">code</field>
+            <field name="code"> self.batch_print_orders(cr,uid,context['active_ids'],context)</field>
+        </record>
+
+        <record model="ir.values" id="batch_print_packs">
+            <field name="name">批量打印</field>
+            <field name="model_id" ref="model_srm_pack"/>
+            <field name="model">srm.pack</field>
+            <field name="key">action</field>
+            <field name="key2">client_action_multi</field>
+            <field name="type">report</field>
+            <field name="value" eval="'ir.actions.server,%d'%batch_print_packs_action"/>
+        </record>
+ -->
+
+    </data>
+</odoo>

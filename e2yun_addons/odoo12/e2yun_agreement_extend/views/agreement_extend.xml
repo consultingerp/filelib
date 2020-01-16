@@ -14,12 +14,57 @@
                     <label for="agreement_code" string="  " class="oe_inline"/>
         </field>
 
+        <field name="end_date" position="after">
+            <field name="plan_sign_time" />
+        </field>
+
+       <xpath expr="//page[@name='structure']" position="attributes">
+               <attribute name="attrs">{'invisible': True}</attribute>
+       </xpath>
+
+       <xpath expr="//page[@name='products']" position="replace">
+
+                 <page name="products" string="Products/Services">
+                            <field name="line_ids" nolabel="1">
+                                <tree editable="top">
+                                    <field name="product_id"/>
+                                    <field name="name"/>
+                                    <field name="qty"/>
+                                    <field name="uom_id" groups="uom.group_uom"/>
+                                    <field name="price_unit"/>
+                                    <field name="taxes_id" widget="many2many_tags"/>
+                                    <field name="price_subtotal"/>
+                                </tree>
+                            </field>
+                        </page>
+
+       </xpath>
+
         <button name="create_new_version" position="after">
+             <button name="action_emil_send" string="Send by Email" type="object"  class="oe_highlight"/>
              <button string="Import File" type="object" name="import_file" class="oe_highlight" />
         </button>
+
+
       </field>
    </record>
 
+
+   <record id="agreement_form_view_extend_download_group" model="ir.ui.view">
+            <field name="model">agreement</field>
+            <field name="inherit_id" ref="agreement_legal.partner_agreement_form_view"/>
+            <field name="groups_id" eval="[(6, 0, [ref('e2yun_agreement_extend.group_agreement_download_pdf') ])]"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='products']" position="inside">
+                        <header>
+                             <button name="download_pdfswy" string="pdfswy" type="object" class="fa fa-download"/>
+                             <button name="download_pdfqw" string="pdfqw" type="object" class="fa fa-download"/>
+                             <button name="download_fktj" string="fktj" type="object" class="fa fa-download"/>
+                        </header>
+                </xpath>
+
+            </field>
+   </record>
 
     <record id="agreement_subtype_form_view_extend" model="ir.ui.view">
        <field name="name">Agreement Sub Type Form Extend</field>

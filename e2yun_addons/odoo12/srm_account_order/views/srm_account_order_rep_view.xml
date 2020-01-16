@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--  行开票 -->
+        <record id="srm_account_order_rep_tree" model="ir.ui.view">
+            <field name="name">srm.account.order.rep.tree</field>
+            <field name="model">srm.account.order.rep</field>
+            <field name="arch" type="xml">
+                <tree create="false" delete='false'>
+                    <field name="picking_partner"/>
+                    <field name="purchase_date"/>
+                    <field name="purchase_order_no"/>
+                    <field name="purchase_order_item"/>
+                    <field name="product_id"/>
+                    <field name="product_uom"/>
+                    <field name="product_uom_qty"/>
+                    <field name="purchase_qty"/>
+                    <field name="currency"/>
+                    <field name="tax_code"/>
+                    <field name="tax_rate"/>
+                    <field name="kbetr"/>
+                    <field name="kpein"/>
+                    <field name="date_done"/>
+                    <field name="picking_type_code"/>
+                    <field name="voucher_code"/>
+                    <field name="voucher_qty"/>
+                    <field name="price_unit"/>
+                    <field name="price_total_tax"/>
+                    <field name="tax_price"/>
+                    <field name="lgort"/>
+                    <field name="dnnum"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="srm_account_order_rep_filter" model="ir.ui.view">
+            <field name="name">srm.account.order.rep.select</field>
+            <field name="model">srm.account.order.rep</field>
+            <field name="arch" type="xml">
+                <search string="Search Account Order">
+                    <field name="picking_partner"/>
+                    <field name="product_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="create_account_order" model="ir.ui.view">
+            <field name="name">创建</field>
+            <field name="model">srm.account.order.rep.batch</field>
+            <field name="arch" type="xml">
+                <form string="创建">
+                    <footer>
+                        <button name="create_account_order" string="确定" type="object" class="oe_highlight"/>
+                        or
+                        <button string="取消" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <!--<record id="create_account_order_mulit" model="ir.actions.act_window">-->
+            <!--<field name="name">创建对账单</field>-->
+            <!--<field name="type">ir.actions.act_window</field>-->
+            <!--<field name="res_model">srm.account.order.rep.batch</field>-->
+            <!--<field name="src_model">srm.account.order.rep</field>-->
+            <!--<field name="view_type">form</field>-->
+            <!--<field name="view_mode">form</field>-->
+            <!--<field name="view_id" ref="create_account_order"/>-->
+            <!--<field name="target">new</field>-->
+            <!--<field name="multi">True</field>-->
+        <!--</record>-->
+
+        <act_window name="创建对账单"
+            res_model="srm.account.order.rep.batch"
+            src_model="srm.account.order.rep"
+            multi="True"
+            key2="client_action_multi"
+            view_mode="form"
+            view_id="create_account_order"
+            target="new"
+            id="create_account_order_mulit"/>
+
+        <!--<record model="ir.values" id="create_account_order_ir">-->
+            <!--<field name="name">创建对账单</field>-->
+            <!--<field name="key2">client_action_multi</field>-->
+            <!--<field name="value"-->
+                   <!--eval="'ir.actions.act_window,' + str(ref('srm_account_order.create_account_order_mulit'))"/>-->
+            <!--<field name="key">action</field>-->
+            <!--<field name="model">srm.account.order.rep</field>-->
+        <!--</record>-->
+
+
+
+        <record id="srm_account_order_rep_action" model="ir.actions.act_window">
+            <field name="name">创建</field>
+            <field name="res_model">srm.account.order.rep</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[]</field>
+            <field eval="False" name="view_id"/>
+        </record>
+
+
+    </data>
+</odoo>

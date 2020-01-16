@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="srm_report_delivery">
+        <div class="header">
+            <div class="row">
+                <div style="color:#000;">
+                    <span t-field="docs.dnnum" />
+                </div>
+            </div>
+        </div>
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="o">
+                    <div class="page" style="color:#000;">
+                        <div class="col-xs-4 pull-left">
+                            <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', o.dnnum, 100, 100)" style="width:100px;height:100px;"/>
+                        </div>
+                         <div class="col-xs-4 pull-right">
+                            <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.dnnum, 600, 100)" style="width:320px;height:70px;"/>
+                        </div>
+                        <h2 style="text-align:center;">
+                            送  货  单
+                        </h2>
+                        <div>
+                            <table class="table table-condensed">
+                                <tr style="color:#000;">
+                                    <td ><strong>送货单号：</strong><span t-field="o.dnnum" /></td>
+                                    <td ><strong>总箱数：</strong><span t-field="o.boxnu" /></td>
+                                    <td ><strong>客户：</strong><span t-field="o.comco" /></td>
+                                    <td ><strong>收货工厂：</strong><span t-field="o.werks" /></td>
+                                </tr>
+                                <tr style="color:#000;">
+                                    <td ><strong>生产订单：</strong><span t-field="o.prnum" /></td>
+                                    <td ><strong>送货日期：</strong><span t-field="o.printSendDate" /></td>
+                                    <td><strong>供应商：</strong><span t-field="o.lifnr" /></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div>
+                              <table class="table table-condensed">
+                                    <thead>
+                                        <tr style="color:#000;">
+                                            <!-- <th><strong>序号</strong></th>-->
+                                            <th><strong>采购订单</strong></th>
+                                            <th><strong>物料号</strong></th>
+                                            <th><strong>物料描述</strong></th>
+                                            <th style="padding-left:60px"><strong>物料</strong></th>
+                                            <th><strong>交货数量</strong></th>
+                                            <th><strong>单位</strong></th>
+                                            <th><strong>备注</strong></th>
+                                            <!-- <th><strong>生产日期</strong></th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="o.delivery_order_line" t-as="d">
+                                            <tr t-foreach="d.delivery_purchase_orders" t-as="move" style="page-break-inside: avoid;color:#000;">
+                                                <!-- <td>
+                                                    <span t-esc="move_index+1"></span>
+                                                </td> -->
+                                                <td><span t-field="move.ponum"/></td>
+                                                <td><span t-field="move.matnr.default_code"/></td>
+                                                <td><span t-field="move.matnr.name"/></td>
+                                                <!--- <td><span t-field="move.matnr"/></td> -->
+                                                <td><img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', move.matnr.default_code, 200, 30)"
+                                                         style="width:200px;height:30px;"/></td>
+                                                <td><span t-field="move.menge"/></td>
+                                                <td><span t-field="d.meins"/></td>
+                                                <td><span t-field="d.memo"/></td>
+                                                <!-- <td><span t-field="move.ddate"/></td>-->
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                              </table>
+                            </div>
+                         <table class="table">
+                            <tr style="color:#000;">
+                                <td style="width:25%"><strong>制单人:</strong><span>__________</span></td>
+                                <td style="width:25%"><strong>审核人:</strong><span>__________</span></td>
+                                <td style="width:25%"><strong>送货人:</strong><span>__________</span></td>
+                                <td style="width:25%"><strong>收货人:</strong><span>__________</span></td>
+                            </tr>
+                        </table>
+                    </div>
+             </t>
+         </t>
+        <div class="footer">
+            <div class="text-center" style="color:#000;">
+                <ul class="list-inline">
+                    <li><span class="page"/></li>
+                    <li>/</li>
+                    <li><span class="topage"/>页</li>
+                </ul>
+            </div>
+        </div>
+    </template>
+
+
+
+</odoo>

@@ -6,7 +6,7 @@ from odoo import api, fields, models, tools, _
 import xlrd
 import time
 
-class AgreementFileUpload(models.TransientModel):
+class AgreementFileUpload(models.Model):
     _name = "agreement.file.upload"
     _description = "agreement file upload"
 
@@ -18,23 +18,41 @@ class AgreementFileUpload(models.TransientModel):
     def import_file(self):
         this = self[0]
         attachment = self.env['ir.attachment']  # 附件
-        name="self.filename"
-
+        name=self.filename
+        res_name=""
         if self.name=='pdfswy':
             name='PDF首尾页'
+            res_name='pdfswy'
         elif self.name=='pdfqw':
             name = 'PDF全文版'
+            res_name = 'pdfqw'
         elif self.name == 'fktj':
             name = '付款条件'
+            res_name = 'fktj'
+
+        agreement_id = self._context['active_id']
+
+        # attachment.search([('res_model', '=', 'agreement.file.upload'),
+        #                    ('res_id', '=', agreement_id),
+        #                    ('res_name', '=', res_name)]).unlink()  # 删除无效附件
+
+        sql = "select id  from ir_attachment where  res_id = %s  and res_name = %s and res_model = %s "
+        self._cr.execute(sql, (agreement_id, res_name, 'agreement.file.upload'))
+        attachmentSqlData = self._cr.fetchall()
+        if attachmentSqlData:
+            for d in attachmentSqlData:
+                attachment.browse(d[0]).unlink()
+
 
         attachmentObj = attachment.create({
             'name': name,
-            'datas': base64.encodestring(this.data),
+            'datas': this.data,
             'datas_fname':self.filename,
-            'res_model': self._context['active_model'],
-            'res_id': self._context['active_id'],
-            'res_name': self.name
+            'res_model': 'agreement.file.upload',
+            'res_id': agreement_id,
+            'res_name': res_name,
         })
+
 
         return {'type': 'ir.actions.act_window_close'}
 

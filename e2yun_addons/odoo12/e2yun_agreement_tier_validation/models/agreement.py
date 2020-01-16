@@ -4,7 +4,7 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 from ast import literal_eval
-
+from odoo.exceptions import UserError
 class Agreement(models.Model):
     _name = "agreement"
     _inherit = ['agreement', 'tier.validation']
@@ -196,7 +196,8 @@ class CommentWizard(models.TransientModel):
             user_review.write({
                 'comment': self.comment,
             })
-            tier_stage_id = user_review.tier_stage_id
+            if user_review.tier_stage_id:
+                tier_stage_id = user_review.tier_stage_id
 
         if self.validate_reject == 'validate':
             rec._validate_tier()
@@ -218,13 +219,45 @@ class TierValidation(models.AbstractModel):
 
     @api.multi
     def write(self, vals):
-        flag=False
+        flag_stage_id=False
+        flag_plan_sign_time = False
         for key in vals:
             if 'stage_id'!=key and 'revision'!=key:
-                flag=True
-        if not flag:
+                flag_stage_id=True
+            if 'plan_sign_time'!=key and 'revision'!=key:
+                flag_plan_sign_time=True
+        if not flag_stage_id:
+            if vals['stage_id'] == 6 and not self.plan_sign_time:
+              raise UserError(u'客户签章阶段计划回签时间必须写入')
+
+            if vals['stage_id'] == 7:
+                sql = "select res_name  from ir_attachment where  res_id = %s   and res_model = %s "
+                self._cr.execute(sql, (self.id, 'agreement.file.upload'))
+                attachmentSqlData = self._cr.fetchall()
+                pdfswy='（PDF首尾页）'
+                pdfqw = '（PDF全文版）'
+                fktj = '（付款条件）'
+                if attachmentSqlData:
+                    for d in attachmentSqlData:
+                        if d[0]=='pdfswy':
+                            pdfswy=""
+                        if d[0]=='pdfqw':
+                            pdfqw=""
+                        if d[0]=='fktj':
+                            fktj=""
+                if pdfswy!="" or pdfqw!="" or fktj!="":
+                    raise UserError(u'执行阶段必须上传'+pdfswy+pdfqw+fktj)
+
             sql="UPDATE  agreement set stage_id=%s where id=%s"
             self._cr.execute(sql,(vals['stage_id'],self.id))
+            return True
+        if not flag_plan_sign_time:
+            sql = "UPDATE  agreement set plan_sign_time=%s where id=%s"
+            if vals['plan_sign_time']:
+                plan_sign_time=vals['plan_sign_time']
+            else:
+                plan_sign_time=None
+            self._cr.execute(sql, (plan_sign_time, self.id))
             return True
 
         for rec in self:
@@ -245,7 +278,7 @@ class TierValidation(models.AbstractModel):
             if (rec.review_ids and getattr(rec, self._state_field) in
                     self._state_from and not vals.get(self._state_field) in
                     (self._state_to + [self._cancel_state]) and not
-                    self._check_allow_write_under_validation(vals)) and flag:
+                    self._check_allow_write_under_validation(vals)):
                 raise ValidationError(_("The operation is under validation."))
         if vals.get(self._state_field) in self._state_from:
             self.mapped('review_ids').unlink()

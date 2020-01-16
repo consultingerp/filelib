@@ -5,6 +5,10 @@ msgid "Agreement Code"
 msgstr "合同编号"
 
 
+#. module: e2yun_agreement_extend
+#: model:ir.model.fields,field_description:e2yun_agreement_extend.field_agreement__plan_sign_time
+msgid "Plan Sign Time"
+msgstr "计划回签时间"
 
 
 #. module: e2yun_agreement_extend
@@ -24,6 +28,27 @@ msgstr "导入文件类型"
 msgid "Import File"
 msgstr "上传文件"
 
+#. module: e2yun_agreement_extend
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_extend.agreement_form_view_view_extend
+msgid "Products/Services"
+msgstr "产品与服务"
 
 
+
+#. module: e2yun_agreement_extend
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_extend.agreement_form_view_extend_download_group
+msgid "pdfswy"
+msgstr "下载PDF首尾页"
+
+
+#. module: e2yun_agreement_extend
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_extend.agreement_form_view_extend_download_group
+msgid "pdfqw"
+msgstr "下载PDF全文"
+
+
+#. module: e2yun_agreement_extend
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_extend.agreement_form_view_extend_download_group
+msgid "fktj"
+msgstr "下载付款条件"
 

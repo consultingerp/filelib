@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report
+            string="SRM Delivery Order"
+            menu="False"
+            id="report_srm_delivery_quotation"
+            model="delivery.order"
+            report_type="qweb-pdf"
+            name="srm_delivery_order.srm_report_delivery"
+            file="srm_delivery_order.srm_report_delivery"
+            print_report_name="'Delivery Order - %s' % (object.dnnum)"
+        />
+
+    </data>
+</odoo>

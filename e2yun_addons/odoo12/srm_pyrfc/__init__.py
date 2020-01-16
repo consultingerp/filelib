@@ -1,0 +1,6 @@
+from.import get_pyrfc_conn
+from.import ZSRM_BAPI_GOODSMVT_CREATE
+from.import ZSRM_MM_BAPI_PO_GETDETAIL
+from.import ZSRM_BAPI_MATERIAL_GET_DETAIL
+
+

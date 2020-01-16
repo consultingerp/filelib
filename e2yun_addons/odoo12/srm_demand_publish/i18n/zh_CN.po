@@ -1,0 +1,172 @@
+#. module: srm_demand_publish
+#: model:ir.model.fields,field_description:srm_demand_publish.field_mat_demand_head_versi
+#: view:ir.model.fields,field_description::srm_demand_publish.menu_purchase_demand_publish
+msgid "Version"
+msgstr "版本"
+
+#. module: srm_demand_publish
+#: model:ir.model.fields,field_description:srm_demand_publish.field_mat_demand_head_comco
+msgid "Company"
+msgstr "公司"
+
+#. module: srm_demand_publish
+#: model:ir.model.fields,field_description:srm_demand_publish.field_mat_demand_head_werks
+msgid "Factory"
+msgstr "工厂"
+
+#. module: srm_demand_publish
+#: model:ir.model.fields,field_description:,mat_demand_line_details:0
+msgid "Mat Demand Line"
+msgstr "物料需求行"
+
+#. module: srm_demand_publish
+#: model:ir.model.fields,field_description:srm_demand_publish.field_mat_demand_line_details_lifnr
+#: view:mat.demand.line.details:srm_demand_publish.menu_purchase_demand_publish
+msgid "Supplier"
+msgstr "供应商"
+
+#. module: srm_demand_publish
+#: model:ir.model.fields,field_description:srm_demand_publish.field_mat_demand_line_details_ekgrp
+msgid "Purchase Group"
+msgstr "采购组"
+
+#. module: srm_demand_publish
+#: model:ir.model.fields,field_description:srm_demand_publish.field_mat_demand_line_details_matnr
+msgid "Material"
+msgstr "物料"
+
+#. module: srm_demand_publish
+#: model:ir.model.fields,field_description:srm_demand_publish.field_mat_demand_line_details_menge
+msgid "Demand Amount"
+msgstr "需求数量"
+
+#. module: srm_demand_publish
+#: model:ir.model.fields,field_description:srm_demand_publish.field_mat_demand_line_details_meins
+msgid "Unit"
+msgstr "单位"
+
+#. module: srm_demand_publish
+#: model:ir.model.fields,field_description:srm_demand_publish.field_mat_demand_line_details_ddate
+msgid "Demand Date"
+msgstr "需求日期"
+
+#. module: srm_demand_publish
+#: model:ir.model.fields,field_description:srm_demand_publish.field_mat_demand_line_details_pdate
+msgid "Production date"
+msgstr "生产日期"
+
+#. module: srm_demand_publish
+#: model:ir.model.fields,field_description:srm_demand_publish.field_mat_demand_line_details_needs_no
+msgid "Needs No"
+msgstr "需求号"
+
+
+#. module: srm_demand_publish
+#: model:ir.model.fields,field_description:srm_demand_publish.field_mat_demand_line_details_bmeng
+msgid "Confirm Amount"
+msgstr "确认数量"
+
+#. module: srm_demand_publish
+#: model:ir.model.fields,field_description:,flag:0
+msgid "Business Flag"
+msgstr "业务标识"
+
+
+#. module: srm_demand_publish
+#: model:ir.model.fields,field_description:srm_demand_publish.field_mat_demand_line_details_memo
+msgid "Remark"
+msgstr "备注"
+
+#. module: srm_demand_publish
+#: model:ir.model.fields,field_description:srm_demand_publish.field_mat_demand_line_details_prnum
+msgid "Produce Order"
+msgstr "生产订单"
+
+#. module: srm_demand_publish
+#: model:ir.model.fields,field_description:srm_demand_publish.field_mat_demand_line_details_monum
+msgid "Model"
+msgstr "型号"
+
+#. module: srm_demand_publish
+#: model:ir.model.fields,field_description:srm_demand_publish.field_mat_demand_line_details_state
+msgid "Status"
+msgstr "状态"
+
+#. module: srm_demand_publish
+#: view:ir.model.fields,field_description::srm_demand_publish.menu_purchase_demand_publish
+msgid "Create"
+msgstr "创建"
+
+#. module: srm_demand_publish
+#: model:ir.model.fields,field_description:srm_demand_publish.field_mat_demand_line_details_publish
+#: view:ir.model.fields,field_description::srm_demand_publish.purchase_demand_publish_create_form
+msgid "Publish"
+msgstr "发布"
+
+#. module: srm_demand_publish
+#: selection:ir.model.fields,field_description:,state:3
+#: view:ir.model.fields,field_description::srm_demand_publish.menu_purchase_demand_publish
+msgid "Edit Publish"
+msgstr "修改发布"
+
+#. module: srm_demand_publish
+#: model:ir.ui.menu,name:srm_demand_publish.menu_purchase_demand_publish
+msgid "Demand Publish"
+msgstr "需求发布"
+
+#. module: srm_demand_publish
+#: model:ir.actions.act_window,name:srm_demand_publish.purchase_demand_publish_create_form_action
+#: model:ir.ui.menu,name:srm_demand_publish.menu_purchase_demand_publish_create_form
+msgid "Material Demand"
+msgstr "物料需求"
+
+#. module: srm_demand_publish
+#: selection:mat.demand.line.details,state:1
+msgid "Create"
+msgstr "创建"
+
+#. module: srm_demand_publish
+#: selection:mat.demand.line.details,state:1
+msgid "Supplier Confirm"
+msgstr "供应商确认"
+
+#. module: srm_demand_publish
+#: selection:mat.demand.line.details,state:1
+msgid "Supplier Edit"
+msgstr "供应商修改"
+
+#. module: srm_demand_publish
+#: selection:mat.demand.line.details,state:1
+msgid "Purchase Edit"
+msgstr "采购修改"
+
+#. module: srm_demand_publish
+#: selection:mat.demand.line.details,state:1
+msgid "System Cancel"
+msgstr "系统取消"
+
+#. module: srm_demand_publish
+#: selection:mat.demand.line.details,state:1
+msgid "Purchase Confirm"
+msgstr "采购确认"
+
+#. module: srm_demand_publish
+#: selection:mat.demand.line.details,state:1
+msgid "Not Confirm"
+msgstr "无需确认"
+
+#. module: srm_demand_publish
+#: model:ir.model.fields,field_description:srm_demand_publish.field_mat_demand_line_details_create_versi
+msgid "Create versi"
+msgstr "小版本号"
+
+
+#. module: srm_demand_publish
+#: selection:mat.demand.line.details,state:1
+msgid "Delete"
+msgstr "删除"
+
+#. module: srm_demand_publish
+#: view:mat.demand.order:srm_demand_publish.purchase_demand_publish_create_form
+msgid "Mat Demand Line"
+msgstr "物料需求行"

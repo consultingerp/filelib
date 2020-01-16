@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_packing">
+        <t t-call="web.basic_layout">
+            <t t-set="o" t-value="o"/>
+                <div class="page" style="width:620px;height:340px;font-family:微软雅黑;font-size: 19px;">
+                    <div style="width:95%;height:30px;">
+                        <div style="width:35%;font-size: 18px;padding-left:20px;float:left"><span t-field="o.name"/></div>
+                        <div style="width:30%;font-size: 18px;padding-left:20px;float:left;font-weight:bold;"><span>悦辰物料标签</span></div>
+                        <div style="width:35%;float:left;"><span style="font-weight:bold;font-style:italic;font-size: 18px;">RoHS/REACH</span></div>
+                    </div>
+                    <div style="width:85%;height:300px;">
+                        <table class="table table-bordered" style="height:300px;">
+                            <t t-foreach="o.srm_pack_line" t-as="l">
+                                <tr>
+                                    <td width="100px" style="border: 1px solid black;">交货日期</td>
+                                    <td style="border: 1px solid black;"><span t-esc="o.get_printSendDate(data)"/></td>
+                                </tr>
+                                <tr>
+                                    <td width="100px" style="border: 1px solid black;">交货单号</td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="l.dnnum"/>
+                                        <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', l.dnnum, 200, 30)" style="width:200px;height:30px;"/>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td width="100px" style="border: 1px solid black;">生产订单</td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="l.prnum"/>
+                                        <t t-if="l.prnum != False" >
+                                            <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', l.prnum, 200, 30)" style="width:200px;height:30px;"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100px" style="border: 1px solid black;">物料号</td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="l.matnr.default_code"/>
+                                        <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', l.matnr.default_code, 200, 30)" style="width:200px;height:30px;"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100px" style="border: 1px solid black;">描述</td>
+                                    <td style="border: 1px solid black;word-break: break-all;"><span t-field="l.matnr.name"/></td>
+                                </tr>
+                                <tr>
+                                   <td width="100px" style="border: 1px solid black;">数量</td>
+                                    <td style="border: 1px solid black;"><span t-field="l.menge"/></td>
+                                </tr>
+                                <tr>
+                                   <td width="100px" style="border: 1px solid black;">供应商</td>
+                                    <td style="border: 1px solid black;">
+                                        <t t-if="o.lifnr.short_name == False">
+                                            <span t-field="o.lifnr.name"/>
+                                        </t>
+                                        <t t-if="o.lifnr.short_name != False">
+                                            <span t-field="o.lifnr.short_name"/>
+                                        </t>
+
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+                    </div>
+                </div>
+        </t>
+    </template>
+
+    <template id="report_packing_tag">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="srm_pack.report_packing"/>
+        </t>
+    </t>
+</template>
+</odoo>

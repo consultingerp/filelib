@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report
+            string="Package Tag"
+            menu="True"
+            id="report_packing_tag_quotation"
+            model="srm.pack"
+            report_type="qweb-pdf"
+            name="srm_pack.report_packing_tag"
+            file="srm_pack.report_packing_tag"
+        />
+    </data>
+</odoo>

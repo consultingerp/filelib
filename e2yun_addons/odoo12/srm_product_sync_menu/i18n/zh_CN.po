@@ -1,0 +1,25 @@
+#. module: srm_product_sync_menu
+#: model:ir.model.fields,field_description:srm_product_sync_menu.field_srm_product_sync_menu_start_date
+msgid "start date"
+msgstr "开始日期"
+
+#. module: srm_product_sync_menu
+#: model:ir.model.fields,field_description:srm_product_sync_menu.field_srm_product_sync_menu_ending_date
+msgid "ending date"
+msgstr "结束日期"
+
+
+#. module: srm_product_sync_menu
+#: model:ir.model.fields,field_description:srm_product_sync_menu.field_srm_product_sync_menu_matnr
+msgid "matnr"
+msgstr "物料号"
+
+
+#. module: srm_product_sync_menu
+#: model:ir.ui.menu,name:srm_product_sync_menu.menu_srm_sap_product_sync
+#: model:ir.actions.act_window,name:srm_product_sync_menu.srm_product_sync_menu_window
+msgid "sap product sync"
+msgstr "SAP物料同步"
+
+
+

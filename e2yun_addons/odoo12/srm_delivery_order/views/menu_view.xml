@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem name="Delivery Order" id="menu_srm_delivery_order" parent="srm_base.menu_srm_root"/>
+
+    <menuitem id="menu_srm_delivery_order_form"
+          action="purchase_delivery_order_form_action"
+          parent="menu_srm_delivery_order"
+          sequence="0"/>
+
+    <menuitem id="menu_delivery_order_rep"
+          parent="menu_srm_delivery_order"
+          action="action_delivery_order_rep"/>
+
+    <menuitem id="menu_delivery_order_line_rep" parent="menu_srm_delivery_order"
+                  action="delivery_order_line_tree_action" sequence="4"/>
+
+    <menuitem id="menu_delivery_order_import" parent="srm_delivery_order.menu_srm_delivery_order"
+              action="delivery_order_import_form_action" sequence="5"/>
+</odoo>
