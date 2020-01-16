@@ -11,6 +11,10 @@ class Agreement(models.Model):
     plan_sign_time=fields.Datetime('Plan Sign Time') # 计划回签时间
     property_product_pricelist = fields.Many2one('product.pricelist', string='Pricelist',default=1,)
 
+    pdfswy = fields.Many2one('ir.attachment', string='Pdfswy',readonly='True')
+    pdfqw = fields.Many2one('ir.attachment', string='Pdfqw',readonly='True' )
+    fktj = fields.Many2one('ir.attachment', string='Fktj',readonly='True')
+
     @api.model
     def create(self, vals):
         vals['code'] = ""
