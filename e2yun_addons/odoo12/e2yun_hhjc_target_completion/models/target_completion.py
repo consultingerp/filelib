@@ -52,9 +52,9 @@ class TargetCompletion(models.Model):
     # target_amount = fields.Integer('门店目标', compute='_compute_target_amount', store=True)
     # jiesuan_amount = fields.Integer('销售金额', compute='_compute_jiesuan_amount', store=True)
 
-    target_amount = fields.Integer('门店目标')
-    jiesuan_amount = fields.Integer('销售金额')
-    completion = fields.Integer('目标完成占比')
+    target_amount = fields.Float('门店目标')
+    jiesuan_amount = fields.Float('销售金额')
+    completion = fields.Float('目标完成占比')
     sale_id = fields.Many2one('proportion.type', '占比类型')
     target_id = fields.Many2one('target_data.source', '数据来源')
 
@@ -171,6 +171,9 @@ class TargetCompletion(models.Model):
             target_year_sql = "target_year = '%s'" % ctx['target_year']
         else:
             target_year_sql = ''
+        sql_str = "select * from outbound_sync_from_pos_final where %s %s %s %s %s %s %s" % (target_year_sql, target_month_sql, werks_sql, vtweg_sql, vkorgtext_sql, kunnr_sql, ywy_sql)
+        self._cr.execute(sql_str)
+        del_data = self._cr.dictfetchall()
         del_sql = "delete from outbound_sync_from_pos_final where %s %s %s %s %s %s %s" % (target_year_sql, target_month_sql, werks_sql, vtweg_sql, vkorgtext_sql, kunnr_sql, ywy_sql)
         self._cr.execute(del_sql)
 
@@ -240,7 +243,7 @@ class TargetCompletion(models.Model):
                 self.create(data_dict)
 
         # 清除查询创建的数据行
-        self.init_target_date(ctx)
+        # self.init_target_date(ctx)
 
         target_amount = self.get_target_amount(ctx)
         jiesuan_amount = self.get_jiesuan_amount(ctx)
@@ -301,7 +304,7 @@ class TargetCompletion(models.Model):
                 target_detail = self.env['team.target.detail'].search([('current_team_id', '=', ctx['kunnr'][0]),
                                                                        ('detail_year', '=', ctx['target_year']),
                                                                        ('target_month', '=?', ctx['target_month']),
-                                                                       ('sales_member.id', '=?', ctx['ywy'])])
+                                                                       ('sales_member.id', '=?', ctx['ywy'][0])])
             else:
                 target_detail = self.env['team.target.detail'].search([('current_team_id', '=', ctx['kunnr'][0]),
                                                                       ('detail_year', '=', ctx['target_year']),
@@ -316,7 +319,7 @@ class TargetCompletion(models.Model):
             if ctx['ywy']:
                 target_detail = self.env['team.target.detail'].search([('current_team_id', '=', ctx['kunnr'][0]),
                                                                        ('detail_year', '=', ctx['target_year']),
-                                                                       ('sales_member.id', '=?', ctx['ywy'])])
+                                                                       ('sales_member.id', '=?', ctx['ywy'][0])])
                 target_amount = 0
                 if target_detail:
                     for detail in target_detail:
