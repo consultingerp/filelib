@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+ <!--
+        <record id="purchase_demand_publish_create_tree_select_lifnr" model="ir.ui.view">
+            <field name="name">mat.demand.line.details.lifnr.select</field>
+            <field name="model">mat.demand.line.details</field>
+            <field name="arch" type="xml">
+                <search string="Search Mat Demand Info">
+                    <field name="matnr"/>
+                    <field name="prnum"/>
+                    <field name="create_versi"/>
+                    <field name="ddate"/>
+                    <filter name='my' string="默认条件" domain="[('mat_demand_id','=',-1)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="版本" domain="[]" context="{'group_by':'mat_demand_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+-->
+        <record id="purchase_demand_publish_create_tree_lifnr" model="ir.ui.view">
+            <field name="name">mat.demand.info.lifnr.tree</field>
+            <field name="model">mat.demand.line.details</field>
+            <field name="arch" type="xml">
+                <tree colors="red:state!= 'supplier_confirm'" string="Demand Create Tree" editable="bottom">
+                    <field name="id" invisible="1"/>
+                    <field name="create_versi" readonly="1"/>
+                    <field name="needs_no" readonly="1"/>
+                    <field name="lifnr" readonly="1"/>
+                    <field name="ekgrp" readonly="1"/>
+                    <field name="matnr" readonly="1"/>
+                    <field name="prnum" readonly="1"/>
+                    <field name="menge" readonly="1"/>
+                    <field name="bmeng"/>
+                    <field name="ddate" readonly="1" widget="date"/>
+                    <field name="state" readonly="1" />
+                    <field name="memo" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="purchase_demand_publish_create_form_action_lifnr" model="ir.actions.act_window">
+            <field name="name">物料需求行项目-供应商</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mat.demand.line.details</field>
+            <field name="context" eval="{'search_default_my':2}"/>
+            <field name="view_id" ref="purchase_demand_publish_create_tree_lifnr"/>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="menu_purchase_demand_publish_create_form_lifnr"
+                  action="purchase_demand_publish_create_form_action_lifnr"
+                  parent="srm_demand_publish.menu_purchase_demand_publish"
+                  sequence="0"/>
+    </data>
+
+
+     <!-- add picking to batch  -->
+    <record id="stock_picking_to_batch_form" model="ir.ui.view">
+        <field name="name">批量确认</field>
+        <field name="model">mat.demand.line.batch.confim.lifnr</field>
+        <field name="arch" type="xml">
+            <form string="批量确认">
+                <footer>
+                    <button name="batch_confirmation" type="object" string="批量确认" class="btn-primary"/>
+                    <button string="取消" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="demand_publish_line_to_batch_action_3"
+        multi="True"
+        key2="client_action_multi" name="批量确认"
+              res_model="mat.demand.line.batch.confim.lifnr"
+            src_model="mat.demand.line.details"
+        view_mode="form" target="new" view_type="form"
+    />
+
+</odoo>

@@ -1,0 +1,29 @@
+#. module: srm_scheduling
+#: model:ir.ui.menu,name:srm_scheduling.menu_srm_scheduling
+msgid "Scheduling management"
+msgstr "排程管理"
+
+
+#. module: srm_scheduling
+#: model:ir.ui.menu,name:srm_scheduling.menu_srm_scheduling_supplier
+msgid "Scheduling management"
+msgstr "排程管理"
+
+
+
+
+
+#. module: srm_scheduling
+#: model:ir.actions.client,name:srm_scheduling.action_srm_scheduling
+#: model:ir.ui.menu,name:srm_scheduling.menu_srm_scheduling_view_supplier_confirm
+msgid "Supplier confirmation"
+msgstr "供应商确认"
+
+
+
+
+#. module: srm_scheduling
+#: model:ir.actions.client,name:srm_scheduling.action_srm_scheduling
+#: model:ir.ui.menu,name:srm_scheduling.menu_srm_scheduling_view_buyer_confirm
+msgid "Buyer confirmation"
+msgstr "采购员确认"

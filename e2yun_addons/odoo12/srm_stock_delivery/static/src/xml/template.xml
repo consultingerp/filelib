@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name='delivery_main'>
+        <div class="page_head_search" data-js="snippet_testimonial_options">
+            <div>
+                <div>
+                    <h2 class="oe_pick_app_header">  </h2>
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-6 ">
+                   <h3>
+                       <strong>
+                            <div class="input-group">
+                                <input type="text" class="form-control deliverOrder_search"  placeholder="交货单号"/>
+                            </div>
+                        </strong>
+                    </h3>
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-6">
+                    <h2>
+                        <div class="input-group">
+                            <input type="text" class="form-control oe_searchbox" placeholder="Filter by location..."/>
+                            <span class="input-group-btn">
+                                <button class="btn btn-danger js_clear_search" type="button">x</button>
+                            </span>
+                        </div>
+                    </h2>
+                </div>
+                <div class="text-right">
+                    <h3 style="padding-top: 18px;">
+                        <button type="button" class='btn btn-danger js_drop_down fa fa-download'> 收 货 </button>
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="page_center_table">
+            <table class='table table-condensed js_op_table_todo'>
+                <thead>
+                    <tr>
+                        <th class="text-left">物料</th>
+                        <th class="text-center" width="100">采购订单</th>
+                        <th class="text-center" width="100">行项目</th>
+                        <th class='text-center' width="150">数量</th>
+                        <th class='text-center'>待办</th>
+                        <th>从</th>
+                        <th>到</th>
+                    </tr>
+                </thead>
+
+                <tbody class="page_center_tbody">
+                    <!--<t t-foreach="widget.get_rows()" t-as="row">-->
+                        <!--<tr t-att-class="row.classes + 'js_pack_op_line'" t-att-data-id="row.cols.id" t-att-data-container-id="row.cols.container_id" t-att-data-package-id="row.cols.package_id" t-att-data-ulid="row.cols.ul_id">-->
+                            <!--<td t-att-class="'brctbl-col1 text-left' + row.cols.head_container ? ' js_unfold' : ''">-->
+                                <!--&lt;!&ndash;<t t-if="!row.cols.head_container &amp;&amp; row.cols.container">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<span class="fa fa-level-up fa-rotate-90" style="margin-left:10px;margin-right:10px;"></span>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</t>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<t t-esc ="row.cols.product" />&ndash;&gt;-->
+                            <!--</td>-->
+                            <!--<td class="brctbl-col3 text-center">-->
+                                <!--&lt;!&ndash;<t t-esc="row.cols.ponum"/>&ndash;&gt;-->
+                            <!--</td>-->
+                            <!--<td class="brctbl-col3 text-center">-->
+                                <!--&lt;!&ndash;<t t-esc="row.cols.poitem"/>&ndash;&gt;-->
+                            <!--</td>-->
+                            <!--<td class='brctbl-col2 text-center js_row_qty'>-->
+                                 <!--<div class="input-group">-->
+                                    <!--<form class="js_submit_value">-->
+                                            <!--&lt;!&ndash;<input type="text" class="form-control text-center js_qty" t-att-id="row.cols.id" t-att-value="row.cols.rem"></input>&ndash;&gt;-->
+                                            <!--<input type="text" class="form-control text-center js_qty" ></input>-->
+                                    <!--</form>-->
+                                 <!--</div>-->
+                            <!--</td>-->
+                            <!--<td class="brctbl-col3 text-center">-->
+                                <!--&lt;!&ndash;<t t-esc="row.cols.qty"/> <t t-esc="row.cols.uom" />&ndash;&gt;-->
+                            <!--</td>-->
+                            <!--<td class="brctbl-col4 js_loc">-->
+                                <!--&lt;!&ndash;<t t-esc="row.cols.loc_name" />&ndash;&gt;-->
+                                <!--&lt;!&ndash;<t t-if="row.cols.pack" ><span> : <t t-esc="row.cols.pack" /></span></t>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<t t-if="row.cols.lot" ><span> : <t t-esc="row.cols.lot" /></span></t>&ndash;&gt;-->
+                            <!--</td>-->
+                            <!--<td class="brctbl-col5 js_loc">-->
+                                <!--&lt;!&ndash;<t t-esc="row.cols.dest_name" />&ndash;&gt;-->
+                                <!--&lt;!&ndash;<div class="pull-right btn-group">-->
+                                    <!--<button type="button" class="js_pack_change_dst btn btn-info btn-sm">Change destination location</button>-->
+                                <!--</div>&ndash;&gt;-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                    <!--</t>-->
+                </tbody>
+            </table>
+        </div>
+    </t>
+</templates>

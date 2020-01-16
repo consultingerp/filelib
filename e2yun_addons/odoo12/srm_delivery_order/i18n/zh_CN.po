@@ -1,0 +1,878 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* srm_delivery_order
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-05-09 09:10+0000\n"
+"PO-Revision-Date: 2019-05-09 09:10+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_report_delivery
+msgid "<strong>交货数量</strong>"
+msgstr "<strong>交货数量</strong>"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_report_delivery
+msgid "<strong>供应商：</strong>"
+msgstr "<strong>供应商：</strong>"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_report_delivery
+msgid "<strong>制单人:</strong><span>__________</span>"
+msgstr "<strong>制单人:</strong><span>__________</span>"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_report_delivery
+msgid "<strong>单位</strong>"
+msgstr "<strong>单位</strong>"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_report_delivery
+msgid "<strong>备注</strong>"
+msgstr "<strong>备注</strong>"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_report_delivery
+msgid "<strong>审核人:</strong><span>__________</span>"
+msgstr "<strong>审核人:</strong><span>__________</span>"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_report_delivery
+msgid "<strong>客户：</strong>"
+msgstr "<strong>客户：</strong>"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_report_delivery
+msgid "<strong>总箱数：</strong>"
+msgstr "<strong>总箱数：</strong>"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_report_delivery
+msgid "<strong>收货人:</strong><span>__________</span>"
+msgstr "<strong>收货人:</strong><span>__________</span>"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_report_delivery
+msgid "<strong>收货工厂：</strong>"
+msgstr "<strong>收货工厂：</strong>"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_report_delivery
+msgid "<strong>物料</strong>"
+msgstr "<strong>物料</strong>"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_report_delivery
+msgid "<strong>物料号</strong>"
+msgstr "<strong>物料号</strong>"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_report_delivery
+msgid "<strong>物料描述</strong>"
+msgstr "<strong>物料描述</strong>"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_report_delivery
+msgid "<strong>生产订单：</strong>"
+msgstr "<strong>生产订单：</strong>"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_report_delivery
+msgid "<strong>送货人:</strong><span>__________</span>"
+msgstr "<strong>送货人:</strong><span>__________</span>"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_report_delivery
+msgid "<strong>送货单号：</strong>"
+msgstr "<strong>送货单号：</strong>"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_report_delivery
+msgid "<strong>送货日期：</strong>"
+msgstr "<strong>送货日期：</strong>"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_report_delivery
+msgid "<strong>采购订单</strong>"
+msgstr "<strong>采购订单</strong>"
+
+#. module: srm_delivery_order
+#: selection:delivery.order,hstat:0
+msgid "Allot Goods"
+msgstr "配货"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_rep_view_allow_create_days
+msgid "Allow create days"
+msgstr "允许创建交货单天数"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_admng
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report_admng
+msgid "Already Delivery Qty"
+msgstr "已交货数"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_aomng
+msgid "Already Out Qty"
+msgstr "收货数量"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_product_orders_aprng
+msgid "Already Product Qty"
+msgstr "生产已交货数量"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_atsel
+msgid "Auto Selection PO"
+msgstr "自动选择采购订单"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_delivery_order_form
+msgid "Cancel"
+msgstr "取消"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_delivery_order_form
+msgid "Cancel Lock"
+msgstr "取消锁定"
+
+#. module: srm_delivery_order
+#: selection:delivery.order,hstat:0
+msgid "Check"
+msgstr "质检"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_comco
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_comco
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_rep_view_comco
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_purchase_orders_comco
+msgid "Company"
+msgstr "公司"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_batch_create_uid
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_create_uid
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_import_create_uid
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_create_uid
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_import_create_uid
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_rep_view_create_uid
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_product_orders_create_uid
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_purchase_orders_create_uid
+#: model:ir.model.fields,field_description:srm_delivery_order.field_order_line_po_mo_import_create_uid
+msgid "Created by"
+msgstr "创建人"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_batch_create_date
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_create_date
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_import_create_date
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_create_date
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_import_create_date
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_rep_view_create_date
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_product_orders_create_date
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_purchase_orders_create_date
+#: model:ir.model.fields,field_description:srm_delivery_order.field_order_line_po_mo_import_create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_batch_datec
+msgid "Date Code"
+msgstr "日期代码"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.delivery_order_rep_tree_view
+msgid "Delivery"
+msgstr "交货"
+
+#. module: srm_delivery_order
+#: model:ir.model,name:srm_delivery_order.model_delivery_order_rep_view
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_dnnum
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_delivery_order_id
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report_dnnum
+#: model:ir.ui.menu,name:srm_delivery_order.menu_srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_delivery_order_form
+msgid "Delivery Order"
+msgstr "交货单"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_purchase_orders_delivery_order_batch
+msgid "Delivery Order Batch"
+msgstr "批次信息"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_delivery_order_form
+msgid "Delivery Order Batch Form"
+msgstr "Delivery Order Batch Form"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_delivery_order_form
+msgid "Delivery Order Batch Tree"
+msgstr "Delivery Order Batch Tree"
+
+#. module: srm_delivery_order
+#: model:ir.actions.act_window,name:srm_delivery_order.delivery_order_import_form_action
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_import_order_id
+#: model:ir.ui.menu,name:srm_delivery_order.menu_delivery_order_import
+msgid "Delivery Order Import"
+msgstr "交货单批导"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_delivery_order_line
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report_dline
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_product_orders_delivery_product_line_id
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_purchase_orders_delivery_order_line_id
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_delivery_order_form
+msgid "Delivery Order Line"
+msgstr "交货订单行"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_import_delivery_order_line
+#: model:ir.model.fields,field_description:srm_delivery_order.field_order_line_po_mo_import_line_id
+msgid "Delivery Order Line Import"
+msgstr "Delivery Order Line Import"
+
+#. module: srm_delivery_order
+#: model:ir.actions.act_window,name:srm_delivery_order.action_delivery_order_rep
+#: model:ir.ui.menu,name:srm_delivery_order.menu_delivery_order_rep
+msgid "Delivery Order Report"
+msgstr "交货单创建"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.delivery_order_rep_tree_view
+msgid "Delivery Order Report Tree"
+msgstr "Delivery Order Report Tree"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.purchase_delivery_order_tree
+msgid "Delivery Order Tree"
+msgstr "Delivery Order Tree"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_delivery_product_orders
+msgid "Delivery Product Orders"
+msgstr "交货生产订单"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_delivery_order_form
+msgid "Delivery Product Orders Form"
+msgstr "Delivery Product Orders Form"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_delivery_order_form
+msgid "Delivery Product Orders Tree"
+msgstr "Delivery Product Orders Tree"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_batch_delivery_purchase_orders_id
+msgid "Delivery Purchase Order"
+msgstr "Delivery Purchase Order"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_delivery_purchase_orders
+msgid "Delivery Purchase Orders"
+msgstr "交货采购订单"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_delivery_order_form
+msgid "Delivery Purchase Orders Form"
+msgstr "Delivery Purchase Orders Form"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_delivery_order_form
+msgid "Delivery Purchase Orders Tree"
+msgstr "Delivery Purchase Orders Tree"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_delivery_order_form
+msgid "Delivery Purchasr Order Lines"
+msgstr "Delivery Purchasr Order Lines"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_batch_menge
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_rep_view_dnmeg
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_purchase_orders_menge
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_delivery_order_form
+msgid "Delivery Qty"
+msgstr "交货数"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_datoo
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report_datoo
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_rep_view_datoo
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_product_orders_ddate
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_purchase_orders_ddate
+msgid "Demand Date"
+msgstr "需求日期"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_order_line_po_mo_import_demand_id
+msgid "Demand Id"
+msgstr "Demand Id"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_product_orders_menge
+msgid "Demand Qty"
+msgstr "生产需求数量"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_product_orders_details_id
+msgid "Details Line"
+msgstr "需求行"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_batch_display_name
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_display_name
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_import_display_name
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_display_name
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_import_display_name
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report_display_name
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_rep_view_display_name
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_product_orders_display_name
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_purchase_orders_display_name
+#: model:ir.model.fields,field_description:srm_delivery_order.field_order_line_po_mo_import_display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_purchase_orders_done_menge
+msgid "Done Qty"
+msgstr "完成数量"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_batch_werks
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report_werks
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_werks
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_rep_view_werks
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_werks
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_purchase_orders_werks
+msgid "Factory"
+msgstr "工厂"
+
+#. module: srm_delivery_order
+#: selection:delivery.order,state:0
+#: selection:delivery.order.line.report,state:0
+msgid "Finished"
+msgstr "已完成"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_hstat
+msgid "Goods Status"
+msgstr "货品状态"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_batch_id
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_id
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_import_id
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_id
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_import_id
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report_id
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_rep_view_id
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_product_orders_id
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_purchase_orders_id
+#: model:ir.model.fields,field_description:srm_delivery_order.field_order_line_po_mo_import_id
+msgid "ID"
+msgstr "ID"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_is_edit_mantr
+msgid "IS Edit Mantr"
+msgstr "IS Edit Mantr"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_rep_view_inmeg
+msgid "In Goods Qty"
+msgstr "收货数"
+
+#. module: srm_delivery_order
+#: selection:delivery.order,hstat:0
+msgid "In Stock"
+msgstr "入库"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_isinvalid
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report_isinvalid
+msgid "Is Invalid"
+msgstr "失效"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_is_supplier
+msgid "Is Supplier"
+msgstr "Is Supplier"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order___last_update
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_batch___last_update
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_import___last_update
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line___last_update
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_import___last_update
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report___last_update
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_rep_view___last_update
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_product_orders___last_update
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_purchase_orders___last_update
+#: model:ir.model.fields,field_description:srm_delivery_order.field_order_line_po_mo_import___last_update
+msgid "Last Modified on"
+msgstr "最后修改日"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_batch_write_uid
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_import_write_uid
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_import_write_uid
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_write_uid
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_rep_view_write_uid
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_write_uid
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_product_orders_write_uid
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_purchase_orders_write_uid
+#: model:ir.model.fields,field_description:srm_delivery_order.field_order_line_po_mo_import_write_uid
+msgid "Last Updated by"
+msgstr "最后更新人"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_batch_write_date
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_import_write_date
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_import_write_date
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_write_date
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_rep_view_write_date
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_write_date
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_product_orders_write_date
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_purchase_orders_write_date
+#: model:ir.model.fields,field_description:srm_delivery_order.field_order_line_po_mo_import_write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_import_lifnr
+msgid "Lifnr"
+msgstr "Lifnr"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_import_name
+msgid "Line Name"
+msgstr "Line Name"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_line_version_id
+msgid "Line Version mat"
+msgstr "Line Version mat"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_delivery_order_form
+msgid "Lock"
+msgstr "锁定"
+
+#. module: srm_delivery_order
+#: model:ir.actions.act_window,name:srm_delivery_order.purchase_delivery_order_form_action
+#: model:ir.ui.menu,name:srm_delivery_order.menu_srm_delivery_order_form
+msgid "Manager"
+msgstr "管理"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_batch_matnr
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_matnr
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_product_orders_matnr
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_purchase_orders_matnr
+msgid "Material"
+msgstr "物料"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_order_line_po_mo_import_matnr
+msgid "Matnr"
+msgstr "物料"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report_prefix_code
+msgid "Matnr Code"
+msgstr "物料编码"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_order_line_po_mo_import_matnrdesc
+msgid "Matnr Desc"
+msgstr "物料描述"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report_matnrname
+msgid "Matnr Name"
+msgstr "物料名称"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_max_dnmng
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_product_orders_max_menge
+msgid "Max Delivery Qty"
+msgstr "最大交货数量"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_order_line_po_mo_import_menge
+msgid "Menge"
+msgstr "Menge"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_monum
+msgid "Model"
+msgstr "模型"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_name
+msgid "Name"
+msgstr "名字"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_dnmng
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report_dnmng
+msgid "Need Delivery Qty"
+msgstr "需交货数"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_purchase_orders_old_menge
+msgid "Old Delivery Qty"
+msgstr "Old Delivery Qty"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_import_line_po_mo
+msgid "Order Line Po Mo Import"
+msgstr "Order Line Po Mo Import"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_import_name
+msgid "Order Name"
+msgstr "Order Name"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.purchase_demand_publish_create_filter
+msgid "Other"
+msgstr "其他"
+
+#. module: srm_delivery_order
+#: selection:delivery.order,hstat:0
+msgid "Out Stock"
+msgstr "准备出库"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report_menge
+msgid "PO Delivery Qty"
+msgstr "采购交货数量"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_batch_pomen
+msgid "PO Qty"
+msgstr "PO 数量"
+
+#. module: srm_delivery_order
+#: code:addons/srm_delivery_order/models/delivery_order.py:750
+#, python-format
+msgid "Packing"
+msgstr "Packing"
+
+#. module: srm_delivery_order
+#: selection:delivery.order,hstat:0
+msgid "Passage"
+msgstr "在途"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_pocondhideorshow
+msgid "Pocondition field Show or Hide"
+msgstr "Pocondition field Show or Hide"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_state_begin_lock
+msgid "Pre-lock state"
+msgstr "Pre-lock state"
+
+#. module: srm_delivery_order
+#: selection:delivery.order,state:0
+#: selection:delivery.order.line.report,state:0
+#: model:ir.ui.view,arch_db:srm_delivery_order.purchase_demand_publish_create_filter
+msgid "Print"
+msgstr "打印"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_prinu
+msgid "Print Count"
+msgstr "打印次数"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_delivery_order_form
+msgid "Print Delivery Order"
+msgstr "打印送货单"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_rep_view_prinu
+msgid "Print Qty"
+msgstr "打印数量"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_printSendDate
+msgid "Print Send Date"
+msgstr "Print Send Date"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_prnum
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_prnum
+msgid "Produce Order"
+msgstr "生产订单"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_batch_pdate
+msgid "Product Date"
+msgstr "生产日期"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report_prnum
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_product_orders_prnum
+msgid "Product Order"
+msgstr "生产订单"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_product_orders_penge
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_delivery_order_form
+msgid "Product Qty"
+msgstr "交货数量"
+
+#. module: srm_delivery_order
+#: selection:delivery.order,state:0
+#: selection:delivery.order.line.report,state:0
+msgid "Purchase Cancel"
+msgstr "采购取消"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_ekgrp
+msgid "Purchase Group"
+msgstr "采购组"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_batch_ponum
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report_ponum
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_pocondition
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_purchase_orders_ponum
+#: model:ir.model.fields,field_description:srm_delivery_order.field_order_line_po_mo_import_po
+msgid "Purchase Order"
+msgstr "采购订单"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_order_line_po_mo_import_poitem
+msgid "Purchase Order Item"
+msgstr "Purchase Order Item"
+
+#. module: srm_delivery_order
+#: model:ir.model,name:srm_delivery_order.model_purchase_order_line
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_batch_pline
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_purchase_orders_pline
+msgid "Purchase Order Line"
+msgstr "采购订单行"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report_pline
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_purchase_orders_item
+msgid "Purchase Order Line ID"
+msgstr "行项目"
+
+#. module: srm_delivery_order
+#: selection:delivery.order,state:0
+#: selection:delivery.order.line.report,state:0
+msgid "Purhase Lock"
+msgstr "采购锁定"
+
+#. module: srm_delivery_order
+#: model:ir.model,name:srm_delivery_order.model_delivery_order_line_report
+msgid "Read the Delivery Order Line."
+msgstr "Read the Delivery Order Line."
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_delivery_order_form
+msgid "Recovery"
+msgstr "恢复"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_memo
+msgid "Remark"
+msgstr "备注"
+
+#. module: srm_delivery_order
+#: model:ir.actions.report,name:srm_delivery_order.report_srm_delivery_quotation
+msgid "SRM Delivery Order"
+msgstr "交货单"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report_sdmng
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_sdmng
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_rep_view_menge
+msgid "Scheduling Qty"
+msgstr "排程数"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.purchase_demand_publish_create_filter
+msgid "Search Delivety Order"
+msgstr "Search Delivety Order"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.purchase_delivery_order_line_filter
+msgid "Search Delivety Order Line"
+msgstr "Search Delivety Order Line"
+
+#. module: srm_delivery_order
+#: model:ir.actions.act_window,name:srm_delivery_order.delivery_order_line_tree_action
+#: model:ir.ui.menu,name:srm_delivery_order.menu_delivery_order_line_rep
+msgid "Select"
+msgstr "查询"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report_senddate
+msgid "Send Date"
+msgstr "送货日期"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report_state
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_state
+msgid "Status"
+msgstr "状态"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_lifnr
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_lifnr
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report_lifnr
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_rep_view_lifnr
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_product_orders_lifnr
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_purchase_orders_lifnr
+msgid "Supplier"
+msgstr "供应商"
+
+#. module: srm_delivery_order
+#: selection:delivery.order,state:0
+#: selection:delivery.order.line.report,state:0
+msgid "Supplier Cancel"
+msgstr "供应商取消"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report_supplier_code
+msgid "Supplier Code"
+msgstr "供应商编码"
+
+#. module: srm_delivery_order
+#: selection:delivery.order,state:0
+#: selection:delivery.order.line.report,state:0
+#: model:ir.ui.view,arch_db:srm_delivery_order.purchase_demand_publish_create_filter
+msgid "Supplier Create"
+msgstr "创建"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report_supplier_name
+msgid "Supplier Name"
+msgstr "供应商名称"
+
+#. module: srm_delivery_order
+#: sql_constraint:delivery.order.line:0
+msgid "The amount of demand must be greater than 0 ."
+msgstr "The amount of demand must be greater than 0 ."
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_boxnu
+msgid "Total Box Qty"
+msgstr "最大箱数"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_meins
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_report_meins
+msgid "Unit"
+msgstr "单位"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_rep_view_usmeg
+msgid "Used Qty"
+msgstr "Used Qty"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_line_version_id
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_rep_view_versi
+msgid "Version"
+msgstr "版本"
+
+#. module: srm_delivery_order
+#: model:ir.model,name:srm_delivery_order.model_delivery_order_import
+msgid "delivery.order.import"
+msgstr "delivery.order.import"
+
+#. module: srm_delivery_order
+#: model:ir.model,name:srm_delivery_order.model_delivery_order_line_import
+msgid "delivery.order.line.import"
+msgstr "delivery.order.line.import"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_rep_view_isAllowCreate
+msgid "isAllowCreate"
+msgstr "isAllowCreate"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_rep_view_isallownoschedulecreate
+msgid "isallownoschedulecreate"
+msgstr "isallownoschedulecreate"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_delivery_order_rep_view_isscheduledate
+msgid "isscheduledate"
+msgstr "isscheduledate"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_purchase_order_line_no_more_gr
+msgid "no more gr"
+msgstr "no more gr"
+
+#. module: srm_delivery_order
+#: model:ir.model,name:srm_delivery_order.model_order_line_po_mo_import
+msgid "order.line.po.mo.import"
+msgstr "order.line.po.mo.import"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.purchase_delivery_order_tree
+msgid "pack"
+msgstr "打包"
+
+#. module: srm_delivery_order
+#: code:addons/srm_delivery_order/models/delivery_order.py:189
+#, python-format
+msgid "交货单第%s行,关联的采购订单%s,行项目%s数量已经大于未清数量%s个."
+msgstr "交货单第%s行,关联的采购订单%s,行项目%s数量已经大于未清数量%s个."
+
+#. module: srm_delivery_order
+#: model:ir.model,name:srm_delivery_order.model_delivery_order
+msgid "交货订单"
+msgstr "交货订单"
+
+#. module: srm_delivery_order
+#: model:ir.model,name:srm_delivery_order.model_delivery_order_line
+msgid "交货订单行"
+msgstr "交货订单行"
+
+#. module: srm_delivery_order
+#: model:ir.model,name:srm_delivery_order.model_delivery_order_batch
+msgid "批次信息"
+msgstr "批次信息"
+
+#. module: srm_delivery_order
+#: model:ir.model.fields,field_description:srm_delivery_order.field_purchase_order_line_delivery_qty
+msgid "收货数量"
+msgstr "收货数量"
+
+#. module: srm_delivery_order
+#: model:ir.model,name:srm_delivery_order.model_delivery_product_orders
+msgid "生产订单"
+msgstr "生产订单"
+
+#. module: srm_delivery_order
+#: model:ir.ui.view,arch_db:srm_delivery_order.srm_report_delivery
+msgid "送  货  单"
+msgstr "送  货  单"
+
+#. module: srm_delivery_order
+#: model:ir.model,name:srm_delivery_order.model_delivery_purchase_orders
+msgid "采购订单"
+msgstr "采购订单"
+

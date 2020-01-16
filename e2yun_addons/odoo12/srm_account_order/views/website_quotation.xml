@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+
+  <template id="assets_frontend" inherit_id="website.assets_frontend" name="Website Quote frontend assets">
+    <xpath expr="." position="inside">
+      <script type="text/javascript" src="/srm_account_order/static/src/js/website_quotation.js"></script>
+      <script type="text/javascript" src="/srm_account_order/static/lib/jSignature/jSignature.min.js"></script>
+      <link rel='stylesheet' href='/srm_account_order/static/src/css/website_quotation.css'/>
+    </xpath>
+  </template>
+
+  <template id="srm_account_pricing" name="发票价格">
+      <section id="quote">
+          <table class="table">
+              <thead>
+                  <tr>
+                      <th>产品</th>
+                      <th>数量</th>
+                      <th >单价</th>
+                      <th >税金</th>
+                      <th >总额</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr t-foreach="quotation.account_lines" t-as="line">
+                      <td>
+                          <div t-field="line.product_id"/>
+                      </td>
+                      <td><div t-field="line.product_uom_qty"/> </td>
+                      <td>
+                          <strong >
+                                 <span t-field="line.price_unit"/>
+                          </strong>
+                      </td>
+                      <td>
+                         <div t-field="line.tax_price"/>
+                      </td>
+                      <td>
+                          <span t-field="line.price_total_tax"/>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td></td><td></td><td></td>
+                      <td ><strong>总计:</strong></td>
+                      <td >
+                            <strong t-esc="quotation.total_price"/>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </section>
+      <t t-call="srm_account_order.quotation_toolbar"/>
+  </template>
+    
+
+  <template id="srm_account_chatter">
+      <h1 class="page-header hidden-print">历史</h1>
+      <ul class="media-list hidden-print" id="comments-list">
+          <t t-foreach="quotation.message_ids" t-as="message">
+              <li class="media" t-if="message.message_type not in ['comment', 'notification'] or message.subtype_id">
+                  <div class="media-body">
+                      <img class="media-object pull-left" t-att-src="website.image_url(message.author_id, 'image_small')" style="width: 50px; margin-right: 10px;"/>
+                      <div class="media-body">
+                          <h5 class="media-heading">
+                              <span t-field="message.author_id"/> <small>on <span t-field="message.date"/></small>
+                          </h5>
+                          <div t-field="message.body"/>
+                      </div>
+                  </div>
+              </li>
+          </t>
+      </ul>
+  </template>
+
+  <!-- Options:Quotation srm_account_chatter: user can reply -->
+  <template id="opt_quotation_srm_account_chatter_post_complete_comment" name="Allow Comments" customize_show="True" inherit_id="srm_account_order.srm_account_chatter">
+      <xpath expr="//h1" position="after">
+          <section class="mb32 css_editable_mode_hidden hidden-print">
+              <form id="comment" t-attf-action="/srm_inquiry_account/#{quotation.id}/post" method="POST">
+                  <img class="img pull-left img-rounded" t-att-src="website.image_url(user_id.partner_id, 'image_small')" style="width: 50px; margin-right: 10px;"/>
+                  <div class="pull-left mb32" style="width: 75%%" t-if="quotation.state in ['send']" >
+                      <textarea rows="4" name="comment" class="form-control" placeholder="Send us a note..."></textarea>
+                      <button type="submit" class="btn btn-primary mt8">Send</button>
+                  </div>
+              </form>
+          </section>
+          <div class="clearfix"/>
+      </xpath>
+  </template>
+
+  <template id="quotation_toolbar">
+      <div class="text-center hidden-print" t-if="quotation.state in ['send'] ">
+
+          <a class="btn btn-success" data-toggle="modal" data-target="#modelaccept1"
+            t-if="days_valid &gt;= 0">
+              <i class="fa fa-check"></i> 接受
+          </a>
+          <a class="btn btn-danger fa fa-times" data-toggle="modal" data-target="#modeldecline">
+              拒绝
+          </a>
+          <a class="btn btn-info fa fa-comment" type="submit" href="#discussion">
+              反馈
+          </a>
+
+      </div>
+  </template>
+
+  <template id="srm_account_inquiry_template" name="供应商对账单确认">
+      <t t-call="website.layout">
+        <body data-spy="scroll" data-target=".navspy" data-offset="50">
+            <div class="container o_srm_account_order">
+              <div class="row mt16">
+                  <div class="col-md-3">
+                      <div class="bs-sidebar">
+                         <div class="text-center hidden-print" t-if="quotation.state in ['send']" style="padding: 10px">
+
+
+                             <a t-if="order_valid" class="btn btn-primary btn-block fa fa-check" data-toggle="modal" data-target="#modelaccept1">
+                                  Accept Order
+                              </a>
+                             <!--
+                                    <form id="accept1" t-attf-action="/srm_inquiry_account/accept1/#{quotation.id}"  method="POST">
+                                         <button type="submit" class="btn btn-primary btn-block fa fa-check">Accept Order</button>
+                                    </form> -->
+
+                              <a t-if="not order_valid" href="#discussion" class="btn btn-info btn-block">
+                                  <strong>This offer expired!</strong><br/>
+                                  Contact us for new quote.
+                              </a>
+                              <div class="mt8" t-if="order_valid">
+                                  <a type="submit" href="#discussion">
+                                      Ask Changes
+                                  </a>
+                                  <!-- or
+                                  <a data-toggle="modal" data-target="#modeldecline">
+                                      Reject
+                                  </a> -->
+                              </div>
+                          </div>
+
+                          <hr class="mt0 mb0"/>
+                          <t t-call="srm_account_order.navigation_menu"/>
+                          <hr class="mt0 mb0"/>
+                      </div>
+                  </div>
+                  <div class="col-md-9">
+                      <div class="alert alert-success alert-dismissable" t-if="message==1">
+                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&amp;times;</button>
+                          Your message has been successfully approved!
+                      </div>
+                      <div class="alert alert-warning alert-dismissable" t-if="message==2">
+                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&amp;times;</button>
+                          This quotation has been rejected. <a href="#discussion">Contact us</a> if you want a new one.
+                      </div>
+                      <div class="alert alert-warning alert-dismissable" t-if="message==3">
+                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&amp;times;</button>
+                          This order has been validated. Thanks for your trust
+                          and do not hesitate to <a href="#discussion">contact us</a> for
+                          any question.
+                      </div>
+
+
+                      <div class="alert alert-warning alert-dismissable" t-if="message==4 and quotation.state != 'approved'">
+                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&amp;times;</button>
+                          This order has already been
+                            <t t-if="quotation.state=='cancel'">cancelled</t>
+                            <t t-if="quotation.state not in ('cancel','draft')">validated</t>
+                          ! You can <a href="#discussion">contact us</a> for
+                          any question.
+                      </div>
+
+                      <a id="introduction"/>
+                      <h1 class="page-header mt16">
+                          <span>Your Order</span>
+                          <em t-esc="quotation.name"/>
+                          <small t-field="quotation.state"/>
+                      </h1>
+
+
+                       <div class="modal fade" id="modelaccept1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <form id="accept" method="POST" t-attf-action="/srm_inquiry_account/accept1/#{quotation.id}" class="modal-content">
+                              <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                              <div class="modal-header">
+                                <h4 class="modal-title">确认接受对账单</h4>
+                              </div>
+                            <div class="modal-body" id="sign-dialog">
+                              <div id="signer" class="form-group">
+                                  <label class="control-label" for="name">Your Name:</label>
+                                  <input type="text" name="signer" id="name" class="form-control"/>
+                              </div>
+                            </div>
+                             <div class="modal-footer">
+                                <button type="submit" t-attf-class="btn btn-primary">确认</button> or
+                                <button type="button" class="btn btn-link" data-dismiss="modal" style="padding: 0">Cancel</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+
+
+                      <div class="modal fade" id="modelaccept" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <form id="accept" method="POST" t-attf-action="/srm_inquiry_account/accept/#{quotation.id}" class="js_accept_json modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
+                              <h4 class="modal-title">Validate Order</h4>
+                            </div>
+                            <div class="modal-body" id="sign-dialog">
+                              <p>
+                                  I agree that by signing this proposal, I
+                                  accept it on the behalf of <b t-field="quotation.company_id"/>,
+                                  for an amount of
+                                  <b data-id="total_amount" t-field="quotation.total_price"
+                                    />
+
+                              </p>
+                              <div id="signer" class="form-group">
+                                  <label class="control-label" for="name">Your Name:</label>
+                                  <input type="text" name="signer" id="name" class="form-control"/>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" t-attf-class="btn btn-primary">Sign Order</button> or
+                                <button type="button" class="btn btn-link" data-dismiss="modal" style="padding: 0">Cancel</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+
+                      <div class="alert alert-warning alert-dismissable" t-if="quotation.state == 'cancel'">
+                          <button type="button" class="close hidden-print" data-dismiss="alert" aria-hidden="true">&amp;times;</button>
+                          <strong>This quotation has been canceled.</strong> Contact us to get a new quote.
+                      </div>
+
+                      <div class="modal fade" id="modeldecline" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <form id="decline" method="POST" t-attf-action="/srm_inquiry_account/#{quotation.id}/decline" class="modal-content">
+                              <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                              <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&amp;times;</button>
+                              <h4 class="modal-title">拒绝对账单</h4>
+                            </div>
+                            <div class="modal-body">
+                              <p>
+                                  告诉我们为什么你拒绝这个对账单，这将帮助我们改进我们的服务
+                              </p>
+                              <textarea rows="4" name="decline_message" placeholder="您的反馈....." class="form-control"/>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" t-att-id="quotation.id" class="btn btn-primary">拒绝</button> 或
+                                <button type="button" class="btn btn-link" data-dismiss="modal" style="padding: 0">取消</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+
+
+                           <div class="row mt32">
+                          <div class="col-md-6">
+                              <div class="row">
+                                  <label class="col-sm-4 text-right">Customer:</label>
+                                  <div class="col-sm-8">
+                                      <div t-field="quotation.partner_id"/>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <label class="col-sm-4 text-right">Bill To:</label>
+                                  <div class="col-sm-8">
+                                      <div t-field="quotation.partner_id" t-field-options='{
+                                          "widget": "contact",
+                                          "fields": ["address", "name", "phone", "email"]
+                                          }'/>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="row">
+                                  <label class="col-sm-5 text-right">Your Contact:</label>
+                                  <div class="col-sm-7">
+                                      <div t-field="quotation.create_uid" t-field-options='{
+                                          "widget": "contact",
+                                          "fields": ["name", "phone", "email"]
+                                          }'/>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="oe_structure"/>
+
+                      <a id="srm_account_pricing"/>
+                      <t t-call="srm_account_order.srm_account_pricing"/>
+                      <a id="options"/>
+                      <t t-call="srm_account_order.optional_products"/>
+                      <a id="discussion"/>
+                      <t t-call="srm_account_order.srm_account_chatter"/>
+                  </div>
+              </div>
+            </div>
+        </body>
+      </t>
+  </template>
+
+  <template id="navigation_menu">
+    <div class="hidden-print navspy" t-ignore="true" role="complementary">
+        <ul class="nav bs-sidenav" data-id="quote_sidebar">
+            <li><a href="#introduction">Introduction</a></li>
+        </ul>
+    </div>
+  </template>
+
+  <!-- Options:Quotation Signature
+  <template id="opt_quotation_signature" name="Ask Signature" customize_show="True" inherit_id="srm_account_order.srm_account_inquiry_template">
+      <xpath expr="//div[@id='sign-dialog']" position="inside">
+        <div class="panel panel-default mt16 mb0" id="drawsign">
+            <div class="panel-heading">
+                <div class="pull-right">
+                    <a id="sign_clean" class="btn btn-xs">Clear</a>
+                </div>
+                <strong>Draw your signature</strong>
+            </div>
+            <div id="signature" class="panel-body" style="padding: 0"/>
+        </div>
+      </xpath>
+  </template>-->
+
+  <template id="optional_products">
+    <div class="container mt32" t-if="option">
+        <section data-snippet-id="title">
+            <h1 class="page-header">Options</h1>
+        </section>
+        <section id="options">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Products</th>
+                        <th>Description</th>
+                        <th></th>
+                        <th class="text-right">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="quotation.options" t-as="option">
+                        <t t-if="not option.line_id">
+                            <td>
+                                <div t-field="option.product_id.name"/>
+                            </td>
+                            <td>
+                                <div t-field="option.name"/>
+                            </td>
+                            <td>
+                                <strong t-if="option.discount" class="text-info">
+                                    <t t-esc="((option.discount % 1) and '%s' or '%d') % option.discount"/>% discount
+                                </strong>
+                            </td>
+                            <td>
+                                <strong class="text-right">
+                                    <div t-field="option.price_unit"
+                                    t-field-options='{"widget": "monetary", "display_currency": "quotation.currency"}'
+                                    t-att-style="option.discount and 'text-decoration: line-through' or ''"
+                                    t-att-class="option.discount and 'text-danger' or ''"/>
+                                    <div t-if="option.discount">
+                                        <t t-esc="'%.2f' % ((1-option.discount / 100.0) * option.price_unit)"/>
+                                    </div>
+                                </strong>
+                            </td>
+                            <td class="pull-right" t-if="quotation.state in ['draft', 'approved']">
+                                <a t-attf-href="/srm_inquiry_account/add_line/#{ option.id }/#{ quotation.id }/" class="mb8 hidden-print">
+                                    <span class="fa fa-shopping-cart"/>
+                                </a>
+                            </td>
+                        </t>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+  </template>
+
+  <template id="so_template" name="SO Template">
+    <t t-call="website.layout">
+        <body data-spy="scroll" data-target=".navspy" data-offset="50">
+            <div class="container o_srm_account_order">
+                <div class="row mt16">
+                    <div class="col-md-3">
+                        <div class="bs-sidebar">
+                            <div class="hidden-print navspy" role="complementary" t-ignore="True">
+                                <ul class="nav bs-sidenav" data-id="quote_sidebar"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="alert alert-info alert-dismissable" t-ignore="True">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&amp;times;</button>
+                            <p>
+                                <strong>Template Header:</strong> this content
+                                will appear on all quotations using this
+                                template.
+                            </p>
+                            <p class="text-muted">
+                                Titles with style <i>Heading 1</i> and
+                                <i>Heading 2</i> will be used to generate the
+                                table of content automatically.
+                            </p>
+                        </div>
+                        <div id="template_introduction" t-field="template.website_description"/>
+                        <t t-foreach="template.quote_line" t-as="line">
+                            <div class="alert alert-info alert-dismissable" t-ignore="True">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&amp;times;</button>
+                                Product: <strong t-esc="line.product_id.name"/>:
+                                this content will appear on the quotation only if this
+                                product is put on the quote.
+                            </div>
+                            <div t-field="line.website_description"/>
+                        </t>
+                        <t t-foreach="template.options" t-as="option_line">
+                            <div class="alert alert-info alert-dismissable" t-ignore="True">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&amp;times;</button>
+                                Optional Product: <strong t-esc="option_line.product_id.name"/>:
+                                this content will appear on the quotation only if this
+                                product is used in the quote.
+                            </div>
+                            <div t-field="option_line.website_description"/>
+                        </t>
+                        <section id="terms" class="container" t-if="template.notes">
+                            <h1 class="page-header" t-ignore="True">Terms &amp; Conditions</h1>
+                            <p t-field="template.notes"/>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </body>
+        </t>
+  </template>
+
+
+</data>
+</odoo>

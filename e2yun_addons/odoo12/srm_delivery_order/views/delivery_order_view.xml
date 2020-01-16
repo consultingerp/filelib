@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="purchase_delivery_order_form_action" model="ir.actions.act_window">
+            <field name="name">Manager</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">delivery.order</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="purchase_delivery_order_tree" model="ir.ui.view">
+            <field name="name">delivery.order.tree</field>
+            <field name="model">delivery.order</field>
+            <field name="arch" type="xml" >
+                <tree string="Delivery Order Tree" colors="red:state == 'supplier_cancel';red:state == 'purchase_cancel';blue:state == 'print';" create="false">
+                    <field name="dnnum"/>
+                    <field name="comco" invisible="1" />
+                    <field name="werks"  />
+                    <field name="lifnr"/>
+                    <field name="datoo"/>
+                    <field name="state"/>
+                    <field name="hstat"/>
+                    <field name="create_date"/>
+                    <field name="boxnu"  invisible="1"/>
+                    <field name="is_supplier" invisible="1"/>
+                    <button name="delivery_pack"  string="pack" type="object" class="oe_highlight" context="{'dnnum':dnnum,'lifnr':lifnr,'werks':werks}" attrs="{'invisible':['|',('is_supplier','=',False),('state','in',['Finished'])]}" />
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="delivery_purchase_orders_tree" model="ir.ui.view">
+            <field name="name">delivery.purchase.orders.tree</field>
+            <field name="model">delivery.purchase.orders</field>
+            <field name="arch" type="xml">
+                <tree string="Delivery Purchase Orders Tree" create="false"><!-- create="false" -->
+                    <field name="ponum"/>
+                    <field name="item"/>
+                    <field name="pline"/>
+                    <field name="menge" sum="Delivery Qty"/>
+                    <field name="comco" invisible="1"/>
+                    <field name="lifnr" invisible="1"/>
+                    <field name="old_menge" invisible="1"/>
+                    <field name="done_menge" invisible="1"/>
+                    <field name="matnr" invisible="1"/>
+                    <field name="werks" invisible="1"/>
+                    <field name="ddate" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="srm_delivery_order_form" model="ir.ui.view">
+            <field name="name">delivery.order.form</field>
+            <field name="model">delivery.order</field>
+            <field name="arch" type="xml">
+                <form string="Delivery Order">
+                    <header>
+                        <button name="order_lock" type="object" string="Lock" class="oe_highlight" attrs="{'invisible':['|',('dnnum','&lt;=',0),'|',('is_supplier','=',True),'|',('state','in',['print','Finished','purchase_lock'])]}"/>
+                        <button name="order_cancel_lock" type="object" string="Cancel Lock" class="oe_highlight" attrs="{'invisible':['|',('dnnum','&lt;=',0),'|',('is_supplier','=',True),('state','in',['Finished','supplier_create','print','supplier_cancel','purchase_cancel'])]}"/>
+                        <button name="order_print" type="object" string="Print Delivery Order" class="oe_highlight" attrs="{'invisible':['|',('dnnum','&lt;=',0),'|',('state','not in',['supplier_create','print']),'|',('is_supplier','!=',True)]}"/>
+                        <button name="order_recovery" type="object" string="Recovery" class="oe_highlight" attrs="{'invisible':['|',('dnnum','&lt;=',0),'|',('is_supplier','!=',True),'|',('state','!=','supplier_cancel')]}"/>
+                        <button name="order_cancel" type="object" string="Cancel" class="oe_highlight" attrs="{'invisible':['|',('dnnum','&lt;=',0),'|',('is_supplier','!=',True),'|',('state','not in',['print','supplier_create'])]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="supplier_create,print" statusbar_colors='{"supplier_create":"blue","print":"blue"}' readonly="1"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="dnnum" />
+                                <field name="comco" />
+                                <field name="werks"/>
+                                <field name="lifnr"/>
+                                <field name="is_supplier" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="datoo"/>
+                                <field name="hstat"/>
+                                <field name="boxnu" invisible="1" attrs="{'readonly':['|',('is_supplier','!=',True),('state','=','Finished')]}"/>
+                                <field name="prinu"/>
+                                <field name="pocondhideorshow" invisible="1"/>
+                                <field name="pocondition" attrs="{'invisible':['|',('pocondhideorshow','=',True)]}" on_change="onchange_pocondition(werks,comco,lifnr,datoo,pocondition)"/>
+                            </group>
+                        </group>
+                        <field name="delivery_order_line" attrs="{'readonly':[('state','=','Finished')]}" context="{'comco':comco,'lifnr':lifnr,'werks':werks}">
+                            <form string="Delivery Purchasr Order Lines">
+                                <group>
+                                    <group>
+                                        <field name="is_edit_mantr" invisible="1"/>
+                                        <field name="matnr" force_save="1" attrs="{'readonly':[('is_edit_mantr','!=',True)]}"/>
+                                        <field name="werks" invisible="1"/>
+                                        <field name="ekgrp" invisible="1"/>
+                                        <field name="meins"/>
+                                        <field name="memo"/>
+                                        <field name="comco" invisible="1"/>
+                                    </group>
+                                    <group>
+                                        <field name="max_dnmng" invisible="1"/>
+                                        <field name="dnmng"/>
+                                        <field name="sdmng" force_save="1"/>
+                                        <field name="aomng" force_save="1"/>
+                                        <field name="admng" force_save="1"/>
+                                        <field name="lifnr" invisible="1"/>
+                                        <field name="atsel"/>
+                                    </group>
+                                </group>
+                                <div>
+                                    <label for="delivery_purchase_orders"/>
+                                    <field name="delivery_purchase_orders" context="{'matnr':matnr,'werks':werks,'comco':comco,'lifnr':lifnr}">
+                                        <form string="Delivery Purchase Orders Form">
+                                            <group>
+                                                <group>
+                                                    <field name="comco" invisible="1"/>
+                                                    <field name="matnr" invisible="1"/>
+                                                    <field name="ponum" readonly="1" force_save="1"/><!-- domain="[('company_id','=',comco),('state','=','supply_confirm'),('partner_id','=',lifnr),('picking_type_id.warehouse_id','=',werks)]" -->
+                                                    <field name="item" readonly="1" force_save="1"/>
+                                                    <field name="pline" readonly="1" force_save="1"/>
+                                                </group>
+                                                <group>
+                                                    <field name="werks" invisible="1"/>
+                                                    <field name="lifnr" invisible="1"/>
+                                                    <field name="old_menge" invisible="1"/>
+                                                    <field name="menge" />
+                                                    <field name="ddate"  widget="date"/>
+                                                </group>
+                                            </group>
+                                            <div>
+                                                <label for="delivery_order_batch"/>
+                                                <field name="delivery_order_batch" context="{'matnr':matnr,'werks':werks,'ponum':ponum,'pline':pline,'pomen':menge}">
+                                                    <form string="Delivery Order Batch Form">
+                                                        <field name="ponum"/>
+                                                        <field name="pline"/>
+                                                        <field name="matnr"/>
+                                                        <field name="menge"/>
+                                                        <field name="pomen"/>
+                                                        <field name="werks"/>
+                                                        <field name="pdate"/>
+                                                        <field name="datec"/>
+                                                    </form>
+                                                    <tree string="Delivery Order Batch Tree" editable="bottom">
+                                                        <field name="ponum" invisible="1"/>
+                                                        <field name="pline" invisible="1"/>
+                                                        <field name="matnr" invisible="1"/>
+                                                        <field name="werks" invisible="1"/>
+                                                        <field name="pomen"/>
+                                                        <field name="menge"/>
+                                                        <field name="pdate"/>
+                                                        <field name="datec"/>
+                                                    </tree>
+                                                </field>
+                                            </div>
+                                        </form>
+                                        <tree string="Delivery Purchase Orders Tree"><!-- create="false" -->
+                                            <field name="ponum"/>
+                                            <field name="item"/>
+                                            <field name="pline"/>
+                                            <field name="menge" sum="Delivery Qty"/>
+                                            <field name="comco" invisible="1"/>
+                                            <field name="lifnr" invisible="1"/>
+                                            <field name="old_menge" invisible="1"/>
+                                            <field name="done_menge" invisible="1"/>
+                                            <field name="matnr" invisible="1"/>
+                                            <field name="werks" invisible="1"/>
+                                            <field name="ddate" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </div>
+                                <div>
+                                    <label for="delivery_product_orders"/>
+                                    <field name="delivery_product_orders" > <!--  context="{'matnr':matnr,'lifnr':lifnr}"-->
+                                        <form string="Delivery Product Orders Form">
+                                            <group>
+                                                <group>
+                                                    <field name="details_id" invisible="1"/>
+                                                    <field name="prnum" readonly='1' force_save="1"/><!-- domain="[('company_id','=',comco),('state','=','supply_confirm'),('partner_id','=',lifnr),('picking_type_id.warehouse_id','=',werks)]" -->
+                                                    <field name="matnr" />
+                                                </group>
+                                                <group>
+                                                    <field name="lifnr" invisible="1"/>
+                                                    <field name="ddate"  widget="date"  readonly='1' force_save="1"/>
+                                                    <field name="max_menge" invisible="1"/>
+                                                    <field name="penge" readonly='0'/>
+                                                </group>
+                                            </group>
+                                        </form>
+                                        <tree string="Delivery Product Orders Tree" ><!-- create="false" delete="true" edit="true"-->
+                                            <field name="details_id" invisible="1"/>
+                                            <field name="ddate" invisible="1"/>
+                                            <field name="lifnr" invisible="1"/>
+                                            <field name="prnum"/>
+                                            <field name="matnr"/>
+                                            <field name="menge"/>
+                                            <field name="aprng"/>
+                                            <field name="penge" sum="Product Qty"/>
+                                        </tree>
+                                    </field>
+                                </div>
+                            </form>
+                            <tree string="Delivery Order Line"   context="{'matnr':matnr,'werks':werks}">
+                                <field name="id" invisible="1"/>
+                                <field name="matnr" force_save="1"/>
+                                <field name="ekgrp" invisible="1"/>
+                                <field name="prnum" invisible="1"/>
+                                <field name="monum" invisible="1"/>
+                                <field name="dnmng"/>
+                                <field name="sdmng" force_save="1"/>
+                                <field name="aomng" force_save="1"/>
+                                <field name="admng" force_save="1"/>
+                                <field name="meins"/>
+                                <field name="memo"/>
+                                <field name="atsel"/>
+                                <field name="max_dnmng" invisible="1" force_save="1"/>
+                                <field name="werks" invisible="1"/>
+                                <field name="version_id" invisible="1" />
+                                <field name="line_version_id" invisible="1" />
+                                <field name="delivery_purchase_orders" invisible="1">
+                                    <tree string="Delivery Purchase Orders Tree" create="false"><!-- create="false" -->
+                                        <field name="ponum"/>
+                                        <field name="item"/>
+                                        <field name="pline"/>
+                                        <field name="menge" sum="Delivery Qty"/>
+                                        <field name="comco" invisible="1"/>
+                                        <field name="lifnr" invisible="1"/>
+                                        <field name="old_menge" invisible="1"/>
+                                        <field name="done_menge" invisible="1"/>
+                                        <field name="matnr" invisible="1"/>
+                                        <field name="werks" invisible="1"/>
+                                        <field name="ddate" invisible="1"/>
+                                    </tree>
+                                </field>
+                                <field name="delivery_product_orders" invisible="1">
+                                    <tree string="Delivery Product Orders Tree" ><!-- create="false" delete="true" edit="true"-->
+                                            <field name="details_id" invisible="1"/>
+                                            <field name="ddate" invisible="1"/>
+                                            <field name="lifnr" invisible="1"/>
+                                            <field name="prnum"/>
+                                            <field name="matnr"/>
+                                            <field name="menge"/>
+                                            <field name="aprng"/>
+                                            <field name="penge" sum="Product Qty"/>
+                                        </tree>
+                                </field>
+                                <!--<button name="select_po"  string="Selection PO" type="object" class="oe_edit_only oe_link"/>-->
+                            </tree>
+                        </field>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="purchase_demand_publish_create_filter" model="ir.ui.view">
+            <field name="name">delivery.order.select</field>
+            <field name="model">delivery.order</field>
+            <field name="arch" type="xml">
+                <search string="Search Delivety Order">
+                    <field name="dnnum"/>
+                    <field name="lifnr"/>
+                    <field name="datoo"/>
+                    <filter name="supplier_create" string="Supplier Create" domain="[('state','=','supplier_create')]"/>
+                    <filter name="print" string="Print" domain="[('state','=','print')]"/>
+                    <filter name="other" string="Other" domain="[('state','in',('supplier_cancel','purchase_cancel','purchase_lock'))]"/>
+                </search>
+            </field>
+        </record>
+    </data>
+</odoo>

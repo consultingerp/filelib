@@ -9,7 +9,11 @@ class Agreement(models.Model):
 
     agreement_code=fields.Char('Agreement Code',default="/") #合同编码
     plan_sign_time=fields.Datetime('Plan Sign Time') # 计划回签时间
+    property_product_pricelist = fields.Many2one('product.pricelist', string='Pricelist',default=1,)
 
+    pdfswy = fields.Many2one('ir.attachment', string='Pdfswy',readonly='True')
+    pdfqw = fields.Many2one('ir.attachment', string='Pdfqw',readonly='True' )
+    fktj = fields.Many2one('ir.attachment', string='Fktj',readonly='True')
 
     @api.model
     def create(self, vals):
@@ -35,6 +39,40 @@ class Agreement(models.Model):
                 vals['agreement_code'] =verse_one+agreement_subtype_obj.for_code+verse_two
                 vals['code'] = vals['agreement_code']
 
+        if 'x_studio_htje' in vals.keys() or 'x_studio_mjhtje' in vals.keys():
+            company_id = self.company_id or self.env.user.company_id
+            create_date = self.create_date or fields.Date.today()
+            queryCurrency=''
+            queryPriceList=''
+            if 'x_studio_mjhtje' in vals.keys() and vals['x_studio_mjhtje'] :
+                queryCurrency='CNY'
+                queryPriceList='USD'
+                x_studio_htje = 'x_studio_mjhtje'
+            elif 'x_studio_htje' in vals.keys() and vals['x_studio_htje'] :
+                queryCurrency = 'USD'
+                queryPriceList = 'CNY'
+                x_studio_htje = 'x_studio_htje'
+
+            currency = self.env['res.currency'].search([('name', 'like', '%'+queryCurrency+'%')])
+            property_product_pricelist = self.env['product.pricelist'].search([('name', 'like', '%'+queryPriceList+'%')])
+
+            if currency and property_product_pricelist:
+                usd_currency_rate = self.env['res.currency']._get_conversion_rate(
+                    property_product_pricelist.currency_id, currency,
+                    company_id, create_date)
+                if x_studio_htje=='x_studio_htje':
+                    vals['x_studio_mjhtje']= round(float(vals['x_studio_htje']) * usd_currency_rate,2)
+                elif x_studio_htje=='x_studio_mjhtje':
+                    vals['x_studio_htje'] = round(float(vals['x_studio_mjhtje']) * usd_currency_rate, 2)
+
+                if 'x_studio_mjhtje' in vals.keys() and vals['x_studio_mjhtje']:
+                    vals['x_studio_mjhtje'] = ("%.2f" % float(vals['x_studio_mjhtje']))
+                if 'x_studio_htje' in vals.keys() and vals['x_studio_htje']:
+                    vals['x_studio_htje'] = ("%.2f" % float(vals['x_studio_htje']))
+
+
+        vals['x_studio_usd'] = 'USD'
+        vals['x_studio_htbz'] = 'CNY'
         return super(Agreement, self).create(vals)
 
     def write(self, vals):
@@ -58,6 +96,32 @@ class Agreement(models.Model):
                 verse_two=agreement_code[-4:]
                 vals['agreement_code'] =verse_one+agreement_subtype_obj.for_code+verse_two
                 vals['code'] = vals['agreement_code']
+
+        if 'x_studio_htje' in vals.keys():
+            company_id = self.company_id or self.env.user.company_id
+            create_date = self.create_date or fields.Date.today()
+            usd_currency = self.env['res.currency'].search([('name', '=', 'USD')])
+            property_product_pricelist = self.env['product.pricelist'].search([('name', 'like', '%CNY%')])
+            usd_currency_rate = self.env['res.currency']._get_conversion_rate(
+                property_product_pricelist.currency_id, usd_currency,
+                company_id, create_date)
+            vals['x_studio_mjhtje'] = round(float(vals['x_studio_htje']) * usd_currency_rate, 2)
+
+        elif 'x_studio_mjhtje' in vals.keys():
+            company_id = self.company_id or self.env.user.company_id
+            create_date = self.create_date or fields.Date.today()
+            usd_currency = self.env['res.currency'].search([('name', '=', 'CNY')])
+            property_product_pricelist = self.env['product.pricelist'].search([('name', 'like', '%USD%')])
+            usd_currency_rate = self.env['res.currency']._get_conversion_rate(
+                property_product_pricelist.currency_id, usd_currency,
+                company_id, create_date)
+            vals['x_studio_htje'] = round(float(vals['x_studio_mjhtje']) * usd_currency_rate, 2)
+
+        if 'x_studio_mjhtje' in vals.keys() and vals['x_studio_mjhtje']:
+            vals['x_studio_mjhtje'] = ("%.2f" % float(vals['x_studio_mjhtje']))
+        if 'x_studio_htje' in vals.keys() and vals['x_studio_htje']:
+            vals['x_studio_htje'] = ("%.2f" % float(vals['x_studio_htje']))
+
         return super(Agreement,self).write(vals)
 
     def send_approval_warn_emlil(self,interval_time):
@@ -95,7 +159,7 @@ class Agreement(models.Model):
                         if (tier_review_data_temp.write_date + day) < now:
                             partner_ids = []
                             if tier_review_data.w_approver_id:
-                                partner_ids.append([6, False, tier_review_data.w_approver_id])
+                                partner_ids.append([6, False, tier_review_data.w_approver_id.id])
                                 self.emil_temp(agreement_data.id, partner_ids)
                             else:
                                 # 审批组、找到团队祖负责人
@@ -128,7 +192,20 @@ class Agreement(models.Model):
             vals['res_id'] = id
             vals['email_from'] = attachment_ids_value['value']['email_from']
             vals['subject'] = attachment_ids_value['value']['subject']
+
+            #attachment_ids = []
+
+            #attachmentObj = self.env['ir.attachment']  # 附件
+
+            #attachmentData = attachmentObj.search([('res_model', '=', 'agreement.file.upload'),
+            #                                             ('res_id', '=', self.id), ('res_name', '=', 'pdfswy')])
+
+            #attachment_ids = []
+            #attachment_ids.append([6, False, [4097]])
+            #vals['attachment_ids'] = attachment_ids
+
             emil_id = self.env['mail.compose.message'].create(vals)
+
             emil_id.action_send_mail()
 
 
@@ -207,6 +284,62 @@ class Agreement(models.Model):
             'url': 'web/content/%s?download=true' % (attachmentSqlData[0]),
         }
 
+    @api.multi
+    def action_emil_send(self):
+        self.ensure_one()
+        ir_model_data = self.env['ir.model.data']
+        try:
+            template_id = ir_model_data.get_object_reference('e2yun_agreement_extend', 'email_template_temp_agreement')[1]
+
+            sqld="delete  from email_template_attachment_rel where email_template_id=%s "
+            self._cr.execute(sqld,(template_id,))
+
+            sql = "insert into email_template_attachment_rel(email_template_id,attachment_id)values (%s,%s)"
+            if self.pdfswy:
+                self._cr.execute(sql, (template_id,self.pdfswy.id))
+            if self.pdfqw:
+                self._cr.execute(sql, (template_id, self.pdfqw.id))
+            if self.fktj:
+                self._cr.execute(sql, (template_id, self.fktj.id))
+
+        except ValueError:
+            template_id = False
+        try:
+            compose_form_id = ir_model_data.get_object_reference('mail', 'email_compose_message_wizard_form')[1]
+        except ValueError:
+            compose_form_id = False
+        ctx = dict(self.env.context or {})
+        ctx.update({
+            'default_model': 'agreement',
+            'default_res_id': self.ids[0],
+            'default_use_template': bool(template_id),
+            'default_template_id': template_id,
+            'default_composition_mode': 'comment',
+            'custom_layout': "mail.mail_notification_paynow",
+            'force_email': True,
+            'mark_rfq_as_sent': True,
+        })
+
+        lang = self.env.context.get('lang')
+        if {'default_template_id', 'default_model', 'default_res_id'} <= ctx.keys():
+            template = self.env['mail.template'].browse(ctx['default_template_id'])
+            if template and template.lang:
+                lang = template._render_template(template.lang, ctx['default_model'], ctx['default_res_id'])
+
+
+        ctx['model_description'] = 'TEST'
+
+        return {
+            'name': _('Compose Email'),
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'mail.compose.message',
+            'views': [(compose_form_id, 'form')],
+            'view_id': compose_form_id,
+            'target': 'new',
+            'context': ctx,
+        }
 
 
 class AgreementSubtype(models.Model):
@@ -227,11 +360,11 @@ class AgreementLine(models.Model):
     @api.depends('qty', 'price_unit', 'taxes_id')
     def _compute_amount(self):
         for line in self:
-
-            vals = line._prepare_compute_all_values()
-            line.update({
-                'price_subtotal': (vals['price_unit']*vals['qty'])-(vals['price_unit']*vals['qty']*vals['amount']),
-            })
+            if line.taxes_id:
+                vals = line._prepare_compute_all_values()
+                line.update({
+                    'price_subtotal': (vals['price_unit']*vals['qty'])-(vals['price_unit']*vals['qty']*vals['amount']),
+                })
 
     def _prepare_compute_all_values(self):
         # Hook method to returns the different argument values for the
