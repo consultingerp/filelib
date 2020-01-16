@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="stock_delivery_kanban_view" model="ir.ui.view">
+            <field name="name">Delivery Kanban From</field>
+            <field name="model">stock.picking.type</field>
+            <field name="inherit_id" ref="stock.stock_picking_type_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='col-6 o_kanban_primary_left']" position="inside">
+                    <div style="position: absolute;top: 72px;left: 15px;">
+                        <div style="top: 72px;left: 15px;">
+                            <field name='isCome' invisible="1"/>
+                            <a href="/web#menu_id=464&amp;action=681" attrs="{'invisible':[('isCome','=',False)]}">
+                                <field name='count_delivery_ready' />交货单就绪
+                            </a>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

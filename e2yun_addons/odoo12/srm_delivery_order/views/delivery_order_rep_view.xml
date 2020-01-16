@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="delivery_order_rep_tree_view" model="ir.ui.view">
+            <field name="name">delivery.order.rep.tree</field>
+            <field name="model">delivery.order.rep.view</field>
+            <field name="arch" type="xml">
+                <tree string="Delivery Order Report Tree" create="false" delete='false' default_order='datoo'>
+                    <field name="versi"/>
+                    <field name="datoo"/>
+                    <field name="werks"/>
+                    <field name="menge"/>
+                    <field name="dnmeg"/>
+                    <field name="prinu"/>
+                    <field name="inmeg"/>
+                    <field name="usmeg" invisible="1"/>
+                    <field name="comco" invisible="1"/>
+                    <field name="lifnr" invisible="1"/>
+                    <field name="isAllowCreate" invisible="1"/>
+                    <field name="isscheduledate" invisible="1"/>
+                    <field name="isallownoschedulecreate" invisible="1"/>
+                    <button name="check_create_delivery"  string="Delivery" type="object" class="oe_highlight" context="{'werks':werks,'datoo':datoo,'isscheduledate':isscheduledate,'isallownoschedulecreate':isallownoschedulecreate,'versi':versi}"
+                        attrs="{'invisible':['|',('usmeg','&lt;=',0),('isAllowCreate','=',False)]}"
+                    />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_delivery_order_rep" model="ir.actions.act_window">
+            <field name="name">Delivery Order Report</field>
+            <field name="res_model">delivery.order.rep.view</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+    </data>
+</odoo>

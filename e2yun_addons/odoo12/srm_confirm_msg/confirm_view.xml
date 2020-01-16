@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+         <record id="view_confirm_msg" model="ir.ui.view">
+            <field name="name">Confirm Quality Status </field>
+            <field name="model">confirm.msg</field>
+            <field name="arch" type="xml">
+                <form string="Transfer details" version="7">
+                    <field name="confirm_msg" readonly="1" widget="html" />
+                    <footer>
+                        <button name="do_confirm" string="Confirm" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

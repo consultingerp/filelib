@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sap_voucher_tree" model="ir.ui.view">
+            <field name="name">sap.voucher.tree</field>
+            <field name="model">sap.voucher</field>
+            <field name="arch" type="xml">
+                <tree string="SAP Voucher" create="false" edit="false">
+                    <field name="matdoc"/>
+                    <field name="psingdate"/>
+                    <field name="dnnum"/>
+                    <field name="ponum"/>
+                    <field name="pline"/>
+                    <field name="matnrcode"/>
+                    <field name="handleQty"/>
+                    <field name="movetype"/>
+                    <field name="prnum"/>
+                    <field name="printSendDate"/>
+                    <field name="matnrdesc"/>
+                    <field name="dline"/>
+                    <field name="picking_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sap_voucher_action" model="ir.actions.act_window">
+            <field name="name">SAP Voucher</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sap.voucher</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <record id="sap_voucher_filter" model="ir.ui.view">
+            <field name="name">sap.voucher.select</field>
+            <field name="model">sap.voucher</field>
+            <field name="arch" type="xml">
+                <search string="Search Sap Voucher">
+                    <field name="matdoc"/>
+                    <field name="dnnum"/>
+                    <field name="ponum"/>
+                    <field name="matnrcode"/>
+                    <field name="matnrdesc"/>
+                    <field name="prnum"/>
+                    <field name="psingdate"/>
+                </search>
+            </field>
+        </record>
+
+        <menuitem id="menu_sap_voucher"
+                  name = "SAP Voucher"
+          action="sap_voucher_action"
+          parent="srm_delivery_order.menu_srm_delivery_order"
+          sequence="4"/>
+    </data>
+</odoo>

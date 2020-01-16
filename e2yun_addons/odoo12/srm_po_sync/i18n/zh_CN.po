@@ -1,0 +1,25 @@
+#. module: srm_po_sync
+#: field:srm.po.sync,start_date:0
+msgid "start date"
+msgstr "开始日期"
+
+#. module: srm_po_sync
+#: field:srm.po.sync,ending_date:0
+msgid "ending date"
+msgstr "结束日期"
+
+
+#. module: srm_po_sync
+#: field:srm.po.sync,ebeln:0
+msgid "ebeln"
+msgstr "PO号"
+
+
+#. module: srm_po_sync
+#: model:ir.ui.menu,name:srm_po_sync.menu_srm_sap_po_sync
+#: model:ir.actions.act_window,name:srm_po_sync.srm_po_sync_window
+msgid "sap po sync menu"
+msgstr "SAP采购订单同步"
+
+
+

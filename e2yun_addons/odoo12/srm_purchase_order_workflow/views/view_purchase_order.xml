@@ -1,0 +1,105 @@
+<odoo>
+  <data>
+    <record id="purchase_order_workflow_form1" model="ir.ui.view">
+      <field name="name">purchase.order.form</field>
+      <field name="model">purchase.order</field>
+      <field name="inherit_id" ref="purchase.purchase_order_form"/>
+      <field name="arch" type="xml">
+          <xpath expr="//button[@name='action_view_picking']" position="replace">
+            <button name="action_view_picking" string="Receive Products" class="oe_highlight" type="object" attrs="{'invisible': ['|', '|' , ('is_shipped', '=', True), ('state','not in', ('purchase','done')), ('picking_count', '=', 0),('state','!=', 'supply_confirm')]}"/>
+          </xpath>
+          <xpath expr="//button[@name='button_cancel']" position="replace">
+           <button name="button_cancel" states="draft,to approve,sent,purchase,supply_confirm" string="Cancel" type="object" />
+          </xpath>
+          <field name="state" position="replace">
+                <field name="state" widget="statusbar" statusbar_visible="draft,sent,purchase,supply_confirm" readonly="1"/>
+          </field>
+          <field name="date_order" position="after">
+              <field name="email_supplier"/>
+          </field>
+      </field>
+    </record>
+
+    <record id="purchase_order_workflow_tree1" model="ir.ui.view">
+        <field name="name">purchase.order.tree</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="colors">grey:state=='cancel';blue:state in ('wait','confirmed','supply_confirm');red:state in ('except_invoice','except_picking','supply_refuse','supply_overdue')</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+
+     <record model="ir.ui.view" id="purchase_order_form_srm_extend">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form" />
+            <field name="arch" type="xml">
+
+             <xpath expr="//field[@name='order_line']" position="replace">
+                      <field name="order_line" attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}">
+                                 <tree string="Purchase Order Lines" editable="bottom">
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="state" invisible="1"/>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="product_id" attrs="{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}" context="{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id}" force_save="1"/>
+                                    <field name="name" invisible="1"/>
+                                    <field name="move_dest_ids" invisible="1"/>
+                                    <field name="date_planned" invisible="1"/>
+                                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                                    <field name="account_analytic_id" context="{'default_partner_id':parent.partner_id}" groups="purchase.group_analytic_accounting"/>
+                                    <field name="analytic_tag_ids" groups="purchase.group_analytic_accounting" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                    <field name="product_qty"/>
+                                    <field name="qty_received" invisible="not context.get('show_purchase', True)"/>
+                                    <field name="qty_invoiced" invisible="not context.get('show_purchase', True)"/>
+                                    <field name="product_uom" groups="product.group_uom" attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}" force_save="1"/>
+                                    <field name="price_unit"/>
+                                    <field name="ret_item"  />
+                                    <field name="item_cat"  />
+                                    <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use','=','purchase')]" context="{'default_type_tax_use': 'purchase'}" options="{'no_create': True}"/>
+                                    <field name="price_subtotal" widget="monetary"/>
+                                </tree>
+                                <form string="Purchase Order Line">
+                                    <sheet>
+                                        <field name="state" invisible="1"/>
+                                        <group>
+                                            <group>
+                                                <field name="product_id"
+                                                       context="{'partner_id': parent.partner_id}"/>
+                                                <label for="product_qty"/>
+                                                <div>
+                                                    <field name="product_qty" class="oe_inline"/>
+                                                    <span class="oe_inline">&#160;</span>
+                                                    <field name="product_uom" groups="product.group_uom" class="oe_inline"/>
+                                                </div>
+                                                <field name="price_unit"/>
+                                            </group>
+                                            <group>
+                                                <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use', '=', 'purchase')]" options="{'no_create': True}"/>
+                                                <field name="date_planned" widget="date"/>
+                                                <field name="account_analytic_id" colspan="2" groups="purchase.group_analytic_accounting"/>
+                                                <field name="analytic_tag_ids" groups="purchase.group_analytic_accounting" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                                            </group>
+                                        </group>
+                                        <notebook>
+                                        <page string="Notes">
+                                            <field name="name"/>
+                                        </page><page string="Invoices and Incoming Shipments">
+                                            <field name="invoice_lines"/>
+                                            <field name="move_ids"/>
+                                            <field name="move_dest_ids" invisible="1"/>
+                                        </page>
+                                        </notebook>
+                                    </sheet>
+                                </form>
+                      </field>
+             </xpath>
+            </field>
+
+        </record>
+  </data>
+</odoo>
