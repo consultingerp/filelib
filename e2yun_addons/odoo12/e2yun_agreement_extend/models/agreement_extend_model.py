@@ -290,8 +290,17 @@ class Agreement(models.Model):
         ir_model_data = self.env['ir.model.data']
         try:
             template_id = ir_model_data.get_object_reference('e2yun_agreement_extend', 'email_template_temp_agreement')[1]
-            sql="insert into email_template_attachment_rel(email_template_id,attachment_id)values (%s,%s)"
-            self._cr.execute(sql,(template_id,4097))
+
+            sqld="delete  from email_template_attachment_rel where email_template_id=%s "
+            self._cr.execute(sqld,(template_id,))
+
+            sql = "insert into email_template_attachment_rel(email_template_id,attachment_id)values (%s,%s)"
+            if self.pdfswy:
+                self._cr.execute(sql, (template_id,self.pdfswy.id))
+            if self.pdfqw:
+                self._cr.execute(sql, (template_id, self.pdfqw.id))
+            if self.fktj:
+                self._cr.execute(sql, (template_id, self.fktj.id))
 
         except ValueError:
             template_id = False
