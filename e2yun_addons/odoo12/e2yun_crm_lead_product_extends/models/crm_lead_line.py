@@ -13,7 +13,7 @@ class CrmLeadLine(models.Model):
     tax_id = fields.Many2many('account.tax', string='Taxes',
                               domain=['|', ('active', '=', False), ('active', '=', True)])
     # 不含税金额
-    price_subtotal = fields.Float(string='Subtotal',compute='_onchange_tax_id', redonly='True', store=True)
+    price_subtotal = fields.Float(string='Subtotal',compute='_onchange_tax_id', readonly='True', store=True)
 
     cgm = fields.Float(string='CGM%')
     pid = fields.Char(string='PID')

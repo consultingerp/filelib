@@ -52,3 +52,7 @@ msgstr "下载PDF全文"
 msgid "fktj"
 msgstr "下载付款条件"
 
+#. module: e2yun_agreement_extend
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_extend.agreement_form_view_view_extend
+msgid "Send by Email"
+msgstr "发送邮件"

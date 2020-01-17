@@ -231,20 +231,32 @@ class TierValidation(models.AbstractModel):
               raise UserError(u'客户签章阶段计划回签时间必须写入')
 
             if vals['stage_id'] == 7:
-                sql = "select res_name  from ir_attachment where  res_id = %s   and res_model = %s "
-                self._cr.execute(sql, (self.id, 'agreement.file.upload'))
-                attachmentSqlData = self._cr.fetchall()
+                # sql = "select res_name  from ir_attachment where  res_id = %s   and res_model = %s "
+                # self._cr.execute(sql, (self.id, 'agreement.file.upload'))
+                # attachmentSqlData = self._cr.fetchall()
+                # pdfswy='（PDF首尾页）'
+                # pdfqw = '（PDF全文版）'
+                # fktj = '（付款条件）'
+                # if attachmentSqlData:
+                #     for d in attachmentSqlData:
+                #         if d[0]=='pdfswy':
+                #             pdfswy=""
+                #         if d[0]=='pdfqw':
+                #             pdfqw=""
+                #         if d[0]=='fktj':
+                #             fktj=""
+                #
+
                 pdfswy='（PDF首尾页）'
                 pdfqw = '（PDF全文版）'
                 fktj = '（付款条件）'
-                if attachmentSqlData:
-                    for d in attachmentSqlData:
-                        if d[0]=='pdfswy':
-                            pdfswy=""
-                        if d[0]=='pdfqw':
-                            pdfqw=""
-                        if d[0]=='fktj':
-                            fktj=""
+                if self.pdfswy:
+                    pdfswy = ""
+                if self.pdfqw:
+                    pdfqw = ""
+                if self.fktj:
+                    fktj = ""
+
                 if pdfswy!="" or pdfqw!="" or fktj!="":
                     raise UserError(u'执行阶段必须上传'+pdfswy+pdfqw+fktj)
 

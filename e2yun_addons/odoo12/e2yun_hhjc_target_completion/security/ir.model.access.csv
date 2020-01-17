@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_target_completion_base_group_user,target_completion.base_group_user,model_outbound_sync_from_pos_final,base.group_user,1,1,1,1
+access_target_source_base_group_user,target_source.base_group_user,model_target_data_source,base.group_user,1,1,1,1
+access_sale_source_base_group_user,sale_source.base_group_user,model_proportion_type,base.group_user,1,1,1,1

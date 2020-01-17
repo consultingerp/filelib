@@ -2,14 +2,14 @@
 
 from odoo import models, fields, api
 
-# class e2yun_erpdemo_sale_order_extends(models.Model):
-#     _name = 'e2yun_erpdemo_sale_order_extends.e2yun_erpdemo_sale_order_extends'
+class E2yunERPDemoResCurrencyExtends(models.Model):
+    _inherit = "res.currency"
 
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         self.value2 = float(self.value) / 100
+    @api.model
+    def _get_conversion_rate(self, from_currency, to_currency, company, date):
+        currency_rates = (from_currency + to_currency)._get_rates(company, date)
+        if not currency_rates.get(to_currency.id) or not currency_rates.get(from_currency.id):
+            res = 1.0
+        else:
+            res = currency_rates.get(to_currency.id) / currency_rates.get(from_currency.id)
+        return res
