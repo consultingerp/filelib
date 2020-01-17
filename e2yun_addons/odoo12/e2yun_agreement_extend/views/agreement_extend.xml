@@ -41,6 +41,7 @@
        </xpath>
 
         <button name="create_new_version" position="after">
+             <button name="action_emil_send" string="Send by Email" type="object"  class="oe_highlight"/>
              <button string="Import File" type="object" name="import_file" class="oe_highlight" />
         </button>
 
@@ -55,11 +56,27 @@
             <field name="groups_id" eval="[(6, 0, [ref('e2yun_agreement_extend.group_agreement_download_pdf') ])]"/>
             <field name="arch" type="xml">
                 <xpath expr="//page[@name='products']" position="inside">
-                        <header>
-                             <button name="download_pdfswy" string="pdfswy" type="object" class="fa fa-download"/>
-                             <button name="download_pdfqw" string="pdfqw" type="object" class="fa fa-download"/>
-                             <button name="download_fktj" string="fktj" type="object" class="fa fa-download"/>
-                        </header>
+
+
+                        <button name="download_pdfswy" string="pdfswy" type="object" class="fa fa-download"/>
+                        <label for="pdfswy" string="  " class="oe_inline"/>
+                        <field name="pdfswy" options='{"no_open":True}' />
+
+                        <label for="download_pdfqw" string="  " class="oe_inline"/>
+                        <button name="download_pdfqw" string="pdfqw" type="object" class="fa fa-download"/>
+
+                         <label for="pdfqw" string="  " class="oe_inline"/>
+                         <field name="pdfqw" options='{"no_open":True}' />
+
+
+                        <label for="download_fktj" string="  " class="oe_inline"/>
+                        <button name="download_fktj" string="fktj" type="object" class="fa fa-download"/>
+
+                        <label for="fktj" string="  " class="oe_inline"/>
+                        <field name="fktj" options='{"no_open":True}' />
+
+
+
                 </xpath>
 
             </field>

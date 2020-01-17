@@ -21,13 +21,10 @@ class AgreementFileUpload(models.Model):
         name=self.filename
         res_name=""
         if self.name=='pdfswy':
-            name='PDF首尾页'
             res_name='pdfswy'
         elif self.name=='pdfqw':
-            name = 'PDF全文版'
             res_name = 'pdfqw'
         elif self.name == 'fktj':
-            name = '付款条件'
             res_name = 'fktj'
 
         agreement_id = self._context['active_id']
@@ -47,13 +44,14 @@ class AgreementFileUpload(models.Model):
         attachmentObj = attachment.create({
             'name': name,
             'datas': this.data,
-            'datas_fname':self.filename,
+            'datas_fname':name,
             'res_model': 'agreement.file.upload',
             'res_id': agreement_id,
             'res_name': res_name,
         })
 
-
+        sql="update agreement set "+res_name+"=%s where id=%s"
+        self._cr.execute(sql, (attachmentObj.id,agreement_id))
         return {'type': 'ir.actions.act_window_close'}
 
 

@@ -23,3 +23,10 @@ class e2yun_demo_crm_extend_sres_partner(models.Model):
         [["客户类型", "T&M 合约，按月/按季度计费"], ["行业1", "按里程碑计费的 FP"],
          ["银行", "项目完成后支付工资，项目周期小于2个月"],
          ["制造业", "项目完成后支付工资，项目周期大于2个月"]], 'Way of settlement', track_visibility='onchange')
+
+class e2yun_demo_crm_extend_crm_lead(models.Model):
+    _inherit = "crm.lead"
+
+    proposal_type = fields.Selection([["recruiting", "邀请"],
+                                      ["structured RFP", "招标"],
+                                      ["prospecting", "探寻"]], '方案类型', track_visibility='onchange')
