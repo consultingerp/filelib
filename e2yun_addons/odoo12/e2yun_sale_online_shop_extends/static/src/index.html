@@ -1,0 +1,400 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+ 
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>方案中心</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="assets/img/icon.png">
+
+    <!-- ************************* CSS Files ************************* -->
+
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="/e2yun_sale_online_shop_extends/static/src/assets/css/vendor.css">
+
+    <!-- style css -->
+    <link rel="stylesheet" href="/e2yun_sale_online_shop_extends/static/src/assets/css/main.css?version=0.1">
+
+    <link rel="stylesheet" href="/e2yun_sale_online_shop_extends/static/src/assets/css/my.css">
+
+
+
+
+</head>
+
+<body>
+
+    <!-- Preloader Start -->
+    <div class="ft-preloader active">
+        <div class="ft-preloader-inner h-100 d-flex align-items-center justify-content-center">
+            <div class="ft-child ft-bounce1"></div>
+            <div class="ft-child ft-bounce2"></div>
+            <div class="ft-child ft-bounce3"></div>
+        </div>
+    </div>
+    <!-- Preloader End -->
+ 
+    <!-- Main Wrapper Start -->
+    <div class="wrapper">
+        <!-- Header Start -->
+        <header class="header">
+            <div class="header__inner fixed-header">
+                <div class="header__main">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="header__main-inner">
+                                    <div class="header__main-left">
+                                        <div class="logo">
+                                            <a href="/hhjc_shop_index" class="logo--normal">
+                                                <!--TODO:在这里可以更换LOGO-->
+                                                <img src="/e2yun_sale_online_shop_extends/static/src/assets/img/logo/LOGOhhjc.jpeg" height="35" width="35" alt="Logo">
+                                            </a>
+                                            <a href="/hhjc_shop_product_list" class="logo--normal">
+                                                <img src="/e2yun_sale_online_shop_extends/static/src/assets/img/category_icon.png?version=0.1" height="30" width="30" alt="Homepage">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="header__main-center">
+                                        <!--TODO:Nav标签下面是控制导航栏的文字按钮-->
+                                        <nav class="main-navigation text-center d-none d-lg-block">
+                                            <ul class="mainmenu">
+                                                <li class="mainmenu__item menu-item-has-children">
+                                                    <a href="/hhjc_shop_index" class="mainmenu__link">
+                                                        <span class="mm-text">主页</span>
+                                                    </a>
+                                                </li>
+                                                <li class="mainmenu__item menu-item-has-children megamenu-holder">
+                                                    <a href="/hhjc_shop_product_list" class="mainmenu__link">
+                                                        <span class="mm-text">方案</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                    <div class="header__main-right">
+                                        <div class="header-toolbar-wrap">
+                                            <div class="header-toolbar">
+                                                <!--TODO:搜索按钮-->
+                                                <div class="header-toolbar__item header-toolbar--search-btn">
+                                                    <a href="#searchForm" class="header-toolbar__btn toolbar-btn">
+                                                        <img style="width: 20px;height: 20px; " src="/e2yun_sale_online_shop_extends/static/src/assets/img/search.png" alt="搜索"/>
+                                                        <!--<i class="la la-search"></i>-->
+                                                    </a>
+                                                </div>
+                                                <!--TODO:购物车按钮-->
+                                                <div style="display: none;"  class="header-toolbar__item header-toolbar--minicart-btn">
+                                                    <a href="#miniCart" class="header-toolbar__btn toolbar-btn">
+                                                        <img class="cart_img" style="width: 20px;height: 20px; " src="/e2yun_sale_online_shop_extends/static/src/assets/img/cart.png" alt="购物车"/>
+                                                        <span id="cart_qty" style="z-index: 9999;
+                                                        width: 15px;height: 15px;line-height: 14px;border:1px solid #dc3545;color:#dc3545; display: none;">0</span>
+                                                    </a>
+                                                </div>
+                                                <div style="display: none;" class="header-toolbar__item d-block d-lg-none" style="padding-right: 10px;">
+                                                    <a href="/hhjc_shop_order_list">
+                                                        <img style="width: 20px;height: 20px; display: none;" src="/e2yun_sale_online_shop_extends/static/src/assets/img/order.png" alt="我的订单"/>
+                                                    </a>
+                                                </div>
+                                                <div style="display: none;">
+                                                    <select id="area_chooser" style="color: #ff0e07;border: 0px solid">
+                                                        <option value="1" style="color:#ff0e07">广东</option>
+                                                        <option value="2" style="color:#ff0e07">北京</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Header End -->
+
+        <!-- Main Content Wrapper Start -->
+        <main class="main-content-wrapper">
+            <!-- Slider area Start -->
+            <!--TODO:该section控制首页头部的滑动展示图文-->
+            <section class="homepage-slider mb--75 mb-md--55">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="element-carousel slick-right-bottom recommend_product"
+                                data-slick-options='{
+                                "slidesToShow": 1, 
+                                "autoplay": true,
+                                "autoplaySpeed":5000,
+                                "prevArrow": {"buttonClass": "slick-btn slick-prev", "iconClass": "la la-arrow-left" },
+                                "nextArrow": {"buttonClass": "slick-btn slick-next", "iconClass": "la la-arrow-right" }
+                            }' 
+                                data-slick-responsive='[{"breakpoint": 768, "settings": {"arrows": false}}]'>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Slider area End -->
+            
+            <!-- Top Sale Area Start -->
+            <!--TODO:该section控制热销商品栏目-->
+            <section class="top-sale-area mb--75 mb-md--55">
+                <div class="container">
+                    <div class="row mb--35 mb-md--23">
+                        <div class="col-12 text-center">
+                            <h2>方案</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="element-carousel sell_well_datas"
+                            data-slick-options='{
+                                "spaceBetween": 30,
+                                "slidesToShow": 3,
+                                "autoplay": true
+                            }'
+                            data-slick-responsive='[
+                                {"breakpoint": 768, "settings": {"slidesToShow": 2}},
+                                {"breakpoint": 480, "settings": {"slidesToShow": 1}}
+                            ]'>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Top Sale Area End -->
+        </main>
+        <!-- OffCanvas Menu Start -->
+        <div class="offcanvas-menu-wrapper" id="offcanvasMenu">
+            <div class="offcanvas-menu-inner">
+                <a href="" class="btn-close">
+                    <i class="la la-remove"></i>
+                </a>
+                <nav class="offcanvas-navigation">
+                    <ul class="offcanvas-menu">
+                        <li class="menu-item-has-children active">
+                            <a href="/hhjc_shop_index">主页</a>
+                        </li>
+                        <li class="menu-item-has-children">
+                            <a href="/hhjc_shop_product_list">方案</a>
+                        </li>
+                    </ul>
+<!--                    <div class="site-info vertical">-->
+<!--                        <div class="site-info__item">-->
+<!--                            <a href="tel:+01223566678"><strong>+01 2235 666 78</strong></a>-->
+<!--                            <a href="mailto:Support@contixs.com">Support@furtrate.com</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                </nav>
+            </div>
+        </div>
+        <!-- OffCanvas Menu End -->
+
+        <!-- Mini Cart Start -->
+        <!--TODO：这里控制购物车侧边栏-->
+        <aside class="mini-cart" id="miniCart">
+            <div class="mini-cart-wrapper">
+                <div class="mini-cart__close">
+                    <a href="#" class="btn-close"><i class="la la-remove"></i></a>
+                </div>
+                <div class="mini-cart-inner">
+                    <h3 class="mini-cart__heading mb--10">购物车</h3>
+                    <div class="mini-cart__content">
+                        <ul class="mini-cart__list">
+                        </ul>
+                        <div class="mini-cart__total">
+                            <span>合计</span>
+                            <span class="ammount"></span>
+                        </div>
+                        <div class="mini-cart__buttons">
+                            <a href="/e2yun_sale_online_shop_extends/order_confirm_page" class="btn btn-fullwidth btn-bg-primary mb--20">确认购物车</a>
+                            <!--<a href="checkout.html" class="btn btn-fullwidth btn-bg-primary">Checkout</a>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- Mini Cart End -->
+
+        <!-- Searchform Popup Start -->
+        <!--TODO:这里是搜索框-->
+        <div class="searchform__popup" id="searchForm">
+            <a href="#" class="btn-close"><i class="la la-remove"></i></a>
+            <div class="searchform__body">
+                <p>请输入要搜索的方案名称</p>
+                <form class="searchform">
+                    <input type="text" name="popup-search" id="popup-search" class="searchform__input" placeholder="请输入要搜索的方案名称">
+                    <button type="button" class="searchform__submit"><i class="la la-search"></i></button>
+                </form>
+            </div>
+        </div>
+        <!-- Searchform Popup End -->
+
+        <!-- Qicuk View Modal Start -->
+        <div class="modal fade product-modal" id="productModal" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true"><i class="la la-remove"></i></span>
+                </button>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="element-carousel slick-vertical-center"
+                        data-slick-options='{
+                            "slidesToShow": 1,
+                            "slidesToScroll": 1,
+                            "arrows": true,
+                            "prevArrow": {"buttonClass": "slick-btn slick-prev", "iconClass": "la la-angle-double-left" },
+                            "nextArrow": {"buttonClass": "slick-btn slick-next", "iconClass": "la la-angle-double-right" }
+                        }'
+                        >
+                            <div class="product-image">
+                                <div class="product-image--holder">
+                                    <a href="product-details.html">
+                                        <img src="/e2yun_sale_online_shop_extends/static/src/assets/img/products/prod-01.jpg" alt="Product Image" class="primary-image">
+                                    </a>
+                                </div>
+                                <span class="product-badge sale">sale</span>
+                            </div>
+                            <div class="product-image">
+                                <div class="product-image--holder">
+                                    <a href="product-details.html">
+                                        <img src="/e2yun_sale_online_shop_extends/static/src/assets/img/products/prod-02.jpg" alt="Product Image" class="primary-image">
+                                    </a>
+                                </div>
+                                <span class="product-badge sale">sale</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="modal-box product-summary">
+                            <div class="product-navigation text-right mb--20">
+                                <a href="#" class="prev"><i class="la la-angle-double-left"></i></a>
+                                <a href="#" class="next"><i class="la la-angle-double-right"></i></a>
+                            </div>
+                            <div class="product-rating d-flex mb--20">
+                                <div class="star-rating star-three">
+                                    <span>Rated <strong class="rating">5.00</strong> out of 5</span>
+                                </div>
+                            </div>
+                            <h3 class="product-title mb--20">Golden Easy Spot Chair.</h3>
+                            <p class="product-short-description mb--25">Donec accumsan auctor iaculis. Sed suscipit arcu ligula, at egestas magna molestie a. Proin ac ex maximus, ultrices justo eget, sodales orci. Aliquam egestas libero ac turpis pharetra, in vehicula lacus scelerisque. Vestibulum ut sem laoreet, feugiat tellus at, hendrerit arcu.</p>
+                            <div class="product-price-wrapper mb--25">
+                                <span class="money">$200.00</span>
+                                <span class="price-separator">-</span>
+                                <span class="money">$400.00</span>
+                            </div>
+                            <form action="#" class="variation-form mb--30">
+                                <div class="product-color-variations d-flex align-items-center mb--20">
+                                    <p class="variation-label">Color:</p>
+                                    <div class="product-color-variation variation-wrapper">
+                                        <div class="variation">
+                                            <a class="product-color-variation-btn red selected" data-toggle="tooltip" data-placement="top" title="Red">
+                                                <span class="product-color-variation-label">Red</span>
+                                            </a>
+                                        </div>
+                                        <div class="variation">
+                                            <a class="product-color-variation-btn black" data-toggle="tooltip" data-placement="top" title="Black">
+                                                <span class="product-color-variation-label">Black</span>
+                                            </a>
+                                        </div>
+                                        <div class="variation">
+                                            <a class="product-color-variation-btn pink" data-toggle="tooltip" data-placement="top" title="Pink">
+                                                <span class="product-color-variation-label">Pink</span>
+                                            </a>
+                                        </div>
+                                        <div class="variation">
+                                            <a class="product-color-variation-btn blue" data-toggle="tooltip" data-placement="top" title="Blue">
+                                                <span class="product-color-variation-label">Blue</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product-size-variations d-flex align-items-center mb--15">
+                                    <p class="variation-label">Size:</p>   
+                                    <div class="product-size-variation variation-wrapper">
+                                        <div class="variation">
+                                            <a class="product-size-variation-btn selected" data-toggle="tooltip" data-placement="top" title="S">
+                                                <span class="product-size-variation-label">S</span>
+                                            </a>
+                                        </div>
+                                        <div class="variation">
+                                            <a class="product-size-variation-btn" data-toggle="tooltip" data-placement="top" title="M">
+                                                <span class="product-size-variation-label">M</span>
+                                            </a>
+                                        </div>
+                                        <div class="variation">
+                                            <a class="product-size-variation-btn" data-toggle="tooltip" data-placement="top" title="L">
+                                                <span class="product-size-variation-label">L</span>
+                                            </a>
+                                        </div>
+                                        <div class="variation">
+                                            <a class="product-size-variation-btn" data-toggle="tooltip" data-placement="top" title="XL">
+                                                <span class="product-size-variation-label">XL</span>
+                                            </a>
+                                        </div>
+                                    </div>                                 
+                                </div>
+                                <a href="" class="reset_variations">Clear</a>
+                            </form>
+                            <div class="product-action d-flex flex-sm-row flex-column align-items-sm-center align-items-start mb--30">
+                                <div class="quantity-wrapper d-flex align-items-center mr--30 mr-xs--0 mb-xs--30">
+                                    <label class="quantity-label" for="quick-qty">Quantity:</label>
+                                    <div class="quantity">
+                                        <input type="number" class="quantity-input" name="qty" id="quick-qty" value="1" min="1">
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-size-sm btn-shape-square" onclick="window.location.href='cart.html'">
+                                    Add To Cart
+                                </button>
+                            </div>  
+                            <div class="product-footer-meta">
+                                <p><span>Category:</span>
+                                    <a href="shop.html">Full Sweater</a>,
+                                    <a href="shop.html">SweatShirt</a>,
+                                    <a href="shop.html">Jacket</a>,
+                                    <a href="shop.html">Blazer</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Qicuk View Modal End -->
+
+        <!-- Global Overlay Start -->
+        <div class="global-overlay"></div>
+        <!-- Global Overlay End -->
+
+        <!-- Global Overlay Start -->
+        <a class="scroll-to-top" href=""><i class="la la-angle-double-up"></i></a>
+        <!-- Global Overlay End -->
+    </div>
+    <!-- Main Wrapper End -->
+ 
+
+    <!-- ************************* JS Files ************************* -->
+
+    <!-- jQuery JS -->
+    <script src="/e2yun_sale_online_shop_extends/static/src/assets/js/vendor.js"></script>
+
+    <!-- 购物车相关js代码-->
+    <script src="/e2yun_sale_online_shop_extends/static/src/assets/js/cart.js?version=0.2"></script>
+
+    <script src="/e2yun_sale_online_shop_extends/static/src/assets/js/index.js?version=1.3"></script>
+
+    <script src="/e2yun_sale_online_shop_extends/static/src/assets/js/user_info.js?version=1.3"></script>
+</body>
+
+</html>
