@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--
+        Worker hours Report
+        -->
+        <record id="view_report_ck_hours_worker_graph" model="ir.ui.view">
+            <field name="name">ck.hours.worker.rep.graph</field>
+            <field name="model">ck.hours.worker.rep</field>
+            <field name="arch" type="xml">
+                <graph string="Worker Hours" type="pivot">
+                    <field name="moid" type="row"/>
+                    <field name="state"  type="col"/>
+                    <field name="date_start" interval="day" type="col"/>
+                    <field name="mo_qty" type="measure"/>
+                    <field name="feed_qty" type="measure"/>
+                    <field name="accepted_qty" type="measure"/>
+                    <field name="rejected_qty" type="measure"/>
+                    <field name="amount" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- Custom reports (aka filters) -->
+         <record id="filter_ck_hours_worker_employee" model="ir.filters">
+            <field name="name">Employee</field>
+            <field name="model_id">ck.hours.worker.rep</field>
+            <field name="domain">[('state','=','done')]</field>
+            <field name="user_id" eval="False"/>
+            <field name="context">{'group_by': ['user_id','data_start:day'],'col_group_by': ['moid'],'measures': ['feed_qty','accepted_qty','accept_qty','rejected_qty','reject_qty']}</field>
+        </record>
+        <record id="filter_ck_hours_worker_custno" model="ir.filters">
+            <field name="name">Customer</field>
+            <field name="model_id">ck.hours.worker.rep</field>
+            <field name="domain">[('state','!=','done')]</field>
+            <field name="user_id" eval="False"/>
+            <field name="context">{'group_by': ['custno','sodate:day'], 'col_group_by': ['moid'], 'measures': ['mo_qty','accepted_qty']}</field>
+        </record>
+
+        <record id="filter_ck_hours_worker_production" model="ir.filters">
+            <field name="name">Production</field>
+            <field name="model_id">ck.hours.worker.rep</field>
+            <field name="user_id" eval="False"/>
+            <field name="context">{'group_by': ['data_start:day','moid'],'col_group_by': ['state'],'measures': ['mo_qty', 'feed_qty','accepted_qty','accept_qty','rejected_qty','reject_qty']}</field>
+        </record>
+
+        <record id="view_report_ck_hours_worker_filter" model="ir.ui.view">
+            <field name="name">ck_hours_worker.select</field>
+            <field name="model">ck.hours.worker.rep</field>
+            <field name="arch" type="xml">
+                <search string="Search">
+                    <field name="modate"/>
+                    <field name="sodate"/>
+                    <field name="date_start"/>
+                    <field name="date_stop"/>
+                    <filter string="Draft" domain="[('state','=','draft'))]"/>
+                    <filter string="Open" name="open" domain="[('state','=','open')]"/>
+                    <filter string="Done" name="done" domain="[('state','=','done')]"/>
+                    <field name="moid" />
+                    <field name="sono"/>
+                    <field name="user_id"/>
+                    <field name="pid"/>
+                    <field name="operno"/>
+                    <field name="opername"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Work Operation" name="Operno" context="{'group_by':'operno'}" />
+                        <filter string="Production" context="{'group_by':'moid'}"/>
+                        <filter string="Status" context="{'group_by':'state'}"/>
+                        <filter string="Product Model" name="Model" context="{'group_by':'model'}" />
+                        <filter string="Product" name="Product" context="{'group_by':'product_id'}" />
+                        <filter string="Employee" name="Employee" context="{'group_by':'user_id'}" />
+                        <filter string="Customer" name="CustomerNo" context="{'group_by':'custno'}" />
+                        <separator/>
+                        <filter string="Month Planned" name="terp-go-month" context="{'group_by':'sodate:month'}" help="Planned Month"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_report_ck_hours_worker" model="ir.actions.act_window">
+            <field name="name">Hours Of Worker</field>
+            <field name="res_model">ck.hours.worker.rep</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="view_report_ck_hours_worker_graph"/>
+            <field name="search_view_id" ref="view_report_ck_hours_worker_filter"/>
+            <field name="context">{'search_default_Operno': 1,'group_by_no_leaf':1,'group_by':[]}</field>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_report_ck_hours_worker_graph">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="view_report_ck_hours_worker_graph"/>
+            <field name="act_window_id" ref="action_report_ck_hours_worker"/>
+        </record>
+
+        <menuitem name="Hours of Worker Analysis" action="action_report_ck_hours_worker"
+                  id="menu_report_ck_hours_worker_tree" parent="menu_ck_report_work" sequence="701"/>
+
+  </data>
+</odoo>

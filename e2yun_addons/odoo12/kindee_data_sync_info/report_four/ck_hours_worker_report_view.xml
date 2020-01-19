@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--<record id="ck_hours_worker_rep_four_tree_view" model="ir.ui.view">
+            <field name="name">ck.hours.worker.rep.four.tree</field>
+            <field name="model">ck.hours.worker.rep.four</field>
+            <field name="arch" type="xml">
+                <tree string="Hour Workers Report Tree">
+                    <field name="real_name"/>
+                    <field name="date_worker" widget="date"/>
+                    <field name="fshift"/>
+                    <field name="fmachine"/>
+                    <field name="state"/>
+                    <field name="gqty"/>
+                    <field name="sqty"/>
+                    <field name="rqty"/>
+                    <field name="amount"/>
+                    <field name="date_ascription" widget="date"/>
+                    <field name="fmodel"/>
+                    <field name="fopername"/>
+                    <field name="fworkcentername"/>
+                    <field name="froutingname"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="ck_hours_worker_rep_four_form_view" model="ir.ui.view">
+            <field name="name">ck.hours.worker.rep.four.form</field>
+            <field name="model">ck.hours.worker.rep.four</field>
+            <field name="arch" type="xml">
+                <form string="Hour Workers Report Form">
+                    <sheet>
+                        <group>
+                            <field name="real_name"/>
+                            <field name="date_worker" widget="date"/>
+                            <field name="fshift"/>
+                            <field name="fmachine"/>
+                            <field name="state"/>
+                            <field name="gqty"/>
+                            <field name="sqty"/>
+                            <field name="rqty"/>
+                            <field name="amount"/>
+                            <field name="date_ascription" widget="date"/>
+                            <field name="fmodel"/>
+                            <field name="fopername"/>
+                            <field name="fworkcentername"/>
+                            <field name="froutingname"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="ck_hours_worker_rep_four_filter" model="ir.ui.view">
+            <field name="name">ck.hours.worker.rep.four.select</field>
+            <field name="model">ck.hours.worker.rep.four</field>
+            <field name="arch" type="xml">
+                <search string="Search Report Time">
+                    <field name="real_name"/>
+                    <field name="date_worker" widget="date"/>
+                    <field name="fshift"/>
+                    <field name="fmachine"/>
+                    <field name="state"/>
+                    <field name="gqty"/>
+                    <field name="sqty"/>
+                    <field name="rqty"/>
+                    <field name="date_ascription" widget="date"/>
+                    <field name="fmodel"/>
+                    <field name="fopername"/>
+                    <field name="fworkcentername"/>
+                    <field name="froutingname"/>
+                    <filter string="当天记录" name="today_content" domain="[('date_ascription','=',current_date)]"/>
+                </search>
+            </field>
+        </record>-->
+
+        <!--View-->
+        <record id="ck_operation_productivity_rep_tree_view" model="ir.ui.view">
+            <field name="name">ck.operation.productivity.rep.tree</field>
+            <field name="model">ck.operation.productivity.rep</field>
+            <field name="arch" type="xml">
+                <tree string="Operation Productivity Report Tree">
+                    <field name="froutingname"/>
+                    <field name="fopername"/>
+                    <field name="gqty"/>
+                    <field name="sqty"/>
+                    <field name="srate"/>
+                    <field name="grate"/>
+                    <field name="uid_count"/>
+                    <field name="uid_avg"/>
+                    <field name="fworkcenterno_count"/>
+                    <field name="fworkcenterno_avg"/>
+                    <field name="date_ascription"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="ck_operation_productivity_rep_form_view" model="ir.ui.view">
+            <field name="name">ck.operation.productivity.rep.form</field>
+            <field name="model">ck.operation.productivity.rep</field>
+            <field name="arch" type="xml">
+                <form string="Operation Productivity Report Form">
+                    <sheet>
+                        <group>
+                            <field name="froutingname"/>
+                            <field name="fopername"/>
+                            <field name="gqty"/>
+                            <field name="sqty"/>
+                            <field name="rqty"/>
+                            <field name="date_ascription"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="ck_daily_income_rep_tree_view" model="ir.ui.view">
+            <field name="name">ck.daily.income.rep.tree</field>
+            <field name="model">ck.daily.income.rep</field>
+            <field name="arch" type="xml">
+                <tree string="Daily Income Report Tree">
+                    <field name="real_name"/>
+                    <field name="froutingname"/>
+                    <field name="fopername"/>
+                    <field name="gqty"/>
+                    <field name="amount"/>
+                    <field name="date_ascription"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="ck_daily_income_rep_form_view" model="ir.ui.view">
+            <field name="name">ck.daily.income.rep.form</field>
+            <field name="model">ck.daily.income.rep</field>
+            <field name="arch" type="xml">
+                <form string="Daily Income Report Form">
+                    <sheet>
+                        <group>
+                            <field name="real_name"/>
+                            <field name="froutingname"/>
+                            <field name="fopername"/>
+                            <field name="gqty"/>
+                            <field name="amount"/>
+                            <field name="date_ascription"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="ck_daily_scrap_rep_tree_view" model="ir.ui.view">
+            <field name="name">ck.daily.scrap.rep.tree</field>
+            <field name="model">ck.daily.scrap.rep</field>
+            <field name="arch" type="xml">
+                <tree string="Daily Scrap Report Tree">
+                    <field name="date_worker"/>
+                    <field name="fworkcentername"/>
+                    <field name="fshift"/>
+                    <field name="fmodel"/>
+                    <field name="gqty"/>
+                    <field name="qty"/>
+                    <field name="reason"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="ck_daily_scrap_rep_form_view" model="ir.ui.view">
+            <field name="name">ck.daily.scrap.rep.form</field>
+            <field name="model">ck.daily.scrap.rep</field>
+            <field name="arch" type="xml">
+                <form string="Daily Scrap Report Form">
+                    <sheet>
+                        <group>
+                            <field name="date_worker"/>
+                            <field name="fworkcentername"/>
+                            <field name="fshift"/>
+                            <field name="fmodel"/>
+                            <field name="gqty"/>
+                            <field name="qty"/>
+                            <field name="reason"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="ck_daily_scrap_rep_graph_view" model="ir.ui.view">
+            <field name="name">ck.daily.scrap.rep.graph</field>
+            <field name="model">ck.daily.scrap.rep</field>
+            <field name="arch" type="xml">
+                <graph string="Daily Scrap Report Graph" type="pivot">
+                    <!--<field name="reason" type="row"/>-->
+                    <field name="date_worker" interval="day" type="row"/>
+                    <field name="fworkcentername" type="col"/>
+                    <field name="fmodel" type="col"/>
+                    <field name="fshift" type="col"/>
+                    <field name="reason" type="row"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="ck_work_order_production_rep_tree_view" model="ir.ui.view">
+            <field name="name">ck.work.order.production.rep.tree</field>
+            <field name="model">ck.work.order.production.rep</field>
+            <field name="arch" type="xml">
+                <tree string="Work Order Production Report Tree">
+                    <field name="name"/>
+                    <field name="froutingname"/>
+                    <field name="fopername"/>
+                    <field name="gqty"/>
+                    <field name="date_ascription"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="ck_work_order_production_rep_form_view" model="ir.ui.view">
+            <field name="name">ck.work.order.production.rep.form</field>
+            <field name="model">ck.work.order.production.rep</field>
+            <field name="arch" type="xml">
+                <form string="Work Order Production Report Form">
+                    <sheet>
+                        <group>
+                             <field name="name"/>
+                             <field name="froutingname"/>
+                             <field name="fopername"/>
+                             <field name="gqty"/>
+                             <field name="date_ascription"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--filter-->
+
+        <record id="ck_operation_productivity_rep_filter" model="ir.ui.view">
+            <field name="name">ck.operation.productivity.rep.select</field>
+            <field name="model">ck.operation.productivity.rep</field>
+            <field name="arch" type="xml">
+                <search string="Search Operation Productivity">
+                    <field name="froutingname"/>
+                    <field name="fopername"/>
+                    <field name="gqty"/>
+                    <field name="sqty"/>
+                    <field name="rqty"/>
+                    <field name="date_ascription"/>
+                    <filter string="当天记录" name="today_content" domain="[('date_ascription','=',current_date)]"/>
+                    <filter string="当月记录" name="current_month_content" domain="[('date_ascription','like', datetime.datetime.now().strftime('%Y-%m'))]" />
+                    <group expand="0" string="Group By">
+                        <filter string="日期" name="by_date" domain="[]" context="{'group_by':'date_ascription'}"/>
+                        <filter string="按工序（当日）" name="by_operation_current_date" domain="[('date_ascription','=',current_date)]" context="{'group_by':'fopername'}"/>
+                        <filter string="按工序（当月）" name="by_operation_current_month" domain="[('date_ascription','like', datetime.datetime.now().strftime('%Y-%m'))]" context="{'group_by':'fopername'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="ck_daily_income_rep_filter" model="ir.ui.view">
+            <field name="name">ck.daily.income.rep.select</field>
+            <field name="model">ck.daily.income.rep</field>
+            <field name="arch" type="xml">
+                <search string="Search Daily Income">
+                    <field name="real_name"/>
+                    <field name="froutingname"/>
+                    <field name="fopername"/>
+                    <field name="gqty"/>
+                    <field name="amount"/>
+                    <field name="date_ascription"/>
+                    <filter string="当天记录" name="today_content" domain="[('date_ascription','=',current_date)]"/>
+                    <group expand="0" string="Group By">
+                            <filter string="按用户（当日）" name="by_user_current_date" domain="[('date_ascription','=',current_date)]" context="{'group_by':'real_name'}"/>
+                           <filter string="按用户（当月）" name="by_user_current_month" domain="[('date_ascription','like', datetime.datetime.now().strftime('%Y-%m'))]" context="{'group_by':'real_name'}"/>
+                            <filter string="按工序（当日）" name="by_operation_current_date" domain="[('date_ascription','=',current_date)]" context="{'group_by':'fopername'}"/>
+                           <filter string="按工序（当月）" name="by_operation_current_month" domain="[('date_ascription','like', datetime.datetime.now().strftime('%Y-%m'))]" context="{'group_by':'fopername'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="ck_daily_scrap_rep_filter" model="ir.ui.view">
+            <field name="name">ck.daily.scrap.rep.select</field>
+            <field name="model">ck.daily.scrap.rep</field>
+            <field name="arch" type="xml">
+                <search string="Daily Scrap Report">
+                    <field name="date_worker"/>
+                    <field name="fworkcentername"/>
+                    <field name="fshift"/>
+                    <field name="fmodel"/>
+                    <field name="gqty"/>
+                    <field name="qty"/>
+                    <field name="reason"/>
+                    <filter string="当天记录" name="today_content" domain="[('date_worker','=',current_date)]"/>
+                    <filter string="当月记录" name="date_ascription" domain="[('date_worker','like', datetime.datetime.now().strftime('%Y-%m'))]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="ck_work_order_production_rep_filter" model="ir.ui.view">
+            <field name="name">ck.work.order.production.rep.form</field>
+            <field name="model">ck.work.order.production.rep</field>
+            <field name="arch" type="xml">
+                <search string="Work Order Production Report">
+                    <field name="name"/>
+                    <field name="froutingname"/>
+                    <field name="fopername"/>
+                    <field name="gqty"/>
+                    <field name="date_ascription"/>
+                    <filter string="当天记录" name="today_content" domain="[('date_ascription','=',current_date)]"/>
+                    <filter string="当月记录" name="current_month" domain="[('date_ascription','like', datetime.datetime.now().strftime('%Y-%m'))]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="按工单（当日）" name="by_icmo_current_date" domain="[('date_ascription','=',current_date)]" context="{'group_by':'name'}"/>
+                        <filter string="按工单（当月）" name="by_icmo_current_month" domain="[('date_ascription','like', datetime.datetime.now().strftime('%Y-%m'))]" context="{'group_by':'name'}"/>
+                        <filter string="按产品线" name="by_froutingname" domain="[]" context="{'group_by':'froutingname'}"/>
+                        <filter string="按工序" name="by_fopername" domain="[]" context="{'group_by':'fopername'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!--Ations-->
+
+        <!--<record id="action_ck_hours_worker_rep_four" model="ir.actions.act_window">
+            <field name="name">CK Hours Worker Report Four</field>
+            <field name="res_model">ck.hours.worker.rep.four</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                    'search_default_today_content': 1
+                }
+            </field>
+        </record>-->
+
+        <record id="action_ck_operation_productivity_rep" model="ir.actions.act_window">
+            <field name="name">CK Operation Productivity Report</field>
+            <field name="res_model">ck.operation.productivity.rep</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                    'search_default_today_content': 1
+                }
+            </field>
+        </record>
+
+        <record id="action_ck_daily_income_rep" model="ir.actions.act_window">
+            <field name="name">CK Daily Income Report</field>
+            <field name="res_model">ck.daily.income.rep</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                    'search_default_today_content': 1
+                }
+            </field>
+        </record>
+
+        <record id="action_ck_daily_scrap_rep" model="ir.actions.act_window">
+            <field name="name">CK Daily Scrap Report</field>
+            <field name="res_model">ck.daily.scrap.rep</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="context">{
+                    'search_default_today_content': 1
+                }
+            </field>
+        </record>
+
+        <record id="action_ck_work_order_production_rep" model="ir.actions.act_window">
+            <field name="name">CK Work Order Production Report</field>
+            <field name="res_model">ck.work.order.production.rep</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{
+                    'search_default_by_icmo_current_date': 1
+                }
+            </field>
+        </record>
+
+        <!--Menuitem-->
+
+        <menuitem id="menu_ck_reps"
+                  parent="menu_work_timesheet"
+                  name="Reports"/>
+
+        <!--<menuitem id="menu_ck_hours_worker_rep_four"
+                  parent="menu_ck_reps"
+                  name="Hours Worker Report Base"
+                  action="action_ck_hours_worker_rep_four"/>-->
+
+        <menuitem id="menu_ck_operation_productivity_rep"
+                  parent="menu_ck_reps"
+                  name="Operation Productivity Report"
+                  action="action_ck_operation_productivity_rep"/>
+
+        <menuitem id="menu_ck_daily_income_rep"
+                  parent="menu_ck_reps"
+                  name="CK Daily Income Report"
+                  action="action_ck_daily_income_rep"/>
+
+        <menuitem id="menu_ck_daily_scrap_rep"
+                  parent="menu_ck_reps"
+                  name="CK Daily Scrap Report"
+                  action="action_ck_daily_scrap_rep"/>
+
+        <menuitem id="menu_ck_work_order_production_rep"
+                  parent="menu_ck_reps"
+                  name="CK Work Order Production Report"
+                  action="action_ck_work_order_production_rep"/>
+    </data>
+</odoo>

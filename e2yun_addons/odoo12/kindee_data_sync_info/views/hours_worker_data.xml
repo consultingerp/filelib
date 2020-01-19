@@ -1,0 +1,1335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+<!--        <record forcecreate="1" id="seq_type_id" model="ir.sequence.type">-->
+<!--            <field name="name">CK_Hours_Worker</field>-->
+<!--            <field name="model">ck.hours.worker</field>-->
+<!--        </record>-->
+        <record forcecreate="1" id="seq_id" model="ir.sequence">
+            <field name="name">CK_Hours_Worker</field>
+            <field name="model">ck.hours.worker</field>
+            <field name="padding">5</field>
+            <field name="prefix">CK/W</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+<!--        <record forcecreate="1" id="line_seq_type_id" model="ir.sequence.type">-->
+<!--            <field name="name">CK_Hours_Worker_Line</field>-->
+<!--            <field name="model">ck.hours.worker.line</field>-->
+<!--        </record>-->
+        <record forcecreate="1" id="line_seq_id" model="ir.sequence">
+            <field name="name">CK_Hours_Worker_Line</field>
+            <field name="model">ck.hours.worker.line</field>
+            <field name="padding">5</field>
+            <field name="prefix">CK/L</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+<!--        <record forcecreate="1" model="base.external.dbsource" id="ck_kindee_dbsource">-->
+<!--           <field name="name">MsSQL2008</field>-->
+<!--           <field name="conn_string">mssql+pymssql://dba:%s@pub.e2yun.cn:51001/AIS20170314110507?charset=utf8</field>-->
+<!--           <field name="connector">mssql</field>-->
+<!--           <field name="password">g00dluck</field>-->
+<!--        </record>-->
+
+<!--        <record forcecreate="1" model="import.odbc.dbtable" id="ck_icmo_sync">-->
+<!--           <field name="dbsource_id" eval= "ref('kindee_data_sync_info.ck_kindee_dbsource')" />-->
+<!--           <field name="raise_import_errors" eval="True"/>-->
+<!--           <field name="sql_source">select  top 10 finterid,  fbillno as name,  fitemid,  fnumber, fname, fmodel,-->
+<!--                        fqty,  funit,  froutingid, froutingno ,forderinterid,  fsourceentryid, seobillno,  fcustid,-->
+<!--                        fcustno,  fnote, CONVERT(varchar(100),fdate,20) as fdate,  CONVERT(varchar(100),-->
+<!--                        fconfirmdate,20) as fconfirmdate from View_ICMO_Sync;-->
+<!--           </field>-->
+<!--           <field name="model_target" eval= "ref('kindee_data_sync_info.model_ck_icmo_sync')"/>-->
+<!--            <field name="name">CK_ICMO_SYNC</field>-->
+<!--            <field name="enabled" eval="True"/>-->
+<!--            <field name="exec_order">30</field>-->
+<!--            <field name="ignore_rel_errors" eval="False"/>-->
+<!--            <field name="noupdate" eval="False"/>-->
+<!--       </record>-->
+
+<!--        <record forcecreate="1" model="import.odbc.dbtable" id="ck_routing_sync">-->
+<!--           <field name="dbsource_id" eval= "ref('kindee_data_sync_info.ck_kindee_dbsource')" />-->
+<!--           <field name="raise_import_errors" eval="True"/>-->
+<!--           <field name="sql_source">select  ROW_NUMBER() OVER(ORDER BY froutingid ) AS  routing_key, froutingid,-->
+<!--               froutingno,  froutingname, fitemid,  fnumber,  fname, foperid,  fopersn,  foperno, fopername,-->
+<!--               fworkcenterid, fworkcenterno,  fworkcentername from View_Routing_Sync-->
+<!--               where froutingid in (select  top 10 froutingid from View_ICMO_Sync )-->
+<!--           </field>-->
+<!--           <field name="model_target" eval= "ref('kindee_data_sync_info.model_ck_routing_sync')"/>-->
+<!--            <field name="name">CK_ROUTING_SYNC</field>-->
+<!--            <field name="enabled" eval="True"/>-->
+<!--            <field name="exec_order">40</field>-->
+<!--            <field name="ignore_rel_errors" eval="False"/>-->
+<!--            <field name="noupdate" eval="False"/>-->
+<!--       </record>-->
+    </data>
+    <data>
+
+         <!-- Table form -->
+        <record model="ir.ui.view" id="view_ck_user_work_time_form">
+            <field name="name">ck.user.work.time.form</field>
+            <field name="model">ck.user.work.time</field>
+            <field name="arch" type="xml">
+               <form string="Production Opration Picking QTY" version="8.0">
+                <!--<header>
+                     <button name="search_by_useridanddatetime" type="object" string="Search Test"
+                        />
+                </header>-->
+                <sheet>
+                    <group col="4">
+                        <field name="user_id"/>
+                        <field name="date_worker"/>
+                        <field name="worktime"/>
+                        <field name="state"/>
+                        <field name="remark"/>
+                    </group>
+                </sheet>
+                </form>
+
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_ck_icno_opra_form">
+            <field name="name">ck.icno.opra.form</field>
+            <field name="model">ck.icno.opra</field>
+            <field name="arch" type="xml">
+               <form string="Production Opration Picking QTY" version="8.0">
+                <sheet>
+                    <group col="2">
+                        <field name="company_id"/>
+                        <field name="production_id"/>
+                        <field name="foperno"/>
+                        <field name="pqty"/>
+                    </group>
+                </sheet>
+                </form>
+
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_ck_user_weixin_form">
+            <field name="name">ck.user.weixin.form</field>
+            <field name="model">ck.user.weixin</field>
+            <field name="arch" type="xml">
+               <form string="Weinxin User" version="8.0">
+                <sheet>
+                    <group col="2">
+                        <field name="company_id"/>
+                        <field name="user_id"/>
+                        <field name="password" password="True"/>
+                        <field name="open_id"/>
+                        <field name="date_active" eval="time.strftime('%Y-%M-%D')"/>
+                    </group>
+                </sheet>
+                </form>
+
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_ck_icmo_sync_form">
+            <field name="name">ck.icmo.sync.form</field>
+            <field name="model">ck.icmo.sync</field>
+            <field name="arch" type="xml">
+               <form string="Production Order Sync" version="8.0">
+                    <header>
+                        <button name="button_hw_confirms" type="object"  string="WorkTime Confirm"
+                                icon="gtk-apply" class="oe_highlight"
+                                attrs="{'invisible': ['|',('hw_ids','=',[])]}"/>
+                    </header>
+                    <sheet>
+                        <group col="2">
+                            <field name="company_id"/>
+                        </group>
+                        <group col="4">
+                            <field name="finterid"/>
+                            <field name="name" />
+                            <field name="fitemid"/>
+                            <field name="fnumber"/>
+                            <field name="fname" />
+                            <field name="fmodel"/>
+                            <field name="froutingid"/>
+                            <field name="froutingno"/>
+                        </group>
+                        <group col="6">
+                            <field name="fqty"/>
+                            <field name="funit"/>
+                        </group>
+                        <group col="4">
+                            <field name="forderinterid"/>
+                            <field name="seobillno" />
+                            <field name="fsourceentryid"/>
+                            <field name="fcustid"/>
+                            <field name="fcustno" />
+                            <field name="fnote"/>
+                            <field name="fdate"/>
+                            <field name="fconfirmdate"/>
+                        </group>
+                        <notebook>
+                            <page string="Hours of Worker">
+                                <field name="hw_ids"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_ck_price_form">
+            <field name="name">ck.price.form</field>
+            <field name="model">ck.price</field>
+            <field name="arch" type="xml">
+               <form string="CK Price" version="8.0">
+                <sheet>
+                    <group col="1">
+                        <group col="2">
+                            <field name="company_id"/>
+                        </group>
+                        <group col="6">
+                            <field name="fitemid"/>
+                            <field name="fnumber"/>
+                            <field name="fname"/>
+                            <field name="froutingid"/>
+                            <field name="froutingno"/>
+                            <field name="froutingname"/>
+                            <field name="foperid"/>
+                            <field name="foperno"/>
+                            <field name="fopername"/>
+                        </group>
+                        <group col="6">
+                            <field name="fprice"/>
+                            <field name="fqty"/>
+                            <field name="funit"/>
+                        </group>
+                        <group col="4">
+                            <field name="date_start" />
+                            <field name="date_stop"  />
+                        </group>
+                    </group>
+                </sheet>
+                </form>
+
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_ck_price_ext_form">
+            <field name="name">ck.price_ext.form</field>
+            <field name="model">ck.price.ext</field>
+            <field name="arch" type="xml">
+               <form string="CK Price Ext" version="8.0">
+                <sheet>
+                    <group col="1">
+                        <group col="2">
+                            <field name="company_id"/>
+                        </group>
+                        <group col="6">
+                            <field name="fitemid"/>
+                            <field name="fnumber"/>
+                            <field name="fname"/>
+                            <field name="froutingid"/>
+                            <field name="froutingno"/>
+                            <field name="froutingname"/>
+                            <field name="foperid"/>
+                            <field name="foperno"/>
+                            <field name="fopername"/>
+                            <field name="fmodel"/>
+                            <field name="fshift"/>
+                            <field name="fmachine"/>
+                            <field name="fpass"/>
+                            <field name="fcustid"/>
+                            <field name="fcustno"/>
+                        </group>
+                        <group col="4">
+                            <field name="fbase_price"/>
+                            <field name="fprice"/>
+                            <field name="fqty"/>
+                            <field name="funit"/>
+                        </group>
+                        <group col="4">
+                            <field name="date_start" />
+                            <field name="date_stop"  />
+                        </group>
+                    </group>
+                </sheet>
+                </form>
+
+            </field>
+        </record>
+
+
+         <record model="ir.ui.view" id="view_ck_attrition_rate_form">
+            <field name="name">ck.attrition.rate.form</field>
+            <field name="model">ck.attrition.rate</field>
+            <field name="arch" type="xml">
+               <form string="CK Price Ext" version="8.0">
+                <sheet>
+                    <group col="1">
+                        <group col="6">
+                            <field name="fitemid"/>
+                            <field name="fnumber"/>
+                            <field name="fname"/>
+                            <field name="fmodel"/>
+                            <field name="attrition_rate"/>
+                        </group>
+                    </group>
+                </sheet>
+                </form>
+
+            </field>
+        </record>
+
+
+
+        <record model="ir.ui.view" id="view_ck_routing_sync_form">
+            <field name="name">ck.routing.sync.form</field>
+            <field name="model">ck.routing.sync</field>
+            <field name="arch" type="xml">
+               <form string="CK Routing" version="8.0">
+                <sheet>
+                        <group col="2">
+                            <field name="company_id"/>
+                        </group>
+                       <!-- <group col="4">
+                            <field name="fitemid"/>
+                            <field name="fnumber"/>
+                        </group>
+                        <group col="2">
+                            <field name="fname"/>
+                        </group>-->
+                        <group col="4">
+                            <field name="froutingid"/>
+                            <field name="froutingno"/>
+                        </group>
+                        <group col="4">
+                            <field name="froutingname"/>
+                            <field name="if_needrqty"/>
+                        </group>
+                         <group col="4">
+                            <field name="foperid"/>
+                            <field name="fopersn"/>
+                        </group>
+                        <group col="4">
+                            <field name="foperno"/>
+                            <field name="fopername"/>
+                        </group>
+                        <group col="4">
+                            <field name="fworkcenterid"/>
+                            <field name="fworkcenterno"/>
+                        </group>
+                        <group col="2">
+                            <field name="fworkcentername"/>
+                            <field name="if_need_manypeoplereport"/>
+                        </group>
+                </sheet>
+                </form>
+
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_ck_hours_worker_line_form">
+            <field name="name">ck.hours.worker.line.form</field>
+            <field name="model">ck.hours.worker.line</field>
+            <field name="arch" type="xml">
+               <form string="WHours of Worker lines" version="8.0">
+                   <header>
+                       <button name="button_confirm_line" type="object"	states="new" string="Confirm"
+                               icon="gtk-apply" class="oe_highlight"
+                               attrs="{'invisible': ['|',('state','=','done')]}"/>
+                       <field name="state" widget="statusbar" statusbar_visible="new,done"/>
+                   </header>
+                   <sheet>
+                        <group col="4">
+                            <field name="order_id" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="user_id" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <!--<field name="name"/>-->
+                            <field name="production_id"/>
+                        </group>
+                        <group col="4">
+                            <field name="foperno" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="fopername" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="fworkcenterno" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="fworkcentername" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                        </group>
+                       <group col="4">
+                            <field name="fnumber" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="fname" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="gqty" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="sqty" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="rqty" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="price"/>
+                            <field name="amount"/>
+                            <field name="fshift" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="fmachine" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                        </group>
+                       <group col="4">
+                            <field name="date_worker" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="fpass" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                        </group>
+
+                        <group col="4">
+                            <field name="scrap_lines"/>
+                        </group>
+                        <group col="4">
+                            <field name="material_scrap_lines"/>
+                        </group>
+                        <group col="4">
+                            <field name="worktime"/>
+                        </group>
+                        <group col="4">
+                            <field name="remark1"/>
+                            <field name="remark2"/>
+                            <field name="remark3"/>
+                            <field name="remark4"/>
+                        </group>
+                        <group col="4">
+                            <field name="reportpeople"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_ck_hours_worker_form">
+            <field name="name">ck.hours.worker.form</field>
+            <field name="model">ck.hours.worker</field>
+            <field name="arch" type="xml">
+               <form string="Hours of Worker">
+                    <header>
+                        <button name="button_confirms" type="object" states="open" string="Confirm"
+                                icon="gtk-apply" class="oe_highlight"
+                                attrs="{'invisible': ['|',('state','=','done')]}"/>
+                        <!--<button name="search_msg_test" type="object" states="open" string="Search Test"
+                            /> -->
+                       <field name="state" widget="statusbar" statusbar_visible="open,done"/>
+                    </header>
+                    <sheet>
+                        <group col="4">
+                            <field name="name" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="production_id" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="company_id" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="user_id" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="uflag" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                        </group>
+                        <group col="4">
+                            <field name="fnumber" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="fname" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="foperno" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="fopername" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="fworkcenterno" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="fworkcentername" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                        </group>
+                        <group col="6">
+                            <field name="pqty" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="gqty" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="sqty" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                        </group>
+                        <group col="4">
+                            <field name="date_start" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="date_stop" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="price" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            <field name="amount_total" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                        </group>
+                        <notebook>
+                            <page string="Hours of Worker line">
+                                <field name="lines" attrs="{'readonly': ['|',('state','=','done')]}"/>
+                            </page>
+                        </notebook>
+
+                    </sheet>
+                </form>
+
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_ck_shift_form">
+            <field name="name">ck.shift.form</field>
+            <field name="model">ck.shift</field>
+            <field name="arch" type="xml">
+               <form string="Shift" version="8.0">
+                <sheet>
+                    <group col="2">
+                        <field name="fshift"/>
+                       <!--<field name="date_start" widget="odoo_timepicker" options="{'step': 1,'timeFormat':'G:i'}"/>
+                        <field name="date_stop" widget="odoo_timepicker" options="{'step': 1,'timeFormat':'G:i'}"/>-->
+                        <field name="date_start"/>
+                        <field name="date_stop"/>
+                        <field name="rate"/>
+                    </group>
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_ck_machine_form">
+            <field name="name">ck.machine.form</field>
+            <field name="model">ck.machine</field>
+            <field name="arch" type="xml">
+               <form string="Shift" version="8.0">
+                <sheet>
+                    <group col="2">
+                        <field name="fmachine"/>
+                        <field name="rate"/>
+                    </group>
+                </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_ck_pass_rate_form">
+            <field name="name">ck.pass.rate.form</field>
+            <field name="model">ck.pass.rate</field>
+            <field name="arch" type="xml">
+               <form string="Shift" version="8.0">
+                <sheet>
+                    <group col="2">
+                        <field name="fpass"/>
+                        <field name="rate"/>
+                    </group>
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_ck_route_scrap_reasons_form">
+            <field name="name">ck.route.scrap.reasons.form</field>
+            <field name="model">ck.route.scrap.reasons</field>
+            <field name="arch" type="xml">
+               <form string="Scrap Reason" version="8.0">
+                <sheet>
+                    <group col="2">
+                        <field name="foperno"/>
+                        <field name="fopername"/>
+                        <field name="reason"/>
+                    </group>
+                </sheet>
+                </form>
+
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_ck_material_scrap_reasons_form">
+            <field name="name">ck.material.scrap.reasons.form</field>
+            <field name="model">ck.material.scrap.reasons</field>
+            <field name="arch" type="xml">
+               <form string="Scrap Reason" version="8.0">
+                <sheet>
+                    <group col="2">
+                        <field name="foperno"/>
+                        <field name="fopername"/>
+                        <field name="reason"/>
+                    </group>
+                </sheet>
+                </form>
+
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_ck_route_scrap_reasons_line_form">
+            <field name="name">ck.route.scrap.reasons.line.form</field>
+            <field name="model">ck.route.scrap.reasons.line</field>
+            <field name="arch" type="xml">
+               <form string="Scrap Reason Quality" version="8.0">
+                <sheet>
+                    <group col="2">
+                        <!--<field name="order_id"/>-->
+                        <field name="reason"/>
+                        <field name="qty"/>
+                    </group>
+                </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_ck_material_scrap_reasons_line_form">
+            <field name="name">ck.material.scrap.reasons.line.form</field>
+            <field name="model">ck.material.scrap.reasons.line</field>
+            <field name="arch" type="xml">
+               <form string="Scrap Reason Quality" version="8.0">
+                <sheet>
+                    <group col="2">
+                        <!--<field name="order_id"/>-->
+                        <field name="reason"/>
+                        <field name="qty"/>
+                    </group>
+                </sheet>
+                </form>
+
+            </field>
+        </record>
+
+
+
+
+        <!-- tree form -->
+        <record model="ir.ui.view" id="view_ck_user_work_time_tree">
+            <field name="name">ck.user.work.time.tree</field>
+            <field name="model">ck.user.work.time</field>
+            <field name="arch" type="xml">
+               <tree string="Work Time"  colors="red:state=='del'">
+                    <field name="user_id"/>
+                    <field name="worktime"/>
+                    <field name="create_date"/>
+                    <field name="state"/>
+                    <field name="department"/>
+                    <field name="date_worker"/>
+                    <field name="remark"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_ck_icno_opra_tree">
+            <field name="name">ck.icno.opra.tree</field>
+            <field name="model">ck.icno.opra</field>
+            <field name="arch" type="xml">
+               <tree string="Production Opration Picking QTY">
+                       <field name="company_id"/>
+                        <field name="production_id"/>
+                        <field name="foperno"/>
+                        <field name="pqty"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_ck_user_weixin_tree">
+            <field name="name">ck.user.weixin.tree</field>
+            <field name="model">ck.user.weixin</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="WeiXin User Map">
+                    <field name="company_id"/>
+		            <field name="open_id"/>
+		            <field name="user_id"/>
+                    <field name="date_active"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_ck_icmo_sync_tree">
+            <field name="name">ck.icmo.sync.tree</field>
+            <field name="model">ck.icmo.sync</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Production Order">
+                    <field name="company_id"/>
+		            <field name="name"/>
+		            <field name="fnumber"/>
+                    <field name="fqty"/>
+                    <field name="fcustno"/>
+		            <field name="fdate"/>
+		            <field name="fnote"/>
+                    <field name="state"/>
+                    <field name="create_uid"/>
+                    <field name="write_uid"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_ck_routing_sync_tree">
+            <field name="name">ck.routing.sync.tree</field>
+            <field name="model">ck.routing.sync</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="CK Routing">
+                    <field name="company_id"/>
+                    <field name="froutingno"/>
+		            <!--<field name="fnumber"/>
+		            <field name="fname"/>-->
+                    <field name="fopersn"/>
+                    <field name="foperno"/>
+                    <field name="fopername"/>
+                    <field name="fworkcenterno"/>
+                    <field name="fworkcentername"/>
+                    <field name="if_needrqty"/>
+                    <field name="if_need_manypeoplereport"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_ck_price_tree">
+            <field name="name">ck.price.tree</field>
+            <field name="model">ck.price</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="CK Price">
+                    <field name="company_id"/>
+		            <field name="fnumber"/>
+		            <field name="fname"/>
+                    <field name="foperno"/>
+                    <field name="fopername"/>
+                    <field name="fprice"/>
+                    <field name="fqty"/>
+                    <field name="date_start" />
+                    <field name="date_stop" />
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_ck_price_ext_tree">
+            <field name="name">ck.price.ext.tree</field>
+            <field name="model">ck.price.ext</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="CK Price ext">
+                    <field name="company_id"/>
+                    <field name="fmodel"/>
+                    <field name="fcustno"/>
+		            <field name="fnumber"/>
+		            <field name="fname"/>
+                    <field name="foperno"/>
+                    <field name="fopername"/>
+                    <field name="fprice"/>
+                    <field name="fqty"/>
+                    <field name="fshift"/>
+                    <field name="fmachine"/>
+                    <field name="fpass"/>
+                    <field name="date_start" />
+                    <field name="date_stop" />
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_ck_attrition_rate_tree">
+            <field name="name">ck.attrition.rate.tree</field>
+            <field name="model">ck.attrition.rate</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="CK Price ext">
+		            <field name="fitemid"/>
+                    <field name="fnumber"/>
+                    <field name="fname"/>
+                    <field name="fmodel"/>
+                    <field name="attrition_rate" />
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_ck_hours_worker_tree">
+            <field name="name">ck.hours.worker.tree</field>
+            <field name="model">ck.hours.worker</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Hours of worker" colors="red:state=='del'">
+                    <field name="company_id"/>
+                    <field name="state"/>
+                    <field name="production_id"/>
+		            <field name="name"/>
+		            <field name="user_id"/>
+                    <field name="pqty"/>
+                    <field name="gqty"/>
+                    <field name="sqty"/>
+                    <field name="price"/>
+
+                    <field name="fnumber"/>
+                    <field name="fworkcenterno"/>
+                    <field name="fworkcentername"/>
+                    <field name="foperno"/>
+                    <field name="fopername"/>
+
+                    <field name="department"/>
+
+                    <field name="amount_total"/>
+                    <field name="date_start" />
+                    <field name="date_stop" />
+                </tree>
+            </field>
+        </record>
+
+       <record model="ir.ui.view" id="view_ck_route_scrap_reasons_tree">
+            <field name="name">ck.route.scrap.reasons.tree</field>
+            <field name="model">ck.route.scrap.reasons</field>
+            <field name="arch" type="xml">
+               <tree string="Scrap Reason">
+                       <field name="foperno"/>
+                        <field name="fopername"/>
+                        <field name="reason"/>
+                </tree>
+            </field>
+        </record>
+       <record model="ir.ui.view" id="view_ck_material_scrap_reasons_tree">
+            <field name="name">ck.material.scrap.reasons.tree</field>
+            <field name="model">ck.material.scrap.reasons</field>
+            <field name="arch" type="xml">
+               <tree string="Scrap Material Reason">
+                       <field name="foperno"/>
+                        <field name="fopername"/>
+                        <field name="reason"/>
+                </tree>
+            </field>
+        </record>
+       <record model="ir.ui.view" id="view_ck_route_scrap_reasons_line_tree">
+            <field name="name">ck.route.scrap.reasons.line.tree</field>
+            <field name="model">ck.route.scrap.reasons.line</field>
+            <field name="arch" type="xml">
+               <tree string="Scrap Reason Quality">
+                    <!--<field name="order_id"/>-->
+                    <field name="reason"/>
+                    <field name="qty"/>
+                </tree>
+            </field>
+        </record>
+       <record model="ir.ui.view" id="view_ck_material_scrap_reasons_line_tree">
+            <field name="name">ck.material.scrap.reasons.line.tree</field>
+            <field name="model">ck.material.scrap.reasons.line</field>
+            <field name="arch" type="xml">
+               <tree string="Scrap Material Reason Quality">
+                    <!--<field name="order_id"/>-->
+                    <field name="reason"/>
+                    <field name="qty"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+        <!--
+        <record id="view_ck_hours_worker_filter" model="ir.ui.view">
+            <field name="name">ck.hours.worker.select</field>
+            <field name="model">ck.hours.worker</field>
+            <field name="arch" type="xml">
+                <search string="Search CK Worker">
+                    <group expand="0" string="Group By">
+                        <filter string="生产任务单" domain="[]" context="{'group_by':'production_id'}"/>
+                        <filter string="产品" domain="[]" context="{'group_by':'fnumber'}"/>
+                        <filter string="工作中心" domain="[]" context="{'group_by':'fworkcenterno'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+        -->
+        <record id="view_ck_routing_sync_filter" model="ir.ui.view">
+            <field name="name">ck.routing.sync.select</field>
+            <field name="model">ck.routing.sync</field>
+            <field name="arch" type="xml">
+                <search string="Search CK Worker">
+                     <field name="company_id"/>
+                    <field name="froutingno"/>
+                    <field name="fopersn"/>
+                    <field name="foperno"/>
+                    <field name="fopername"/>
+                    <field name="fworkcenterno"/>
+                    <field name="fworkcentername"/>
+                    <field name="if_needrqty"/>
+                    <field name="if_need_manypeoplereport"/>
+               </search>
+            </field>
+        </record>
+
+         <record id="view_ck_user_work_time_filter" model="ir.ui.view">
+            <field name="name">ck.user.work.time.select</field>
+            <field name="model">ck.user.work.time</field>
+            <field name="arch" type="xml">
+                <search string="Search Work Time">
+                    <field name="user_id"/>
+                    <field name="worktime"/>
+                    <field name="create_date"/>
+                    <field name="create_date" operator="&gt;=" string="创建日期大于"/>
+                    <field name="create_date" operator="&lt;=" string="创建日期小于"/>
+                    <field name="state"/>
+                    <field name="department"/>
+                    <field name="date_worker"/>
+                    <field name="remark"/>
+                    <filter string="可用记录" name="notdeletecontent" domain="[('state','!=', 'del')]" />
+               </search>
+            </field>
+        </record>
+         <record id="view_ck_price_ext_filter" model="ir.ui.view">
+            <field name="name">ck.price.ext.select</field>
+            <field name="model">ck.price.ext</field>
+            <field name="arch" type="xml">
+                <search string="Search ck.price.ext">
+                    <field name="fmodel"/>
+                    <field name="fnumber"/>
+                    <field name="fname"/>
+                    <field name="froutingno"/>
+                    <field name="froutingname"/>
+                    <field name="foperno"/>
+                    <field name="fopername"/>
+                    <field name="fshift"/>
+                    <field name="fmachine"/>
+                    <field name="fcustno"/>
+                    <field name="date_start" operator="&gt;=" string="Start Start Time"/>
+                    <field name="date_start" operator="&lt;=" string="Start End Time"/>
+                    <field name="date_stop" operator="&gt;=" string="End Start Time"/>
+                    <field name="date_stop" operator="&lt;=" string="End End Time"/>
+               </search>
+            </field>
+        </record>
+
+         <record id="view_ck_hours_worker_filter" model="ir.ui.view">
+            <field name="name">ck.hours.worker.select</field>
+            <field name="model">ck.hours.worker</field>
+            <field name="arch" type="xml">
+                <search string="Search ck.hours.worker">
+                    <field name="state"/>
+                    <field name="production_id"/>
+		            <field name="name"/>
+
+                    <field name="fnumber"/>
+                    <field name="fworkcenterno"/>
+                    <field name="fworkcentername"/>
+                    <field name="foperno"/>
+                    <field name="fopername"/>
+
+                    <field name="department"/>
+
+		            <field name="user_id"/>
+                    <field name="pqty"/>
+                    <field name="gqty"/>
+                    <field name="sqty"/>
+                    <field name="price"/>
+                    <field name="amount_total"/>
+                    <field name="date_start"/>
+                    <field name="date_stop"/>
+                    <!--<filter string="可用记录" name="notdeletecontent" domain="[('state','!=', 'del')]" />-->
+                    <group expand="0" string="Group By">
+                        <filter string="生产任务单" domain="[]" context="{'group_by':'production_id'}"/>
+                        <filter string="产品" domain="[]" context="{'group_by':'fnumber'}"/>
+                        <filter string="工作中心" domain="[]" context="{'group_by':'fworkcentername'}"/>
+                        <filter string="工序" domain="[]" context="{'group_by':'fopername'}"/>
+                        <filter string="产品编码" domain="[]" context="{'group_by':'fnumber'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+
+         <record id="view_ck_hours_worker_line_filter" model="ir.ui.view">
+            <field name="name">ck.hours.worker.line.select</field>
+            <field name="model">ck.hours.worker.line</field>
+            <field name="arch" type="xml">
+                <search string="Search CK worker.line">
+                    <field name="id"/>
+                    <field name="id" operator="&gt;=" string="明细序号大于"/>
+                    <field name="id" operator="&lt;=" string="明细序号小于"/>
+                    <!--<field name="name"/>-->
+                    <field name="fmodel"/>
+                    <field name="order_id"/>
+                    <field name="production_id"/>
+		            <field name="user_id"/>
+		            <field name="user_id"/>
+                    <field name="write_uid"/>
+                    <field name="date_approve" operator="&gt;=" string="审批时间从"/>
+                    <field name="date_approve" operator="&lt;=" string="审批时间到"/>
+                    <field name="date_worker" operator="&gt;=" string="Report Start Time"/>
+                    <field name="date_worker" operator="&lt;=" string="Report End Time"/>
+                    <field name="fworkcentername"/>
+                    <field name="department"/>
+                    <field name="foperno"/>
+                    <field name="fopername"/>
+                    <field name="gqty"/>
+                    <field name="sqty"/>
+                    <field name="price"/>
+                    <field name="amount"/>
+                    <field name="state"/>
+                    <field name="reportpeople"/>
+                    <filter string="当天" name="currentday" domain="[('date_worker','&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('date_worker','&lt;=', datetime.datetime.now().strftime('%Y-%m-%d 23:59:59'))]" />
+                    <filter string="当月" name="currentmonth" domain="[('date_worker','like', datetime.datetime.now().strftime('%Y-%m'))]" />
+                    <!--<filter string="可用记录" name="notdeletecontent" domain="[('state','!=', 'del')]" />-->
+                     <group expand="0" string="Group By">
+                        <filter string="用户" domain="[]" context="{'group_by':'user_id'}"/>
+                        <filter string="报工时间" domain="[]" context="{'group_by':'date_worker'}"/>
+                        <filter string="班次" domain="[]" context="{'group_by':'fshift'}"/>
+                        <filter string="型号" domain="[]" context="{'group_by':'fmodel'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+         <record id="view_ck_icmo_sync_filter" model="ir.ui.view">
+            <field name="name">ck.icmo.sync.select</field>
+            <field name="model">ck.icmo.sync</field>
+            <field name="arch" type="xml">
+                <search string="Search CK icmo">
+		            <field name="name"/>
+		            <field name="fnumber"/>
+                    <field name="fqty"/>
+                    <field name="fcustno"/>
+		            <field name="fdate"/>
+		            <field name="fnote"/>
+               </search>
+            </field>
+        </record>
+         <record id="view_ck_user_weixin_filter" model="ir.ui.view">
+            <field name="name">ck.user.weixin.select</field>
+            <field name="model">ck.user.weixin</field>
+            <field name="arch" type="xml">
+                <search string="Search ck.user.weixin">
+		               <field name="open_id"/>
+		            <field name="user_id"/>
+                    <field name="date_active"/>
+               </search>
+            </field>
+        </record>
+         <record id="view_ck_attrition_rate_filter" model="ir.ui.view">
+            <field name="name">ck.attrition.rate.select</field>
+            <field name="model">ck.attrition.rate</field>
+            <field name="arch" type="xml">
+                <search string="Search ck.attrition.rate">
+                    <field name="fmodel"/>
+                    <field name="fitemid"/>
+                    <field name="fnumber"/>
+                    <field name="fname"/>
+                    <field name="attrition_rate"/>
+               </search>
+            </field>
+        </record>
+         <record id="view_ck_icno_opra_filter" model="ir.ui.view">
+            <field name="name">ck.icno.opra.select</field>
+            <field name="model">ck.icno.opra</field>
+            <field name="arch" type="xml">
+                <search string="Search ck.attrition.rate">
+                    <field name="production_id"/>
+                    <field name="foperno"/>
+                    <field name="pqty"/>
+               </search>
+            </field>
+        </record>
+
+         <record id="view_ck_route_scrap_reasons_filter" model="ir.ui.view">
+            <field name="name">ck.route.scrap.reasons.select</field>
+            <field name="model">ck.route.scrap.reasons</field>
+            <field name="arch" type="xml">
+                <search string="Search Scrap Reasons">
+                    <field name="foperno"/>
+                    <field name="fopername"/>
+                    <field name="reason"/>
+               </search>
+            </field>
+        </record>
+         <record id="view_ck_material_scrap_reasons_filter" model="ir.ui.view">
+            <field name="name">ck.material.scrap.reasons.select</field>
+            <field name="model">ck.material.scrap.reasons</field>
+            <field name="arch" type="xml">
+                <search string="Search Material Scrap Reasons">
+                    <field name="foperno"/>
+                    <field name="fopername"/>
+                    <field name="reason"/>
+               </search>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="view_ck_hours_worker_line_tree">
+            <field name="name">ck.hours.worker.line.tree</field>
+            <field name="model">ck.hours.worker.line</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Hours of work line" colors="red:state=='del'">
+                    <field name="id"/>
+                    <field name="order_id"/>
+                    <!--<field name="name"/>-->
+                    <field name="production_id"/>
+                    <field name="date_worker"/>
+                    <field name="state"/>
+                    <field name="user_id"/>
+                    <field name="fmodel"/>
+                    <field name="fnumber"/>
+                    <field name="foperno"/>
+                    <field name="fopername"/>
+                    <field name="fshift"/>
+                    <field name="fmachine"/>
+                    <field name="pqty"/>
+                    <field name="gqty"/>
+                    <field name="sqty"/>
+                    <field name="price"/>
+                    <field name="fpass"/>
+                    <field name="amount"/>
+                    <field name="fworkcenterno"/>
+                    <field name="fworkcentername"/>
+                    <field name="department"/>
+                    <field name="write_uid" string="审批人" attrs="{'invisible': ['|', ('state','=','new'), ('state','=','del')]}"/>
+                    <field name="date_approve"/>
+                    <field name="worktime"/>
+                    <field name="remark1"/>
+                    <field name="remark2"/>
+                    <field name="remark3"/>
+                    <field name="remark4"/>
+                    <field name="reportpeople"/>
+                </tree>
+            </field>
+        </record>
+
+         <record model="ir.ui.view" id="view_ck_shift_tree">
+            <field name="name">ck.shift.tree</field>
+            <field name="model">ck.shift</field>
+            <field name="arch" type="xml">
+               <tree string="Shift">
+                    <field name="fshift"/>
+                    <field name="date_start"/>
+                    <field name="date_stop"/>
+                    <field name="rate"/>
+                </tree>
+            </field>
+        </record>
+
+         <record model="ir.ui.view" id="view_ck_machine_tree">
+            <field name="name">ck.machine.tree</field>
+            <field name="model">ck.machine</field>
+            <field name="arch" type="xml">
+               <tree string="Shift">
+                    <field name="fmachine"/>
+                    <field name="rate"/>
+                </tree>
+            </field>
+        </record>
+         <record model="ir.ui.view" id="view_ck_pass_rate_tree">
+            <field name="name">ck.pass.rate.tree</field>
+            <field name="model">ck.pass.rate</field>
+            <field name="arch" type="xml">
+               <tree string="Shift">
+                    <field name="fpass"/>
+                    <field name="rate"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <!-- Action -->
+         <record model="ir.actions.act_window" id="action_ck_user_work_time">
+           <field name="name">Work Time</field>
+           <field name="res_model">ck.user.work.time</field>
+           <field name="view_mode">tree,form</field>
+           <field name="view_type">form</field>
+           <field name="context">{
+                    'search_default_notdeletecontent': 1
+                }
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_ck_icno_opra">
+           <field name="name">Production Opration Picking QTY</field>
+           <field name="res_model">ck.icno.opra</field>
+           <field name="view_mode">tree,form</field>
+           <field name="view_type">form</field>
+        </record>
+        <record model="ir.actions.act_window" id="action_ck_user_weixin">
+           <field name="name">Weixin user Map</field>
+           <field name="res_model">ck.user.weixin</field>
+           <field name="view_mode">tree,form</field>
+           <field name="view_type">form</field>
+        </record>
+        <record model="ir.actions.act_window" id="action_ck_price">
+           <field name="name">CK Price</field>
+           <field name="res_model">ck.price</field>
+           <field name="view_mode">tree,form</field>
+           <field name="view_type">form</field>
+        </record>
+        <record model="ir.actions.act_window" id="action_ck_price_ext">
+           <field name="name">CK Price Ext</field>
+           <field name="res_model">ck.price.ext</field>
+           <field name="view_mode">tree,form</field>
+           <field name="view_type">form</field>
+        </record>
+        <record model="ir.actions.act_window" id="action_ck_attrition_rate">
+           <field name="name">CK attrition rate</field>
+           <field name="res_model">ck.attrition.rate</field>
+           <field name="view_mode">tree,form</field>
+           <field name="view_type">form</field>
+        </record>
+        <record model="ir.actions.act_window" id="action_ck_routing_sync">
+           <field name="name">CK Routing Sync</field>
+           <field name="res_model">ck.routing.sync</field>
+           <field name="view_mode">tree,form</field>
+           <field name="view_type">form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_ck_hours_worker">
+           <field name="name">Hours of Worker</field>
+           <field name="res_model">ck.hours.worker</field>
+           <field name="view_mode">tree,form</field>
+           <field name="view_type">form</field>
+            <field name="domain">[('state', 'in',  ( 'open','done'))]</field>
+            <!--<field name="context">{
+                    'search_default_notdeletecontent': 1
+                }
+            </field>-->
+       </record>
+        <record model="ir.actions.act_window" id="action_ck_hours_worker_line">
+           <field name="name">Hours of Worker Line</field>
+           <field name="res_model">ck.hours.worker.line</field>
+           <field name="view_mode">tree,form,graph</field>
+           <field name="view_type">form</field>
+           <field name="domain">[('state', 'in',  ( 'new','done'))]</field>
+             <!--<field name="context">{
+                    'search_default_notdeletecontent': 1
+                }
+            </field>-->
+       </record>
+        <record model="ir.actions.act_window" id="action_ck_icmo_sync">
+           <field name="name">Production Order Sync</field>
+           <field name="res_model">ck.icmo.sync</field>
+           <field name="view_mode">tree,form</field>
+           <field name="view_type">form</field>
+       </record>
+
+         <record model="ir.actions.act_window" id="action_ck_shift_opra">
+           <field name="name">Shift</field>
+           <field name="res_model">ck.shift</field>
+           <field name="view_mode">tree,form</field>
+           <field name="view_type">form</field>
+        </record>
+         <record model="ir.actions.act_window" id="action_ck_machine_opra">
+           <field name="name">Shift</field>
+           <field name="res_model">ck.machine</field>
+           <field name="view_mode">tree,form</field>
+           <field name="view_type">form</field>
+        </record>
+         <record model="ir.actions.act_window" id="action_ck_pass_rate_opra">
+           <field name="name">Pass Rate</field>
+           <field name="res_model">ck.pass.rate</field>
+           <field name="view_mode">tree,form</field>
+           <field name="view_type">form</field>
+        </record>
+         <record model="ir.actions.act_window" id="action_ck_route_scrap_reasons">
+           <field name="name">Scrap Reason</field>
+           <field name="res_model">ck.route.scrap.reasons</field>
+           <field name="view_mode">tree,form</field>
+           <field name="view_type">form</field>
+        </record>
+         <record model="ir.actions.act_window" id="action_ck_material_scrap_reasons">
+           <field name="name">Scrap Reason</field>
+           <field name="res_model">ck.material.scrap.reasons</field>
+           <field name="view_mode">tree,form</field>
+           <field name="view_type">form</field>
+        </record>
+
+        <menuitem name="Work Timesheet"
+                 id="menu_work_timesheet"
+                 parent=""/>
+        <menuitem name="CK Report Work"
+                 id="menu_ck_report_work"
+                 parent="menu_work_timesheet"/>
+        <menuitem name="Weixin user Map"
+                 id="menu_ck_user_weixin"
+                 parent="menu_ck_report_work"
+                 action="action_ck_user_weixin"/>
+        <!--<menuitem name="CK Price"
+                 id="menu_ck_price"
+                 parent="menu_ck_report_work"
+                 action="action_ck_price"/> -->
+        <menuitem name="CK Price Ext"
+                 id="menu_ck_price_ext"
+                 parent="menu_ck_report_work"
+                 action="action_ck_price_ext"/>
+        <menuitem name="CK attrition rate"
+                 id="menu_ck_attrition_rate"
+                 parent="menu_ck_report_work"
+                 action="action_ck_attrition_rate"/>
+        <menuitem name="CK Routing Sync"
+                 id="menu_ck_routing_sync"
+                 parent="menu_ck_report_work"
+                 action="action_ck_routing_sync"/>
+        <menuitem name="Hours of Worker"
+                 id="menu_ck_hours_worker"
+                 parent="menu_ck_report_work"
+                 action="action_ck_hours_worker"/>
+        <menuitem name="Production Order"
+                 id="menu_ck_icmo_sync"
+                 parent="menu_ck_report_work"
+                 action="action_ck_icmo_sync"/>
+        <menuitem name="CK ICNO Opra"
+                 id="menu_ck_icno_opra"
+                  action="action_ck_icno_opra"
+                 parent="menu_ck_report_work"/>
+        <menuitem name="Hours of Worker Line"
+                 id="menu_ck_hours_worker_line"
+                 parent="menu_ck_report_work"
+                 action="action_ck_hours_worker_line"/>
+
+          <menuitem name="CK Shift"
+                 id="menu_ck_shift"
+                 parent="menu_ck_report_work"
+                 action="action_ck_shift_opra"/>
+
+          <menuitem name="CK Machine"
+                 id="menu_ck_machine"
+                 parent="menu_ck_report_work"
+                 action="action_ck_machine_opra"/>
+
+          <menuitem name="CK Scrap Reason"
+                 id="menu_ck_route_scrap_reasons"
+                 parent="menu_ck_report_work"
+                 action="action_ck_route_scrap_reasons" sequence="41"/>
+
+          <menuitem name="CK Material Scrap Reason"
+                 id="menu_ck_material_scrap_reasons"
+                 parent="menu_ck_report_work"
+                 action="action_ck_material_scrap_reasons" sequence="42"/>
+
+          <menuitem name="CK Work Time"
+                 id="menu_ck_user_work_time"
+                 parent="menu_ck_report_work"
+                 action="action_ck_user_work_time" sequence="40"/>
+
+          <!--<menuitem name="CK Pass Rate"
+                 id="menu_ck_pass_rate"
+                 parent="menu_ck_report_work"
+                 action="action_ck_pass_rate_opra"/>-->
+
+
+        <menuitem name="Moile Access Menu"
+                 id="menu_ck_hours_mobile_access_menu"
+                 parent="base.menu_custom"
+                 />
+
+        <menuitem name="Personal Information"
+                 id="menu_ck_personal_information"
+                 parent="menu_ck_hours_mobile_access_menu"
+                 action="action_ck_hours_worker_line"
+                groups="group_rw_employee,group_rw_admin,group_rw_termleader,group_rw_manager" sequence="20"/>
+        <menuitem name="Change Password"
+                 id="menu_ck_change_password"
+                 parent="menu_ck_hours_mobile_access_menu"
+                 action="action_ck_hours_worker_line"
+                groups="group_rw_employee,group_rw_admin,group_rw_termleader,group_rw_manager" sequence="25"/>
+        <menuitem name="My Report"
+                 id="menu_ck_my_report"
+                 parent="menu_ck_hours_mobile_access_menu"
+                 action="action_ck_hours_worker_line"
+                groups="group_rw_employee,group_rw_admin,group_rw_termleader,group_rw_manager" sequence="30"/>
+        <menuitem name="Approve Report"
+                 id="menu_ck_approve_report"
+                 parent="menu_ck_hours_mobile_access_menu"
+                 action="action_ck_hours_worker_line"
+                groups="group_rw_admin,group_rw_termleader,group_rw_manager" sequence="35"/>
+        <menuitem name="Exit"
+                 id="menu_ck_exit"
+                 parent="menu_ck_hours_mobile_access_menu"
+                 action="action_ck_hours_worker_line"
+                groups="group_rw_employee,group_rw_admin,group_rw_termleader,group_rw_manager" sequence="40"/>
+
+
+
+
+         <record id="cn_hours_worker_leader" model="ir.rule">
+            <field name="name">报工数据</field>
+            <field name="model_id" search="[('model','=','ck.hours.worker')]" model="ir.model"/>
+            <field name="domain_force">[('user_id','=',user.id)]</field>
+            <field name="groups" eval="[(4,ref('kindee_data_sync_info.group_rw_admin')), (4,ref('kindee_data_sync_info.group_rw_termleader')),(4,ref('kindee_data_sync_info.group_rw_manager'))]"/>
+        </record>
+         <record id="cn_hours_worker_line_leader" model="ir.rule">
+            <field name="name">报工明细</field>
+            <field name="model_id" search="[('model','=','ck.hours.worker.line')]" model="ir.model"/>
+            <field name="domain_force">[('user_id','=',user.id)]</field>
+            <field name="groups" eval="[(4,ref('kindee_data_sync_info.group_rw_admin')), (4,ref('kindee_data_sync_info.group_rw_termleader')),(4,ref('kindee_data_sync_info.group_rw_manager'))]"/>
+        </record>
+         <record id="cn_hours_worker_employee" model="ir.rule">
+            <field name="name">报工数据（员工）</field>
+            <field name="model_id" search="[('model','=','ck.hours.worker')]" model="ir.model"/>
+            <field name="domain_force">[('user_id','=',user.id)]</field>
+            <field name="groups" eval="[(4,ref('kindee_data_sync_info.group_rw_employee'))]"/>
+        </record>
+         <record id="cn_hours_worker_line_employee" model="ir.rule">
+            <field name="name">报工明细（员工）</field>
+            <field name="model_id"  search="[('model','=','ck.hours.worker.line')]" model="ir.model" />
+            <field name="domain_force">[('user_id','=',user.id)]</field>
+            <field name="groups" eval="[(4,ref('kindee_data_sync_info.group_rw_employee'))]"/>
+        </record>
+
+
+
+
+        <!-- Graph -->
+        <record id="view_ck_hours_worker_line_graph " model="ir.ui.view">
+            <field name="name">ck.hours.worker.line.graph</field>
+            <field name="model">ck.hours.worker.line</field>
+            <field name="arch" type="xml">
+                <graph string="Worker analysis" type="bar">
+                    <field name="user_id"/>
+                    <field name="gqty" operator="+"/>
+                    <field name="amount" operator="+"/>
+                    <field name="sqty" operator="+"/>
+                </graph>
+            </field>
+        </record>
+
+
+
+    </data>
+</odoo>

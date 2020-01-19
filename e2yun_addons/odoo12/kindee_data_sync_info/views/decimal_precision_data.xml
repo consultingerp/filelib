@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+         Price of worker Hours
+         <record forcecreate="True" id="decimal_ck_worker_price" model="decimal.precision">
+            <field name="name">ck_workprice_digit</field>
+            <field name="digits">3</field>
+        </record>
+        -->
+
+
+        <record forcecreate="True" id="decimal_ck_worker_qty" model="decimal.precision">
+            <field name="name">ck_workqty_digit</field>
+            <field name="digits">0</field>
+        </record>
+       <record forcecreate="True" id="decimal_ck_worker_amount" model="decimal.precision">
+            <field name="name">ck_workamount_digit</field>
+            <field name="digits">2</field>
+        </record>
+    </data>
+</odoo>

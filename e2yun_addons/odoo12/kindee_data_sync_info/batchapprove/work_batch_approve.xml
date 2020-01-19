@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="worker_line_view_form_batch_confirm" model="ir.ui.view">
+            <field name="name">Approve Worker</field>
+            <field name="model">ck.hours.worker.line.batch.approve</field>
+            <field name="arch" type="xml">
+                <form string="Approve Worker">
+                    <group col="4">
+                        <field  name="fshift" />
+                    </group>
+                    <separator colspan="4" string="Do you really want to approve the order(s)?"/>
+                    <footer>
+                        <button name="batch_approve_worker_line" string="Yes" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="worker_line_action_batch_confirm" model="ir.actions.act_window">
+            <field name="name">批量审核</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ck.hours.worker.line.batch.approve</field>
+            <field name="src_model">ck.hours.worker.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="worker_line_view_form_batch_confirm"/>
+            <field name="target">new</field>
+            <field name="multi">True</field>
+        </record>
+
+<!--        <record model="ir.values" id="worker_line_confirm_batch">-->
+        <record model="ir.actions.server" id="worker_line_confirm_batch">
+            <field name="model_id" ref="kindee_data_sync_info.model_ck_hours_worker_line"/>
+            <field name="name">批量审核</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('worker_line_action_batch_confirm'))"/>
+            <field name="key">action</field>
+            <field name="model">ck.hours.worker.line</field>
+        </record>
+    </data>
+</odoo>
