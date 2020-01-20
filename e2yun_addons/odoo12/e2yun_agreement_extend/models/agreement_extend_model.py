@@ -11,6 +11,10 @@ class Agreement(models.Model):
     plan_sign_time=fields.Datetime('Plan Sign Time') # 计划回签时间
     property_product_pricelist = fields.Many2one('product.pricelist', string='Pricelist',default=1,)
 
+    pdfswy = fields.Many2one('ir.attachment', string='Pdfswy',readonly='True')
+    pdfqw = fields.Many2one('ir.attachment', string='Pdfqw',readonly='True' )
+    fktj = fields.Many2one('ir.attachment', string='Fktj',readonly='True')
+
     @api.model
     def create(self, vals):
         vals['code'] = ""
@@ -286,8 +290,17 @@ class Agreement(models.Model):
         ir_model_data = self.env['ir.model.data']
         try:
             template_id = ir_model_data.get_object_reference('e2yun_agreement_extend', 'email_template_temp_agreement')[1]
-            sql="insert into email_template_attachment_rel(email_template_id,attachment_id)values (%s,%s)"
-            self._cr.execute(sql,(template_id,4097))
+
+            sqld="delete  from email_template_attachment_rel where email_template_id=%s "
+            self._cr.execute(sqld,(template_id,))
+
+            sql = "insert into email_template_attachment_rel(email_template_id,attachment_id)values (%s,%s)"
+            if self.pdfswy:
+                self._cr.execute(sql, (template_id,self.pdfswy.id))
+            if self.pdfqw:
+                self._cr.execute(sql, (template_id, self.pdfqw.id))
+            if self.fktj:
+                self._cr.execute(sql, (template_id, self.fktj.id))
 
         except ValueError:
             template_id = False

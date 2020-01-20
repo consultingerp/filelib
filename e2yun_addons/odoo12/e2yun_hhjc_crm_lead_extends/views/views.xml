@@ -1,0 +1,16 @@
+<odoo>
+  <data>
+    <record id="crm_form_view_leads_extends" model="ir.ui.view">
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
+        <field name="arch" type="xml">
+             <xpath expr="//field[@name='team_id']" position="attributes">
+                <attribute name="widget"></attribute>
+            </xpath>
+          <xpath expr="//field[@name='team_id']" position="attributes">
+                <attribute name="options">{'no_create_edit': 1}</attribute>
+            </xpath>
+        </field>
+    </record>
+  </data>
+</odoo>

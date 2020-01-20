@@ -96,14 +96,19 @@ class res_partner(models.Model):
                or 'mobile' in vals.keys():
             I_INPUT = {}
             I_INPUT['ZTYPE'] = '1'  # 事务类型  0 创建 1修改
-            if not self.sap_kunnr:
+            if not self.sap_kunnr or  not self.sap_remark :
                 return super(res_partner, self).write(vals)
             I_INPUT['KUNNR'] =self.sap_kunnr
-            I_INPUT['NAME_ORG1'] = vals['name']
-            I_INPUT['KTOKD'] = self.sap_ktokd
-            I_INPUT['REMARK'] = self.sap_remark
-            I_INPUT['BU_SORT1'] = self.sap_bu_sort1
-            I_INPUT['BU_SORT2'] = self.sap_bu_sort1
+            if 'name' in vals.keys() and vals['name']:
+                I_INPUT['NAME_ORG1'] = vals['name']
+            if self.sap_ktokd:
+                I_INPUT['KTOKD'] = self.sap_ktokd
+            if self.sap_remark:
+                I_INPUT['REMARK'] = self.sap_remark
+            if self.sap_bu_sort1:
+                I_INPUT['BU_SORT1'] = self.sap_bu_sort1
+            if self.sap_bu_sort2:
+                I_INPUT['BU_SORT2'] = self.sap_bu_sort2
             I_INPUT['LANGU'] = 'zh'  # 默认
             I_INPUT['COUNTRY'] = 'CN'  # 默认
 

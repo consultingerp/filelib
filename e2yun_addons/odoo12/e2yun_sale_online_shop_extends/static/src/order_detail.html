@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>查看订单</title>
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+        <meta content="yes" name="apple-mobile-web-app-capable"/>
+        <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+        <meta content="telephone=no" name="format-detection"/>
+        <link href="/e2yun_sale_online_shop_extends/static/src/assets/css/order_detail.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <section class="aui-flexView">
+            <header class="aui-navBar aui-navBar-fixed b-line">
+                <a href="#"  onClick="javascript :history.back(-1);" class="aui-navBar-item">
+                    <i class="icon icon-return"></i>
+                </a>
+                <div class="aui-center">
+                    <span class="aui-center-title">查看订单</span>
+                </div>
+            </header>
+            <section class="aui-scrollView">
+                <div class="aui-flex aui-flex-lag">
+                    <div class="aui-flex-box">
+                        <h2>
+                            订单编号：<em id="order_name"></em>
+                        </h2>
+                    </div>
+                </div>
+                <div class="divHeight"></div>
+                <div class="aui-flex aui-flex-lag">
+                    <div class="aui-flex-box">
+                        <h2 style="color:#333">订单跟踪</h2>
+                    </div>
+                </div>
+                <div class="aui-timeLine b-line">
+                    <ul class="aui-timeLine-content">
+
+                    </ul>
+                </div>
+                <div class="b-line divHeight"></div>
+            </section>
+        </section>
+    <script src="/e2yun_sale_online_shop_extends/static/src/assets/js/vendor.js"></script>
+    <script type="text/javascript" src="/e2yun_sale_online_shop_extends/static/src/assets/js/order_detail.js?version=0.1"></script>
+    </body>
+</html>
