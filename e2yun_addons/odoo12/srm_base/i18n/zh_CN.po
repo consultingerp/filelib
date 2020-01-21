@@ -1,13 +1,13 @@
-                                       # Translation of Odoo Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
 #	* srm_base
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-22 02:34+0000\n"
-"PO-Revision-Date: 2019-04-22 02:34+0000\n"
+"POT-Creation-Date: 2020-01-21 03:51+0000\n"
+"PO-Revision-Date: 2020-01-21 03:51+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,20 +16,20 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: srm_base
-#: model:ir.model.fields,field_description:srm_base.field_res_partner_allow_create_days
-#: model:ir.model.fields,field_description:srm_base.field_res_users_allow_create_days
+#: model:ir.model.fields,field_description:srm_base.field_res_partner__allow_create_days
+#: model:ir.model.fields,field_description:srm_base.field_res_users__allow_create_days
 msgid "Allow Create Days"
 msgstr "允许创建交货单天数"
 
 #. module: srm_base
-#: model:ir.model.fields,field_description:srm_base.field_res_partner_allow_no_schedule_create
-#: model:ir.model.fields,field_description:srm_base.field_res_users_allow_no_schedule_create
+#: model:ir.model.fields,field_description:srm_base.field_res_partner__allow_no_schedule_create
+#: model:ir.model.fields,field_description:srm_base.field_res_users__allow_no_schedule_create
 msgid "Allow No Schedule Create"
 msgstr "允许不按排程交货"
 
 #. module: srm_base
-#: model:ir.model.fields,field_description:srm_base.field_res_partner_auto_send_email
-#: model:ir.model.fields,field_description:srm_base.field_res_users_auto_send_email
+#: model:ir.model.fields,field_description:srm_base.field_res_partner__auto_send_email
+#: model:ir.model.fields,field_description:srm_base.field_res_users__auto_send_email
 msgid "Auto Send Email"
 msgstr "同步自动确认"
 
@@ -39,56 +39,56 @@ msgid "Companies"
 msgstr "公司"
 
 #. module: srm_base
-#: model:ir.model.fields,field_description:srm_base.field_res_company_company_code
+#: model:ir.model.fields,field_description:srm_base.field_res_company__company_code
 msgid "Company code"
 msgstr "公司代码"
 
 #. module: srm_base
-#: model:ir.model.fields,field_description:srm_base.field_res_partner_order_confirm
-#: model:ir.model.fields,field_description:srm_base.field_res_users_order_confirm
+#: model:ir.model.fields,field_description:srm_base.field_res_partner__order_confirm
+#: model:ir.model.fields,field_description:srm_base.field_res_users__order_confirm
 msgid "Confirmation of purchase order"
 msgstr "供应商自动确认"
 
 #. module: srm_base
 #: model:ir.model,name:srm_base.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "联系人"
 
 #. module: srm_base
-#: model:ir.model.fields,field_description:srm_base.field_product_supplierinfo_automatic_selection
+#: model:ir.model.fields,field_description:srm_base.field_product_supplierinfo__automatic_selection
 msgid "Delivery Automatic Selection PO"
 msgstr "DN自动匹配PO"
 
 #. module: srm_base
-#: model:ir.model.fields,field_description:srm_base.field_stock_warehouse_factory_code
+#: model:ir.model.fields,field_description:srm_base.field_stock_warehouse__factory_code
 msgid "Factory code"
 msgstr "工厂代码"
 
 #. module: srm_base
-#: model:ir.model,name:srm_base.model_product_supplierinfo
-msgid "Information about a product vendor"
-msgstr ""
-
-#. module: srm_base
-#: model:ir.model.fields,field_description:srm_base.field_product_supplierinfo_min_pack
+#: model:ir.model.fields,field_description:srm_base.field_product_supplierinfo__min_pack
 msgid "Min Package"
 msgstr "最小包装"
 
 #. module: srm_base
-#: model:ir.model.fields,field_description:srm_base.field_stock_picking_type_move_type
+#: model:ir.model.fields,field_description:srm_base.field_stock_picking_type__move_type
 msgid "Move Type"
 msgstr "移动类型"
 
 #. module: srm_base
-#: model:ir.model.fields,field_description:srm_base.field_product_supplierinfo_number_tolerance
+#: model:ir.model.fields,field_description:srm_base.field_product_supplierinfo__number_tolerance
 msgid "Number Tolerance"
 msgstr "数量容差"
 
 #. module: srm_base
-#: model:ir.model.fields,field_description:srm_base.field_res_partner_purchae_order_cancel
-#: model:ir.model.fields,field_description:srm_base.field_res_users_purchae_order_cancel
+#: model:ir.model.fields,field_description:srm_base.field_res_partner__purchae_order_cancel
+#: model:ir.model.fields,field_description:srm_base.field_res_users__purchae_order_cancel
 msgid "Purchae Order Cancel"
 msgstr "采购订单取消"
+
+#. module: srm_base
+#: model:ir.model,name:srm_base.model_purchase_order
+msgid "Purchase Order"
+msgstr "采购订单"
 
 #. module: srm_base
 #: model:ir.ui.menu,name:srm_base.menu_srm_root
@@ -96,77 +96,87 @@ msgid "SRM"
 msgstr "SRM"
 
 #. module: srm_base
-#: model:ir.model.fields,field_description:srm_base.field_res_partner_schedule_confirm
-#: model:ir.model.fields,field_description:srm_base.field_res_users_schedule_confirm
+#: model:ir.model.fields,field_description:srm_base.field_res_partner__schedule_confirm
+#: model:ir.model.fields,field_description:srm_base.field_res_users__schedule_confirm
 msgid "Schedule confirmed"
 msgstr "排程确认"
 
 #. module: srm_base
-#: model:ir.model.fields,field_description:srm_base.field_res_partner_short_name
-#: model:ir.model.fields,field_description:srm_base.field_res_users_short_name
+#: model:ir.model.fields,field_description:srm_base.field_res_partner__short_name
+#: model:ir.model.fields,field_description:srm_base.field_res_users__short_name
 msgid "Short Name"
-msgstr "简称"
+msgstr "缩写"
 
 #. module: srm_base
-#: model:ir.model.fields,field_description:srm_base.field_product_supplierinfo_delivery_overdue_days
+#: model:ir.model,name:srm_base.model_stock_picking_type
+msgid "Stock Delivery Kanban"
+msgstr ""
+
+#. module: srm_base
+#: model:ir.model.fields,field_description:srm_base.field_product_supplierinfo__delivery_overdue_days
 msgid "Supplier Delivery Overdue days"
 msgstr "交货失效天数"
 
 #. module: srm_base
-#: model:ir.model.fields,field_description:srm_base.field_product_supplierinfo_the_quota
+#: model:ir.model,name:srm_base.model_product_supplierinfo
+msgid "Supplier Pricelist"
+msgstr "供应商价格表"
+
+#. module: srm_base
+#: model:ir.model.fields,field_description:srm_base.field_product_supplierinfo__the_quota
 msgid "Supplier The Quota"
 msgstr "采购配额"
 
 #. module: srm_base
-#: model:ir.model.fields,field_description:srm_base.field_res_partner_supplier_code
-#: model:ir.model.fields,field_description:srm_base.field_res_users_supplier_code
+#: model:ir.model.fields,field_description:srm_base.field_res_partner__supplier_code
+#: model:ir.model.fields,field_description:srm_base.field_res_users__supplier_code
 msgid "Supplier code"
 msgstr "供应商代码"
 
 #. module: srm_base
-#: model:ir.model,name:srm_base.model_stock_picking_type
-msgid "The operation type determines the picking view"
-msgstr ""
-
-#. module: srm_base
-#: model:ir.model.fields,field_description:srm_base.field_res_partner_user_signature
-#: model:ir.model.fields,field_description:srm_base.field_res_users_user_signature
+#: model:ir.model.fields,field_description:srm_base.field_res_partner__user_signature
+#: model:ir.model.fields,field_description:srm_base.field_res_users__user_signature
 msgid "The user signature"
 msgstr "签名图片"
 
 #. module: srm_base
-#: model:ir.model.fields,field_description:srm_base.field_product_supplierinfo_time_tolerance
+#: model:ir.model.fields,field_description:srm_base.field_product_supplierinfo__time_tolerance
 msgid "Time Tolerance"
 msgstr "时间容差"
 
 #. module: srm_base
 #: model:ir.model,name:srm_base.model_res_users
 msgid "Users"
-msgstr ""
+msgstr "用户"
 
 #. module: srm_base
 #: model:ir.model,name:srm_base.model_stock_warehouse
 msgid "Warehouse"
-msgstr ""
+msgstr "仓库"
 
 #. module: srm_base
 #: sql_constraint:res.partner:0
 msgid "error message dec supplier_code uniq"
-msgstr "error message dec supplier_code uniq"
+msgstr ""
 
 #. module: srm_base
-#: model:ir.model.fields,field_description:srm_base.field_res_partner_seal_of_pictures
-#: model:ir.model.fields,field_description:srm_base.field_res_users_seal_of_pictures
+#: model:ir.model.fields,field_description:srm_base.field_res_partner__seal_of_pictures
+#: model:ir.model.fields,field_description:srm_base.field_res_users__seal_of_pictures
 msgid "seal of pictures"
 msgstr "盖章图片"
 
 #. module: srm_base
-#: model:ir.ui.view,arch_db:srm_base.view_partner_form
+#: model:ir.model.fields,field_description:srm_base.field_purchase_order__location_id
+msgid "交货到"
+msgstr "交货到"
+
+#. module: srm_base
+#: model_terms:ir.ui.view,arch_db:srm_base.view_partner_form
 msgid "盖章图片"
 msgstr "盖章图片"
 
 #. module: srm_base
-#: model:ir.ui.view,arch_db:srm_base.view_partner_form
+#: model_terms:ir.ui.view,arch_db:srm_base.view_partner_form
 msgid "签名图片"
 msgstr "签名图片"
 

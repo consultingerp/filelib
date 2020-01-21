@@ -1,13 +1,13 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* confirm_msg
+#	* srm_confirm_msg
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-16 10:16+0000\n"
-"PO-Revision-Date: 2019-05-16 10:16+0000\n"
+"POT-Creation-Date: 2020-01-21 04:00+0000\n"
+"PO-Revision-Date: 2020-01-21 04:00+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,88 +15,88 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: confirm_msg
-#: model:ir.ui.view,arch_db:confirm_msg.view_confirm_msg
+#. module: srm_confirm_msg
+#: model_terms:ir.ui.view,arch_db:srm_confirm_msg.view_confirm_msg
 msgid "Cancel"
 msgstr "取消"
 
-#. module: confirm_msg
-#: model:ir.ui.view,arch_db:confirm_msg.view_confirm_msg
+#. module: srm_confirm_msg
+#: model_terms:ir.ui.view,arch_db:srm_confirm_msg.view_confirm_msg
 msgid "Confirm"
 msgstr "确认"
 
-#. module: confirm_msg
-#: model:ir.model.fields,field_description:confirm_msg.field_confirm_msg_confirm_msg
+#. module: srm_confirm_msg
+#: model:ir.model.fields,field_description:srm_confirm_msg.field_confirm_msg__confirm_msg
 msgid "Confirm Message"
-msgstr "Confirm Message"
+msgstr ""
 
-#. module: confirm_msg
-#: model:ir.model.fields,field_description:confirm_msg.field_confirm_msg_confirm_title
+#. module: srm_confirm_msg
+#: model:ir.model.fields,field_description:srm_confirm_msg.field_confirm_msg__confirm_title
 msgid "Confirm Message Title"
-msgstr "Confirm Message Title"
+msgstr ""
 
-#. module: confirm_msg
-#: model:ir.model.fields,field_description:confirm_msg.field_confirm_msg_create_uid
+#. module: srm_confirm_msg
+#: model:ir.model.fields,field_description:srm_confirm_msg.field_confirm_msg__create_uid
 msgid "Created by"
 msgstr "创建人"
 
-#. module: confirm_msg
-#: model:ir.model.fields,field_description:confirm_msg.field_confirm_msg_create_date
+#. module: srm_confirm_msg
+#: model:ir.model.fields,field_description:srm_confirm_msg.field_confirm_msg__create_date
 msgid "Created on"
 msgstr "创建时间"
 
-#. module: confirm_msg
-#: model:ir.model.fields,field_description:confirm_msg.field_confirm_msg_display_name
+#. module: srm_confirm_msg
+#: model:ir.model.fields,field_description:srm_confirm_msg.field_confirm_msg__display_name
 msgid "Display Name"
 msgstr "显示名称"
 
-#. module: confirm_msg
-#: model:ir.model.fields,field_description:confirm_msg.field_confirm_msg_id
+#. module: srm_confirm_msg
+#: model:ir.model.fields,field_description:srm_confirm_msg.field_confirm_msg__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
-#. module: confirm_msg
-#: model:ir.model.fields,field_description:confirm_msg.field_confirm_msg___last_update
+#. module: srm_confirm_msg
+#: model:ir.model.fields,field_description:srm_confirm_msg.field_confirm_msg____last_update
 msgid "Last Modified on"
-msgstr "最后修改时间"
+msgstr "最后修改日"
 
-#. module: confirm_msg
-#: model:ir.model.fields,field_description:confirm_msg.field_confirm_msg_write_uid
+#. module: srm_confirm_msg
+#: model:ir.model.fields,field_description:srm_confirm_msg.field_confirm_msg__write_uid
 msgid "Last Updated by"
 msgstr "最后更新者"
 
-#. module: confirm_msg
-#: model:ir.model.fields,field_description:confirm_msg.field_confirm_msg_write_date
+#. module: srm_confirm_msg
+#: model:ir.model.fields,field_description:srm_confirm_msg.field_confirm_msg__write_date
 msgid "Last Updated on"
 msgstr "最后更新时间"
 
-#. module: confirm_msg
-#: model:ir.ui.view,arch_db:confirm_msg.view_confirm_msg
+#. module: srm_confirm_msg
+#: model_terms:ir.ui.view,arch_db:srm_confirm_msg.view_confirm_msg
 msgid "Transfer details"
 msgstr "Transfer details"
 
-#. module: confirm_msg
-#: model:ir.model,name:confirm_msg.model_confirm_msg
+#. module: srm_confirm_msg
+#: model:ir.model,name:srm_confirm_msg.model_confirm_msg
 msgid "confirm.msg"
-msgstr "confirm.msg"
+msgstr ""
 
-#. module: confirm_msg
-#: model:ir.ui.view,arch_db:confirm_msg.view_confirm_msg
+#. module: srm_confirm_msg
+#: model_terms:ir.ui.view,arch_db:srm_confirm_msg.view_confirm_msg
 msgid "or"
 msgstr "或"
 
-#. module: confirm_msg
-#: model:ir.model.fields,field_description:confirm_msg.field_confirm_msg_previous_id
+#. module: srm_confirm_msg
+#: model:ir.model.fields,field_description:srm_confirm_msg.field_confirm_msg__previous_id
 msgid "previous_id"
 msgstr "previous_id"
 
-#. module: confirm_msg
-#: model:ir.model.fields,field_description:confirm_msg.field_confirm_msg_previous_method
+#. module: srm_confirm_msg
+#: model:ir.model.fields,field_description:srm_confirm_msg.field_confirm_msg__previous_method
 msgid "previous_method"
 msgstr "previous_method"
 
-#. module: confirm_msg
-#: model:ir.model.fields,field_description:confirm_msg.field_confirm_msg_previous_type
+#. module: srm_confirm_msg
+#: model:ir.model.fields,field_description:srm_confirm_msg.field_confirm_msg__previous_type
 msgid "previous_type"
 msgstr "previous_type"
 

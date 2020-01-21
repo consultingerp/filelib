@@ -1,58 +1,128 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* srm_purchase_component
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-01-21 07:15+0000\n"
+"PO-Revision-Date: 2020-01-21 07:15+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
 #. module: srm_purchase_component
-#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_po_number
-msgid "po_number"
-msgstr "采购订单"
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component__create_uid
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_line__create_uid
+msgid "Created by"
+msgstr "创建人"
 
 #. module: srm_purchase_component
-#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_po_item
-msgid "po_item"
-msgstr "行项目"
-
-
-
-#. module: srm_purchase_component
-#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_line_po_number
-msgid "po_number"
-msgstr "采购订单"
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component__create_date
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_line__create_date
+msgid "Created on"
+msgstr "创建时间"
 
 #. module: srm_purchase_component
-#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_line_po_item
-msgid "po_item"
-msgstr "行项目"
-
-
-#. module: srm_purchase_component
-#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_line_material
-msgid "material"
-msgstr "物料"
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component__display_name
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_line__display_name
+msgid "Display Name"
+msgstr "显示名称"
 
 #. module: srm_purchase_component
-#: model:ir.model.fields,field_description:srm_purchase_component.line.field_purchase_component_line_entry_quantity
-msgid "entry_quantity"
-msgstr "需求数量"
-
-
-
-#. module: srm_purchase_component
-#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_line_entry_qentry_uom
-msgid "entry_uom"
-msgstr "单位"
-
-
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component__id
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_line__id
+msgid "ID"
+msgstr ""
 
 #. module: srm_purchase_component
-#: model:ir.model.fields,field_description:srm_purchase_component.line.field_purchase_component_line_entry_plant
-msgid "plant"
-msgstr "工厂"
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component____last_update
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_line____last_update
+msgid "Last Modified on"
+msgstr "最后修改日"
 
 #. module: srm_purchase_component
-#: model:ir.ui.menu,name:srm_purchase_component.menu_purchase_component
-msgid "purchase component"
-msgstr "委外组件"
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component__write_uid
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_line__write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: srm_purchase_component
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component__write_date
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_line__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: srm_purchase_component
+#: model_terms:ir.ui.view,arch_db:srm_purchase_component.purchase_component_create_form
+msgid "Mat Demand Head"
+msgstr ""
 
 #. module: srm_purchase_component
 #: model:ir.actions.act_window,name:srm_purchase_component.purchase_component_create_form_action
 #: model:ir.ui.menu,name:srm_purchase_component.menu_component_create_form
 msgid "Purchase component"
 msgstr "采购订单组件"
+
+#. module: srm_purchase_component
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component__purchase_component_line
+msgid "component Line"
+msgstr "组件行"
+
+#. module: srm_purchase_component
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_line__entry_quantity
+msgid "entry_quantity"
+msgstr "需求数量"
+
+#. module: srm_purchase_component
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_line__entry_uom
+msgid "entry_uom"
+msgstr "单位"
+
+#. module: srm_purchase_component
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_line__material
+msgid "material"
+msgstr "物料"
+
+#. module: srm_purchase_component
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component__name
+msgid "name"
+msgstr "名称"
+
+#. module: srm_purchase_component
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_line__plant
+msgid "plant"
+msgstr "工厂"
+
+#. module: srm_purchase_component
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component__po_item
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_line__po_item
+msgid "po_item"
+msgstr "行项目"
+
+#. module: srm_purchase_component
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component__po_number
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_line__po_number
+msgid "po_number"
+msgstr "采购订单"
+
+#. module: srm_purchase_component
+#: model:ir.model.fields,field_description:srm_purchase_component.field_purchase_component_line__purchase_component_id
+#: model:ir.ui.menu,name:srm_purchase_component.menu_purchase_component
+msgid "purchase component"
+msgstr "委外组件"
+
+#. module: srm_purchase_component
+#: model:ir.model,name:srm_purchase_component.model_purchase_component
+msgid "purchase.component"
+msgstr "委外组件"
+
+#. module: srm_purchase_component
+#: model:ir.model,name:srm_purchase_component.model_purchase_component_line
+msgid "purchase.component.line"
+msgstr "委外组件行"
+

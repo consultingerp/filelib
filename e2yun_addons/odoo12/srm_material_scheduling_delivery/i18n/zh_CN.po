@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-24 01:49+0000\n"
-"PO-Revision-Date: 2019-05-24 01:49+0000\n"
+"POT-Creation-Date: 2020-01-21 06:58+0000\n"
+"PO-Revision-Date: 2020-01-21 06:58+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,179 +16,179 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_allow_create_days
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__allow_create_days
 msgid "Allow Create Days"
 msgstr "允许创建交货单天数"
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_bmeng
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__bmeng
 msgid "Confirm Qty"
 msgstr "确认数量"
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.ui.view,arch_db:srm_material_scheduling_delivery.srm_demand_delivery_line_view_tree
+#: model_terms:ir.ui.view,arch_db:srm_material_scheduling_delivery.srm_demand_delivery_line_view_tree
 msgid "Delivery"
 msgstr "交货"
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_dnmng
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__dnmng
 msgid "Delivery Qty"
 msgstr "交货数"
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_datoo
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__datoo
 msgid "Demand Date"
 msgstr "需求日期"
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_menge
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__menge
 msgid "Demand Qty"
 msgstr "生产需求数量"
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_diff_qty
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__diff_qty
 msgid "Difference Qty"
 msgstr "差异数量"
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_display_name
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__display_name
 msgid "Display Name"
 msgstr "显示名称"
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_done_menge
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__done_menge
 msgid "Goods Qty"
 msgstr "收货数量"
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_id
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view___last_update
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view____last_update
 msgid "Last Modified on"
-msgstr "最后修改时间"
+msgstr "最后修改日"
 
 #. module: srm_material_scheduling_delivery
 #: model:ir.actions.act_window,name:srm_material_scheduling_delivery.action_srm_demand_delivery_line_view
 #: model:ir.ui.menu,name:srm_material_scheduling_delivery.menu_srm_demand_delivery_line_view
-#: model:ir.ui.view,arch_db:srm_material_scheduling_delivery.srm_demand_delivery_line_view_tree
+#: model_terms:ir.ui.view,arch_db:srm_material_scheduling_delivery.srm_demand_delivery_line_view_tree
 msgid "Material scheduling delivery"
 msgstr "物料排程交货"
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_matnr
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__matnr
 msgid "Matnr"
 msgstr "物料"
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_prefix_code
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__prefix_code
 msgid "Matnr Code"
 msgstr "物料编码"
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_monum
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__monum
 msgid "Model"
 msgstr "模型"
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_prnum
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__prnum
 msgid "Production Order"
 msgstr "生产订单"
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_publish
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__publish
 msgid "Publish"
 msgstr "发布"
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_state
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__state
 msgid "Status"
 msgstr "状态"
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_lifnr
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__lifnr
 msgid "Supplier"
 msgstr "供应商"
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_supplier_code
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__supplier_code
 msgid "Supplier Code"
 msgstr "供应商编码"
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_supplier_name
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__supplier_name
 msgid "Supplier Name"
 msgstr "供应商名称"
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_versi
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__versi
 msgid "Version"
 msgstr "版本"
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_isAllowCreate
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__isAllowCreate
 msgid "isAllowCreate"
 msgstr "isAllowCreate"
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_isallownoschedulecreate
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__isallownoschedulecreate
 msgid "isallownoschedulecreate"
-msgstr "isallownoschedulecreate"
+msgstr ""
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_isscheduledate
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__isscheduledate
 msgid "isscheduledate"
-msgstr "isscheduledate"
+msgstr ""
 
 #. module: srm_material_scheduling_delivery
 #: model:ir.model,name:srm_material_scheduling_delivery.model_srm_demand_delivery_line_view
 msgid "srm.demand.delivery.line.view"
-msgstr "srm.demand.delivery.line.view"
+msgstr ""
 
 #. module: srm_material_scheduling_delivery
-#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view_werks
+#: model:ir.model.fields,field_description:srm_material_scheduling_delivery.field_srm_demand_delivery_line_view__werks
 msgid "werks"
 msgstr "工厂"
 
 #. module: srm_material_scheduling_delivery
 #: selection:srm.demand.delivery.line.view,state:0
 msgid "供应商修改"
-msgstr "供应商修改"
+msgstr ""
 
 #. module: srm_material_scheduling_delivery
 #: selection:srm.demand.delivery.line.view,state:0
 msgid "供应商确认"
-msgstr "供应商确认"
+msgstr ""
 
 #. module: srm_material_scheduling_delivery
 #: selection:srm.demand.delivery.line.view,state:0
 msgid "创建"
-msgstr "创建"
+msgstr ""
 
 #. module: srm_material_scheduling_delivery
 #: selection:srm.demand.delivery.line.view,state:0
 msgid "删除"
-msgstr "删除"
+msgstr ""
 
 #. module: srm_material_scheduling_delivery
 #: selection:srm.demand.delivery.line.view,state:0
 msgid "无需确认"
-msgstr "无需确认"
+msgstr ""
 
 #. module: srm_material_scheduling_delivery
 #: selection:srm.demand.delivery.line.view,state:0
 msgid "系统取消"
-msgstr "系统取消"
+msgstr ""
 
 #. module: srm_material_scheduling_delivery
 #: selection:srm.demand.delivery.line.view,state:0
 msgid "采购修改"
-msgstr "采购修改"
+msgstr ""
 
 #. module: srm_material_scheduling_delivery
 #: selection:srm.demand.delivery.line.view,state:0
 msgid "采购确认"
-msgstr "采购确认"
+msgstr ""
 
