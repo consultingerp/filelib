@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- some initiall data ck.shift -->
+        <record model="ck.shift" id="ck_shift_all">
+            <field name="fshift">all</field>
+            <field name="date_start">00:00</field>
+            <field name="date_stop">00:00</field>
+            <field name="rate">1</field>
+        </record>
+        <!-- some initiall data ck.machine -->
+        <record model="ck.machine" id="ck_machine_all">
+            <field name="fmachine">all</field>
+            <field name="rate">1</field>
+        </record>
+    </data>
+</odoo>

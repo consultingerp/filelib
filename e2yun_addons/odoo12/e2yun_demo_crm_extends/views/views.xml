@@ -8,6 +8,18 @@
                 <xpath expr="//field[@name='priority']" position="before">
                     <field name="proposal_type"/>
                 </xpath>
+                <xpath expr="//div[hasclass('o_row_readonly')]" position="replace">
+                    <div class="o_row o_row_readonly">
+                        <field name="email_from"
+                           attrs="{'invisible': [('partner_address_email', '!=', False)]}"
+                           string="Email"
+                           widget="email"/>
+                        <field name="partner_address_email"
+                           attrs="{'invisible': [('partner_address_email', '==', False)]}"
+                           widget="email"
+                           string="Email"/>
+                    </div>
+                </xpath>
             </field>
         </record>
     </data>

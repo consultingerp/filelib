@@ -1,0 +1,310 @@
+<odoo>
+    <data>
+<!--        Working Summary Report -->
+        <record id="ck_working_summary_report" model="ir.ui.view">
+            <field name="name">ck.working.summary.report.tree</field>
+            <field name="model">ck.working.summary.report</field>
+            <field name="arch" type="xml">
+                <tree string="Mission Summary Report">
+                    <field name="name"/>
+                    <field name="fnumber"/>
+                    <field name="fname"/>
+                    <field name="fmodel"/>
+                    <field name="date_worker"/>
+                    <field name="gqty"/>
+                    <field name="amount_total"/>
+                </tree>
+            </field>
+        </record>
+        <record id="ck_working_summary_report_filter" model="ir.ui.view">
+            <field name="name">ck.working.summary.report.select</field>
+            <field name="model">ck.working.summary.report</field>
+            <field name="arch" type="xml">
+                <search string="Search Mission Summary">
+                    <field name="fnumber"/>
+                    <field name="fname"/>
+                    <field name="fmodel"/>
+                    <field name="date_worker"/>
+                    <field name="gqty"/>
+                    <field name="amount_total"/>
+                    <filter string="当天" name="currentday" domain="[('day_worker','&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('date_worker','&lt;=', datetime.datetime.now().strftime('%Y-%m-%d 23:59:59'))]" />
+                    <filter string="当月" name="currentmonth" domain="[('date_worker','like', datetime.datetime.now().strftime('%Y-%m'))]" />
+                    <group expand="0" string="Group By">
+                        <filter string="生产任务单（当月）" name="name" domain="[('date_worker','like', datetime.datetime.now().strftime('%Y-%m'))]" context="{'group_by':'name'}"/>
+                        <filter string="产品编码" name="fnumber" domain="[]" context="{'group_by':'fnumber'}"/>
+                        <filter string="产品描述" name="fname" domain="[]" context="{'group_by':'fname'}"/>
+                        <filter string="产品规格" name="fmodel" domain="[]" context="{'group_by':'fmodel'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+<!--        Date,Month Summary Report -->
+        <record id="ck_date_summary_report" model="ir.ui.view">
+            <field name="name">ck.date.summary.report.tree</field>
+            <field name="model">ck.date.summary.report</field>
+            <field name="arch" type="xml">
+                <tree string="Mission Summary Report(Date,Month)">
+                    <field name="name"/>
+                    <field name="fname"/>
+                    <field name="year_worker"/>
+                    <field name="month_worker"/>
+                    <field name="day_worker"/>
+                    <field name="gqty_sum"/>
+                    <field name="amount_total"/>
+                </tree>
+            </field>
+        </record>
+        <record id="ck_date_summary_report_filter" model="ir.ui.view">
+            <field name="name">ck.date.summary.report.select</field>
+            <field name="model">ck.date.summary.report</field>
+            <field name="arch" type="xml">
+                <search string="Search Mission Summary">
+                    <field name="fname"/>
+                    <field name="year_worker"/>
+                    <field name="month_worker"/>
+                    <field name="day_worker"/>
+                    <field name="gqty_sum"/>
+                    <field name="amount_total"/>
+                    <group expand="0" string="Group By">
+                        <filter string="用户ID" name="name" domain="[]" context="{'group_by':'name'}"/>
+                        <filter string="用户ID（当月）" name="name_month" domain="[('month_worker','like', datetime.datetime.now().strftime('%m'))]" context="{'group_by':'name'}"/>
+                        <filter string="用户ID（当天）" name="name_day" domain="[('day_worker','=', datetime.datetime.now().strftime('%d')),('month_worker','=', datetime.datetime.now().strftime('%m')),('year_worker','=', datetime.datetime.now().strftime('%Y'))]" context="{'group_by':'name'}"/>
+                        <filter string="产品描述" name="fname" domain="[]" context="{'group_by':'fname'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+<!--        Unfinished Summary Report -->
+         <record id="ck_unfinished_summary_report" model="ir.ui.view">
+            <field name="name">ck.unfinished.summary.report.tree</field>
+            <field name="model">ck.unfinished.summary.report</field>
+            <field name="arch" type="xml">
+                <tree string="Unfinished Summary Report">
+                    <field name="name"/>
+                    <field name="create_date"/>
+                    <field name="fmodel"/>
+                    <field name="fname"/>
+                    <field name="fopername"/>
+                    <field name="sum_gqty"/>
+                    <field name="unfinished"/>
+                </tree>
+            </field>
+        </record>
+        <record id="ck_unfinished_summary_report_filter" model="ir.ui.view">
+            <field name="name">ck.unfinished.summary.report.select</field>
+            <field name="model">ck.unfinished.summary.report</field>
+            <field name="arch" type="xml">
+                <search string="Search Mission Summary">
+                    <field name="create_date"/>
+                    <field name="fmodel"/>
+                    <field name="fname"/>
+                    <field name="fopername"/>
+                    <field name="sum_gqty"/>
+                    <field name="unfinished"/>
+                    <group expand="0" string="Group By">
+                        <filter string="生产任务单" name="name" domain="[]" context="{'group_by':'name'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <!--        Working Unfinished Summary Report -->
+        <record id="ck_work_unfinished_summary_report" model="ir.ui.view">
+            <field name="name">ck.work.unfinished.summary.report.tree</field>
+            <field name="model">ck.work.unfinished.summary.report</field>
+            <field name="arch" type="xml">
+                <tree string="Unfinished Summary Report">
+                    <field name="fname"/>
+                    <field name="date_worker"/>
+                    <field name="fnumber"/>
+                    <field name="fmodel"/>
+                    <field name="name"/>
+                    <field name="fopername"/>
+                    <field name="gqty"/>
+                    <field name="sum_gqty"/>
+                    <field name="unfinished"/>
+                </tree>
+            </field>
+        </record>
+        <record id="ck_work_unfinished_summary_report_filter" model="ir.ui.view">
+            <field name="name">ck.work.unfinished.summary.report.select</field>
+            <field name="model">ck.work.unfinished.summary.report</field>
+            <field name="arch" type="xml">
+                <search string="Search Mission Summary">
+                    <field name="fname"/>
+                    <field name="date_worker"/>
+                    <field name="fnumber"/>
+                    <field name="fmodel"/>
+                    <field name="fopername"/>
+                    <field name="gqty"/>
+                    <field name="sum_gqty"/>
+                    <field name="unfinished"/>
+                    <filter string="当天" name="currentday" domain="[('date_worker','&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('date_worker','&lt;=', datetime.datetime.now().strftime('%Y-%m-%d 23:59:59'))]" context="{'group_by':'name'}"/>
+                    <filter string="当月" name="currentmonth" domain="[('date_worker','like', datetime.datetime.now().strftime('%Y-%m'))]" context="{'group_by':'name'}"/>
+                    <group expand="0" string="Group By">
+                        <filter string="生产任务单" name="name" domain="[]" context="{'group_by':'name'}"/>
+                        <filter string="产品编码" name="fnumber" domain="[]" context="{'group_by':'fnumber'}"/>
+                        <filter string="产品描述" name="fname" domain="[]" context="{'group_by':'fname'}"/>
+                        <filter string="产品型号" name="fmodel" domain="[]" context="{'group_by':'fmodel'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <!--       Window action -->
+        <record id="action_ck_working_summary_report" model="ir.actions.act_window">
+            <field name="name">CK Working Summary Report</field>
+            <field name="res_model">ck.working.summary.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="domain"></field>
+            <field name="context">{
+                'search_default_name':1
+                }
+            </field>
+        </record>
+        <record id="action_ck_date_summary_report" model="ir.actions.act_window">
+            <field name="name">CK Date Summary Report</field>
+            <field name="res_model">ck.date.summary.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="domain"></field>
+            <field name="context">{
+                'search_default_name_month':1
+                }
+            </field>
+        </record>
+        <record id="action_ck_unfinished_summary_report" model="ir.actions.act_window">
+            <field name="name">CK Unfinished Summary Report</field>
+            <field name="res_model">ck.unfinished.summary.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="domain"></field>
+            <field name="context">{
+                'search_default_name':1
+                }
+            </field>
+        </record>
+        <record id="action_ck_work_unfinished_summary_report" model="ir.actions.act_window">
+            <field name="name">CK Work Unfinished Summary Report</field>
+            <field name="res_model">ck.work.unfinished.summary.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="domain"></field>
+            <field name="context">{
+                'search_default_currentday':1
+                }
+            </field>
+        </record>
+<!--        Menu item-->
+        <menuitem id="menu_ck_reps"
+                  parent="menu_work_timesheet"
+                  name="Reports"/>
+        <menuitem id="menu_ck_working_summary_report"
+                  parent="menu_ck_reps"
+                  name="CK Working Summary Report"
+                  action="action_ck_working_summary_report"
+                  groups="group_rw_undefined_user,group_rw_admin,group_rw_termleader,group_rw_manager"/>
+        <menuitem id="menu_ck_date_summary_report"
+                  parent="menu_ck_reps"
+                  name="CK Date Summary Report"
+                  action="action_ck_date_summary_report"
+                  groups="group_rw_undefined_user,group_rw_admin,group_rw_termleader,group_rw_manager"/>
+        <menuitem id="menu_ck_unfinished_summary_report"
+                  parent="menu_ck_reps"
+                  name="CK Unfinished Summary Report"
+                  action="action_ck_unfinished_summary_report"
+                  groups="group_rw_undefined_user,group_rw_admin,group_rw_termleader,group_rw_manager"/>
+        <menuitem id="menu_ck_work_unfinished_summary_report"
+                  parent="menu_ck_reps"
+                  name="CK Work Unfinished Summary Report"
+                  action="action_ck_work_unfinished_summary_report"
+                  groups="group_rw_undefined_user,group_rw_admin,group_rw_termleader,group_rw_manager"/>
+<!--        Security-->
+        <record id="working_summary_report" model="ir.rule">
+            <field name="name">working_summary_report</field>
+            <field name="model_id" search="[('model','=','ck.working.summary.report')]" model="ir.model"/>
+            <field name="domain_force">[('user_id','=',user.id)]</field>
+            <field name="groups" eval="[(4,ref('kindee_data_sync_info.group_rw_undefined_user')),(4,ref('kindee_data_sync_info.group_rw_admin')), (4,ref('kindee_data_sync_info.group_rw_termleader')),(4,ref('kindee_data_sync_info.group_rw_manager'))]"/>
+        </record>
+        <record id="date_summary_report" model="ir.rule">
+            <field name="name">date_summary_report</field>
+            <field name="model_id" search="[('model','=','ck.date.summary.report')]" model="ir.model"/>
+            <field name="domain_force">[('user_id','=',user.id)]</field>
+            <field name="groups" eval="[(4,ref('kindee_data_sync_info.group_rw_undefined_user')),(4,ref('kindee_data_sync_info.group_rw_admin')), (4,ref('kindee_data_sync_info.group_rw_termleader')),(4,ref('kindee_data_sync_info.group_rw_manager'))]"/>
+        </record>
+        <record id="unfinished_summary_report" model="ir.rule">
+            <field name="name">unfinished_summary_report</field>
+            <field name="model_id" search="[('model','=','ck.unfinished.summary.report')]" model="ir.model"/>
+            <field name="domain_force">[('user_id','=',user.id)]</field>
+            <field name="groups" eval="[(4,ref('kindee_data_sync_info.group_rw_undefined_user')),(4,ref('kindee_data_sync_info.group_rw_admin')), (4,ref('kindee_data_sync_info.group_rw_termleader')),(4,ref('kindee_data_sync_info.group_rw_manager'))]"/>
+        </record>
+        <record id="work_unfinished_summary_report" model="ir.rule">
+            <field name="name">work_unfinished_summary_report</field>
+            <field name="model_id" search="[('model','=','ck.unfinished.summary.report')]" model="ir.model"/>
+            <field name="domain_force">[('user_id','=',user.id)]</field>
+            <field name="groups" eval="[(4,ref('kindee_data_sync_info.group_rw_undefined_user')),(4,ref('kindee_data_sync_info.group_rw_admin')), (4,ref('kindee_data_sync_info.group_rw_termleader')),(4,ref('kindee_data_sync_info.group_rw_manager'))]"/>
+        </record>
+<!--        Graph-->
+        <record id="view_ck_unfinished_summary_report_graph" model="ir.ui.view">
+            <field name="name">ck.unfinished.summary.report.graph</field>
+            <field name="model">ck.unfinished.summary.report</field>
+            <field name="arch" type="xml">
+                <graph string="Worker Summary analysis" type="bar">
+                   <field name="name"/>
+                    <field name="create_date"/>
+                    <field name="fmodel"/>
+                    <field name="fname"/>
+                    <field name="fopername"/>
+                    <field name="sum_gqty" operator="+"/>
+                    <field name="unfinished" operator="+"/>
+                </graph>
+            </field>
+        </record>
+        <record id="view_ck_working_summary_graph" model="ir.ui.view">
+            <field name="name">ck.working.summary.report.graph</field>
+            <field name="model">ck.working.summary.report</field>
+            <field name="arch" type="xml">
+                <graph string="Worker Summary analysis" type="bar">
+                    <field name="name"/>
+                    <field name="fnumber"/>
+                    <field name="fname"/>
+                    <field name="fmodel"/>
+                    <field name="date_worker"/>
+                    <field name="gqty" operator="+"/>
+                    <field name="amount_total" operator="+"/>
+                </graph>
+            </field>
+        </record>
+        <record id="view_ck_date_summary_report_graph" model="ir.ui.view">
+            <field name="name">ck.date.summary.report.graph</field>
+            <field name="model">ck.date.summary.report</field>
+            <field name="arch" type="xml">
+                <graph string="Worker Summary analysis" type="bar">
+                    <field name="name"/>
+                    <field name="fname"/>
+                    <field name="year_worker"/>
+                    <field name="month_worker"/>
+                    <field name="day_worker"/>
+                    <field name="gqty_sum" operator="+"/>
+                    <field name="amount_total" operator="+"/>
+                </graph>
+            </field>
+        </record>
+        <record id="view_ck_work_unfinished_summary_report_graph" model="ir.ui.view">
+            <field name="name">ck.work.unfinished.summary.report.graph</field>
+            <field name="model">ck.work.unfinished.summary.report</field>
+            <field name="arch" type="xml">
+                <graph string="Worker Summary analysis" type="bar">
+                    <field name="fname"/>
+                    <field name="date_worker"/>
+                    <field name="fnumber"/>
+                    <field name="fmodel"/>
+                    <field name="name"/>
+                    <field name="fopername"/>
+                    <field name="gqty"/>
+                    <field name="sum_gqty" operator="+"/>
+                    <field name="unfinished" operator="+"/>
+                </graph>
+            </field>
+        </record>
+    </data>
+</odoo>
