@@ -8,6 +8,7 @@ import logging
 import sys
 import datetime
 import odoo.addons.decimal_precision as dp
+import time
 
 class stock_transfer_details(models.TransientModel):
     _inherit = 'stock.transfer_details'
@@ -112,7 +113,7 @@ class stock_transfer_details(models.TransientModel):
         packops.unlink()
 
         #Execute the transfer of the picking
-        self.picking_id.do_transfer()
+        self.picking_id.action_done()
         #super(stock_transfer_details, self).do_detailed_transfer()
 
         self.sapdo_po_transfer();
@@ -184,7 +185,7 @@ class stock_transfer_details(models.TransientModel):
                             quantity = quantity - voucher.qty - offset_qty
 
                         if quantity <= 0:
-                            break;
+                            break
 
                 else:
                     voucher = vouchaer_obj.browse(voucher_id)
@@ -362,18 +363,27 @@ class stock_transfer_details(models.TransientModel):
                             move.product_uos_qty = move.product_uos_qty - m.product_uos_qty
 
         GOODSMVT_HEADER['HEADER_TXT'] = '交货单'+GOODSMVT_HEADER['REF_DOC_NO']
-        zbapi_goodsmvt_create = None #ZSRM_BAPI_GOODSMVT_CREATE.ZBAPI_GOODSMVT_CREATE()
-        result_rfc = zbapi_goodsmvt_create.BAPI_GOODSMVT_CREATE(self._cr,GOODSMVT_HEADER, GOODSMVT_ITEM,'01')
-        if result_rfc['code'] == 1:
-            msg = result_rfc['message']
-            raise exceptions.ValidationError(" SAP调拨过账失败，失败原因：%s" % (msg))
-        else:
-            msg = result_rfc['MAT_DOC']
-            for val in vals:
-                val['matdoc'] = msg
-                vouchaer_obj.create(val)
-            if offset_ids and len(offset_ids):
-                for offset in offset_ids:
-                    offset['matdoc'] = msg
-                    offset_sap_voucher.create(offset)
-        return result_rfc
+        # zbapi_goodsmvt_create = None #ZSRM_BAPI_GOODSMVT_CREATE.ZBAPI_GOODSMVT_CREATE()
+        # result_rfc = zbapi_goodsmvt_create.BAPI_GOODSMVT_CREATE(self._cr,GOODSMVT_HEADER, GOODSMVT_ITEM,'01')
+        # if result_rfc['code'] == 1:
+        #     msg = result_rfc['message']
+        #     raise exceptions.ValidationError(" SAP调拨过账失败，失败原因：%s" % (msg))
+        # else:
+        #     msg = result_rfc['MAT_DOC']
+        #     for val in vals:
+        #         val['matdoc'] = msg
+        #         vouchaer_obj.create(val)
+        #     if offset_ids and len(offset_ids):
+        #         for offset in offset_ids:
+        #             offset['matdoc'] = msg
+        #             offset_sap_voucher.create(offset)
+
+        msg = str(int(time.time()))
+        for val in vals:
+            val['matdoc'] = msg
+            vouchaer_obj.create(val)
+        if offset_ids and len(offset_ids):
+            for offset in offset_ids:
+                offset['matdoc'] = msg
+                offset_sap_voucher.create(offset)
+        return True

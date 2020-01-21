@@ -39,13 +39,13 @@ class delivery_order_rep_view(models.Model):
 
     def _get_isAllowCreate(self):
         for s in self:
-            datoo = datetime.strptime(s.datoo, '%Y-%m-%d')
+            datoo = datetime.strptime(str(s.datoo), '%Y-%m-%d')
             nowstr = datetime.strftime(datetime.now(), '%Y-%m-%d')
             nowdate = datetime.strptime(nowstr, '%Y-%m-%d')
             if s.allow_create_days > 0 and (datoo - nowdate).days > s.allow_create_days:
-                s.isAllowCreate = False;
+                s.isAllowCreate = False
             else:
-                s.isAllowCreate = True;
+                s.isAllowCreate = True
 
     def get_last_day_data(self,comco,lifnr,datoo):
         self._cr.execute("select id from delivery_order_rep_view where (menge - coalesce(dnmeg,0)) > 0 and comco=%s and lifnr=%s and datoo < %s ", (comco, lifnr,datoo))

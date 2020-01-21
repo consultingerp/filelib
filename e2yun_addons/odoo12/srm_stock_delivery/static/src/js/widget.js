@@ -159,12 +159,18 @@ var deliveryMain = Widget.extend({
     on_searchbox: function(query){
         var self = this;
         self.load_row(query)
+    },
+    on_attach_callback: function () {
+
+    },
+    canBeRemoved: function () {
+        return $.when();
     }
 
 });
 
 core.action_registry.add('deliveryMain', deliveryMain);
 
-return {'deliveryMain':deliveryMain}
+return deliveryMain;
 
 });

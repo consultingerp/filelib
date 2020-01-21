@@ -122,7 +122,7 @@ class Srm_vouchers_synchronize_data(models.Model):
                 picking_id = self.env['stock.picking'].create(val)
                 move_lins = []
                 for l in list:
-                    unit_id = self.env['product.uom'].search([('name','=',l['erfme'])],limit=1)
+                    unit_id = self.env['uom.uom'].search([('name','=',l['erfme'])],limit=1)
                     product_id = self.env['product.product'].search([('default_code','=',l['matnr'])],limit=1)
                     if not product_id:
                         continue

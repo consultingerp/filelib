@@ -381,7 +381,7 @@ class delivery_order_rep(models.Model):
 
     picking_partner = fields.Many2one('res.partner','供应商')
     product_id = fields.Many2one('product.product','物料')
-    product_uom = fields.Many2one('product.uom','单位')
+    product_uom = fields.Many2one('uom.uom','单位')
     price_unit = fields.Float('单价',digits=dp.get_precision('Product Price'))
     picking_id = fields.Many2one('stock.picking','作业')
     purchase_line_id = fields.Many2one('purchase.order.line','采购订单行')
