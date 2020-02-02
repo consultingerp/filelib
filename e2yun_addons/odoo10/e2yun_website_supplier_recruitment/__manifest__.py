@@ -13,7 +13,7 @@ Odoo Contact Form
         """,
     'depends': ['website_partner', 'e2yun_supplier_recruitment', 'website_mail', 'website_form'],
     'data': [
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'security/website_supplier_recruitment_security.xml',
         'data/config_data.xml',
         'views/website_supplier_recruitment_templates.xml',

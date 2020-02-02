@@ -20,7 +20,7 @@
         "product",
     ],
     "data": [
-        "security/ir.model.access.csv",
+        "security/ir.model.access2.csv",
         "views/project_view.xml",
     ],
 }

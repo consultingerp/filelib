@@ -31,7 +31,7 @@
     'website': 'http://www.openeducat.org',
     'depends': ['openeducat_core'],
     'data': [
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'views/facility_view.xml',
         'views/facility_line_view.xml',
         'menus/op_menu.xml',

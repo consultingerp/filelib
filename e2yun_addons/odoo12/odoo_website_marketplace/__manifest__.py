@@ -111,7 +111,7 @@ marketplace Odoo
     "depends" : ['base', 'sale_management', 'product','uom','stock', 'sale_stock', 'website', 'website_sale', 'website_partner'],
     "data": [
         'security/marketplace_security.xml',
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'data/data.xml',
         'data/email_template_signup.xml',
         'views/res_partner_view.xml',

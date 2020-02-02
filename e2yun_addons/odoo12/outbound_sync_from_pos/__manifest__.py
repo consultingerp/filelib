@@ -22,7 +22,7 @@
 
     # always loaded
     'data': [
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'views/outbound_report_dashboard.xml',
     ],
     'qweb': [

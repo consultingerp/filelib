@@ -32,7 +32,7 @@
     'depends': ['board', 'document', 'hr', 'web', 'website'],
     'data': [
         'security/op_security.xml',
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'report/report_menu.xml',
         'report/report_student_bonafide.xml',
         'report/report_student_idcard.xml',

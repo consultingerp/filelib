@@ -11,7 +11,7 @@
         'web', 'website', 'im_livechat', 'mail', 'web_user_center'
     ],
     'data': [
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'views/online_mall_templates.xml',
         'views/online_mall_views.xml',
         'views/product_info_views.xml'

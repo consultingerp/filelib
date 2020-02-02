@@ -14,7 +14,7 @@
         "fieldservice",
     ],
     "data": [
-        "security/ir.model.access.csv",
+        "security/ir.model.access2.csv",
         "views/fsm_person.xml",
         "views/fsm_category.xml",
         "views/fsm_person_skill.xml",

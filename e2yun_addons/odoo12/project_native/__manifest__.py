@@ -42,7 +42,7 @@
         'views/project_task_detail_plan_view.xml',
         'views/project_calendar_access_view.xml',
         'views/project_project_view.xml',
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
     ],
     "qweb": [],
     "demo": [],

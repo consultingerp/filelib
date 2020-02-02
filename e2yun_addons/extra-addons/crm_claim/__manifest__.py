@@ -17,7 +17,7 @@
         'mail',
     ],
     'data': [
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'data/crm_claim_data.xml',
         'views/crm_claim_views.xml',
         'views/crm_claim_category_views.xml',

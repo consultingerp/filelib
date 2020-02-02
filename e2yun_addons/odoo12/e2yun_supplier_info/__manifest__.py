@@ -13,7 +13,7 @@
     'version': '0.1',
     'depends': ['base', 'purchase','website','e2yun_srm_partner_address' ],
     'data': [
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'data/website_supplier_data.xml',
         'data/ir_sequence_data.xml',
         'views/e2yun_supplier_info_view.xml',

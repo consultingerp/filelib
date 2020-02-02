@@ -18,7 +18,7 @@
         'mail',
     ],
     'data': [
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'security/project_role.xml',
         'views/project_assignment.xml',
         'views/project_project.xml',

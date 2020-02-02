@@ -31,7 +31,7 @@ Dynamic Workflow Builder
     'data': [
         'templates/webclient_templates.xml',
         'security/groups.xml',
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'views/menu.xml',
         'wizards/views/odoo_workflow_refuse_wizard_view.xml',
         'wizards/views/odoo_workflow_update_wizard_view.xml',

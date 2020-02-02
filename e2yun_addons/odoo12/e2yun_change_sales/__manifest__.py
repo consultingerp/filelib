@@ -12,7 +12,7 @@
     "data": [
         "views/change_sales.xml",
         # "views/sale_order_change_sales.xml",
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'security/security.xml',
     ],
      "depends": [

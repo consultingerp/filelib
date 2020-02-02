@@ -34,7 +34,7 @@
         'openeducat_fees'
     ],
     'data': [
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'data/admission_sequence.xml',
         'views/admission_register_view.xml',
         'views/admission_view.xml',

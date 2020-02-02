@@ -17,7 +17,7 @@
         "product",
     ],
     "data": [
-        "security/ir.model.access.csv",
+        "security/ir.model.access2.csv",
         "views/product_view.xml",
     ],
     "demo": [

@@ -31,7 +31,7 @@ Support following feature:
     'demo': ['asset_demo.xml'],
     'data': [
         'security/asset_security.xml',
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'asset_view.xml',
         'asset_data.xml',
         'stock_data.xml',

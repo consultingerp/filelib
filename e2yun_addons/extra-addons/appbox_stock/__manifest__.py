@@ -25,7 +25,7 @@
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        # 'security/ir.model.access2.csv',
         'data/app_view_stock_backorder_confirmation.xml',
         'data/app_view_stock_immediate_transfer.xml',
         'data/app_view_stock_picking.xml',

@@ -37,7 +37,7 @@
     ],
     'data': [
         'security/op_security.xml',
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'data/custom_paperformat.xml',
         'data/media_queue_sequence.xml',
         'data/action_rule_data.xml',

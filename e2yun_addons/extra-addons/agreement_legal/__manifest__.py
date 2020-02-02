@@ -19,7 +19,7 @@
         "data/agreement_stage.xml",
         "data/agreement_type.xml",
         "security/res_groups.xml",
-        "security/ir.model.access.csv",
+        "security/ir.model.access2.csv",
         "report/agreement.xml",
         "views/res_config_settings.xml",
         "views/agreement_appendix.xml",

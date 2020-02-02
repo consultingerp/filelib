@@ -15,7 +15,7 @@
         'agreement',
     ],
     'data': [
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'views/agreement.xml',
         ],
     'development_status': 'Beta',

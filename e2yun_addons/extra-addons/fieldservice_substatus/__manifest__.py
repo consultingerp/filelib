@@ -16,7 +16,7 @@
     'data': [
         'data/fsm_stage_status.xml',
         'data/fsm_stage.xml',
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'views/fsm_stage_status.xml',
         'views/fsm_stage.xml',
         'views/fsm_order.xml'

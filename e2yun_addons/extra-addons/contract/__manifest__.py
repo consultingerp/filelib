@@ -18,7 +18,7 @@
     'website': 'https://github.com/oca/contract',
     'depends': ['base', 'account', 'analytic'],
     'data': [
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'security/contract_security.xml',
         'report/report_contract.xml',
         'report/contract_views.xml',

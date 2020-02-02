@@ -13,7 +13,7 @@
     'license': 'AGPL-3',
     'depends': ['base'],
     'data': [
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'security/agreement_security.xml',
         'views/agreement.xml',
         ],

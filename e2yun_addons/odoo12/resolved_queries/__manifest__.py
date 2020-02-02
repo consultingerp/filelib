@@ -27,7 +27,7 @@
         'views/resolved_queries.xml',
         'wizard/run_resolved_queries.xml',
         'wizard/data_resolved_queries.xml',
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
     ],
     # only loaded in demonstration mode
     'demo': [

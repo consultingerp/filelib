@@ -34,7 +34,7 @@
     'images': ['static/description/banner.jpg'],
     'data': [
         'security/security.xml',
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'views/asset_sequence.xml',
         'views/asset_view.xml',
         'views/asset_move_view.xml'

@@ -11,7 +11,7 @@
     ],
     "data": [
         "data/ir_cron.xml",
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'views/process_config.xml',
     ],
     "demo": [

@@ -13,7 +13,7 @@
                 'purchase_open_qty',
                 'purchase_stock',
                 ],
-    'data': ['security/ir.model.access.csv',
+    'data': ['security/ir.model.access2.csv',
              'wizard/purchase_create_invoice_plan_view.xml',
              'wizard/purchase_make_planned_invoice_view.xml',
              'views/purchase_view.xml',

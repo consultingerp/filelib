@@ -16,7 +16,7 @@
         "data/demo.xml",
     ],
     "data": [
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         "views/res_partner_relation_all.xml",
         'views/res_partner.xml',
         'views/res_partner_relation_type.xml',

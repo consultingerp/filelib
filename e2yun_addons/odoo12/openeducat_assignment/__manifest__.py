@@ -35,7 +35,7 @@
     ],
     'data': [
         'security/op_security.xml',
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'views/assignment_view.xml',
         'views/assignment_type_view.xml',
         'views/assignment_sub_line_view.xml',

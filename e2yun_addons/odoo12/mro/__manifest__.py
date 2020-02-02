@@ -39,7 +39,7 @@ Required modules:
     'demo': ['mro_demo.xml'],
     'data': [
         'security/mro_security.xml',
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'wizard/reject_view.xml',
         'wizard/convert_order.xml',
         'asset_view.xml',

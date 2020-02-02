@@ -10,7 +10,7 @@
 
     # always loaded
     'data': [
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'views/sales_team_goal.xml',
     ],
     'installable': True,

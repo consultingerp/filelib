@@ -18,7 +18,7 @@
         'views/project_type_views.xml',
         'views/project_project_views.xml',
         'views/project_task_views.xml',
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
     ],
     'installable': True,
 }

@@ -13,7 +13,7 @@
         'views/menus.xml',
         'data/website.menu.csv',
         'data/ir.cron.csv',
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
     ],
     'demo': [],
     'depends': ['website'],

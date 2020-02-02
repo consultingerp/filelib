@@ -15,7 +15,7 @@
         'stock',
     ],
     'data': [
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'views/res_config.xml',
         'views/res_users.xml',
     ],

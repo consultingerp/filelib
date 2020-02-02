@@ -12,7 +12,7 @@
     'website': 'http://www.github.com/OCA/crm',
     'depends': ['crm', 'product'],
     'data': [
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'views/crm_lead_views.xml',
         'views/crm_lead_line_views.xml',
         'report/crm_product_report_views.xml',

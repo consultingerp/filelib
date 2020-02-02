@@ -13,7 +13,7 @@
                 'sale_management',
                 'sale_stock',
                 ],
-    'data': ['security/ir.model.access.csv',
+    'data': ['security/ir.model.access2.csv',
              'wizard/sale_create_invoice_plan_view.xml',
              'wizard/sale_make_planned_invoice_view.xml',
              'views/sale_view.xml'],

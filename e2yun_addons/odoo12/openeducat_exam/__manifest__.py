@@ -32,7 +32,7 @@
     'depends': ['openeducat_classroom'],
     'data': [
         'security/op_security.xml',
-        'security/ir.model.access.csv',
+        'security/ir.model.access2.csv',
         'views/res_partner_view.xml',
         'views/exam_attendees_view.xml',
         'views/exam_room_view.xml',
