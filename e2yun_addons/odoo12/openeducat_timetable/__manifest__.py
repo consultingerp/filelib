@@ -31,7 +31,7 @@
     'depends': ['openeducat_classroom'],
     'data': [
         'security/op_security.xml',
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
         'views/timetable_view.xml',
         'views/timing_view.xml',
         'views/faculty_view.xml',

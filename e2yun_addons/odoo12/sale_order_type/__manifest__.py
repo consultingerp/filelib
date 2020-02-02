@@ -27,7 +27,7 @@
         "demo/sale_order_demo.xml",
     ],
     "data": [
-        "security/ir.model.access2.csv",
+        "security/ir.model.access.csv",
         "security/security.xml",
         "views/sale_order_view.xml",
         "views/sale_order_type_view.xml",

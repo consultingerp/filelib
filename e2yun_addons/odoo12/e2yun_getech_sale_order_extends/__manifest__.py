@@ -10,7 +10,7 @@
     'summary': 'Sale Order Extends',
     'description': """格创东智销售订单扩展""",
     'data': [
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
         'views/sale_order_view.xml',
         'views/category_view.xml',
         'views/res_partner_view.xml',

@@ -8,7 +8,7 @@
     'data': [
         'data/mail.template.csv',
         'data/res.groups.csv',
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
         'views/etq_exam.xml',
         'views/exam_templates.xml',
         'views/etq_results.xml',

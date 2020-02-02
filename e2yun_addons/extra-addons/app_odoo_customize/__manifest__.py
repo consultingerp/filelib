@@ -94,7 +94,7 @@
         # 'data/digest_template_data.xml',
         'data/res_company_data.xml',
         'data/res_groups.xml',
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
     ],
     'qweb': [
         'static/src/xml/*.xml',

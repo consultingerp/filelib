@@ -13,7 +13,7 @@
     ],
     'data': [
         'security/res_groups.xml',
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
         'views/fsm_vehicle.xml',
         'views/fsm_route.xml',
         'views/menu.xml',

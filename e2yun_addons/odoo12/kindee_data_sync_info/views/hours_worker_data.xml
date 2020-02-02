@@ -844,84 +844,84 @@
             </field>
         </record>
 
-<!--         <record id="view_ck_hours_worker_filter" model="ir.ui.view">-->
-<!--            <field name="name">ck.hours.worker.select</field>-->
-<!--            <field name="model">ck.hours.worker</field>-->
-<!--            <field name="arch" type="xml">-->
-<!--                <search string="Search ck.hours.worker">-->
-<!--                    <field name="state"/>-->
-<!--                    <field name="production_id"/>-->
-<!--		            <field name="name"/>-->
+         <record id="view_ck_hours_worker_filter" model="ir.ui.view">
+            <field name="name">ck.hours.worker.select</field>
+            <field name="model">ck.hours.worker</field>
+            <field name="arch" type="xml">
+                <search string="Search ck.hours.worker">
+                    <field name="state"/>
+                    <field name="production_id"/>
+		            <field name="name"/>
 
-<!--                    <field name="fnumber"/>-->
-<!--                    <field name="fworkcenterno"/>-->
-<!--                    <field name="fworkcentername"/>-->
-<!--                    <field name="foperno"/>-->
-<!--                    <field name="fopername"/>-->
+                    <field name="fnumber"/>
+                    <field name="fworkcenterno"/>
+                    <field name="fworkcentername"/>
+                    <field name="foperno"/>
+                    <field name="fopername"/>
 
-<!--                    <field name="department"/>-->
+                    <field name="department"/>
 
-<!--		            <field name="user_id"/>-->
-<!--                    <field name="pqty"/>-->
-<!--                    <field name="gqty"/>-->
-<!--                    <field name="sqty"/>-->
-<!--                    <field name="price"/>-->
-<!--                    <field name="amount_total"/>-->
-<!--                    <field name="date_start"/>-->
-<!--                    <field name="date_stop"/>-->
-<!--                    &lt;!&ndash;<filter string="可用记录" name="notdeletecontent" domain="[('state','!=', 'del')]" />&ndash;&gt;-->
-<!--                    <group expand="0" string="Group By">-->
-<!--                        <filter string="生产任务单" domain="[]" context="{'group_by':'production_id'}"/>-->
-<!--                        <filter string="产品" domain="[]" context="{'group_by':'fnumber'}"/>-->
-<!--                        <filter string="工作中心" domain="[]" context="{'group_by':'fworkcentername'}"/>-->
-<!--                        <filter string="工序" domain="[]" context="{'group_by':'fopername'}"/>-->
-<!--                        <filter string="产品编码" domain="[]" context="{'group_by':'fnumber'}"/>-->
-<!--                    </group>-->
-<!--               </search>-->
-<!--            </field>-->
-<!--        </record>-->
+		            <field name="user_id"/>
+                    <field name="pqty"/>
+                    <field name="gqty"/>
+                    <field name="sqty"/>
+                    <field name="price"/>
+                    <field name="amount_total"/>
+                    <field name="date_start"/>
+                    <field name="date_stop"/>
+                    <!--<filter string="可用记录" name="notdeletecontent" domain="[('state','!=', 'del')]" />-->
+                    <group expand="0" string="Group By">
+                        <filter string="生产任务单" domain="[]" context="{'group_by':'production_id'}"/>
+                        <filter string="产品" domain="[]" context="{'group_by':'fnumber'}"/>
+                        <filter string="工作中心" domain="[]" context="{'group_by':'fworkcentername'}"/>
+                        <filter string="工序" domain="[]" context="{'group_by':'fopername'}"/>
+                        <filter string="产品编码" domain="[]" context="{'group_by':'fnumber'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
 
-<!--         <record id="view_ck_hours_worker_line_filter" model="ir.ui.view">-->
-<!--            <field name="name">ck.hours.worker.line.select</field>-->
-<!--            <field name="model">ck.hours.worker.line</field>-->
-<!--            <field name="arch" type="xml">-->
-<!--                <search string="Search CK worker.line">-->
-<!--                    <field name="id"/>-->
-<!--                    <field name="id" operator="&gt;=" string="明细序号大于"/>-->
-<!--                    <field name="id" operator="&lt;=" string="明细序号小于"/>-->
-<!--                    &lt;!&ndash;<field name="name"/>&ndash;&gt;-->
-<!--                    <field name="fmodel"/>-->
-<!--                    <field name="order_id"/>-->
-<!--                    <field name="production_id"/>-->
-<!--		            <field name="user_id"/>-->
-<!--		            <field name="user_id"/>-->
-<!--                    <field name="write_uid"/>-->
-<!--                    <field name="date_approve" operator="&gt;=" string="审批时间从"/>-->
-<!--                    <field name="date_approve" operator="&lt;=" string="审批时间到"/>-->
-<!--                    <field name="date_worker" operator="&gt;=" string="Report Start Time"/>-->
-<!--                    <field name="date_worker" operator="&lt;=" string="Report End Time"/>-->
-<!--                    <field name="fworkcentername"/>-->
-<!--                    <field name="department"/>-->
-<!--                    <field name="foperno"/>-->
-<!--                    <field name="fopername"/>-->
-<!--                    <field name="gqty"/>-->
-<!--                    <field name="sqty"/>-->
-<!--                    <field name="price"/>-->
-<!--                    <field name="amount"/>-->
-<!--                    <field name="state"/>-->
-<!--                    <field name="reportpeople"/>-->
-<!--                    <filter string="当天" name="currentday" domain="[('date_worker','&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('date_worker','&lt;=', datetime.datetime.now().strftime('%Y-%m-%d 23:59:59'))]" />-->
-<!--                    <filter string="当月" name="currentmonth" domain="[('date_worker','like', datetime.datetime.now().strftime('%Y-%m'))]" />-->
-<!--                    &lt;!&ndash;<filter string="可用记录" name="notdeletecontent" domain="[('state','!=', 'del')]" />&ndash;&gt;-->
-<!--                     <group expand="0" string="Group By">-->
-<!--                        <filter string="用户" domain="[]" context="{'group_by':'user_id'}"/>-->
-<!--                        <filter string="报工时间" domain="[]" context="{'group_by':'date_worker'}"/>-->
-<!--                        <filter string="班次" domain="[]" context="{'group_by':'fshift'}"/>-->
-<!--                        <filter string="型号" domain="[]" context="{'group_by':'fmodel'}"/>-->
-<!--                    </group>-->
-<!--               </search>-->
-<!--            </field>-->
-<!--        </record>-->
+         <record id="view_ck_hours_worker_line_filter" model="ir.ui.view">
+            <field name="name">ck.hours.worker.line.select</field>
+            <field name="model">ck.hours.worker.line</field>
+            <field name="arch" type="xml">
+                <search string="Search CK worker.line">
+                    <field name="id"/>
+                    <field name="id" operator="&gt;=" string="明细序号大于"/>
+                    <field name="id" operator="&lt;=" string="明细序号小于"/>
+                    <!--<field name="name"/>-->
+                    <field name="fmodel"/>
+                    <field name="order_id"/>
+                    <field name="production_id"/>
+		            <field name="user_id"/>
+		            <field name="user_id"/>
+                    <field name="write_uid"/>
+                    <field name="date_approve" operator="&gt;=" string="审批时间从"/>
+                    <field name="date_approve" operator="&lt;=" string="审批时间到"/>
+                    <field name="date_worker" operator="&gt;=" string="Report Start Time"/>
+                    <field name="date_worker" operator="&lt;=" string="Report End Time"/>
+                    <field name="fworkcentername"/>
+                    <field name="department"/>
+                    <field name="foperno"/>
+                    <field name="fopername"/>
+                    <field name="gqty"/>
+                    <field name="sqty"/>
+                    <field name="price"/>
+                    <field name="amount"/>
+                    <field name="state"/>
+                    <field name="reportpeople"/>
+                    <filter string="当天" name="currentday" domain="[('date_worker','&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('date_worker','&lt;=', datetime.datetime.now().strftime('%Y-%m-%d 23:59:59'))]" />
+                    <filter string="当月" name="currentmonth" domain="[('date_worker','like', datetime.datetime.now().strftime('%Y-%m'))]" />
+                    <!--<filter string="可用记录" name="notdeletecontent" domain="[('state','!=', 'del')]" />-->
+                     <group expand="0" string="Group By">
+                        <filter string="用户" domain="[]" context="{'group_by':'user_id'}"/>
+                        <filter string="报工时间" domain="[]" context="{'group_by':'date_worker'}"/>
+                        <filter string="班次" domain="[]" context="{'group_by':'fshift'}"/>
+                        <filter string="型号" domain="[]" context="{'group_by':'fmodel'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
          <record id="view_ck_icmo_sync_filter" model="ir.ui.view">
             <field name="name">ck.icmo.sync.select</field>
             <field name="model">ck.icmo.sync</field>

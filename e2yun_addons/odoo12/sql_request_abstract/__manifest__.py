@@ -16,7 +16,7 @@
     'data': [
         'security/ir_module_category.xml',
         'security/res_groups.xml',
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
     ],
     'installable': True,
 }

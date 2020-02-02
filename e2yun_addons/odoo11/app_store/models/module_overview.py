@@ -118,8 +118,8 @@ class ModuleOverviewWizard(models.Model):
             if os.path.exists(app_directory + "/" + module_name + "/__manifest__.py"):
                 manifest_file = "__manifest__.py"
 
-            if os.path.exists(app_directory + "/" + module_name + "/__manifest__.py"):
-                manifest_file = "__manifest__.py"        
+            if os.path.exists(app_directory + "/" + module_name + "/__openerp__.py"):
+                manifest_file = "__openerp__.py"        
 
             if manifest_file == "":
                 #If they module does not have a manifest file do not even bother

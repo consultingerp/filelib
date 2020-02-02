@@ -17,7 +17,7 @@
         "hr"
     ],
     'data': [
-        "security/ir.model.access2.csv",
+        "security/ir.model.access.csv",
         "views/hr_skill.xml",
         "views/hr_employee.xml",
         "views/hr_employee_skill.xml",

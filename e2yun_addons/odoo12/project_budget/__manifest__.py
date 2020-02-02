@@ -15,7 +15,7 @@
     ],
     'data': [
         'security/project_security.xml',
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
         'views/project.xml',
         'views/account_budget.xml',
     ],

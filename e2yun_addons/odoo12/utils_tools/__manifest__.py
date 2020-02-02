@@ -11,7 +11,7 @@
         'web', 'base'
     ],
     'data': [
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
         'views/templates.xml',
     ],
     'qweb': [

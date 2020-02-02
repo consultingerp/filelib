@@ -25,7 +25,7 @@
         'report/project_native_views_main.xml',
         'report/project_native_report_templates.xml',
         'wizard/project_native_pdf_view.xml',
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
 
     ],
     "qweb": [],

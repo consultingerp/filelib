@@ -12,7 +12,7 @@
     'version': '0.1',
     'depends': ['base','contacts','base_address_city'],
     'data': [
-        #'security/ir.model.access2.csv',
+        #'security/ir.model.access.csv',
         'views/views.xml',
     ],
     'demo': [

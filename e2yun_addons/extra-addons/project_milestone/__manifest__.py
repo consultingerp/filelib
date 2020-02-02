@@ -13,7 +13,7 @@
         'views/project.xml',
         'views/project_task.xml',
         'views/project_milestone.xml',
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
     ],
     'application': False,
     'development_status': 'Beta',

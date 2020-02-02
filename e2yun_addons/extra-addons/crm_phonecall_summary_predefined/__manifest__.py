@@ -17,7 +17,7 @@
         "sales_team",
     ],
     "data": [
-        "security/ir.model.access2.csv",
+        "security/ir.model.access.csv",
         "views/crm_phonecall_summary_view.xml",
         "views/crm_phonecall_view.xml",
     ],

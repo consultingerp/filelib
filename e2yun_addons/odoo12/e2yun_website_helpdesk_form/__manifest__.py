@@ -13,7 +13,7 @@
     ],
     'data': [
         'security/helpdesk_security.xml',
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
         'data/website_helpdesk.xml',
         'views/helpdesk_templates.xml',
         'views/commonproblems_templates.xml',

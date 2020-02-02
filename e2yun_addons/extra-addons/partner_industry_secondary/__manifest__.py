@@ -17,7 +17,7 @@
         "contacts",
     ],
     "data": [
-        "security/ir.model.access2.csv",
+        "security/ir.model.access.csv",
         "security/partner_industry_security.xml",
         "views/res_partner_industry_view.xml",
         "views/res_partner_view.xml",

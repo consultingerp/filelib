@@ -12,7 +12,7 @@
         'base',
     ],
     'data': [
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
         'data/ir_cron.xml',
         'views/auditlog_view.xml',
         'views/http_session_view.xml',

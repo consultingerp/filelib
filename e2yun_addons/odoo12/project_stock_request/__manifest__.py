@@ -17,7 +17,7 @@
         'views/project_views.xml',
         'views/project_task_views.xml',
         'views/stock_request_order_views.xml',
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
     ],
     'installable': True,
 }

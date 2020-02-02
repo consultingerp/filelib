@@ -12,7 +12,7 @@
     'depends': ['survey', 'e2yun_supplier_recruitment'],
     'data': [
         'security/supplier_recruitment_survey_security.xml',
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
         'data/survey_survey_data.xml',
         'views/supplier_job_views.xml',
         'views/supplier_applicant_views.xml',

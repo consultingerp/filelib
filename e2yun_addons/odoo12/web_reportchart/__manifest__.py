@@ -15,7 +15,7 @@
     'version': '0.1',
     'depends': ['base', 'web'],
     'data': [
-        # 'security/ir.model.access2.csv',
+        # 'security/ir.model.access.csv',
         'views/templates.xml',
     ],
     # only loaded in demonstration mode

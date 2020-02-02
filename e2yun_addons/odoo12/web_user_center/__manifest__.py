@@ -12,7 +12,7 @@
     ],
     'data': [
         'security/user_center_security.xml',
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
         'views/web_user_center_templates.xml',
         'views/user_center_menus.xml',
         'views/user_center.xml',

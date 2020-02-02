@@ -19,7 +19,7 @@
         'geo_view/ir_view_view.xml',
         'geo_view/geo_raster_layer_view.xml',
         'geo_view/geo_vector_layer_view.xml',
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
     ],
     'external_dependencies': {
         'python': [

@@ -10,7 +10,7 @@
     'application': True,
     'data': [
         'security/res_groups.xml',
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
         'data/wx_init_data.xml',
         'views/parent_menus.xml',
         'views/wx_action_act_article_views.xml',

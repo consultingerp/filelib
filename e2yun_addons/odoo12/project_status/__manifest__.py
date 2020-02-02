@@ -18,7 +18,7 @@
     'data': [
         'views/project_status.xml',
         'views/project.xml',
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
         'data/data.xml',
     ],
 

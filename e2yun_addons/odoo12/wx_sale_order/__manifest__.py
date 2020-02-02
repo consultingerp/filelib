@@ -11,7 +11,7 @@
         'web','sale_management'
     ],
     'data': [
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
         'views/templates.xml',
         'views/sale_order_test.xml'
     ],

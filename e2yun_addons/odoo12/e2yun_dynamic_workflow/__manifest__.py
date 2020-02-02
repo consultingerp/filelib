@@ -34,7 +34,7 @@ http://mohamedhammad.info/
     'data': [
         'templates/webclient_templates.xml',
         'security/groups.xml',
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
         'views/menu.xml',
         'wizards/views/e2yun_workflow_refuse_wizard_view.xml',
         'wizards/views/e2yun_workflow_update_wizard_view.xml',

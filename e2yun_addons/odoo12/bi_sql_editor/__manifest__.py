@@ -15,7 +15,7 @@
         'sql_request_abstract',
     ],
     'data': [
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
         'views/view_bi_sql_view.xml',
         'views/action.xml',
         'views/menu.xml',

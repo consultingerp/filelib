@@ -11,7 +11,7 @@
     'depends': ['account'],
     'excludes': ['account_budget'],
     'data': [
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
         'security/account_budget_security.xml',
         'views/account_analytic_account_views.xml',
         'views/account_budget_views.xml',

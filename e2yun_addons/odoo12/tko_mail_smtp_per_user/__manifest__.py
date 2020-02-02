@@ -14,7 +14,7 @@
         'web_notify'
     ],
     'data': [
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
         'views/mail_server_config_view.xml',
         'views/templates.xml'
     ],

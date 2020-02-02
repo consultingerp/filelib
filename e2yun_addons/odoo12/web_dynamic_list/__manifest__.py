@@ -10,7 +10,7 @@
     'depends': ['web', 'web_export_list_xls'],
     'data': [
         'security/security.xml',
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
         'views/assets_registary.xml',
     ],
     'qweb': [

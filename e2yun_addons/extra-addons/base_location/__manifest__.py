@@ -19,7 +19,7 @@
     'summary': '''Enhanced zip/npa management system''',
     'website': 'https://github.com/OCA/partner-contact',
     'data': [
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
         'views/res_city_zip_view.xml',
         'views/res_city_view.xml',
         'views/res_country_view.xml',

@@ -30,7 +30,7 @@ You can define the different phases of interviews and easily rate the applicant 
     ],
     'data': [
         'security/supplier_recruitment_security.xml',
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
         'data/supplier_recruitment_data.xml',
         'views/supplier_recruitment_views.xml',
         'report/supplier_recruitment_report_views.xml',

@@ -15,7 +15,7 @@
     ],
     "data": [
         "security/stock_request_security.xml",
-        "security/ir.model.access2.csv",
+        "security/ir.model.access.csv",
         "views/product.xml",
         "views/stock_request_views.xml",
         "views/stock_request_allocation_views.xml",

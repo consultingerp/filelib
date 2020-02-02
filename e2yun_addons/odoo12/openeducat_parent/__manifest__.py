@@ -32,7 +32,7 @@
     'depends': ['openeducat_core'],
     'data': [
         'security/op_security.xml',
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
         'data/parent_user_data.xml',
         'views/parent_view.xml',
         'menus/op_menu.xml',

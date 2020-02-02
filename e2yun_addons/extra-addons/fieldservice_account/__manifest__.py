@@ -17,7 +17,7 @@
     ],
     'data': [
         'data/time_products.xml',
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
         'views/account.xml',
         'views/fsm_location.xml',
         'views/fsm_order.xml',

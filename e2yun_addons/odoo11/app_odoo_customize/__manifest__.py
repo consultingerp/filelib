@@ -82,7 +82,7 @@ The user can get the help document just by one click.
         'data/ir_config_parameter.xml',
         #'data/res_company_data.xml',
         'data/res_groups.xml',
-        'security/ir.model.access2.csv',
+        'security/ir.model.access.csv',
     ],
     'demo': [],
     'test': [

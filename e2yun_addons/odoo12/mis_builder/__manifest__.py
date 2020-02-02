@@ -23,7 +23,7 @@
         "views/mis_report_instance.xml",
         "views/mis_report_style.xml",
         "datas/ir_cron.xml",
-        "security/ir.model.access2.csv",
+        "security/ir.model.access.csv",
         "security/mis_builder_security.xml",
         "report/mis_report_instance_qweb.xml",
         "report/mis_report_instance_xlsx.xml",
