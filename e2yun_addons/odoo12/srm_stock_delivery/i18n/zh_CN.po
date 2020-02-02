@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0\n"
+"Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-09 09:47+0000\n"
-"PO-Revision-Date: 2019-05-09 09:47+0000\n"
+"POT-Creation-Date: 2020-01-21 08:03+0000\n"
+"PO-Revision-Date: 2020-01-21 08:03+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -20,28 +20,21 @@ msgstr ""
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:241
 #, python-format
 msgid "< Previous"
-msgstr "< Previous"
-
-#. module: srm_stock_delivery
-#. openerp-web
-#: code:addons/srm_stock_delivery/static/src/js/widgets.js:585
-#, python-format
-msgid "<p>We could not find a picking to display.</p>"
-msgstr "<p>We could not find a picking to display.</p>"
+msgstr ""
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:25
 #, python-format
 msgid "Change Location"
-msgstr "Change Location"
+msgstr ""
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:12
 #, python-format
 msgid "Choose a location"
-msgstr "Choose a location"
+msgstr ""
 
 #. module: srm_stock_delivery
 #. openerp-web
@@ -50,10 +43,10 @@ msgstr "Choose a location"
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:67
 #, python-format
 msgid "Close"
-msgstr "Close"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation_comco
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation__comco
 msgid "Company"
 msgstr "公司"
 
@@ -62,7 +55,7 @@ msgstr "公司"
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:55
 #, python-format
 msgid "Configure package"
-msgstr "Configure package"
+msgstr ""
 
 #. module: srm_stock_delivery
 #. openerp-web
@@ -70,160 +63,153 @@ msgstr "Configure package"
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:44
 #, python-format
 msgid "Create Lot"
-msgstr "Create Lot"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_offset_sap_voucher_create_uid
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_create_uid
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log_create_uid
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_offset_sap_voucher__create_uid
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__create_uid
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log__create_uid
 msgid "Created by"
 msgstr "创建人"
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_offset_sap_voucher_create_date
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_create_date
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log_create_date
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_offset_sap_voucher__create_date
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__create_date
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log__create_date
 msgid "Created on"
 msgstr "创建时间"
 
 #. module: srm_stock_delivery
-#: model:ir.actions.client,name:srm_stock_delivery.action_custom_page
-#: model:ir.ui.menu,name:srm_stock_delivery.menu_root_custom_page
-msgid "Custom Page"
-msgstr "Custom Page"
-
-#. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_stock_picking_delivery_line_ids
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_stock_picking__delivery_line_ids
 msgid "Delivery Line"
-msgstr "Delivery Line"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation_delivery_order_id
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation_dnnum
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_dnnum
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation__delivery_order_id
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation__dnnum
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__dnnum
 msgid "Delivery Order"
 msgstr "交货单"
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation_delivery_order_line_id
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_dline
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation__delivery_order_line_id
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__dline
 msgid "Delivery Order Line"
-msgstr "交货单行项目"
+msgstr "交货订单行"
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation_delivery_po_line_id
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation__delivery_po_line_id
 msgid "Delivery Po Line"
-msgstr "Delivery Po Line"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_stock_picking_type_count_delivery_ready
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_stock_picking_type__count_delivery_ready
 msgid "Delivery Ready Count"
-msgstr "Delivery Ready Count"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation_display_name
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_offset_sap_voucher_display_name
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_display_name
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log_display_name
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation__display_name
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_offset_sap_voucher__display_name
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__display_name
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log__display_name
 msgid "Display Name"
 msgstr "显示名称"
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:100
-#: code:addons/srm_stock_delivery/static/src/xml/template.xml:19
+#: code:addons/srm_stock_delivery/static/src/xml/template.xml:22
 #, python-format
 msgid "Filter by location..."
-msgstr "Filter by location..."
+msgstr "按位置筛选"
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:125
-#: code:addons/srm_stock_delivery/static/src/xml/template.xml:44
 #, python-format
 msgid "From"
-msgstr "From"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation_id
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_offset_sap_voucher_id
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_id
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log_id
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation__id
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_offset_sap_voucher__id
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__id
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_stock_picking_type_isCome
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_stock_picking_type__isCome
 msgid "IsCome"
-msgstr "IsCome"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation___last_update
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_offset_sap_voucher___last_update
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher___last_update
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log___last_update
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation____last_update
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_offset_sap_voucher____last_update
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher____last_update
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log____last_update
 msgid "Last Modified on"
 msgstr "最后修改日"
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_offset_sap_voucher_write_uid
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_write_uid
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log_write_uid
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_offset_sap_voucher__write_uid
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__write_uid
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log__write_uid
 msgid "Last Updated by"
-msgstr "最后更新人"
+msgstr "最后更新者"
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_offset_sap_voucher_write_date
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_write_date
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log_write_date
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_offset_sap_voucher__write_date
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__write_date
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log__write_date
 msgid "Last Updated on"
 msgstr "最后更新时间"
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_linemark
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__linemark
 msgid "Line Mark"
-msgstr "Line Mark"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation_location_id
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation_location_name
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation__location_id
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation__location_name
 msgid "Location"
 msgstr "位置"
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation_location_dest_id
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation_location_dest_name
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation__location_dest_id
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation__location_dest_name
 msgid "Location Dest"
-msgstr "Location Dest"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation_menge
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation__menge
 msgid "Mange"
-msgstr "Mange"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_offset_sap_voucher_matdoc
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_matdoc
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_offset_sap_voucher__matdoc
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__matdoc
 msgid "Mat Doc"
 msgstr "过账凭证"
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_matnr
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__matnr
 msgid "Material"
 msgstr "物料"
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_matnrcode
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__matnrcode
 msgid "Material Code"
 msgstr "物料代码"
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_matnrdesc
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__matnrdesc
 msgid "Material Desc"
 msgstr "物料描述"
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation_matnr
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation__matnr
 msgid "Matnr"
 msgstr "物料"
 
@@ -235,14 +221,14 @@ msgid "Menu"
 msgstr "菜单"
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation_move_id
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_move_id
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log_move_id
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation__move_id
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__move_id
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log__move_id
 msgid "Move"
 msgstr "移动"
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_movetype
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__movetype
 msgid "Move type"
 msgstr "过账类型"
 
@@ -251,51 +237,37 @@ msgstr "过账类型"
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:242
 #, python-format
 msgid "Next >"
-msgstr "Next >"
-
-#. module: srm_stock_delivery
-#. openerp-web
-#: code:addons/srm_stock_delivery/static/src/js/widgets.js:578
-#, python-format
-msgid "No Picking Available"
-msgstr "No Picking Available"
+msgstr ""
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:176
 #, python-format
 msgid "No picking found."
-msgstr "No picking found."
+msgstr ""
 
 #. module: srm_stock_delivery
-#. openerp-web
-#: code:addons/srm_stock_delivery/static/src/js/widgets.js:580
-#, python-format
-msgid "Ok"
-msgstr "Ok"
-
-#. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_operation_id
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__operation_id
 msgid "Operation ID"
-msgstr "Operation ID"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_offset_sap_voucher_orging_linemark
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_offset_sap_voucher__orging_linemark
 msgid "Origin Line Mark"
-msgstr "Origin Line Mark"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_offset_sap_voucher_origin_matdoc
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_offset_sap_voucher__origin_matdoc
 msgid "Origin Mat Doc"
-msgstr "Origin Mat Doc"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation_poitem
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation__poitem
 msgid "PO Item"
-msgstr "PO Item"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_psingdate
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__psingdate
 msgid "PSTNG DATE"
 msgstr "过账日期"
 
@@ -304,61 +276,60 @@ msgstr "过账日期"
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:58
 #, python-format
 msgid "Package type"
-msgstr "Package type"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_picking_id
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__picking_id
 msgid "Pick"
 msgstr "分拣"
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation_picking_id
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log_picking_id
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation__picking_id
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log__picking_id
 msgid "Picking"
-msgstr "拣货"
+msgstr "分拣"
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_pickname
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__pickname
 msgid "Picking Name"
-msgstr "Picking Name"
+msgstr "拣货名称"
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:120
-#: code:addons/srm_stock_delivery/static/src/xml/template.xml:39
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation_matnr_name
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log_product_id
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation__matnr_name
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log__product_id
 #, python-format
 msgid "Product"
 msgstr "产品"
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_prnum
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__prnum
 msgid "Product Order"
 msgstr "生产订单"
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation_ponum
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_po_id
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_ponum
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation__ponum
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__po_id
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__ponum
 msgid "Purchase Order"
 msgstr "采购订单"
 
 #. module: srm_stock_delivery
 #: model:ir.model,name:srm_stock_delivery.model_purchase_order_line
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation_pline
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_pline
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_po_line_id
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log_po_line_id
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation__pline
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__pline
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__po_line_id
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log__po_line_id
 msgid "Purchase Order Line"
 msgstr "采购订单行"
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation_qty
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_offset_sap_voucher_qty
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_handleQty
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_qty
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log_qty
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation__qty
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_offset_sap_voucher__qty
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__handleQty
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__qty
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log__qty
 msgid "Qty"
 msgstr "数量"
 
@@ -367,19 +338,19 @@ msgstr "数量"
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:199
 #, python-format
 msgid "Quit"
-msgstr "Quit"
+msgstr ""
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:250
 #, python-format
 msgid "Recompute"
-msgstr "Recompute"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_refpickname
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__refpickname
 msgid "Reference Picking Name"
-msgstr "Reference Picking Name"
+msgstr ""
 
 #. module: srm_stock_delivery
 #: model:ir.model,name:srm_stock_delivery.model_stock_return_picking
@@ -387,9 +358,14 @@ msgid "Return Picking"
 msgstr "退回拣货"
 
 #. module: srm_stock_delivery
+#: model:ir.model,name:srm_stock_delivery.model_stock_return_picking_line
+msgid "Return Picking Line"
+msgstr "退料明细行"
+
+#. module: srm_stock_delivery
 #: model:ir.actions.act_window,name:srm_stock_delivery.sap_voucher_action
 #: model:ir.ui.menu,name:srm_stock_delivery.menu_sap_voucher
-#: model:ir.ui.view,arch_db:srm_stock_delivery.sap_voucher_tree
+#: model_terms:ir.ui.view,arch_db:srm_stock_delivery.sap_voucher_tree
 msgid "SAP Voucher"
 msgstr "SAP凭证"
 
@@ -398,80 +374,83 @@ msgstr "SAP凭证"
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:15
 #, python-format
 msgid "Scan a location or select it in the list below"
-msgstr "Scan a location or select it in the list below"
+msgstr ""
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:39
 #, python-format
 msgid "Scan a lot or type it below (leave empty to generate one automatically)"
-msgstr "Scan a lot or type it below (leave empty to generate one automatically)"
+msgstr ""
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:207
 #, python-format
 msgid "Scanned picking could not be found"
-msgstr "Scanned picking could not be found"
+msgstr ""
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:196
 #, python-format
 msgid "Search"
-msgstr "Search"
+msgstr ""
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:172
 #, python-format
 msgid "Search Results"
-msgstr "Search Results"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: model:ir.ui.view,arch_db:srm_stock_delivery.sap_voucher_filter
+#: model_terms:ir.ui.view,arch_db:srm_stock_delivery.sap_voucher_filter
 msgid "Search Sap Voucher"
-msgstr "Search Sap Voucher"
+msgstr ""
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:206
 #, python-format
 msgid "Select your operation"
-msgstr "Select your operation"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher_printSendDate
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_sap_voucher__printSendDate
 msgid "Send Date"
 msgstr "送货日期"
 
 #. module: srm_stock_delivery
 #: model:ir.model,name:srm_stock_delivery.model_stock_picking_type
 msgid "Stock Delivery Kanban"
-msgstr "Stock Delivery Kanban"
+msgstr ""
+
+#. module: srm_stock_delivery
+#: model:ir.model,name:srm_stock_delivery.model_stock_move
+msgid "Stock Move"
+msgstr "库存移动"
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:249
 #, python-format
 msgid "The reserved stock changed. You might want to"
-msgstr "The reserved stock changed. You might want to"
+msgstr ""
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:126
-#: code:addons/srm_stock_delivery/static/src/xml/template.xml:45
 #, python-format
 msgid "To"
-msgstr "To"
+msgstr ""
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:124
-#: code:addons/srm_stock_delivery/static/src/xml/template.xml:43
 #, python-format
 msgid "Todo"
-msgstr "Todo"
+msgstr ""
 
 #. module: srm_stock_delivery
 #: model:ir.model,name:srm_stock_delivery.model_stock_picking
@@ -481,123 +460,146 @@ msgstr "调拨"
 #. module: srm_stock_delivery
 #: model:ir.model,name:srm_stock_delivery.model_transfer_log
 msgid "Transfer Log"
-msgstr "Transfer Log"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation_product_uom
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation_product_uom_name
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation__product_uom
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_delivery_pack_operation__product_uom_name
 msgid "Unit"
-msgstr "Unit"
+msgstr "单位"
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log_used
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_transfer_log__used
 msgid "Used"
-msgstr "Used"
+msgstr ""
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:68
 #, python-format
 msgid "Validate package"
-msgstr "Validate package"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: code:addons/srm_stock_delivery/models/stock_transfer_details.py:82
+#: code:addons/srm_stock_delivery/models/stock_transfer_details.py:83
 #, python-format
 msgid "You cannot transfer a picking in state '%s'."
-msgstr "You cannot transfer a picking in state '%s'."
+msgstr ""
 
 #. module: srm_stock_delivery
 #: model:ir.model,name:srm_stock_delivery.model_delivery_pack_operation
 msgid "delivery.pack.operation"
-msgstr "delivery.pack.operation"
+msgstr ""
 
 #. module: srm_stock_delivery
 #: model:ir.model,name:srm_stock_delivery.model_offset_sap_voucher
 msgid "offset.sap.voucher"
-msgstr "offset.sap.voucher"
+msgstr ""
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:224
 #, python-format
 msgid "picking(s)"
-msgstr "picking(s)"
+msgstr ""
 
 #. module: srm_stock_delivery
 #: model:ir.model,name:srm_stock_delivery.model_sap_voucher
 msgid "sap.voucher"
-msgstr "sap.voucher"
-
-#. module: srm_stock_delivery
-#: model:ir.model,name:srm_stock_delivery.model_stock_return_picking_line
-msgid "stock.return.picking.line"
-msgstr "stock.return.picking.line"
+msgstr ""
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:250
 #, python-format
 msgid "the operations."
-msgstr "the operations."
+msgstr ""
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:92
-#: code:addons/srm_stock_delivery/static/src/xml/template.xml:11
+#: code:addons/srm_stock_delivery/static/src/xml/template.xml:14
 #, python-format
 msgid "交货单号"
-msgstr "交货单号"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: model:ir.ui.view,arch_db:srm_stock_delivery.stock_delivery_kanban_view
+#: model_terms:ir.ui.view,arch_db:srm_stock_delivery.stock_delivery_kanban_view
 msgid "交货单就绪"
-msgstr "交货单就绪"
+msgstr ""
+
+#. module: srm_stock_delivery
+#. openerp-web
+#: code:addons/srm_stock_delivery/static/src/xml/template.xml:46
+#, python-format
+msgid "待办"
+msgstr ""
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:109
-#: code:addons/srm_stock_delivery/static/src/xml/template.xml:28
+#: code:addons/srm_stock_delivery/static/src/xml/template.xml:31
 #, python-format
 msgid "收 货"
-msgstr "收 货"
+msgstr ""
+
+#. module: srm_stock_delivery
+#: model:ir.actions.client,name:srm_stock_delivery.action_stock_delivery
+#: model:ir.ui.menu,name:srm_stock_delivery.menu_in_goods
+msgid "收货"
+msgstr ""
+
+#. module: srm_stock_delivery
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_purchase_order_line__delivery_qty
+msgid "收货数量"
+msgstr ""
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:123
-#: code:addons/srm_stock_delivery/static/src/xml/template.xml:42
+#: code:addons/srm_stock_delivery/static/src/xml/template.xml:45
 #, python-format
 msgid "数量"
-msgstr "数量"
+msgstr ""
 
 #. module: srm_stock_delivery
+#: selection:stock.move,move_reason:0
 #: selection:stock.return.picking.line,move_reason:0
 msgid "来料不良"
-msgstr "来料不良"
+msgstr ""
 
 #. module: srm_stock_delivery
-#: model:ir.model.fields,field_description:srm_stock_delivery.field_stock_return_picking_line_move_reason
+#. openerp-web
+#: code:addons/srm_stock_delivery/static/src/xml/template.xml:42
+#, python-format
+msgid "物料"
+msgstr ""
+
+#. module: srm_stock_delivery
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_stock_move__move_reason
+#: model:ir.model.fields,field_description:srm_stock_delivery.field_stock_return_picking_line__move_reason
 msgid "移动原因"
-msgstr "移动原因"
+msgstr ""
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:122
-#: code:addons/srm_stock_delivery/static/src/xml/template.xml:41
+#: code:addons/srm_stock_delivery/static/src/xml/template.xml:44
 #, python-format
 msgid "行项目"
-msgstr "行项目"
+msgstr ""
 
 #. module: srm_stock_delivery
+#: selection:stock.move,move_reason:0
 #: selection:stock.return.picking.line,move_reason:0
 msgid "输错冲销"
-msgstr "输错冲销"
+msgstr ""
 
 #. module: srm_stock_delivery
 #. openerp-web
 #: code:addons/srm_stock_delivery/static/src/xml/delivery_order_picking.xml:121
-#: code:addons/srm_stock_delivery/static/src/xml/template.xml:40
+#: code:addons/srm_stock_delivery/static/src/xml/template.xml:43
 #, python-format
 msgid "采购订单"
-msgstr "采购订单"
+msgstr ""
 

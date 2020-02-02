@@ -3,6 +3,7 @@
 from odoo import models, fields, tools, api, exceptions
 
 import logging
+import time
 try:
     from odoo.addons.srm_pyrfc import ZSRM_BAPI_GOODSMVT_CREATE
 except:
@@ -100,7 +101,7 @@ class delivery_pack_operation(models.Model):
     location_dest_name = fields.Char('Location Dest')
     qty = fields.Integer('Qty')
     menge = fields.Integer('Mange')
-    product_uom = fields.Many2one('product.uom', 'Unit')
+    product_uom = fields.Many2one('uom.uom', 'Unit')
     product_uom_name = fields.Char('Unit')
     picking_id = fields.Many2one('stock.picking')
     delivery_po_line_id = fields.Many2one('delivery.purchase.orders')
@@ -290,17 +291,21 @@ class delivery_pack_operation(models.Model):
                     'prnum':line['prnum']
                 })
 
-        zbapi_goodsmvt_create = ZSRM_BAPI_GOODSMVT_CREATE.ZBAPI_GOODSMVT_CREATE()
-        result_rfc = zbapi_goodsmvt_create.BAPI_GOODSMVT_CREATE(self._cr, GOODSMVT_HEADER, GOODSMVT_ITEM, '01')
-        if result_rfc['code'] == 1 and 'message' in result_rfc:
-            raise exceptions.ValidationError(" SAP收货过账失败，失败原因：%s" % (result_rfc['message']))
-        elif result_rfc['code'] == 1 and 'message' not in result_rfc:
-            raise exceptions.ValidationError(" SAP收货过账失败.")
-        else:
-            mat_doc = result_rfc['MAT_DOC']
-            for line in vouchaer_vals:
-                line['matdoc'] = mat_doc
-                sapVouchaer.create(line)
+        # zbapi_goodsmvt_create = ZSRM_BAPI_GOODSMVT_CREATE.ZBAPI_GOODSMVT_CREATE()
+        # result_rfc = zbapi_goodsmvt_create.BAPI_GOODSMVT_CREATE(self._cr, GOODSMVT_HEADER, GOODSMVT_ITEM, '01')
+        # if result_rfc['code'] == 1 and 'message' in result_rfc:
+        #     raise exceptions.ValidationError(" SAP收货过账失败，失败原因：%s" % (result_rfc['message']))
+        # elif result_rfc['code'] == 1 and 'message' not in result_rfc:
+        #     raise exceptions.ValidationError(" SAP收货过账失败.")
+        # else:
+        #     mat_doc = result_rfc['MAT_DOC']
+        #     for line in vouchaer_vals:
+        #         line['matdoc'] = mat_doc
+        #         sapVouchaer.create(line)
+
+        for line in vouchaer_vals:
+            line['matdoc'] = str(int(time.time()))
+            sapVouchaer.create(line)
 
     @api.model
     def action_done_from_ui(self, dnnum, change_lines):
@@ -388,7 +393,7 @@ class delivery_pack_operation(models.Model):
 
         if len(picking_ids) > 0:
             for p in picking_obj.browse(picking_ids):
-                p.do_transfer()
+                p.action_done()
             self.trans_to_sap(dnnum, trans_sap_lines)
 
         order_dbobj = order_obj.search([('dnnum', '=', dnnum)])

@@ -1,10 +1,400 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* srm_po_sync_task
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-01-21 07:08+0000\n"
+"PO-Revision-Date: 2020-01-21 07:08+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
 #. module: srm_po_sync_task
-#: model:ir.model.fields,field_description:srm_po_sync_task.field_purchase_order_line_ret_item
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "1111"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "11111"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "<span>提示:出货时必须提供一定数量备品！并区分包装标识！</span>"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_srm_po_sync_task__create_uid
+msgid "Created by"
+msgstr "创建人"
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_srm_po_sync_task__create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_srm_po_sync_task__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_srm_po_sync_task__id
+msgid "ID"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_srm_po_sync_task____last_update
+msgid "Last Modified on"
+msgstr "最后修改日"
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_srm_po_sync_task__write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_srm_po_sync_task__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.external_layout_footer
+msgid "Page:"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model:ir.model,name:srm_po_sync_task.model_product_category
+msgid "Product Category"
+msgstr "产品种类"
+
+#. module: srm_po_sync_task
+#: model:ir.model,name:srm_po_sync_task.model_purchase_order
+msgid "Purchase Order"
+msgstr "采购订单"
+
+#. module: srm_po_sync_task
+#: model:ir.model,name:srm_po_sync_task.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "采购订单行"
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "RSR机密文件"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: code:addons/srm_po_sync_task/srm_po_sync_task.py:758
+#, python-format
+msgid "You must set a Vendor Location for this partner %s"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_purchase_order_line__component_id
+msgid "component"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_purchase_order__date_order1
+msgid "date_order1"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_purchase_order_line__item
+msgid "item"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_purchase_order_line__item_cat
+msgid "item cat"
+msgstr "外协项目"
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_purchase_order_line__lgort
+msgid "lgort"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_purchase_order_line__no_more_gr
+msgid "no more gr"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_purchase_order_line__ret_item
 msgid "ret item"
 msgstr "退回项目"
 
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_purchase_order_line__sap_amount_qty
+msgid "sap amount qty"
+msgstr ""
 
 #. module: srm_po_sync_task
-#: model:ir.model.fields,field_description:srm_po_sync_task.field_purchase_order_line_item_cat
-msgid "item cat"
-msgstr "外协项目"
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_purchase_order__sap_amount_tax
+msgid "sap amount tax"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_purchase_order__sap_amount_total
+msgid "sap amount total"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_purchase_order__sap_amount_untaxed
+msgid "sap amount untaxed"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_purchase_order_line__sap_price_unit
+msgid "sap price unit"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_purchase_order_line__sap_product_qty
+msgid "sap product qty"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_purchase_order__sap_order_type
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_purchase_order__sap_update_flag
+msgid "sap update flag"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model:ir.model,name:srm_po_sync_task.model_srm_po_sync_task
+msgid "srm_po_sync_task"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_purchase_order__updatetime_sap
+msgid "updatetime_sap"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_purchase_order_line__werks
+msgid "werks"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "下单日期:"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "交货地点：广东省中山市港口镇沙港东路群乐工业园A3栋 中山市悦辰电子实业有限公司"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "付款条件:"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "传真:"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "供方:"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "供方经手人:"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "公司盖章:"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "关联生产订单:"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "办公电话:"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "包装方式：纸箱或胶箱（确保物料无损坏送达我司） 包材是否需要回收： □是   □否"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "包装标识:内外包装需标识清楚需方物料编号、名称、数量，并标贴RoHS标志 REACH标志"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "单价(含税)"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "单位"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "合计金额(含税)"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "地址:"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.external_layout_footer
+msgid "备注:若无疑问请在订货合同发出两天内,签名并盖章回传确认。文件编号：PUFM005"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "备注：需要提供送货单、增值税发票"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "币别:CNY"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "序号"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "总值(含税)"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "总机:"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "总计(不含税)"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "批准:"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "机型:"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "物料描述"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "物料编码"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "环保材质要求: √ 符合REACH √ 符合RoHS □ 其他：符合3C安规要求"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "直线电话:"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "移动电话:"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "税率"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "税额"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "结算方式:"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "职务:"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "联系人:"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "计划交货日期"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "订购数量"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "运输方式：供应商承担"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "邮箱:"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "采购合同"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model:ir.model.fields,field_description:srm_po_sync_task.field_product_category__group_id
+msgid "采购组"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.external_layout_header
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "采购订单编号:"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "需方:"
+msgstr ""
+
+#. module: srm_po_sync_task
+#: model_terms:ir.ui.view,arch_db:srm_po_sync_task.report_purchaseorder_yuechen_document
+msgid "需方经手人:"
+msgstr ""
+

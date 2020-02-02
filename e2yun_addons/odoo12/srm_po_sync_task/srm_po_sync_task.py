@@ -616,7 +616,7 @@ class srm_po_sync_task(models.Model):
 
     def _prepare_order_line_move(self, cr, uid, order, order_line, picking_id, group_id, context=None):
         ''' prepare the stock move data from the PO line. This function returns a list of dictionary ready to be used in stock.move's create()'''
-        product_uom = self.pool.get('product.uom')
+        product_uom = self.pool.get('uom.uom')
         price_unit = order_line.price_unit
         if order_line.taxes_id:
             taxes = self.pool['account.tax'].compute_all(cr, uid, order_line.taxes_id, price_unit, 1.0,
@@ -924,7 +924,7 @@ class SrmPurchaseOrder(models.Model):
 
    def _prepare_order_line_move_ref(self, cr, uid, order, order_line, picking_id, group_id, context=None):
        ''' prepare the stock move data from the PO line. This function returns a list of dictionary ready to be used in stock.move's create()'''
-       product_uom = self.pool.get('product.uom')
+       product_uom = self.pool.get('uom.uom')
        price_unit = order_line.price_unit
        if order_line.taxes_id:
            taxes = self.pool['account.tax'].compute_all(cr, uid, order_line.taxes_id, price_unit, 1.0,

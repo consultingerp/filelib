@@ -786,7 +786,7 @@ class delivery_order_line(models.Model):
     sdmng = fields.Integer('Scheduling Qty', readonly=True)
     admng = fields.Integer('Already Delivery Qty', readonly=True)
     aomng = fields.Integer('Already Out Qty', readonly=True,compute=_compute_aomng,store=True)
-    meins = fields.Many2one('product.uom', 'Unit', required=False, readonly=True)
+    meins = fields.Many2one('uom.uom', 'Unit', required=False, readonly=True)
     memo = fields.Text('Remark')
     prnum = fields.Text('Produce Order')
     monum = fields.Text('Model')
@@ -825,80 +825,80 @@ class delivery_order_line(models.Model):
 
         return super(delivery_order_line, self).search(args, offset=offset, limit=limit, order=order,count=count)
 
-    def create(self,vals):
-        if not vals.get('delivery_purchase_orders') or len(vals.get('delivery_purchase_orders')) <= 0:
-            if 'source' in self._context.keys() and 'import' == self._context['source']:
-                raise exceptions.ValidationError("No purchase order.No delivery order is allowed.")
-            else:
-                raise exceptions.ValidationError("没有采购订单不允许创建交货单")
-        if 'delivery_purchase_orders' in  vals:
-            for d in vals['delivery_purchase_orders']:
-                for k in d:
-                    if type(k) == dict and 'matnr' in  k and k['matnr'] != vals['matnr']:
-                        raise exceptions.ValidationError("采购订单行和交货单行不匹配")
+    def create(self,values):
+        for vals in values:
+            if not vals.get('delivery_purchase_orders',False) or len(vals.get('delivery_purchase_orders')) <= 0:
+                if 'source' in self._context.keys() and 'import' == self._context['source']:
+                    raise exceptions.ValidationError("No purchase order.No delivery order is allowed.")
+                else:
+                    raise exceptions.ValidationError("没有采购订单不允许创建交货单")
+            if 'delivery_purchase_orders' in  vals:
+                for d in vals['delivery_purchase_orders']:
+                    for k in d:
+                        if type(k) == dict and 'matnr' in  k and k['matnr'] != vals['matnr']:
+                            raise exceptions.ValidationError("采购订单行和交货单行不匹配")
 
-        # if not vals.get('delivery_product_orders') and context.get('isscheduledate')==True:
-        #     raise exceptions.ValidationError("没有生产订单不允许创建交货单")
-        if 'delivery_product_orders' in vals.keys() and  len(vals.get('delivery_product_orders'))>1:
-            if 'source' in self._context.keys() and 'import' == self._context['source']:
-                raise exceptions.ValidationError("Only one production order is allowed to create the delivery order.")
-            else:
-                raise exceptions.ValidationError("只允许选择一个生产订单创建交货单")
+            # if not vals.get('delivery_product_orders') and context.get('isscheduledate')==True:
+            #     raise exceptions.ValidationError("没有生产订单不允许创建交货单")
+            if 'delivery_product_orders' in vals.keys() and  len(vals.get('delivery_product_orders'))>1:
+                if 'source' in self._context.keys() and 'import' == self._context['source']:
+                    raise exceptions.ValidationError("Only one production order is allowed to create the delivery order.")
+                else:
+                    raise exceptions.ValidationError("只允许选择一个生产订单创建交货单")
 
-        #交货数不能超过最大交货数
-        if 'max_dnmng' in vals and vals['dnmng'] > vals['max_dnmng']:
-            raise exceptions.ValidationError("交货数量不能超过最大交货数"+str(vals['max_dnmng']))
+            #交货数不能超过最大交货数
+            if 'max_dnmng' in vals and vals['dnmng'] > vals['max_dnmng']:
+                raise exceptions.ValidationError("交货数量不能超过最大交货数"+str(vals['max_dnmng']))
 
-        # 判断采购订单合计数量是否超过需交货数
-        po_pty = 0
-        for po in vals['delivery_purchase_orders']:
-            for p in po:
-                if p and isinstance(p, dict) and p.get('menge'):
-                    po_pty += p['menge']
+            # 判断采购订单合计数量是否超过需交货数
+            po_pty = 0
+            for po in vals['delivery_purchase_orders']:
+                for p in po:
+                    if p and isinstance(p, dict) and p.get('menge'):
+                        po_pty += p['menge']
 
-        if po_pty > vals['dnmng']:
-            if 'source' in self._context.keys() and 'import' == self._context['source']:
-                raise exceptions.ValidationError("Purchase orders can not exceed the quantity required.")
-            else:
-                raise exceptions.ValidationError("采购订单数量不能大于需交货数.")
-        elif po_pty < vals['dnmng']:
-            if 'source' in self._context.keys() and 'import' == self._context['source']:
-                raise exceptions.ValidationError("Purchase order quantity should not be less than required delivery quantity.")
-            else:
-                raise exceptions.ValidationError("采购订单数量不能小于需交货数")
+            if po_pty > vals['dnmng']:
+                if 'source' in self._context.keys() and 'import' == self._context['source']:
+                    raise exceptions.ValidationError("Purchase orders can not exceed the quantity required.")
+                else:
+                    raise exceptions.ValidationError("采购订单数量不能大于需交货数.")
+            elif po_pty < vals['dnmng']:
+                if 'source' in self._context.keys() and 'import' == self._context['source']:
+                    raise exceptions.ValidationError("Purchase order quantity should not be less than required delivery quantity.")
+                else:
+                    raise exceptions.ValidationError("采购订单数量不能小于需交货数")
 
-        pr_pty = 0
-        if 'delivery_product_orders' in vals.keys():
-            for pr in vals['delivery_product_orders']:
-                for p in pr:
-                    if p and isinstance(p, dict) and p.get('penge'):
-                        pr_pty += p['penge']
+            pr_pty = 0
+            if 'delivery_product_orders' in vals.keys():
+                for pr in vals['delivery_product_orders']:
+                    for p in pr:
+                        if p and isinstance(p, dict) and p.get('penge'):
+                            pr_pty += p['penge']
 
-                if pr_pty > vals['dnmng']:
-                    if 'source' in self._context.keys() and 'import' == self._context['source']:
-                        raise exceptions.ValidationError("The number of production orders can not exceed the required delivery.")
-                    else:
-                        raise exceptions.ValidationError("生产订单数量不能大于需交货数.")
-                elif pr_pty < vals['dnmng']:
-                    if 'source' in self._context.keys() and 'import' == self._context['source']:
-                        raise exceptions.ValidationError("The quantity of production orders should not be less than the required deliveries.")
-                    else:
-                        raise exceptions.ValidationError("生产订单数量不能小于需交货数.")
-
-
-        if 'admng' in vals.keys():
-            vals['admng'] = vals['admng'] + vals['dnmng']
-        if 'meins' not in  vals.keys():
-            self._cr.execute("select product_tmpl_id from  product_product where id=%(matnr)s ", {'matnr': vals['matnr']})
-            tmpl_id = self._cr.fetchone()
-            self._cr.execute("select uom_id from  product_template where id=%(tmpl_id)s ", {'tmpl_id': tmpl_id})
-            menin = self._cr.fetchone()
-            vals['meins'] = menin[0]
+                    if pr_pty > vals['dnmng']:
+                        if 'source' in self._context.keys() and 'import' == self._context['source']:
+                            raise exceptions.ValidationError("The number of production orders can not exceed the required delivery.")
+                        else:
+                            raise exceptions.ValidationError("生产订单数量不能大于需交货数.")
+                    elif pr_pty < vals['dnmng']:
+                        if 'source' in self._context.keys() and 'import' == self._context['source']:
+                            raise exceptions.ValidationError("The quantity of production orders should not be less than the required deliveries.")
+                        else:
+                            raise exceptions.ValidationError("生产订单数量不能小于需交货数.")
 
 
-        id = super(delivery_order_line, self).create(vals)
+            if 'admng' in vals.keys():
+                vals['admng'] = vals['admng'] + vals['dnmng']
+            if 'meins' not in  vals.keys():
+                self._cr.execute("select product_tmpl_id from  product_product where id=%(matnr)s ", {'matnr': vals['matnr']})
+                tmpl_id = self._cr.fetchone()
+                self._cr.execute("select uom_id from  product_template where id=%(tmpl_id)s ", {'tmpl_id': tmpl_id})
+                menin = self._cr.fetchone()
+                vals['meins'] = menin[0]
 
-        return id
+
+        return super(delivery_order_line, self).create(values)
+
 
     @api.onchange('matnr')
     def onchange_matnr(self):
@@ -967,7 +967,7 @@ class delivery_order_line(models.Model):
                             'old_menge':od['product_qty'] - pomenge,
                             'matnr': od['product_id'],
                             'werks': werks,
-                            'ddate': od['date_planned'],
+                            'ddate': od['date_planned'].strftime('%Y-%m-%d'),
                             'comco': comco,
                             'lifnr': lifnr,
                             'item':od['item']

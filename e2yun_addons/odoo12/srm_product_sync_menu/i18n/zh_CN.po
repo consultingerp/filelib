@@ -1,25 +1,95 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* srm_product_sync_menu
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-01-21 07:13+0000\n"
+"PO-Revision-Date: 2020-01-21 07:13+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
 #. module: srm_product_sync_menu
-#: model:ir.model.fields,field_description:srm_product_sync_menu.field_srm_product_sync_menu_start_date
+#: model:ir.model.fields,field_description:srm_product_sync_menu.field_srm_product_sync_menu__create_uid
+msgid "Created by"
+msgstr "创建人"
+
+#. module: srm_product_sync_menu
+#: model:ir.model.fields,field_description:srm_product_sync_menu.field_srm_product_sync_menu__create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: srm_product_sync_menu
+#: model:ir.model.fields,field_description:srm_product_sync_menu.field_srm_product_sync_menu__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: srm_product_sync_menu
+#: model:ir.model.fields,field_description:srm_product_sync_menu.field_srm_product_sync_menu__id
+msgid "ID"
+msgstr ""
+
+#. module: srm_product_sync_menu
+#: model:ir.model.fields,field_description:srm_product_sync_menu.field_srm_product_sync_menu____last_update
+msgid "Last Modified on"
+msgstr "最后修改日"
+
+#. module: srm_product_sync_menu
+#: model:ir.model.fields,field_description:srm_product_sync_menu.field_srm_product_sync_menu__write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: srm_product_sync_menu
+#: model:ir.model.fields,field_description:srm_product_sync_menu.field_srm_product_sync_menu__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: srm_product_sync_menu
+#: model:ir.model.fields,field_description:srm_product_sync_menu.field_srm_product_sync_menu__ending_date
+msgid "ending date"
+msgstr "结束日期"
+
+#. module: srm_product_sync_menu
+#: model:ir.model.fields,field_description:srm_product_sync_menu.field_srm_product_sync_menu__matnr
+msgid "matnr"
+msgstr "物料"
+
+#. module: srm_product_sync_menu
+#: model:ir.model,name:srm_product_sync_menu.model_srm_product_sync_menu
+msgid "srm.product.sync.menu"
+msgstr "SAP物料同步"
+
+#. module: srm_product_sync_menu
+#: model:ir.model.fields,field_description:srm_product_sync_menu.field_srm_product_sync_menu__start_date
 msgid "start date"
 msgstr "开始日期"
 
 #. module: srm_product_sync_menu
-#: model:ir.model.fields,field_description:srm_product_sync_menu.field_srm_product_sync_menu_ending_date
-msgid "ending date"
-msgstr "结束日期"
-
-
-#. module: srm_product_sync_menu
-#: model:ir.model.fields,field_description:srm_product_sync_menu.field_srm_product_sync_menu_matnr
-msgid "matnr"
-msgstr "物料号"
-
+#: model_terms:ir.ui.view,arch_db:srm_product_sync_menu.srm_product_sync_b1
+msgid "取消"
+msgstr ""
 
 #. module: srm_product_sync_menu
+#: model:ir.actions.act_window,name:srm_product_sync_menu.srm_product_sync_2
+#: model:ir.actions.act_window,name:srm_product_sync_menu.srm_product_sync_b
+msgid "同步"
+msgstr ""
+
+#. module: srm_product_sync_menu
+#: model:ir.actions.act_window,name:srm_product_sync_menu.srm_product_sync_window
 #: model:ir.ui.menu,name:srm_product_sync_menu.menu_srm_sap_product_sync
-#: model:ir.actions.act_window,name:srm_product_sync_menu.srm_product_sync_menu_window
-msgid "sap product sync"
-msgstr "SAP物料同步"
+#: model_terms:ir.ui.view,arch_db:srm_product_sync_menu.srm_product_sync_tree
+msgid "物料同步"
+msgstr ""
 
-
+#. module: srm_product_sync_menu
+#: model_terms:ir.ui.view,arch_db:srm_product_sync_menu.srm_product_sync_b1
+msgid "确定"
+msgstr ""
 

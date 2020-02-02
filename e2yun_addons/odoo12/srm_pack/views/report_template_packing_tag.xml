@@ -13,11 +13,11 @@
                         <table class="table table-bordered" style="height:300px;">
                             <t t-foreach="o.srm_pack_line" t-as="l">
                                 <tr>
-                                    <td width="100px" style="border: 1px solid black;">交货日期</td>
+                                    <td width="120px" style="border: 1px solid black;">交货日期</td>
                                     <td style="border: 1px solid black;"><span t-esc="o.get_printSendDate(data)"/></td>
                                 </tr>
                                 <tr>
-                                    <td width="100px" style="border: 1px solid black;">交货单号</td>
+                                    <td width="120px" style="border: 1px solid black;">交货单号</td>
                                     <td style="border: 1px solid black;">
                                         <span t-field="l.dnnum"/>
                                         <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', l.dnnum, 200, 30)" style="width:200px;height:30px;"/>
@@ -25,7 +25,7 @@
 
                                 </tr>
                                 <tr>
-                                    <td width="100px" style="border: 1px solid black;">生产订单</td>
+                                    <td width="120px" style="border: 1px solid black;">生产订单</td>
                                     <td style="border: 1px solid black;">
                                         <span t-field="l.prnum"/>
                                         <t t-if="l.prnum != False" >
@@ -34,22 +34,22 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td width="100px" style="border: 1px solid black;">物料号</td>
+                                    <td width="120px" style="border: 1px solid black;">物料号</td>
                                     <td style="border: 1px solid black;">
                                         <span t-field="l.matnr.default_code"/>
                                         <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', l.matnr.default_code, 200, 30)" style="width:200px;height:30px;"/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td width="100px" style="border: 1px solid black;">描述</td>
+                                    <td width="120px" style="border: 1px solid black;">描述</td>
                                     <td style="border: 1px solid black;word-break: break-all;"><span t-field="l.matnr.name"/></td>
                                 </tr>
                                 <tr>
-                                   <td width="100px" style="border: 1px solid black;">数量</td>
+                                   <td width="120px" style="border: 1px solid black;">数量</td>
                                     <td style="border: 1px solid black;"><span t-field="l.menge"/></td>
                                 </tr>
                                 <tr>
-                                   <td width="100px" style="border: 1px solid black;">供应商</td>
+                                   <td width="120px" style="border: 1px solid black;">供应商</td>
                                     <td style="border: 1px solid black;">
                                         <t t-if="o.lifnr.short_name == False">
                                             <span t-field="o.lifnr.name"/>

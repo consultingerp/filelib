@@ -1,29 +1,309 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* srm_scheduling
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-01-21 08:01+0000\n"
+"PO-Revision-Date: 2020-01-21 08:01+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
 #. module: srm_scheduling
-#: model:ir.ui.menu,name:srm_scheduling.menu_srm_scheduling
-msgid "Scheduling management"
-msgstr "排程管理"
-
-
-#. module: srm_scheduling
-#: model:ir.ui.menu,name:srm_scheduling.menu_srm_scheduling_supplier
-msgid "Scheduling management"
-msgstr "排程管理"
-
-
-
-
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__message_needaction
+msgid "Action Needed"
+msgstr "前置操作"
 
 #. module: srm_scheduling
-#: model:ir.actions.client,name:srm_scheduling.action_srm_scheduling
-#: model:ir.ui.menu,name:srm_scheduling.menu_srm_scheduling_view_supplier_confirm
-msgid "Supplier confirmation"
-msgstr "供应商确认"
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__activity_ids
+msgid "Activities"
+msgstr "活动"
 
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__activity_state
+msgid "Activity State"
+msgstr "活动状态"
 
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__message_attachment_count
+msgid "Attachment Count"
+msgstr "附件数量"
 
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__flag
+msgid "Business Flag"
+msgstr ""
 
 #. module: srm_scheduling
 #: model:ir.actions.client,name:srm_scheduling.action_srm_scheduling
 #: model:ir.ui.menu,name:srm_scheduling.menu_srm_scheduling_view_buyer_confirm
 msgid "Buyer confirmation"
 msgstr "采购员确认"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__comco
+msgid "Company"
+msgstr "公司"
+
+#. module: srm_scheduling
+#: selection:srm.scheduling,state:0
+msgid "Create"
+msgstr ""
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__create_uid
+msgid "Created by"
+msgstr "创建人"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: srm_scheduling
+#: selection:srm.scheduling,state:0
+msgid "Edit Publish"
+msgstr ""
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__werks
+msgid "Factory"
+msgstr "工厂"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__message_follower_ids
+msgid "Followers"
+msgstr "关注者"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "关注者(渠道)"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "关注者(业务伙伴)"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__history_data
+msgid "History"
+msgstr ""
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__id
+msgid "ID"
+msgstr ""
+
+#. module: srm_scheduling
+#: model:ir.model.fields,help:srm_scheduling.field_srm_scheduling__message_unread
+msgid "If checked new messages require your attention."
+msgstr "查看是否有需要留意的新消息。"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,help:srm_scheduling.field_srm_scheduling__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "确认后, 出现提示消息."
+
+#. module: srm_scheduling
+#: model:ir.model.fields,help:srm_scheduling.field_srm_scheduling__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "如果勾选此项， 某些消息将会产生传递错误。"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__message_is_follower
+msgid "Is Follower"
+msgstr "关注者"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling____last_update
+msgid "Last Modified on"
+msgstr "最后修改日"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__mail_type
+msgid "Mail Type"
+msgstr ""
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "附件"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__mat_demand_line
+msgid "Mat Demand Line"
+msgstr ""
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__mat_demand_line_details
+msgid "Mat Demand Line Details"
+msgstr ""
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__message_has_error
+msgid "Message Delivery error"
+msgstr "消息递送错误"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__message_ids
+msgid "Messages"
+msgstr "消息"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__name
+msgid "Name"
+msgstr "名称"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "下一活动截止日期"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__activity_summary
+msgid "Next Activity Summary"
+msgstr "下一个活动摘要"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__activity_type_id
+msgid "Next Activity Type"
+msgstr "下一活动类型"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__message_needaction_counter
+msgid "Number of Actions"
+msgstr "操作次数"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__message_has_error_counter
+msgid "Number of error"
+msgstr "错误个数"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,help:srm_scheduling.field_srm_scheduling__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "需要操作消息数量"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,help:srm_scheduling.field_srm_scheduling__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "递送错误消息数量"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,help:srm_scheduling.field_srm_scheduling__message_unread_counter
+msgid "Number of unread messages"
+msgstr "未读消息数量"
+
+#. module: srm_scheduling
+#: selection:srm.scheduling,activity_state:0
+msgid "Overdue"
+msgstr ""
+
+#. module: srm_scheduling
+#: selection:srm.scheduling,activity_state:0
+msgid "Planned"
+msgstr ""
+
+#. module: srm_scheduling
+#: selection:srm.scheduling,state:0
+msgid "Publish"
+msgstr ""
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__activity_user_id
+msgid "Responsible User"
+msgstr "责任用户"
+
+#. module: srm_scheduling
+#: model:ir.ui.menu,name:srm_scheduling.menu_srm_scheduling
+msgid "Scheduling management"
+msgstr "排程管理"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__send_lifnr
+msgid "Send Mail Supplier"
+msgstr ""
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__state
+msgid "Status"
+msgstr "状态"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,help:srm_scheduling.field_srm_scheduling__activity_state
+msgid "Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr "基于活动的状态 \n"
+" 逾期：已经超过截止日期 \n"
+" 现今：活动日期是当天 \n"
+" 计划：未来的活动。"
+
+#. module: srm_scheduling
+#: selection:srm.scheduling,activity_state:0
+msgid "Today"
+msgstr ""
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__message_unread
+msgid "Unread Messages"
+msgstr "未读消息"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "未读消息计数器"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__validator
+msgid "Validated by"
+msgstr ""
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__versi
+msgid "Version"
+msgstr "版本"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,field_description:srm_scheduling.field_srm_scheduling__website_message_ids
+msgid "Website Messages"
+msgstr "网站消息"
+
+#. module: srm_scheduling
+#: model:ir.model.fields,help:srm_scheduling.field_srm_scheduling__website_message_ids
+msgid "Website communication history"
+msgstr "网站沟通记录"
+
+#. module: srm_scheduling
+#: model:ir.model,name:srm_scheduling.model_srm_scheduling
+msgid "srm.scheduling"
+msgstr ""
+
+#. module: srm_scheduling
+#: model:ir.actions.client,name:srm_scheduling.action_srm_scheduling_supplier
+msgid "供应商确认"
+msgstr ""
+

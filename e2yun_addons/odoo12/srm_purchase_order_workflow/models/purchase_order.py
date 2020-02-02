@@ -94,16 +94,29 @@ class PurchaseOrder(models.Model):
         except ValueError:
             compose_form_id = False
         ctx = dict(self.env.context or {})
+
+        ctx = dict(self.env.context or {})
         ctx.update({
             'default_model': 'purchase.order',
             'default_res_id': self.ids[0],
             'default_use_template': bool(template_id),
             'default_template_id': template_id,
             'default_composition_mode': 'comment',
-            'custom_layout': "purchase.mail_template_data_notification_email_purchase_order",
-            'purchase_mark_rfq_sent': True,
-            'force_email': True
+            'custom_layout': "mail.mail_notification_paynow",
+            'force_email': True,
+            'mark_rfq_as_sent': True,
         })
+
+        lang = self.env.context.get('lang')
+        if {'default_template_id', 'default_model', 'default_res_id'} <= ctx.keys():
+            template = self.env['mail.template'].browse(ctx['default_template_id'])
+            if template and template.lang:
+                lang = template._render_template(template.lang, ctx['default_model'], ctx['default_res_id'])
+        self = self.with_context(lang=lang)
+        if self.state in ['draft', 'sent']:
+            ctx['model_description'] = _('Request for Quotation')
+        else:
+            ctx['model_description'] = _('Purchase Order')
         return {
             'name': _('Compose Email'),
             'type': 'ir.actions.act_window',

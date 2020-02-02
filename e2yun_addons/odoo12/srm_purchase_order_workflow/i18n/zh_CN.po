@@ -1,48 +1,231 @@
-#. module: srm_purchase_order_workflow
-#: model:ir.ui.view,arch_db:srm_purchase_order_workflow.srm_purchase_order_workflow_form1
-#: selection:purchase.order,state:0 selection:purchase.report,state:0
-msgid "Supplier Confirmed"
-msgstr "供应商确认"
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* srm_purchase_order_workflow
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-01-21 07:23+0000\n"
+"PO-Revision-Date: 2020-01-21 07:23+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
 #. module: srm_purchase_order_workflow
-#: selection:purchase.order,state:6
-msgid "Supplier Refuse"
-msgstr "供应商拒绝"
+#: model:mail.template,body_html:srm_purchase_order_workflow.email_template_confim_purchase
+msgid "\n"
+"\n"
+"<div style=\"padding:0px;margin:0px;font-size:13px;font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"\n"
+"\n"
+"    <p style=\"padding:0px;margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">\n"
+"        您可以在线确认订单:\n"
+"    </p>\n"
+"    <a style=\"text-decoration:none;background-color:transparent;color:rgb(0, 135, 132);display:block; width: 150px; height:20px; margin-left: 120px; color: #DDD; font-family: 'Lucida Grande', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: bold; text-align: center; text-decoration: none !important; line-height: 1; padding: 5px 0px 0px 0px; background-color: #8E0000; border-radius: 5px 5px; background-repeat: repeat no-repeat;\" href=\"/web?db=srm#action=srm_purchase_supplier_inquiry.action_p_inquiry_redirect&amp;order_id=${object.id}\"> 查看订单 </a>\n"
+"\n"
+"    </div>\n"
+"\n"
+"            "
+msgstr ""
 
 #. module: srm_purchase_order_workflow
-#: selection:purchase.order,state:6
-msgid "Supplier Overdue"
-msgstr "供应商逾期未确认"
+#: model:mail.template,body_html:srm_purchase_order_workflow.email_template_cancel_purchase
+msgid "\n"
+"                <div style=\"padding:0px;margin:0px;font-size:13px;font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"\n"
+"                    <p style=\"padding:0px;margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">您好 ${object.partner_id.name},</p>\n"
+"\n"
+"                    <p style=\"padding:0px;margin:0px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;font-weight:bold;font-size: 13px;color:red;\">采购订单已取消: </p>\n"
+"\n"
+"                    <p style=\"padding:0px;margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;border-left: 1px solid #8e0000; margin-left: 30px;\">\n"
+"                       &nbsp;&nbsp;<strong style=\"font-style:normal;font-weight:bolder;\">摘要</strong><br>\n"
+"                       &nbsp;&nbsp;订单编号：<strong style=\"font-style:normal;font-weight:bolder;\">${object.name}</strong><br>\n"
+"                       &nbsp;&nbsp;订单总额：<strong style=\"font-style:normal;font-weight:bolder;\">${object.amount_total} ${object.pricelist_id.currency_id.name}</strong><br>\n"
+"                       &nbsp;&nbsp;订单日期：${object.date_order}<br>\n"
+"                       % if object.origin:\n"
+"                       &nbsp;&nbsp;订单参考：${object.origin}<br>\n"
+"                       % endif\n"
+"                       % if object.partner_ref:\n"
+"                       &nbsp;&nbsp;您的参考：${object.partner_ref}<br>\n"
+"                       % endif\n"
+"                       % if object.validator:\n"
+"                       &nbsp;&nbsp;您的联系人：<a href=\"mailto:${object.validator.email or ''}?subject=Order%20${object.name}\" style=\"text-decoration:none;background-color:transparent;color:rgb(0, 135, 132);\">${object.validator.name}</a>\n"
+"                       % endif\n"
+"                    </p>\n"
+"\n"
+"                    <br>\n"
+"                    <p style=\"padding:0px;margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">如果您有任何问题，敬请联系我们。</p>\n"
+"                    <p style=\"padding:0px;margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">谢谢！</p>\n"
+"                    <br>\n"
+"                    <br>\n"
+"                    <div style=\"padding:0px;margin:0px;font-size:13px;font-family:微软雅黑;\">\n"
+"                        Thanks &amp; Best regards <br>\n"
+"                        ${object.create_uid.name} <br>\n"
+"                        ${object.create_uid.function} <br><br>\n"
+"                            <hr align=\"left\" style=\"padding:0px;margin:0px;border-top-color:rgba(0, 0, 0, 0.1);border-top-style:solid;border-top-width:1px;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;overflow-y:visible;overflow-x:visible;height:0px;box-sizing:content-box;border-top:1px solid #555555;width:430px;\"><br>\n"
+"                        <span style=\"font-weight:bold;font-size: 13px;\">中山市悦辰电子实业有限公司</span><br>\n"
+"                        Zhong&nbsp;Shan&nbsp;City Richsound Electronic Industrial Ltd<br>\n"
+"                        Tel:${object.create_uid.phone}/Fax:${object.create_uid.fax}<br>\n"
+"                        Mob:${object.create_uid.mobile}<br>\n"
+"                        E-mail:${object.create_uid.email}<br>\n"
+"                        <span style=\"font-size:13px;\">RSR淘宝旗舰店：</span> <a href=\"http://rsrdq.tmall.com\" style=\"text-decoration:none;background-color:transparent;color:rgb(0, 135, 132);\">http://rsrdq.tmall.com</a><br>\n"
+"                        广东省中山市港口镇沙港东路群乐工业区<br>\n"
+"                        <img src=\"/srm_po_sync_task/static/img/emailpic.png\" style=\"border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;vertical-align:middle;\">\n"
+"                    </div>\n"
+"                    <div style=\"padding:0px;margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;width: 375px; margin: 0px; padding: 0px; background-color: #8E0000; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px; background-repeat: repeat no-repeat;\">\n"
+"                        <h3 style=\"padding:0px;font-size:100%;color:rgb(33, 37, 41);line-height:1.2;font-weight:normal;font-family:inherit;margin: 0px; padding: 2px 14px; font-size: 12px; color: #DDD;\">\n"
+"                            <strong style=\"font-style:normal;font-weight:bolder;text-transform:uppercase;\">${object.company_id.name}</strong></h3>\n"
+"                    </div>\n"
+"                    <div style=\"padding:0px;margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;width: 347px; margin: 0px; padding: 5px 14px; line-height: 16px; background-color: #F2F2F2;\">\n"
+"                        <span style=\"color: #222; margin-bottom: 5px; display: block; \">\n"
+"                        % if object.company_id.street:\n"
+"                            ${object.company_id.street}<br>\n"
+"                        % endif\n"
+"                        % if object.company_id.street2:\n"
+"                            ${object.company_id.street2}<br>\n"
+"                        % endif\n"
+"                        % if object.company_id.city or object.company_id.zip:\n"
+"                            ${object.company_id.zip} ${object.company_id.city}<br>\n"
+"                        % endif\n"
+"                        % if object.company_id.country_id:\n"
+"                            ${object.company_id.state_id and ('%s, ' % object.company_id.state_id.name) or ''} ${object.company_id.country_id.name or ''}<br>\n"
+"                        % endif\n"
+"                        </span>\n"
+"                        % if object.company_id.phone:\n"
+"                            <div style=\"padding:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; \">\n"
+"                                电话号码：&nbsp; ${object.company_id.phone}\n"
+"                            </div>\n"
+"                        % endif\n"
+"                        % if object.company_id.website:\n"
+"                            <div style=\"padding:0px;margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">\n"
+"                                网址 :&nbsp;<a href=\"${object.company_id.website}\" style=\"text-decoration:none;background-color:transparent;color:rgb(0, 135, 132);\">${object.company_id.website}</a>\n"
+"                            </div>\n"
+"                        %endif\n"
+"                        <p style=\"padding:0px;margin:0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\"></p>\n"
+"                    </div>\n"
+"                </div>\n"
+"\n"
+"            "
+msgstr ""
 
 #. module: srm_purchase_order_workflow
-#: selection:purchase.order,state:6
-msgid "Have received the goods"
-msgstr "已收货"
+#: model:mail.template,subject:srm_purchase_order_workflow.email_template_cancel_purchase
+#: model:mail.template,subject:srm_purchase_order_workflow.email_template_confim_purchase
+msgid "${object.company_id.name|safe} Order (Ref ${object.name or 'n/a' })"
+msgstr ""
 
 #. module: srm_purchase_order_workflow
-#: selection:purchase.order,state:6
-msgid "Purchase Confirmed"
-msgstr "待供应商确认"
+#: selection:purchase.order,state:0
+msgid "Bid Received"
+msgstr ""
 
 #. module: srm_purchase_order_workflow
-#: model:ir.model.fields,field_description:srm_purchase_order_workflow.field_purchase_order_email_supplier
+#: model_terms:ir.ui.view,arch_db:srm_purchase_order_workflow.purchase_order_workflow_form1
+msgid "Cancel"
+msgstr "取消"
+
+#. module: srm_purchase_order_workflow
+#: selection:purchase.order,state:0
+msgid "Cancelled"
+msgstr "已取消"
+
+#. module: srm_purchase_order_workflow
+#: code:addons/srm_purchase_order_workflow/models/purchase_order.py:121
+#, python-format
+msgid "Compose Email"
+msgstr ""
+
+#. module: srm_purchase_order_workflow
+#: model_terms:ir.ui.view,arch_db:srm_purchase_order_workflow.purchase_order_form_srm_extend
+msgid "Invoices and Incoming Shipments"
+msgstr "开票及入向送货"
+
+#. module: srm_purchase_order_workflow
+#: selection:purchase.order,state:0
+msgid "Locked"
+msgstr "已锁定"
+
+#. module: srm_purchase_order_workflow
+#: model_terms:ir.ui.view,arch_db:srm_purchase_order_workflow.purchase_order_form_srm_extend
+msgid "Notes"
+msgstr "备注"
+
+#. module: srm_purchase_order_workflow
+#: code:addons/srm_purchase_order_workflow/models/purchase_order.py:119
+#: model:ir.model,name:srm_purchase_order_workflow.model_purchase_order
+#: selection:purchase.order,state:0
+#, python-format
+msgid "Purchase Order"
+msgstr "采购订单"
+
+#. module: srm_purchase_order_workflow
+#: model_terms:ir.ui.view,arch_db:srm_purchase_order_workflow.purchase_order_form_srm_extend
+msgid "Purchase Order Line"
+msgstr "采购订单行"
+
+#. module: srm_purchase_order_workflow
+#: model_terms:ir.ui.view,arch_db:srm_purchase_order_workflow.purchase_order_form_srm_extend
+msgid "Purchase Order Lines"
+msgstr "采购订单明细"
+
+#. module: srm_purchase_order_workflow
+#: selection:purchase.order,state:0
+msgid "RFQ"
+msgstr "询价单"
+
+#. module: srm_purchase_order_workflow
+#: selection:purchase.order,state:0
+msgid "RFQ Sent"
+msgstr "发送询价单"
+
+#. module: srm_purchase_order_workflow
+#: model:mail.template,report_name:srm_purchase_order_workflow.email_template_cancel_purchase
+#: model:mail.template,report_name:srm_purchase_order_workflow.email_template_confim_purchase
+msgid "RFQ_${(object.name or '').replace('/','_')}"
+msgstr ""
+
+#. module: srm_purchase_order_workflow
+#: model_terms:ir.ui.view,arch_db:srm_purchase_order_workflow.purchase_order_workflow_form1
+msgid "Receive Products"
+msgstr "接收产品"
+
+#. module: srm_purchase_order_workflow
+#: code:addons/srm_purchase_order_workflow/models/purchase_order.py:117
+#, python-format
+msgid "Request for Quotation"
+msgstr ""
+
+#. module: srm_purchase_order_workflow
+#: model:ir.model.fields,field_description:srm_purchase_order_workflow.field_purchase_order__email_supplier
 msgid "Send Mail Supplier"
 msgstr "已发送邮件给供应商"
 
 #. module: srm_purchase_order_workflow
-#: model:ir.ui.view,arch_db:srm_purchase_order_workflow.purchase_order_workflow_form1
-msgid "Receive Products"
-msgstr "接收产品"
-
-
-#. module: srm_purchase_order_workflow
-#: model:ir.ui.view,arch_db:srm_purchase_order_workflow.purchase_order_workflow_form1
-msgid "Cancel"
-msgstr "取消"
-
-
+#: model:ir.model.fields,field_description:srm_purchase_order_workflow.field_purchase_order__state
+msgid "Status"
+msgstr "状态"
 
 #. module: srm_purchase_order_workflow
-#: model:ir.ui.view,arch_db:srm_purchase_order_workflow.purchase_order_workflow_form1
-msgid "Cancel"
-msgstr "取消"
+#: selection:purchase.order,state:0
+msgid "Supplier Confirmed"
+msgstr "供应商确认"
+
+#. module: srm_purchase_order_workflow
+#: selection:purchase.order,state:0
+msgid "Supplier Overdue"
+msgstr "供应商逾期未确认"
+
+#. module: srm_purchase_order_workflow
+#: selection:purchase.order,state:0
+msgid "Supplier Refuse"
+msgstr "供应商拒绝"
+
+#. module: srm_purchase_order_workflow
+#: selection:purchase.order,state:0
+msgid "To Approve"
+msgstr "待批准"
+

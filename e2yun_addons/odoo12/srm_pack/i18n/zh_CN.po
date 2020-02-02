@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0\n"
+"Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-09 09:39+0000\n"
-"PO-Revision-Date: 2019-05-09 09:39+0000\n"
+"POT-Creation-Date: 2020-01-21 07:01+0000\n"
+"PO-Revision-Date: 2020-01-21 07:01+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,186 +16,115 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: srm_pack
-#: model:ir.ui.view,arch_db:srm_pack.report_packing_tag
+#: model_terms:ir.ui.view,arch_db:srm_pack.report_packing
 msgid "<span style=\"font-weight:bold;font-style:italic;font-size: 18px;\">RoHS/REACH</span>"
-msgstr "<span style=\"font-weight:bold;font-style:italic;font-size: 18px;\">RoHS/REACH</span>"
+msgstr ""
 
 #. module: srm_pack
-#: model:ir.ui.view,arch_db:srm_pack.report_packing_tag
+#: model_terms:ir.ui.view,arch_db:srm_pack.report_packing
 msgid "<span>悦辰物料标签</span>"
-msgstr "<span>悦辰物料标签</span>"
+msgstr ""
 
 #. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line_batch_line_id
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line__batch_line_id
 msgid "Batch Line ID"
-msgstr "Batch Line ID"
+msgstr ""
 
 #. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_comco
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack__comco
 msgid "Company"
 msgstr "公司"
 
 #. module: srm_pack
-#: model:ir.ui.view,arch_db:srm_pack.srm_pack_filter
+#: model_terms:ir.ui.view,arch_db:srm_pack.srm_pack_filter
 #: selection:srm.pack,state:0
 msgid "Create"
 msgstr "创建"
 
 #. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_create_uid
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line_create_uid
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack__create_uid
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line__create_uid
 msgid "Created by"
 msgstr "创建人"
 
 #. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_create_date
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line_create_date
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack__create_date
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line__create_date
 msgid "Created on"
 msgstr "创建时间"
 
 #. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line_datec
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line__datec
 msgid "Date Code"
 msgstr "日期代码"
 
 #. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_dnnum
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line_dnnum
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack__dnnum
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line__dnnum
 msgid "Delivery Order"
-msgstr "交货订单"
+msgstr "交货单"
 
 #. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line_dnnum_line_id
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line__dnnum_line_id
 msgid "Delivery Order Line"
-msgstr "交货单行"
+msgstr "交货订单行"
 
 #. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_display_name
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line_display_name
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack__display_name
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line__display_name
 msgid "Display Name"
 msgstr "显示名称"
 
 #. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_werks
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack__werks
 msgid "Factory"
 msgstr "工厂"
 
 #. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_id
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line_id
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack__id
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack___last_update
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line___last_update
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack____last_update
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line____last_update
 msgid "Last Modified on"
 msgstr "最后修改日"
 
 #. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line_write_uid
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_write_uid
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack__write_uid
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line__write_uid
 msgid "Last Updated by"
-msgstr "最后更新人"
+msgstr "最后更新者"
 
 #. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line_write_date
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_write_date
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack__write_date
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line__write_date
 msgid "Last Updated on"
 msgstr "最后更新时间"
 
 #. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line_matnr
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_matnr
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack__matnr
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line__matnr
 msgid "Material"
 msgstr "物料"
 
 #. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line_monum
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_monum
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack__monum
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line__monum
 msgid "Model"
 msgstr "模型"
 
 #. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line_order_line_id
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line__order_line_id
 msgid "Order Line ID"
-msgstr "Order Line ID"
+msgstr ""
 
 #. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line_packnum
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line__packnum
 msgid "Package Num"
 msgstr "包数"
-
-#. module: srm_pack
-#: model:ir.actions.act_window,name:srm_pack.srm_packing_form_action
-#: model:ir.ui.menu,name:srm_pack.menu_srm_packing_form
-#: model:ir.ui.view,arch_db:srm_pack.srm_pack_form
-msgid "Packing"
-msgstr "包裹"
-
-#. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_srm_pack_line
-msgid "Packing Line"
-msgstr "包裹行"
-
-#. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line_srm_pack_id
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_name
-msgid "Packing Num"
-msgstr "包裹号"
-
-#. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line_menge
-msgid "Packing Qty"
-msgstr "包装数量"
-
-#. module: srm_pack
-#: model:ir.ui.view,arch_db:srm_pack.srm_packing_tree
-msgid "Packing Tree"
-msgstr "Packing Tree"
-
-#. module: srm_pack
-#: model:ir.ui.view,arch_db:srm_pack.srm_pack_filter
-#: model:ir.ui.view,arch_db:srm_pack.srm_pack_form
-#: selection:srm.pack,state:0
-msgid "Print"
-msgstr "打印"
-
-#. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_prinu
-msgid "Print Count"
-msgstr "打印次数"
-
-#. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_printSendDate
-msgid "Print Send Date"
-msgstr "Print Send Date"
-
-#. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line_prnum
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_prnum
-msgid "Produce Order"
-msgstr "生产订单"
-
-#. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line_pdate
-msgid "Product Date"
-msgstr "生产日期"
-
-#. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line_ponum
-msgid "Purchase Order"
-msgstr "采购订单"
-
-#. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line_pline
-msgid "Purchase Order Line"
-msgstr "采购订单行"
-
-#. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_memo
-msgid "Remark"
-msgstr "备注"
 
 #. module: srm_pack
 #: model:ir.actions.report,name:srm_pack.report_packing_tag_quotation
@@ -203,42 +132,113 @@ msgid "Package Tag"
 msgstr "包裹标签"
 
 #. module: srm_pack
-#: model:ir.ui.view,arch_db:srm_pack.srm_pack_filter
-msgid "Search SRM Packing"
-msgstr "Search SRM Packing"
+#: model:ir.actions.act_window,name:srm_pack.srm_packing_form_action
+#: model:ir.ui.menu,name:srm_pack.menu_srm_packing_form
+#: model_terms:ir.ui.view,arch_db:srm_pack.srm_pack_form
+msgid "Packing"
+msgstr "包裹"
 
 #. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_serial_num
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack__srm_pack_line
+msgid "Packing Line"
+msgstr "包裹行"
+
+#. module: srm_pack
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack__name
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line__srm_pack_id
+msgid "Packing Num"
+msgstr "包裹号"
+
+#. module: srm_pack
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line__menge
+msgid "Packing Qty"
+msgstr "包装数量"
+
+#. module: srm_pack
+#: model_terms:ir.ui.view,arch_db:srm_pack.srm_packing_tree
+msgid "Packing Tree"
+msgstr ""
+
+#. module: srm_pack
+#: model_terms:ir.ui.view,arch_db:srm_pack.srm_pack_filter
+#: model_terms:ir.ui.view,arch_db:srm_pack.srm_pack_form
+#: selection:srm.pack,state:0
+msgid "Print"
+msgstr "打印"
+
+#. module: srm_pack
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack__prinu
+msgid "Print Count"
+msgstr "打印次数"
+
+#. module: srm_pack
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack__printSendDate
+msgid "Print Send Date"
+msgstr ""
+
+#. module: srm_pack
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack__prnum
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line__prnum
+msgid "Produce Order"
+msgstr "生产订单"
+
+#. module: srm_pack
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line__pdate
+msgid "Product Date"
+msgstr "生产日期"
+
+#. module: srm_pack
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line__ponum
+msgid "Purchase Order"
+msgstr "采购订单"
+
+#. module: srm_pack
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line__pline
+msgid "Purchase Order Line"
+msgstr "采购订单行"
+
+#. module: srm_pack
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack__memo
+msgid "Remark"
+msgstr "备注"
+
+#. module: srm_pack
+#: model_terms:ir.ui.view,arch_db:srm_pack.srm_pack_filter
+msgid "Search SRM Packing"
+msgstr ""
+
+#. module: srm_pack
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack__serial_num
 msgid "Serial Num"
 msgstr "排序号"
 
 #. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_state
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack__state
 msgid "Status"
 msgstr "状态"
 
 #. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_lifnr
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack__lifnr
 msgid "Supplier"
 msgstr "供应商"
 
 #. module: srm_pack
-#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line_usmeg
+#: model:ir.model.fields,field_description:srm_pack.field_srm_pack_line__usmeg
 msgid "Used Qty"
 msgstr "数量"
 
 #. module: srm_pack
-#: model:ir.ui.view,arch_db:srm_pack.report_packing_tag
+#: model_terms:ir.ui.view,arch_db:srm_pack.report_packing
 msgid "交货单号"
 msgstr "交货单号"
 
 #. module: srm_pack
-#: model:ir.ui.view,arch_db:srm_pack.report_packing_tag
+#: model_terms:ir.ui.view,arch_db:srm_pack.report_packing
 msgid "交货日期"
 msgstr "交货日期"
 
 #. module: srm_pack
-#: model:ir.ui.view,arch_db:srm_pack.report_packing_tag
+#: model_terms:ir.ui.view,arch_db:srm_pack.report_packing
 msgid "供应商"
 msgstr "供应商"
 
@@ -253,22 +253,22 @@ msgid "包裹行"
 msgstr "包裹行"
 
 #. module: srm_pack
-#: model:ir.ui.view,arch_db:srm_pack.report_packing_tag
+#: model_terms:ir.ui.view,arch_db:srm_pack.report_packing
 msgid "描述"
 msgstr "描述"
 
 #. module: srm_pack
-#: model:ir.ui.view,arch_db:srm_pack.report_packing_tag
+#: model_terms:ir.ui.view,arch_db:srm_pack.report_packing
 msgid "数量"
 msgstr "数量"
 
 #. module: srm_pack
-#: model:ir.ui.view,arch_db:srm_pack.report_packing_tag
+#: model_terms:ir.ui.view,arch_db:srm_pack.report_packing
 msgid "物料号"
 msgstr "物料号"
 
 #. module: srm_pack
-#: model:ir.ui.view,arch_db:srm_pack.report_packing_tag
+#: model_terms:ir.ui.view,arch_db:srm_pack.report_packing
 msgid "生产订单"
 msgstr "生产订单"
 

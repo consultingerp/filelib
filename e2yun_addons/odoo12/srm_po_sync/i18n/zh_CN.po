@@ -1,25 +1,99 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* srm_po_sync
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-01-21 07:10+0000\n"
+"PO-Revision-Date: 2020-01-21 07:10+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
 #. module: srm_po_sync
-#: field:srm.po.sync,start_date:0
+#: model:ir.model.fields,field_description:srm_po_sync.field_srm_po_sync__create_uid
+msgid "Created by"
+msgstr "创建人"
+
+#. module: srm_po_sync
+#: model:ir.model.fields,field_description:srm_po_sync.field_srm_po_sync__create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: srm_po_sync
+#: model:ir.model.fields,field_description:srm_po_sync.field_srm_po_sync__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: srm_po_sync
+#: model:ir.model.fields,field_description:srm_po_sync.field_srm_po_sync__id
+msgid "ID"
+msgstr ""
+
+#. module: srm_po_sync
+#: model:ir.model.fields,field_description:srm_po_sync.field_srm_po_sync____last_update
+msgid "Last Modified on"
+msgstr "最后修改日"
+
+#. module: srm_po_sync
+#: model:ir.model.fields,field_description:srm_po_sync.field_srm_po_sync__write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: srm_po_sync
+#: model:ir.model.fields,field_description:srm_po_sync.field_srm_po_sync__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: srm_po_sync
+#: model:ir.model.fields,field_description:srm_po_sync.field_srm_po_sync__ebeln
+msgid "ebeln"
+msgstr "PO号"
+
+#. module: srm_po_sync
+#: model:ir.model.fields,field_description:srm_po_sync.field_srm_po_sync__ending_date
+msgid "ending date"
+msgstr "结束日期"
+
+#. module: srm_po_sync
+#: model_terms:ir.ui.view,arch_db:srm_po_sync.srm_po_sync_tree
+msgid "sap po sync"
+msgstr "SAP采购订单同步"
+
+#. module: srm_po_sync
+#: model:ir.actions.act_window,name:srm_po_sync.srm_po_sync_window
+#: model:ir.ui.menu,name:srm_po_sync.menu_srm_sap_po_sync
+msgid "sap po sync menu"
+msgstr "SAP采购订单同步"
+
+#. module: srm_po_sync
+#: model:ir.model,name:srm_po_sync.model_srm_po_sync
+msgid "srm.po.sync"
+msgstr ""
+
+#. module: srm_po_sync
+#: model:ir.model.fields,field_description:srm_po_sync.field_srm_po_sync__start_date
 msgid "start date"
 msgstr "开始日期"
 
 #. module: srm_po_sync
-#: field:srm.po.sync,ending_date:0
-msgid "ending date"
-msgstr "结束日期"
-
-
-#. module: srm_po_sync
-#: field:srm.po.sync,ebeln:0
-msgid "ebeln"
-msgstr "PO号"
-
+#: model_terms:ir.ui.view,arch_db:srm_po_sync.srm_po_sync_b1
+msgid "取消"
+msgstr ""
 
 #. module: srm_po_sync
-#: model:ir.ui.menu,name:srm_po_sync.menu_srm_sap_po_sync
-#: model:ir.actions.act_window,name:srm_po_sync.srm_po_sync_window
-msgid "sap po sync menu"
-msgstr "SAP采购订单同步"
+#: model:ir.actions.act_window,name:srm_po_sync.srm_po_sync_b
+#: model:ir.actions.act_window,name:srm_po_sync.srm_po_sync_b2
+msgid "同步"
+msgstr ""
 
-
+#. module: srm_po_sync
+#: model_terms:ir.ui.view,arch_db:srm_po_sync.srm_po_sync_b1
+msgid "确定"
+msgstr ""
 

@@ -93,6 +93,9 @@ class res_partner(models.Model):
                or 'street' in vals.keys() \
                or 'city' in vals.keys() \
                or 'state_id' in vals.keys() \
+               or 'sap_bu_sort1' in vals.keys() \
+               or 'sap_bu_sort2' in vals.keys() \
+               or 'sap_remark' in vals.keys() \
                or 'mobile' in vals.keys():
             I_INPUT = {}
             I_INPUT['ZTYPE'] = '1'  # 事务类型  0 创建 1修改
@@ -101,14 +104,31 @@ class res_partner(models.Model):
             I_INPUT['KUNNR'] =self.sap_kunnr
             if 'name' in vals.keys() and vals['name']:
                 I_INPUT['NAME_ORG1'] = vals['name']
-            if self.sap_ktokd:
+            else:
+                I_INPUT['NAME_ORG1'] = self.name
+
+            if 'sap_ktokd' in vals.keys() and vals['sap_ktokd']:
+                I_INPUT['KTOKD'] = vals['sap_ktokd']
+            else:
                 I_INPUT['KTOKD'] = self.sap_ktokd
-            if self.sap_remark:
+
+            if 'sap_remark' in vals.keys() and vals['sap_remark']:
+                I_INPUT['REMARK'] = vals['sap_remark']
+            else:
                 I_INPUT['REMARK'] = self.sap_remark
-            if self.sap_bu_sort1:
+
+            if 'sap_bu_sort1' in vals.keys() and vals['sap_bu_sort1']:
+                I_INPUT['BU_SORT1'] = vals['sap_bu_sort1']
+            else:
                 I_INPUT['BU_SORT1'] = self.sap_bu_sort1
-            if self.sap_bu_sort2:
+
+
+            if 'sap_bu_sort2' in vals.keys() and vals['sap_bu_sort2']:
+                I_INPUT['BU_SORT2'] = vals['sap_bu_sort2']
+            else:
                 I_INPUT['BU_SORT2'] = self.sap_bu_sort2
+
+
             I_INPUT['LANGU'] = 'zh'  # 默认
             I_INPUT['COUNTRY'] = 'CN'  # 默认
 
