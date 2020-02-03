@@ -1,23 +1,23 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-report_work_rw_user,user report work,kindee_data_sync_info.model_ck_hours_worker,base.group_user,1,1,1,1
-report_work_icmo_user,user production,kindee_data_sync_info.model_ck_icmo_sync,base.group_user,1,1,1,1
-report_work_opra_user,user opra,kindee_data_sync_info.model_ck_icno_opra,base.group_user,1,1,1,1
-report_work_routing_user,user routing,kindee_data_sync_info.model_ck_routing_sync,base.group_user,1,1,1,1
-report_work_price_user,user price,kindee_data_sync_info.model_ck_price,base.group_user,1,1,1,1
-report_work_rw_line_user,report work line user,kindee_data_sync_info.model_ck_hours_worker_line,base.group_user,1,1,1,1
-report_work_weixin_user,weixin user,kindee_data_sync_info.model_ck_user_weixin,base.group_user,1,1,1,1
-report_work_price_ext_user,user price ext,kindee_data_sync_info.model_ck_price_ext,base.group_user,1,1,1,1
-report_shift_user,user shift,kindee_data_sync_info.model_ck_shift,base.group_user,1,1,1,1
-report_machine_user,user machine,kindee_data_sync_info.model_ck_machine,base.group_user,1,1,1,1
-report_passrate_user,user passrate,kindee_data_sync_info.model_ck_pass_rate,base.group_user,1,1,1,1
-report_attrition_user,user attrition,kindee_data_sync_info.model_ck_attrition_rate,base.group_user,1,1,1,1
-report_scrap_reason_line_user,user scrap reason line,kindee_data_sync_info.model_ck_route_scrap_reasons_line,base.group_user,1,1,1,1
-report_scrap_reason_user,user scrap reason,kindee_data_sync_info.model_ck_route_scrap_reasons,base.group_user,1,1,1,1
+access_report_work_rw_user,user_report_work,model_ck_hours_worker,base.group_user,1,1,1,1
+access_report_work_icmo_user,user_production,model_ck_icmo_sync,base.group_user,1,1,1,1
+access_report_work_opra_user,user_opra,model_ck_icno_opra,base.group_user,1,1,1,1
+access_report_work_routing_user,user_routing,model_ck_routing_sync,base.group_user,1,1,1,1
+access_report_work_price_user,user_price,model_ck_price,base.group_user,1,1,1,1
+access_report_work_rw_line_user,report_wor_line_user,model_ck_hours_worker_line,base.group_user,1,1,1,1
+access_report_work_weixin_user,weixin_user,model_ck_user_weixin,base.group_user,1,1,1,1
+access_report_work_price_ext_user,user_price_ext,model_ck_price_ext,base.group_user,1,1,1,1
+access_report_shift_user,user_shift,model_ck_shift,base.group_user,1,1,1,1
+access_report_machine_user,user_machine,model_ck_machine,base.group_user,1,1,1,1
+access_report_passrate_user,user_passrate,model_ck_pass_rate,base.group_user,1,1,1,1
+access_report_attrition_user,user_attrition,model_ck_attrition_rate,base.group_user,1,1,1,1
+access_report_scrap_reason_line_user,user_scrap_reason_line,model_ck_route_scrap_reasons_line,base.group_user,1,1,1,1
+access_report_scrap_reason_user,user_scrap_reason,model_ck_route_scrap_reasons,base.group_user,1,1,1,1
 ,,,,,,,
-report_scrap_reason_line_user,user scrap reason line,kindee_data_sync_info.model_ck_route_scrap_reasons_line,base.group_user,1,1,1,1
+access_report_scrap_reason_line_user,user_scrap_reason_line,model_ck_route_scrap_reasons_line,base.group_user,1,1,1,1
 ,,,,,,,
-report_work_time_user,user work_time,kindee_data_sync_info.model_ck_user_work_time,base.group_user,1,1,1,1
+access_report_work_time_user,user_work_time,model_ck_user_work_time,base.group_user,1,1,1,1
 ,,,,,,,
-report_material_scrap_reason_line_user,user material scrap reason line,kindee_data_sync_info.model_ck_material_scrap_reasons_line,base.group_user,1,1,1,1
+access_report_material_scrap_reason_line_user,user_material_scrap_reason_line,model_ck_material_scrap_reasons_line,base.group_user,1,1,1,1
 ,,,,,,,
-report_material_scrap_reason_user,user material_ scrap reason,kindee_data_sync_info.model_ck_material_scrap_reasons,base.group_user,1,1,1,1
+access_report_material_scrap_reason_user,user_material_scrap_reason,model_ck_material_scrap_reasons,base.group_user,1,1,1,1
