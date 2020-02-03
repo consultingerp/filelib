@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="installation_cost_list">
+          <field name="name">installation list</field>
+          <field name="model">hhjc.installation.head</field>
+          <field name="arch" type="xml">
+            <tree>
+              <field name="name"/>
+              <field name="company_id"/>
+              <field name="remark"/>
+              <field name="line_ids"/>
+            </tree>
+          </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="installation_cost_action">
+          <field name="name">安装/拆旧收费标准</field>
+          <field name="res_model">hhjc.installation.head</field>
+          <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="安装/拆旧收费标准" id="hhjc_installation_cost_menu" parent="crm.crm_menu_config"
+                  action="installation_cost_action"/>
+
+    </data>
+</odoo>

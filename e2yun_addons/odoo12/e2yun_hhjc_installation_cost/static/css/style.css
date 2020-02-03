@@ -1,0 +1,135 @@
+﻿body,
+article,section,
+h1,h2,
+table,th,td,
+thead,tbody,tfoot {
+    margin: 0;
+    padding: 0;
+    font-size: 35px;
+}
+
+body {
+    color: #333333;
+    font-size: 75%;
+    line-height: 1.5;
+	background-color:#f8f9fb;
+}
+h1 {
+    margin: 20px 0 10px;
+    font-size: 150%;
+}
+
+h2 {
+    margin: 0 0 5px;
+    padding: 0 0 0 5px;
+    font-size: 116%;
+    border-left: 5px solid #3399CC;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    border-top: 1px solid #888888;
+    border-right: none;
+    border-bottom: none;
+    border-left: 1px solid #888888;
+    background-color: #FFFFFF;
+}
+
+th,td {
+    padding: 5px 10px;
+    border-top: none;
+    border-right: 1px solid #888888;
+    border-bottom: 1px solid #888888;
+    border-left: none;
+    vertical-align: middle;
+}
+
+td {
+    background-color: #EFEFEF;
+	
+}
+
+thead th,tfoot {
+    color: #FFFFFF;
+}
+
+thead th,tfoot th {
+    background-color: #333333;
+}
+
+tfoot td {
+    background-color: #666666;
+}
+
+tbody th {
+    background-color: #FCC;
+}
+
+/* 第1行、左端的元素 */
+tr:first-child th:first-child,
+tr:first-child td:first-child {
+    border-top-left-radius: 10px; /* 左上角的圆角*/
+}
+
+/*第1行、右端的元素 */
+tr:first-child th:last-child,
+tr:first-child td:last-child {
+    border-top-right-radius: 10px; /* 右上角的圆角*/
+}
+
+/* 不使用thead时的tbody > th（与thead > th采用相同样式。） */
+table tbody:first-child th {
+    background-color: #333333;
+    color: #FFFFFF;
+}
+
+/*使用thead时的tbody的第1行、左端的元素*/
+thead ~ tbody tr:first-child th:first-child,
+thead ~ tbody tr:first-child td:first-child {
+    border-top-left-radius: 0; /*每一个左上角*/
+}
+
+/*使用thead时的tbody的第1行、右端的元素*/
+thead ~ tbody tr:first-child td:last-child {
+    border-top-right-radius: 0; /*每一个右上角 */
+}
+
+/* tbody的最后1行、左端的元素*/
+tbody tr:last-child th:first-child,
+tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 10px; /* 左下角的圆角*/
+}
+
+/* tbody的最后1行、右端的元素*/
+tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 10px; /* 右下角的圆角*/
+}
+
+/* ----- 使用tfoot时 ----- */
+
+/* tbody的最后1行、左端的元素(不使用tfoot时tbody的样式) */
+tfoot ~ tbody tr:last-child th:first-child,
+tfoot ~ tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 0; /* 每一个左下角*/
+}
+
+/* tbody的最后1行、右端的元素(不使用tfoot时tbody的样式)*/
+tfoot ~ tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 0; /* 每一个右下角 */
+}
+
+/* tfoot的最后1行、左端的元素*/
+tfoot tr:last-child th:first-child,
+tfoot tr:last-child td:first-child {
+    border-top-left-radius: 0; /* 每一个左下角 */
+    border-bottom-left-radius: 10px; /* 左下角的圆角 */
+}
+
+/* tfoot的最后1行、右端的元素 */
+tfoot tr:last-child td:last-child{
+    border-top-right-radius: 0; /* 每一个右上角 */
+    border-bottom-right-radius: 10px; /* 右下角的圆角 */
+}
