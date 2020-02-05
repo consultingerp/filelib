@@ -8,7 +8,7 @@ import time
 
 import pytz
 
-import addons.decimal_precision as dp
+import odoo.addons.decimal_precision as dp
 
 DEFAULT_SERVER_DATE_FORMAT = "%Y-%m-%d"
 _logger = logging.getLogger(__name__)

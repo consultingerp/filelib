@@ -6,7 +6,7 @@
                 <div class="page" style="width:620px;height:340px;font-family:微软雅黑;font-size: 19px;">
                     <div style="width:95%;height:30px;">
                         <div style="width:35%;font-size: 18px;padding-left:20px;float:left"><span t-field="o.name"/></div>
-                        <div style="width:30%;font-size: 18px;padding-left:20px;float:left;font-weight:bold;"><span>悦辰物料标签</span></div>
+                        <div style="width:30%;font-size: 18px;padding-left:15px;float:left;font-weight:bold;"><span>文思海辉物料标签</span></div>
                         <div style="width:35%;float:left;"><span style="font-weight:bold;font-style:italic;font-size: 18px;">RoHS/REACH</span></div>
                     </div>
                     <div style="width:85%;height:300px;">
