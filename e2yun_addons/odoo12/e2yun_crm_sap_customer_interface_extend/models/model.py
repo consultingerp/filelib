@@ -28,9 +28,12 @@ class e2yun_customer_info(models.Model):
 
         if self.sap_ktokd and self.sap_ktokd=='C002':
             return super(e2yun_customer_info, self).customer_transfer_to_normal()
-
-        partner=super(e2yun_customer_info, self).customer_transfer_to_normal()
-
+        try:
+            partner=super(e2yun_customer_info, self).customer_transfer_to_normal()
+        except BaseException as b:
+            raise exceptions.ValidationError(b)
+        if not partner:
+            raise exceptions.ValidationError(u'生成正式客户失败')
         I_INPUT = {}
         I_INPUT['ZTYPE'] = '0'  # 事务类型  0 创建 1修改
         I_INPUT['KTOKD'] = self.sap_ktokd
