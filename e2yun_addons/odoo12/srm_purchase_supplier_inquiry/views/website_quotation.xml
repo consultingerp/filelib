@@ -393,7 +393,7 @@
                       <t t-call="srm_purchase_supplier_inquiry.optional_products"/>
 
                       <a id="discussion"/>
-                      <t t-call="srm_purchase_supplier_inquiry.chatter"/>
+                      <!--<t t-call="srm_purchase_supplier_inquiry.chatter"/>-->
                   </div>
               </div>
             </div>
