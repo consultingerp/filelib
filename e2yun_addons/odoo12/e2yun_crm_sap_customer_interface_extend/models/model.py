@@ -35,7 +35,7 @@ class e2yun_customer_info(models.Model):
         #I_INPUT['KUNNR'] = '200682'  # 客户号
         I_INPUT['NAME_ORG1'] = self.name
         I_INPUT['BU_SORT1'] = self.sap_bu_sort1
-        I_INPUT['BU_SORT2'] = self.sap_bu_sort1
+        I_INPUT['BU_SORT2'] = self.sap_bu_sort2
         I_INPUT['REMARK'] = self.sap_remark
         I_INPUT['LANGU'] = 'zh'  # 默认
         I_INPUT['COUNTRY'] = 'CN'  # 默认
