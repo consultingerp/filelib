@@ -187,14 +187,14 @@ class Agreement(models.Model):  #合同
             data_sections=None
             data_appendix=None
             import re
+            recitalStrList=None
             if agreementData.recital_ids:
                 master_word_id = agreementData.recital_ids[0].master_word_id
                 data_recital = self.env['ir.http'].binary_content(
                     xmlid=None, model='ir.attachment', id=master_word_id, field='datas')
                 recitalStrList = re.findall(r"a*>(.+?)</p>", agreementData.recital_ids[0].content)
-                for recita in recitalStrList:
-
-                    print(recita)
+                for j in range(len(recitalStrList)):
+                    print(str(j)+":"+recitalStrList[j])
 
             if agreementData.sections_ids:
                 master_word_id = agreementData.sections_ids[0].master_word_id
@@ -233,15 +233,12 @@ class Agreement(models.Model):  #合同
               #                 inline[i].text = text
               #     print (p.text)
 
-
-              for j in range(len(word_temp.paragraphs)):
-                  paragraph = word_temp.paragraphs[j]
+              j=-1
+              for paragraph in word_temp.paragraphs:
                   if not paragraph.text or paragraph.text =="" :
                       continue
-
                   #list_runs = copy.deepcopy(paragraph.runs)
-
-
+                  j=j+1
                   p = doc.add_paragraph()
                   for oldrun in paragraph.runs:
                     run = p.add_run()
@@ -280,9 +277,9 @@ class Agreement(models.Model):  #合同
                   # p.paragraph_format.space_after ==Pt(12)# 下行间距
                   # p.paragraph_format.line_spacing =Pt(9)  # 行距
 
-
+                  if i==1 and recitalStrList:
                   #p.part = paragraph.part
-                 # p.text = paragraph.text
+                   p.text = recitalStrList[j]
 
                   p.add_run=paragraph.runs
                   p.style = paragraph.style
