@@ -20,6 +20,12 @@ class e2yun_customer_info(models.Model):
     sap_bu_sort2 = fields.Char('sap bu_sort2',required=True) #sap客户简称 字母
 
     def customer_transfer_to_normal(self):
+
+        partnerCheck = self.env['res.partner'].search([('name', '=', self.name)])
+        if partnerCheck:
+            raise exceptions.UserError(u'' + self.name + ',已经存在')
+            return False
+
         if self.sap_ktokd and self.sap_ktokd=='C002':
             return super(e2yun_customer_info, self).customer_transfer_to_normal()
 
