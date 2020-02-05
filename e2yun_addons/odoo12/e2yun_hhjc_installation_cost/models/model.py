@@ -9,7 +9,7 @@ from odoo.addons.utils_tools.iptools.IpAddress import IpAddress
 
 
 BASE_DIR = os.path.dirname((os.path.dirname(__file__)))
-templateLoader = jinja2.FileSystemLoader(searchpath=BASE_DIR + "/static")
+templateLoader = jinja2.FileSystemLoader(searchpath=BASE_DIR + "/static/src")
 env = jinja2.Environment(loader=templateLoader)
 
 class Head(models.Model):
