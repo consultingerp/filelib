@@ -165,7 +165,8 @@ var deliveryMain = Widget.extend({
     },
     canBeRemoved: function () {
         return $.when();
-    }
+    },
+    on_detach_callback: function () {}
 
 });
 
