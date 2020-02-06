@@ -175,7 +175,7 @@ class delivery_order_rep(models.Model):
     def _compute_purchase_date(self):
         for line in self:
             if line.purchase_line_id:
-                line.purchase_date = line.purchase_line_id.order_id.date_order
+                line.purchase_date = line.purchase_line_id.order_id.date_order.date()
             else:
                 voucher_id = self.env['vouchers.synchronize.data'].search(
                     [('mblnr', '=', line.picking_id.name), ('lfpos', '=', line.origin)])
@@ -219,7 +219,7 @@ class delivery_order_rep(models.Model):
 
     def _compute_date_done(self):
         for line in self:
-            line.date_done = line.picking_id.date_done
+            line.date_done = line.picking_id.date_done.date()
 
     def _compute_picking_type_code(self):
         for line in self:
@@ -418,7 +418,7 @@ class delivery_order_rep(models.Model):
             m.picking_id,m.purchase_line_id,m.tax_id,m.name,m.product_uom_qty,m.origin
             from stock_move m inner join stock_picking p on m.picking_id = p.id
             where m.state = 'done' 
-            and p.confirm_transfer = 't' 
+            -- and p.confirm_transfer = 't' 
             and p.state = 'done'
             and m.product_uom_qty - coalesce(m.account_qty,0) > 0
         

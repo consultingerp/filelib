@@ -40,7 +40,7 @@ class srm_account_quiry(http.Controller):
         now = time.strftime('%Y-%m-%d')
         # if request.uid:
         #     if request.uid != order.access_token:
-        #         return request.website.render('website.404')
+        #         return request.render('website.404')
 
         values = {
             'quotation': order,

@@ -59,6 +59,30 @@
                                 <field name="lgort"/>
                                 <field name="dnnum"/>
                             </tree>
+                            <form>
+                                <group>
+                                    <group>
+                                        <field name="product_id"/>
+                                            <field name="product_uom"/>
+                                            <field name="product_uom_qty" invisible="1"/>
+                                            <field name="purchase_order_no" invisible="1"/>
+                                            <field name="purchase_order_item" invisible="1"/>
+                                            <field name="tax_code"/>
+                                            <field name="date_done"/>
+                                    </group>
+                                    <group>
+                                        <field name="picking_type_code"/>
+                                            <field name="voucher_code"/>
+                                            <field name="product_uom_qty"/>
+                                            <field name="voucher_qty"/>
+                                            <field name="price_total_tax"/>
+                                            <field name="tax_price"/>
+                                            <field name="lgort"/>
+                                            <field name="dnnum"/>
+                                    </group>
+                                </group>
+
+                            </form>
                         </field>
                     </sheet>
                     <div class="oe_chatter">

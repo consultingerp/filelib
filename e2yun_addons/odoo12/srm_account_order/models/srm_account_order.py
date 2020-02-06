@@ -5,6 +5,7 @@ from odoo import models, fields, api, exceptions
 import odoo.addons.decimal_precision as dp
 from odoo.tools.translate import _
 import datetime
+import time
 try:
     from odoo.addons.srm_pyrfc import ZSRM_INCOMINGINVOICE_CREATE
 except:
@@ -99,8 +100,8 @@ class srm_account_order(models.Model):
             IS_HEADERDATA['DOC_TYPE'] = 'RE'
             IS_HEADERDATA['REF_DOC_NO'] = inv.name or ''
             if inv.date:
-                IS_HEADERDATA['DOC_DATE'] = inv.date.replace('-', '')
-                IS_HEADERDATA['PSTNG_DATE'] = inv.date.replace('-', '')
+                IS_HEADERDATA['DOC_DATE'] = str(inv.date).replace('-', '')
+                IS_HEADERDATA['PSTNG_DATE'] = str(inv.date).replace('-', '')
             else:
                 IS_HEADERDATA['DOC_DATE'] = datetime.datetime.strftime(current_date, '%Y-%m-%d').replace('-', '')
                 IS_HEADERDATA['PSTNG_DATE'] = datetime.datetime.strftime(current_date, '%Y-%m-%d').replace('-', '')
@@ -145,13 +146,15 @@ class srm_account_order(models.Model):
                 for item in IT_ITEMDATA:
                     item['ITEM_AMOUNT'] = abs(item['ITEM_AMOUNT'])
 
-            srmpyrfc = ZSRM_INCOMINGINVOICE_CREATE.ZSRM_INCOMINGINVOICE_CREATE()
-            result_rfc = srmpyrfc.BAPI_INCOMINGINVOICE_CREATE(self._cr, IS_HEADERDATA, IT_ITEMDATA)
-
-            if result_rfc['code'] == 1:
-                raise exceptions.ValidationError('SAP' + result_rfc['message'])
-            else:
-                self.write({'state': 'done','voucher':result_rfc['EV_INVOICEDOCNUMBER'],'done_date':datetime.date.today()})
+            # srmpyrfc = ZSRM_INCOMINGINVOICE_CREATE.ZSRM_INCOMINGINVOICE_CREATE()
+            # result_rfc = srmpyrfc.BAPI_INCOMINGINVOICE_CREATE(self._cr, IS_HEADERDATA, IT_ITEMDATA)
+            #
+            # if result_rfc['code'] == 1:
+            #     raise exceptions.ValidationError('SAP' + result_rfc['message'])
+            # else:
+            #     self.write({'state': 'done','voucher':result_rfc['EV_INVOICEDOCNUMBER'],'done_date':datetime.date.today()})
+            self.write(
+                {'state': 'done', 'voucher': int(time.time()), 'done_date': datetime.date.today()})
         return True
 
 

@@ -2,6 +2,7 @@ from odoo import models,api,exceptions
 from odoo.tools.translate import _
 from odoo.tools.float_utils import float_compare, float_round
 import datetime
+import time
 try:
     from odoo.addons.srm_pyrfc import ZSRM_BAPI_GOODSMVT_CREATE
 except:
@@ -258,8 +259,13 @@ class stock_picking(models.Model):
                             move.product_uos_qty = move.product_uos_qty - m.product_uos_qty
 
         GOODSMVT_HEADER['HEADER_TXT'] = '交货单'+ GOODSMVT_HEADER.get('REF_DOC_NO','')
-        zbapi_goodsmvt_create = ZSRM_BAPI_GOODSMVT_CREATE.ZBAPI_GOODSMVT_CREATE()
-        result_rfc = zbapi_goodsmvt_create.BAPI_GOODSMVT_CREATE(self._cr,GOODSMVT_HEADER, GOODSMVT_ITEM,'01')
+        # zbapi_goodsmvt_create = ZSRM_BAPI_GOODSMVT_CREATE.ZBAPI_GOODSMVT_CREATE()
+        # result_rfc = zbapi_goodsmvt_create.BAPI_GOODSMVT_CREATE(self._cr,GOODSMVT_HEADER, GOODSMVT_ITEM,'01')
+        result_rfc = {
+            'code':0,
+            'MAT_DOC':int(time.time())
+        }
+
         if result_rfc['code'] == 1:
             msg = result_rfc['message']
             raise exceptions.ValidationError(" SAP调拨过账失败，失败原因：%s" % (msg))
@@ -420,8 +426,13 @@ class stock_picking(models.Model):
                     order.state = 'outgoing'
 
         GOODSMVT_HEADER['HEADER_TXT'] = '退货订单' + GOODSMVT_HEADER.get('REF_DOC_NO','')
-        zbapi_goodsmvt_create = ZSRM_BAPI_GOODSMVT_CREATE.ZBAPI_GOODSMVT_CREATE()
-        result_rfc = zbapi_goodsmvt_create.BAPI_GOODSMVT_CREATE(self._cr, GOODSMVT_HEADER, GOODSMVT_ITEM, '01')
+        # zbapi_goodsmvt_create = ZSRM_BAPI_GOODSMVT_CREATE.ZBAPI_GOODSMVT_CREATE()
+        # result_rfc = zbapi_goodsmvt_create.BAPI_GOODSMVT_CREATE(self._cr, GOODSMVT_HEADER, GOODSMVT_ITEM, '01')
+        result_rfc = {
+            'code':0,
+            'MAT_DOC':int(time.time())
+        }
+
         if result_rfc['code'] == 1:
             msg = result_rfc['message']
             raise exceptions.ValidationError(" SAP调拨过账失败，失败原因：%s" % (msg))
@@ -605,8 +616,13 @@ class stock_picking(models.Model):
 
 
         GOODSMVT_HEADER['HEADER_TXT'] = '外协订单' + GOODSMVT_HEADER.get('REF_DOC_NO','')
-        zbapi_goodsmvt_create = ZSRM_BAPI_GOODSMVT_CREATE.ZBAPI_GOODSMVT_CREATE()
-        result_rfc = zbapi_goodsmvt_create.BAPI_GOODSMVT_CREATE(self._cr, GOODSMVT_HEADER, GOODSMVT_ITEM, gm_code)
+        # zbapi_goodsmvt_create = ZSRM_BAPI_GOODSMVT_CREATE.ZBAPI_GOODSMVT_CREATE()
+        # result_rfc = zbapi_goodsmvt_create.BAPI_GOODSMVT_CREATE(self._cr, GOODSMVT_HEADER, GOODSMVT_ITEM, gm_code)
+
+        result_rfc = {
+            'code':0,
+            'MAT_DOC':int(time.time())
+        }
         if result_rfc['code'] == 1:
             msg = result_rfc['message']
             raise exceptions.ValidationError(" SAP调拨过账失败，失败原因：%s" % (msg))
