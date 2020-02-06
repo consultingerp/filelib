@@ -21,7 +21,7 @@
 
 from odoo import fields, models, api
 from odoo import tools, _
-import addons.decimal_precision as dp
+import odoo.addons.decimal_precision as dp
 
 
 class ck_hours_worker_rep(models.Model):

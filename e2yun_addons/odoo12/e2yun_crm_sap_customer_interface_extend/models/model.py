@@ -20,16 +20,27 @@ class e2yun_customer_info(models.Model):
     sap_bu_sort2 = fields.Char('sap bu_sort2',required=True) #sap客户简称 字母
 
     def customer_transfer_to_normal(self):
+
+        partnerCheck = self.env['res.partner'].search([('name', '=', self.name)])
+        if partnerCheck:
+            raise exceptions.UserError(u'' + self.name + ',已经存在')
+            return False
+
         if self.sap_ktokd and self.sap_ktokd=='C002':
             return super(e2yun_customer_info, self).customer_transfer_to_normal()
-
+        try:
+            partner=super(e2yun_customer_info, self).customer_transfer_to_normal()
+        except BaseException as b:
+            raise exceptions.ValidationError(b)
+        if not partner:
+            raise exceptions.ValidationError(u'生成正式客户失败')
         I_INPUT = {}
         I_INPUT['ZTYPE'] = '0'  # 事务类型  0 创建 1修改
         I_INPUT['KTOKD'] = self.sap_ktokd
         #I_INPUT['KUNNR'] = '200682'  # 客户号
         I_INPUT['NAME_ORG1'] = self.name
         I_INPUT['BU_SORT1'] = self.sap_bu_sort1
-        I_INPUT['BU_SORT2'] = self.sap_bu_sort1
+        I_INPUT['BU_SORT2'] = self.sap_bu_sort2
         I_INPUT['REMARK'] = self.sap_remark
         I_INPUT['LANGU'] = 'zh'  # 默认
         I_INPUT['COUNTRY'] = 'CN'  # 默认
@@ -62,7 +73,8 @@ class e2yun_customer_info(models.Model):
             result = ZCL_REST_CUSTOMER_RFC.ZCL_REST_CUSTOMER(I_INPUT)
             if result:
                 if result['I_OUTPUT']['ZTYPE']=='S':
-                    self.sap_kunnr=int(result['I_OUTPUT']['KUNNR'])
+                    #self.sap_kunnr=int(result['I_OUTPUT']['KUNNR'])
+                    partner.sap_kunnr=int(result['I_OUTPUT']['KUNNR'])
                 elif result['I_OUTPUT']['ZTYPE']=='E':
                     raise exceptions.ValidationError("SAP返回消息"+str(result['I_OUTPUT']['ZMESG']))
                 else:
@@ -72,7 +84,7 @@ class e2yun_customer_info(models.Model):
         except BaseException as b:
             raise exceptions.ValidationError(b)
 
-        return super(e2yun_customer_info,self).customer_transfer_to_normal()
+        return True
 
 
 

@@ -186,10 +186,16 @@ class Agreement(models.Model):  #合同
             data_recital=None
             data_sections=None
             data_appendix=None
+            import re
+            recitalStrList=None
             if agreementData.recital_ids:
                 master_word_id = agreementData.recital_ids[0].master_word_id
                 data_recital = self.env['ir.http'].binary_content(
                     xmlid=None, model='ir.attachment', id=master_word_id, field='datas')
+                recitalStrList = re.findall(r"a*>(.+?)</p>", agreementData.recital_ids[0].content)
+                for j in range(len(recitalStrList)):
+                    print(str(j)+":"+recitalStrList[j])
+
             if agreementData.sections_ids:
                 master_word_id = agreementData.sections_ids[0].master_word_id
                 data_sections = self.env['ir.http'].binary_content(
@@ -215,13 +221,37 @@ class Agreement(models.Model):  #合同
               f.write(base64.decodestring(word_data))
               f.close()
               word_temp=Document(wb_path)
-              for j in range(len(word_temp.paragraphs)):
-                  paragraph = word_temp.paragraphs[j]
+
+
+              # for j in range(len(word_temp.paragraphs)):
+              #     p = word_temp.paragraphs[j]
+              #     inline = p.runs
+              #         # Loop added to work with runs (strings with same style)
+              #     for i in range(len(inline)):
+              #             if 'old text' in inline[i].text:
+              #                 text = inline[i].text.replace('old text', 'new text')
+              #                 inline[i].text = text
+              #     print (p.text)
+
+              j=-1
+              for paragraph in word_temp.paragraphs:
                   if not paragraph.text or paragraph.text =="" :
                       continue
                   #list_runs = copy.deepcopy(paragraph.runs)
+                  j=j+1
+                  p = doc.add_paragraph()
+                  for oldrun in paragraph.runs:
+                    run = p.add_run()
+                    run.text=oldrun.text
+                    run._element = oldrun._element
+                    run.bold = oldrun.bold
+                    run.element =oldrun.element
+                    run.style = oldrun.style
 
-                  p = doc.add_paragraph(paragraph.text)
+                    run.font.name = oldrun.font.name
+                    run.font.bold = oldrun.font.bold
+                  #run.font.element = paragraph.runs[0].font.element
+
 
                   # if i==1 and j==5:
                   #     p.text = p.text.replace("XXXXXX", "中国远大", 1)
@@ -235,17 +265,22 @@ class Agreement(models.Model):  #合同
                   p._p== paragraph._p
                   p._parent=paragraph._parent
                   p.alignment = paragraph.alignment
+
                   #p.paragraph_format = copy.deepcopy(paragraph.paragraph_format)
                   #p.paragraph_format.element=paragraph.paragraph_format.element
-                  p.paragraph_format.alignment = paragraph.paragraph_format.alignment
-                  print(paragraph.paragraph_format.space_before)
+
+                  # p.paragraph_format.alignment = paragraph.paragraph_format.alignment
+                  #
+                  # print(paragraph.paragraph_format.space_before)
+
                   # p.paragraph_format.space_before =Pt(3)  # 上行间距
                   # p.paragraph_format.space_after ==Pt(12)# 下行间距
                   # p.paragraph_format.line_spacing =Pt(9)  # 行距
 
-
+                  if i==1 and recitalStrList:
                   #p.part = paragraph.part
-                 # p.text = paragraph.text
+                   p.text = recitalStrList[j]
+
                   p.add_run=paragraph.runs
                   p.style = paragraph.style
 

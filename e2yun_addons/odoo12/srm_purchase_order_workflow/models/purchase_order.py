@@ -94,15 +94,13 @@ class PurchaseOrder(models.Model):
         except ValueError:
             compose_form_id = False
         ctx = dict(self.env.context or {})
-
-        ctx = dict(self.env.context or {})
         ctx.update({
             'default_model': 'purchase.order',
             'default_res_id': self.ids[0],
             'default_use_template': bool(template_id),
             'default_template_id': template_id,
             'default_composition_mode': 'comment',
-            'custom_layout': "mail.mail_notification_paynow",
+            'custom_layout': "mail.mail_notification_light",
             'force_email': True,
             'mark_rfq_as_sent': True,
         })

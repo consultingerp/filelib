@@ -45,14 +45,11 @@
                         ${object.create_uid.name} <br />
                         ${object.create_uid.function} <br /><br/>
                             <hr align="left" style="border-top:1px solid #555555;width:430px;" /><br/>
-                        <span style="font-weight:bold;font-size: 13px;">中山市悦辰电子实业有限公司</span><br />
+                        <span style="font-weight:bold;font-size: 13px;">深圳文思海辉信息科技有限公司</span><br />
                         Zhong Shan City Richsound Electronic Industrial Ltd<br />
                         Tel:${object.create_uid.phone}/Fax:${object.create_uid.fax}<br />
                         Mob:${object.create_uid.mobile}<br />
                         E-mail:${object.create_uid.email}<br />
-                        <span style="font-size:13px;">RSR淘宝旗舰店：</span> <a href="http://rsrdq.tmall.com">http://rsrdq.tmall.com</a><br />
-                        广东省中山市港口镇沙港东路群乐工业区<br />
-                        <img src="/srm_po_sync_task/static/img/emailpic.png"/>
                     </div>
                     <div style="width: 375px; margin: 0px; padding: 0px; background-color: #8E0000; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px; background-repeat: repeat no-repeat;">
                         <h3 style="margin: 0px; padding: 2px 14px; font-size: 12px; color: #DDD;">
@@ -108,7 +105,7 @@
     <p>
         您可以在线确认订单:
     </p>
-    <a style="display:block; width: 150px; height:20px; margin-left: 120px; color: #DDD; font-family: 'Lucida Grande', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: bold; text-align: center; text-decoration: none !important; line-height: 1; padding: 5px 0px 0px 0px; background-color: #8E0000; border-radius: 5px 5px; background-repeat: repeat no-repeat;" href="/web?db=odoo11-3#action=srm_purchase_supplier_inquiry.action_p_inquiry_redirect&order_id=${object.id}"> 查看订单 </a>
+    <a style="display:block; width: 150px; height:20px; margin-left: 120px; color: #DDD; font-family: 'Lucida Grande', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: bold; text-align: center; text-decoration: none !important; line-height: 1; padding: 5px 0px 0px 0px; background-color: #8E0000; border-radius: 5px 5px; background-repeat: repeat no-repeat;" href="/web?db=srm#action=srm_purchase_supplier_inquiry.action_p_inquiry_redirect&order_id=${object.id}"> 查看订单 </a>
 
     </div>
 
