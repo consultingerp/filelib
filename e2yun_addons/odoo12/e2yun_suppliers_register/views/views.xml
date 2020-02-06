@@ -5,8 +5,10 @@
         <field name="model">survey.survey</field>
         <field name="inherit_id" ref="survey.survey_form"/>
         <field name="arch" type="xml">
-             <xpath expr="//div[@class='oe_title']" position="after">
-               <field name="lock_survey" invisible="1"/>
+             <xpath expr="//form/sheet/notebook" position="before">
+                 <group>
+                     <field name="lock_survey" attrs="{'invisible':[('lock_survey', '=', False)],'readonly':[('lock_survey', '=', True)]}"/>
+                 </group>
             </xpath>
 
             <xpath expr="//field[@name='title']" position="replace">
@@ -29,6 +31,16 @@
         </field>
       </record>
 
+      <record id="survey_email_compose_message_add_confirm" model="ir.ui.view">
+        <field name="name">survey.email.compose.message.add.confirm</field>
+        <field name="model">survey.mail.compose.message</field>
+        <field name="inherit_id" ref="survey.survey_email_compose_message"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='send_mail_action']" position="attributes">
+                <attribute name="confirm">'发送邮件后将不能修改问卷。是否发送邮件？'</attribute>
+            </xpath>
+        </field>
+      </record>
     <!-- explicit list view definition -->
     <!--
     <record model="ir.ui.view" id="e2yun_supplyer_regist.list">
