@@ -173,7 +173,7 @@
 
                       <a id="introduction"/>
                       <h1 class="page-header mt16">
-                          <span>Your Order</span>
+                          <span>您的对账单</span>
                           <em t-esc="quotation.name"/>
                           <small t-field="quotation.state"/>
                       </h1>
@@ -188,7 +188,7 @@
                               </div>
                             <div class="modal-body" id="sign-dialog">
                               <div id="signer" class="form-group">
-                                  <label class="control-label" for="name">Your Name:</label>
+                                  <label class="control-label" for="name">您的名称:</label>
                                   <input type="text" name="signer" id="name" class="form-control"/>
                               </div>
                             </div>
@@ -218,13 +218,13 @@
 
                               </p>
                               <div id="signer" class="form-group">
-                                  <label class="control-label" for="name">Your Name:</label>
+                                  <label class="control-label" for="name">您的名称:</label>
                                   <input type="text" name="signer" id="name" class="form-control"/>
                               </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" t-attf-class="btn btn-primary">Sign Order</button> or
-                                <button type="button" class="btn btn-link" data-dismiss="modal" style="padding: 0">Cancel</button>
+                                <button type="button" class="btn btn-link" data-dismiss="modal" style="padding: 0">取消</button>
                             </div>
                           </form>
                         </div>

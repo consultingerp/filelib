@@ -46,7 +46,7 @@ class purchase_quote(http.Controller):
         now = time.strftime('%Y-%m-%d')
         if token:
             if token != order.access_token:
-                return request.website.render('website.404')
+                return request.render('website.404')
 
             # Log only once a day
             if request.session.get('view_quote',False)!=now:
@@ -84,12 +84,12 @@ class purchase_quote(http.Controller):
         self.__message_post(message, order_id, type='comment', subtype='mt_comment', attachments=attachments)
         return werkzeug.utils.redirect("/quote_purchase/%s" % (order_id,))
 
-    @http.route(['/quote_purchase/<int:order_id>/<token>/decline'], type='http', auth="public", website=True)
-    def decline(self, order_id, token, **post):
-        order_obj = request.registry.get('purchase.order')
-        order = order_obj.browse(request.cr, SUPERUSER_ID, order_id)
-        if token != order.access_token:
-            return request.website.render('website.404')
+    @http.route('/quote_purchase/decline/<int:order_id>', type='http', auth="public", methods=['POST'],website=True)
+    def decline(self, order_id=None, token=None, **post):
+        order_obj = request.env['purchase.order']
+        order = order_obj.browse(order_id)
+        # if token != order.access_token:
+        #     return request.render('website.404')
         # if order.state != 'sent':
         #     return werkzeug.utils.redirect("/quote_purchase/%s/%s?message=4" % (order_id, token))
         #request.registry.get('purchase.order').action_cancel(request.cr, SUPERUSER_ID, [order_id])
@@ -97,7 +97,7 @@ class purchase_quote(http.Controller):
         message = post.get('decline_message')
         if message:
             self.__message_post(message, order_id, type='comment', subtype='mt_comment')
-        return werkzeug.utils.redirect("/quote_purchase/%s/%s?message=2" % (order_id, token))
+            return werkzeug.utils.redirect("/quote_purchase/%s" % (order_id,))
 
     @http.route(['/quote_purchase/<int:order_id>/<token>/post'], type='http', auth="public", website=True)
     def post(self, order_id, token, **post):
@@ -106,7 +106,7 @@ class purchase_quote(http.Controller):
         order = order_obj.browse(request.cr, SUPERUSER_ID, order_id)
         message = post.get('comment')
         if token != order.access_token:
-            return request.website.render('website.404')
+            return request.render('website.404')
         if message:
             self.__message_post(message, order_id, type='comment', subtype='mt_comment')
         return werkzeug.utils.redirect("/quote_purchase/%s/%s?message=1" % (order_id, token))
@@ -131,7 +131,7 @@ class purchase_quote(http.Controller):
     def update(self, line_id, remove=False, unlink=False, order_id=None, token=None, **post):
         order = request.registry.get('purchase.order').browse(request.cr, SUPERUSER_ID, int(order_id))
         if token != order.access_token:
-            return request.website.render('website.404')
+            return request.render('website.404')
         if order.state not in ('draft','sent'):
             return False
         line_id=int(line_id)
@@ -156,7 +156,7 @@ class purchase_quote(http.Controller):
         vals = {}
         order = request.registry.get('purchase.order').browse(request.cr, SUPERUSER_ID, order_id)
         if token != order.access_token:
-            return request.website.render('website.404')
+            return request.render('website.404')
         if order.state not in ['draft', 'sent']:
             return request.website.render('website.http_error', {'status_code': 'Forbidden', 'status_message': _('You cannot add options to a confirmed order.')})
         option_obj = request.registry.get('purchase.order.option')
