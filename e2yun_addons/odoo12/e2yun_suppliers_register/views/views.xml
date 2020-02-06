@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="survey.survey_form"/>
         <field name="arch" type="xml">
              <xpath expr="//div[@class='oe_title']" position="after">
-               <field name="lock_survey" invisible="0"/>
+               <field name="lock_survey" invisible="1"/>
             </xpath>
 
             <xpath expr="//field[@name='title']" position="replace">
