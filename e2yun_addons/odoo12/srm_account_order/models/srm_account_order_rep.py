@@ -407,12 +407,13 @@ class delivery_order_rep(models.Model):
     dnnum = fields.Char(compute='_compute_dnnum', string='送货单号')
     kbetr = fields.Float(compute='_compute_kbetr', string='价格',digits=dp.get_precision('Product Price'))
     kpein = fields.Float(compute='_compute_kpein', string='价格单位')
+    company_id = fields.Many2one('res.company','公司')
 
     def init(self):
         tools.drop_view_if_exists(self._cr, 'srm_account_order_rep')
 
         sql = """CREATE OR REPLACE VIEW srm_account_order_rep AS
-            select m.id,p.partner_id as picking_partner,m.product_id,m.product_uom,
+            select m.id,p.partner_id as picking_partner,m.product_id,m.product_uom,p.company_id,
             (case when m.price_unit <=0 then (select price_unit from purchase_order_line where id= m.purchase_line_id) else m.price_unit end) price_unit,
             --(select price_unit from purchase_order_line where id= m.purchase_line_id) price_unit,
             m.picking_id,m.purchase_line_id,m.tax_id,m.name,m.product_uom_qty,m.origin
@@ -424,3 +425,7 @@ class delivery_order_rep(models.Model):
         
         """
         self._cr.execute(sql)
+
+    def search(self, args, offset=0, limit=None, order=None, count=False):
+        args = args + [('company_id','=',self.env['res.company']._company_default_get('srm.account.order.rep').id)]
+        return super(delivery_order_rep, self).search(args, offset=offset, limit=limit, order=order, count=count)
