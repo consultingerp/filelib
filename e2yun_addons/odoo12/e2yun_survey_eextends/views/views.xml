@@ -31,11 +31,11 @@
     <attribute name="effect">False</attribute>
   </xpath>
   <xpath expr="//field[@name='questionnaire_classification']" position="attributes">
-    <attribute name="attrs">{}</attribute>
+    <attribute name="attrs">{'readonly': [('lock_survey', '=', True)]}</attribute>
     <attribute name="required">1</attribute>
   </xpath>
   <xpath expr="//field[@name='questionnaire_scenario']" position="attributes">
-    <attribute name="attrs">{}</attribute>
+    <attribute name="attrs">{'readonly': [('lock_survey', '=', True)]}</attribute>
     <attribute name="required">1</attribute>
   </xpath>
   <xpath expr="//form[1]/sheet[1]/div[not(@name)][1]" position="after">
