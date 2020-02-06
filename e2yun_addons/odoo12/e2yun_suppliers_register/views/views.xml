@@ -1,0 +1,89 @@
+<odoo>
+  <data>
+      <record id="survey_form_view_suppliers_register_inherit" model="ir.ui.view">
+        <field name="name">survey.form.suppliers.register.inherit</field>
+        <field name="model">survey.survey</field>
+        <field name="inherit_id" ref="survey.survey_form"/>
+        <field name="arch" type="xml">
+             <xpath expr="//div[@class='oe_title']" position="after">
+               <field name="lock_survey" invisible="0"/>
+            </xpath>
+
+            <xpath expr="//field[@name='title']" position="replace">
+                <field name="title" placeholder="Survey Title"
+                       attrs="{'readonly': [('lock_survey', '=', True)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='page_ids']" position="attributes">
+                <attribute name="attrs">{'readonly': [('lock_survey', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='users_can_go_back']" position="attributes">
+                <attribute name="attrs">{'readonly': [('lock_survey', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='auth_required']" position="attributes">
+                <attribute name="attrs">{'readonly': [('lock_survey', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='quizz_mode']" position="attributes">
+                <attribute name="attrs">{'readonly': [('lock_survey', '=', True)]}</attribute>
+            </xpath>
+
+        </field>
+      </record>
+
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="e2yun_supplyer_regist.list">
+      <field name="name">e2yun_supplyer_regist list</field>
+      <field name="model">e2yun_supplyer_regist.e2yun_supplyer_regist</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="e2yun_supplyer_regist.action_window">
+      <field name="name">e2yun_supplyer_regist window</field>
+      <field name="res_model">e2yun_supplyer_regist.e2yun_supplyer_regist</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="e2yun_supplyer_regist.action_server">
+      <field name="name">e2yun_supplyer_regist server</field>
+      <field name="model_id" ref="model_e2yun_supplyer_regist_e2yun_supplyer_regist"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="e2yun_supplyer_regist" id="e2yun_supplyer_regist.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="e2yun_supplyer_regist.menu_1" parent="e2yun_supplyer_regist.menu_root"/>
+    <menuitem name="Menu 2" id="e2yun_supplyer_regist.menu_2" parent="e2yun_supplyer_regist.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="e2yun_supplyer_regist.menu_1_list" parent="e2yun_supplyer_regist.menu_1"
+              action="e2yun_supplyer_regist.action_window"/>
+    <menuitem name="Server to list" id="e2yun_supplyer_regist" parent="e2yun_supplyer_regist.menu_2"
+              action="e2yun_supplyer_regist.action_server"/>
+    -->
+  </data>
+</odoo>
