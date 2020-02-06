@@ -11,10 +11,10 @@
                 </xpath>
                 <!--增加问卷分类和问卷场景-->
                 <xpath expr="//div[@class='oe_title']/h1" position="after">
-                    <label for="questionnaire_classification" string="问卷分类"/>
-                    <field name="questionnaire_classification"/><br/>
-                    <label for="questionnaire_scenario" string="问卷场景"/>
+                  <group>
+                    <field name="questionnaire_classification"/>
                     <field name="questionnaire_scenario"/>
+                  </group>
                 </xpath>
                 <xpath expr="//field[@name='question_ids']" position="before">
                     <field name="weight"/>
