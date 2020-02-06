@@ -61,7 +61,7 @@
                                   t-field-options='{"widget": "monetary", "display_currency": "quotation.pricelist_id.currency_id"}'
                                   t-att-style="line.discount and 'text-decoration: line-through' or ''"
                                   t-att-class="line.discount and 'text-danger' or ''"/>-->
-                                 <span t-field="line.sap_price_unit"/>
+                                 <span t-field="line.price_unit"/>
 
                               <!-- TODO: apply monetary widget formating -->
                                 <!--
@@ -76,7 +76,7 @@
                           <div
                               t-field="line.price_subtotal"
                               t-field-options='{"widget": "monetary", "display_currency": "quotation.pricelist_id.currency_id"}'/> -->
-                          <span t-field="line.sap_amount_qty"/>
+                          <span t-field="line.price_total"/>
 
                       </td>
 
@@ -88,7 +88,7 @@
                          <!--
                           <strong data-id="total_amount" t-field="quotation.sap_amount_untaxed" t-field-options='{"widget": "monetary","display_currency": "quotation.pricelist_id.currency_id"}'/>
                             -->
-                          <strong t-esc="quotation.sap_amount_untaxed"/>
+                          <strong t-esc="quotation.amount_untaxed"/>
                       </td>
                   </tr>
                   <tr>
@@ -98,7 +98,7 @@
                           <!--
                           <span data-id="total_amount" t-field="quotation.sap_amount_tax" t-field-options='{"widget": "monetary","display_currency": "quotation.pricelist_id.currency_id"}'/>
                             -->
-                          <strong t-esc="quotation.sap_amount_tax"/>
+                          <strong t-esc="quotation.amount_tax"/>
                       </td>
                   </tr>
                   <tr>
@@ -108,7 +108,7 @@
                            <!--
                           <strong data-id="total_amount" t-field="quotation.sap_amount_total" t-field-options='{"widget": "monetary","display_currency": "quotation.pricelist_id.currency_id"}'/>
                             -->
-                            <strong t-esc="quotation.sap_amount_total"/>
+                            <strong t-esc="quotation.amount_total"/>
                       </td>
                   </tr>
               </tbody>
