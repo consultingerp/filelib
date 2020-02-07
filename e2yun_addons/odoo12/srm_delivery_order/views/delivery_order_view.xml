@@ -54,7 +54,7 @@
             <field name="name">delivery.order.form</field>
             <field name="model">delivery.order</field>
             <field name="arch" type="xml">
-                <form string="Delivery Order">
+                <form string="Delivery Order" create="false">
                     <header>
                         <button name="order_lock" type="object" string="Lock" class="oe_highlight" attrs="{'invisible':['|',('dnnum','&lt;=',0),'|',('is_supplier','=',True),'|',('state','in',['print','Finished','purchase_lock'])]}"/>
                         <button name="order_cancel_lock" type="object" string="Cancel Lock" class="oe_highlight" attrs="{'invisible':['|',('dnnum','&lt;=',0),'|',('is_supplier','=',True),('state','in',['Finished','supplier_create','print','supplier_cancel','purchase_cancel'])]}"/>
