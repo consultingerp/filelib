@@ -56,3 +56,27 @@ msgstr "下载付款条件"
 #: model_terms:ir.ui.view,arch_db:e2yun_agreement_extend.agreement_form_view_view_extend
 msgid "Send by Email"
 msgstr "发送邮件"
+
+
+#. module: e2yun_agreement_extend
+#: model:ir.model.fields,field_description:e2yun_agreement_extend.field_crm_lead__agreement_amount
+msgid "Agreement Amount"
+msgstr "合同金额"
+
+
+#. module: e2yun_agreement_extend
+#: model:ir.model.fields,field_description:e2yun_agreement_extend.field_crm_lead__agreement_amount_usd
+msgid "Agreement Amount USD"
+msgstr "合同USD金额"
+
+
+#. module: e2yun_agreement_extend
+#: model:ir.model.fields,field_description:e2yun_agreement_extend.field_crm_lead__agreement_code
+msgid "Agreement Code"
+msgstr "合同编号"
+
+
+#. module: e2yun_agreement_extend
+#: model:ir.model.fields,field_description:e2yun_agreement_extend.field_crm_lead__agreement_partner_id
+msgid "Agreement Partner"
+msgstr "合同客户"

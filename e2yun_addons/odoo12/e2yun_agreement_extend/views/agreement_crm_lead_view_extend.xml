@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="agreement_crm_lead_view_form_extend" model="ir.ui.view">
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='team_id']" position="inside">
+                    <field name="agreement_code" />
+                    <field name="agreement_partner_id" />
+                    <field name="agreement_amount" />
+                    <field name="agreement_amount_usd" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
