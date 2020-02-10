@@ -13,6 +13,7 @@
         'views/agreement_sequence.xml',
         'data/mail_template_data.xml',
         'views/file_upload.xml',
+        'views/agreement_crm_lead_view_extend.xml',
     ],
     'installable': True,
     'auto_install': False,

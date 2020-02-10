@@ -54,7 +54,6 @@ class purchase_quote(http.Controller):
                 body=_('Quotation viewed by customer')
                 self.__message_post(body, order_id, type='comment')
         days = 0
-        order.state
         values = {
             'quotation': order,
             # 'message': message and int(message) or False,
@@ -74,7 +73,7 @@ class purchase_quote(http.Controller):
 
     @http.route('/quote_purchase/accept', type='json', auth="public", methods=['POST'], website=True)
     def accept(self, order_id=None, token=None, signer=None, sign=None, **post):
-        order_obj = request.env['purchase.order']
+        order_obj = request.env['purchase.order'].sudo()
         order = order_obj.browse(order_id)
         print(sign)
         attachments = [('signature.png', base64.b64decode(sign))] if sign else [],
@@ -86,7 +85,7 @@ class purchase_quote(http.Controller):
 
     @http.route('/quote_purchase/decline/<int:order_id>', type='http', auth="public", methods=['POST'],website=True)
     def decline(self, order_id=None, token=None, **post):
-        order_obj = request.env['purchase.order']
+        order_obj = request.env['purchase.order'].sudo()
         order = order_obj.browse(order_id)
         # if token != order.access_token:
         #     return request.render('website.404')
@@ -102,8 +101,8 @@ class purchase_quote(http.Controller):
     @http.route(['/quote_purchase/<int:order_id>/<token>/post'], type='http', auth="public", website=True)
     def post(self, order_id, token, **post):
         # use SUPERUSER_ID allow to access/view order for public user
-        order_obj = request.registry.get('purchase.order')
-        order = order_obj.browse(request.cr, SUPERUSER_ID, order_id)
+        order_obj = request.env['purchase.order'].sudo()
+        order = order_obj.browse(order_id)
         message = post.get('comment')
         if token != order.access_token:
             return request.render('website.404')
@@ -129,7 +128,7 @@ class purchase_quote(http.Controller):
 
     @http.route(['/quote_purchase/update_line'], type='json', auth="public", website=True)
     def update(self, line_id, remove=False, unlink=False, order_id=None, token=None, **post):
-        order = request.registry.get('purchase.order').browse(request.cr, SUPERUSER_ID, int(order_id))
+        order = request.env['purchase.order'].browse(int(order_id))
         if token != order.access_token:
             return request.render('website.404')
         if order.state not in ('draft','sent'):
