@@ -15,7 +15,7 @@ class mat_demand_head(models.Model):
         ('edit_publish', 'Edit Publish')
     ]
 
-    versi = fields.Char('Version', required=True, states={
+    versi = fields.Char('Version', required=False, states={
         'create': [('readonly', True)],
         'publish': [('readonly', True)],
         'edit_publish': [('readonly', True)]
@@ -37,8 +37,7 @@ class mat_demand_head(models.Model):
     send_lifnr = fields.Many2one('res.partner', 'Send Mail Supplier',readonly=True)
     mail_type = fields.Char('Mail Type')
 
-
-
+    @api.model
     def create(self,vals):
         #cr, uid,
         cr=self._cr
@@ -201,14 +200,14 @@ class mat_demand_head(models.Model):
             vals['email_from'] = attachment_ids_value['value']['email_from']
             vals['subject'] = attachment_ids_value['value']['subject']
             emil_id = self.env['mail.compose.message'].create(vals)
-            emil_id.send_mail_action()
+            emil_id.send_mail()
         return True
 
 
 class mat_demand_line_details(models.Model):
     _name = "mat.demand.line.details"
     _table = 'mat_demand_line_details'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
+    # _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = "物料需求明细行"
 
     STATE_SELECTION = [
@@ -307,13 +306,16 @@ class mat_demand_line_details(models.Model):
                 raise exceptions.ValidationError("Date format error, correct case example: 2018-07-02. Please re-enter.");
         except:
             raise exceptions.ValidationError("Date format error, correct case example: 2018-07-02. Please re-enter.");
-        return strDate1;
+        return strDate1
 
+    @api.model
     def create(self,vals):
         is_supplier = self.env['res.users']._get_default_supplier()
         # 供应商不能创建
         if is_supplier != 0:
             return True
+
+
 
         matobj = self.env['product.product'].browse(vals['matnr'])
 
@@ -413,12 +415,7 @@ class mat_demand_line_details(models.Model):
                        i=i+1
                        self.update_state(lid.id)
         except BaseException as e:
-            message = ""
-            if e.value:
-                message = e.value
-            elif e.message:
-                message = e.message
-            raise exceptions.ValidationError(message)
+            raise exceptions.ValidationError(e)
 
         vals['id'] = lid.id
         return lid
@@ -565,8 +562,8 @@ class mat_demand_line_details(models.Model):
         delivery_sql += " and l.version_id = %s and l.prnum=%s"
         cr.execute(delivery_sql, (
             line_obj.mat_demand_id.comco.id, line_obj.mat_demand_id.werks.id, line_obj.lifnr.id, line_obj.matnr.id,
-            line_obj.ddate,
-            line_obj.mat_demand_id.id,line_obj.prnum))
+            str(line_obj.ddate),
+            line_obj.mat_demand_id.id,line_obj.prnum or ''))
         delivery_dnmng = cr.fetchone()
         if type=='W':
             if delivery_dnmng and delivery_dnmng[0] and delivery_dnmng[0]>0:
