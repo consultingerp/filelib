@@ -415,12 +415,7 @@ class mat_demand_line_details(models.Model):
                        i=i+1
                        self.update_state(lid.id)
         except BaseException as e:
-            message = ""
-            if e.value:
-                message = e.value
-            elif e.message:
-                message = e.message
-            raise exceptions.ValidationError(message)
+            raise exceptions.ValidationError(e)
 
         vals['id'] = lid.id
         return lid
