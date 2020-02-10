@@ -469,8 +469,12 @@ class e2yun_customer_info(models.Model):
         self.state = 'done'
         # except Exception as e:
         #     raise UserError(u'转正式客户失败，请在工作流中添加^完成^状态')
-      finally:
+      except Exception as e:
+          raise UserError(u''+str(e))
+      if self.partner_id:
         return self.partner_id
+      else:
+        return False
 
     @api.model
     def _get_default_image(self, partner_type, is_company, parent_id):

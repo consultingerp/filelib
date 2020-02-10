@@ -8,6 +8,9 @@
                 <xpath expr="//field[@name='priority']" position="before">
                     <field name="proposal_type"/>
                 </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="options">{"no_create": True}</attribute>
+                </xpath>
                 <xpath expr="//div[hasclass('o_row_readonly')]" position="replace">
                     <div class="o_row o_row_readonly">
                         <field name="email_from"
