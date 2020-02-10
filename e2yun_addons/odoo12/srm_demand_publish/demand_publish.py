@@ -207,7 +207,7 @@ class mat_demand_head(models.Model):
 class mat_demand_line_details(models.Model):
     _name = "mat.demand.line.details"
     _table = 'mat_demand_line_details'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
+    # _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = "物料需求明细行"
 
     STATE_SELECTION = [
