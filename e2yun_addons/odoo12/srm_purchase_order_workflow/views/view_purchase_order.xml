@@ -109,6 +109,8 @@
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='do_print_picking']" position="replace">
                 </xpath>
+                <xpath expr="//button[@name='153']" position="replace">
+                </xpath>
             </field>
         </record>
   </data>
