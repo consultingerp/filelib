@@ -8,7 +8,7 @@
     "license": "LGPL-3",
     "author": "chuqiu.xu",
     "website": "https://www.e2yun.com/",
-    'depends': ['purchase'],
+    'depends': ['purchase','stock'],
     'data': [
         'views/view_purchase_order.xml',
         'views/purchase_order_email_template.xml',

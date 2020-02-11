@@ -153,12 +153,16 @@ class Agreement(models.Model):
                         if (tier_review_data.write_date+day)<now:
                             partner_ids = []
                             if tier_review_data.w_approver_id:
-                                partner_ids.append([6, False, tier_review_data.w_approver_id])
+                                partner_idsids=[]
+                                partner_idsids.append(tier_review_data.w_approver_id.partner_id.id)
+                                partner_ids.append([6, False, partner_idsids])
                                 self.emil_temp(agreement_data.id,partner_ids)
                             else:
                                 #审批组、找到团队祖负责人
                                 if agreement_data.assigned_user_id:
-                                    partner_ids.append([6, False, agreement_data.assigned_user_id. sale_team_id.user_id.id])
+                                    partner_idsids = []
+                                    partner_idsids.append(agreement_data.assigned_user_id.sale_team_id.user_id.id)
+                                    partner_ids.append([6, False, partner_idsids])
                                     self.emil_temp(agreement_data.id, partner_ids)
 
                             break
@@ -168,12 +172,16 @@ class Agreement(models.Model):
                         if (tier_review_data_temp.write_date + day) < now:
                             partner_ids = []
                             if tier_review_data.w_approver_id:
-                                partner_ids.append([6, False, tier_review_data.w_approver_id.id])
+                                partner_idsids = []
+                                partner_idsids.append(tier_review_data.w_approver_id.partner_id.id)
+                                partner_ids.append([6, False, partner_idsids])
                                 self.emil_temp(agreement_data.id, partner_ids)
                             else:
                                 # 审批组、找到团队祖负责人
                                 if agreement_data.assigned_user_id:
-                                    partner_ids.append([6, False, agreement_data.assigned_user_id.sale_team_id.user_id.id])
+                                    partner_idsids = []
+                                    partner_idsids.append(agreement_data.assigned_user_id.sale_team_id.user_id.id)
+                                    partner_ids.append([6, False, partner_idsids])
                                     self.emil_temp(agreement_data.id, partner_ids)
                             break
 
@@ -199,7 +207,8 @@ class Agreement(models.Model):
             vals['partner_ids'] =partner_ids
             vals['body'] = attachment_ids_value['value']['body']
             vals['res_id'] = id
-            vals['email_from'] = attachment_ids_value['value']['email_from']
+            #vals['email_from'] = attachment_ids_value['value']['email_from']
+            vals['email_from'] = 'postmaster-odoo@e2yun.com'
             vals['subject'] = attachment_ids_value['value']['subject']
 
             #attachment_ids = []
@@ -213,9 +222,9 @@ class Agreement(models.Model):
             #attachment_ids.append([6, False, [4097]])
             #vals['attachment_ids'] = attachment_ids
 
-            emil_id = self.env['mail.compose.message'].create(vals)
+            mail_compose=self.env['mail.compose.message'].create(vals)
 
-            emil_id.action_send_mail()
+            mail_compose.action_send_mail()
 
 
     def import_file(self):

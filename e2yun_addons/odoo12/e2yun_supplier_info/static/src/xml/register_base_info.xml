@@ -60,7 +60,7 @@
                                 <label class="col-form-label" for="website">公司网站</label>
                               </div>
                               <div class="col-lg-3 col-md-8">
-                                <input type="text" t-att-readonly="'readonly' if is_view else None" placeholder="非必填项" class="form-control o_website_form_input" t-att-value="supplier.website" name="website"/>
+                                <input type="text" t-att-readonly="'readonly' if is_view else None" placeholder="非必填项" class="form-control o_website_form_input" t-att-value="supplier.website" name="website" id="website"/>
                                 <!--<input type="text" t-att-readonly="'readonly' if is_view else None" placeholder="非必填项" class="form-control o_website_form_input" name="website"/>-->
                               </div>
                             </div>
@@ -453,7 +453,8 @@
                             <div class="form-group row">
                               <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
                                 <t t-if="is_view == False">
-                                  <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>
+<!--                                  <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>-->
+                                  <input type="button" class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text" value="添加"/>
                                 </t>
                                 <span id="o_website_form_result" class="text-danger ml8"/>
                               </div>
@@ -862,7 +863,13 @@
                           <div class="form-group row">
                             <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
                               <t t-if="is_view == False">
-                                <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>
+<!--                                <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>-->
+                              <input type="button" class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text" value="添加" onclick="refresh()"/>
+                              <script>
+                                    function refresh(){
+                                      setTimeout(function(){ location.assign(location); }, 500);
+                                    }
+                              </script>
                               </t>
                               <span id="o_website_form_result" class="text-danger ml8"/>
                             </div>
@@ -881,7 +888,17 @@
                   <div class="form-group row">
                     <!--<div t-attf-class="clearfix oe_login_buttons text-center mb-1 {{'pt-2' if form_small else 'pt-3'}}">-->
                     <div class="col-lg-12 s_title pt16 pb16" style="text-align: center;">
-                      <div class="s_btn pb0 pt0 text-center" data-name="Buttons"><a href="/supplier/register_authentication_info/" class="rounded-circle rounded-circle rounded-circle rounded-circle btn btn-success rounded-circle btn-lg" data-original-title="" title="" aria-describedby="tooltip84497">下一步</a>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</div>
+                      <div class="s_btn pb0 pt0 text-center" data-name="Buttons">
+                        <t t-if="is_view == True">
+                          <a href="/supplier/register_authentication_info/" class="rounded-circle rounded-circle rounded-circle rounded-circle btn btn-success rounded-circle btn-lg" data-original-title="" title="" aria-describedby="tooltip84497">下一步</a>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;
+<!--                        <a href="javascript:void(0);" class="rounded-circle rounded-circle rounded-circle rounded-circle btn btn-success rounded-circle btn-lg" data-original-title="" title="" aria-describedby="tooltip84497" onclick="js_method()">下一步</a>-->
+<!--                        <script>-->
+<!--                            function js_method(){-->
+<!--                              setTimeout(function(){ location.assign(location); }, 500);-->
+<!--                            }-->
+<!--                        </script>-->
+                        </t>
+                      </div>
                     </div>
                   </div>
                 <!--</form>-->

@@ -712,7 +712,7 @@ class srm_po_sync_task(models.Model):
             vals['email_from'] = order.create_uid.email
             vals['subject'] = attachment_ids_value['value']['subject']
             emil_id = self.env['mail.compose.message'].create(vals)
-            emil_id.send_mail_action()
+            emil_id.send_mail()
 
     def srm_wkf_confirm_order(self, cr, uid, ids,state, context=None):
         self.button_confirm_sync(cr, uid, ids,state)
