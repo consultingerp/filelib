@@ -2,6 +2,8 @@
 
 from odoo import models, fields, api, _, exceptions
 import logging
+import math
+from numpy import nan as NaN
 _logger = logging.getLogger(__name__)
 
 
@@ -76,7 +78,6 @@ class e2yun_survey_question_extends(models.Model):
         #         if question_type_name in ['file', 'pull_down', 'score']:
         #             question_type_name = 'free_text'
         #         vals['type'] = question_type_name
-        res = super(e2yun_survey_question_extends, self).write(vals)
         for item in self:
             if item.scoring_method == '唯一性计分':
                 if item.labels_ids:
@@ -93,8 +94,10 @@ class e2yun_survey_question_extends(models.Model):
             elif item.scoring_method == '选择性计分':
                 if item.labels_ids:
                     for l in item.labels_ids:
-                        if l.quizz_mark == 0:
+                        if l.quizz_mark is False:
                             raise exceptions.Warning(_('选择性计分每个选项都有分值，请重新输入'))
+        res = super(e2yun_survey_question_extends, self).write(vals)
+
         return res
 
     # ⑥创建问题保存时，系统校验 “题库大类”和“计分方式”是否选择，如果未选择，则弹出提示“计分方式未选择，请选择”；# 唯一性计分分值超出则弹框提醒；选择性计分只能有唯一答案，但每个选项都有分数，否则弹框提醒。
@@ -108,23 +111,28 @@ class e2yun_survey_question_extends(models.Model):
         #         if question_type_name in ['file', 'pull_down', 'score']:
         #             question_type_name = 'free_text'
         #         vals['type'] = question_type_name
-        res = super(e2yun_survey_question_extends, self).create(vals)
-        if res.scoring_method == '唯一性计分':
-            if res.labels_ids:
+        if 'scoring_method' in vals and vals['scoring_method'] == '唯一性计分':
+            if 'labels_ids' in vals:
                 # count = 0
                 all = []
-                for l in self.labels_ids:
-                    if l.quizz_mark > 0.0:
-                        all.append(l.quizz_mark)
+                for l in vals['labels_ids']:
+                    if l[0] == 1 and l[2] is not False:
+                        if 'quizz_mark' in l[2] and l[2]['quizz_mark'] > 0.0:
+                            all.append(l.quizz_mark)
                 # statistics = all.count(0.0)
                 # if count > 2 or count == 1 or statistics > 1 or statistics == 0:
                 if len(all) >= 2:
                     raise exceptions.Warning(_('唯一性计分只能给一个选项赋值，其他为0，请重新输入'))
-        elif res.scoring_method == '选择性计分':
-            if res.labels_ids:
-                for l in res.labels_ids:
-                    if l.quizz_mark == 0:
-                        raise exceptions.Warning(_('选择性计分每个选项都有分值，请重新输入'))
-        if not res.question_bank_type or not res.scoring_method:
+        elif 'scoring_method' in vals and vals['scoring_method'] == '选择性计分':
+            if 'labels_ids' in vals:
+                for l in vals['labels_ids']:
+                    if l[0] == 1 and l[2] is not False:
+                        if 'quizz_mark' in l[2] and l[2]['quizz_mark'] is False:
+                            raise exceptions.Warning(_('选择性计分每个选项都有分值，请重新输入'))
+                        elif 'quizz_mark' not in l[2]:
+                            raise exceptions.Warning(_('选择性计分每个选项都有分值，请重新输入'))
+        if 'question_bank_type' not in vals or 'scoring_method' not in vals:
             raise exceptions.Warning(_('题库大类或计分方式未选择，请选择'))
+        res = super(e2yun_survey_question_extends, self).create(vals)
+
         return res
