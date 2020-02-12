@@ -1,30 +1,26 @@
-odoo.define('srm.scheduling', function (require) {
-"use strict";
-var core = require('web.core');
-var Widget = require('web.Widget');
-var ajax = require('web.ajax');
-var rpc = require('web.rpc');
-var QWeb = core.qweb;
-var NotificationManager = require('web.notification').NotificationManager;
-var mixins = require('web.mixins');
-var page=0; //初始页
-var size=4; //每页显示多少条
-var table_data_map={};
-var current_select_bmeng="";
-var is_supplier=true;
-var supplier_bmeng_temp=0;
-var s_c_schedul_map;  //供应商确认数据列表
-var initial_requirement_map; //期初需求
-var revisions_edit_flag=""; //验证是否历史版本，历史版本：0，不能编辑
+odoo.define('srm_scheduling', function (require) {
+    "use strict";
+    var core = require('web.core');
+    var Widget = require('web.Widget');
+    var ajax = require('web.ajax');
+    var rpc = require('web.rpc');
+    var QWeb = core.qweb;
+    var mixins = require('web.mixins');
+    var page=0; //初始页
+    var size=4; //每页显示多少条
+    var table_data_map={};
+    var current_select_bmeng="";
+    var is_supplier=true;
+    var supplier_bmeng_temp=0;
+    var s_c_schedul_map;  //供应商确认数据列表
+    var initial_requirement_map; //期初需求
+    var revisions_edit_flag=""; //验证是否历史版本，历史版本：0，不能编辑
 var srm_scheduling = Widget.extend({
-template: 'srm_scheduling_qweb',
-init:function(parent, action){
-     var self = this;
-     this._super.apply(this, arguments);
-     var q=this.$el;
-     var mixins = require('web.mixins');
- },
-start: function() {
+    template: 'srm_scheduling_qweb',
+    init:function(){
+         this._super.apply(this, arguments);
+     },
+    start: function() {
     var q=this.$el;
     var self = this;
     var supplier=q.find("#query_supplier_code").val();
@@ -68,7 +64,7 @@ start: function() {
           });
 
 
-},
+    },
     test_read: function (self,size, page,supplier,werks,query_xqrq_e,query_matnr) {
         var q=this.$el;
         var totalData=0
@@ -492,8 +488,8 @@ start: function() {
                                 qrrr['matnr']= v['matnr'];
                                 qrrr['lifnr']=v['lifnr'];
                                 qrrr['versi']=v['versi'];
-                                qrrr['line_state']="供应商确认"
-                                qrrr['total_requirement']=v['total_requirement']
+                                qrrr['line_state']="供应商确认";
+                                qrrr['total_requirement']=v['total_requirement'];
                                 qrrr['matnr']= v['matnr'];
                                 qrrr['matnr_a']= v['matnr_a'];
                                 qrrr['supplier_code']= v['supplier'];
@@ -702,13 +698,20 @@ start: function() {
             table_content+="<tr><td>2018年7月3日14:41:51</td><td>adddmn</td><td></td><td>100</td></tr>"
        }
 
-       tb.append(table_content)
+       tb.append(table_content);
         $('#model_datalog').modal('show');
-    }
+    },
+    on_attach_callback: function () {
+
+    },
+    canBeRemoved: function () {
+        return $.when();
+    },
+    on_detach_callback: function () {}
 
 });
 
-core.action_registry.add('srm_scheduling_main', srm_scheduling);
+core.action_registry.add('srm_scheduling', srm_scheduling);
 
 return srm_scheduling;
 });

@@ -10,7 +10,7 @@
     "version": "12.0.1.0.0",
     "license": "LGPL-3",
     "author": "chuqiu.xu",
-    'depends': ['web','srm_demand_publish'],
+    'depends': ['base','web','srm_demand_publish'],
     'data': [
         'views/qweb_templates.xml',
         'views/manager_view.xml',

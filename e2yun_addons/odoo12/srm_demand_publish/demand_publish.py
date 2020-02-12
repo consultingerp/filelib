@@ -52,12 +52,15 @@ class mat_demand_head(models.Model):
         if isAdd[0]:
             mat_id=isAdd[0]
             #更新行项目
+            temp_lines = []
             for line_details in vals['mat_demand_line_details']:
                 vals_temp= line_details[2]
                 vals_temp['create_versi']=createversi
                 vals_temp['mat_demand_id']=mat_id
                 vals_temp['ddate']=self.env['mat.demand.line.details'].tranDate(vals_temp['ddate'])
-                vals_temp['pdate'] = self.env['mat.demand.line.details'].tranDate(vals_temp['pdate'])
+                if vals_temp.get('pdate',False):
+                    vals_temp['pdate'] = self.env['mat.demand.line.details'].tranDate(vals_temp['pdate'])
+
                 sql = "select *  from mat_demand_line_details where 1=1  and  mat_demand_id=" + str(mat_id) + ""
                 ids_temp=[]
                 if 'needs_no' in vals_temp.keys():#需求号逻辑
@@ -81,11 +84,14 @@ class mat_demand_head(models.Model):
                         continue
                     vals_temp['publish'] = 'f'
                     line_obj = self.env['mat.demand.line.details'].browse(ids_temp[0]['id'])
-                    line_obj.write(vals_temp)
-                    rmat_id = super(mat_demand_head, self).browse(line_obj.mat_demand_id.id)
+                    d = line_obj.write(vals_temp)
+                    rmat_id = line_obj.mat_demand_id
                 else:
-                    rmat_id=self.env['mat.demand.line.details'].create(vals_temp)
-
+                    temp_lines.append(vals_temp)
+                    rmat_id = self.browse(vals_temp['mat_demand_id'])
+                    # d = self.env['mat.demand.line.details'].create(vals_temp)
+            if len(temp_lines) > 0:
+                d = self.env['mat.demand.line.details'].create(temp_lines)
         else:
             #默认一个版本
             vals['versi']='1'
@@ -293,14 +299,14 @@ class mat_demand_line_details(models.Model):
                 cr.execute(sql)
 
     def tranDate(self,strDate):
-        strDate1 = '';
+        strDate1 = ''
         try:
             if strDate.find('/',0,len(strDate)) > 0:
                 strDate1 = datetime.strftime(datetime.strptime(strDate, '%Y/%m/%d'), '%Y-%m-%d');
             elif strDate.find('.', 0, len(strDate)) > 0:
                 strDate1 = datetime.strftime(datetime.strptime(strDate, '%Y.%m.%d'), '%Y-%m-%d');
             elif strDate.find('-', 0, len(strDate)) > 0:
-                strDate1 = strDate;
+                strDate1 = strDate
 
             if len(strDate1) < 10 or len(strDate1) > 10:
                 raise exceptions.ValidationError("Date format error, correct case example: 2018-07-02. Please re-enter.");
@@ -308,116 +314,134 @@ class mat_demand_line_details(models.Model):
             raise exceptions.ValidationError("Date format error, correct case example: 2018-07-02. Please re-enter.");
         return strDate1
 
-    @api.model
-    def create(self,vals):
+    @api.model_create_multi
+    def create(self,values):
+
         is_supplier = self.env['res.users']._get_default_supplier()
         # 供应商不能创建
         if is_supplier != 0:
             return True
 
-
-
-        matobj = self.env['product.product'].browse(vals['matnr'])
-
-        uom_id = matobj.product_tmpl_id.uom_id.id
         supplier_self = self.env['product.supplierinfo']
         comco = self.env['res.company']._company_default_get('mat.demand.head')
-        supplierinfo_temp = supplier_self.search([('product_tmpl_id', '=', matobj.product_tmpl_id.id),
-                                                      ('company_id', '=', comco.id)],);
 
-        if not supplierinfo_temp:
-            raise exceptions.ValidationError(matobj.default_code + " Material does not maintain the supplier")
+        add_vals = []
 
-        supplierinfo = []
-        pe=0
-        sinfo = [];
+        for vals in values:
+            matobj = self.env['product.product'].browse(vals['matnr'])
+            uom_id = matobj.product_tmpl_id.uom_id.id
+            supplierinfo_temp = supplier_self.search([('product_tmpl_id', '=', matobj.product_tmpl_id.id),
+                                                          ('company_id', '=', comco.id)],)
 
-        # 	配额分配的一个要求是优先有PO的供应商，（PO的优先级>配额）
-        # for supplier in supplierinfo_temp:
-        #     s_obj = supplier_self.browse(cr, uid, supplier)
-        #     po_sql = " select SUM (p1.product_qty) - SUM (p1.delivery_qty) AS unclean_po  "
-        #     po_sql += "from purchase_order p "
-        #     po_sql += "left join purchase_order_line p1  "
-        #     po_sql += "on p1.order_id = p.id  "
-        #     po_sql += "where p.partner_id = " + str(s_obj.name.id) + "  "
-        #     po_sql += "and p.state <> 'cancel'  "
-        #     po_sql += "and p1.product_id =" + str(vals['matnr']) + ""
-        #     cr.execute(po_sql)
-        #     value_po = cr.fetchone()
-        #     if value_po and value_po[0] >0:
-        #         if s_obj.the_quota>0:
-        #             pe = s_obj.the_quota + pe
-        #             sinfo.append(s_obj)
-        #         supplierinfo.append(supplier)
-        #
-        # if not supplierinfo:
-        #     print(1)
-        #     #raise exceptions.ValidationError(matobj.default_code + " No outstanding purchase orders")
+            if not supplierinfo_temp:
+                raise exceptions.ValidationError(matobj.default_code + " Material does not maintain the supplier")
 
-        for supplier in supplierinfo_temp:
-            s_obj = supplier_self.browse(supplier.id)
-            if s_obj.the_quota > 0:
-                pe = s_obj.the_quota + pe
-                sinfo.append(s_obj)
+            supplierinfo = []
+            pe=0
+            sinfo = []
 
-        supplierinfo=supplierinfo_temp
+            for supplier in supplierinfo_temp:
+                s_obj = supplier_self.browse(supplier.id)
+                if s_obj.the_quota > 0:
+                    pe = s_obj.the_quota + pe
+                    sinfo.append(s_obj)
 
-        head_history_data = self.env['mat.demand.head'].browse(vals['mat_demand_id'])
-        self.valida_is_history_data(head_history_data.history_data)
-        ddate = str(vals['ddate']);
-        vals['ddate'] = self.tranDate(ddate);
+            supplierinfo=supplierinfo_temp
 
-        try:
-           pdate = str(vals['pdate']);
-           vals['pdate'] = self.tranDate(pdate);
-        except:
-          pass
+            head_history_data_id = vals.get('mat_demand_id',False)
+            if not head_history_data_id:
+                head = self.env['mat.demand.head'].search([('history_data','=',False)],limit=1)
+                head_history_data_id = head.id
+                vals['mat_demand_id'] = head_history_data_id
 
-        try:
-           if len(supplierinfo) == 1:
-               s_obj = supplier_self.browse(supplierinfo.id)
-               vals['lifnr'] = s_obj.name.id
-               vals['meins'] = uom_id
-               lid = super(mat_demand_line_details, self).create( vals)
-               self.update_state(lid.id)
-           else:
-               if len(sinfo) == 1:
-                   s_obj = sinfo[0]
-                   vals['lifnr'] = s_obj.name.id
-                   vals['meins'] = uom_id
-                   lid = super(mat_demand_line_details, self).create(vals)
-                   self.update_state(lid.id)
-               elif len(sinfo) == 0:
-                   menge = vals['menge'] / len(supplierinfo)
-                   for supplier in supplierinfo:
-                       s_obj = supplier_self.browse(supplier.id)
-                       vals['lifnr'] = s_obj.name.id
-                       vals['meins'] = uom_id
-                       vals['menge'] = menge
-                       lid = super(mat_demand_line_details, self).create(vals)
-                       self.update_state(lid.id)
-               else:
-                   total_menge = vals['menge']
-                   remaining_quantity=0
-                   i=1
-                   for s in sinfo:
-                       s_obj = s
-                       if i==len(sinfo):
-                           vals['lifnr'] = s_obj.name.id
-                           vals['meins'] = uom_id
-                           vals['menge'] = remaining_quantity
-                       else:
-                           vals['lifnr'] = s_obj.name.id
-                           vals['meins'] = uom_id
-                           vals['menge'] = round(s_obj.the_quota / pe * total_menge,0);
-                           remaining_quantity = total_menge - vals['menge']
-                       lid = super(mat_demand_line_details, self).create(vals)
-                       i=i+1
-                       self.update_state(lid.id)
-        except BaseException as e:
-            raise exceptions.ValidationError(e)
 
-        vals['id'] = lid.id
+            head_history_data = self.env['mat.demand.head'].browse(head_history_data_id)
+            self.valida_is_history_data(head_history_data.history_data)
+            ddate = str(vals['ddate'])
+            vals['ddate'] = self.tranDate(ddate)
+
+            try:
+               pdate = str(vals['pdate'])
+               vals['pdate'] = self.tranDate(pdate)
+            except:
+              pass
+
+            if len(supplierinfo) == 1:
+                s_obj = supplier_self.browse(supplierinfo.id)
+                vals['lifnr'] = s_obj.name.id
+                vals['meins'] = uom_id
+                # lid = super(mat_demand_line_details, self).create(vals)
+                # self.update_state(lid.id)
+                # return lid
+            else:
+                if len(sinfo) == 1:
+                    s_obj = sinfo[0]
+                    vals['lifnr'] = s_obj.name.id
+                    vals['meins'] = uom_id
+                    # lid = super(mat_demand_line_details, self).create(vals)
+                    # self.update_state(lid.id)
+                    # return lid
+                elif len(sinfo) == 0:
+                    menge = vals['menge'] / len(supplierinfo)
+                    num = 0
+                    copy_vals = vals.copy()
+
+                    for supplier in supplierinfo:
+                        s_obj = supplier_self.browse(supplier.id)
+                        if num > 0:
+                            copy_vals['lifnr'] = s_obj.name.id
+                            copy_vals['meins'] = uom_id
+                            copy_vals['menge'] = menge
+                            add_vals.append(copy_vals)
+                        else:
+                            vals['lifnr'] = s_obj.name.id
+                            vals['meins'] = uom_id
+                            vals['menge'] = menge
+                        num = num + 1
+                        # lid = super(mat_demand_line_details, self).create(vals)
+                        # self.update_state(lid.id)
+                else:
+                    total_menge = vals['menge']
+                    remaining_quantity = 0
+                    i = 1
+                    num = 0
+                    copy_vals = vals.copy()
+                    for s in sinfo:
+                        s_obj = s
+                        if num > 0:
+                            if i == len(sinfo):
+                                copy_vals['lifnr'] = s_obj.name.id
+                                copy_vals['meins'] = uom_id
+                                copy_vals['menge'] = remaining_quantity
+                            else:
+                                copy_vals['lifnr'] = s_obj.name.id
+                                copy_vals['meins'] = uom_id
+                                copy_vals['menge'] = round(s_obj.the_quota / pe * total_menge, 0)
+                                remaining_quantity = total_menge - copy_vals['menge']
+                                add_vals.append(copy_vals)
+                        else:
+                            if i == len(sinfo):
+                                vals['lifnr'] = s_obj.name.id
+                                vals['meins'] = uom_id
+                                vals['menge'] = remaining_quantity
+                            else:
+                                vals['lifnr'] = s_obj.name.id
+                                vals['meins'] = uom_id
+                                vals['menge'] = round(s_obj.the_quota / pe * total_menge, 0)
+                                remaining_quantity = total_menge - vals['menge']
+
+
+                        # lid = super(mat_demand_line_details, self).create(vals)
+                        i = i + 1
+                        # self.update_state(lid.id)
+        values.extend(add_vals)
+
+        lid = super(mat_demand_line_details, self).create(values)
+        for l in lid:
+            # l = super(mat_demand_line_details, self).create(v)
+            # lid.append(l)
+            self.update_state(l.id)
+
         return lid
 
 
@@ -428,7 +452,7 @@ class mat_demand_line_details(models.Model):
 
         for id in self.ids:
             sql = "update mat_demand_line_details set calculate_initial_flag='f' where id=" + str(id) + ""
-            cr.execute(sql);
+            cr.execute(sql)
             mat = self.browse(id)
             self.valida_delivery_order(mat,'D')
             vals = {}
@@ -461,7 +485,7 @@ class mat_demand_line_details(models.Model):
             ids=vals['ids']
             line_obj = self.browse(ids[0])
         else:
-            raise exceptions.ValidationError("更新异常。");
+            raise exceptions.ValidationError("更新异常。")
         if is_supplier != 0 :
             # 供应商批量确认
 
@@ -499,7 +523,7 @@ class mat_demand_line_details(models.Model):
         if (mat_obj.state == 'publish'):
             for id in ids:
                 sql = "update mat_demand_line_details set calculate_initial_flag='f' where id=" + str(id) + ""
-                cr.execute(sql);
+                cr.execute(sql)
                 line_obj = self.browse(id)
 
                 if line_obj.state != 'not_confirm' and line_obj.state != 'delete':
@@ -507,11 +531,11 @@ class mat_demand_line_details(models.Model):
                         if vals['publish'] != 't':
                             sql = "update mat_demand_line_details set publish='f',state='purchase_edit' where id=" + str(
                                 id) + ""
-                            cr.execute(sql);
+                            cr.execute(sql)
                     else:
                         sql = "update mat_demand_line_details set publish='f',state='purchase_edit' where id=" + str(
                             id) + ""
-                        cr.execute(sql);
+                        cr.execute(sql)
                 vals['id'] = id
                 vals['lifnr'] = line_obj.lifnr.id
                 vals['matnr'] = line_obj.matnr.id
@@ -531,12 +555,12 @@ class mat_demand_line_details(models.Model):
                 vals['state'] = state_temp
                 if line_obj.menge != line_obj.bmeng:
                     sql = "update mat_demand_line_details set delivery='f' where id=" + str(id) + ""
-                    cr.execute(sql);
+                    cr.execute(sql)
                 self.insert_mat_demand_line_details(vals)
         else:
             for id in ids:
                 sql = "update mat_demand_line_details set calculate_initial_flag='f' where id=" + str(id) + ""
-                cr.execute(sql);
+                cr.execute(sql)
                 line_obj = self.browse(id)
                 if line_obj.state != 'not_confirm' and line_obj.state != 'delete':
                     self.valida_delivery_order(line_obj, 'W')
@@ -548,7 +572,7 @@ class mat_demand_line_details(models.Model):
                 vals['state'] = line_obj.state
                 if line_obj.menge != line_obj.bmeng:
                     sql = "update mat_demand_line_details set delivery='f' where id=" + str(id) + ""
-                    cr.execute(sql);
+                    cr.execute(sql)
                 self.insert_mat_demand_line_details (vals)
         return True
 
@@ -593,7 +617,7 @@ class mat_demand_line_details(models.Model):
 
 
         if type == 'D':
-            if delivery_dnmng and delivery_dnmng[0] >0:
+            if delivery_dnmng and delivery_dnmng[0] and delivery_dnmng[0] >0:
                 raise exceptions.ValidationError(
                     line_obj.lifnr.name + "," + line_obj.matnr.default_code + "," + line_obj.ddate + ",删除失败，已创建交货单," + str(
                         delivery_dnmng[0]))
@@ -605,12 +629,12 @@ class mat_demand_line_details(models.Model):
     def insert_mat_demand_line_details(self,valss):
         cr=self._cr
         sql = "delete from mat_demand_line WHERE lifnr=" + str(valss['lifnr']) + " and ddate='" + str(valss['ddate']) + "' and matnr=" + str( valss['matnr'])+" and mat_demand_id ="+str(valss['mat_demand_id'])+""
-        cr.execute(sql);
+        cr.execute(sql)
 
         sql = "delete from mat_demand_line WHERE id=" + str(valss['id']) + " "
-        cr.execute(sql);
+        cr.execute(sql)
 
-        sql = "SELECT ";
+        sql = "SELECT "
         sql += " ID, "
         sql += " bmeng,"
         sql += " mat_demand_id,"
@@ -714,7 +738,7 @@ class mat_demand_line_details(models.Model):
                     vals[12], vals[13],vals[14],vals[15],vals[16]))
 
         # 合并原始表数据
-        sql = "SELECT ";
+        sql = "SELECT "
         sql += " ID, "
         sql += " bmeng,"
         sql += " mat_demand_id,"

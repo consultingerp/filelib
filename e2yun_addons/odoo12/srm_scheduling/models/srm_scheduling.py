@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from odoo import api, fields, models, exceptions, _
 import datetime
+import json
+from odoo.tools import date_utils
 
 
 class srm_scheduling(models.Model):
@@ -278,7 +280,7 @@ class srm_scheduling(models.Model):
                       map_data_value={}
 
                       #记录当天已排程数量，用于计算不能超过总需求+期初需求+数量容差+最小包装量
-                      s_c_schedule_maps[data_value['ddate']] = {'bmeng': data_value['bmeng'],
+                      s_c_schedule_maps[str(data_value['ddate'])] = {'bmeng': data_value['bmeng'],
                                                                 'menge': data_value['menge']}
                       bmeng_temp=0
                       menge_temp=0
@@ -324,7 +326,7 @@ class srm_scheduling(models.Model):
                       delivery_sql += " where h.comco = %s and h.werks = %s and h.lifnr = %s and l.matnr = %s"
                       delivery_sql += " and h.datoo = %s and h.state not in ('supplier_cancel') "
                       delivery_sql += " and l.version_id = %s "
-                      self._cr.execute(delivery_sql, (data_value['comco'], data_value['werks'], data_value['lifnr'], data_value['matnr'], data_value['ddate'], data['id']))
+                      self._cr.execute(delivery_sql, (data_value['comco'], data_value['werks'], data_value['lifnr'], data_value['matnr'], str(data_value['ddate']), data['id']))
                       delivery_dnmng = self._cr.fetchone()
                       if delivery_dnmng[0]:
                           map_data_value['jhtsl']  = delivery_dnmng[0]
@@ -337,7 +339,7 @@ class srm_scheduling(models.Model):
                       else:
                           map_data_value['yjhsl'] =""
 
-                      list_requirement_line[map_data_value['ddate']]=map_data_value
+                      list_requirement_line[str(map_data_value['ddate'])]=map_data_value
 
             initial_requirement_map[data_key]['qcxqsl'] =qcxqsl; # 原始期初需求， #计算当前排程考虑的期初需求后剩余的期初需求
             initial_requirement_map[data_key]['ysqcxqsl'] = ysqcxqsl;

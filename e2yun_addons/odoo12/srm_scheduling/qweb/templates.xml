@@ -81,7 +81,7 @@
        </div>
 
                   <div class="modal fade" id="modelupdate_bmeng" role="dialog" aria-hidden="true">
-                       <div class="modal-dialog1">
+                       <div class="modal-dialog modal-dialog1">
                             <div class="modal-header">
                               <h4 class="modal-title">录入排程数量</h4>
                             </div>

@@ -2,15 +2,15 @@
 <openerp>
     <data>
 
- <record id="action_srm_scheduling_supplier" model="ir.actions.client">
-            <field name="name">供应商确认</field>
-            <field name="tag">srm_scheduling_main</field>
- </record>
+         <record id="action_srm_scheduling_supplier" model="ir.actions.client">
+                    <field name="name">供应商确认</field>
+                    <field name="tag">srm_scheduling</field>
+         </record>
 
- <record id="action_srm_scheduling" model="ir.actions.client">
-            <field name="name">Buyer confirmation</field>
-            <field name="tag">srm_scheduling_main</field>
- </record>
+         <record id="action_srm_scheduling" model="ir.actions.client">
+                    <field name="name">Buyer confirmation</field>
+                    <field name="tag">srm_scheduling</field>
+         </record>
 
         <menuitem id="menu_srm_scheduling"
                   name="Scheduling management"
