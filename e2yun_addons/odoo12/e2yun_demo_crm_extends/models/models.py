@@ -66,3 +66,18 @@ class e2yun_demo_crm_extend_crm_lead(models.Model):
     proposal_type = fields.Selection([("recruiting", "邀请"),
                                       ("structured RFP", "招标"),
                                       ("prospecting", "探寻")], '方案类型', track_visibility='onchange')
+
+class e2yun_demo_crm_extend_crm_lead_lost(models.TransientModel):
+    _inherit = 'crm.lead.lost'
+
+    @api.multi
+    def action_lost_reason_apply(self):
+        leads = self.env['crm.lead'].browse(self.env.context.get('active_ids'))
+        btn_type = self.env.context.get('btn_type', False)
+        if btn_type:
+            # stage = self.env['crm.stage'].search([('name', '=', btn_type)])
+            leads.write({'lost_reason': self.lost_reason_id.id, 'stage_id': 11,
+                         'losssuspend_detail': self.losssuspend_detail})
+        else:
+            leads.write({'lost_reason': self.lost_reason_id.id, 'losssuspend_detail': self.losssuspend_detail})
+        return leads.action_set_lost()
