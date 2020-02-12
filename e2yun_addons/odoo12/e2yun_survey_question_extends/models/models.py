@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 class e2yun_survey_question_extends(models.Model):
     _inherit = 'survey.question'
 
-    highest_score = fields.Float(string='最高分值')
+    highest_score = fields.Float(string='最高分值', compute='_compute_highest_score', default=0.0)
     scoring_method = fields.Selection([('唯一性计分', '唯一性计分'), ('选择性计分', '选择性计分'), ('不计分', '不计分')], string='计分方式', required=True)
     reference_existing_question = fields.Many2one('survey.question', string='引用已有题库')
     # 题库页面创建并可以保存，继承并修改：required=False
@@ -44,6 +44,15 @@ class e2yun_survey_question_extends(models.Model):
             return {}
         else:
             return checker(post, answer_tag)
+
+    def _compute_highest_score(self):
+        for record in self:
+            if len(record.labels_ids) > 0 and record.type in ['simple_choice', 'multiple_choice']:
+                record_highest_score = 0.0
+                for line in record.labels_ids:
+                    if line.quizz_mark > record_highest_score:
+                        record_highest_score = line.quizz_mark
+                record.highest_score = record_highest_score
 
     @api.onchange('labels_ids')
     def _onchange_score(self):
