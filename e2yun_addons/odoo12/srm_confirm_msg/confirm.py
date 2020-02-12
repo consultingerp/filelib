@@ -36,7 +36,7 @@ class confirm_msg(models.TransientModel):
 
     @api.multi
     def do_confirm_action(self):
-        view = self.env.ref('confirm_msg.view_confirm_msg')
+        view = self.env.ref('srm_confirm_msg.view_confirm_msg')
 
         return {
             'name': self.confirm_title,
