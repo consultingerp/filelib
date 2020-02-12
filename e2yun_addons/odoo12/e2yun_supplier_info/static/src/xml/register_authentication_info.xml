@@ -762,7 +762,13 @@
                           <div class="form-group row">
                             <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
                               <t t-if="is_view == False">
-                                <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>
+<!--                                <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>-->
+                                <input type="button" class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text" value="添加" onclick="refresh()" />
+                                <script>
+                                    function refresh(){
+                                      setTimeout(function(){ location.assign(location); }, 500);
+                                    }
+                              </script>
                               </t>
                               <span id="o_website_form_result" class="text-danger ml8"/>
                             </div>
@@ -778,7 +784,7 @@
                 </div>
                 <div class="col-lg-12 s_title pt16 pb16" style="text-align: center;">
                   <div class="s_btn pb0 pt0 text-center" data-name="Buttons">
-                    <t t-if="is_view == False">
+                    <t t-if="is_view == True">
                       <a href="/supplier/register_done" class="rounded-circle rounded-circle rounded-circle rounded-circle btn btn-success rounded-circle btn-lg" data-original-title="" title="" aria-describedby="tooltip84497">下一步</a>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;
                     </t>
                   </div>

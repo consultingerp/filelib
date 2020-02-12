@@ -888,7 +888,17 @@
                   <div class="form-group row">
                     <!--<div t-attf-class="clearfix oe_login_buttons text-center mb-1 {{'pt-2' if form_small else 'pt-3'}}">-->
                     <div class="col-lg-12 s_title pt16 pb16" style="text-align: center;">
-                      <div class="s_btn pb0 pt0 text-center" data-name="Buttons"><a href="/supplier/register_authentication_info/" class="rounded-circle rounded-circle rounded-circle rounded-circle btn btn-success rounded-circle btn-lg" data-original-title="" title="" aria-describedby="tooltip84497">下一步</a>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</div>
+                      <div class="s_btn pb0 pt0 text-center" data-name="Buttons">
+                        <t t-if="is_view == True">
+                          <a href="/supplier/register_authentication_info/" class="rounded-circle rounded-circle rounded-circle rounded-circle btn btn-success rounded-circle btn-lg" data-original-title="" title="" aria-describedby="tooltip84497">下一步</a>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;
+<!--                        <a href="javascript:void(0);" class="rounded-circle rounded-circle rounded-circle rounded-circle btn btn-success rounded-circle btn-lg" data-original-title="" title="" aria-describedby="tooltip84497" onclick="js_method()">下一步</a>-->
+<!--                        <script>-->
+<!--                            function js_method(){-->
+<!--                              setTimeout(function(){ location.assign(location); }, 500);-->
+<!--                            }-->
+<!--                        </script>-->
+                        </t>
+                      </div>
                     </div>
                   </div>
                 <!--</form>-->

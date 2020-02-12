@@ -56,8 +56,6 @@
             <field name="groups_id" eval="[(6, 0, [ref('e2yun_agreement_extend.group_agreement_download_pdf') ])]"/>
             <field name="arch" type="xml">
                 <xpath expr="//page[@name='products']" position="inside">
-
-
                         <button name="download_pdfswy" string="pdfswy" type="object" class="fa fa-download"/>
                         <label for="pdfswy" string="  " class="oe_inline"/>
                         <field name="pdfswy" options='{"no_open":True}' />
@@ -82,7 +80,7 @@
             </field>
    </record>
 
-    <record id="agreement_subtype_form_view_extend" model="ir.ui.view">
+   <record id="agreement_subtype_form_view_extend" model="ir.ui.view">
        <field name="name">Agreement Sub Type Form Extend</field>
        <field name="model">agreement.subtype</field>
        <field name="inherit_id" ref="agreement_legal.partner_agreement_subtype_form_view"/>
@@ -94,5 +92,64 @@
    </record>
 
 
+   <record id="view_project_agreement_kanban_extend" model="ir.ui.view">
+        <field name="name">Agreement Kanban</field>
+        <field name="model">agreement</field>
+        <field name="inherit_id" ref="agreement_legal.view_project_agreement_kanban"/>
+        <field name="arch" type="xml">
+             <xpath expr="//kanban//templates" position="replace">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong><br/>
+                                        <strong class="o_kanban_record_title">
+                                             <field name="agreement_code"/>
+                                        </strong><br/>
+                                        <div class="o_kanban_record_subtitle text-muted">
+                                            <field name="partner_id" invisible="context.get('default_partner_id', False)"/>
+                                            <t t-if="record.end_date.raw_value and record.end_date.raw_value lt (new Date())" t-set="red">oe_kanban_text_red</t>
+                                            <div t-attf-class="#{red || ''}">
+                                                <i><field name="end_date"/></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="o_dropdown_kanban dropdown" groups="base.group_user">
+                                        <a role="button" class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+                                            <span class="fa fa-ellipsis-v" aria-hidden="true"/>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                            <li t-if="widget.editable"><a type="edit">Edit</a></li>
+                                            <li class="divider"/>
+                                            <li class="dropdown-header">Record's Colour</li>
+                                            <li>
+                                                <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <field name="agreement_type_id"/> - <field name="agreement_subtype_id"/>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        V: <field name="version"/>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <img t-att-src="kanban_image('res.users', 'image_small', record.assigned_user_id.raw_value)" t-att-title="record.assigned_user_id.value" width="36" height="36" class="oe_kanban_avatar" alt="user &amp; picture"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="oe_clear"/>
+                        </div>
+                    </t>
+                </templates>
+                </xpath>
+        </field>
+    </record>
 
 </odoo>

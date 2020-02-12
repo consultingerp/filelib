@@ -8,7 +8,7 @@
         <field name="model">comment.wizard</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
-             <form string="Comment">
+             <form string="Comment Idea">
                  <group>
                      <field name="comment" nolabel="1"/>
                  </group>
