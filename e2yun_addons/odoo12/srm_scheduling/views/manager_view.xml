@@ -19,5 +19,9 @@
         <menuitem id="menu_srm_scheduling_view_buyer_confirm"
                   parent="menu_srm_scheduling"
                   action="action_srm_scheduling"/>
+
+        <menuitem id="menu_srm_scheduling_view_supplier_confirm"
+                  parent="menu_srm_scheduling"
+                  action="action_srm_scheduling_supplier"/>
     </data>
 </openerp>
