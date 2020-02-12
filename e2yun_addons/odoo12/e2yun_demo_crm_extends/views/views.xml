@@ -25,5 +25,27 @@
                 </xpath>
             </field>
         </record>
+
+        <record id="base_view_partner_tree_democrm_extends" model="ir.ui.view">
+            <field name="name">base.view.partner.tree.democrm.extends</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="create">false</attribute>
+            </xpath>
+            </field>
+        </record>
+         <record id="base_res_partner_kanban_democrm_extends" model="ir.ui.view">
+            <field name="name">base.res.partner.kanban.democrm.extends</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+            <field name="arch" type="xml">
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="create">false</attribute>
+            </xpath>
+            </field>
+        </record>
+
     </data>
 </odoo>
