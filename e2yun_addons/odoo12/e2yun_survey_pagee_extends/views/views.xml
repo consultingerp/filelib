@@ -5,11 +5,11 @@
             <field name="model">survey.page</field>
             <field name="inherit_id" ref="survey.survey_page_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//div[@class='oe_title']" position="after">
-                    <label for="weight" class="oe_edit_only"/>
-                    <h1>
-                        <field name="weight" placeholder="Weight"/>
-                    </h1>
+                <xpath expr="//field[@name='question_ids']" position="before">
+                    <label for="weight"/>
+                    <field name="weight" placeholder="Weight"/>
+                    <label for="x_studio_survey_page_sum"/>
+                    <field name="x_studio_survey_page_sum" readonly="1"/>
                 </xpath>
                 <xpath expr="//field[@name='question_ids']" position="replace">
                     <field name="question_ids" nolabel="1" mode="tree" context="{'default_page_id': active_id}">

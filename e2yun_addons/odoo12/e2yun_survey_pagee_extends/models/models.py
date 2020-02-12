@@ -8,7 +8,16 @@ class SurveyPage(models.Model):
     # 调查问卷page页面添加’权重‘字段
     weight = fields.Char(string='权重')
     # 小计
-    x_studio_survey_page_sum = fields.Integer(string='小计')
+    x_studio_survey_page_sum = fields.Float(string='小计', compute='_compute_page_sum')
+
+    def _compute_page_sum(self):
+        for record in self:
+            page_total_score = 0.0
+            for question in record.question_ids:
+                page_total_score = page_total_score + question.highest_score
+            record.x_studio_survey_page_sum = page_total_score
+
+
     # 权重百分比
     @api.onchange('weight')
     def _onchange_weight(self):
