@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, tools, _
-
+from odoo import exceptions
 import datetime
 class Agreement(models.Model):
     _inherit = "agreement"
@@ -14,6 +14,52 @@ class Agreement(models.Model):
     pdfswy = fields.Many2one('ir.attachment', string='Pdfswy',readonly='True')
     pdfqw = fields.Many2one('ir.attachment', string='Pdfqw',readonly='True' )
     fktj = fields.Many2one('ir.attachment', string='Fktj',readonly='True')
+
+    @api.onchange("x_studio_htbz")
+    def onchange_x_studio_htbz(self):
+        oldhtbz = self.env['agreement'].search([('id', '=', self._origin.id)])
+        if self.x_studio_htbz and oldhtbz:
+            company_id = self.company_id or self.env.user.company_id
+            create_date = self.create_date or fields.Date.today()
+            currency = self.env['res.currency'].search([('name', '=', self.x_studio_htbz)])
+            property_product_pricelist = self.env['product.pricelist'].search(
+                [('name', 'like', '%' + oldhtbz.x_studio_htbz)])
+            if currency and property_product_pricelist:
+                currency_rate = self.env['res.currency']._get_conversion_rate(
+                        property_product_pricelist.currency_id,currency,
+                        company_id, create_date)
+                self.x_studio_htje = round(float(self.x_studio_htje) * currency_rate, 2)
+            else:
+                raise exceptions.UserError("价格表没有维护的币别")
+
+    @api.onchange('x_studio_htje')
+    def _onchange_x_studio_htje(self):
+            company_id = self.company_id or self.env.user.company_id
+            create_date = self.create_date or fields.Date.today()
+            currency = self.env['res.currency'].search([('name', 'like', '%USD%')])
+            property_product_pricelist = self.env['product.pricelist'].search(
+                [('name', 'like', '%' + self.x_studio_htbz + '%')])
+            if currency and property_product_pricelist:
+                currency_rate = self.env['res.currency']._get_conversion_rate(
+                    property_product_pricelist.currency_id, currency,
+                    company_id, create_date)
+                self.x_studio_mjhtje = round(float(self.x_studio_htje) * currency_rate, 2)
+
+    @api.onchange('x_studio_mjhtje')
+    def _onchange_x_studio_mjhtje(self):
+        company_id = self.company_id or self.env.user.company_id
+        create_date = self.create_date or fields.Date.today()
+        currency = self.env['res.currency'].search([('name', 'like', '%CNY%')])
+        property_product_pricelist = self.env['product.pricelist'].search(
+            [('name', 'like', '%USD%')])
+        if currency and property_product_pricelist:
+            currency_rate = self.env['res.currency']._get_conversion_rate(
+                property_product_pricelist.currency_id, currency,
+                company_id, create_date)
+            if not self.x_studio_htje:
+                self.x_studio_htje = round(float(self.x_studio_mjhtje) * currency_rate, 2)
+
+
 
     @api.model
     def create(self, vals):
@@ -97,25 +143,25 @@ class Agreement(models.Model):
                 vals['agreement_code'] =verse_one+agreement_subtype_obj.for_code+verse_two
                 vals['code'] = vals['agreement_code']
 
-        if 'x_studio_htje' in vals.keys():
-            company_id = self.company_id or self.env.user.company_id
-            create_date = self.create_date or fields.Date.today()
-            usd_currency = self.env['res.currency'].search([('name', '=', 'USD')])
-            property_product_pricelist = self.env['product.pricelist'].search([('name', 'like', '%CNY%')])
-            usd_currency_rate = self.env['res.currency']._get_conversion_rate(
-                property_product_pricelist.currency_id, usd_currency,
-                company_id, create_date)
-            vals['x_studio_mjhtje'] = round(float(vals['x_studio_htje']) * usd_currency_rate, 2)
-
-        elif 'x_studio_mjhtje' in vals.keys():
-            company_id = self.company_id or self.env.user.company_id
-            create_date = self.create_date or fields.Date.today()
-            usd_currency = self.env['res.currency'].search([('name', '=', 'CNY')])
-            property_product_pricelist = self.env['product.pricelist'].search([('name', 'like', '%USD%')])
-            usd_currency_rate = self.env['res.currency']._get_conversion_rate(
-                property_product_pricelist.currency_id, usd_currency,
-                company_id, create_date)
-            vals['x_studio_htje'] = round(float(vals['x_studio_mjhtje']) * usd_currency_rate, 2)
+        # if 'x_studio_htje' in vals.keys():
+        #     company_id = self.company_id or self.env.user.company_id
+        #     create_date = self.create_date or fields.Date.today()
+        #     usd_currency = self.env['res.currency'].search([('name', '=', 'USD')])
+        #     property_product_pricelist = self.env['product.pricelist'].search([('name', 'like', '%CNY%')])
+        #     usd_currency_rate = self.env['res.currency']._get_conversion_rate(
+        #         property_product_pricelist.currency_id, usd_currency,
+        #         company_id, create_date)
+        #     vals['x_studio_mjhtje'] = round(float(vals['x_studio_htje']) * usd_currency_rate, 2)
+        #
+        # elif 'x_studio_mjhtje' in vals.keys():
+        #     company_id = self.company_id or self.env.user.company_id
+        #     create_date = self.create_date or fields.Date.today()
+        #     usd_currency = self.env['res.currency'].search([('name', '=', 'CNY')])
+        #     property_product_pricelist = self.env['product.pricelist'].search([('name', 'like', '%USD%')])
+        #     usd_currency_rate = self.env['res.currency']._get_conversion_rate(
+        #         property_product_pricelist.currency_id, usd_currency,
+        #         company_id, create_date)
+        #     vals['x_studio_htje'] = round(float(vals['x_studio_mjhtje']) * usd_currency_rate, 2)
 
         if 'x_studio_mjhtje' in vals.keys() and vals['x_studio_mjhtje']:
             vals['x_studio_mjhtje'] = ("%.2f" % float(vals['x_studio_mjhtje']))
