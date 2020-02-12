@@ -398,3 +398,21 @@ msgstr "审批"
 #: model_terms:ir.ui.view,arch_db:base_tier_validation.tier_definition_view_form
 msgid "e.g. Tier Validation for..."
 msgstr "例如：层级审批对于..."
+
+
+#. module: base_tier_validation
+#: model_terms:ir.ui.view,arch_db:base_tier_validation.view_comment_wizard
+msgid "Comment Idea"
+msgstr "审核意见"
+
+
+#. module: base_tier_validation
+#: model_terms:ir.ui.view,arch_db:base_tier_validation.view_comment_wizard
+msgid "Comment"
+msgstr "审核"
+
+
+#. module: base_tier_validation
+#: model_terms:ir.ui.view,arch_db:base_tier_validation.view_comment_wizard
+msgid "Cancel"
+msgstr "取消"
