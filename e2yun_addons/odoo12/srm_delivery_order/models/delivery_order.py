@@ -291,7 +291,7 @@ class delivery_order(models.Model):
                     'old_menge': od['product_qty'] - pomenge,
                     'matnr': od['product_id'],
                     'werks': werks,
-                    'ddate': od['date_planned'],
+                    'ddate': str(od['date_planned']),
                     'comco': comco,
                     'lifnr': lifnr,
                     'item': od['item']
@@ -363,7 +363,7 @@ class delivery_order(models.Model):
 
             #" and h.history_data = False "
             # and l.state in ('supplier_confirm','not_confirm')
-            self._cr.execute(sql, (comco, werks, lifnr,versi,datoo))
+            self._cr.execute(sql, (comco, werks, lifnr,versi,str(datoo)))
             dicts = self._cr.dictfetchall()
             order_line = []
             for d in dicts:
@@ -436,7 +436,7 @@ class delivery_order(models.Model):
                                             'old_menge': calculate_dnmng,
                                             'matnr': od['product_id'],
                                             'werks': werks,
-                                            'ddate': od['date_planned'],
+                                            'ddate': str(od['date_planned']),
                                             'comco': comco,
                                             'lifnr': lifnr,
                                             'item':od['item']
@@ -450,7 +450,7 @@ class delivery_order(models.Model):
                                             'old_menge': od['product_qty'] - pomenge,
                                             'matnr': od['product_id'],
                                             'werks': werks,
-                                            'ddate': od['date_planned'],
+                                            'ddate': str(od['date_planned']),
                                             'comco': comco,
                                             'lifnr': lifnr,
                                             'item': od['item']
@@ -464,7 +464,7 @@ class delivery_order(models.Model):
                                         'old_menge':od['product_qty'] - pomenge,
                                         'matnr': od['product_id'],
                                         'werks': werks,
-                                        'ddate': od['date_planned'],
+                                        'ddate': str(od['date_planned']),
                                         'comco': comco,
                                         'lifnr': lifnr,
                                         'item': od['item']
@@ -482,7 +482,7 @@ class delivery_order(models.Model):
                         if prnum:
                             demandsql +=  """ and prnum = '"""+prnum+"""'"""
 
-                        self._cr.execute(demandsql, (datoo,d['matnr'] ,lifnr,versi))
+                        self._cr.execute(demandsql, (str(datoo),d['matnr'] ,lifnr,versi))
                         productLine = self._cr.dictfetchall()
                     ol = {
                         'matnr': d['matnr'],
@@ -590,7 +590,7 @@ class delivery_order(models.Model):
                             'old_menge': od['product_qty'] - pomenge,
                             'matnr': od['product_id'],
                             'werks': werks,
-                            'ddate': od['date_planned'],
+                            'ddate': str(od['date_planned']),
                             'comco': comco,
                             'lifnr': lifnr,
                             'item': od['item']
