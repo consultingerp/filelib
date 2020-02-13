@@ -346,7 +346,7 @@ class Agreement(models.Model):
         }
 
     @api.multi
-    def action_emil_send(self):
+    def action_emil_send1(self):
         self.ensure_one()
         ir_model_data = self.env['ir.model.data']
         try:
@@ -402,6 +402,69 @@ class Agreement(models.Model):
             'context': ctx,
         }
 
+    @api.multi
+    def action_emil_send(self):
+        '''
+        This function opens a window to compose an email, with the edi purchase template message loaded by default
+        '''
+        self.ensure_one()
+        ir_model_data = self.env['ir.model.data']
+        try:
+            template_id = ir_model_data.get_object_reference('e2yun_agreement_extend', 'email_template_temp_agreement')[1]
+
+            sqld="delete  from email_template_attachment_rel where email_template_id=%s "
+            self._cr.execute(sqld,(template_id,))
+
+            sql = "insert into email_template_attachment_rel(email_template_id,attachment_id)values (%s,%s)"
+            if self.pdfswy:
+                self._cr.execute(sql, (template_id,self.pdfswy.id))
+            if self.pdfqw:
+                self._cr.execute(sql, (template_id, self.pdfqw.id))
+            if self.fktj:
+                self._cr.execute(sql, (template_id, self.fktj.id))
+
+        except ValueError:
+            template_id = False
+        try:
+            compose_form_id = ir_model_data.get_object_reference('mail', 'email_compose_message_wizard_form')[1]
+        except ValueError:
+            compose_form_id = False
+        ctx = dict(self.env.context or {})
+        ctx.update({
+            'default_model': 'agreement',
+            'default_res_id': self.ids[0],
+            'default_use_template': bool(template_id),
+            'default_template_id': template_id,
+            'default_composition_mode': 'comment',
+            'custom_layout': "mail.mail_notification_paynow",
+            'force_email': True,
+            'mark_rfq_as_sent': True,
+        })
+
+        # In the case of a RFQ or a PO, we want the "View..." button in line with the state of the
+        # object. Therefore, we pass the model description in the context, in the language in which
+        # the template is rendered.
+        lang = self.env.context.get('lang')
+        if {'default_template_id', 'default_model', 'default_res_id'} <= ctx.keys():
+            template = self.env['mail.template'].browse(ctx['default_template_id'])
+            if template and template.lang:
+                lang = template._render_template(template.lang, ctx['default_model'], ctx['default_res_id'])
+
+        self = self.with_context(lang=lang)
+
+        ctx['model_description'] = _('Purchase Order')
+
+        return {
+            'name': _('Compose Email'),
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'mail.compose.message',
+            'views': [(compose_form_id, 'form')],
+            'view_id': compose_form_id,
+            'target': 'new',
+            'context': ctx,
+        }
 
 class AgreementSubtype(models.Model):
     _inherit = "agreement.subtype"
