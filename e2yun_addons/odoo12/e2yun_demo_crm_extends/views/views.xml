@@ -36,16 +36,16 @@
             </field>
         </record>
 
-        <record id="customerinfo_view_partner_form_democrm_extends" model="ir.ui.view">
-            <field name="name">customer.info.view.partner.form.democrm.extends</field>
-            <field name="model">e2yun.customer.info</field>
-            <field name="inherit_id" ref="e2yun_customer_info.view_partner_form"/>
-            <field name="arch" type="xml">
-            <xpath expr="//field[@name='x_studio_account_type']" position="attributes">
-                <attribute name="readonly">1</attribute>
-            </xpath>
-            </field>
-        </record>
+<!--        <record id="customerinfo_view_partner_form_democrm_extends" model="ir.ui.view">-->
+<!--            <field name="name">customer.info.view.partner.form.democrm.extends</field>-->
+<!--            <field name="model">e2yun.customer.info</field>-->
+<!--            <field name="inherit_id" ref="e2yun_customer_info.view_partner_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='x_studio_account_type']" position="attributes">-->
+<!--                <attribute name="readonly">1</attribute>-->
+<!--            </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
 
         <record id="base_view_partner_tree_democrm_extends" model="ir.ui.view">
             <field name="name">base.view.partner.tree.democrm.extends</field>
