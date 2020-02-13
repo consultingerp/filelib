@@ -110,6 +110,11 @@
                     <field name="reference_existing_question"/>
                     <!--<field name="type" invisible="1"/>-->
                 </xpath>
+                <!--添加最高分值-->
+                <xpath expr="//field[@name='type']" position="after">
+                    <label for="highest_score" string="最高分值"/>
+                    <field name="highest_score" string="最高分值"/>
+                </xpath>
                 <!--添加计分方式-->
                 <xpath expr="//field[@name='labels_ids']" position="before">
                     <label for="scoring_method" string="计分方式"/>
