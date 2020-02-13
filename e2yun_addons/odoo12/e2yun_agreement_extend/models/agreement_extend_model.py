@@ -169,11 +169,8 @@ class Agreement(models.Model):
             vals['x_studio_htje'] = ("%.2f" % float(vals['x_studio_htje']))
 
         if 'stage_id' in vals.keys():
-            if vals['stage_id']==7:
-                print(self.x_studio_htje)
-                print(self.x_studio_mjhtje)
-                print(self.id)
-                print(self.partner_id)
+            if vals['stage_id']==7 and self.x_studio_htje\
+                    and self.partner_id and self.x_studio_jhhm_id:
                 sql='update crm_lead set agreement_amount=%s,agreement_amount_usd=%s,agreement_code=%s,agreement_partner_id=%s where code=%s'
                 self._cr.execute(sql,(self.x_studio_htje,self.x_studio_mjhtje,self.id,self.partner_id.id,self.x_studio_jhhm_id))
 
