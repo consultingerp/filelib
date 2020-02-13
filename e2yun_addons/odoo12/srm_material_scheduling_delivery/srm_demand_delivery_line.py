@@ -45,7 +45,7 @@ class srm_demand_delivery_line_view(models.Model):
 
     def _get_isAllowCreate(self):
         for obj in self:
-            datoo = datetime.strptime(obj.datoo, '%Y-%m-%d')
+            datoo = datetime.strptime(str(obj.datoo), '%Y-%m-%d')
             nowstr = datetime.strftime(datetime.now(), '%Y-%m-%d')
             nowdate = datetime.strptime(nowstr, '%Y-%m-%d')
             if obj.allow_create_days > 0 and (datoo - nowdate).days > obj.allow_create_days:

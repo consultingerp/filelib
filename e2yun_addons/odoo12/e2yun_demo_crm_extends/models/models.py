@@ -18,7 +18,7 @@ class e2yun_demo_crm_extends(models.Model):
             self.x_studio_account_type = 'Significant Client'
 
     x_studio_account_type = fields.Selection([("Target Client", "目标客户"), ("Active Client", "活动客户"),
-                                              ("Significant Client", "重要客户")], 'Account type', track_visibility='onchange', readonly=True)
+                                              ("Significant Client", "重要客户")], 'Account type', track_visibility='onchange')
 
     x_studio_account_source = fields.Selection([("Other", "Other"),
                                                 ("Net", "网络"),
