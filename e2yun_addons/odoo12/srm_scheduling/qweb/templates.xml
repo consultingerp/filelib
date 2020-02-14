@@ -1,170 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<templates id="template" xml:space="preserve">
-            <t t-name="srm_scheduling_qweb">
-                <div id="test" class="test-fixedTable" >
-                    <!-- <label id="test2">ssss</label>
-                 <button  id="delete" class="btn btn-primary mt8" data-toggle="modal" data-target="#modelaccept" >测试</button>
-                                 <t t-esc="widget.name"/>
-                 -->
-               </div>
-
-
-
-
-
-            <div id="query_form" class="form-group" style="left:10px;position:relative">
-                <table id='table_query_form'>
-                    <tr>
-
+<templates>
+    <t t-name="srm_scheduling_qweb">
+        <div id="query_form" class="form-group" style="left:10px;position:relative">
+            <table id='table_query_form'>
+                <tr>
+                <!--
+                    <td><label class="control-label" for="query_xqrq_s">开始日期:</label>
+                <input type="date" name="query_xqrq_s" id="query_xqrq_s" class="qform-date-control"/>
+                </td>   -->
+                    <td>
+                    <label class="control-label" for="query_xqrq_e">结束日期</label>
+                 <input type="date" name="query_xqrq_e" id="query_xqrq_e" class="qform-date-control"/>
+                    </td>
+        <!--
+                    <td>
+                <label class="control-label" for="query_version">版本:</label>
+                <input type="text" name="query_version" id="query_version" class="qform-control"/>
+                    </td> -->
+                    <td>
+                <label class="control-label" for="query_supplier_code" id="query_supplier_code_text" >供应商:</label>
+                <input type="text" name="query_supplier_code" id="query_supplier_code" class="qform-control"/>
+                   </td>
                     <!--
-                        <td><label class="control-label" for="query_xqrq_s">开始日期:</label>
-                    <input type="date" name="query_xqrq_s" id="query_xqrq_s" class="qform-date-control"/>
-                    </td>   -->
+                    <td>
+                <label class="control-label" for="query_company_code">公司代码:</label>
+                <input type="text" name="query_company_code" id="query_company_code" class="qform-control"/>
+                    </td> -->
+                    <td>
+                <label class="control-label" for="query_werks_code">工厂:</label>
+                <input type="text" name="query_werks_code" id="query_werks_code" class="qform-control"/>
+                    </td>
 
-                        <td>
-                        <label class="control-label" for="query_xqrq_e">结束日期</label>
-                     <input type="date" name="query_xqrq_e" id="query_xqrq_e" class="qform-date-control"/>
-                        </td>
-            <!--
-                        <td>
-                    <label class="control-label" for="query_version">版本:</label>
-                    <input type="text" name="query_version" id="query_version" class="qform-control"/>
-                        </td> -->
+                    <td>
+                <label class="control-label" for="query_matnr">物料号:</label>
+                <input type="text" name="query_matnr" id="query_matnr" class="qform-control"/>
+                    </td>
 
-
-                        <td>
-                    <label class="control-label" for="query_supplier_code" id="query_supplier_code_text" >供应商:</label>
-                    <input type="text" name="query_supplier_code" id="query_supplier_code" class="qform-control"/>
-                       </td>
-
-                        <!--
-                        <td>
-                    <label class="control-label" for="query_company_code">公司代码:</label>
-                    <input type="text" name="query_company_code" id="query_company_code" class="qform-control"/>
-                        </td> -->
-
-                        <td>
-                    <label class="control-label" for="query_werks_code">工厂:</label>
-                    <input type="text" name="query_werks_code" id="query_werks_code" class="qform-control"/>
-                        </td>
-
-                        <td>
-                    <label class="control-label" for="query_matnr">物料号:</label>
-                    <input type="text" name="query_matnr" id="query_matnr" class="qform-control"/>
-                        </td>
-
-                        <td>
-                             <!-- <input type="button" id="query_button" name="query_button" class="btn-query-form"  value="查询"/> -->
-                             <a class="btn btn-info hidden-print btn-query-form " style="color:#fff;" id="query_button"  >查询</a>
-                         </td>
-                    </tr>
-                </table>
-            </div>
-
-                 <!--
-                     <div id="div_alert_message" class="alert1 alert-success1 alert-dismissable1" style="display:none;left:10px;position:relative" >
-                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&amp;times;</button>
-                        <li id="alert_message"/>
-                      </div>-->
-
-
-            <div class="div_table">
-                <table id='table0' class="tab_css_1" style="margin:auto;" ></table>
-                </div>
+                    <td>
+                         <!-- <input type="button" id="query_button" name="query_button" class="btn-query-form"  value="查询"/> -->
+                         <a class="btn btn-info hidden-print btn-query-form " style="color:#fff;" id="query_button"  >查询</a>
+                     </td>
+                </tr>
+            </table>
+        </div>
+             <!--
+                 <div id="div_alert_message" class="alert1 alert-success1 alert-dismissable1" style="display:none;left:10px;position:relative" >
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&amp;times;</button>
+                    <li id="alert_message"/>
+                  </div>-->
+        <div class="div_table">
+            <table id='table0' class="tab_css_1" style="margin:auto;" ></table>
+        </div>
 
         <div class="oe_notification ui-notify">
-       <div id="div_alert_message" class="ui-state-error ui-notify-message ui-notify-message-style" style="overflow: hidden; display: none;">
-            <a id="alert_message_close" class="ui-notify-cross ui-notify-close" href="#" style="color: #cd0a0a;">x</a>
-            <span class="ui-icon ui-icon-alert" style="float:left; margin:2px 5px 0 0;"></span>
-             <li id="alert_message"/>
-        </div>
-       </div>
-
-                  <div class="modal fade" id="modelupdate_bmeng" role="dialog" aria-hidden="true">
-                       <div class="modal-dialog modal-dialog1">
-                            <div class="modal-header">
-                              <h4 class="modal-title">录入排程数量</h4>
-                            </div>
-                           <!-- <div class="modal-body"> -->
-                                <table class="tab_css_2">
-                                    <tr>
-                                        <td >供应商</td><td  colspan='2'><li id="model_supplier"/></td>
-                                        <td  >供应商名称</td><td colspan='4'> <li id="model_supplier_name"/></td>
-                                    </tr>
-                                     <tr>
-                                        <td>物料号</td><td  colspan='2'> <li id="model_matnr"/></td>
-                                        <td>物料名称</td><td colspan='4'> <li id="model_matnr_name"/></td>
-                                    </tr>
-                                    <!--
-                                    <tr>
-                                        <td>时间容差</td><td> <li id="model_d_o_days"/></td>
-                                       <td>数量容差</td><td > <li id="model_the_quota"/></td>
-
-                                    </tr>-->
-
-                                    <tr>
-                                        <td>时间容差</td><td> <li id="model_d_o_days"/></td>
-                                        <td>最小包装数</td><td> <li id="model_zxbzs"/></td>
-                                        <td>未清PO数量</td><td> <li id="model_unclean_po"/></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>日期</td><td style="background-color: #c9e2b3;"> <li id="model_ddate"/></td>
-                                        <td>确认排程数</td><td> <input type="number" name="model_bmeng" id="model_bmeng" style='width:100%;height:100%;'/></td>
-                                        <td>最大排程数</td><td><li  style='width:80px' id="model_zdpcs"/></td>
-                                        <td>当前排程数</td><td> <li  style='width:80px' id="model_dqpcs"/></td>
-                                    </tr>
-
-                                </table>
-                             <!-- </div> -->
-
-                            <div class="modal-footer">
-                                <button type="submit" id="btnupdate_bmeng" class="btn btn-primary"
-                                        style="color: #fff;background-color: #428bca;border-color: #357ebd;background-image: none;font-size: 14px; display: inline-block;padding: 6px 12px;margin-bottom: 0;">
-                                     确定</button> or
-                                <button type="button" class="btn btn-link" data-dismiss="modal" style="font-weight: normal;
-    color: #428bca;
-    cursor: pointer;
-    border-radius: 0;
-    margin-bottom: 0;
-    margin-left: 5px;
-    line-height: 1.42857143;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    user-select: none;
-    background-image: none;
-    border: 1px solid transparent;
-    box-shadow: none;
-    background-color: transparent;">取消</button>
-                            </div>
-
-                           <!--
-                           <table class="tab_css_2">
-                               <tr><td>需求号</td><td>生产订单</td><td>需求数量</td><td>确认数量 <input type="number" name="model_bmeng" id="model_bmeng" style='width:100%;height:100%;'/></td></tr>
-                           </table> -->
-
-                        </div>
-                  </div>
-
-
-
-      <div class="modal fade" id="model_datalog" role="dialog" aria-hidden="true">
-                       <div class="modal-dialog_datalog"  style="overflow:scroll;">
-                            <div class="modal-header">
-                              <h4 class="modal-title">数据历史记录</h4>
-                            </div>
-                                <table id="tab_datalog" class="tab_datalog">
-                                </table>
-                        </div>
+           <div id="div_alert_message" class="ui-state-error ui-notify-message ui-notify-message-style" style="overflow: hidden; display: none;">
+                <a id="alert_message_close" class="ui-notify-cross ui-notify-close" href="#" style="color: #cd0a0a;">x</a>
+                <span class="ui-icon ui-icon-alert" style="float:left; margin:2px 5px 0 0;"></span>
+                 <li id="alert_message"/>
             </div>
+        </div>
 
-                <div class="m-style M-box11"></div>
-                <p class="tips" style="left:10px;position:relative">
-                        总数据
-                        <span class="count" id="s_count"></span>条，每页显示
-                        <span class="count" id="l_count"></span>条，总页数为
-                        <span class="count" id="p_count"></span>页
-                </p>
-          </t>
+        <div class="modal fade" id="modelupdate_bmeng" role="dialog" aria-hidden="true">
+           <div class="modal-dialog">
+                <div class="modal-header">
+                  <h4 class="modal-title">录入排程数量</h4>
+                </div>
+               <!-- <div class="modal-body"> -->
+                <table class="tab_css_2">
+                    <tr>
+                        <td >供应商</td><td  colspan='2'><li id="model_supplier"/></td>
+                        <td  >供应商名称</td><td colspan='4'> <li id="model_supplier_name"/></td>
+                    </tr>
+                     <tr>
+                        <td>物料号</td><td  colspan='2'> <li id="model_matnr"/></td>
+                        <td>物料名称</td><td colspan='4'> <li id="model_matnr_name"/></td>
+                    </tr>
+                    <!--
+                    <tr>
+                        <td>时间容差</td><td> <li id="model_d_o_days"/></td>
+                       <td>数量容差</td><td > <li id="model_the_quota"/></td>
+
+                    </tr>-->
+
+                    <tr>
+                        <td>时间容差</td><td> <li id="model_d_o_days"/></td>
+                        <td>最小包装数</td><td> <li id="model_zxbzs"/></td>
+                        <td>未清PO数量</td><td> <li id="model_unclean_po"/></td>
+                    </tr>
+
+                    <tr>
+                        <td>日期</td><td style="background-color: #c9e2b3;"> <li id="model_ddate"/></td>
+                        <td>确认排程数</td><td> <input type="number" name="model_bmeng" id="model_bmeng" style='width:100%;height:100%;'/></td>
+                        <td>最大排程数</td><td><li  style='width:80px' id="model_zdpcs"/></td>
+                        <td>当前排程数</td><td> <li  style='width:80px' id="model_dqpcs"/></td>
+                    </tr>
+
+                </table>
+                 <!-- </div> -->
+
+                <div class="modal-footer">
+                    <button type="submit" id="btnupdate_bmeng" class="btn btn-primary"
+                            style="color: #fff;background-color: #428bca;border-color: #357ebd;background-image: none;font-size: 14px; display: inline-block;padding: 6px 12px;margin-bottom: 0;">
+                         确定</button> or
+                    <button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
+                </div>
+
+               <!--
+               <table class="tab_css_2">
+                   <tr><td>需求号</td><td>生产订单</td><td>需求数量</td><td>确认数量 <input type="number" name="model_bmeng" id="model_bmeng" style='width:100%;height:100%;'/></td></tr>
+               </table> -->
+
+            </div>
+        </div>
+
+        <div class="modal fade" id="model_datalog" role="dialog" aria-hidden="true">
+           <div class="modal-dialog_datalog"  style="overflow:scroll;">
+                <div class="modal-header">
+                  <h4 class="modal-title">数据历史记录</h4>
+                </div>
+                    <table id="tab_datalog" class="tab_datalog">
+                    </table>
+            </div>
+        </div>
+
+        <div class="m-style M-box11"></div>
+        <p class="tips" style="left:10px;position:relative">
+                总数据
+                <span class="count" id="s_count"></span>条，每页显示
+                <span class="count" id="l_count"></span>条，总页数为
+                <span class="count" id="p_count"></span>页
+        </p>
+    </t>
 </templates>
