@@ -138,14 +138,15 @@ class Agreement(models.Model):
                                 if sequence == 1:
                                     if self.assigned_user_id:
                                         partner_idsids = []
-                                        partner_idsids.append(self.assigned_user_id.sale_team_id.user_id.id)
-                                        partner_ids.append([6, False, partner_idsids])
+                                        #partner_idsids.append(self.assigned_user_id.sale_team_id.user_id.id)
+                                        partner_ids.append(self.assigned_user_id.sale_team_id.user_id.partner_id.email)
+
                             else:
                                 w_approver = td.reviewer_id.name
                                 w_approver_id = td.reviewer_id.id
                                 if sequence == 1:
-                                    partner_idsids.append(td.reviewer_id.partner_id.id)
-
+                                    #partner_idsids.append(td.reviewer_id.partner_id.id)
+                                    partner_ids.append(td.reviewer_id.partner_id.email)
 
 
                             created_trs += tr_obj.create({
@@ -168,7 +169,7 @@ class Agreement(models.Model):
 
 
 
-        partner_ids.append([6, False, partner_idsids])
+        #partner_ids.append([6, False, partner_idsids])
         self.emil_temp(self.id, partner_ids)
 
         return created_trs
@@ -197,30 +198,49 @@ class Agreement(models.Model):
             rec._notify_accepted_reviews()
 
 
-    def emil_temp(self,id,partner_ids,):
+    def emil_temp(self,id,partner_ids):
         ir_model_data = self.env['ir.model.data']
         template_ids = ir_model_data.get_object_reference('e2yun_agreement_extend', 'email_template_check_agreement')[1]
         email_template_obj_message = self.env['mail.compose.message']
         if template_ids:
             attachment_ids_value = email_template_obj_message.onchange_template_id(template_ids, 'comment',
                                                                                    'agreement', id)
-            vals = {}
-            vals['composition_mode'] = 'mass_mail'
-            vals['template_id'] = template_ids
-            vals['parent_id'] = False
-            vals['notify'] = False
-            vals['no_auto_thread'] = False
-            vals['reply_to'] = False
-            vals['model'] = 'agreement'
-            vals['partner_ids'] =partner_ids
-            vals['body'] = attachment_ids_value['value']['body']
-            vals['res_id'] = id
-            vals['email_from'] = 'postmaster-odoo@e2yun.com'
-            vals['subject'] = attachment_ids_value['value']['subject']
+            # vals = {}
+            # vals['composition_mode'] = 'mass_mail'
+            # vals['template_id'] = template_ids
+            # vals['parent_id'] = False
+            # vals['notify'] = False
+            # vals['no_auto_thread'] = False
+            # vals['reply_to'] = '981274333@qq.com'
+            # vals['model'] = 'agreement'
+            # #if partner_ids and partner_ids[0][2][0]:
+            # #    vals['partner_ids'] =partner_ids
+            # #vals['email_to'] = 'chuqiu.xu@pactera.com'
+            # vals['body'] = attachment_ids_value['value']['body']
+            # vals['res_id'] = id
+            # vals['email_from'] = 'postmaster-odoo@e2yun.com'
+            # vals['subject'] = attachment_ids_value['value']['subject']
+            #
+            # mail_compose=self.env['mail.compose.message'].create(vals)
+            #
+            # mail_compose.action_send_mail()
 
-            mail_compose=self.env['mail.compose.message'].create(vals)
-
-            mail_compose.action_send_mail()
+            if not partner_ids:
+                return
+            mails = self.env['mail.mail']
+            mail_values = {
+                'email_from': 'postmaster-odoo@e2yun.com',
+                #'reply_to': '981274333@qq.com',
+                'email_to': partner_ids[0],
+                'subject': attachment_ids_value['value']['subject'],
+                'body_html':attachment_ids_value['value']['body'],
+                'notification': True,
+               # 'mailing_id': mailing.id,
+                'auto_delete': True,
+            }
+            mail = self.env['mail.mail'].create(mail_values)
+            mails |= mail
+        mails.send()
 
 
 class CommentWizard(models.TransientModel):
@@ -269,14 +289,15 @@ class CommentWizard(models.TransientModel):
                         agreement_obj = self.env['agreement']
                         agreement_datas = agreement_obj.browse(self.res_id)
                         if agreement_datas.assigned_user_id:
-                            partner_idsids = []
-                            partner_idsids.append(agreement_datas.assigned_user_id.sale_team_id.user_id.id)
-                            partner_ids.append([6, False, partner_idsids])
+                            #partner_idsids.append(agreement_datas.assigned_user_id.sale_team_id.user_id.id)
+                            #partner_ids.append([6, False, partner_idsids])
+                            partner_ids.append(agreement_datas.assigned_user_id.sale_team_id.user_id.partner_id.email)
                             self.emil_temp(self.res_id, partner_ids)
                             break
                     else:
-                        partner_idsids.append(tier_review_data.reviewer_id.partner_id.id)
-                        partner_ids.append([6, False, partner_idsids])
+                        #partner_idsids.append(tier_review_data.reviewer_id.partner_id.id)
+                        #partner_ids.append([6, False, partner_idsids])
+                        partner_ids.append(tier_review_data.reviewer_id.partner_id.email)
                         self.emil_temp(self.res_id, partner_ids)
                         break
 
@@ -289,23 +310,42 @@ class CommentWizard(models.TransientModel):
         if template_ids:
             attachment_ids_value = email_template_obj_message.onchange_template_id(template_ids, 'comment',
                                                                                    'agreement', id)
-            vals = {}
-            vals['composition_mode'] = 'mass_mail'
-            vals['template_id'] = template_ids
-            vals['parent_id'] = False
-            vals['notify'] = False
-            vals['no_auto_thread'] = False
-            vals['reply_to'] = False
-            vals['model'] = 'agreement'
-            vals['partner_ids'] =partner_ids
-            vals['body'] = attachment_ids_value['value']['body']
-            vals['res_id'] = id
-            vals['email_from'] = 'postmaster-odoo@e2yun.com'
-            vals['subject'] = attachment_ids_value['value']['subject']
+            # vals = {}
+            # vals['composition_mode'] = 'mass_mail'
+            # vals['template_id'] = template_ids
+            # vals['parent_id'] = False
+            # vals['notify'] = False
+            # vals['no_auto_thread'] = False
+            # vals['reply_to'] = False
+            # vals['model'] = 'agreement'
+            # if partner_ids and partner_ids[0][2][0]:
+            #     vals['partner_ids'] =partner_ids
+            # vals['body'] = attachment_ids_value['value']['body']
+            # vals['res_id'] = id
+            # vals['email_from'] = 'postmaster-odoo@e2yun.com'
+            # vals['subject'] = attachment_ids_value['value']['subject']
+            #
+            # mail_compose=self.env['mail.compose.message'].create(vals)
+            #
+            # mail_compose.action_send_mail()
 
-            mail_compose=self.env['mail.compose.message'].create(vals)
+            if not partner_ids:
+                return
+            mails = self.env['mail.mail']
+            mail_values = {
+                'email_from': 'postmaster-odoo@e2yun.com',
+                # 'reply_to': '981274333@qq.com',
+                'email_to': partner_ids[0],
+                'subject': attachment_ids_value['value']['subject'],
+                'body_html': attachment_ids_value['value']['body'],
+                'notification': True,
+                # 'mailing_id': mailing.id,
+                'auto_delete': True,
+            }
+            mail = self.env['mail.mail'].create(mail_values)
+            mails |= mail
+        mails.send()
 
-            mail_compose.action_send_mail()
 
 class TierValidation(models.AbstractModel):
     _inherit = "tier.validation"

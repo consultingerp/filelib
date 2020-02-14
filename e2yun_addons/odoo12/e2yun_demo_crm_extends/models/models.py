@@ -18,7 +18,7 @@ class e2yun_demo_crm_extends(models.Model):
             self.x_studio_account_type = 'Significant Client'
 
     x_studio_account_type = fields.Selection([("Target Client", "目标客户"), ("Active Client", "活动客户"),
-                                              ("Significant Client", "重要客户")], 'Account type', track_visibility='onchange')
+                                              ("Significant Client", "重要客户")], 'Account type', track_visibility='onchange', readonly=True)
 
     x_studio_account_source = fields.Selection([("Other", "Other"),
                                                 ("Net", "网络"),
@@ -27,6 +27,33 @@ class e2yun_demo_crm_extends(models.Model):
                                                 ("Cooperators", "合作伙伴"),
                                                 ("Public_Relations", "公共关系"),
                                                 ("Exhibition", "展会")], 'Account Source', track_visibility='onchange')
+
+    @api.model
+    def create(self, vals_list):
+        gradeid = vals_list.get('grade_id')
+        if gradeid == 18:
+            account_type = 'Target Client'
+        elif gradeid == 19:
+            account_type = 'Active Client'
+        else:
+            account_type = 'Significant Client'
+        if gradeid:
+            vals_list.update({'x_studio_account_type': account_type})
+        return super(e2yun_demo_crm_extends, self).create(vals_list)
+
+    @api.multi
+    def write(self, vals):
+        gradeid = vals.get('grade_id')
+        if gradeid == 18:
+            account_type = 'Target Client'
+        elif gradeid == 19:
+            account_type = 'Active Client'
+        else:
+            account_type = 'Significant Client'
+        if gradeid:
+            vals.update({'x_studio_account_type': account_type})
+        return super(e2yun_demo_crm_extends, self).write(vals)
+
 
 class e2yun_demo_crm_extend_sres_partner(models.Model):
     _inherit = "res.partner"
