@@ -316,16 +316,23 @@ class Agreement(models.Model):
                                 if agreement_data.assigned_user_id:
                                     partner_ids.append(
                                         agreement_data.assigned_user_id.sale_team_id.user_id.partner_id.email)
-                            self.send_approval_emil_temp(agreement_data.id, partner_ids)
+                            self.send_approval_emil_temp(agreement_data.id, partner_ids,'email_template_check_agreement')
                             tier_review_data.is_send_email=True
                             break
                     else:
+                        partner_ids = []
+                        if tier_review_data.status == 'rejected':
+                            if tier_review_data.requested_by:
+                                partner_ids.append(tier_review_data.requested_by.partner_id.email)
+                                self.send_approval_emil_temp(agreement_data.id, partner_ids,'email_template_rejected_agreement')
+                                tier_review_data.is_send_email = True
+                                break
+
                         if up_sequence.get(tier_review_data.up_sequence):
                             tier_review_data_temp=up_sequence[tier_review_data.up_sequence]
                         else:
                             tier_review_data_temp = tier_review_datas[i - 1]
                         if tier_review_data_temp.status == 'approved':
-                            partner_ids = []
                             if tier_review_data.w_approver_id:
                                 partner_ids.append(tier_review_data.w_approver_id.partner_id.email)
                             else:
@@ -333,15 +340,18 @@ class Agreement(models.Model):
                                 if agreement_data.assigned_user_id:
                                     partner_ids.append(
                                         agreement_data.assigned_user_id.sale_team_id.user_id.partner_id.email)
-                            self.send_approval_emil_temp(agreement_data.id,partner_ids)
+                            self.send_approval_emil_temp(agreement_data.id,partner_ids,'email_template_check_agreement')
                             tier_review_data.is_send_email = True
+
+
+
                 i = i + 1
 
 
 
-    def send_approval_emil_temp(self,id,partner_ids):
+    def send_approval_emil_temp(self,id,partner_ids,emil_template):
         ir_model_data = self.env['ir.model.data']
-        template_ids = ir_model_data.get_object_reference('e2yun_agreement_extend', 'email_template_check_agreement')[1]
+        template_ids = ir_model_data.get_object_reference('e2yun_agreement_extend', emil_template)[1]
         email_template_obj_message = self.env['mail.compose.message']
         if template_ids:
             attachment_ids_value = email_template_obj_message.onchange_template_id(template_ids, 'comment',
