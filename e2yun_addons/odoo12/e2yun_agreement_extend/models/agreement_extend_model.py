@@ -297,6 +297,7 @@ class Agreement(models.Model):
             [('stage_id', '<', 5)])
         tier_review_obj = self.env['tier.review']
 
+        up_sequence={}
         for agreement_data in agreement_datas:
             tier_review_datas = tier_review_obj.search(
                 [('res_id', '=', agreement_data.id)], order="sequence asc")
@@ -304,6 +305,7 @@ class Agreement(models.Model):
             i = 0
             while i < len(tier_review_datas):
                 tier_review_data = tier_review_datas[i]
+                up_sequence[tier_review_data.cp_sequence]=tier_review_data
                 if tier_review_data.status != 'approved' and tier_review_data.is_send_email==False:
                     if i == 0:
                             partner_ids = []
@@ -318,8 +320,10 @@ class Agreement(models.Model):
                             tier_review_data.is_send_email=True
                             break
                     else:
-
-                        tier_review_data_temp = tier_review_datas[i - 1]
+                        if up_sequence.get(tier_review_data.up_sequence):
+                            tier_review_data_temp=up_sequence[tier_review_data.up_sequence]
+                        else:
+                            tier_review_data_temp = tier_review_datas[i - 1]
                         if tier_review_data_temp.status == 'approved':
                             partner_ids = []
                             if tier_review_data.w_approver_id:
@@ -331,9 +335,6 @@ class Agreement(models.Model):
                                         agreement_data.assigned_user_id.sale_team_id.user_id.partner_id.email)
                             self.send_approval_emil_temp(agreement_data.id,partner_ids)
                             tier_review_data.is_send_email = True
-
-
-                            break
                 i = i + 1
 
 
