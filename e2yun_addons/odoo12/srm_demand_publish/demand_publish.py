@@ -314,8 +314,138 @@ class mat_demand_line_details(models.Model):
             raise exceptions.ValidationError("Date format error, correct case example: 2018-07-02. Please re-enter.");
         return strDate1
 
-    @api.model_create_multi
-    def create(self,values):
+    # @api.model_create_multi
+    # def create(self,values):
+    #
+    #     is_supplier = self.env['res.users']._get_default_supplier()
+    #     # 供应商不能创建
+    #     if is_supplier != 0:
+    #         return True
+    #
+    #     supplier_self = self.env['product.supplierinfo']
+    #     comco = self.env['res.company']._company_default_get('mat.demand.head')
+    #
+    #     add_vals = []
+    #
+    #     for vals in values:
+    #         matobj = self.env['product.product'].browse(vals['matnr'])
+    #         uom_id = matobj.product_tmpl_id.uom_id.id
+    #         supplierinfo_temp = supplier_self.search([('product_tmpl_id', '=', matobj.product_tmpl_id.id),
+    #                                                       ('company_id', '=', comco.id)],)
+    #
+    #         if not supplierinfo_temp:
+    #             raise exceptions.ValidationError(matobj.default_code + " Material does not maintain the supplier")
+    #
+    #         supplierinfo = []
+    #         pe=0
+    #         sinfo = []
+    #
+    #         for supplier in supplierinfo_temp:
+    #             s_obj = supplier_self.browse(supplier.id)
+    #             if s_obj.the_quota > 0:
+    #                 pe = s_obj.the_quota + pe
+    #                 sinfo.append(s_obj)
+    #
+    #         supplierinfo=supplierinfo_temp
+    #
+    #         head_history_data_id = vals.get('mat_demand_id',False)
+    #         if not head_history_data_id:
+    #             head = self.env['mat.demand.head'].search([('history_data','=',False)],limit=1)
+    #             head_history_data_id = head.id
+    #             vals['mat_demand_id'] = head_history_data_id
+    #
+    #
+    #         head_history_data = self.env['mat.demand.head'].browse(head_history_data_id)
+    #         self.valida_is_history_data(head_history_data.history_data)
+    #         ddate = str(vals['ddate'])
+    #         vals['ddate'] = self.tranDate(ddate)
+    #
+    #         try:
+    #            pdate = str(vals['pdate'])
+    #            vals['pdate'] = self.tranDate(pdate)
+    #         except:
+    #           pass
+    #
+    #         if len(supplierinfo) == 1:
+    #             s_obj = supplier_self.browse(supplierinfo.id)
+    #             vals['lifnr'] = s_obj.name.id
+    #             vals['meins'] = uom_id
+    #             # lid = super(mat_demand_line_details, self).create(vals)
+    #             # self.update_state(lid.id)
+    #             # return lid
+    #         else:
+    #             if len(sinfo) == 1:
+    #                 s_obj = sinfo[0]
+    #                 vals['lifnr'] = s_obj.name.id
+    #                 vals['meins'] = uom_id
+    #                 # lid = super(mat_demand_line_details, self).create(vals)
+    #                 # self.update_state(lid.id)
+    #                 # return lid
+    #             elif len(sinfo) == 0:
+    #                 menge = vals['menge'] / len(supplierinfo)
+    #                 num = 0
+    #                 copy_vals = vals.copy()
+    #
+    #                 for supplier in supplierinfo:
+    #                     s_obj = supplier_self.browse(supplier.id)
+    #                     if num > 0:
+    #                         copy_vals['lifnr'] = s_obj.name.id
+    #                         copy_vals['meins'] = uom_id
+    #                         copy_vals['menge'] = menge
+    #                         add_vals.append(copy_vals)
+    #                     else:
+    #                         vals['lifnr'] = s_obj.name.id
+    #                         vals['meins'] = uom_id
+    #                         vals['menge'] = menge
+    #                     num = num + 1
+    #                     # lid = super(mat_demand_line_details, self).create(vals)
+    #                     # self.update_state(lid.id)
+    #             else:
+    #                 total_menge = vals['menge']
+    #                 remaining_quantity = 0
+    #                 i = 1
+    #                 num = 0
+    #                 copy_vals = vals.copy()
+    #                 for s in sinfo:
+    #                     s_obj = s
+    #                     if num > 0:
+    #                         if i == len(sinfo):
+    #                             copy_vals['lifnr'] = s_obj.name.id
+    #                             copy_vals['meins'] = uom_id
+    #                             copy_vals['menge'] = remaining_quantity
+    #                         else:
+    #                             copy_vals['lifnr'] = s_obj.name.id
+    #                             copy_vals['meins'] = uom_id
+    #                             copy_vals['menge'] = round(s_obj.the_quota / pe * total_menge, 0)
+    #                             remaining_quantity = total_menge - copy_vals['menge']
+    #                             add_vals.append(copy_vals)
+    #                     else:
+    #                         if i == len(sinfo):
+    #                             vals['lifnr'] = s_obj.name.id
+    #                             vals['meins'] = uom_id
+    #                             vals['menge'] = remaining_quantity
+    #                         else:
+    #                             vals['lifnr'] = s_obj.name.id
+    #                             vals['meins'] = uom_id
+    #                             vals['menge'] = round(s_obj.the_quota / pe * total_menge, 0)
+    #                             remaining_quantity = total_menge - vals['menge']
+    #
+    #
+    #                     # lid = super(mat_demand_line_details, self).create(vals)
+    #                     i = i + 1
+    #                     # self.update_state(lid.id)
+    #     values.extend(add_vals)
+    #
+    #     lid = super(mat_demand_line_details, self).create(values)
+    #     for l in lid:
+    #         # l = super(mat_demand_line_details, self).create(v)
+    #         # lid.append(l)
+    #         self.update_state(l.id)
+    #
+    #     return lid
+
+    @api.model
+    def create(self, vals):
 
         is_supplier = self.env['res.users']._get_default_supplier()
         # 供应商不能创建
@@ -327,122 +457,119 @@ class mat_demand_line_details(models.Model):
 
         add_vals = []
 
-        for vals in values:
-            matobj = self.env['product.product'].browse(vals['matnr'])
-            uom_id = matobj.product_tmpl_id.uom_id.id
-            supplierinfo_temp = supplier_self.search([('product_tmpl_id', '=', matobj.product_tmpl_id.id),
-                                                          ('company_id', '=', comco.id)],)
+        matobj = self.env['product.product'].browse(vals['matnr'])
+        uom_id = matobj.product_tmpl_id.uom_id.id
+        supplierinfo_temp = supplier_self.search([('product_tmpl_id', '=', matobj.product_tmpl_id.id),
+                                                  ('company_id', '=', comco.id)], )
 
-            if not supplierinfo_temp:
-                raise exceptions.ValidationError(matobj.default_code + " Material does not maintain the supplier")
+        if not supplierinfo_temp:
+            raise exceptions.ValidationError(matobj.default_code + " Material does not maintain the supplier")
 
-            supplierinfo = []
-            pe=0
-            sinfo = []
+        pe = 0
+        sinfo = []
 
-            for supplier in supplierinfo_temp:
-                s_obj = supplier_self.browse(supplier.id)
-                if s_obj.the_quota > 0:
-                    pe = s_obj.the_quota + pe
-                    sinfo.append(s_obj)
+        for supplier in supplierinfo_temp:
+            s_obj = supplier_self.browse(supplier.id)
+            if s_obj.the_quota > 0:
+                pe = s_obj.the_quota + pe
+                sinfo.append(s_obj)
 
-            supplierinfo=supplierinfo_temp
+        supplierinfo = supplierinfo_temp
 
-            head_history_data_id = vals.get('mat_demand_id',False)
-            if not head_history_data_id:
-                head = self.env['mat.demand.head'].search([('history_data','=',False)],limit=1)
-                head_history_data_id = head.id
-                vals['mat_demand_id'] = head_history_data_id
+        head_history_data_id = vals.get('mat_demand_id', False)
+        if not head_history_data_id:
+            head = self.env['mat.demand.head'].search([('history_data', '=', False)], limit=1)
+            head_history_data_id = head.id
+            vals['mat_demand_id'] = head_history_data_id
 
+        head_history_data = self.env['mat.demand.head'].browse(head_history_data_id)
+        self.valida_is_history_data(head_history_data.history_data)
+        ddate = str(vals['ddate'])
+        vals['ddate'] = self.tranDate(ddate)
 
-            head_history_data = self.env['mat.demand.head'].browse(head_history_data_id)
-            self.valida_is_history_data(head_history_data.history_data)
-            ddate = str(vals['ddate'])
-            vals['ddate'] = self.tranDate(ddate)
+        try:
+            pdate = str(vals['pdate'])
+            vals['pdate'] = self.tranDate(pdate)
+        except:
+            pass
 
-            try:
-               pdate = str(vals['pdate'])
-               vals['pdate'] = self.tranDate(pdate)
-            except:
-              pass
-
-            if len(supplierinfo) == 1:
-                s_obj = supplier_self.browse(supplierinfo.id)
+        if len(supplierinfo) == 1:
+            s_obj = supplier_self.browse(supplierinfo.id)
+            vals['lifnr'] = s_obj.name.id
+            vals['meins'] = uom_id
+            lid = super(mat_demand_line_details, self).create(vals)
+            self.update_state(lid.id)
+            return lid
+        else:
+            if len(sinfo) == 1:
+                s_obj = sinfo[0]
                 vals['lifnr'] = s_obj.name.id
                 vals['meins'] = uom_id
-                # lid = super(mat_demand_line_details, self).create(vals)
-                # self.update_state(lid.id)
-                # return lid
-            else:
-                if len(sinfo) == 1:
-                    s_obj = sinfo[0]
-                    vals['lifnr'] = s_obj.name.id
-                    vals['meins'] = uom_id
-                    # lid = super(mat_demand_line_details, self).create(vals)
-                    # self.update_state(lid.id)
-                    # return lid
-                elif len(sinfo) == 0:
-                    menge = vals['menge'] / len(supplierinfo)
-                    num = 0
-                    copy_vals = vals.copy()
+                lid = super(mat_demand_line_details, self).create(vals)
+                self.update_state(lid.id)
+                return lid
+            elif len(sinfo) == 0:
+                menge = vals['menge'] / len(supplierinfo)
+                num = 0
+                copy_vals = vals.copy()
 
-                    for supplier in supplierinfo:
-                        s_obj = supplier_self.browse(supplier.id)
-                        if num > 0:
+                for supplier in supplierinfo:
+                    s_obj = supplier_self.browse(supplier.id)
+                    if num > 0:
+                        copy_vals['lifnr'] = s_obj.name.id
+                        copy_vals['meins'] = uom_id
+                        copy_vals['menge'] = menge
+                        lid = super(mat_demand_line_details, self).create(copy_vals)
+                        self.update_state(lid.id)
+                    else:
+                        vals['lifnr'] = s_obj.name.id
+                        vals['meins'] = uom_id
+                        vals['menge'] = menge
+                    num = num + 1
+                lid = super(mat_demand_line_details, self).create(vals)
+                self.update_state(lid.id)
+                return lid
+            else:
+                total_menge = vals['menge']
+                remaining_quantity = 0
+                i = 1
+                num = 0
+                copy_vals = vals.copy()
+                for s in sinfo:
+                    s_obj = s
+                    if num > 0:
+                        if i == len(sinfo):
                             copy_vals['lifnr'] = s_obj.name.id
                             copy_vals['meins'] = uom_id
-                            copy_vals['menge'] = menge
-                            add_vals.append(copy_vals)
+                            copy_vals['menge'] = remaining_quantity
+                        else:
+                            copy_vals['lifnr'] = s_obj.name.id
+                            copy_vals['meins'] = uom_id
+                            copy_vals['menge'] = round(s_obj.the_quota / pe * total_menge, 0)
+                            remaining_quantity = total_menge - copy_vals['menge']
+                            # add_vals.append(copy_vals)
+                        lid = super(mat_demand_line_details, self).create(copy_vals)
+                        self.update_state(lid.id)
+                    else:
+                        if i == len(sinfo):
+                            vals['lifnr'] = s_obj.name.id
+                            vals['meins'] = uom_id
+                            vals['menge'] = remaining_quantity
                         else:
                             vals['lifnr'] = s_obj.name.id
                             vals['meins'] = uom_id
-                            vals['menge'] = menge
-                        num = num + 1
-                        # lid = super(mat_demand_line_details, self).create(vals)
-                        # self.update_state(lid.id)
-                else:
-                    total_menge = vals['menge']
-                    remaining_quantity = 0
-                    i = 1
-                    num = 0
-                    copy_vals = vals.copy()
-                    for s in sinfo:
-                        s_obj = s
-                        if num > 0:
-                            if i == len(sinfo):
-                                copy_vals['lifnr'] = s_obj.name.id
-                                copy_vals['meins'] = uom_id
-                                copy_vals['menge'] = remaining_quantity
-                            else:
-                                copy_vals['lifnr'] = s_obj.name.id
-                                copy_vals['meins'] = uom_id
-                                copy_vals['menge'] = round(s_obj.the_quota / pe * total_menge, 0)
-                                remaining_quantity = total_menge - copy_vals['menge']
-                                add_vals.append(copy_vals)
-                        else:
-                            if i == len(sinfo):
-                                vals['lifnr'] = s_obj.name.id
-                                vals['meins'] = uom_id
-                                vals['menge'] = remaining_quantity
-                            else:
-                                vals['lifnr'] = s_obj.name.id
-                                vals['meins'] = uom_id
-                                vals['menge'] = round(s_obj.the_quota / pe * total_menge, 0)
-                                remaining_quantity = total_menge - vals['menge']
+                            vals['menge'] = round(s_obj.the_quota / pe * total_menge, 0)
+                            remaining_quantity = total_menge - vals['menge']
 
+                    i = i + 1
+                    lid = super(mat_demand_line_details, self).create(vals)
+                    self.update_state(lid.id)
+                    return lid
 
-                        # lid = super(mat_demand_line_details, self).create(vals)
-                        i = i + 1
-                        # self.update_state(lid.id)
-        values.extend(add_vals)
+        # lid = super(mat_demand_line_details, self).create(vals)
+        # self.update_state(lid.id);
 
-        lid = super(mat_demand_line_details, self).create(values)
-        for l in lid:
-            # l = super(mat_demand_line_details, self).create(v)
-            # lid.append(l)
-            self.update_state(l.id)
-
-        return lid
+        # return lid
 
 
 
