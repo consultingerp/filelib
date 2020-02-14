@@ -11,9 +11,6 @@
 <div style="margin: 0px; padding: 0px;">
     <p style="margin: 0px; padding: 0px; font-size: 13px;">
         Dear
-        % if object.create_uid.parent_id:
-            (${object.create_uid.parent_id.name})
-        % endif
         <br/><br/>
         <strong>${object.name}</strong> 合同已超期，请您及时审批
 
@@ -66,9 +63,6 @@
 <div style="margin: 0px; padding: 0px;">
     <p style="margin: 0px; padding: 0px; font-size: 13px;">
         Dear
-        % if object.create_uid.parent_id:
-            (${object.create_uid.parent_id.name})
-        % endif
         <br/><br/>
         <strong>${object.name}</strong> 合同已提交，请您及时审批
 

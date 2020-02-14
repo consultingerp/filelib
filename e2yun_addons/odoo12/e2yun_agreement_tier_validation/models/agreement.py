@@ -116,10 +116,7 @@ class Agreement(models.Model):
     def request_validation(self):
         td_obj = self.env['tier.definition']
         tr_obj = created_trs = self.env['tier.review']
-
         partner_ids = []
-        partner_idsids = []
-
         for rec in self:
             if getattr(rec, self._state_field) in self._state_from:
                 if rec.need_validation:
@@ -127,28 +124,22 @@ class Agreement(models.Model):
                         ('model', '=', self._name)], order="sequence asc")
                     sequence = 0
                     for td in tier_definitions:
+                        is_send_email = False
                         if rec.evaluate_tier(td):
-
                             sequence += 1
                             if td.review_type=='group':
                                 w_approver=td.reviewer_group_id.name
                                 w_approver_id=""
-
                                  #组找对应的团队领导
                                 if sequence == 1:
                                     if self.assigned_user_id:
-                                        partner_idsids = []
-                                        #partner_idsids.append(self.assigned_user_id.sale_team_id.user_id.id)
                                         partner_ids.append(self.assigned_user_id.sale_team_id.user_id.partner_id.email)
 
                             else:
                                 w_approver = td.reviewer_id.name
                                 w_approver_id = td.reviewer_id.id
                                 if sequence == 1:
-                                    #partner_idsids.append(td.reviewer_id.partner_id.id)
                                     partner_ids.append(td.reviewer_id.partner_id.email)
-
-
                             created_trs += tr_obj.create({
                                 'model': self._name,
                                 'res_id': rec.id,
@@ -162,16 +153,12 @@ class Agreement(models.Model):
                                 'w_approver':w_approver,
                                 'w_approver_id': w_approver_id,
                                 'tier_stage_id':td.tier_stage_id.id,
+                                'is_send_email':is_send_email,
                             })
 
                     self._update_counter()
         self._notify_review_requested(created_trs)
-
-
-
-        #partner_ids.append([6, False, partner_idsids])
-        self.emil_temp(self.id, partner_ids)
-
+        #self.emil_temp(self.id, partner_ids)
         return created_trs
 
     def _rebut_tier(self, tiers=False):
@@ -205,32 +192,11 @@ class Agreement(models.Model):
         if template_ids:
             attachment_ids_value = email_template_obj_message.onchange_template_id(template_ids, 'comment',
                                                                                    'agreement', id)
-            # vals = {}
-            # vals['composition_mode'] = 'mass_mail'
-            # vals['template_id'] = template_ids
-            # vals['parent_id'] = False
-            # vals['notify'] = False
-            # vals['no_auto_thread'] = False
-            # vals['reply_to'] = '981274333@qq.com'
-            # vals['model'] = 'agreement'
-            # #if partner_ids and partner_ids[0][2][0]:
-            # #    vals['partner_ids'] =partner_ids
-            # #vals['email_to'] = 'chuqiu.xu@pactera.com'
-            # vals['body'] = attachment_ids_value['value']['body']
-            # vals['res_id'] = id
-            # vals['email_from'] = 'postmaster-odoo@e2yun.com'
-            # vals['subject'] = attachment_ids_value['value']['subject']
-            #
-            # mail_compose=self.env['mail.compose.message'].create(vals)
-            #
-            # mail_compose.action_send_mail()
-
             if not partner_ids:
                 return
             mails = self.env['mail.mail']
             mail_values = {
                 'email_from': 'postmaster-odoo@e2yun.com',
-                #'reply_to': '981274333@qq.com',
                 'email_to': partner_ids[0],
                 'subject': attachment_ids_value['value']['subject'],
                 'body_html':attachment_ids_value['value']['body'],
@@ -258,6 +224,7 @@ class CommentWizard(models.TransientModel):
             ('res_id', '=', self.res_id),
             ('definition_id', 'in', self.definition_ids.ids)
         ])
+
         for user_review in user_reviews:
             user_review.write({
                 'comment': self.comment,
@@ -277,74 +244,7 @@ class CommentWizard(models.TransientModel):
 
         rec._update_counter()
 
-        tier_review_obj = self.env['tier.review']
-        tier_review_datas = tier_review_obj.search(
-            [('res_id', '=', self.res_id)], order="sequence asc")
-        for tier_review_data in tier_review_datas:
-            if tier_review_data.status != 'approved':
-                if tier_review_data not in user_reviews:
-                    partner_ids = []
-                    partner_idsids = []
-                    if tier_review_data.review_type=='group':
-                        agreement_obj = self.env['agreement']
-                        agreement_datas = agreement_obj.browse(self.res_id)
-                        if agreement_datas.assigned_user_id:
-                            #partner_idsids.append(agreement_datas.assigned_user_id.sale_team_id.user_id.id)
-                            #partner_ids.append([6, False, partner_idsids])
-                            partner_ids.append(agreement_datas.assigned_user_id.sale_team_id.user_id.partner_id.email)
-                            self.emil_temp(self.res_id, partner_ids)
-                            break
-                    else:
-                        #partner_idsids.append(tier_review_data.reviewer_id.partner_id.id)
-                        #partner_ids.append([6, False, partner_idsids])
-                        partner_ids.append(tier_review_data.reviewer_id.partner_id.email)
-                        self.emil_temp(self.res_id, partner_ids)
-                        break
 
-
-
-    def emil_temp(self,id,partner_ids,):
-        ir_model_data = self.env['ir.model.data']
-        template_ids = ir_model_data.get_object_reference('e2yun_agreement_extend', 'email_template_check_agreement')[1]
-        email_template_obj_message = self.env['mail.compose.message']
-        if template_ids:
-            attachment_ids_value = email_template_obj_message.onchange_template_id(template_ids, 'comment',
-                                                                                   'agreement', id)
-            # vals = {}
-            # vals['composition_mode'] = 'mass_mail'
-            # vals['template_id'] = template_ids
-            # vals['parent_id'] = False
-            # vals['notify'] = False
-            # vals['no_auto_thread'] = False
-            # vals['reply_to'] = False
-            # vals['model'] = 'agreement'
-            # if partner_ids and partner_ids[0][2][0]:
-            #     vals['partner_ids'] =partner_ids
-            # vals['body'] = attachment_ids_value['value']['body']
-            # vals['res_id'] = id
-            # vals['email_from'] = 'postmaster-odoo@e2yun.com'
-            # vals['subject'] = attachment_ids_value['value']['subject']
-            #
-            # mail_compose=self.env['mail.compose.message'].create(vals)
-            #
-            # mail_compose.action_send_mail()
-
-            if not partner_ids:
-                return
-            mails = self.env['mail.mail']
-            mail_values = {
-                'email_from': 'postmaster-odoo@e2yun.com',
-                # 'reply_to': '981274333@qq.com',
-                'email_to': partner_ids[0],
-                'subject': attachment_ids_value['value']['subject'],
-                'body_html': attachment_ids_value['value']['body'],
-                'notification': True,
-                # 'mailing_id': mailing.id,
-                'auto_delete': True,
-            }
-            mail = self.env['mail.mail'].create(mail_values)
-            mails |= mail
-        mails.send()
 
 
 class TierValidation(models.AbstractModel):
@@ -443,3 +343,4 @@ class TierReview(models.Model):
         comodel_name="res.users",
     )
     tier_stage_id = fields.Integer("stage")
+    is_send_email=fields.Boolean("is_send_email")
