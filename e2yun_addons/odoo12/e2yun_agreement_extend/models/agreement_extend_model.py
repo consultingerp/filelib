@@ -318,6 +318,7 @@ class Agreement(models.Model):
                             tier_review_data.is_send_email=True
                             break
                     else:
+
                         tier_review_data_temp = tier_review_datas[i - 1]
                         if tier_review_data_temp.status == 'approved':
                             partner_ids = []
@@ -330,6 +331,8 @@ class Agreement(models.Model):
                                         agreement_data.assigned_user_id.sale_team_id.user_id.partner_id.email)
                             self.send_approval_emil_temp(agreement_data.id,partner_ids)
                             tier_review_data.is_send_email = True
+
+
                             break
                 i = i + 1
 
