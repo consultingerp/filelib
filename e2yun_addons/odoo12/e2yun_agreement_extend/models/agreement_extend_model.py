@@ -236,6 +236,7 @@ class Agreement(models.Model):
 
         #验证最后一次的审批时
         return  True
+
     def emil_temp(self,id,partner_ids):
         ir_model_data = self.env['ir.model.data']
         template_ids = ir_model_data.get_object_reference('e2yun_agreement_extend', 'email_template_rocp_agreement')[1]
@@ -290,6 +291,74 @@ class Agreement(models.Model):
         mails.send()
 
 
+    def send_approval_emil(self):
+        agreement_obj = self.env['agreement']
+        agreement_datas = agreement_obj.search(
+            [('stage_id', '<', 5)])
+        tier_review_obj = self.env['tier.review']
+
+        for agreement_data in agreement_datas:
+            tier_review_datas = tier_review_obj.search(
+                [('res_id', '=', agreement_data.id)], order="sequence asc")
+
+            i = 0
+            while i < len(tier_review_datas):
+                tier_review_data = tier_review_datas[i]
+                if tier_review_data.status != 'approved' and tier_review_data.is_send_email==False:
+                    if i == 0:
+                            partner_ids = []
+                            if tier_review_data.w_approver_id:
+                                partner_ids.append(tier_review_data.w_approver_id.partner_id.email)
+                            else:
+                                # 审批组、找到团队祖负责人
+                                if agreement_data.assigned_user_id:
+                                    partner_ids.append(
+                                        agreement_data.assigned_user_id.sale_team_id.user_id.partner_id.email)
+                            self.send_approval_emil_temp(agreement_data.id, partner_ids)
+                            tier_review_data.is_send_email=True
+                            break
+                    else:
+
+                        tier_review_data_temp = tier_review_datas[i - 1]
+                        if tier_review_data_temp.status == 'approved':
+                            partner_ids = []
+                            if tier_review_data.w_approver_id:
+                                partner_ids.append(tier_review_data.w_approver_id.partner_id.email)
+                            else:
+                                # 审批组、找到团队祖负责人
+                                if agreement_data.assigned_user_id:
+                                    partner_ids.append(
+                                        agreement_data.assigned_user_id.sale_team_id.user_id.partner_id.email)
+                            self.send_approval_emil_temp(agreement_data.id,partner_ids)
+                            tier_review_data.is_send_email = True
+
+
+                            break
+                i = i + 1
+
+
+
+    def send_approval_emil_temp(self,id,partner_ids):
+        ir_model_data = self.env['ir.model.data']
+        template_ids = ir_model_data.get_object_reference('e2yun_agreement_extend', 'email_template_check_agreement')[1]
+        email_template_obj_message = self.env['mail.compose.message']
+        if template_ids:
+            attachment_ids_value = email_template_obj_message.onchange_template_id(template_ids, 'comment',
+                                                                                   'agreement', id)
+            if not partner_ids:
+                return
+            mails = self.env['mail.mail']
+            mail_values = {
+                'email_from': 'postmaster-odoo@e2yun.com',
+                'email_to': partner_ids[0],
+                'subject': attachment_ids_value['value']['subject'],
+                'body_html': attachment_ids_value['value']['body'],
+                'notification': True,
+                'auto_delete': True,
+            }
+            mail = self.env['mail.mail'].create(mail_values)
+            mails |= mail
+        mails.send()
 
     def import_file(self):
         print(self.id)
