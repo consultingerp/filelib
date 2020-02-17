@@ -2690,7 +2690,7 @@ class CK_Price_Ext(models.Model):
     fbase_price = fields.Float(digits=dp.get_precision('ck_workprice_digit'), string=_('Base Price'))  # 基准价格
     fprice = fields.Float(digits=dp.get_precision('ck_workprice_digit'), string=_('WorkPrice'))  # 价格
     date_start = fields.Date('Valid From', default=fields.Date.today())  # 生效开始日期
-    date_stop = fields.Date('Valid Until', default=fields.Date.from_string('9999-12-31'))  # 生效结束日期
+    date_stop = fields.Date('Valid Until', default=fields.datetime.strptime('2219-12-31','%Y-%m-%d').date())  # 生效结束日期
 
     @api.one
     @api.onchange('fcustid')
