@@ -18,7 +18,7 @@ class Agreement(models.Model):
     @api.onchange("x_studio_htbz")
     def onchange_x_studio_htbz(self):
         oldhtbz = self.env['agreement'].search([('id', '=', self._origin.id)])
-        if self.x_studio_htbz and oldhtbz:
+        if self.x_studio_htbz and oldhtbz and self.x_studio_htje:
             company_id = self.company_id or self.env.user.company_id
             create_date = self.create_date or fields.Date.today()
             currency = self.env['res.currency'].search([('name', '=', self.x_studio_htbz)])
@@ -34,6 +34,7 @@ class Agreement(models.Model):
 
     @api.onchange('x_studio_htje')
     def _onchange_x_studio_htje(self):
+        if self.x_studio_htbz and self.x_studio_htje:
             company_id = self.company_id or self.env.user.company_id
             create_date = self.create_date or fields.Date.today()
             currency = self.env['res.currency'].search([('name', 'like', '%USD%')])
