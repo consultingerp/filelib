@@ -7,6 +7,7 @@
             <field name="arch" type="xml">
                 <!--增加题库大类-->
                 <xpath expr="//field[@name='type']" position="before">
+                    <field name="is_template_question" readonly="True"/>
                     <field name="question_bank_type" widget="radio"/>
                 </xpath>
                 <!--增加样式-->
@@ -105,11 +106,11 @@
             <field name="inherit_id" ref="survey.survey_question_form"/>
             <field name="arch" type="xml">
                 <!--引用已有题库的按钮-->
-                <xpath expr="//div[@class='oe_title']" position="after">
-                    <label for="reference_existing_question" class="oe_read_only"/>
-                    <field name="reference_existing_question"/>
-                    <!--<field name="type" invisible="1"/>-->
-                </xpath>
+<!--                <xpath expr="//div[@class='oe_title']" position="after">-->
+<!--                    <label for="reference_existing_question" class="oe_read_only"/>-->
+<!--                    <field name="reference_existing_question"/>-->
+<!--                    &lt;!&ndash;<field name="type" invisible="1"/>&ndash;&gt;-->
+<!--                </xpath>-->
                 <!--添加最高分值-->
                 <xpath expr="//field[@name='type']" position="after">
                     <label for="highest_score" string="最高分值"/>
@@ -162,6 +163,8 @@
 
             </field>
         </record>
+
+
         <!--题库按题库大类分组继承问题搜索视图-->
         <record model="ir.ui.view" id="survey_question_search_extends">
             <field name="name">Search view for survey question extends</field>
@@ -175,29 +178,56 @@
             </field>
         </record>
 
-        <record model="ir.actions.act_window" id="action_survey_question_form_extends">
-            <field name="name">Questions</field>
+        <!--模板题库菜单Tree Action-->
+        <!--该action相对于原action，主要变更在于增加了domain和context-->
+        <record model="ir.actions.act_window" id="action_template_survey_question_tree">
+            <field name="name">模板问题配置</field>
+            <field name="domain">[('is_template_question', '=', True)]</field>
             <field name="res_model">survey.question</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="search_view_id" ref="survey.survey_question_search"/>
-            <field name="context">{'search_default_group_by_question_bank_type': True}</field>
+            <field name="context">{'search_default_group_by_question_bank_type': True, 'is_template_question': True}</field>
             <field name="help" type="html">
                 <p class="o_view_nocontent_empty_folder">
                     No questions found
                 </p>
             </field>
         </record>
-        <menuitem id="survey.menu_survey_question_form1" action="action_survey_question_form_extends"
+
+        <!--普通题库Tree Action-->
+        <record model="ir.actions.act_window" id="action_normal_survey_question_tree">
+            <field name="name">普通问题配置</field>
+            <field name="domain">[('is_template_question', '=', False)]</field>
+            <field name="res_model">survey.question</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="survey.survey_question_search"/>
+            <field name="context">{'search_default_group_by_question_bank_type': True, 'is_template_question': False}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">
+                    No questions found
+                </p>
+            </field>
+        </record>
+
+
+        <!--模板题库菜单-->
+        <menuitem id="survey.menu_survey_question_form1" name="模板题库配置" action="action_template_survey_question_tree"
                   parent="survey.menu_surveys_configuration" sequence="2"/>
+        <!--普通题库菜单-->
+        <menuitem id="menu_normal_survey_question_tree" name="普通题库配置" action="action_normal_survey_question_tree"
+                  parent="survey.menu_surveys_configuration" sequence="3"/>
 
 
+        <!--创建一个没有用户的权限组，用于隐藏问卷配置下的用户输入明细菜单和选项配置菜单-->
         <record id="make_invisible" model="res.groups">
             <field name="name">Invisible</field>
         </record>
 
         <menuitem id="survey.menu_survey_response_line_form" action="survey.action_survey_user_input_line"
                   parent="survey.menu_surveys_configuration" sequence="4" groups="e2yun_survey_question_extends.make_invisible"/>
+        <menuitem id="survey.survey_label_tree" groups="e2yun_survey_question_extends.make_invisible"/>
 
 
     </data>
