@@ -18,7 +18,7 @@ class Agreement(models.Model):
     @api.onchange("x_studio_htbz")
     def onchange_x_studio_htbz(self):
         oldhtbz = self.env['agreement'].search([('id', '=', self._origin.id)])
-        if self.x_studio_htbz and oldhtbz:
+        if self.x_studio_htbz and oldhtbz and self.x_studio_htje:
             company_id = self.company_id or self.env.user.company_id
             create_date = self.create_date or fields.Date.today()
             currency = self.env['res.currency'].search([('name', '=', self.x_studio_htbz)])
@@ -34,6 +34,7 @@ class Agreement(models.Model):
 
     @api.onchange('x_studio_htje')
     def _onchange_x_studio_htje(self):
+        if self.x_studio_htbz and self.x_studio_htje:
             company_id = self.company_id or self.env.user.company_id
             create_date = self.create_date or fields.Date.today()
             currency = self.env['res.currency'].search([('name', 'like', '%USD%')])
@@ -169,11 +170,8 @@ class Agreement(models.Model):
             vals['x_studio_htje'] = ("%.2f" % float(vals['x_studio_htje']))
 
         if 'stage_id' in vals.keys():
-            if vals['stage_id']==7:
-                print(self.x_studio_htje)
-                print(self.x_studio_mjhtje)
-                print(self.id)
-                print(self.partner_id)
+            if vals['stage_id']==7 and self.x_studio_htje\
+                    and self.partner_id and self.x_studio_jhhm_id:
                 sql='update crm_lead set agreement_amount=%s,agreement_amount_usd=%s,agreement_code=%s,agreement_partner_id=%s where code=%s'
                 self._cr.execute(sql,(self.x_studio_htje,self.x_studio_mjhtje,self.id,self.partner_id.id,self.x_studio_jhhm_id))
 
@@ -201,14 +199,16 @@ class Agreement(models.Model):
                             if tier_review_data.w_approver_id:
                                 partner_idsids=[]
                                 partner_idsids.append(tier_review_data.w_approver_id.partner_id.id)
-                                partner_ids.append([6, False, partner_idsids])
+                               #partner_ids.append([6, False, partner_idsids])
+                                partner_ids.append(tier_review_data.w_approver_id.partner_id.email)
                                 self.emil_temp(agreement_data.id,partner_ids)
                             else:
                                 #审批组、找到团队祖负责人
                                 if agreement_data.assigned_user_id:
                                     partner_idsids = []
                                     partner_idsids.append(agreement_data.assigned_user_id.sale_team_id.user_id.id)
-                                    partner_ids.append([6, False, partner_idsids])
+                                    #partner_ids.append([6, False, partner_idsids])
+                                    partner_ids.append(agreement_data.assigned_user_id.sale_team_id.user_id.partner_id.email)
                                     self.emil_temp(agreement_data.id, partner_ids)
 
                             break
@@ -220,14 +220,16 @@ class Agreement(models.Model):
                             if tier_review_data.w_approver_id:
                                 partner_idsids = []
                                 partner_idsids.append(tier_review_data.w_approver_id.partner_id.id)
-                                partner_ids.append([6, False, partner_idsids])
+                                #partner_ids.append([6, False, partner_idsids])
+                                partner_ids.append(tier_review_data.w_approver_id.partner_id.email)
                                 self.emil_temp(agreement_data.id, partner_ids)
                             else:
                                 # 审批组、找到团队祖负责人
                                 if agreement_data.assigned_user_id:
                                     partner_idsids = []
                                     partner_idsids.append(agreement_data.assigned_user_id.sale_team_id.user_id.id)
-                                    partner_ids.append([6, False, partner_idsids])
+                                    #partner_ids.append([6, False, partner_idsids])
+                                    partner_ids.append(agreement_data.assigned_user_id.sale_team_id.user_id.partner_id.email)
                                     self.emil_temp(agreement_data.id, partner_ids)
                             break
 
@@ -235,27 +237,28 @@ class Agreement(models.Model):
 
         #验证最后一次的审批时
         return  True
-    def emil_temp(self,id,partner_ids,):
+
+    def emil_temp(self,id,partner_ids):
         ir_model_data = self.env['ir.model.data']
         template_ids = ir_model_data.get_object_reference('e2yun_agreement_extend', 'email_template_rocp_agreement')[1]
         email_template_obj_message = self.env['mail.compose.message']
         if template_ids:
             attachment_ids_value = email_template_obj_message.onchange_template_id(template_ids, 'comment',
                                                                                    'agreement', id)
-            vals = {}
-            vals['composition_mode'] = 'mass_mail'
-            vals['template_id'] = template_ids
-            vals['parent_id'] = False
-            vals['notify'] = False
-            vals['no_auto_thread'] = False
-            vals['reply_to'] = False
-            vals['model'] = 'agreement'
-            vals['partner_ids'] =partner_ids
-            vals['body'] = attachment_ids_value['value']['body']
-            vals['res_id'] = id
-            #vals['email_from'] = attachment_ids_value['value']['email_from']
-            vals['email_from'] = 'postmaster-odoo@e2yun.com'
-            vals['subject'] = attachment_ids_value['value']['subject']
+            # vals = {}
+            # vals['composition_mode'] = 'mass_mail'
+            # vals['template_id'] = template_ids
+            # vals['parent_id'] = False
+            # vals['notify'] = False
+            # vals['no_auto_thread'] = False
+            # vals['reply_to'] = False
+            # vals['model'] = 'agreement'
+            # vals['partner_ids'] =partner_ids
+            # vals['body'] = attachment_ids_value['value']['body']
+            # vals['res_id'] = id
+            # #vals['email_from'] = attachment_ids_value['value']['email_from']
+            # vals['email_from'] = 'postmaster-odoo@e2yun.com'
+            # vals['subject'] = attachment_ids_value['value']['subject']
 
             #attachment_ids = []
 
@@ -268,10 +271,106 @@ class Agreement(models.Model):
             #attachment_ids.append([6, False, [4097]])
             #vals['attachment_ids'] = attachment_ids
 
-            mail_compose=self.env['mail.compose.message'].create(vals)
+            # mail_compose=self.env['mail.compose.message'].create(vals)
+            #
+            # mail_compose.action_send_mail()
+            if not partner_ids:
+                return
+            mails = self.env['mail.mail']
+            mail_values = {
+                'email_from': 'postmaster-odoo@e2yun.com',
+                # 'reply_to': '981274333@qq.com',
+                'email_to': partner_ids[0],
+                'subject': attachment_ids_value['value']['subject'],
+                'body_html': attachment_ids_value['value']['body'],
+                'notification': True,
+                # 'mailing_id': mailing.id,
+                'auto_delete': True,
+            }
+            mail = self.env['mail.mail'].create(mail_values)
+            mails |= mail
+        mails.send()
 
-            mail_compose.action_send_mail()
 
+    def send_approval_emil(self):
+        agreement_obj = self.env['agreement']
+        agreement_datas = agreement_obj.search(
+            [('stage_id', '<', 5)])
+        tier_review_obj = self.env['tier.review']
+
+        up_sequence={}
+        for agreement_data in agreement_datas:
+            tier_review_datas = tier_review_obj.search(
+                [('res_id', '=', agreement_data.id)], order="sequence asc")
+
+            i = 0
+            while i < len(tier_review_datas):
+                tier_review_data = tier_review_datas[i]
+                up_sequence[tier_review_data.cp_sequence]=tier_review_data
+                if tier_review_data.status != 'approved' and tier_review_data.is_send_email==False:
+                    if i == 0:
+                            partner_ids = []
+                            if tier_review_data.w_approver_id:
+                                partner_ids.append(tier_review_data.w_approver_id.partner_id.email)
+                            else:
+                                # 审批组、找到团队祖负责人
+                                if agreement_data.assigned_user_id:
+                                    partner_ids.append(
+                                        agreement_data.assigned_user_id.sale_team_id.user_id.partner_id.email)
+                            self.send_approval_emil_temp(agreement_data.id, partner_ids,'email_template_check_agreement')
+                            tier_review_data.is_send_email=True
+                            break
+                    else:
+                        partner_ids = []
+                        if tier_review_data.status == 'rejected':
+                            if tier_review_data.requested_by:
+                                partner_ids.append(tier_review_data.requested_by.partner_id.email)
+                                self.send_approval_emil_temp(agreement_data.id, partner_ids,'email_template_rejected_agreement')
+                                tier_review_data.is_send_email = True
+                                break
+
+                        if up_sequence.get(tier_review_data.up_sequence):
+                            tier_review_data_temp=up_sequence[tier_review_data.up_sequence]
+                        else:
+                            tier_review_data_temp = tier_review_datas[i - 1]
+                        if tier_review_data_temp.status == 'approved':
+                            if tier_review_data.w_approver_id:
+                                partner_ids.append(tier_review_data.w_approver_id.partner_id.email)
+                            else:
+                                # 审批组、找到团队祖负责人
+                                if agreement_data.assigned_user_id:
+                                    partner_ids.append(
+                                        agreement_data.assigned_user_id.sale_team_id.user_id.partner_id.email)
+                            self.send_approval_emil_temp(agreement_data.id,partner_ids,'email_template_check_agreement')
+                            tier_review_data.is_send_email = True
+
+
+
+                i = i + 1
+
+
+
+    def send_approval_emil_temp(self,id,partner_ids,emil_template):
+        ir_model_data = self.env['ir.model.data']
+        template_ids = ir_model_data.get_object_reference('e2yun_agreement_extend', emil_template)[1]
+        email_template_obj_message = self.env['mail.compose.message']
+        if template_ids:
+            attachment_ids_value = email_template_obj_message.onchange_template_id(template_ids, 'comment',
+                                                                                   'agreement', id)
+            if not partner_ids:
+                return
+            mails = self.env['mail.mail']
+            mail_values = {
+                'email_from': 'postmaster-odoo@e2yun.com',
+                'email_to': partner_ids[0],
+                'subject': attachment_ids_value['value']['subject'],
+                'body_html': attachment_ids_value['value']['body'],
+                'notification': True,
+                'auto_delete': True,
+            }
+            mail = self.env['mail.mail'].create(mail_values)
+            mails |= mail
+        mails.send()
 
     def import_file(self):
         print(self.id)
@@ -349,7 +448,7 @@ class Agreement(models.Model):
         }
 
     @api.multi
-    def action_emil_send(self):
+    def action_emil_send1(self):
         self.ensure_one()
         ir_model_data = self.env['ir.model.data']
         try:
@@ -405,6 +504,69 @@ class Agreement(models.Model):
             'context': ctx,
         }
 
+    @api.multi
+    def action_emil_send(self):
+        '''
+        This function opens a window to compose an email, with the edi purchase template message loaded by default
+        '''
+        self.ensure_one()
+        ir_model_data = self.env['ir.model.data']
+        try:
+            template_id = ir_model_data.get_object_reference('e2yun_agreement_extend', 'email_template_temp_agreement')[1]
+
+            sqld="delete  from email_template_attachment_rel where email_template_id=%s "
+            self._cr.execute(sqld,(template_id,))
+
+            sql = "insert into email_template_attachment_rel(email_template_id,attachment_id)values (%s,%s)"
+            if self.pdfswy:
+                self._cr.execute(sql, (template_id,self.pdfswy.id))
+            if self.pdfqw:
+                self._cr.execute(sql, (template_id, self.pdfqw.id))
+            if self.fktj:
+                self._cr.execute(sql, (template_id, self.fktj.id))
+
+        except ValueError:
+            template_id = False
+        try:
+            compose_form_id = ir_model_data.get_object_reference('mail', 'email_compose_message_wizard_form')[1]
+        except ValueError:
+            compose_form_id = False
+        ctx = dict(self.env.context or {})
+        ctx.update({
+            'default_model': 'agreement',
+            'default_res_id': self.ids[0],
+            'default_use_template': bool(template_id),
+            'default_template_id': template_id,
+            'default_composition_mode': 'comment',
+            'custom_layout': "mail.mail_notification_paynow",
+            'force_email': True,
+            'mark_rfq_as_sent': True,
+        })
+
+        # In the case of a RFQ or a PO, we want the "View..." button in line with the state of the
+        # object. Therefore, we pass the model description in the context, in the language in which
+        # the template is rendered.
+        lang = self.env.context.get('lang')
+        if {'default_template_id', 'default_model', 'default_res_id'} <= ctx.keys():
+            template = self.env['mail.template'].browse(ctx['default_template_id'])
+            if template and template.lang:
+                lang = template._render_template(template.lang, ctx['default_model'], ctx['default_res_id'])
+
+        self = self.with_context(lang=lang)
+
+        ctx['model_description'] = _('Purchase Order')
+
+        return {
+            'name': _('Compose Email'),
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'mail.compose.message',
+            'views': [(compose_form_id, 'form')],
+            'view_id': compose_form_id,
+            'target': 'new',
+            'context': ctx,
+        }
 
 class AgreementSubtype(models.Model):
     _inherit = "agreement.subtype"

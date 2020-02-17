@@ -1,0 +1,743 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* e2yun_task_mail_wizard_extends
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-16 05:50+0000\n"
+"PO-Revision-Date: 2020-02-16 15:19+0800\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 2.3\n"
+"Last-Translator: \n"
+"Language: zh_CN\n"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:mail.template,body_html:e2yun_task_mail_wizard_extends.email_template_survey_1
+msgid ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Hello<br/><br/>\n"
+"        We are conducting a survey, and your response would be appreciated.\n"
+"        <div style=\"margin: 16px 0px 16px 0px;\">\n"
+"            <a href=\"__URL__\" style=\"background-color: #875A7B; padding: "
+"8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; "
+"font-size:13px;\">\n"
+"                Start Survey\n"
+"            </a>\n"
+"        </div>\n"
+"        Thanks for your participation!\n"
+"    </p>\n"
+"</div>\n"
+"            "
+msgstr ""
+"div style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        你好<br/><br/>\n"
+"        我们正在进行一份调查，您的回复将不胜感激。\n"
+"        <div style=\"margin: 16px 0px 16px 0px;\">\n"
+"            <a href=\"__URL__\" style=\"background-color: #875A7B; padding: "
+"8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; "
+"font-size:13px;\">\n"
+"                点击调查\n"
+"            </a>\n"
+"        </div>\n"
+"       谢谢你的参与！ \n"
+"    </p>\n"
+"</div>\n"
+"            "
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:mail.template,body_html:e2yun_task_mail_wizard_extends.email_template_survey_3
+msgid ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Hello<br/><br/>\n"
+"        We are conducting two surveys, and your response would be "
+"appreciated.\n"
+"        <div style=\"margin: 16px 0px 16px 0px;\">\n"
+"            <a href=\"zhangsan\" style=\"background-color: #875A7B; padding: "
+"8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; "
+"font-size:13px;\">\n"
+"                Start Survey 1\n"
+"            </a>\n"
+"            <a href=\"lisi\" style=\"background-color: #875A7B; padding: 8px "
+"16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-"
+"size:13px;\">\n"
+"                Start Survey 2\n"
+"            </a>\n"
+"            <a href=\"wangwu\" style=\"background-color: #875A7B; padding: "
+"8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; "
+"font-size:13px;\">\n"
+"                Start Survey 3\n"
+"            </a>\n"
+"        </div>\n"
+"        Thanks for your participation!\n"
+"    </p>\n"
+"</div>\n"
+"            "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">你好<br><br>我们"
+"正在进行三项调查，您的回复将不胜感激。<div style=\"margin: 16px 0px 16px 0px;"
+"\">\n"
+"            <a href=\"zhangsan\" style=\"background-color: #875A7B; padding: "
+"8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; "
+"font-size:13px;\">\n"
+"                点击调查 1\n"
+"            </a>\n"
+"            <a href=\"lisi\" style=\"background-color: #875A7B; padding: 8px "
+"16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-"
+"size:13px;\">\n"
+"                点击调查 2\n"
+"            </a>\n"
+"            <a href=\"wangwu\" style=\"background-color: #875A7B; padding: "
+"8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; "
+"font-size:13px;\">\n"
+"                点击调查 3\n"
+"            </a>\n"
+"        </div>感谢您的参与！</p>\n"
+"</div>"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:mail.template,body_html:e2yun_task_mail_wizard_extends.email_template_survey_2
+msgid ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Hello<br/><br/>\n"
+"        We are conducting two surveys, and your response would be "
+"appreciated.\n"
+"        <div style=\"margin: 16px 0px 16px 0px;\">\n"
+"            <a href=\"zhangsan\" style=\"background-color: #875A7B; padding: "
+"8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; "
+"font-size:13px;\">\n"
+"                Start Survey 1\n"
+"            </a>\n"
+"            <a href=\"lisi\" style=\"background-color: #875A7B; padding: 8px "
+"16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-"
+"size:13px;\">\n"
+"                Start Survey 2\n"
+"            </a>\n"
+"        </div>\n"
+"        Thanks for your participation!\n"
+"    </p>\n"
+"</div>\n"
+"            "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">你好<br><br>我们"
+"正在进行两项调查，您的回复将不胜感激。<div style=\"margin: 16px 0px 16px 0px;"
+"\">\n"
+"            <a href=\"zhangsan\" style=\"background-color: #875A7B; padding: "
+"8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; "
+"font-size:13px;\">\n"
+"               点击调查 1\n"
+"            </a>\n"
+"            <a href=\"lisi\" style=\"background-color: #875A7B; padding: 8px "
+"16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-"
+"size:13px;\">\n"
+"                点击调查 2\n"
+"            </a>\n"
+"        </div>感谢您的参与！</p>\n"
+"</div>"
+
+#. module: e2yun_task_mail_wizard_extends
+#: selection:task.mail.compose.message,moderation_status:0
+msgid "Accepted"
+msgstr "可接受的"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__active_domain
+msgid "Active domain"
+msgstr "活跃的domain"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__add_sign
+msgid "Add Sign"
+msgstr "添加标记"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_task_mail_wizard_extends.task_email_compose_message
+msgid ""
+"Add a list of email of recipients (will not be converted into contacts). "
+"Separated by commas, semicolons or newline..."
+msgstr ""
+"添加收件人的电子邮件列表（不会转换为联系人）。用逗号、分号或排行分隔..."
+
+#. module: e2yun_task_mail_wizard_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_task_mail_wizard_extends.task_email_compose_message
+msgid "Add existing contacts..."
+msgstr "正在添加现有联系人..."
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,help:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__no_auto_thread
+msgid ""
+"Answers do not go in the original document discussion thread. This has an "
+"impact on the generated message-id."
+msgstr "答案不在原来的讨论区中，会对生成的message-id中有影响。"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__attachment_ids
+msgid "Attachments"
+msgstr "附件"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,help:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__attachment_ids
+msgid ""
+"Attachments are linked to a document through model / res_id and to the "
+"message through this field."
+msgstr "附件通过model / res_id链接到文档，并通过该字段链接到消息。"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__author_id
+msgid "Author"
+msgstr "作者"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,help:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__author_id
+msgid ""
+"Author of the message. If not set, email_from may hold an email address that "
+"did not match any partner."
+msgstr ""
+"信息的作者。如果未设置，email_from可能包含与任何合作伙伴不匹配的电子邮件地"
+"址。"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__author_avatar
+msgid "Author's avatar"
+msgstr ""
+
+#. module: e2yun_task_mail_wizard_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_task_mail_wizard_extends.task_email_compose_message
+msgid "Cancel"
+msgstr "取消"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__channel_ids
+msgid "Channels"
+msgstr "频道"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__child_ids
+msgid "Child Messages"
+msgstr "子消息"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_task_mail_wizard_extends.task_email_compose_message
+msgid "Close"
+msgstr "关闭"
+
+#. module: e2yun_task_mail_wizard_extends
+#: selection:task.mail.compose.message,message_type:0
+msgid "Comment"
+msgstr "意见"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_task_mail_wizard_extends.task_email_compose_message
+msgid "Compose Email"
+msgstr "编辑邮件"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__composition_mode
+msgid "Composition mode"
+msgstr "组合模式"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__body
+msgid "Contents"
+msgstr "内容"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_task_mail_wizard_extends.task_email_compose_message
+msgid "Copy and paste the HTML code below to add this web link to any webpage."
+msgstr "复制并粘贴下面的HTML代码，将此web链接添加到任何网页。"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_task_mail_wizard_extends.task_email_compose_message
+msgid "Copy, paste and share the web link below to your audience."
+msgstr "复制，粘贴和分享下面的网络链接给你的观众。"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__create_uid
+msgid "Created by"
+msgstr "创建"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__create_date
+msgid "Created on"
+msgstr "创建"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,help:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__starred
+msgid "Current user has a starred notification linked to this message"
+msgstr "当前用户有一个链接到此消息的星号通知"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__date
+msgid "Date"
+msgstr "日期"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,help:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__date_deadline
+msgid ""
+"Deadline to which the invitation to respond for this survey is valid. If the "
+"field is empty,        the invitation is still valid."
+msgstr "此调查的回复邀请截止日期有效。如果字段为空，则邀请仍然有效。"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__date_deadline
+msgid "Deadline to which the invitation to respond is valid"
+msgstr "回复邀请的截止日期有效"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__auto_delete
+msgid "Delete Emails"
+msgstr "删除邮件"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__auto_delete_message
+msgid "Delete Message Copy"
+msgstr "删除消息副本"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,help:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__auto_delete
+msgid "Delete sent emails (mass mailing only)"
+msgstr "删除已发送的电子邮件(仅限群发)"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__description
+msgid "Description"
+msgstr "描述"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,help:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__auto_delete_message
+msgid ""
+"Do not keep a copy of the email in the document communication history (mass "
+"mailing only)"
+msgstr "不要在文档通信历史记录中保留电子邮件的副本(仅限群发)"
+
+#. module: e2yun_task_mail_wizard_extends
+#: selection:task.mail.compose.message,message_type:0
+msgid "Email"
+msgstr "电子邮件"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,help:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__email_from
+msgid ""
+"Email address of the sender. This field is set when no matching partner is "
+"found and replaces the author_id field in the chatter."
+msgstr ""
+"发件人的电子邮件地址。当没有找到匹配的合作伙伴并替换聊天记录中的author_id字段"
+"时，将设置此字段。"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model,name:e2yun_task_mail_wizard_extends.model_task_mail_compose_message
+msgid "Email composition wizard for Task"
+msgstr "电子邮件组成向导的任务"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__partner_ids
+msgid "Existing contacts"
+msgstr "现有的联系人"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__starred_partner_ids
+msgid "Favorited By"
+msgstr "受欢迎的,"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__email_from
+msgid "From"
+msgstr "来自"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__has_error
+#: model:ir.model.fields,help:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__has_error
+msgid "Has error"
+msgstr "有错误"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__id
+msgid "ID"
+msgstr "身份证件"
+
+#. module: e2yun_task_mail_wizard_extends
+#: code:addons/e2yun_task_mail_wizard_extends/wizard/task_email_compose_message.py:95
+#, python-format
+msgid "Incorrect Email Address: %s"
+msgstr "错误的电子邮件地址:%s"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,help:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__parent_id
+msgid "Initial thread message."
+msgstr "初始消息。"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message____last_update
+msgid "Last Modified on"
+msgstr "最后修改"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__write_uid
+msgid "Last Updated by"
+msgstr "最后更新"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__write_date
+msgid "Last Updated on"
+msgstr "最后一次更新在"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__layout
+msgid "Layout"
+msgstr "布局"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__multi_email
+msgid "List of emails"
+msgstr "电子邮件列表"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__is_log
+msgid "Log an Internal Note"
+msgstr "记录内部记录"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__mail_activity_type_id
+msgid "Mail Activity Type"
+msgstr "邮件活动类型"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__record_name
+msgid "Message Record Name"
+msgstr "消息记录名称"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,help:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__description
+msgid "Message description: either the subject, or the beginning of the body"
+msgstr "信息描述:要么是主题，要么是正文的开头"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,help:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__message_type
+msgid ""
+"Message type: email for email message, notification for system message, "
+"comment for other messages such as user replies"
+msgstr ""
+"消息类型:电子邮件消息的电子邮件，系统消息的通知，其他消息的评论，如用户回复"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,help:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__message_id
+msgid "Message unique identifier"
+msgstr "消息唯一标识符"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__message_id
+msgid "Message-Id"
+msgstr "Message-Id"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__moderator_id
+msgid "Moderated By"
+msgstr "管理人"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__moderation_status
+msgid "Moderation Status"
+msgstr "管理状态"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,help:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__record_name
+msgid "Name get of the related document."
+msgstr "相关文件的名称。"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__needaction
+#: model:ir.model.fields,help:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__needaction
+msgid "Need Action"
+msgstr "待处理"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__need_moderation
+msgid "Need moderation"
+msgstr "需审核"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__no_auto_thread
+msgid "No threading for answers"
+msgstr "线程无应答"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__notification_ids
+msgid "Notifications"
+msgstr "通知"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__notify
+msgid "Notify followers"
+msgstr "通知关注者"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,help:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__notify
+msgid "Notify followers of the document (mass post only)"
+msgstr "通知文档的关注者(仅限群发)"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:mail.template,subject:e2yun_task_mail_wizard_extends.email_template_survey_1
+msgid "One Questionnaire"
+msgstr "一份问卷调查"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__mail_server_id
+msgid "Outgoing mail server"
+msgstr "邮件发送服务器"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__parent_id
+msgid "Parent Message"
+msgstr "上級消息"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__needaction_partner_ids
+msgid "Partners with Need Action"
+msgstr "待处理的业务伙伴"
+
+#. module: e2yun_task_mail_wizard_extends
+#: selection:task.mail.compose.message,moderation_status:0
+msgid "Pending Moderation"
+msgstr "等待审核"
+
+#. module: e2yun_task_mail_wizard_extends
+#: code:addons/e2yun_task_mail_wizard_extends/wizard/task_email_compose_message.py:300
+#, python-format
+msgid "Please enter at least one valid recipient."
+msgstr "请输入至少一个有效的收件人。"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__public_url_html
+msgid "Public HTML web link"
+msgstr "公共HTML网页链接"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__public_url
+msgid "Public url"
+msgstr "公共url"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__website_published
+msgid "Published"
+msgstr "已发布的"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__rating_value
+msgid "Rating Value"
+msgstr "评级值"
+
+#. module: e2yun_task_mail_wizard_extends
+#: selection:task.mail.compose.message,moderation_status:0
+msgid "Rejected"
+msgstr "拒绝"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__res_id
+msgid "Related Document ID"
+msgstr "相关文档编号"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__model
+msgid "Related Document Model"
+msgstr "相关文档模型"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__rating_ids
+msgid "Related ratings"
+msgstr "相关的评级"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,help:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__reply_to
+msgid ""
+"Reply email address. Setting the reply_to bypasses the automatic thread "
+"creation."
+msgstr "回复电子邮件地址。设置reply_to将绕过自动线程创建。"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__reply_to
+msgid "Reply-To"
+msgstr "回复"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_task_mail_wizard_extends.task_email_compose_message
+msgid "Save as a new template"
+msgstr "保存为一个新模板"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_task_mail_wizard_extends.task_email_compose_message
+msgid "Save as new template"
+msgstr "保存为一个新模板"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_task_mail_wizard_extends.task_email_compose_message
+msgid "Send"
+msgstr "发送"
+
+#. module: e2yun_task_mail_wizard_extends
+#: selection:task.mail.compose.message,public:0
+msgid "Send by email the public web link to your audience."
+msgstr "通过电子邮件向您的听众发送公共web链接。"
+
+#. module: e2yun_task_mail_wizard_extends
+#: selection:task.mail.compose.message,public:0
+msgid ""
+"Send private invitation to your audience (only one response per recipient "
+"and per invitation)."
+msgstr "向您的观众发送私人邀请(每个收件人和每个邀请只有一个响应)。"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_task_mail_wizard_extends.task_form_extendds
+msgid "Share and invite by email"
+msgstr "发送多问卷"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__public
+msgid "Share options"
+msgstr "分享选项"
+
+#. module: e2yun_task_mail_wizard_extends
+#: selection:task.mail.compose.message,public:0
+msgid "Share the public web link to your audience."
+msgstr "与您的受众共享公共web链接。"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,help:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__author_avatar
+msgid ""
+"Small-sized image of this contact. It is automatically resized as a 64x64px "
+"image, with aspect ratio preserved. Use this field anywhere a small image is "
+"required."
+msgstr ""
+"联系人小尺寸图像。自动缩放为64x64px ，保留纵横比。此字段用于任何需要小图像的"
+"场合"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__starred
+msgid "Starred"
+msgstr "星标邮件"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__subject
+msgid "Subject"
+msgstr "主題"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_task_mail_wizard_extends.task_email_compose_message
+msgid "Subject..."
+msgstr "主题..."
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__subtype_id
+msgid "Subtype"
+msgstr "子类型"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__survey_ids
+msgid "Survey"
+msgstr "调查"
+
+#. module: e2yun_task_mail_wizard_extends
+#: selection:task.mail.compose.message,message_type:0
+msgid "System notification"
+msgstr "系统通知"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model,name:e2yun_task_mail_wizard_extends.model_project_task
+msgid "Task"
+msgstr "任务"
+
+#. module: e2yun_task_mail_wizard_extends
+#: code:addons/e2yun_task_mail_wizard_extends/models/models.py:99
+#, python-format
+msgid "There is no questionnaire for the task!"
+msgstr "这个任务没有调查问卷"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,help:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__multi_email
+msgid ""
+"This list of emails of recipients will not be converted in contacts.        "
+"Emails must be separated by commas, semicolons or newline."
+msgstr ""
+"此收件人邮件列表将不会转换为联系人。电子邮件必须用逗号、分号或换行符分隔。"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:mail.template,subject:e2yun_task_mail_wizard_extends.email_template_survey_3
+msgid "Three Questionnaires"
+msgstr "三份调查问卷"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,help:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__tracking_value_ids
+msgid ""
+"Tracked values are stored in a separate model. This field allow to "
+"reconstruct the tracking and to generate statistics on the model."
+msgstr ""
+"被跟踪的值存储在单独的模型中。该字段允许重建跟踪并生成关于模型的统计信息。"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__tracking_value_ids
+msgid "Tracking values"
+msgstr "跟踪值"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:mail.template,subject:e2yun_task_mail_wizard_extends.email_template_survey_2
+msgid "Two Questionnaires"
+msgstr "三份调查问卷"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__message_type
+msgid "Type"
+msgstr "类型"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__use_active_domain
+msgid "Use active domain"
+msgstr "使用有效域"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__template_id
+#: model_terms:ir.ui.view,arch_db:e2yun_task_mail_wizard_extends.task_email_compose_message
+msgid "Use template"
+msgstr "使用模板"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,help:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__website_published
+msgid "Visible on the website as a comment"
+msgstr "作为评论在网站可见"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model.fields,help:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__is_log
+msgid "Whether the message is an internal note (comment mode only)"
+msgstr "该消息是否是一个内部备注(注释模式)"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_task_mail_wizard_extends.task_email_compose_message
+msgid ""
+"You can share your survey web public link and/or send private invitations to "
+"your audience. People can answer once per invitation, and whenever they want "
+"with the public web link (in this case, the \"Login Required\" setting must "
+"be disabled)."
+msgstr ""
+"您可以分享您的调查网络公共链接和/或发送私人邀请给您的观众。人们可以在每个邀请"
+"中回答一次问题，并且只要他们想使用公共web链接(在这种情况下，必须禁用“Login "
+"Required”设置)。"
+
+#. module: e2yun_task_mail_wizard_extends
+#: code:addons/e2yun_task_mail_wizard_extends/models/models.py:28
+#, python-format
+msgid "You cannot send invitations for closed surveys."
+msgstr "您不能发送封闭式调查的邀请。"
