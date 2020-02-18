@@ -38,7 +38,7 @@
             <field name="arch" type="xml">
                 <form string="Mat Demand Head" create="false">
                     <header>
-                        <button name="publish_data" type="object" string="Publish" attrs="{'invisible': ['|',('history_data','=',True),('state','=','publish')]}" class="oe_highlight"/>
+                        <button name="publish_data" type="object" string="Publish" attrs="{'invisible': ['|','|',('history_data','=',True),('state','=','publish'),('state','=',False)]}" class="oe_highlight"/>
                         <field name="state" widget="statusbar" statusbar_visible="create,publish" statusbar_colors='{"publish":"blue","edit_publish":"blue"}' readonly="1" invisible='1' />
                     </header>
                     <sheet>
