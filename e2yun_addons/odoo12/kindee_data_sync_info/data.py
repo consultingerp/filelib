@@ -35,7 +35,11 @@ class CK_ICNO_Opra(models.Model):
     def _compute_qty(self):
 
         pqty = 0
-        self._cr.execute('select id,pqty,foperno from ck_hours_worker where production_id =%s and foperno = %s and state != %s', (self.production_id.id, self.foperno, 'del',))
+        if self.production_id.id and self.foperno:
+            sql = 'select id,pqty,foperno from ck_hours_worker where production_id =%s and foperno = %s and state != %s' % (self.production_id.id, self.foperno, 'del',)
+        else:
+            sql = "select id,pqty,foperno from ck_hours_worker where state != %s" % "'del'"
+        self._cr.execute(sql)
         hw_ids = self._cr.fetchall()
         if self.foperno and self.production_id and hw_ids:
             for hw in hw_ids:
