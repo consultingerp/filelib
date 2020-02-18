@@ -11,8 +11,9 @@
                     <h1><field name="supplier_code"  class="oe_inline" /></h1>
                     <label for="short_name" class="oe_edit_only" />
                     <h1><field name="short_name"  class="oe_inline" /></h1>
-                    <field name="seal_of_pictures" widget="image"  class="oe_avatar oe_left"  placeholder="盖章图片"/>
-                    <field name="user_signature" widget="image"  class="oe_avatar oe_left"   placeholder="签名图片"/>
+                    <label for="seal_of_pictures"/><label for="user_signature" class="srm_margin_left_60"/>
+                    <h1><field name="seal_of_pictures" widget="image"  class="oe_avatar oe_left"  placeholder="盖章图片"/></h1>
+                    <h1><field name="user_signature" widget="image"  class="oe_avatar oe_left srm_margin_left_20"   placeholder="签名图片"/></h1>
                 </field>
 
                 <!--<xpath expr="//div[@class='oe_title oe_left']" position="inside">

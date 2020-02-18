@@ -39,7 +39,7 @@
             <field name="arch" type="xml">
                 <form string="Packing" create="false" edit="false">
                     <header>
-                        <button name="print_order" type="object" string="Print" class="oe_highlight"/>
+                        <button name="print_order" type="object" string="Print" class="oe_highlight" invisible="1"/>
                         <field name="state" widget="statusbar" statusbar_visible="create,print" statusbar_colors='{"print":"blue"}' readonly="1"/>
                     </header>
                     <sheet>
