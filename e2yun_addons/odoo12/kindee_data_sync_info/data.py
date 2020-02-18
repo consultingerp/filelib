@@ -167,7 +167,7 @@ class CK_Price(models.Model):
     date_start = fields.Date('Valid From', default=fields.Date.today())  # 生效开始日期
     date_stop = fields.Date('Valid Until', default=fields.Date.from_string('9999-12-31'))  # 生效结束日期
 
-    @api.one
+    # @api.one
     @api.onchange('fitemid')
     def change_fitemid(self):
         if self.fitemid:
@@ -176,7 +176,7 @@ class CK_Price(models.Model):
                 self.fnumber = foper_ids[0].fnumber
                 self.fname = foper_ids[0].fname
 
-    @api.one
+    # @api.one
     @api.onchange('fnumber')
     def change_fnumber(self):
         if self.fnumber:
@@ -185,7 +185,7 @@ class CK_Price(models.Model):
                 self.fitemid = foper_ids[0].fitemid
                 self.fname = foper_ids[0].fname
 
-    @api.one
+    # @api.one
     @api.onchange('foperno')
     def change_foperno(self):
         if self.foperno:
@@ -194,7 +194,7 @@ class CK_Price(models.Model):
                 self.fopername = foper_ids[0].fopername
                 self.foperid = foper_ids[0].foperid
 
-    @api.one
+    # @api.one
     @api.onchange('foperid')
     def change_foperid(self):
         if self.foperid:
@@ -203,7 +203,7 @@ class CK_Price(models.Model):
                 self.fopername = foper_ids[0].fopername
                 self.foperno = foper_ids[0].foperno
 
-    @api.one
+    # @api.one
     @api.onchange('froutingno')
     def change_froutingno(self):
         if self.froutingno:
@@ -212,7 +212,7 @@ class CK_Price(models.Model):
                 self.froutingname = foper_ids[0].froutingname
                 self.froutingid = foper_ids[0].froutingid
 
-    @api.one
+    # @api.one
     @api.onchange('froutingid')
     def change_froutingid(self):
         if self.froutingid:
@@ -502,7 +502,7 @@ class CK_Hours_Worker(models.Model):
         return True
     '''
 
-    @api.one
+    # @api.one
     @api.onchange('production_id')
     def change_production_id(self):
         self.foperno = False
@@ -519,7 +519,7 @@ class CK_Hours_Worker(models.Model):
         if not self.user_id:
             self.usr_id = self.env.user
 
-    @api.one
+    # @api.one
     @api.onchange('foperno')
     def change_foperno(self):
         self.fopername = False
@@ -531,7 +531,7 @@ class CK_Hours_Worker(models.Model):
             if any(foper_ids):
                 self.fopername = foper_ids[0].fopername
 
-    @api.one
+    # @api.one
     @api.onchange('fworkcenterno')
     def change_fworkcenterno(self):
         self.pqty = 0
@@ -1815,7 +1815,7 @@ class CK_Hours_Worker_line(models.Model):
             for user in mygroups.users:
                 print(user)
 
-    @api.one
+    # @api.one
     @api.onchange('production_id')
     def change_production_id(self):
         self.foperno = False
@@ -1832,7 +1832,7 @@ class CK_Hours_Worker_line(models.Model):
         if not self.user_id:
             self.usr_id = self.env.user
 
-    @api.one
+    # @api.one
     @api.onchange('foperno')
     def change_foperno(self):
         self.fopername = False
@@ -1844,7 +1844,7 @@ class CK_Hours_Worker_line(models.Model):
             if any(foper_ids):
                 self.fopername = foper_ids[0].fopername
 
-    @api.one
+    # @api.one
     @api.onchange('fworkcenterno')
     def change_fworkcenterno(self):
         self.pqty = 0
@@ -1978,7 +1978,7 @@ class CK_Hours_Worker_line(models.Model):
         fworkcenter = self.env['ck.routing.sync'].search([('fworkcenterno', '=', self.fworkcenterno)], limit=1)
         self.department = fworkcenter.fworkcentername
 
-    @api.one
+    # @api.one
     @api.depends('sqty', 'gqty')
     def _compute_price(self):
         if self.gqty:
@@ -2203,7 +2203,7 @@ class CK_Hours_Worker_line(models.Model):
                 line.fmachine = self.fmachine
             i = i + 1
 
-    @api.one
+    # @api.one
     @api.depends('sqty', 'gqty')
     def _compute_amount(self):
         # if self.state != 'done':
@@ -2696,7 +2696,7 @@ class CK_Price_Ext(models.Model):
     date_start = fields.Date('Valid From', default=fields.Date.today())  # 生效开始日期
     date_stop = fields.Date('Valid Until', default=fields.datetime.strptime('2219-12-31','%Y-%m-%d').date())  # 生效结束日期
 
-    @api.one
+    # @api.one
     @api.onchange('fcustid')
     def change_fcustid(self):
         if self.fcustid:
@@ -2704,7 +2704,7 @@ class CK_Price_Ext(models.Model):
             if any(icmo_ids):
                 self.fcustno = icmo_ids[0].fcustno
 
-    @api.one
+    # @api.one
     @api.onchange('fcustno')
     def change_fcustno(self):
         if self.fcustno:
@@ -2712,7 +2712,7 @@ class CK_Price_Ext(models.Model):
             if any(icmo_ids):
                 self.fcustid = icmo_ids[0].fcustid
 
-    @api.one
+    # @api.one
     @api.onchange('fitemid')
     def change_fitemid(self):
         if self.fitemid:
@@ -2721,7 +2721,7 @@ class CK_Price_Ext(models.Model):
                 self.fnumber = foper_ids[0].fnumber
                 self.fname = foper_ids[0].fname
 
-    @api.one
+    # @api.one
     @api.onchange('fnumber')
     def change_fnumber(self):
         if self.fnumber:
@@ -2730,7 +2730,7 @@ class CK_Price_Ext(models.Model):
                 self.fitemid = foper_ids[0].fitemid
                 self.fname = foper_ids[0].fname
 
-    @api.one
+    # @api.one
     @api.onchange('foperno')
     def change_foperno(self):
         if self.foperno:
@@ -2739,7 +2739,7 @@ class CK_Price_Ext(models.Model):
                 self.fopername = foper_ids[0].fopername
                 self.foperid = foper_ids[0].foperid
 
-    @api.one
+    # @api.one
     @api.onchange('foperid')
     def change_foperid(self):
         if self.foperid:
@@ -2748,7 +2748,7 @@ class CK_Price_Ext(models.Model):
                 self.fopername = foper_ids[0].fopername
                 self.foperno = foper_ids[0].foperno
 
-    @api.one
+    # @api.one
     @api.onchange('froutingno')
     def change_froutingno(self):
         if self.froutingno:
@@ -2757,7 +2757,7 @@ class CK_Price_Ext(models.Model):
                 self.froutingname = foper_ids[0].froutingname
                 self.froutingid = foper_ids[0].froutingid
 
-    @api.one
+    # @api.one
     @api.onchange('froutingid')
     def change_froutingid(self):
         if self.froutingid:
@@ -2766,17 +2766,17 @@ class CK_Price_Ext(models.Model):
                 self.froutingname = foper_ids[0].froutingname
                 self.froutingno = foper_ids[0].froutingno
 
-    @api.one
+    # @api.one
     @api.onchange('fbase_price')
     def change_fbase_price(self):
         self.change_work_price()
 
-    @api.one
+    # @api.one
     @api.onchange('fshift')
     def change_fshift(self):
         self.change_work_price()
 
-    @api.one
+    # @api.one
     @api.onchange('fmachine')
     def change_fmachine(self):
         self.change_work_price()
@@ -2848,7 +2848,7 @@ class ck_attrition_rate(models.Model):
     attrition_rate = fields.Float(string=_('Attrition rate'))  # 损耗率
     attrition_key = fields.Char(string="Key")
 
-    @api.one
+    # @api.one
     @api.onchange('fitemid')
     def change_fitemid(self):
         if self.fitemid:
@@ -2857,7 +2857,7 @@ class ck_attrition_rate(models.Model):
                 self.fnumber = foper_ids[0].fnumber
                 self.fname = foper_ids[0].fname
 
-    @api.one
+    # @api.one
     @api.onchange('fnumber')
     def change_fnumber(self):
         if self.fnumber:
@@ -2879,7 +2879,7 @@ class ck_route_scrap_reasons(models.Model):
         ("ck_route_scrap_reasons_unique", "unique(foperno,reason)", _("工序原因不能重复。"))
     ]
 
-    @api.one
+    # @api.one
     @api.onchange('foperno')
     def change_foperno(self):
         if self.foperno:
@@ -3003,7 +3003,7 @@ class ck_material_scrap_reasons(models.Model):
         ("ck_route_scrap_reasons_unique", "unique(foperno,reason)", _("工序原因不能重复。"))
     ]
 
-    @api.one
+    # @api.one
     @api.onchange('foperno')
     def change_foperno(self):
         if self.foperno:
