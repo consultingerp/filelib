@@ -161,6 +161,15 @@ class Agreement(models.Model):
         #self.emil_temp(self.id, partner_ids)
         return created_trs
 
+
+    @api.multi
+    def restart_validation(self):
+        for rec in self:
+            if getattr(rec, self._state_field) in self._state_from:
+                rec.mapped('review_ids').unlink()
+                self._update_counter()
+        self.stage_id = 1
+
     def _rebut_tier(self, tiers=False):
         self.ensure_one()
         tier_reviews = tiers or self.review_ids
