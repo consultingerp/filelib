@@ -381,6 +381,46 @@
             </field>
     </record>
 
+    <record id="survey_form_change_page_ids_form" model="ir.ui.view">
+      <field name="name">Survey Form Change Page IDS Form</field>
+      <field name="model">survey.survey</field>
+      <field name="inherit_id" ref="survey.survey_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='page_ids']" position="inside">
+          <form>
+            <sheet>
+                        <div class="oe_title" style="width: 100%;">
+                            <label for="title" class="oe_edit_only"/>
+                            <h1><field name="title" placeholder="Page Title"/></h1>
+                        </div>
+              <group>
+                        <group>
+                            <field name="weight" placeholder="权重"/>
+                        </group>
+                        <group>
+                            <field name="x_studio_survey_page_sum" readonly="1"/>
+                        </group>
+                    </group>
+                        <field name="question_ids" nolabel="1" mode="tree" context="{'default_page_id': active_id}">
+                        <tree>
+                            <field name="sequence" widget="handle"/>
+                            <field name="question"/>
+                            <field name="highest_score"/>
+                            <field name="type"/>
+                            <field name="scoring_method"/>
+                            <field name="constr_mandatory"/>
+                        </tree>
+                    </field>
+<!--                    <button name="new_question" string="新建问题" type="object" class='oe_edit_only'/>-->
+                    <button name="chose_question_from_template" string="从模板问题库中选择问题" type="object" class="oe_edit_only"/>
+
+                    </sheet>
+          </form>
+<!--                <attribute name="context">{'default_survey_id': active_id, 'form_view_ref': 'e2yun_survey_pagee_extends.survey_page_extends'}</attribute>-->
+        </xpath>
+      </field>
+    </record>
+
 
   </data>
 </odoo>

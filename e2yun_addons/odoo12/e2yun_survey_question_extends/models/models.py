@@ -10,6 +10,8 @@ _logger = logging.getLogger(__name__)
 class e2yun_survey_question_extends(models.Model):
     _inherit = 'survey.question'
 
+    is_template_question = fields.Boolean(string='是否模板问题')
+
     highest_score = fields.Float(string='最高分值', compute='_compute_highest_score', default=0.0)
     scoring_method = fields.Selection([('唯一性计分', '唯一性计分'), ('选择性计分', '选择性计分'), ('不计分', '不计分')], string='计分方式', required=True)
     reference_existing_question = fields.Many2one('survey.question', string='引用已有题库')
@@ -32,6 +34,17 @@ class e2yun_survey_question_extends(models.Model):
         ('scoring', '打分'),
         ('upload attachments', '附件上传'),
         ], required=False)
+
+
+    @api.model
+    def default_get(self, fields_list):
+        res = super(e2yun_survey_question_extends, self).default_get(fields_list)
+        is_template_question = self._context.get('is_template_question')
+        if is_template_question:
+            res.update({'is_template_question': True})
+        else:
+            res.update({'is_template_question': False})
+        return res
 
     @api.multi
     def validate_question(self, post, answer_tag):
