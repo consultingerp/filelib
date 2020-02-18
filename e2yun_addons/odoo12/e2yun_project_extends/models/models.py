@@ -80,10 +80,11 @@ class E2yunTaskInfo(models.Model):
     @api.one
     def write(self, vals):
         res = super(E2yunTaskInfo, self).write(vals)
-        if self.multiple_questionnaires == 'no' and len(self.questionnaire_ids) == 0:
-            raise exceptions.Warning(_('请先维护行信息！'))
+        # if self.multiple_questionnaires == 'no' and len(self.questionnaire_ids) == 0:
+        #     raise exceptions.Warning(_('请先维护行信息！'))
         if self.multiple_questionnaires and self.multiple_questionnaires == 'no':
-            self.questionnaire_ids.weight = '100%'
+            for questionnaire in self.questionnaire_ids:
+                questionnaire.weight = '100%'
         all_score = 0
         for record in self.questionnaire_ids:
             str_weight = record.weight

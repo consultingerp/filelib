@@ -19,7 +19,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'survey', 'e2yun_suppliers_register'],
+    'depends': ['base', 'survey', 'e2yun_suppliers_register', 'e2yun_survey_pagee_extends'],
 
     # always loaded
     'data': [

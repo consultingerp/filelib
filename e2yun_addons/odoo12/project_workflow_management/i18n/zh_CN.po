@@ -1,0 +1,1070 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* project_workflow_management
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-15 03:03+0000\n"
+"PO-Revision-Date: 2020-02-15 03:03+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_wkf_project_task_confirmation__message
+msgid "Action Message"
+msgstr "活动信息"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow__stage_ids
+msgid "All workflow task stages"
+msgstr "所有工作流任务阶段"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_project__allow_workflow
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_task__allow_workflow
+msgid "Allow Workflow?"
+msgstr "是否允许工作流？"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.edit_project_extend_with_type_workflow
+msgid "Allow workflow"
+msgstr "是否允许工作流？"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,help:project_workflow_management.field_project_workflow_stage_mapping_wizard_line__task_count
+#: model:ir.model.fields,help:project_workflow_management.field_project_workflow_stage_mapping_wizard_stage__task_count
+msgid "Applicable only for stages of type 'from'"
+msgstr "仅适用于 "from" 类型的阶段"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_edit_workspace_wizard_form
+msgid "Apply"
+msgstr "应用"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_edit_workspace_wizard_form
+msgid "Apply Workflow"
+msgstr "应用工作流"
+
+#. module: project_workflow_management
+#. openerp-web
+#: code:addons/project_workflow_management/static/src/js/diagram_controller.js:118
+#, python-format
+msgid "Are you sure you want to discard this workflow?"
+msgstr "确实要放弃此工作流吗？"
+
+#. module: project_workflow_management
+#. openerp-web
+#: code:addons/project_workflow_management/static/src/js/diagram_controller.js:100
+#, python-format
+msgid "Are you sure you want to publish this workflow?"
+msgstr "确实要发布此工作流吗？"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_wkf_project_task_confirmation__user_id
+msgid "Assignee"
+msgstr "分配给"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_edit_workspace_wizard_form
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_export_wizard_form
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_import_wizard_form
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workspace_edit_wizard_form
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workspace_mapping_wizard_form
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.wkf_project_task_confirmation_form
+msgid "Cancel"
+msgstr "取消"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.edit_project_extend_with_type_workflow
+msgid "Change Workflow"
+msgstr "修改工作流"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_export_wizard_form
+msgid "Close"
+msgstr "关闭"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.wkf_project_task_confirmation_form
+msgid "Comment"
+msgstr "备注"
+
+#. module: project_workflow_management
+#: model:ir.model,name:project_workflow_management.model_res_config_settings
+msgid "Config Settings"
+msgstr "配置设定"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.res_config_settings_view_form
+msgid "Configure project workflow to provide default task states per security group."
+msgstr "配置项目工作流, 以便为每个安全组提供默认任务状态。"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.res_config_settings_view_form
+msgid "Configure project workflow transitions and states to execute server actions."
+msgstr "配置项目工作流转换和执行服务器操作的状态。"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.res_config_settings_view_form
+msgid "Configure project workflow transitions to be allowed for specified projects."
+msgstr "配置项目工作流转换以允许指定的项目。"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.res_config_settings_view_form
+msgid "Configure project workflow transitions to be allowed for specified security groups."
+msgstr "配置项目工作流转换以允许指定的安全组。"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.wkf_project_task_confirmation_form
+msgid "Confirm"
+msgstr "确认"
+
+#. module: project_workflow_management
+#: model:ir.actions.act_window,name:project_workflow_management.wkf_project_task_confirmation_action
+msgid "Confirmation Widow"
+msgstr "确认窗口"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_edit_workflow_wizard__create_uid
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow__create_uid
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_edit_wizard__create_uid
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_export_wizard__create_uid
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_import_wizard__create_uid
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard__create_uid
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_line__create_uid
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_stage__create_uid
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_state__create_uid
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_transition__create_uid
+#: model:ir.model.fields,field_description:project_workflow_management.field_wkf_project_task_confirmation__create_uid
+msgid "Created by"
+msgstr "创建人"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_edit_workflow_wizard__create_date
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow__create_date
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_edit_wizard__create_date
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_export_wizard__create_date
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_import_wizard__create_date
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard__create_date
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_line__create_date
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_stage__create_date
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_state__create_date
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_transition__create_date
+#: model:ir.model.fields,field_description:project_workflow_management.field_wkf_project_task_confirmation__create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_edit_workflow_wizard__current_workflow_id
+msgid "Current Workflow"
+msgstr "当前工作流程"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_import_wizard__data
+msgid "Data"
+msgstr "数据"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow__default_state_id
+msgid "Default state"
+msgstr "默认状态"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_res_config_settings__module_project_workflow_default_state_per_group
+msgid "Default task states per security group"
+msgstr "每个安全组的默认任务状态"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,help:project_workflow_management.field_project_workflow__description
+msgid "Describe this workflow for your colleagues ..."
+msgstr "为您的同事描述此工作流…"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow__description
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_state__description
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_transition__description
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.edit_project_workflow
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_transition_diagram_form
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_transition_form
+msgid "Description"
+msgstr "说明"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_transition__dst_id
+msgid "Destination Stage"
+msgstr "目标阶段"
+
+#. module: project_workflow_management
+#: selection:project.workflow.edit.wizard,type:0
+msgid "Diagram"
+msgstr "图表"
+
+#. module: project_workflow_management
+#. openerp-web
+#: code:addons/project_workflow_management/static/src/xml/diagram.xml:21
+#, python-format
+msgid "Discard"
+msgstr "废弃"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_edit_workflow_wizard__display_name
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow__display_name
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_edit_wizard__display_name
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_export_wizard__display_name
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_import_wizard__display_name
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_importer__display_name
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_publisher__display_name
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard__display_name
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_line__display_name
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_stage__display_name
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_state__display_name
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_transition__display_name
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_xml_reader__display_name
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_xml_writer__display_name
+#: model:ir.model.fields,field_description:project_workflow_management.field_wkf_project_task_confirmation__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: project_workflow_management
+#: selection:project.workflow.state,type:0
+msgid "Done"
+msgstr "完成"
+
+#. module: project_workflow_management
+#: selection:project.workflow,state:0
+msgid "Draft"
+msgstr "草稿"
+
+#. module: project_workflow_management
+#: code:addons/project_workflow_management/models/project_workflow.py:300
+#, python-format
+msgid "Draft Version of '%s'"
+msgstr "‘%s’的草稿版本"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow__edit_ids
+msgid "Drafts"
+msgstr "草稿"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_form
+msgid "Edit"
+msgstr "编辑"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow__edit_count
+msgid "Edit Count"
+msgstr "编辑数目"
+
+#. module: project_workflow_management
+#. openerp-web
+#: code:addons/project_workflow_management/static/src/js/diagram_controller.js:67
+#, python-format
+msgid "Edit:"
+msgstr "编辑："
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workspace_edit_wizard_form
+msgid "Editor"
+msgstr "编辑器"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workspace_edit_wizard_form
+msgid "Editor Chooser"
+msgstr "编辑选择器"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_edit_wizard__type
+msgid "Editor Type"
+msgstr "编辑器类型"
+
+#. module: project_workflow_management
+#: selection:project.workflow.export.wizard,state:0
+msgid "End"
+msgstr "结束"
+
+#. module: project_workflow_management
+#. openerp-web
+#: code:addons/project_workflow_management/static/src/xml/diagram.xml:25
+#: model:ir.ui.menu,name:project_workflow_management.project_workflow_export
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_form
+#, python-format
+msgid "Export"
+msgstr "导出"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_export_wizard__data
+msgid "File"
+msgstr "文件"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_export_wizard__file_name
+msgid "File Name"
+msgstr "文件名称"
+
+#. module: project_workflow_management
+#: code:addons/project_workflow_management/models/project_workflow_xml.py:123
+#, python-format
+msgid "Following state(s) are referenced in the transitions but can not be found: [%s]"
+msgstr "在转换中引用以下状态：[%s], 但找不到"
+
+#. module: project_workflow_management
+#: selection:project.workflow.edit.wizard,type:0
+msgid "Form"
+msgstr "表单"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard__from_id
+#: selection:project.workflow.stage.mapping.wizard.stage,type:0
+msgid "From"
+msgstr "从"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_line__from_id
+msgid "From Stage"
+msgstr "从阶段"
+
+#. module: project_workflow_management
+#: sql_constraint:project.workflow.stage.mapping.wizard.line:0
+msgid "From and To stages must be unique!"
+msgstr "从和到的阶段必须是唯一的!"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_state_diagram_form
+msgid "Global State"
+msgstr "全局状态"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_edit_workflow_wizard__id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow__id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_edit_wizard__id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_export_wizard__id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_import_wizard__id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_importer__id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_publisher__id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard__id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_line__id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_stage__id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_state__id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_transition__id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_xml_reader__id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_xml_writer__id
+#: model:ir.model.fields,field_description:project_workflow_management.field_wkf_project_task_confirmation__id
+msgid "ID"
+msgstr ""
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_state_diagram_form
+msgid "If check this state be declared as a Global State which means that the workflow will allow all in/out transitions to/from this state."
+msgstr "如果检查此状态声明为全局状态, 这意味着工作流将允许从该状态进行所有输入转换。"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_state_diagram_form
+msgid "If checked this state will be declared as the initial state for this workflow. When creating a task this state will be assigned as default state"
+msgstr "如果选中此状态, 则将声明为此工作流的初始状态。创建任务时, 此状态将被分配为默认状态"
+
+#. module: project_workflow_management
+#: model:ir.ui.menu,name:project_workflow_management.project_workflow_import
+msgid "Import"
+msgstr "导入"
+
+#. module: project_workflow_management
+#: code:addons/project_workflow_management/models/project_workflow_importer.py:35
+#, python-format
+msgid "Importer can not run without provided data reader!"
+msgstr "没有提供的数据读取器, 导入器就无法运行!"
+
+#. module: project_workflow_management
+#: selection:project.workflow.state,type:0
+msgid "In Progress"
+msgstr "进行中"
+
+#. module: project_workflow_management
+#: code:addons/project_workflow_management/models/project_workflow_publisher.py:50
+#, python-format
+msgid "In case old workflow is not present, you need to provide project to which, a new workflow will be applied!"
+msgstr "如果旧工作流不存在, 则需要提供项目, 并将对其应用新的工作流!"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_state__in_transitions
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_state_form
+msgid "Incoming Transitions"
+msgstr "传入的转换"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_state_diagram_form
+msgid "Initial State"
+msgstr "初始状态"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard__from_diagram
+msgid "Initiated from diagram?"
+msgstr "从图表初始化？"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_state__is_default
+msgid "Is default"
+msgstr ""
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_state__is_global
+msgid "Is global?"
+msgstr "是否全局？"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard__switch
+msgid "Just Switch"
+msgstr "只需切换"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_state__kanban_sequence
+msgid "Kanban Sequence"
+msgstr "看板序列"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,help:project_workflow_management.field_project_workflow_state__kanban_sequence
+msgid "Kanban sequence is used for defining order of statesin kanban view."
+msgstr "看板序列用于定义状态看板视图的顺序。"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_edit_workflow_wizard____last_update
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow____last_update
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_edit_wizard____last_update
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_export_wizard____last_update
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_import_wizard____last_update
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_importer____last_update
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_publisher____last_update
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard____last_update
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_line____last_update
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_stage____last_update
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_state____last_update
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_transition____last_update
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_xml_reader____last_update
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_xml_writer____last_update
+#: model:ir.model.fields,field_description:project_workflow_management.field_wkf_project_task_confirmation____last_update
+msgid "Last Modified on"
+msgstr "最后修改日"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_edit_workflow_wizard__write_uid
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow__write_uid
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_edit_wizard__write_uid
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_export_wizard__write_uid
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_import_wizard__write_uid
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard__write_uid
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_line__write_uid
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_stage__write_uid
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_state__write_uid
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_transition__write_uid
+#: model:ir.model.fields,field_description:project_workflow_management.field_wkf_project_task_confirmation__write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_edit_workflow_wizard__write_date
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow__write_date
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_edit_wizard__write_date
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_export_wizard__write_date
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_import_wizard__write_date
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard__write_date
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_line__write_date
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_stage__write_date
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_state__write_date
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_transition__write_date
+#: model:ir.model.fields,field_description:project_workflow_management.field_wkf_project_task_confirmation__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard__line_ids
+msgid "Line"
+msgstr "行"
+
+#. module: project_workflow_management
+#: selection:project.workflow,state:0
+msgid "Live"
+msgstr ""
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workspace_mapping_wizard_form
+msgid "Map From"
+msgstr "映射从"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workspace_mapping_wizard_form
+msgid "Map To"
+msgstr "映射到"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workspace_mapping_wizard_form
+msgid "Mapping Wizard"
+msgstr "映射向导"
+
+#. module: project_workflow_management
+#. openerp-web
+#: code:addons/project_workflow_management/static/src/xml/base.xml:17
+#, python-format
+msgid "More"
+msgstr "更多"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow__name
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_stage__name
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_state__name
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_transition__name
+msgid "Name"
+msgstr "名称"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_wkf_project_task_confirmation__stage_id
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.wkf_project_task_confirmation_form
+msgid "New Stage"
+msgstr "新阶段"
+
+#. module: project_workflow_management
+#. openerp-web
+#: code:addons/project_workflow_management/static/src/xml/diagram.xml:13
+#, python-format
+msgid "New State"
+msgstr "新阶段"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_edit_workflow_wizard__new_workflow_id
+msgid "New Workflow"
+msgstr "新工作流"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workspace_edit_wizard_form
+msgid "Open"
+msgstr "打开"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow__original_id
+msgid "Origin"
+msgstr "原始"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow__original_name
+msgid "Original"
+msgstr "源"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_state__out_transitions
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_state_form
+msgid "Outgoing Transitions"
+msgstr "出向转换"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workspace_edit_wizard_form
+msgid "Please choose workflow editor"
+msgstr "请选择工作流编辑器"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_form
+msgid "Please have in mind that you have made changes to your workflow but those changes are not published.<br/>\n"
+"                        To view your changes please follow this"
+msgstr "请记住, 您已对工作流进行了更改, 但这些更改不会发布. <br/>\n"
+"                        要查看您的更改, 请按照以下步骤操作"
+
+#. module: project_workflow_management
+#: model:ir.model,name:project_workflow_management.model_project_project
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_edit_workflow_wizard__project_id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard__project_id
+msgid "Project"
+msgstr "项目"
+
+#. module: project_workflow_management
+#: model:ir.actions.act_window,name:project_workflow_management.project_edit_workflow_wizard_action
+msgid "Project Apply Workflow Wizard"
+msgstr "项目应用工作流向导"
+
+#. module: project_workflow_management
+#: model:ir.model,name:project_workflow_management.model_project_workflow
+#: model:ir.model.fields,help:project_workflow_management.field_project_project__workflow_id
+#: model:ir.model.fields,help:project_workflow_management.field_project_task__workflow_id
+msgid "Project Workflow"
+msgstr "项目工作流"
+
+#. module: project_workflow_management
+#: model:ir.actions.act_window,name:project_workflow_management.project_workspace_edit_wizard_action
+msgid "Project Workflow Edit Wizard"
+msgstr "项目工作流编辑向导"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_export_wizard_form
+msgid "Project Workflow Exporter"
+msgstr "项目工作流浏览器"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_import_wizard_form
+msgid "Project Workflow Importer"
+msgstr "项目工作流导入工具"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.res_config_settings_view_form
+msgid "Project Workflow Management"
+msgstr "项目工作流管理"
+
+#. module: project_workflow_management
+#: model:ir.actions.act_window,name:project_workflow_management.project_workspace_mapping_wizard_action
+msgid "Project Workflow Mapping Wizard"
+msgstr "项目工作流映射向导"
+
+#. module: project_workflow_management
+#: model:ir.model,name:project_workflow_management.model_project_workflow_state
+msgid "Project Workflow State"
+msgstr "项目工作流状态"
+
+#. module: project_workflow_management
+#: model:ir.model,name:project_workflow_management.model_project_workflow_transition
+msgid "Project Workflow Transition"
+msgstr "项目工作流转换"
+
+#. module: project_workflow_management
+#: code:addons/project_workflow_management/models/project.py:194
+#: code:addons/project_workflow_management/models/project.py:247
+#, python-format
+msgid "Project workflow '%s' has no default state.Please configure the workflow, so that we know what default stage should be"
+msgstr "项目工作流 '%s' 没有默认状态！.请配置工作流, 以便我们知道默认状态应该是什么"
+
+#. module: project_workflow_management
+#: sql_constraint:project.workflow:0
+msgid "Project workflow with this name already exists!"
+msgstr "同名的项目工作流已经存在！"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow__project_ids
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_form
+msgid "Projects"
+msgstr "项目"
+
+#. module: project_workflow_management
+#. openerp-web
+#: code:addons/project_workflow_management/static/src/xml/diagram.xml:17
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_form
+#, python-format
+msgid "Publish"
+msgstr "出版"
+
+#. module: project_workflow_management
+#. openerp-web
+#: code:addons/project_workflow_management/static/src/xml/diagram.xml:9
+#, python-format
+msgid "Rename"
+msgstr "重命名"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_form
+msgid "Scenario Title..."
+msgstr "方案标题…"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_state__sequence
+msgid "Sequence"
+msgstr "序号"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.edit_project_extend_with_type_workflow
+msgid "Set Workflow"
+msgstr "设置工作流"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_transition__src_id
+msgid "Source Stage"
+msgstr "源阶段"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_task__stage_id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_stage__stage_id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_state__stage_id
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workspace_mapping_wizard_form
+msgid "Stage"
+msgstr "阶段"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workspace_mapping_wizard_form
+msgid "Stage Mappings"
+msgstr "阶段映射"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,help:project_workflow_management.field_project_workflow__default_state_id
+msgid "Stage from this state will be set by default if not specified when creating task."
+msgstr "如果在创建任务时未指定, 默认情况下将设置此状态下的阶段。"
+
+#. module: project_workflow_management
+#: selection:project.workflow.export.wizard,state:0
+msgid "Start"
+msgstr "开始"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow__state
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_export_wizard__state
+msgid "State"
+msgstr "省/ 州"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow__state_ids
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_form
+msgid "States"
+msgstr "省份"
+
+#. module: project_workflow_management
+#: model:ir.model,name:project_workflow_management.model_project_task
+#: model:ir.model.fields,field_description:project_workflow_management.field_wkf_project_task_confirmation__task_id
+msgid "Task"
+msgstr "任务"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_line__task_count
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_stage__task_count
+msgid "Task Count"
+msgstr "任务统计"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_state_diagram_form
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_state_form
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_state_tree
+msgid "Task Workflow State"
+msgstr "任务工作流状态"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_transition_diagram_form
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_transition_form
+msgid "Task Workflow Transition"
+msgstr "任务工作流变换"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workspace_mapping_wizard_form
+msgid "Task stage mappings"
+msgstr "任务阶段映射"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workspace_mapping_wizard_form
+msgid "Tasks"
+msgstr "任务"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,help:project_workflow_management.field_project_workflow__state_ids
+msgid "The list of all possible states a task can be in."
+msgstr "列出任务所有可能状态的列表。"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,help:project_workflow_management.field_project_workflow__transition_ids
+msgid "The list of all state transitions."
+msgstr "列出所有状态变换的列表。"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,help:project_workflow_management.field_project_workflow__project_ids
+msgid "The list of related projects."
+msgstr "相关项目列表。"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,help:project_workflow_management.field_project_workflow__name
+#: model:ir.model.fields,help:project_workflow_management.field_project_workflow__original_name
+msgid "The name of the workflow. It has to be unique!"
+msgstr "工作流的名称必须唯一！"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_form
+msgid "This is a draft version of workflow.\n"
+"                        Here you can apply your modifications but please have in mind that those changes will not be visible in the rest of the system until you publish them."
+msgstr "这是工作流的草稿版本。\n"
+"在这里, 您可以应用您的修改, 但请记住, 这些更改在发布之前，在系统的其他部分是不可见的。"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_form
+msgid "This is a published workflow.\n"
+"                        You can change it by entering edit mode but please have in mind that those changes will not be visible in the rest of the system until you publish them."
+msgstr "这是已发布的工作流。\n"
+"您可以通过进入编辑模式来更改它, 但请记住, 在发布这些更改之前, 这些更改在系统的其他部分中不会可见。"
+
+#. module: project_workflow_management
+#: sql_constraint:project.workflow.state:0
+msgid "This state already exists!"
+msgstr "此状态已存在!"
+
+#. module: project_workflow_management
+#: sql_constraint:project.workflow.transition:0
+msgid "This transition already exists!"
+msgstr "此转换已存在!"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_edit_workspace_wizard_form
+msgid "This wizard will help you to safely change workflow"
+msgstr "此向导将帮助您安全地更改工作流"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard__to_id
+#: selection:project.workflow.stage.mapping.wizard.stage,type:0
+msgid "To"
+msgstr "至"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_line__to_id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_line__to_stage_id
+msgid "To Stage"
+msgstr ""
+
+#. module: project_workflow_management
+#: selection:project.workflow.state,type:0
+msgid "ToDo"
+msgstr ""
+
+#. module: project_workflow_management
+#: code:addons/project_workflow_management/models/project_workflow.py:181
+#, python-format
+msgid "Transition to this state is not supported from the current task state!\n"
+"Please refer to the project workflow '%s' to see all possible transitions from the current state or you could view task in form view and see possible transitionsfrom there."
+msgstr "从当前任务状态不支持转换到此状态!\n"
+"请参阅项目工作流 “% s” 以查看当前状态的所有可能的转换, 或者您可以在窗体视图中查看任务并查看从那里可能进行的转换。"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow__transition_ids
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_form
+msgid "Transitions"
+msgstr "转换"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_stage__type
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_state__type
+msgid "Type"
+msgstr "类型"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_transition__user_confirmation
+msgid "User Confirmation?"
+msgstr "用户确认？"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,help:project_workflow_management.field_project_workflow_state__sequence
+msgid "Value of sequence determines order of transitions. When Task is in a workflow state, available transitions areshown according to their destinations state sequence."
+msgstr "序列的值确定转换的顺序。当任务处于工作流状态时, 可根据其目标状态序列进行转换。"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workspace_mapping_wizard_form
+msgid "We have detected changes between old and new versions of your workflow\n"
+"                        and we need your action to resolve conflicts."
+msgstr "我们检测到您的工作流的新旧版本之间的更改, 我们需要您采取措施解决冲突。"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,help:project_workflow_management.field_project_workflow_state__is_global
+msgid "When checked it will allow all transitions from/to this state."
+msgstr "选中此选项后, 它将允许 从/到 此状态的所有转换。"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.view_project_workflow_diagram
+msgid "When customizing a workflow, be sure you do not modify an existing node or arrow, but rather add new nodes or arrows. If you absolutely need to modify a node or arrow, you can only change fields that are empty or set to the default value. If you don't do that, your customization will be overwritten at the next update or upgrade to a future version of Odoo."
+msgstr "自定义工作流时, 请确保不修改现有节点或箭头, 而是添加新节点或箭头。如果绝对需要修改节点或箭头, 则只能更改为空或设置为默认值的字段。如果不这样做, 您的自定义将在下一次更新或升级到未来版本的 odoo 时被覆盖。"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_line__wizard_id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_stage_mapping_wizard_stage__wizard_id
+msgid "Wizard"
+msgstr "向导"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_task__wkf_state_type
+msgid "Wkf State Type"
+msgstr "Wkf状态类型"
+
+#. module: project_workflow_management
+#. openerp-web
+#: code:addons/project_workflow_management/static/src/js/diagram_controller.js:61
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_project__workflow_id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_task__workflow_id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_edit_wizard__workflow_id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_export_wizard__workflow_id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_state__workflow_id
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_workflow_transition__workflow_id
+#: model:ir.ui.menu,name:project_workflow_management.project_workflow_menu
+#, python-format
+msgid "Workflow"
+msgstr "工作流"
+
+#. module: project_workflow_management
+#. openerp-web
+#: code:addons/project_workflow_management/static/src/js/diagram_controller.js:93
+#, python-format
+msgid "Workflow '' has been successfully published!"
+msgstr "工作流已成功发布！"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_res_config_settings__module_project_workflow_action
+msgid "Workflow Action"
+msgstr "工作流动作"
+
+#. module: project_workflow_management
+#: model:ir.actions.act_window,name:project_workflow_management.project_workflow_diagram_edit_action
+#: model:ir.actions.act_window,name:project_workflow_management.project_workflow_diagram_readonly_action
+msgid "Workflow Diagram"
+msgstr "工作流程示意图"
+
+#. module: project_workflow_management
+#: model:ir.actions.act_window,name:project_workflow_management.project_workflow_export_wizard_action
+msgid "Workflow Export Wizard"
+msgstr "工作流导出向导"
+
+#. module: project_workflow_management
+#: code:addons/project_workflow_management/models/project_workflow_xml.py:43
+#, python-format
+msgid "Workflow File Validation Error: %s,"
+msgstr "工作流文件验证错误:% s,"
+
+#. module: project_workflow_management
+#: model:ir.actions.act_window,name:project_workflow_management.project_workflow_form_edit_action
+msgid "Workflow Form"
+msgstr "工作流窗体"
+
+#. module: project_workflow_management
+#: model:ir.actions.act_window,name:project_workflow_management.project_workflow_import_wizard_action
+msgid "Workflow Import Wizard"
+msgstr "工作流导入向导"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_res_config_settings__module_project_workflow_security
+msgid "Workflow Security"
+msgstr "工作流安全性"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_task__wkf_stage_id
+msgid "Workflow Stage"
+msgstr "工作流程阶段"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_project_task__wkf_state_id
+msgid "Workflow State"
+msgstr "工作流状态"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.edit_project_workflow
+msgid "Workflow Title..."
+msgstr "工作流标题…"
+
+#. module: project_workflow_management
+#: model:ir.model.fields,field_description:project_workflow_management.field_res_config_settings__module_project_workflow_transition_by_project
+msgid "Workflow Transitions by Project"
+msgstr "按项目的工作流转换"
+
+#. module: project_workflow_management
+#: code:addons/project_workflow_management/models/project_workflow_xml.py:130
+#, python-format
+msgid "Workflow default state is missing!"
+msgstr "缺少工作流默认状态!"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_export_wizard_form
+msgid "Workflow has been exported and now you can download it from here:"
+msgstr "工作流已导出, 现在您可以从此处下载它:"
+
+#. module: project_workflow_management
+#: model:ir.actions.act_window,name:project_workflow_management.project_workflow_form_read_only_action
+#: model:ir.actions.act_window,name:project_workflow_management.project_workflow_read_only_action
+#: model:ir.ui.menu,name:project_workflow_management.project_workflows_menu
+msgid "Workflows"
+msgstr "工作流"
+
+#. module: project_workflow_management
+#: code:addons/project_workflow_management/models/project_workflow.py:143
+#, python-format
+msgid "You are not allowed do delete this workflow because it is being used by the following projects: %s"
+msgstr "不允许删除此工作流, 因为以下项目正在使用它:% s"
+
+#. module: project_workflow_management
+#: code:addons/project_workflow_management/models/project_workflow_xml.py:109
+#, python-format
+msgid "You have defined one or more states with the same name!"
+msgstr "您已经定义了一个或多个同名的状态!"
+
+#. module: project_workflow_management
+#: code:addons/project_workflow_management/models/project_workflow_publisher.py:45
+#, python-format
+msgid "You have to provide the new workflow!"
+msgstr "您必须提供新的工作流!"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_export_wizard_form
+msgid "_Export"
+msgstr "_ 导出"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workspace_mapping_wizard_form
+msgid "_Finish"
+msgstr "_ 完成"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_import_wizard_form
+msgid "_Import"
+msgstr "_导入"
+
+#. module: project_workflow_management
+#: model_terms:ir.ui.view,arch_db:project_workflow_management.project_workflow_form
+msgid "link"
+msgstr "链接"
+
+#. module: project_workflow_management
+#: model:ir.model,name:project_workflow_management.model_project_edit_workflow_wizard
+msgid "project.edit.workflow.wizard"
+msgstr ""
+
+#. module: project_workflow_management
+#: model:ir.model,name:project_workflow_management.model_project_workflow_edit_wizard
+msgid "project.workflow.edit.wizard"
+msgstr ""
+
+#. module: project_workflow_management
+#: model:ir.model,name:project_workflow_management.model_project_workflow_export_wizard
+msgid "project.workflow.export.wizard"
+msgstr ""
+
+#. module: project_workflow_management
+#: model:ir.model,name:project_workflow_management.model_project_workflow_import_wizard
+msgid "project.workflow.import.wizard"
+msgstr ""
+
+#. module: project_workflow_management
+#: model:ir.model,name:project_workflow_management.model_project_workflow_importer
+msgid "project.workflow.importer"
+msgstr ""
+
+#. module: project_workflow_management
+#: model:ir.model,name:project_workflow_management.model_project_workflow_publisher
+msgid "project.workflow.publisher"
+msgstr ""
+
+#. module: project_workflow_management
+#: model:ir.model,name:project_workflow_management.model_project_workflow_stage_mapping_wizard
+msgid "project.workflow.stage.mapping.wizard"
+msgstr ""
+
+#. module: project_workflow_management
+#: model:ir.model,name:project_workflow_management.model_project_workflow_stage_mapping_wizard_line
+msgid "project.workflow.stage.mapping.wizard.line"
+msgstr ""
+
+#. module: project_workflow_management
+#: model:ir.model,name:project_workflow_management.model_project_workflow_stage_mapping_wizard_stage
+msgid "project.workflow.stage.mapping.wizard.stage"
+msgstr ""
+
+#. module: project_workflow_management
+#: model:ir.model,name:project_workflow_management.model_project_workflow_xml_reader
+msgid "project.workflow.xml.reader"
+msgstr ""
+
+#. module: project_workflow_management
+#: model:ir.model,name:project_workflow_management.model_project_workflow_xml_writer
+msgid "project.workflow.xml.writer"
+msgstr ""
+
+#. module: project_workflow_management
+#: model:ir.model,name:project_workflow_management.model_wkf_project_task_confirmation
+msgid "wkf.project.task.confirmation"
+msgstr ""
+

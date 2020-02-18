@@ -1,0 +1,1837 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* project_agile
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-15 02:05+0000\n"
+"PO-Revision-Date: 2020-02-15 02:05+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: project_agile
+#: code:addons/project_agile/models/base.py:39
+#, python-format
+msgid "%s '%s' is a system record!\n"
+"You are not allowed to delete system record!"
+msgstr "不允许删除系统记录！"
+
+#. module: project_agile
+#: model:project.task.type,name:project_agile.project_task_stage_accepted
+msgid "Accepted"
+msgstr "接受"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_report__action_id
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_report__action_id
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team_report__action_id
+msgid "Action"
+msgstr "动作"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__message_needaction
+msgid "Action Needed"
+msgstr "前置操作"
+
+#. module: project_agile
+#: model:project.task.type,name:project_agile.project_task_stage_actionable
+msgid "Actionable"
+msgstr "可操作的"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.res_config_settings_view_form
+msgid "Activate task analytics for your agile projects"
+msgstr "激活任务分析你的敏捷项目"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_code_item__active
+#: model:ir.model.fields,field_description:project_agile.field_project_task_priority__active
+#: model:ir.model.fields,field_description:project_agile.field_project_task_resolution__active
+#: model:ir.model.fields,field_description:project_agile.field_project_task_type2__active
+#: model:ir.model.fields,field_description:project_agile.field_project_type__active
+msgid "Active"
+msgstr "有效"
+
+#. module: project_agile
+#: model:ir.actions.act_window,name:project_agile.launch_task_link_wizard
+msgid "Add Link"
+msgstr "添加链接"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.view_task_form2_inherited
+msgid "Add Sub-Task"
+msgstr "添加子任务"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.view_task_form2_inherited
+msgid "Add Worklog"
+msgstr "添加工作日志"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.project_task_link_wizard
+msgid "Add link"
+msgstr "添加链接"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.view_task_form2_inherited
+msgid "Add new link"
+msgstr "添加新链接"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.agile_board_form
+msgid "Advanced"
+msgstr "高级"
+
+#. module: project_agile
+#: model:ir.ui.menu,name:project_agile.project_agile_menu
+#: model_terms:ir.ui.view,arch_db:project_agile.view_project_project_filter_extend_with_key
+msgid "Agile"
+msgstr "敏捷"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_agile_board
+#: model_terms:ir.ui.view,arch_db:project_agile.agile_board_create_wizard_form
+msgid "Agile Board"
+msgstr "敏捷面板"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_agile_board_column
+msgid "Agile Board Column"
+msgstr "敏捷面板专栏"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_agile_board_column_status
+msgid "Agile Board Column Status"
+msgstr "敏捷面板板列状态"
+
+#. module: project_agile
+#: model:ir.actions.act_window,name:project_agile.agile_board_create_action
+msgid "Agile Board Create Wizard"
+msgstr "敏捷面板创建向导"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.edit_project
+msgid "Agile Boards"
+msgstr "敏捷面板"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_agile_code_item
+msgid "Agile Code Item"
+msgstr ""
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_project__agile_method
+#: model_terms:ir.ui.view,arch_db:project_agile.view_project_project_filter_extend_with_key
+msgid "Agile Method"
+msgstr "敏捷代码项"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task__agile_order
+msgid "Agile Order"
+msgstr "敏捷订单"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.view_project_agile_team_form
+#: model:ir.model.fields,field_description:project_agile.field_project_project__team_ids
+msgid "Agile Team"
+msgstr "敏捷团队"
+
+#. module: project_agile
+#: code:addons/project_agile/models/project_agile_board.py:156
+#, python-format
+msgid "Agile method on assigned projects does not match selected board type!"
+msgstr "分配项目上的敏捷方法与选定的面板类型不匹配!"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task__allow_story_points
+#: model:ir.model.fields,field_description:project_agile.field_project_task_type2__allow_story_points
+msgid "Allow Story Points"
+msgstr "允许故事点"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_type2__allow_sub_tasks
+msgid "Allow Sub-Items"
+msgstr "允许子项目"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task__allow_sub_tasks
+msgid "Allow Sub-Tasks"
+msgstr "允许子任务"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_sub_task_add_wizard__type_ids
+#: model:ir.model.fields,field_description:project_agile.field_project_task__type_ids
+msgid "Allowed Subtypes"
+msgstr "允许的子类型"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_res_config_settings__module_project_agile_analytic
+msgid "Analytics"
+msgstr "分析"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task__user_id
+msgid "Assigned to"
+msgstr "分派给"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task__assigned_to_me
+msgid "Assigned to Me"
+msgstr "分配给我"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_sub_task_add_wizard__user_id
+msgid "Assignee"
+msgstr "分配给"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__message_attachment_count
+msgid "Attachment Count"
+msgstr "附件数量"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board__backlog_task_type_ids
+msgid "Backlog Task Types"
+msgstr "积压任务类型"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.agile_board_form
+msgid "Backlog Task Types..."
+msgstr "积压任务类型..."
+
+#. module: project_agile
+#: model:project.task.type,name:project_agile.project_task_stage_blocked
+msgid "Blocked"
+msgstr "阻塞"
+
+#. module: project_agile
+#: model:ir.actions.act_window,name:project_agile.open_agile_board_form
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column__board_id
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column_status__board_id
+msgid "Board"
+msgstr "面板"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.agile_board_form
+msgid "Board Columns"
+msgstr "板列"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_project__boards_count
+msgid "Board Count"
+msgstr "面板数目"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board__board_task_type_ids
+msgid "Board Task Types"
+msgstr "面板面板任务类型"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.agile_board_form
+msgid "Board Task Types..."
+msgstr "面板面板任务类型..."
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__board_ids
+#: model:ir.model.fields,field_description:project_agile.field_project_project__board_ids
+#: model:ir.ui.menu,name:project_agile.project_agile_board_menu_config
+#: model:ir.ui.menu,name:project_agile.project_agile_boards_menu
+msgid "Boards"
+msgstr "面板"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.agile_board_create_wizard_form
+#: model_terms:ir.ui.view,arch_db:project_agile.agile_project_task_worklog_form
+#: model_terms:ir.ui.view,arch_db:project_agile.project_sub_task_wizard
+#: model_terms:ir.ui.view,arch_db:project_agile.project_task_link_wizard
+msgid "Cancel"
+msgstr "取消"
+
+#. module: project_agile
+#: model:project.task.type,name:project_agile.project_task_stage_close
+msgid "Closed"
+msgstr "已关闭"
+
+#. module: project_agile
+#: model:project.task.type,name:project_agile.project_task_stage_code_review
+msgid "Code Review"
+msgstr "代码评审"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column_status__column_id
+msgid "Column"
+msgstr "列"
+
+#. module: project_agile
+#: sql_constraint:project.agile.board.column.status:0
+msgid "Column state must be unique per board!"
+msgstr "每个面板列状态必须是唯一的!"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board__column_ids
+#: model_terms:ir.ui.view,arch_db:project_agile.agile_board_form
+msgid "Columns"
+msgstr "列"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_workflow_state__board_column_status_ids
+msgid "Columns Statuses"
+msgstr "列状态"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link__comment
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link_add_wizard__comment
+msgid "Comment"
+msgstr "备注"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task__team_id
+msgid "Committed team"
+msgstr "敬业的团队"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_res_config_settings
+msgid "Config Settings"
+msgstr "配置设定"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.res_config_settings_view_form_workflow
+msgid "Configure project workflow transitions to be allowed for specified task types."
+msgstr "配置项目工作流转换以允许指定的任务类型。"
+
+#. module: project_agile
+#: model:ir.ui.menu,name:project_agile.project_agile_board_wiz_menu
+msgid "Create Board"
+msgstr "创建面板"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.project_sub_task_wizard
+msgid "Create Sub-Task"
+msgstr "创建子任务"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task__create_date
+#: model_terms:ir.ui.view,arch_db:project_agile.view_task_form2_inherited
+msgid "Created"
+msgstr "已创建"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board__create_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column__create_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column_status__create_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_create_wizard__create_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_report__create_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__create_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team_report__create_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_sub_task_add_wizard__create_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link__create_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link_add_wizard__create_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link_relation__create_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_task_priority__create_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_task_resolution__create_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_task_type2__create_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_task_worklog_wizard__create_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_type__create_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_workflow_task_type__create_uid
+msgid "Created by"
+msgstr "创建人"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board__create_date
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column__create_date
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column_status__create_date
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_create_wizard__create_date
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_report__create_date
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__create_date
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team_report__create_date
+#: model:ir.model.fields,field_description:project_agile.field_project_sub_task_add_wizard__create_date
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link__create_date
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link_add_wizard__create_date
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link_relation__create_date
+#: model:ir.model.fields,field_description:project_agile.field_project_task_priority__create_date
+#: model:ir.model.fields,field_description:project_agile.field_project_task_resolution__create_date
+#: model:ir.model.fields,field_description:project_agile.field_project_task_type2__create_date
+#: model:ir.model.fields,field_description:project_agile.field_project_task_worklog_wizard__create_date
+#: model:ir.model.fields,field_description:project_agile.field_project_type__create_date
+#: model:ir.model.fields,field_description:project_agile.field_project_workflow_task_type__create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_res_users__team_id
+msgid "Current team"
+msgstr ""
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_worklog_wizard__date
+msgid "Date"
+msgstr "日期"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.agile_board_form
+msgid "Declare Default"
+msgstr "声明默认值"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_type2__default_priority_id
+msgid "Default Task Priority"
+msgstr "默认任务优先级"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_project__default_task_type_id
+#: model:ir.model.fields,field_description:project_agile.field_project_type__default_task_type_id
+#: model:ir.model.fields,field_description:project_agile.field_project_workflow__default_task_type_id
+msgid "Default Task Type"
+msgstr "默认任务类型"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__default_hrs
+msgid "Default daily hours"
+msgstr "默认每日任务时间"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board__is_default
+msgid "Default?"
+msgstr "默认?"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.view_task_form2_inherited
+msgid "Delete"
+msgstr "刪除"
+
+#. module: project_agile
+#: model:project.task.type,name:project_agile.project_task_stage_deployment
+msgid "Deployment"
+msgstr "部署"
+
+#. module: project_agile
+#: model:project.task.type,name:project_agile.project_task_stage_deployment_uat
+msgid "Deployment UAT"
+msgstr "部署UAT"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board__description
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_report__description
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_code_item__description
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_report__description
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__description
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team_report__description
+#: model:ir.model.fields,field_description:project_agile.field_project_sub_task_add_wizard__description
+#: model:ir.model.fields,field_description:project_agile.field_project_task_priority__description
+#: model:ir.model.fields,field_description:project_agile.field_project_task_resolution__description
+#: model:ir.model.fields,field_description:project_agile.field_project_task_type2__description
+#: model:ir.model.fields,field_description:project_agile.field_project_task_worklog_wizard__name
+#: model:ir.model.fields,field_description:project_agile.field_project_type__description
+#: model_terms:ir.ui.view,arch_db:project_agile.project_sub_task_wizard
+#: model_terms:ir.ui.view,arch_db:project_agile.project_task_priority_form
+#: model_terms:ir.ui.view,arch_db:project_agile.project_task_type2_form
+#: model_terms:ir.ui.view,arch_db:project_agile.project_type_form
+msgid "Description"
+msgstr "说明"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.agile_board_form
+msgid "Description..."
+msgstr "说明…"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board__display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column__display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column_status__display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_create_wizard__display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_report__display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_code_item__display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_mixin_id_search__display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_report__display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team_report__display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_sub_task_add_wizard__display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link__display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link_add_wizard__display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link_relation__display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_task_priority__display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_task_resolution__display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_task_type2__display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_task_worklog_wizard__display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_type__display_name
+#: model:ir.model.fields,field_description:project_agile.field_project_workflow_task_type__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.view_task_form2_inherited
+msgid "Documents"
+msgstr "文档"
+
+#. module: project_agile
+#: model:project.task.type,name:project_agile.project_task_stage_done
+msgid "Done"
+msgstr "完成"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_project__done_estimation
+msgid "Done Estimation"
+msgstr "完成预估"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_worklog_wizard__duration
+msgid "Duration"
+msgstr "持续时间"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__email
+msgid "E-mail"
+msgstr "邮箱"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.res_config_settings_view_form
+msgid "Enable timesheet category for project agile"
+msgstr "为敏捷项目启用工时表类别"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_res_users__team_ids
+msgid "Enroled in teams"
+msgstr "参加团队"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task__epic_id
+msgid "Epic"
+msgstr ""
+
+#. module: project_agile
+#: code:addons/project_agile/models/project_project.py:361
+#: model_terms:ir.ui.view,arch_db:project_agile.edit_project
+#: model_terms:ir.ui.view,arch_db:project_agile.view_project_kanban
+#, python-format
+msgid "Epics"
+msgstr ""
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_project__epics_count
+msgid "Epics Count"
+msgstr ""
+
+#. module: project_agile
+#: selection:project.agile.board.column,notification_level:0
+msgid "Error"
+msgstr "错误"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_sub_task_add_wizard__story_points
+msgid "Estimate"
+msgstr "预估"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.view_task_search_form_inherited
+msgid "Exclude Sub-Tasks"
+msgstr "排除子任务"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__message_follower_ids
+msgid "Followers"
+msgstr "关注者"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "关注者(渠道)"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "关注者(业务伙伴)"
+
+#. module: project_agile
+#: selection:project.agile.board,visibility:0
+#: selection:project.agile.board.create.wizard,visibility:0
+msgid "Global"
+msgstr "全局"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board__id
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column__id
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column_status__id
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_create_wizard__id
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_report__id
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_code_item__id
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_mixin_id_search__id
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_report__id
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__id
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team_report__id
+#: model:ir.model.fields,field_description:project_agile.field_project_sub_task_add_wizard__id
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link__id
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link_add_wizard__id
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link_relation__id
+#: model:ir.model.fields,field_description:project_agile.field_project_task_priority__id
+#: model:ir.model.fields,field_description:project_agile.field_project_task_resolution__id
+#: model:ir.model.fields,field_description:project_agile.field_project_task_type2__id
+#: model:ir.model.fields,field_description:project_agile.field_project_task_worklog_wizard__id
+#: model:ir.model.fields,field_description:project_agile.field_project_type__id
+#: model:ir.model.fields,field_description:project_agile.field_project_workflow_task_type__id
+msgid "ID"
+msgstr ""
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_priority__icon
+#: model:ir.model.fields,field_description:project_agile.field_project_task_type2__icon
+msgid "Icon"
+msgstr "图标"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_agile_team__message_unread
+msgid "If checked new messages require your attention."
+msgstr "查看是否有需要留意的新消息。"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_project__agile_enabled
+#: model:ir.model.fields,help:project_agile.field_project_task__agile_enabled
+msgid "If checked project will be enabled for agile management"
+msgstr "如果已选中的项目将启用敏捷管理"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_agile_team__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "确认后, 出现提示消息."
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_agile_team__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "如果勾选此项， 某些消息将会产生传递错误。"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__image
+#: model:ir.model.fields,field_description:project_agile.field_project_project__image
+msgid "Image"
+msgstr "图像"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_report__image_url
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_report__image_url
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team_report__image_url
+msgid "Image Url"
+msgstr "图像网址"
+
+#. module: project_agile
+#: model:project.task.type,name:project_agile.project_task_stage_in_progress
+msgid "In Progress"
+msgstr "进行中"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_project__in_progress_estimation
+msgid "In Progress Estimation"
+msgstr "正在进行中的估计"
+
+#. module: project_agile
+#: model:project.task.type,name:project_agile.project_task_stage_in_progress_qa
+msgid "In Progress QA"
+msgstr ""
+
+#. module: project_agile
+#: model:project.task.type,name:project_agile.project_task_stage_in_progress_uat_qa
+msgid "In Progress UAT QA"
+msgstr ""
+
+#. module: project_agile
+#: model:project.task.type,name:project_agile.project_task_stage_init
+msgid "Init"
+msgstr "初始化"
+
+#. module: project_agile
+#: model:project.task.type,name:project_agile.project_task_stage_integration
+msgid "Integration"
+msgstr "整合"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link_relation__inverse_name
+msgid "Inverse Name"
+msgstr "反向名称"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_workflow_task_type__is_default
+msgid "Is Default?"
+msgstr "是否默认？"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task__is_epic
+msgid "Is Epic"
+msgstr ""
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__message_is_follower
+msgid "Is Follower"
+msgstr "关注者"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task__is_user_story
+msgid "Is Story"
+msgstr "是库存"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_code_item__system
+#: model:ir.model.fields,field_description:project_agile.field_project_task_priority__system
+#: model:ir.model.fields,field_description:project_agile.field_project_task_resolution__system
+#: model:ir.model.fields,field_description:project_agile.field_project_task_type2__system
+#: model:ir.model.fields,field_description:project_agile.field_project_type__system
+msgid "Is System Type"
+msgstr "系统类型"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_res_config_settings__module_project_agile_jira
+msgid "JIRA Importer"
+msgstr ""
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_res_config_settings__module_project_agile_kanban
+msgid "Kanban"
+msgstr ""
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board____last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column____last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column_status____last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_create_wizard____last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_report____last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_code_item____last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_mixin_id_search____last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_report____last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team____last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team_report____last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_sub_task_add_wizard____last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link____last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link_add_wizard____last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link_relation____last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_task_priority____last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_task_resolution____last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_task_type2____last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_task_worklog_wizard____last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_type____last_update
+#: model:ir.model.fields,field_description:project_agile.field_project_workflow_task_type____last_update
+msgid "Last Modified on"
+msgstr "最后修改日"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board__write_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column__write_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column_status__write_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_create_wizard__write_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_report__write_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__write_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team_report__write_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_sub_task_add_wizard__write_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link__write_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link_add_wizard__write_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link_relation__write_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_task_priority__write_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_task_resolution__write_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_task_type2__write_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_task_worklog_wizard__write_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_type__write_uid
+#: model:ir.model.fields,field_description:project_agile.field_project_workflow_task_type__write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board__write_date
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column__write_date
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column_status__write_date
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_create_wizard__write_date
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_report__write_date
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__write_date
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team_report__write_date
+#: model:ir.model.fields,field_description:project_agile.field_project_sub_task_add_wizard__write_date
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link__write_date
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link_add_wizard__write_date
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link_relation__write_date
+#: model:ir.model.fields,field_description:project_agile.field_project_task_priority__write_date
+#: model:ir.model.fields,field_description:project_agile.field_project_task_resolution__write_date
+#: model:ir.model.fields,field_description:project_agile.field_project_task_type2__write_date
+#: model:ir.model.fields,field_description:project_agile.field_project_task_worklog_wizard__write_date
+#: model:ir.model.fields,field_description:project_agile.field_project_type__write_date
+#: model:ir.model.fields,field_description:project_agile.field_project_workflow_task_type__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_agile_board_column__notification_level
+msgid "Level of notification when the maximum number of issues is exceeded!"
+msgstr "超过最大问题数量时的通知级别!"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task__link_ids
+#: model_terms:ir.ui.view,arch_db:project_agile.view_task_form2_inherited
+msgid "Links"
+msgstr "链接"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_agile_board__board_task_type_ids
+msgid "List of available task types for active sprint.If left empty task types from registered projects will be used"
+msgstr "活动任务刺的可用任务类型列表。如果离开, 将使用注册项目中的空任务类型"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_agile_board__backlog_task_type_ids
+msgid "List of available task types for this board.If left empty task types from registered projects will be used"
+msgstr "此看板的可用任务类型列表。如果离开, 将使用注册项目中的空任务类型"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "附件"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column__max
+msgid "Max"
+msgstr "最大值"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__image_medium
+#: model:ir.model.fields,field_description:project_agile.field_project_project__image_medium
+msgid "Medium-sized image"
+msgstr "中等尺寸图像"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_agile_team__image_medium
+msgid "Medium-sized image of the agile team. It is automatically resized as a 128x128px image, with aspect ratio preserved, only when the image exceeds one of those sizes. Use this field in form views or some kanban views."
+msgstr "敏捷团队的中型形象。它自动调整大小为128x128px图像，并保留纵横比，只有当图像超过其中一个大小时。在窗体视图或某些看板视图中使用此字段。"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_project__image_medium
+msgid "Medium-sized image of the project. It is automatically resized as a 128x128px image, with aspect ratio preserved,only when the image exceeds one of those sizes. Use this field in form views or some kanban views."
+msgstr "中等规模的项目形象。它自动调整大小为128x128px图像，并保留纵横比，只有当图像超过其中一个大小时。在窗体视图或某些看板视图中使用此字段。"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__message_has_error
+msgid "Message Delivery error"
+msgstr "消息递送错误"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__message_ids
+msgid "Messages"
+msgstr "消息"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.res_config_settings_view_form
+msgid "Migrate your projects and tasks from your JIRA account."
+msgstr "从JIRA帐户迁移项目和任务。"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column__min
+msgid "Min"
+msgstr "最小值"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column__min_max_visible
+msgid "Min Max Visible"
+msgstr "最小最大可见值"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.view_project_agile_team_form
+msgid "Mobile:"
+msgstr "手机："
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board__name
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column__name
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column_status__name
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column_status__stage_id
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column_status__state_id
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_create_wizard__name
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_report__name
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_code_item__name
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_report__name
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__name
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team_report__name
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link__name
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link_relation__name
+#: model:ir.model.fields,field_description:project_agile.field_project_task_priority__name
+#: model:ir.model.fields,field_description:project_agile.field_project_task_resolution__name
+#: model:ir.model.fields,field_description:project_agile.field_project_task_type2__name
+#: model:ir.model.fields,field_description:project_agile.field_project_type__name
+#: model_terms:ir.ui.view,arch_db:project_agile.agile_board_form
+#: model_terms:ir.ui.view,arch_db:project_agile.view_project_agile_team_form
+msgid "Name"
+msgstr "名称"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "下一活动截止日期"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column__notification_level
+msgid "Notification Level"
+msgstr "通知级别"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__message_needaction_counter
+msgid "Number of Actions"
+msgstr "操作次数"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task__link_count
+msgid "Number of Links"
+msgstr "链接数目"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task__task_count
+msgid "Number of SubTasks"
+msgstr "子任务数目"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task__doc_count
+msgid "Number of documents attached"
+msgstr "附件数量"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__message_has_error_counter
+msgid "Number of error"
+msgstr "错误个数"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_agile_team__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "需要操作消息数量"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_agile_team__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "递送错误消息数量"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_agile_team__message_unread_counter
+msgid "Number of unread messages"
+msgstr "未读消息数量"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_agile_team__project_ids
+msgid "Only projects with same type as team can be connected.Projects must also have Use Agile option enabled"
+msgstr "只能连接与团队类型相同的项目。项目还必须启用 “使用敏捷” 选项"
+
+#. module: project_agile
+#: model:project.task.type,name:project_agile.project_task_stage_open
+msgid "Open"
+msgstr "打开"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column__order
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column_status__order
+msgid "Order"
+msgstr "订单"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.view_task_form2_inherited
+msgid "Parent"
+msgstr "上级"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_sub_task_add_wizard__task_id
+msgid "Parent Task"
+msgstr "上级任务"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.view_project_agile_team_form
+msgid "Phone:"
+msgstr "电话:"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_type2__priority_ids
+msgid "Priorities"
+msgstr "优先级"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_sub_task_add_wizard__priority_id
+#: model:ir.model.fields,field_description:project_agile.field_project_task__priority_id
+#: model_terms:ir.ui.view,arch_db:project_agile.view_task_search_form_inherited
+msgid "Priority"
+msgstr "优先级"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.project_task_priority_form
+msgid "Priority Description"
+msgstr "优先级描述"
+
+#. module: project_agile
+#: sql_constraint:project.task.priority:0
+msgid "Priority name already exists"
+msgstr "优先级名称已存在"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__product_owner_ids
+msgid "Product Owner"
+msgstr "产品所有者"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.view_project_agile_team_form
+msgid "Product Owners"
+msgstr "产品所有者"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_project
+#: model:ir.model.fields,field_description:project_agile.field_project_sub_task_add_wizard__project_id
+msgid "Project"
+msgstr "项目"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.res_config_settings_view_form
+msgid "Project Agile"
+msgstr "项目敏捷开发"
+
+#. module: project_agile
+#: model:ir.actions.act_window,name:project_agile.launch_sub_task_wizard
+#: model:ir.actions.act_window,name:project_agile.project_sub_task_action_window
+msgid "Project Sub-Task"
+msgstr "项目子任务"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_sub_task_add_wizard
+msgid "Project Sub-Task Add Wizard"
+msgstr "项目子任务添加向导"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_task_link_add_wizard
+msgid "Project Task Add Link Wizard"
+msgstr "项目任务增加链接向导"
+
+#. module: project_agile
+#: model:ir.actions.act_window,name:project_agile.project_task_link_action_window
+#: model:ir.model,name:project_agile.model_project_task_link
+msgid "Project Task Link"
+msgstr "项目任务链接"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_task_link_relation
+msgid "Project Task Link Relation Type"
+msgstr "项目任务链接关系类型"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_sub_task_add_wizard__project_type_id
+#: model:ir.model.fields,field_description:project_agile.field_project_task__project_type_id
+#: model_terms:ir.ui.view,arch_db:project_agile.view_project_project_filter_extend_with_key
+msgid "Project Type"
+msgstr "项目类型"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_type2__project_type_ids
+#: model:ir.ui.menu,name:project_agile.project_type_menu
+#: model_terms:ir.ui.view,arch_db:project_agile.project_task_type2_form
+msgid "Project Types"
+msgstr "项目类型"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_workflow
+#: model:ir.model.fields,help:project_agile.field_project_project__workflow_id
+msgid "Project Workflow"
+msgstr "项目工作流"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_workflow_state
+msgid "Project Workflow State"
+msgstr "项目工作流状态"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_workflow_task_type
+msgid "Project Workflow Task Type"
+msgstr "项目工作流任务类型"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_workflow_transition
+msgid "Project Workflow Transition"
+msgstr "项目工作流转换"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_project__type_id
+#: model_terms:ir.ui.view,arch_db:project_agile.edit_project
+msgid "Project type"
+msgstr "项目类型"
+
+#. module: project_agile
+#: model:ir.actions.act_window,name:project_agile.project_type_action
+msgid "Project types"
+msgstr "项目类型"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board__project_ids
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_create_wizard__project_ids
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__project_ids
+msgid "Projects"
+msgstr "项目"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.agile_board_form
+msgid "Projects..."
+msgstr "项目..."
+
+#. module: project_agile
+#: model:project.task.type,name:project_agile.project_task_stage_qa
+msgid "QA"
+msgstr ""
+
+#. module: project_agile
+#: model:project.task.type,name:project_agile.project_task_stage_qa_production
+msgid "QA Production"
+msgstr ""
+
+#. module: project_agile
+#: model:project.task.type,name:project_agile.project_task_stage_rejected
+msgid "Rejected"
+msgstr "拒收"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_type2__task_ids
+msgid "Related Tasks"
+msgstr "相关任务"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link__related_task_id
+msgid "Related task"
+msgstr "相关任务"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link__relation_id
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link__relation_name
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link_add_wizard__relation_id
+msgid "Relation"
+msgstr "相关"
+
+#. module: project_agile
+#: model:project.task.type,name:project_agile.project_task_stage_reopened
+msgid "Reopened"
+msgstr "重新打开"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board__report_ids
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__report_ids
+msgid "Report"
+msgstr "报告"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task__create_uid
+msgid "Reported By"
+msgstr "指派人"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.view_task_form2_inherited
+msgid "Reported by"
+msgstr "指派人"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.agile_board_form
+#: model_terms:ir.ui.view,arch_db:project_agile.view_project_agile_team_form
+msgid "Reports"
+msgstr "报表"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task__resolution_id
+#: model:ir.model.fields,field_description:project_agile.field_project_workflow_transition__resolution_id
+#: model:ir.model.fields,field_description:project_agile.field_wkf_project_task_confirmation__resolution_id
+#: model_terms:ir.ui.view,arch_db:project_agile.view_task_search_form_inherited
+msgid "Resolution"
+msgstr "决议"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.project_task_resolution_form
+msgid "Resolution Description"
+msgstr "决议说明"
+
+#. module: project_agile
+#: model:project.task.type,name:project_agile.project_task_stage_resolved
+msgid "Resolved"
+msgstr "断然的"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.res_config_settings_view_form
+msgid "Run your projects by Agile Kanban"
+msgstr "通过敏捷看板运行您的项目"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.res_config_settings_view_form
+msgid "Run your projects by Agile Scrum"
+msgstr "通过敏捷Scrum运行您的项目"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_res_config_settings__module_project_agile_scrum
+msgid "Scrum"
+msgstr ""
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_code_item__sequence
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link_relation__sequence
+#: model:ir.model.fields,field_description:project_agile.field_project_task_priority__sequence
+#: model:ir.model.fields,field_description:project_agile.field_project_task_resolution__sequence
+#: model:ir.model.fields,field_description:project_agile.field_project_task_type2__sequence
+#: model:ir.model.fields,field_description:project_agile.field_project_type__sequence
+msgid "Sequence"
+msgstr "序号"
+
+#. module: project_agile
+#: model:ir.ui.menu,name:project_agile.project_services_menu
+msgid "Services"
+msgstr "服务"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__image_small
+#: model:ir.model.fields,field_description:project_agile.field_project_project__image_small
+msgid "Small-sized image"
+msgstr "小尺寸图像"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_agile_team__image_small
+msgid "Small-sized image of the agile team. It is automatically resized as a 64x64px image, with aspect ratio preserved. Use this field anywhere a small image is required."
+msgstr "敏捷团队的小头像。它将自动调整为64x64px 图像, 并保留纵横比。在需要小头像的任何地方使用此字段。"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_project__image_small
+msgid "Small-sized image of the project. It is automatically resized as a 64x64px image, with aspect ratio preserved. Use this field anywhere a small image is required."
+msgstr "项目的小图像。它将自动调整为64x64px 图像, 并保留纵横比。在需要小图像的任何地方使用此字段。"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.edit_project
+#: model_terms:ir.ui.view,arch_db:project_agile.project_type_form
+msgid "Stages"
+msgstr "阶段"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board__status_ids
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column__status_ids
+msgid "Statuses"
+msgstr "状态"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task__story_points
+msgid "Story Points"
+msgstr ""
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_type2__type_ids
+#: model_terms:ir.ui.view,arch_db:project_agile.project_task_type2_form
+msgid "Sub Types"
+msgstr "子类型"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_sub_task_add_wizard__type_id
+msgid "Sub-Task Type"
+msgstr "子任务类型"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.view_task_form2_inherited
+msgid "Sub-Tasks"
+msgstr "子任务"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_sub_task_add_wizard__subject
+msgid "Subject"
+msgstr "主题"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_sub_task_add_wizard__tag_ids
+msgid "Tags"
+msgstr "标签"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_task
+#: model:ir.model.fields,field_description:project_agile.field_project_task_worklog_wizard__task_id
+msgid "Task"
+msgstr "任务"
+
+#. module: project_agile
+#: model:ir.actions.act_window,name:project_agile.open_task_priority_form
+#: model:ir.ui.menu,name:project_agile.project_task_priority_menu
+#: model_terms:ir.ui.view,arch_db:project_agile.project_task_type2_form
+msgid "Task Priorities"
+msgstr "任务优先级"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_task_priority
+msgid "Task Priority"
+msgstr "任务优先级"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_task_resolution
+msgid "Task Resolution"
+msgstr "任务解决方案"
+
+#. module: project_agile
+#: model:ir.actions.act_window,name:project_agile.open_task_resolution_form
+#: model:ir.ui.menu,name:project_agile.project_task_resolution_menu
+msgid "Task Resolutions"
+msgstr "任务解决方案"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_task_type2
+#: model:ir.model.fields,field_description:project_agile.field_project_workflow_task_type__type_id
+#: model_terms:ir.ui.view,arch_db:project_agile.project_task_type2_form
+msgid "Task Type"
+msgstr "任务类型"
+
+#. module: project_agile
+#: model:ir.actions.act_window,name:project_agile.open_task_type2_form
+#: model:ir.model.fields,field_description:project_agile.field_project_type__task_type_ids
+#: model:ir.model.fields,field_description:project_agile.field_project_workflow__task_type_ids
+#: model:ir.ui.menu,name:project_agile.project_task_type2_menu
+#: model_terms:ir.ui.view,arch_db:project_agile.edit_project_workflow
+#: model_terms:ir.ui.view,arch_db:project_agile.project_task_priority_form
+#: model_terms:ir.ui.view,arch_db:project_agile.project_type_form
+#: model_terms:ir.ui.view,arch_db:project_agile.view_task_type2_search_form
+msgid "Task Types"
+msgstr "任务类型"
+
+#. module: project_agile
+#: model:ir.actions.act_window,name:project_agile.agile_project_task_worklog_action
+msgid "Task Worklog"
+msgstr "任务工作日志"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link__task_left_id
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link_add_wizard__task_left_id
+msgid "Task on the left"
+msgstr "在左边的任务"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link__task_right_id
+#: model:ir.model.fields,field_description:project_agile.field_project_task_link_add_wizard__task_right_id
+msgid "Task on the right"
+msgstr "在右边的任务"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_type__stage_ids
+msgid "Tasks Stages"
+msgstr "任务阶段"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board__team_id
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_create_wizard__team_id
+#: selection:project.agile.board,visibility:0
+#: selection:project.agile.board.create.wizard,visibility:0
+msgid "Team"
+msgstr "团队"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__member_ids
+#: model_terms:ir.ui.view,arch_db:project_agile.view_project_agile_team_form
+msgid "Team Members"
+msgstr "团队成员"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_agile_board__team_id
+#: model:ir.model.fields,help:project_agile.field_project_agile_board_create_wizard__team_id
+msgid "Team which owns this board"
+msgstr "拥有这块看板的团队"
+
+#. module: project_agile
+#: model:ir.actions.act_window,name:project_agile.action_project_agile_team
+#: model:ir.ui.menu,name:project_agile.project_agile_team_menu
+#: model_terms:ir.ui.view,arch_db:project_agile.edit_project
+msgid "Teams"
+msgstr "团队"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_agile_board_column__max
+msgid "The maximum number of issues int this column"
+msgstr "此列中的最大问题数"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_agile_board_column__min
+msgid "The minimum number of issues in this column"
+msgstr "此列中的最小问题数"
+
+#. module: project_agile
+#: sql_constraint:project.type:0
+msgid "The name must be unique"
+msgstr "名称必须唯一"
+
+#. module: project_agile
+#: sql_constraint:project.agile.board.column:0
+msgid "The name of the column must be unique per board"
+msgstr "列的名称必须是每个看板唯一的"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_agile_team__image
+msgid "This field holds the image used as image for the agile team, limited to 1024x1024px."
+msgstr "这个字段保存敏捷开发团队的头像大图，分辨率限制为1024x1024px。"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_project__image
+msgid "This field holds the image used as image for the project, limited to 1024x1024px."
+msgstr "这个字段保存项目图像大图，分辨率限制为1024x1024px。"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_task__epic_id
+msgid "This field represents the first"
+msgstr "此行代表第一个"
+
+#. module: project_agile
+#: model:project.task.type,description:project_agile.project_task_stage_in_progress_uat_qa
+msgid "This means that QA is testing this task on UAT environment."
+msgstr "这意味着QA正在UAT环境中测试这个任务。"
+
+#. module: project_agile
+#: model:project.task.type,description:project_agile.project_task_stage_in_progress_qa
+msgid "This means that QA is working on this task."
+msgstr "这意味着QA正在处理这个任务。"
+
+#. module: project_agile
+#: model:project.task.type,description:project_agile.project_task_stage_blocked
+msgid "This means that on this task could not be worked anymore due the missing information\n"
+"            or similar.\n"
+"        "
+msgstr "这意味着，由于缺少信息或类似信息，无法再执行此任务。"
+
+#. module: project_agile
+#: model:project.task.type,description:project_agile.project_task_stage_code_review
+msgid "This means that on this task requires code review."
+msgstr "这意味着此任务需要代码检查。"
+
+#. module: project_agile
+#: model:project.task.type,description:project_agile.project_task_stage_integration
+msgid "This means that on this task requires integration testing (i.e. Unit Testing)."
+msgstr "这意味着在这个任务上需要集成测试（即单元测试）。"
+
+#. module: project_agile
+#: model:project.task.type,description:project_agile.project_task_stage_reopened
+msgid "This means that the task has been reopened for some reason."
+msgstr "这意味着任务由于某种原因被重新打开。"
+
+#. module: project_agile
+#: model:project.task.type,description:project_agile.project_task_stage_deployment_uat
+msgid "This means that the task is ready to be deployed on UAT."
+msgstr "这意味着任务已经准备好部署到UAT上。"
+
+#. module: project_agile
+#: model:project.task.type,description:project_agile.project_task_stage_uat_qa
+msgid "This means that the task is ready to be tested on UAT."
+msgstr "这意味着任务已经准备好在UAT上测试。"
+
+#. module: project_agile
+#: model:project.task.type,description:project_agile.project_task_stage_qa
+msgid "This means that this task is ready for QA"
+msgstr "这意味着这个任务已经为QA做好了准备"
+
+#. module: project_agile
+#: model:project.task.type,description:project_agile.project_task_stage_resolved
+msgid "This stage means that a task has been successfully test on UAT."
+msgstr "这个阶段意味着任务已经在UAT上成功测试。"
+
+#. module: project_agile
+#: model:project.task.type,description:project_agile.project_task_stage_deployment
+msgid "This stage means that a task is ready to be deployed to production."
+msgstr "此阶段意味着任务已准备好部署到生产环境中。"
+
+#. module: project_agile
+#: model:project.task.type,description:project_agile.project_task_stage_qa_production
+msgid "This stage means that a ticket has been deployed to production and it's waiting to be\n"
+"            verified on production if possible..\n"
+"        "
+msgstr "这个阶段意味着一张票已经部署到生产中，它正在等待\n"
+"            在生产中验证。。\n"
+"        "
+
+#. module: project_agile
+#: model:project.task.type,description:project_agile.project_task_stage_open
+msgid "This stage means that it can be worked on this task."
+msgstr "这个阶段意味着它可以完成这个任务。"
+
+#. module: project_agile
+#: model:project.task.type,description:project_agile.project_task_stage_in_progress
+msgid "This stage means that on this task is been actively worked on."
+msgstr "这一阶段意味着这项任务正在积极进行。"
+
+#. module: project_agile
+#: model:project.task.type,description:project_agile.project_task_stage_actionable
+msgid "This stage means that the task definition has been completed and that it's ready for\n"
+"            review by project manager.\n"
+"        "
+msgstr "此阶段意味着任务定义已完成，并准备好供\n"
+"            项目经理审阅。\n"
+"        "
+
+#. module: project_agile
+#: model:project.task.type,description:project_agile.project_task_stage_accepted
+msgid "This stage means that the task has been accepted by the project manager"
+msgstr "此阶段意味着项目经理已接受该任务"
+
+#. module: project_agile
+#: model:project.task.type,description:project_agile.project_task_stage_done
+msgid "This stage means that the task has been completed."
+msgstr "这个阶段意味着任务已经完成。"
+
+#. module: project_agile
+#: model:project.task.type,description:project_agile.project_task_stage_rejected
+msgid "This stage means that the task has been rejected."
+msgstr "此阶段意味着任务已被拒绝。"
+
+#. module: project_agile
+#: model:project.task.type,description:project_agile.project_task_stage_init
+msgid "This stage means that the task is under construction. It should be ignored until\n"
+"            reporter says otherwise.\n"
+"        "
+msgstr "这个阶段意味着这项任务正在建设中。除非记者另有说法，\n"
+"            否则应该不予理睬。\n"
+"        "
+
+#. module: project_agile
+#: model:project.task.type,description:project_agile.project_task_stage_waiting_approval
+msgid "This stage means that the task is waiting for a \"green light\" to be worked on."
+msgstr "此阶段意味着任务正在等待“绿灯”亮起。"
+
+#. module: project_agile
+#: model:project.task.type,description:project_agile.project_task_stage_todo
+msgid "This stage means that the task is waiting on TODO list to be picked up for work.\n"
+"        "
+msgstr "此阶段意味着任务正在等待待办事项列表中的待办事项，以便进行处理。\n"
+"        "
+
+#. module: project_agile
+#: model:project.task.type,description:project_agile.project_task_stage_close
+msgid "This stage means that this task is closed."
+msgstr "此阶段意味着此任务已结束。"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_res_config_settings__module_project_agile_timesheet_category
+msgid "Timesheet Category"
+msgstr "时间表类别"
+
+#. module: project_agile
+#: model:project.task.type,name:project_agile.project_task_stage_todo
+msgid "ToDo"
+msgstr ""
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_project__todo_estimation
+msgid "Todo Estimation"
+msgstr "Todo 估计"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board__type
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_create_wizard__type
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_report__type
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_report__type
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__type
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team_report__type
+#: model:ir.model.fields,field_description:project_agile.field_project_task__type_id
+#: model_terms:ir.ui.view,arch_db:project_agile.view_project_project_filter_extend_with_key
+#: model_terms:ir.ui.view,arch_db:project_agile.view_task_search_form_inherited
+msgid "Type"
+msgstr "类型"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task_priority__type_ids
+#: model_terms:ir.ui.view,arch_db:project_agile.view_task_type2_search_form
+msgid "Types"
+msgstr "类型"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_agile_team__type
+msgid "Types are introduced by plugins, if there is no methodology youneed, please install appropriate plugin for Scrummer."
+msgstr "类型是由插件引入的，如果没有你需要的方法，请为Scrummer安装合适的插件。"
+
+#. module: project_agile
+#: model:project.task.type,name:project_agile.project_task_stage_uat_qa
+msgid "UAT QA"
+msgstr "UAT质量保证"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board__unmapped_state_ids
+msgid "Unmapped State"
+msgstr "未映射的状态"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.agile_board_form
+msgid "Unmapped States"
+msgstr "未映射的状态"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board__unmapped_task_stage_ids
+msgid "Unmapped Task Stage"
+msgstr "未映射的任务阶段"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__message_unread
+msgid "Unread Messages"
+msgstr "未读消息"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "未读消息计数器"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_task__write_date
+#: model_terms:ir.ui.view,arch_db:project_agile.view_task_form2_inherited
+msgid "Updated"
+msgstr "更新"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_project__agile_enabled
+#: model:ir.model.fields,field_description:project_agile.field_project_task__agile_enabled
+msgid "Use Agile"
+msgstr "使用敏捷"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board__user_id
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_create_wizard__user_id
+#: model:ir.model.fields,field_description:project_agile.field_project_task_worklog_wizard__user_id
+#: selection:project.agile.board,visibility:0
+#: selection:project.agile.board.create.wizard,visibility:0
+msgid "User"
+msgstr "用户"
+
+#. module: project_agile
+#: code:addons/project_agile/models/project_project.py:332
+#: model_terms:ir.ui.view,arch_db:project_agile.edit_project
+#: model_terms:ir.ui.view,arch_db:project_agile.view_project_kanban
+#, python-format
+msgid "User Stories"
+msgstr "用户情景"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_project__user_story_count
+msgid "User Story Count"
+msgstr "用户情景计数"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_agile_board__user_id
+#: model:ir.model.fields,help:project_agile.field_project_agile_board_create_wizard__user_id
+msgid "User which owns this board"
+msgstr "该看板的拥有者"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_res_users
+msgid "Users"
+msgstr "用户"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.view_task_form2_inherited
+msgid "View Linked Task"
+msgstr "查看相关联的任务"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.view_task_form2_inherited
+msgid "View Sub-Task"
+msgstr "查看子任务"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board__visibility
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_create_wizard__visibility
+msgid "Visibility"
+msgstr "是否可见"
+
+#. module: project_agile
+#: model:project.task.type,name:project_agile.project_task_stage_waiting_approval
+msgid "Waiting Approval"
+msgstr "等待审批"
+
+#. module: project_agile
+#: selection:project.agile.board.column,notification_level:0
+msgid "Warning"
+msgstr "警告"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_team__website_message_ids
+msgid "Website Messages"
+msgstr "网站消息"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_agile_team__website_message_ids
+msgid "Website communication history"
+msgstr "网站沟通记录"
+
+#. module: project_agile
+#: model_terms:ir.actions.act_window,help:project_agile.action_project_agile_team
+msgid "With this view you can create your agile teams."
+msgstr "使用这个视图，可以创建你的敏捷团队。"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column_status__workflow_id
+#: model:ir.model.fields,field_description:project_agile.field_project_project__workflow_id
+#: model:ir.model.fields,field_description:project_agile.field_project_type__workflow_id
+#: model:ir.model.fields,field_description:project_agile.field_project_workflow_task_type__workflow_id
+msgid "Workflow"
+msgstr "工作流"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column_status__workflow_stage_ids
+msgid "Workflow Stage"
+msgstr "工作流程阶段"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.agile_board_form
+msgid "Workflow States"
+msgstr "工作流状态"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_res_config_settings__module_project_agile_workflow_transitions_by_task_type
+msgid "Workflow Transitions by task type"
+msgstr "按任务类型的工作流转换"
+
+#. module: project_agile
+#: model:ir.model.fields,help:project_agile.field_project_type__workflow_id
+msgid "Workflow which will be used as a default project workflow"
+msgstr "将用作默认项目工作流的工作流"
+
+#. module: project_agile
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board__workflow_ids
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column__workflow_ids
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_column_status__workflow_ids
+#: model:ir.model.fields,field_description:project_agile.field_project_agile_board_create_wizard__workflow_ids
+msgid "Workflows"
+msgstr "工作流"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.agile_project_task_worklog_form
+msgid "Worklog"
+msgstr "工作日志"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.agile_project_task_worklog_form
+msgid "Worklog Description"
+msgstr "工作日志描述"
+
+#. module: project_agile
+#: code:addons/project_agile/models/res_users.py:56
+#, python-format
+msgid "You are allowed only to change current team for yourself"
+msgstr "你只允许自己改变现在的团队"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.agile_board_create_wizard_form
+msgid "_Apply"
+msgstr "_应用"
+
+#. module: project_agile
+#: model_terms:ir.ui.view,arch_db:project_agile.agile_project_task_worklog_form
+msgid "_Sumbit"
+msgstr "_ 提交"
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_agile_board_create_wizard
+msgid "project.agile.board.create.wizard"
+msgstr ""
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_agile_board_report
+msgid "project.agile.board.report"
+msgstr ""
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_agile_mixin_id_search
+msgid "project.agile.mixin.id_search"
+msgstr ""
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_agile_report
+msgid "project.agile.report"
+msgstr ""
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_agile_team
+msgid "project.agile.team"
+msgstr ""
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_agile_team_report
+msgid "project.agile.team.report"
+msgstr ""
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_task_worklog_wizard
+msgid "project.task.worklog.wizard"
+msgstr ""
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_type
+msgid "project.type"
+msgstr ""
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_project_workflow_publisher
+msgid "project.workflow.publisher"
+msgstr ""
+
+#. module: project_agile
+#: model:ir.model,name:project_agile.model_wkf_project_task_confirmation
+msgid "wkf.project.task.confirmation"
+msgstr ""
+
+#. module: project_agile
+#: model:project.task.type,legend_done:project_agile.project_task_stage_accepted
+#: model:project.task.type,legend_done:project_agile.project_task_stage_actionable
+#: model:project.task.type,legend_done:project_agile.project_task_stage_blocked
+#: model:project.task.type,legend_done:project_agile.project_task_stage_close
+#: model:project.task.type,legend_done:project_agile.project_task_stage_code_review
+#: model:project.task.type,legend_done:project_agile.project_task_stage_deployment
+#: model:project.task.type,legend_done:project_agile.project_task_stage_deployment_uat
+#: model:project.task.type,legend_done:project_agile.project_task_stage_done
+#: model:project.task.type,legend_done:project_agile.project_task_stage_in_progress
+#: model:project.task.type,legend_done:project_agile.project_task_stage_in_progress_qa
+#: model:project.task.type,legend_done:project_agile.project_task_stage_in_progress_uat_qa
+#: model:project.task.type,legend_done:project_agile.project_task_stage_init
+#: model:project.task.type,legend_done:project_agile.project_task_stage_integration
+#: model:project.task.type,legend_done:project_agile.project_task_stage_open
+#: model:project.task.type,legend_done:project_agile.project_task_stage_qa
+#: model:project.task.type,legend_done:project_agile.project_task_stage_qa_production
+#: model:project.task.type,legend_done:project_agile.project_task_stage_rejected
+#: model:project.task.type,legend_done:project_agile.project_task_stage_reopened
+#: model:project.task.type,legend_done:project_agile.project_task_stage_resolved
+#: model:project.task.type,legend_done:project_agile.project_task_stage_todo
+#: model:project.task.type,legend_done:project_agile.project_task_stage_uat_qa
+#: model:project.task.type,legend_done:project_agile.project_task_stage_waiting_approval
+msgid "下一阶段就绪"
+msgstr ""
+
+#. module: project_agile
+#: model:project.task.type,legend_blocked:project_agile.project_task_stage_accepted
+#: model:project.task.type,legend_blocked:project_agile.project_task_stage_actionable
+#: model:project.task.type,legend_blocked:project_agile.project_task_stage_blocked
+#: model:project.task.type,legend_blocked:project_agile.project_task_stage_close
+#: model:project.task.type,legend_blocked:project_agile.project_task_stage_code_review
+#: model:project.task.type,legend_blocked:project_agile.project_task_stage_deployment
+#: model:project.task.type,legend_blocked:project_agile.project_task_stage_deployment_uat
+#: model:project.task.type,legend_blocked:project_agile.project_task_stage_done
+#: model:project.task.type,legend_blocked:project_agile.project_task_stage_in_progress
+#: model:project.task.type,legend_blocked:project_agile.project_task_stage_in_progress_qa
+#: model:project.task.type,legend_blocked:project_agile.project_task_stage_in_progress_uat_qa
+#: model:project.task.type,legend_blocked:project_agile.project_task_stage_init
+#: model:project.task.type,legend_blocked:project_agile.project_task_stage_integration
+#: model:project.task.type,legend_blocked:project_agile.project_task_stage_open
+#: model:project.task.type,legend_blocked:project_agile.project_task_stage_qa
+#: model:project.task.type,legend_blocked:project_agile.project_task_stage_qa_production
+#: model:project.task.type,legend_blocked:project_agile.project_task_stage_rejected
+#: model:project.task.type,legend_blocked:project_agile.project_task_stage_reopened
+#: model:project.task.type,legend_blocked:project_agile.project_task_stage_resolved
+#: model:project.task.type,legend_blocked:project_agile.project_task_stage_todo
+#: model:project.task.type,legend_blocked:project_agile.project_task_stage_uat_qa
+#: model:project.task.type,legend_blocked:project_agile.project_task_stage_waiting_approval
+msgid "已封锁"
+msgstr ""
+
+#. module: project_agile
+#: model:project.task.type,legend_normal:project_agile.project_task_stage_accepted
+#: model:project.task.type,legend_normal:project_agile.project_task_stage_actionable
+#: model:project.task.type,legend_normal:project_agile.project_task_stage_blocked
+#: model:project.task.type,legend_normal:project_agile.project_task_stage_close
+#: model:project.task.type,legend_normal:project_agile.project_task_stage_code_review
+#: model:project.task.type,legend_normal:project_agile.project_task_stage_deployment
+#: model:project.task.type,legend_normal:project_agile.project_task_stage_deployment_uat
+#: model:project.task.type,legend_normal:project_agile.project_task_stage_done
+#: model:project.task.type,legend_normal:project_agile.project_task_stage_in_progress
+#: model:project.task.type,legend_normal:project_agile.project_task_stage_in_progress_qa
+#: model:project.task.type,legend_normal:project_agile.project_task_stage_in_progress_uat_qa
+#: model:project.task.type,legend_normal:project_agile.project_task_stage_init
+#: model:project.task.type,legend_normal:project_agile.project_task_stage_integration
+#: model:project.task.type,legend_normal:project_agile.project_task_stage_open
+#: model:project.task.type,legend_normal:project_agile.project_task_stage_qa
+#: model:project.task.type,legend_normal:project_agile.project_task_stage_qa_production
+#: model:project.task.type,legend_normal:project_agile.project_task_stage_rejected
+#: model:project.task.type,legend_normal:project_agile.project_task_stage_reopened
+#: model:project.task.type,legend_normal:project_agile.project_task_stage_resolved
+#: model:project.task.type,legend_normal:project_agile.project_task_stage_todo
+#: model:project.task.type,legend_normal:project_agile.project_task_stage_uat_qa
+#: model:project.task.type,legend_normal:project_agile.project_task_stage_waiting_approval
+msgid "进行中"
+msgstr ""
+
