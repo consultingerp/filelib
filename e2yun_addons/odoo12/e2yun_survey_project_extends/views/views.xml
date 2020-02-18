@@ -1,0 +1,73 @@
+<odoo>
+    <data>
+        <record id="project_task_add_questionnaire_form" model="ir.ui.view">
+            <field name="name">添加历史问卷</field>
+            <field name="model">project.task.add.questionnaire</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="questionnaire_classification" readonly="1"/>
+                            <field name="questionnaire_scenario" required="1"/>
+                            <field name="survey_temp_id" required="1" options="{'no_create': True, 'no_create_edit':True}"/>
+                        </group>
+                        <group>
+                            <field name="multiple_questionnaires" readonly="1"/>
+                            <field name="weight" required="1"/>
+                            <field name="questionnaire_name" required="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="add_questionnaire_to_task" string="确定" class="btn-primary" type="object"/>
+                        <button special="cancel" string="取消"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="project_task_add_new_questionnaire_form" model="ir.ui.view">
+            <field name="name">添加新问卷</field>
+            <field name="model">project.task.add.questionnaire</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="questionnaire_classification" readonly="1"/>
+                            <field name="questionnaire_scenario" required="1"/>
+                            <field name="survey_temp_id" required="1" domain="[('id', '=', False)]"/>
+                        </group>
+                        <group>
+                            <field name="multiple_questionnaires" readonly="1"/>
+                            <field name="weight" required="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="add_questionnaire_to_task" string="确定" class="btn-primary" type="object"/>
+                        <button special="cancel" string="取消"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="project_task_survey_form_extends" model="ir.ui.view">
+            <field name="name">Project Task Survey Task Form</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="e2yun_project_extends.view_task_form2_extends"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='questionnaire_ids']" position="inside">
+                    <tree edit="0" create="0">
+                        <field name="questionnaire_scenario"/>
+                        <field name="weight" attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>
+                        <field name="survey_temp_id" options="{'no_create_edit':1}"/>
+                    </tree>
+                </xpath>
+                <xpath expr="//field[@name='questionnaire_ids']" position="after">
+                    <button name="project_task_survey_add_questionnaire" string="添加历史问卷" type="object" class='oe_edit_only'
+                    attrs="{'invisible': [('task_mode','!=', 'questionnaire model')]}"/>
+                    <button name="project_task_survey_add_new_questionnaire" string="添加新问卷" type="object" class='oe_edit_only'
+                    attrs="{'invisible': [('task_mode','!=', 'questionnaire model')]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

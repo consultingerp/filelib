@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="email_template_survey_1" model="mail.template">
+            <field name="name">Send questionnaire</field>
+            <field name="model_id" ref="model_project_task" />
+            <field name="subject">One Questionnaire</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px; font-size: 13px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Hello<br /><br />
+        We are conducting a survey, and your response would be appreciated.
+        <div style="margin: 16px 0px 16px 0px;">
+            <a href="__URL__"
+                style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                Start Survey
+            </a>
+        </div>
+        Thanks for your participation!
+    </p>
+</div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+            <field name="user_signature" eval="False"/>
+        </record>
+        <record id="email_template_survey_2" model="mail.template">
+            <field name="name">Send two copies of the questionnaire</field>
+            <field name="model_id" ref="model_project_task" />
+            <field name="subject">Two Questionnaires</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px; font-size: 13px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Hello<br /><br />
+        We are conducting two surveys, and your response would be appreciated.
+        <div style="margin: 16px 0px 16px 0px;">
+            <a href="zhangsan"
+                style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                Start Survey 1
+            </a>
+            <a href="lisi"
+                style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                Start Survey 2
+            </a>
+        </div>
+        Thanks for your participation!
+    </p>
+</div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+            <field name="user_signature" eval="False"/>
+        </record>
+
+        <record id="email_template_survey_3" model="mail.template">
+            <field name="name">Send three copies of the questionnaire</field>
+            <field name="model_id" ref="model_project_task" />
+            <field name="subject">Three Questionnaires</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px; font-size: 13px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Hello<br /><br />
+        We are conducting three surveys, and your response would be appreciated.
+        <div style="margin: 16px 0px 16px 0px;">
+            <a href="zhangsan"
+                style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                Start Survey 1
+            </a>
+            <a href="lisi"
+                style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                Start Survey 2
+            </a>
+            <a href="wangwu"
+                style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                Start Survey 3
+            </a>
+        </div>
+        Thanks for your participation!
+    </p>
+</div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+            <field name="user_signature" eval="False"/>
+        </record>
+
+    </data>
+</odoo>
