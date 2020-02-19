@@ -49,6 +49,8 @@ class mat_demand_head(models.Model):
         isAdd = cr.fetchone()
         mat_id=0
         rmat_id=''
+        if not vals.get('mat_demand_line_details',False):
+            raise exceptions.ValidationError('请维护需求明细行！')
         if isAdd[0]:
             mat_id=isAdd[0]
             #更新行项目

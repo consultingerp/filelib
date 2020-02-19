@@ -17,6 +17,9 @@ class e2yun_demo_crm_extends(models.Model):
         else:
             self.x_studio_account_type = 'Significant Client'
 
+    customer_lost1 = fields.Char('退回原因', track_visibility='onchange')
+    customer_lost2 = fields.Char('审批不通过原因', track_visibility='onchange')
+
     x_studio_account_type = fields.Selection([("Target Client", "目标客户"), ("Active Client", "活动客户"),
                                               ("Significant Client", "重要客户")], 'Account type', track_visibility='onchange', readonly=True)
 
@@ -54,6 +57,21 @@ class e2yun_demo_crm_extends(models.Model):
             vals.update({'x_studio_account_type': account_type})
         return super(e2yun_demo_crm_extends, self).write(vals)
 
+    @api.multi
+    def btn_exec_action(self):
+        cx = self.env.context.copy() or {}
+        if cx.get('btn_key') in ('N8IMU9JJ0E', '9QPVIFOWV7'):
+            cx.update({'active_id': self.id, 'active_ids': self.ids})
+            return {
+                'type': 'ir.actions.act_window',
+                'view_type': 'form',
+                'view_mode': 'form',
+                'res_model': 'e2yun.customer.info.lost',
+                'target': 'new',
+                'context': cx,
+            }
+        else:
+            return super(e2yun_demo_crm_extends, self).btn_exec_action()
 
 class e2yun_demo_crm_extend_sres_partner(models.Model):
     _inherit = "res.partner"
@@ -86,7 +104,6 @@ class e2yun_demo_crm_extend_sres_partner(models.Model):
                                                 ("Public_Relations", "公共关系"),
                                                 ("Exhibition", "展会")], 'Account Source')
 
-
 class e2yun_demo_crm_extend_crm_lead(models.Model):
     _inherit = "crm.lead"
 
@@ -108,3 +125,21 @@ class e2yun_demo_crm_extend_crm_lead_lost(models.TransientModel):
         else:
             leads.write({'lost_reason': self.lost_reason_id.id, 'losssuspend_detail': self.losssuspend_detail})
         return leads.action_set_lost()
+
+class e2yun_customer_info_lost(models.Model):
+    _name = 'e2yun.customer.info.lost'
+
+    lost_reason = fields.Char('退回原因')
+
+    def confirm_customer_lost_reason(self):
+        cx = self.env.context.copy() or {}
+        if cx.get('btn_key') == 'N8IMU9JJ0E':
+            self.env['e2yun.customer.info'].browse(cx.get('active_id')).write({'customer_lost1': self.lost_reason})
+        elif cx.get('btn_key') == '9QPVIFOWV7':
+            self.env['e2yun.customer.info'].browse(cx.get('active_id')).write({'customer_lost2': self.lost_reason})
+        wkf_btn_obj = self.env['e2yun.workflow.node.button']
+        btn_rec = wkf_btn_obj.search([('btn_key', '=', cx.get('btn_key', False))])
+        if btn_rec:
+            return btn_rec.with_context(cx).run()
+
+
