@@ -8,7 +8,7 @@
             <field name="name">ck_workprice_digit</field>
             <field name="digits">3</field>
         </record>
-        -->
+
 
 
         <record forcecreate="True" id="decimal_ck_worker_qty" model="decimal.precision">
@@ -18,6 +18,6 @@
        <record forcecreate="True" id="decimal_ck_worker_amount" model="decimal.precision">
             <field name="name">ck_workamount_digit</field>
             <field name="digits">2</field>
-        </record>
+        </record>-->
     </data>
 </odoo>
