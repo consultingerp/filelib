@@ -23,7 +23,7 @@
     'category': 'Report Work Management',
     'author': 'Feng Zhou',
     'application': True,
-    'depends': ['base', 'base_external_dbsource', 'import_odbc'],
+    'depends': ['base', 'base_external_dbsource', 'import_odbc','decimal_precision',],
     'data': ['security/report_work_security.xml',
              'security/ir.model.access.csv',
              'views/hours_worker_data.xml',

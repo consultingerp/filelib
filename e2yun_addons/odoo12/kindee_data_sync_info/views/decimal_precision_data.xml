@@ -11,6 +11,7 @@
         -->
 
 
+
         <record forcecreate="True" id="decimal_ck_worker_qty" model="decimal.precision">
             <field name="name">ck_workqty_digit</field>
             <field name="digits">0</field>

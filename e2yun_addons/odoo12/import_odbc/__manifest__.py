@@ -90,7 +90,7 @@ Contributors
     'data': [
         'security/ir.model.access.csv',
         'import_odbc_view.xml',
-        'import_odbc_from_mysql.xml',
+        #'import_odbc_from_mysql.xml',
     ],
     'demo': [
         'import_odbc_demo.xml',

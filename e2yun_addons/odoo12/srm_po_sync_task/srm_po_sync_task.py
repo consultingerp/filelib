@@ -820,6 +820,18 @@ class SrmPurchaseOrderLine(models.Model):
        super(SrmPurchaseOrderLine, self).unlink(cr, uid, ids, context=context)
        return True
 
+   @api.model
+   def create(self, values):
+
+       order_id = values.get('order_id',False)
+       if order_id and not values.get('item',False) :
+           order = self.env['purchase.order'].browse(order_id)
+           if len(order.order_line) == 0:
+               values['item'] = '10'
+           values['item'] = str((len(order.order_line)+1)*10)
+       return super(SrmPurchaseOrderLine, self).create(values)
+
+
    # def search(self):
    #     # order = 'item asc '
    #     # args.append(('product_qty', '<>', 0))
