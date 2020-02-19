@@ -80,3 +80,16 @@ msgstr "合同编号"
 #: model:ir.model.fields,field_description:e2yun_agreement_extend.field_crm_lead__agreement_partner_id
 msgid "Agreement Partner"
 msgstr "合同客户"
+
+
+#. module: e2yun_agreement_extend
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_extend.view_agreement_file_import
+msgid "_Import"
+msgstr "导入"
+
+
+
+#. module: e2yun_agreement_extend
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_extend.view_agreement_file_import
+msgid "Cancel"
+msgstr "取消"
