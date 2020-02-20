@@ -18,6 +18,10 @@
     ],
     "data": [
         "views/base_tier_validation_view.xml",
+        "views/assets_backend.xml",
         "views/agreement_view.xml",
+    ],
+    'qweb': [
+        'static/src/xml/tier_upload_attachment.xml',
     ],
 }

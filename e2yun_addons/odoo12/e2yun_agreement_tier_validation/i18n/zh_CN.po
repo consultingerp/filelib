@@ -83,3 +83,23 @@ msgstr "审批"
 #: model_terms:ir.ui.view,arch_db:e2yun_agreement_tier_validation.view_agreement_filter
 msgid "Validated"
 msgstr "已审批"
+
+
+#. module: e2yun_agreement_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_tier_validation.view_comment_wizard_extend
+msgid "Comment Idea"
+msgstr "审核建议"
+
+
+#. module: e2yun_agreement_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_tier_validation.view_comment_wizard_extend
+msgid "Comment"
+msgstr "审核"
+
+#. module: e2yun_agreement_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_tier_validation.view_comment_wizard_extend
+msgid "Cancel"
+msgstr "取消"
+
+
+

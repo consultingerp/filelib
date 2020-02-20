@@ -10,7 +10,7 @@
         <field name="arch" type="xml">
             <field name="reviewer_group_id" position="after">
                 <field name="tier_stage_id"/>
-                <field name="rebut"/>
+                <field name="rebut" invisible="1"/>
                 <field name="reject"/>
             </field>
 

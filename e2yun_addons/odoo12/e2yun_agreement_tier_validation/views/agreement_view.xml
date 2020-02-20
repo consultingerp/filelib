@@ -95,4 +95,31 @@
         </field>
     </record>
 
+
+
+     <record id="view_comment_wizard_extend" model="ir.ui.view">
+        <field name="name">Comment Wizard</field>
+        <field name="model">comment.wizard</field>
+        <field name="inherit_id" ref="base_tier_validation.view_comment_wizard"/>
+        <field name="arch" type="xml">
+               <xpath expr="//form" position="replace">
+                   <form string="Comment Idea">
+                 <group>
+                     <field name="check_advise" nolabel="1"/>
+                 </group>
+               <!--  <field name="upload_attachmen_widget"  widget="tier_upload_attachment" class="oe_inline"/> -->
+                  <field name="attachment_ids" widget="many2many_binary" string="附件" nolabel="1" colspan="2"/>
+                 <footer>
+                     <button name="add_comment"
+                             string="Comment" type="object"
+                             class="oe_highlight"/>
+                     <button special="cancel" string="Cancel" class="oe_link"/>
+                 </footer>
+                 </form>
+
+               </xpath>
+
+        </field>
+    </record>
+
 </odoo>
