@@ -2274,10 +2274,15 @@ class CK_Hours_Worker_line(models.Model):
             vals['fnumber'] = production_id.fnumber
             vals['fname'] = production_id.fname
 
+            if self.env.user.tz:
+                timezone = self.self.env.user.tz
+            else:
+                timezone = 'utc'
             now_time = datetime.datetime.strptime(datetime.datetime.now().
-                                                  replace(tzinfo=pytz.utc).
-                                                  astimezone(pytz.timezone(self.env.user.tz)).
-                                                  strftime('%Y-%m-%d %H:%M:%S'), '%Y-%m-%d %H:%M:%S')
+                                                      replace(tzinfo=pytz.utc).
+                                                      astimezone(pytz.timezone(timezone)).
+                                                      strftime('%Y-%m-%d %H:%M:%S'), '%Y-%m-%d %H:%M:%S')
+
             shifts = self.env['ck.shift'].search([('fshift', '=', 'day')])
 
             for shift in shifts:
