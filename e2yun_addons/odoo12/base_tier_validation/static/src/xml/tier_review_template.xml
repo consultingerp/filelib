@@ -17,6 +17,18 @@
     </t>
 
     <t t-name="tier.review.ReviewsTable">
+
+  &lt;!DOCTYPE html&gt;
+<html lang="zh">
+<head>
+          <script type="text/javascript">
+                  var value={}
+              </script>
+
+</head>
+<body>
+        <div id="emerge_div" style="position:absolute;display:none;border:1px solid Black;background:Ivory;" />
+
         <table class="oe_mt32 table table-condensed">
             <thead>
                 <tr>
@@ -31,6 +43,10 @@
             </thead>
             <tbody class="sale_tbody">
                 <t t-foreach="reviews" t-as="review">
+                       <script type="text/javascript">
+                         value["<t t-esc="review.id" />"]="<t t-esc="review.comment_temp" />"
+                      </script>
+
                     <t t-if="review.status == 'pending'" t-set="status_class" t-value=""/>
                     <t t-if="review.status == 'approved'" t-set="status_class" t-value="'alert-success'"/>
                     <t t-if="review.status == 'rejected'" t-set="status_class" t-value="'alert-danger'"/>
@@ -42,12 +58,14 @@
                         <td class="text-center">
                             <span t-esc="review.name"/>
                         </td>
-                        <td class="text-center">
+
+                        <td class="text-center"  t-att-id="review.id"
+                            onMouseOver='javascript:show(this,"emerge_div" )' onMouseOut="hide(this,'emerge_div')">
                             <t t-if="review.comment">
                                  <span t-esc="review.comment"/>
                             </t>
                         </td>
-                         <td class="text-center">
+                         <td class="text-center" >
                             <span t-esc="review.display_status"/>
                         </td>
                         <!--
@@ -68,6 +86,29 @@
                 </t>
             </tbody>
         </table>
+
+    <script type="text/javascript">
+   function show(obj,id) {
+
+    var objDiv = $("#"+id+"");
+     $(objDiv).css("display","block");
+     $(objDiv).css("left", 350);
+     $(objDiv).css("top", event.clientY+1000);
+     $(objDiv).text("")
+     if(value[""+obj.id+""]!='false'){
+	     $(objDiv).text(value[""+obj.id+""])
+      }else{
+         $(objDiv).css("display", "none");
+      }
+    }
+    function hide(obj,id) {
+        var objDiv = $("#"+id+"");
+        $(objDiv).css("display", "none");
+    }
+    </script>
+        </body>
+</html>
+
     </t>
 
 </templates>
