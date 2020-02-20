@@ -3,9 +3,13 @@
 
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
-from ast import literal_eval
 from odoo.exceptions import UserError
 import datetime
+try:
+    from odoo.addons.e2yun_agreement_tier_validation.models import get_zone_datetime
+except BaseException as b:
+    print(b)
+    pass
 class Agreement(models.Model):
     _name = "agreement"
     _inherit = ['agreement', 'tier.validation']
@@ -184,11 +188,12 @@ class Agreement(models.Model):
             if tier_review.sequence==sequence:
                 user_reviews=tier_review
 
-
+        GetDatetime = get_zone_datetime.GetDatetime()
+        reviewed_date = GetDatetime.get_datetime()
         user_reviews.write({
             'status': 'pending',
             'done_by': '',
-            'reviewed_date': datetime.datetime.now(),
+            'reviewed_date': reviewed_date,
         })
         for review in user_reviews:
             rec = self.env[review.model].browse(review.res_id)
@@ -225,10 +230,14 @@ class Agreement(models.Model):
         user_reviews = tier_reviews.filtered(
             lambda r: r.status in ('pending', 'rejected') and
             (self.env.user in r.reviewer_ids))
+
+        GetDatetime = get_zone_datetime.GetDatetime()
+        reviewed_date = GetDatetime.get_datetime()
+
         user_reviews.write({
             'status': 'approved',
             'done_by': self.env.user.id,
-            'reviewed_date': datetime.datetime.now(),
+            'reviewed_date': reviewed_date,
         })
         for review in user_reviews:
             rec = self.env[review.model].browse(review.res_id)
@@ -250,10 +259,14 @@ class Agreement(models.Model):
             lambda r: r.status in ('pending', 'approved') and
             (r.reviewer_id == self.env.user or
              r.reviewer_group_id in self.env.user.groups_id))
+
+        GetDatetime = get_zone_datetime.GetDatetime()
+        reviewed_date = GetDatetime.get_datetime()
+
         user_reviews.write({
             'status': 'rejected',
             'done_by': self.env.user.id,
-            'reviewed_date': datetime.datetime.now(),
+            'reviewed_date':reviewed_date,
         })
         for review in user_reviews:
             rec = self.env[review.model].browse(review.res_id)
