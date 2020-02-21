@@ -122,15 +122,18 @@ class SurveyMailComposeMessage(models.TransientModel):
             for u in wizard.survey_ids:
                  urls.append(u.public_url)
             if token:
-                if len(wizard.survey_ids) == 1:
-                    urls = urls.replace(0,urls[0]+token[0])
-                elif len(wizard.survey_ids) == 2:
-                    urls = urls.replace(0,urls[0]+token[0])
-                    urls = urls.replace(1,urls[1]+token[1])
-                elif len(wizard.survey_ids) == 3:
-                    urls = urls.replace(0,urls[0]+token[0])
-                    urls = urls.replace(1,urls[1]+token[1])
-                    urls = urls.replace(2, urls[2] + token[2])
+                for index in range(len(wizard.survey_ids)):
+                    urls = urls.replace(index, urls[index] + token[index])
+
+                # if len(wizard.survey_ids) == 1:
+                #     urls = urls.replace(0,urls[0]+token[0])
+                # elif len(wizard.survey_ids) == 2:
+                #     urls = urls.replace(0,urls[0]+token[0])
+                #     urls = urls.replace(1,urls[1]+token[1])
+                # elif len(wizard.survey_ids) == 3:
+                #     urls = urls.replace(0,urls[0]+token[0])
+                #     urls = urls.replace(1,urls[1]+token[1])
+                #     urls = urls.replace(2, urls[2] + token[2])
             # urls = wizard.survey_id.public_url
 
             # if token:
@@ -139,61 +142,100 @@ class SurveyMailComposeMessage(models.TransientModel):
             #         ul = ul + '/' + token
             #         urls.append(ul)
             # post the message:判断问卷的个数，在进行url的替换
-            if len(wizard.survey_ids) == 1:
-                url = urls[0]
-                values = {
-                    'model': None,
-                    'res_id': None,
-                    'subject': wizard.subject,
-                    'body': wizard.body.replace("__URL__", url),
-                    'body_html': wizard.body.replace("__URL__", url),
-                    'parent_id': None,
-                    'attachment_ids': wizard.attachment_ids and [(6, 0, wizard.attachment_ids.ids)] or None,
-                    'email_from': wizard.email_from or None,
-                    'auto_delete': True,
-                }
-                if partner_id:
-                    values['recipient_ids'] = [(4, partner_id)]
-                else:
-                    values['email_to'] = email
 
-            elif len(wizard.survey_ids) == 2:
-                url1 = urls[0]
-                url2 = urls[1]
-                values = {
-                    'model': None,
-                    'res_id': None,
-                    'subject': wizard.subject,
-                    'body': wizard.body.replace("zhangsan", url1).replace("lisi", url2),
-                    'body_html': wizard.body.replace("zhangsan", url1).replace("lisi", url2),
-                    'parent_id': None,
-                    'attachment_ids': wizard.attachment_ids and [(6, 0, wizard.attachment_ids.ids)] or None,
-                    'email_from': wizard.email_from or None,
-                    'auto_delete': True,
-                }
-                if partner_id:
-                    values['recipient_ids'] = [(4, partner_id)]
-                else:
-                    values['email_to'] = email
-            elif len(wizard.survey_ids) == 3:
-                url1 = urls[0]
-                url2 = urls[1]
-                url3 = urls[2]
-                values = {
-                    'model': None,
-                    'res_id': None,
-                    'subject': wizard.subject,
-                    'body': wizard.body.replace("zhangsan", url1).replace("lisi", url2).replace("wangwu", url3),
-                    'body_html': wizard.body.replace("zhangsan", url1).replace("lisi", url2).replace("wangwu", url3),
-                    'parent_id': None,
-                    'attachment_ids': wizard.attachment_ids and [(6, 0, wizard.attachment_ids.ids)] or None,
-                    'email_from': wizard.email_from or None,
-                    'auto_delete': True,
-                }
-                if partner_id:
-                    values['recipient_ids'] = [(4, partner_id)]
-                else:
-                    values['email_to'] = email
+            body_a = ""
+
+            for u in urls:
+                body_a = body_a + """<a href='"""+u+"""' style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                            Start Survey
+                        </a>"""
+
+            body = """
+                <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Hello<br /><br />
+                        We are conducting a survey, and your response would be appreciated.
+                        <div style="margin: 16px 0px 16px 0px;">
+                            """+body_a+"""
+                        </div>
+                        Thanks for your participation!
+                    </p>
+                </div> 
+           """
+            values = {
+                'model': None,
+                'res_id': None,
+                'subject': wizard.subject,
+                'body': body,
+                'body_html': body,
+                'parent_id': None,
+                'attachment_ids': wizard.attachment_ids and [(6, 0, wizard.attachment_ids.ids)] or None,
+                'email_from': wizard.email_from or None,
+                'auto_delete': True,
+            }
+            if partner_id:
+                values['recipient_ids'] = [(4, partner_id)]
+            else:
+                values['email_to'] = email
+
+            # url1 = urls[0]
+            # url2 = urls[1]
+            # url3 = urls[2]
+            # if len(wizard.survey_ids) == 1:
+            #     url = urls[0]
+            #     values = {
+            #         'model': None,
+            #         'res_id': None,
+            #         'subject': wizard.subject,
+            #         'body': wizard.body.replace("__URL__", url),
+            #         'body_html': wizard.body.replace("__URL__", url),
+            #         'parent_id': None,
+            #         'attachment_ids': wizard.attachment_ids and [(6, 0, wizard.attachment_ids.ids)] or None,
+            #         'email_from': wizard.email_from or None,
+            #         'auto_delete': True,
+            #     }
+            #     if partner_id:
+            #         values['recipient_ids'] = [(4, partner_id)]
+            #     else:
+            #         values['email_to'] = email
+            #
+            # elif len(wizard.survey_ids) == 2:
+            #     url1 = urls[0]
+            #     url2 = urls[1]
+            #     values = {
+            #         'model': None,
+            #         'res_id': None,
+            #         'subject': wizard.subject,
+            #         'body': wizard.body.replace("zhangsan", url1).replace("lisi", url2),
+            #         'body_html': wizard.body.replace("zhangsan", url1).replace("lisi", url2),
+            #         'parent_id': None,
+            #         'attachment_ids': wizard.attachment_ids and [(6, 0, wizard.attachment_ids.ids)] or None,
+            #         'email_from': wizard.email_from or None,
+            #         'auto_delete': True,
+            #     }
+            #     if partner_id:
+            #         values['recipient_ids'] = [(4, partner_id)]
+            #     else:
+            #         values['email_to'] = email
+            # elif len(wizard.survey_ids) == 3:
+            #     url1 = urls[0]
+            #     url2 = urls[1]
+            #     url3 = urls[2]
+            #     values = {
+            #         'model': None,
+            #         'res_id': None,
+            #         'subject': wizard.subject,
+            #         'body': wizard.body.replace("zhangsan", url1).replace("lisi", url2).replace("wangwu", url3),
+            #         'body_html': wizard.body.replace("zhangsan", url1).replace("lisi", url2).replace("wangwu", url3),
+            #         'parent_id': None,
+            #         'attachment_ids': wizard.attachment_ids and [(6, 0, wizard.attachment_ids.ids)] or None,
+            #         'email_from': wizard.email_from or None,
+            #         'auto_delete': True,
+            #     }
+            #     if partner_id:
+            #         values['recipient_ids'] = [(4, partner_id)]
+            #     else:
+            #         values['email_to'] = email
 
             # optional support of notif_layout in context
             if notif_layout:
