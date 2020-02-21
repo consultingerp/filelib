@@ -224,7 +224,7 @@ class Agreement(models.Model):
         mails.send()
 
 
-    def _validate_tier(self, body,attachment_ids,tiers=False):
+    def _validate_tier_extend(self, body,attachment_ids,tiers=False):
         self.ensure_one()
         tier_reviews = tiers or self.review_ids
         user_reviews = tier_reviews.filtered(
@@ -241,9 +241,9 @@ class Agreement(models.Model):
         })
         for review in user_reviews:
             rec = self.env[review.model].browse(review.res_id)
-            rec._notify_accepted_reviews(body,attachment_ids)
+            rec._notify_accepted_reviews_extend(body,attachment_ids)
 
-    def _notify_accepted_reviews(self,body,attachment_ids):
+    def _notify_accepted_reviews_extend(self,body,attachment_ids):
         if hasattr(self, 'message_post'):
             # Notify state change
             getattr(self, 'message_post')(
@@ -252,7 +252,7 @@ class Agreement(models.Model):
                 attachment_ids=attachment_ids
             )
 
-    def _rejected_tier(self, body,attachment_ids,tiers=False):
+    def _rejected_tier_extend(self, body,attachment_ids,tiers=False):
         self.ensure_one()
         tier_reviews = tiers or self.review_ids
         user_reviews = tier_reviews.filtered(
@@ -270,9 +270,9 @@ class Agreement(models.Model):
         })
         for review in user_reviews:
             rec = self.env[review.model].browse(review.res_id)
-            rec._notify_rejected_review(body,attachment_ids)
+            rec._notify_rejected_review_extend(body,attachment_ids)
 
-    def _notify_rejected_review(self,body,attachment_ids):
+    def _notify_rejected_review_extend(self,body,attachment_ids):
         if hasattr(self, 'message_post'):
             # Notify state change
             getattr(self, 'message_post')(
@@ -321,10 +321,10 @@ class CommentWizard(models.TransientModel):
             attachment_ids.append(attachment_id.id)
         if self.validate_reject == 'validate':
             body = '审批通过:' + self.check_advise
-            rec._validate_tier(body,attachment_ids)
+            rec._validate_tier_extend(body,attachment_ids)
         if self.validate_reject == 'reject':
             body = '审批拒绝:' + self.check_advise
-            rec._rejected_tier(body,attachment_ids)
+            rec._rejected_tier_extend(body,attachment_ids)
         if self.validate_reject == 'rebut':
             rec._rebut_tier()
 
@@ -380,7 +380,7 @@ class TierValidation(models.AbstractModel):
             return True
 
         if not message_main_attachment_id:
-            sql = "UPDATE  agreement set plan_sign_time=%s where id=%s"
+            sql = "UPDATE  agreement set message_main_attachment_id=%s where id=%s"
             if vals['message_main_attachment_id']:
                 message_main_attachment_id=vals['message_main_attachment_id']
             self._cr.execute(sql, (message_main_attachment_id, self.id))

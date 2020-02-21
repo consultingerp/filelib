@@ -200,7 +200,7 @@ class TierValidation(models.AbstractModel):
 
     def _add_comment(self, validate_reject):
         wizard = self.env.ref(
-            'base_tier_validation.view_comment_wizard')
+            'e2yun_agreement_base_tier_validation.view_comment_wizard')
         definition_ids = self.env['tier.definition'].search([
             ('model', '=', self._name),
             '|', ('reviewer_id', '=', self.env.user.id),

@@ -89,11 +89,10 @@
 
     <script type="text/javascript">
    function show(obj,id) {
-
     var objDiv = $("#"+id+"");
      $(objDiv).css("display","block");
      $(objDiv).css("left", 350);
-     $(objDiv).css("top", event.clientY+1000);
+     $(objDiv).css("top", event.clientY+800);
      $(objDiv).text("")
      if(value[""+obj.id+""]!='false'){
 	     $(objDiv).text(value[""+obj.id+""])
