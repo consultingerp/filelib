@@ -65,6 +65,17 @@
             </field>
         </record>
 
+        <record id="view_task_kanban_extends" model="ir.ui.view">
+            <field name="name">view_task_kanban_extends</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//kanban[@class='o_kanban_small_column o_kanban_project_tasks']" position="attributes">
+                <attribute name="quick_create_view">0</attribute>
+                <attribute name="quick_create">0</attribute>
+                </xpath>
+            </field>
+        </record>
         <menuitem name="Labels" groups="base.group_no_one" id="survey.menu_survey_label_form1" action="survey.action_survey_label_form" parent="survey.menu_surveys_configuration" sequence="3"/>
     </data>
 </odoo>    

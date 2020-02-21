@@ -14,10 +14,14 @@
     "depends": [
         "agreement",
         "agreement_legal",
-        "base_tier_validation",
+        "e2yun_agreement_base_tier_validation",
     ],
     "data": [
         "views/base_tier_validation_view.xml",
+        "views/assets_backend.xml",
         "views/agreement_view.xml",
+    ],
+    'qweb': [
+        'static/src/xml/tier_upload_attachment.xml',
     ],
 }
