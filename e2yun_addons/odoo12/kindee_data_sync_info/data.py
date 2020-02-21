@@ -273,8 +273,9 @@ class CK_Hours_Worker(models.Model):
     @api.one
     @api.depends('user_id', 'state')
     def _compute_department(self):
-        if self.user_id.employee_ids:
-            self.department = self.user_id.employee_ids[0].department_id.complete_name
+        if 'employee_ids' in self.user_id:
+            if self.user_id.employee_ids:
+                self.department = self.user_id.employee_ids[0].department_id.complete_name
 
     @api.one
     @api.depends('uflag')
