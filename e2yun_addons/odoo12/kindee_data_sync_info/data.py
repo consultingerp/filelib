@@ -36,7 +36,7 @@ class CK_ICNO_Opra(models.Model):
 
         pqty = 0
         if self.production_id.id and self.foperno:
-            sql = "select id,pqty,foperno from ck_hours_worker where production_id =%s and foperno = %s and state != %s" % (self.production_id.id, self.foperno, "'del'",)
+            sql = "select id,pqty,foperno from ck_hours_worker where production_id =%s and foperno = '%s' and state != %s" % (self.production_id.id, self.foperno, "'del'",)
         else:
             sql = "select id,pqty,foperno from ck_hours_worker where state != %s" % "'del'"
         self._cr.execute(sql)
@@ -273,8 +273,9 @@ class CK_Hours_Worker(models.Model):
     @api.one
     @api.depends('user_id', 'state')
     def _compute_department(self):
-        if self.user_id.employee_ids:
-            self.department = self.user_id.employee_ids[0].department_id.complete_name
+        if 'employee_ids' in self.user_id:
+            if self.user_id.employee_ids:
+                self.department = self.user_id.employee_ids[0].department_id.complete_name
 
     @api.one
     @api.depends('uflag')

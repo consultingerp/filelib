@@ -29,71 +29,96 @@ class Task(models.Model):
 
         if self.questionnaire_ids:
             survey_ids = []
-            if len(self.questionnaire_ids) == 1:
-                template = self.env.ref('e2yun_task_mail_wizard_extends.email_template_survey_1', raise_if_not_found=False)
-                for record in self.questionnaire_ids:
-                    survey_ids.append(record.survey_temp_id.id)
-                local_context = dict(
-                    self.env.context,
-                    default_model='project.task',
-                    default_res_id=self.id,
-                    default_survey_ids=survey_ids,
-                    default_use_template=bool(template),
-                    default_template_id=template and template.id or False,
-                    default_composition_mode='comment',
-                    notif_layout='mail.mail_notification_light',
-                )
-                return {
-                    'type': 'ir.actions.act_window',
-                    'view_type': 'form',
-                    'view_mode': 'form',
-                    'res_model': 'task.mail.compose.message',
-                    'target': 'new',
-                    'context': local_context,
-                }
-            if len(self.questionnaire_ids) == 2:
-                templatee = self.env.ref('e2yun_task_mail_wizard_extends.email_template_survey_2', raise_if_not_found=False)
-                for record in self.questionnaire_ids:
-                    survey_ids.append(record.survey_temp_id.id)
-                local_context = dict(
+
+            template = self.env.ref('e2yun_task_mail_wizard_extends.email_template_survey', raise_if_not_found=False)
+            for record in self.questionnaire_ids:
+                survey_ids.append(record.survey_temp_id.id)
+            local_context = dict(
                 self.env.context,
                 default_model='project.task',
                 default_res_id=self.id,
                 default_survey_ids=survey_ids,
-                default_use_template=bool(templatee),
-                default_template_id=templatee and templatee.id or False,
+                default_use_template=bool(template),
+                default_template_id=template and template.id or False,
                 default_composition_mode='comment',
                 notif_layout='mail.mail_notification_light',
             )
-                return {
-                    'type': 'ir.actions.act_window',
-                    'view_type': 'form',
-                    'view_mode': 'form',
-                    'res_model': 'task.mail.compose.message',
-                    'target': 'new',
-                    'context': local_context,
-                }
-            if len(self.questionnaire_ids) == 3:
-                templateee = self.env.ref('e2yun_task_mail_wizard_extends.email_template_survey_3', raise_if_not_found=False)
-                for record in self.questionnaire_ids:
-                    survey_ids.append(record.survey_temp_id.id)
-                local_context = dict(
-                    self.env.context,
-                    default_model='project.task',
-                    default_res_id=self.id,
-                    default_survey_ids=survey_ids,
-                    default_use_template=bool(templateee),
-                    default_template_id=templateee and templateee.id or False,
-                    default_composition_mode='comment',
-                    notif_layout='mail.mail_notification_light',
-                )
-                return {
-                    'type': 'ir.actions.act_window',
-                    'view_type': 'form',
-                    'view_mode': 'form',
-                    'res_model': 'task.mail.compose.message',
-                    'target': 'new',
-                    'context': local_context,
-                }
+            return {
+                'type': 'ir.actions.act_window',
+                'view_type': 'form',
+                'view_mode': 'form',
+                'res_model': 'task.mail.compose.message',
+                'target': 'new',
+                'context': local_context,
+            }
+
+
+
+            # if len(self.questionnaire_ids) == 1:
+            #     template = self.env.ref('e2yun_task_mail_wizard_extends.email_template_survey_1', raise_if_not_found=False)
+            #     for record in self.questionnaire_ids:
+            #         survey_ids.append(record.survey_temp_id.id)
+            #     local_context = dict(
+            #         self.env.context,
+            #         default_model='project.task',
+            #         default_res_id=self.id,
+            #         default_survey_ids=survey_ids,
+            #         default_use_template=bool(template),
+            #         default_template_id=template and template.id or False,
+            #         default_composition_mode='comment',
+            #         notif_layout='mail.mail_notification_light',
+            #     )
+            #     return {
+            #         'type': 'ir.actions.act_window',
+            #         'view_type': 'form',
+            #         'view_mode': 'form',
+            #         'res_model': 'task.mail.compose.message',
+            #         'target': 'new',
+            #         'context': local_context,
+            #     }
+            # if len(self.questionnaire_ids) == 2:
+            #     templatee = self.env.ref('e2yun_task_mail_wizard_extends.email_template_survey_2', raise_if_not_found=False)
+            #     for record in self.questionnaire_ids:
+            #         survey_ids.append(record.survey_temp_id.id)
+            #     local_context = dict(
+            #     self.env.context,
+            #     default_model='project.task',
+            #     default_res_id=self.id,
+            #     default_survey_ids=survey_ids,
+            #     default_use_template=bool(templatee),
+            #     default_template_id=templatee and templatee.id or False,
+            #     default_composition_mode='comment',
+            #     notif_layout='mail.mail_notification_light',
+            # )
+            #     return {
+            #         'type': 'ir.actions.act_window',
+            #         'view_type': 'form',
+            #         'view_mode': 'form',
+            #         'res_model': 'task.mail.compose.message',
+            #         'target': 'new',
+            #         'context': local_context,
+            #     }
+            # if len(self.questionnaire_ids) == 3:
+            #     templateee = self.env.ref('e2yun_task_mail_wizard_extends.email_template_survey_3', raise_if_not_found=False)
+            #     for record in self.questionnaire_ids:
+            #         survey_ids.append(record.survey_temp_id.id)
+            #     local_context = dict(
+            #         self.env.context,
+            #         default_model='project.task',
+            #         default_res_id=self.id,
+            #         default_survey_ids=survey_ids,
+            #         default_use_template=bool(templateee),
+            #         default_template_id=templateee and templateee.id or False,
+            #         default_composition_mode='comment',
+            #         notif_layout='mail.mail_notification_light',
+            #     )
+            #     return {
+            #         'type': 'ir.actions.act_window',
+            #         'view_type': 'form',
+            #         'view_mode': 'form',
+            #         'res_model': 'task.mail.compose.message',
+            #         'target': 'new',
+            #         'context': local_context,
+            #     }
         else:
             raise exceptions.Warning(_('There is no questionnaire for the task!'))
