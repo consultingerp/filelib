@@ -173,7 +173,8 @@ class Agreement(models.Model):
             if getattr(rec, self._state_field) in self._state_from:
                 rec.mapped('review_ids').unlink()
                 self._update_counter()
-        self.stage_id = 1
+        sql = "UPDATE  agreement set stage_id=%s where id=%s"
+        self._cr.execute(sql, (1, self.id))
 
     def _rebut_tier(self, tiers=False):
         self.ensure_one()
@@ -329,7 +330,8 @@ class CommentWizard(models.TransientModel):
             rec._rebut_tier()
 
         if tier_stage_id!="":
-            rec.stage_id = tier_stage_id
+            sql = "UPDATE  agreement set stage_id=%s where id=%s"
+            self._cr.execute(sql, (tier_stage_id, self.res_id))
 
         rec._update_counter()
 
@@ -353,8 +355,16 @@ class TierValidation(models.AbstractModel):
                 message_main_attachment_id=True
 
         if not flag_stage_id:
-            if vals['stage_id'] == 6 and not self.plan_sign_time:
-              raise UserError(u'客户签章阶段计划回签时间必须写入')
+            # if vals['stage_id'] == 6 and not self.plan_sign_time:
+            #   raise UserError(u'客户签章阶段计划回签时间必须写入')
+            user_reviews = self.env['tier.review'].search([
+                ('model', '=', 'agreement'),
+                ('res_id', '=', self.id),
+                ('status', '=', 'pending')
+            ])
+            if user_reviews:
+                raise UserError(u'该操作正在审批中。')
+
             if vals['stage_id'] == 7:
                 pdfswy='（PDF首尾页）'
                 pdfqw = '（PDF全文版）'
