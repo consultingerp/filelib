@@ -6,7 +6,7 @@
         <record id="tier_definition_form_view" model="ir.ui.view">
         <field name="name">tier.definition form</field>
         <field name="model">tier.definition</field>
-        <field name="inherit_id" ref="base_tier_validation.tier_definition_view_form"/>
+        <field name="inherit_id" ref="e2yun_agreement_base_tier_validation.tier_definition_view_form"/>
         <field name="arch" type="xml">
             <field name="reviewer_group_id" position="after">
                 <field name="tier_stage_id"/>

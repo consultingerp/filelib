@@ -14,7 +14,7 @@
     "depends": [
         "agreement",
         "agreement_legal",
-        "base_tier_validation",
+        "e2yun_agreement_base_tier_validation",
     ],
     "data": [
         "views/base_tier_validation_view.xml",
