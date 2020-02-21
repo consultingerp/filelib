@@ -36,7 +36,7 @@ class CK_ICNO_Opra(models.Model):
 
         pqty = 0
         if self.production_id.id and self.foperno:
-            sql = "select id,pqty,foperno from ck_hours_worker where production_id =%s and foperno = %s and state != %s" % (self.production_id.id, self.foperno, "'del'",)
+            sql = "select id,pqty,foperno from ck_hours_worker where production_id =%s and foperno = '%s' and state != %s" % (self.production_id.id, self.foperno, "'del'",)
         else:
             sql = "select id,pqty,foperno from ck_hours_worker where state != %s" % "'del'"
         self._cr.execute(sql)
