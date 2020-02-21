@@ -316,6 +316,28 @@ class SurveyMailComposeMessage(models.TransientModel):
             else:
                 subtype_id = self.env['ir.model.data'].xmlid_to_res_id('mail.mt_comment')
 
+            #消息内容
+            survey_ids = wizard._context['default_survey_ids']
+            survey = self.env['survey.survey']
+            body_a = """"""
+            for u in survey.browse(survey_ids):
+                url = u.public_url
+                body_a = body_a + """<a href='""" + url + """' style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                         开始调查
+                     </a>"""
+
+            body = """
+                 <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                         您好<br /><br />
+                         我们正在进行调查，您的回复将不胜感激。
+                         <div style="margin: 16px 0px 16px 0px;">
+                             """ + body_a + """
+                         </div>
+                         谢您的参与！
+                     </p>
+                 </div> 
+            """
             for res_ids in sliced_res_ids:
                 batch_mails = Mail
                 all_mail_values = wizard.get_mail_values(res_ids)
@@ -323,6 +345,7 @@ class SurveyMailComposeMessage(models.TransientModel):
                     if wizard.composition_mode == 'mass_mail':
                         batch_mails |= Mail.create(mail_values)
                     else:
+                        mail_values['body'] = body
                         post_params = dict(
                             message_type=wizard.message_type,
                             subtype_id=subtype_id,
