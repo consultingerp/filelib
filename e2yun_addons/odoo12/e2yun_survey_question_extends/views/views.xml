@@ -227,7 +227,8 @@
 
         <menuitem id="survey.menu_survey_response_line_form" action="survey.action_survey_user_input_line"
                   parent="survey.menu_surveys_configuration" sequence="4" groups="e2yun_survey_question_extends.make_invisible"/>
-        <menuitem id="survey.survey_label_tree" groups="e2yun_survey_question_extends.make_invisible"/>
+        <menuitem id="survey.survey_label_tree" action="survey.action_survey_label_form"
+                  parent="survey.menu_surveys_configuration" groups="e2yun_survey_question_extends.make_invisible"/>
 
 
     </data>
