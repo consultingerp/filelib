@@ -193,8 +193,8 @@
                               </div>
                             </div>
                              <div class="modal-footer">
-                                <button type="submit" t-attf-class="btn btn-primary">确认</button> or
-                                <button type="button" class="btn btn-link" data-dismiss="modal" style="padding: 0">Cancel</button>
+                                <button type="submit" t-attf-class="btn btn-primary">确认</button> 或
+                                <button type="button" class="btn btn-link" data-dismiss="modal" style="padding: 0">取消</button>
                             </div>
                           </form>
                         </div>
@@ -223,7 +223,7 @@
                               </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" t-attf-class="btn btn-primary">Sign Order</button> or
+                                <button type="submit" t-attf-class="btn btn-primary">确认</button> 或
                                 <button type="button" class="btn btn-link" data-dismiss="modal" style="padding: 0">取消</button>
                             </div>
                           </form>

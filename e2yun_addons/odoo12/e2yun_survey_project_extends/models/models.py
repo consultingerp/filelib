@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 from collections import defaultdict
+
 # special columns automatically created by the ORM
 LOG_ACCESS_COLUMNS = ['create_uid', 'create_date', 'write_uid', 'write_date']
 MAGIC_COLUMNS = ['id'] + LOG_ACCESS_COLUMNS
-
 
 from odoo import models, fields, api, _
 from odoo.exceptions import Warning
 
 
 class E2yunProjectTaskAddQuestionnaire(models.TransientModel):
-
     _name = 'project.task.add.questionnaire'
     _description = '任务页面添加问卷按钮'
 
@@ -31,9 +30,15 @@ class E2yunProjectTaskAddQuestionnaire(models.TransientModel):
     def _onchange_questionnaire_scenario(self):
         survey_temp_id_domain = [('questionnaire_classification', '=', self.questionnaire_classification),
                                  ('questionnaire_scenario', '=', self.questionnaire_scenario)]
-        return {
-            'domain': {'survey_temp_id': survey_temp_id_domain}
-        }
+        context = self._context.copy()
+        if context.get('add_new_questionnaire'):
+            return {
+                'domain': {'survey_temp_id': [('id', '=', -1)]}
+            }
+        else:
+            return {
+                'domain': {'survey_temp_id': survey_temp_id_domain}
+            }
 
     def add_questionnaire_to_task(self):
         current_project_task_id = self._context.get('current_project_task_id')
@@ -53,7 +58,8 @@ class E2yunProjectTaskAddQuestionnaire(models.TransientModel):
             'survey_temp_id': survey_after_copy.id
         }
 
-        new_project_task_questionnaire_ids_item = self.env['project.questionnaire'].create(new_project_task_questionnaire_ids_values)
+        new_project_task_questionnaire_ids_item = self.env['project.questionnaire'].create(
+            new_project_task_questionnaire_ids_values)
         if new_project_task_questionnaire_ids_item:
             current_questionnaire_ids = current_project_task.questionnaire_ids.ids
             current_questionnaire_ids.append(new_project_task_questionnaire_ids_item.id)
@@ -64,7 +70,6 @@ class E2yunProjectTaskAddQuestionnaire(models.TransientModel):
         else:
             raise Warning(_("无法正确新建行项目!"))
 
-
     @api.model
     def default_get(self, fields_list):
         res = super(E2yunProjectTaskAddQuestionnaire, self).default_get(fields_list)
@@ -74,7 +79,6 @@ class E2yunProjectTaskAddQuestionnaire(models.TransientModel):
 
 
 class E2yunSurveyProjectExtends(models.Model):
-
     _inherit = 'project.task'
 
     def project_task_survey_add_questionnaire(self):

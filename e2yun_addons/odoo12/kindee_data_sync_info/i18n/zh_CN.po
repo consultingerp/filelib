@@ -1,21 +1,19 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* kindee_data_sync_info
+#	* kindee_data_sync_info
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: Odoo Server 12.0+e-20190424\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-10 15:39+0000\n"
-"PO-Revision-Date: 2017-09-10 23:45+0800\n"
+"POT-Creation-Date: 2020-02-05 08:45+0000\n"
+"PO-Revision-Date: 2020-02-05 08:45+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"Language: zh\n"
-"X-Generator: Poedit 1.8.12\n"
 
 #. module: kindee_data_sync_info
 #: model:res.groups,name:kindee_data_sync_info.group_rw_admin
@@ -23,20 +21,18 @@ msgid "Administrator"
 msgstr "移动报工管理员"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1482
-#: code:addons/kindee_data_sync_info/data.py:1484
-#: code:addons/kindee_data_sync_info/data.py:1599
-#: code:addons/kindee_data_sync_info/data.py:1614
-#: selection:ck.machine,fmachine:0 selection:ck.price.ext,fmachine:0
-#: selection:ck.price.ext,fshift:0 selection:ck.shift,fshift:0
+#: code:addons/kindee_data_sync_info/data.py:2675
+#: code:addons/kindee_data_sync_info/data.py:2677
+#: code:addons/kindee_data_sync_info/data.py:2793
+#: code:addons/kindee_data_sync_info/data.py:2809
 #, python-format
 msgid "All"
-msgstr "全部"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: field:ck.hours.worker.line,amount:0
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__amount
 msgid "Amount"
-msgstr "金额"
+msgstr "总额"
 
 #. module: kindee_data_sync_info
 #: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_approve_report
@@ -44,32 +40,52 @@ msgid "Approve Report"
 msgstr "审批报工"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:983
-#: field:ck.hours.worker.line,date_approve:0
+#: code:addons/kindee_data_sync_info/data.py:1731
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__date_approve
 #, python-format
 msgid "Approve Time"
 msgstr "审批时间"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1640
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.worker_line_view_form_batch_confirm
+msgid "Approve Worker"
+msgstr "审批人"
+
+#. module: kindee_data_sync_info
+#: code:addons/kindee_data_sync_info/data.py:2836
 #: model:ir.model,name:kindee_data_sync_info.model_ck_attrition_rate
 #, python-format
 msgid "Attrition Rate Info"
 msgstr "同步损耗率"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1648
-#: field:ck.attrition.rate,attrition_rate:0
+#: code:addons/kindee_data_sync_info/data.py:2844
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_attrition_rate__attrition_rate
 #, python-format
 msgid "Attrition rate"
 msgstr "损耗率"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1497
-#: field:ck.price.ext,fbase_price:0
+#: code:addons/kindee_data_sync_info/data.py:2690
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__fbase_price
 #, python-format
 msgid "Base Price"
 msgstr "基准价格"
+
+#. module: kindee_data_sync_info
+#: model:ir.model,name:kindee_data_sync_info.model_ck_daily_income_rep
+msgid "CK Daily Income Report"
+msgstr "CK 日收益报表"
+
+#. module: kindee_data_sync_info
+#: model:ir.model,name:kindee_data_sync_info.model_ck_daily_scrap_rep
+msgid "CK Daily Scrap Report"
+msgstr "CK 日损耗报表"
+
+#. module: kindee_data_sync_info
+#: model:ir.model,name:kindee_data_sync_info.model_ck_date_summary_report
+msgid "CK Date Summary Report"
+msgstr "CK 报工总结报表"
 
 #. module: kindee_data_sync_info
 #: model:ir.model,name:kindee_data_sync_info.model_ck_hours_worker_rep
@@ -87,25 +103,35 @@ msgid "CK Machine"
 msgstr "单双机维护"
 
 #. module: kindee_data_sync_info
-#: view:ck.price:kindee_data_sync_info.view_ck_price_form
-#: view:ck.price:kindee_data_sync_info.view_ck_price_tree
+#: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_material_scrap_reasons
+msgid "CK Material Scrap Reason"
+msgstr "材料报废原因"
+
+#. module: kindee_data_sync_info
+#: model:ir.model,name:kindee_data_sync_info.model_ck_operation_productivity_rep
+msgid "CK Operation Productivity Report"
+msgstr "CK 运作效率报表"
+
+#. module: kindee_data_sync_info
 #: model:ir.actions.act_window,name:kindee_data_sync_info.action_ck_price
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_price_form
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_price_tree
 msgid "CK Price"
 msgstr "CK 工价"
 
 #. module: kindee_data_sync_info
-#: view:ck.attrition.rate:kindee_data_sync_info.view_ck_attrition_rate_form
-#: view:ck.price.ext:kindee_data_sync_info.view_ck_price_ext_form
 #: model:ir.actions.act_window,name:kindee_data_sync_info.action_ck_price_ext
 #: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_price_ext
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_attrition_rate_form
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_price_ext_form
 msgid "CK Price Ext"
 msgstr "工价维护"
 
 #. module: kindee_data_sync_info
-#: view:ck.attrition.rate:kindee_data_sync_info.view_ck_attrition_rate_tree
-#: view:ck.price.ext:kindee_data_sync_info.view_ck_price_ext_tree
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_attrition_rate_tree
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_price_ext_tree
 msgid "CK Price ext"
-msgstr "CK 工价 "
+msgstr "工价维护"
 
 #. module: kindee_data_sync_info
 #: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_report_work
@@ -113,10 +139,10 @@ msgid "CK Report Work"
 msgstr "CK 报工"
 
 #. module: kindee_data_sync_info
-#: view:ck.routing.sync:kindee_data_sync_info.view_ck_routing_sync_form
-#: view:ck.routing.sync:kindee_data_sync_info.view_ck_routing_sync_tree
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_routing_sync_form
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_routing_sync_tree
 msgid "CK Routing"
-msgstr "CK 工艺"
+msgstr "CK 工艺路线"
 
 #. module: kindee_data_sync_info
 #: model:ir.actions.act_window,name:kindee_data_sync_info.action_ck_routing_sync
@@ -125,9 +151,49 @@ msgid "CK Routing Sync"
 msgstr "CK 工艺同步"
 
 #. module: kindee_data_sync_info
+#: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_route_scrap_reasons
+msgid "CK Scrap Reason"
+msgstr "报废原因"
+
+#. module: kindee_data_sync_info
 #: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_shift
 msgid "CK Shift"
 msgstr "CK 班次"
+
+#. module: kindee_data_sync_info
+#: model:ir.model,name:kindee_data_sync_info.model_ck_unfinished_accessary_form
+msgid "CK Unfinished Accessary Form"
+msgstr "CK 未完成附件"
+
+#. module: kindee_data_sync_info
+#: model:ir.model,name:kindee_data_sync_info.model_ck_unfinished_summary_report
+msgid "CK Unfinished Summary Report"
+msgstr "CK 未完成总结报表"
+
+#. module: kindee_data_sync_info
+#: model:ir.model,name:kindee_data_sync_info.model_ck_work_order_production_rep
+msgid "CK Work Order Production Report"
+msgstr "CK 生产任务报表"
+
+#. module: kindee_data_sync_info
+#: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_user_work_time
+msgid "CK Work Time"
+msgstr "工时填报"
+
+#. module: kindee_data_sync_info
+#: model:ir.model,name:kindee_data_sync_info.model_ck_work_unfinished_accessary_form
+msgid "CK Work Unfinished Accessary Form"
+msgstr "CK 未完成工作附件"
+
+#. module: kindee_data_sync_info
+#: model:ir.model,name:kindee_data_sync_info.model_ck_work_unfinished_summary_report
+msgid "CK Work Unfinished Summary Report"
+msgstr "CK 未完成工作总结报表"
+
+#. module: kindee_data_sync_info
+#: model:ir.model,name:kindee_data_sync_info.model_ck_working_summary_report
+msgid "CK Working Summary Report"
+msgstr "CK 工时总结报表"
 
 #. module: kindee_data_sync_info
 #: model:ir.actions.act_window,name:kindee_data_sync_info.action_ck_attrition_rate
@@ -136,11 +202,9 @@ msgid "CK attrition rate"
 msgstr "损耗率维护"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:43
-#: selection:ck.hours.worker.rep,state:0
-#, python-format
-msgid "Cancelled"
-msgstr "已取消"
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.worker_line_view_form_batch_confirm
+msgid "Cancel"
+msgstr "取消"
 
 #. module: kindee_data_sync_info
 #: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_change_password
@@ -148,173 +212,213 @@ msgid "Change Password"
 msgstr "修改密码"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1597
+#: code:addons/kindee_data_sync_info/data.py:2791
 #: model:ir.model,name:kindee_data_sync_info.model_ck_shift
 #, python-format
 msgid "Classes Info"
-msgstr "Classes Info"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: field:ck.hours.worker,company_id:0 field:ck.hours.worker.line,company_id:0
-#: field:ck.icmo.sync,company_id:0 field:ck.icno.opra,company_id:0
-#: field:ck.price,company_id:0 field:ck.price.ext,company_id:0
-#: field:ck.routing.sync,company_id:0 field:ck.user.weixin,company_id:0
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__company_id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__company_id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__company_id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icno_opra__company_id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price__company_id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__company_id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_routing_sync__company_id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_weixin__company_id
 msgid "Company"
 msgstr "公司"
 
 #. module: kindee_data_sync_info
-#: view:ck.hours.worker:kindee_data_sync_info.view_ck_hours_worker_form
-#: view:ck.hours.worker.line:kindee_data_sync_info.view_ck_hours_worker_line_form
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_hours_worker_form
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_hours_worker_line_form
 msgid "Confirm"
 msgstr "确认"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:59
-#: field:ck.hours.worker.rep,amount:0
-#, python-format
-msgid "Confirm Amount"
-msgstr "已确认金额"
-
-#. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:55
-#: field:ck.hours.worker.rep,accepted_qty:0
-#, python-format
-msgid "Confirm Good Quantity"
-msgstr "已确认良品数"
-
-#. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:57
-#: field:ck.hours.worker.rep,rejected_qty:0
-#, python-format
-msgid "Confirm Scrap Quantity"
-msgstr "已确认报废数"
-
-#. module: kindee_data_sync_info
-#: field:ck.attrition.rate,create_uid:0 field:ck.hours.worker,create_uid:0
-#: field:ck.hours.worker.line,create_uid:0 field:ck.icmo.sync,create_uid:0
-#: field:ck.icno.opra,create_uid:0 field:ck.machine,create_uid:0
-#: field:ck.pass.rate,create_uid:0 field:ck.price,create_uid:0
-#: field:ck.price.ext,create_uid:0 field:ck.routing.sync,create_uid:0
-#: field:ck.shift,create_uid:0 field:ck.user.weixin,create_uid:0
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_attrition_rate__create_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__create_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__create_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line_batch_approve__create_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__create_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icno_opra__create_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_machine__create_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_material_scrap_reasons__create_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_material_scrap_reasons_line__create_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_pass_rate__create_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price__create_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__create_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_route_scrap_reasons__create_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_route_scrap_reasons_line__create_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_routing_sync__create_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_shift__create_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_weixin__create_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_work_time__create_uid
 msgid "Created by"
-msgstr "创建者"
+msgstr "创建人"
 
 #. module: kindee_data_sync_info
-#: field:ck.attrition.rate,create_date:0 field:ck.hours.worker,create_date:0
-#: field:ck.hours.worker.line,create_date:0 field:ck.icmo.sync,create_date:0
-#: field:ck.icno.opra,create_date:0 field:ck.machine,create_date:0
-#: field:ck.pass.rate,create_date:0 field:ck.price,create_date:0
-#: field:ck.price.ext,create_date:0 field:ck.routing.sync,create_date:0
-#: field:ck.shift,create_date:0 field:ck.user.weixin,create_date:0
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_attrition_rate__create_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__create_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__create_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line_batch_approve__create_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__create_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icno_opra__create_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_machine__create_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_material_scrap_reasons__create_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_material_scrap_reasons_line__create_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_pass_rate__create_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price__create_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__create_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_route_scrap_reasons__create_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_route_scrap_reasons_line__create_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_routing_sync__create_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_shift__create_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_weixin__create_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_work_time__create_date
 msgid "Created on"
-msgstr "创建者"
+msgstr "创建时间"
 
 #. module: kindee_data_sync_info
-#: field:ck.price,currency_id:0 field:ck.price.ext,currency_id:0
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price__currency_id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__currency_id
 msgid "Currency"
-msgstr "货币"
+msgstr "币种"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:68
-#: code:addons/kindee_data_sync_info/data.py:1487 field:ck.icmo.sync,fcustid:0
-#: field:ck.price.ext,fcustid:0
+#: code:addons/kindee_data_sync_info/data.py:70
+#: code:addons/kindee_data_sync_info/data.py:2680
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__fcustid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__fcustid
 #, python-format
 msgid "CustmerID"
 msgstr "客户ID"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:69
-#: code:addons/kindee_data_sync_info/data.py:1488
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:33
-#: field:ck.hours.worker.rep,custno:0 field:ck.icmo.sync,fcustno:0
-#: field:ck.price.ext,fcustno:0
+#: code:addons/kindee_data_sync_info/data.py:71
+#: code:addons/kindee_data_sync_info/data.py:2681
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__fcustno
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__fcustno
 #, python-format
 msgid "CustmerNo"
 msgstr "客户编号"
 
 #. module: kindee_data_sync_info
-#: view:ck.hours.worker.rep:kindee_data_sync_info.view_report_ck_hours_worker_filter
-#: model:ir.filters,name:kindee_data_sync_info.filter_ck_hours_worker_custno
-msgid "Customer"
-msgstr "客户"
-
-#. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:70 field:ck.icmo.sync,fnote:0
+#: code:addons/kindee_data_sync_info/data.py:72
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__fnote
 #, python-format
 msgid "CustomerNote"
 msgstr "客户备注"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:71
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:34
-#: field:ck.hours.worker.rep,sodate:0 field:ck.icmo.sync,fdate:0
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_work_order_production_rep__date_ascription
+msgid "Date Ascription"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_daily_income_rep__date_ascription
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_operation_productivity_rep__date_ascription
+msgid "Date_Ascription"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: code:addons/kindee_data_sync_info/data.py:258
+#: code:addons/kindee_data_sync_info/data.py:1735
+#: code:addons/kindee_data_sync_info/data.py:2911
+#, python-format
+msgid "Delete"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: code:addons/kindee_data_sync_info/data.py:73
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__fdate
 #, python-format
 msgid "DeliveryDate"
 msgstr "产品交期"
 
 #. module: kindee_data_sync_info
-#: field:ck.attrition.rate,display_name:0 field:ck.hours.worker,display_name:0
-#: field:ck.hours.worker.line,display_name:0
-#: field:ck.hours.worker.rep,display_name:0 field:ck.icmo.sync,display_name:0
-#: field:ck.icno.opra,display_name:0 field:ck.machine,display_name:0
-#: field:ck.pass.rate,display_name:0 field:ck.price,display_name:0
-#: field:ck.price.ext,display_name:0 field:ck.routing.sync,display_name:0
-#: field:ck.shift,display_name:0 field:ck.user.weixin,display_name:0
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_attrition_rate__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_daily_income_rep__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_daily_scrap_rep__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_date_summary_report__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line_batch_approve__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_rep__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icno_opra__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_machine__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_material_scrap_reasons__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_material_scrap_reasons_line__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_operation_productivity_rep__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_pass_rate__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_route_scrap_reasons__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_route_scrap_reasons_line__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_routing_sync__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_shift__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_unfinished_accessary_form__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_unfinished_summary_report__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_weixin__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_work_time__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_work_order_production_rep__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_work_unfinished_accessary_form__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_work_unfinished_summary_report__display_name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_working_summary_report__display_name
 msgid "Display Name"
 msgstr "显示名称"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:241
-#: code:addons/kindee_data_sync_info/data.py:987
-#: selection:ck.hours.worker,state:0 selection:ck.hours.worker.line,state:0
-#: view:ck.hours.worker.rep:kindee_data_sync_info.view_report_ck_hours_worker_filter
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.worker_line_view_form_batch_confirm
+msgid "Do you really want to approve the order(s)?"
+msgstr "请确认是否提交"
+
+#. module: kindee_data_sync_info
+#: code:addons/kindee_data_sync_info/data.py:78
+#: code:addons/kindee_data_sync_info/data.py:258
+#: code:addons/kindee_data_sync_info/data.py:1735
+#: code:addons/kindee_data_sync_info/data.py:2911
 #, python-format
 msgid "Done"
-msgstr "完成"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:43
-#: view:ck.hours.worker.rep:kindee_data_sync_info.view_report_ck_hours_worker_filter
-#: selection:ck.hours.worker.rep,state:0
-#, python-format
-msgid "Draft"
-msgstr "准备"
-
-#. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:78 sql_constraint:ck.icmo.sync:0
+#: code:addons/kindee_data_sync_info/data.py:80
+#: sql_constraint:ck.icmo.sync:0
 #, python-format
 msgid "Duplicated ProductionNo"
 msgstr "ProductionNo 重复"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:28 sql_constraint:ck.icno.opra:0
+#: code:addons/kindee_data_sync_info/data.py:30
+#: sql_constraint:ck.icno.opra:0
 #, python-format
 msgid "Duplicated ProductionOp"
 msgstr "重复生产工序发料记录"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1463
+#: code:addons/kindee_data_sync_info/data.py:2657
 #: sql_constraint:ck.user.weixin:0
 #, python-format
 msgid "Duplicated User"
 msgstr "用户重复"
 
 #. module: kindee_data_sync_info
-#: view:ck.hours.worker.rep:kindee_data_sync_info.view_report_ck_hours_worker_filter
-#: model:ir.filters,name:kindee_data_sync_info.filter_ck_hours_worker_employee
 #: model:res.groups,name:kindee_data_sync_info.group_rw_employee
 msgid "Employee"
 msgstr "员工"
 
 #. module: kindee_data_sync_info
-#: view:ck.price.ext:kindee_data_sync_info.view_ck_price_ext_filter
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_price_ext_filter
 msgid "End End Time"
-msgstr "有效期结束时间到"
+msgstr "结束时间"
 
 #. module: kindee_data_sync_info
-#: view:ck.price.ext:kindee_data_sync_info.view_ck_price_ext_filter
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_price_ext_filter
 msgid "End Start Time"
-msgstr "有效期结束时间从"
+msgstr "开始时间"
 
 #. module: kindee_data_sync_info
 #: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_exit
@@ -322,40 +426,27 @@ msgid "Exit"
 msgstr "退出"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:328
-#: code:addons/kindee_data_sync_info/data.py:365
+#: code:addons/kindee_data_sync_info/data.py:386
+#: code:addons/kindee_data_sync_info/data.py:467
 #, python-format
 msgid "Feeding quantity can not exceed work order quantity!"
 msgstr "发料数不能超过工单数！"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:44
-#: selection:ck.hours.worker.rep,state:0
-#, python-format
-msgid "Finished"
-msgstr "已结束"
-
-#. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1601 field:ck.shift,date_start:0
+#: code:addons/kindee_data_sync_info/data.py:2795
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_shift__date_start
 #, python-format
 msgid "From"
 msgstr "时间从"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:233
-#: code:addons/kindee_data_sync_info/data.py:989
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:51
-#: field:ck.hours.worker,gqty:0 field:ck.hours.worker.line,gqty:0
-#: field:ck.hours.worker.rep,accept_qty:0
+#: code:addons/kindee_data_sync_info/data.py:250
+#: code:addons/kindee_data_sync_info/data.py:1738
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__gqty
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__gqty
 #, python-format
 msgid "Good Quantity"
 msgstr "良品数量"
-
-#. module: kindee_data_sync_info
-#: view:ck.hours.worker.line:kindee_data_sync_info.view_ck_hours_worker_line_filter
-#: view:ck.hours.worker.rep:kindee_data_sync_info.view_report_ck_hours_worker_filter
-msgid "Group By"
-msgstr "分组于"
 
 #. module: kindee_data_sync_info
 #: model:ir.module.category,description:kindee_data_sync_info.module_category_report_work
@@ -363,30 +454,21 @@ msgid "Helps you manage your report work."
 msgstr "帮助你管理报工"
 
 #. module: kindee_data_sync_info
-#: model:ir.actions.act_window,name:kindee_data_sync_info.action_report_ck_hours_worker
-msgid "Hours Of Worker"
-msgstr "报工"
-
-#. module: kindee_data_sync_info
-#: field:ck.hours.worker,lines:0 field:ck.icmo.sync,hw_ids:0
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__lines
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__hw_ids
 msgid "Hours Worker Lines"
 msgstr "工时明细"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:206
-#: view:ck.hours.worker:kindee_data_sync_info.view_ck_hours_worker_form
-#: view:ck.icmo.sync:kindee_data_sync_info.view_ck_icmo_sync_form
+#: code:addons/kindee_data_sync_info/data.py:223
 #: model:ir.actions.act_window,name:kindee_data_sync_info.action_ck_hours_worker
 #: model:ir.model,name:kindee_data_sync_info.model_ck_hours_worker
 #: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_hours_worker
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_hours_worker_form
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_icmo_sync_form
 #, python-format
 msgid "Hours of Worker"
 msgstr "报工"
-
-#. module: kindee_data_sync_info
-#: model:ir.ui.menu,name:kindee_data_sync_info.menu_report_ck_hours_worker_tree
-msgid "Hours of Worker Analysis"
-msgstr "CK 报工分析"
 
 #. module: kindee_data_sync_info
 #: model:ir.actions.act_window,name:kindee_data_sync_info.action_ck_hours_worker_line
@@ -395,92 +477,159 @@ msgid "Hours of Worker Line"
 msgstr "工时明细"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:973
-#: view:ck.hours.worker:kindee_data_sync_info.view_ck_hours_worker_form
+#: code:addons/kindee_data_sync_info/data.py:1721
 #: model:ir.model,name:kindee_data_sync_info.model_ck_hours_worker_line
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_hours_worker_form
 #, python-format
 msgid "Hours of Worker line"
 msgstr "工时明细"
 
 #. module: kindee_data_sync_info
-#: view:ck.hours.worker.line:kindee_data_sync_info.view_ck_hours_worker_line_tree
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_hours_worker_line_tree
 msgid "Hours of work line"
-msgstr "工时明细"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: view:ck.hours.worker:kindee_data_sync_info.view_ck_hours_worker_tree
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_hours_worker_tree
 msgid "Hours of worker"
-msgstr "报工"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: field:ck.attrition.rate,id:0 field:ck.hours.worker,id:0
-#: field:ck.hours.worker.line,id:0 field:ck.hours.worker.rep,id:0
-#: field:ck.icmo.sync,id:0 field:ck.icno.opra,id:0 field:ck.machine,id:0
-#: field:ck.pass.rate,id:0 field:ck.price,id:0 field:ck.price.ext,id:0
-#: field:ck.routing.sync,id:0 field:ck.shift,id:0 field:ck.user.weixin,id:0
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_attrition_rate__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_daily_income_rep__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_daily_scrap_rep__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_date_summary_report__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line_batch_approve__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_rep__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icno_opra__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_machine__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_material_scrap_reasons__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_material_scrap_reasons_line__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_operation_productivity_rep__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_pass_rate__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_route_scrap_reasons__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_route_scrap_reasons_line__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_routing_sync__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_shift__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_unfinished_accessary_form__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_unfinished_summary_report__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_weixin__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_work_time__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_work_order_production_rep__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_work_unfinished_accessary_form__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_work_unfinished_summary_report__id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_working_summary_report__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:43
-#: selection:ck.hours.worker.rep,state:0
-#, python-format
-msgid "In Progress"
-msgstr "在制"
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_routing_sync__if_needrqty
+msgid "If Need Input Repair Number"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: field:ck.attrition.rate,attrition_key:0 field:ck.routing.sync,routing_key:0
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_routing_sync__if_need_manypeoplereport
+msgid "If Need Many People Report"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_attrition_rate__attrition_key
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_routing_sync__routing_key
 msgid "Key"
-msgstr "Key"
+msgstr "键"
 
 #. module: kindee_data_sync_info
-#: field:ck.attrition.rate,__last_update:0
-#: field:ck.hours.worker,__last_update:0
-#: field:ck.hours.worker.line,__last_update:0
-#: field:ck.hours.worker.rep,__last_update:0 field:ck.icmo.sync,__last_update:0
-#: field:ck.icno.opra,__last_update:0 field:ck.machine,__last_update:0
-#: field:ck.pass.rate,__last_update:0 field:ck.price,__last_update:0
-#: field:ck.price.ext,__last_update:0 field:ck.routing.sync,__last_update:0
-#: field:ck.shift,__last_update:0 field:ck.user.weixin,__last_update:0
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_attrition_rate____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_daily_income_rep____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_daily_scrap_rep____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_date_summary_report____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line_batch_approve____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_rep____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icno_opra____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_machine____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_material_scrap_reasons____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_material_scrap_reasons_line____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_operation_productivity_rep____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_pass_rate____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_route_scrap_reasons____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_route_scrap_reasons_line____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_routing_sync____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_shift____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_unfinished_accessary_form____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_unfinished_summary_report____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_weixin____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_work_time____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_work_order_production_rep____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_work_unfinished_accessary_form____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_work_unfinished_summary_report____last_update
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_working_summary_report____last_update
 msgid "Last Modified on"
-msgstr "修改时间"
+msgstr "最后修改日"
 
 #. module: kindee_data_sync_info
-#: field:ck.attrition.rate,write_uid:0 field:ck.hours.worker,write_uid:0
-#: field:ck.hours.worker.line,write_uid:0 field:ck.icmo.sync,write_uid:0
-#: field:ck.icno.opra,write_uid:0 field:ck.machine,write_uid:0
-#: field:ck.pass.rate,write_uid:0 field:ck.price,write_uid:0
-#: field:ck.price.ext,write_uid:0 field:ck.routing.sync,write_uid:0
-#: field:ck.shift,write_uid:0 field:ck.user.weixin,write_uid:0
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_attrition_rate__write_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__write_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__write_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line_batch_approve__write_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__write_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icno_opra__write_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_machine__write_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_material_scrap_reasons__write_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_material_scrap_reasons_line__write_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_pass_rate__write_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price__write_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__write_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_route_scrap_reasons__write_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_route_scrap_reasons_line__write_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_routing_sync__write_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_shift__write_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_weixin__write_uid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_work_time__write_uid
 msgid "Last Updated by"
-msgstr "修改者"
+msgstr "最后更新者"
 
 #. module: kindee_data_sync_info
-#: field:ck.attrition.rate,write_date:0 field:ck.hours.worker,write_date:0
-#: field:ck.hours.worker.line,write_date:0 field:ck.icmo.sync,write_date:0
-#: field:ck.icno.opra,write_date:0 field:ck.machine,write_date:0
-#: field:ck.pass.rate,write_date:0 field:ck.price,write_date:0
-#: field:ck.price.ext,write_date:0 field:ck.routing.sync,write_date:0
-#: field:ck.shift,write_date:0 field:ck.user.weixin,write_date:0
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_attrition_rate__write_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__write_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__write_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line_batch_approve__write_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__write_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icno_opra__write_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_machine__write_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_material_scrap_reasons__write_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_material_scrap_reasons_line__write_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_pass_rate__write_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price__write_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__write_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_route_scrap_reasons__write_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_route_scrap_reasons_line__write_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_routing_sync__write_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_shift__write_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_weixin__write_date
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_work_time__write_date
 msgid "Last Updated on"
-msgstr "修改时间"
+msgstr "最后更新时间"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:39
-#: field:ck.hours.worker.rep,mo_qty:0
-#, python-format
-msgid "MO Quantity"
-msgstr "生产任务单数"
-
-#. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1612
+#: code:addons/kindee_data_sync_info/data.py:2807
 #: model:ir.model,name:kindee_data_sync_info.model_ck_machine
 #, python-format
 msgid "Machine Info"
 msgstr "机台信息"
 
 #. module: kindee_data_sync_info
-#: sql_constraint:ck.machine:0 sql_constraint:ck.pass.rate:0
+#: sql_constraint:ck.machine:0
+#: sql_constraint:ck.pass.rate:0
 msgid "Machine Must unique!"
 msgstr "机台必须唯一"
 
@@ -490,14 +639,14 @@ msgid "Manager"
 msgstr "经理"
 
 #. module: kindee_data_sync_info
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__material_scrap_lines
+msgid "Material Scrap Quality Lines"
+msgstr "废料质量线"
+
+#. module: kindee_data_sync_info
 #: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_hours_mobile_access_menu
 msgid "Moile Access Menu"
 msgstr "移动报工菜单"
-
-#. module: kindee_data_sync_info
-#: view:ck.hours.worker.rep:kindee_data_sync_info.view_report_ck_hours_worker_filter
-msgid "Month Planned"
-msgstr "月计划"
 
 #. module: kindee_data_sync_info
 #: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_my_report
@@ -505,162 +654,107 @@ msgid "My Report"
 msgstr "我的报工"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:987
-#: selection:ck.hours.worker.line,state:0
-#: selection:ck.user.work.time,state:0
+#: code:addons/kindee_data_sync_info/data.py:78
+#: code:addons/kindee_data_sync_info/data.py:1735
+#: code:addons/kindee_data_sync_info/data.py:2911
 #, python-format
 msgid "New"
-msgstr "新建"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: selection:ck.hours.worker.line,state:0
-#: selection:ck.hours.worker,state:0
-#: selection:ck.user.work.time,state:0
-#, python-format
-msgid "Delete"
-msgstr "已删除"
-
-#. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:998
-#: code:addons/kindee_data_sync_info/data.py:1485
-#: code:addons/kindee_data_sync_info/data.py:1615
-#: field:ck.hours.worker.line,fmachine:0 field:ck.machine,fmachine:0
-#: field:ck.price.ext,fmachine:0
+#: code:addons/kindee_data_sync_info/data.py:1747
+#: code:addons/kindee_data_sync_info/data.py:2678
+#: code:addons/kindee_data_sync_info/data.py:2810
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__fmachine
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_machine__fmachine
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__fmachine
 #, python-format
 msgid "Number of machines"
 msgstr "单双机"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:241
-#: selection:ck.hours.worker,state:0
-#: view:ck.hours.worker.rep:kindee_data_sync_info.view_report_ck_hours_worker_filter
+#: code:addons/kindee_data_sync_info/data.py:258
 #, python-format
 msgid "Open"
-msgstr "开工"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:111
-#: code:addons/kindee_data_sync_info/data.py:142
-#: code:addons/kindee_data_sync_info/data.py:1492 field:ck.price,foperid:0
-#: field:ck.price.ext,foperid:0 field:ck.routing.sync,foperid:0
+#: code:addons/kindee_data_sync_info/data.py:125
+#: code:addons/kindee_data_sync_info/data.py:157
+#: code:addons/kindee_data_sync_info/data.py:2685
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price__foperid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__foperid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_routing_sync__foperid
 #, python-format
 msgid "OperationID"
 msgstr "工序ID"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:119
-#: code:addons/kindee_data_sync_info/data.py:144
-#: code:addons/kindee_data_sync_info/data.py:227
-#: code:addons/kindee_data_sync_info/data.py:1012
-#: code:addons/kindee_data_sync_info/data.py:1494
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:48
-#: field:ck.hours.worker,fopername:0 field:ck.hours.worker.line,fopername:0
-#: field:ck.hours.worker.rep,opername:0 field:ck.price,fopername:0
-#: field:ck.price.ext,fopername:0 field:ck.routing.sync,fopername:0
+#: code:addons/kindee_data_sync_info/data.py:133
+#: code:addons/kindee_data_sync_info/data.py:159
+#: code:addons/kindee_data_sync_info/data.py:244
+#: code:addons/kindee_data_sync_info/data.py:1760
+#: code:addons/kindee_data_sync_info/data.py:2687
+#: code:addons/kindee_data_sync_info/data.py:2871
+#: code:addons/kindee_data_sync_info/data.py:2995
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__fopername
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__fopername
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_material_scrap_reasons__fopername
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price__fopername
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__fopername
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_route_scrap_reasons__fopername
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_routing_sync__fopername
 #, python-format
 msgid "OperationName"
 msgstr "工序名称"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:24
-#: code:addons/kindee_data_sync_info/data.py:118
-#: code:addons/kindee_data_sync_info/data.py:143
-#: code:addons/kindee_data_sync_info/data.py:226
-#: code:addons/kindee_data_sync_info/data.py:1018
-#: code:addons/kindee_data_sync_info/data.py:1493
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:47
-#: field:ck.hours.worker,foperno:0 field:ck.hours.worker.line,foperno:0
-#: field:ck.hours.worker.rep,operno:0 field:ck.icno.opra,foperno:0
-#: field:ck.price,foperno:0 field:ck.price.ext,foperno:0
-#: field:ck.routing.sync,foperno:0
+#: code:addons/kindee_data_sync_info/data.py:26
+#: code:addons/kindee_data_sync_info/data.py:132
+#: code:addons/kindee_data_sync_info/data.py:158
+#: code:addons/kindee_data_sync_info/data.py:243
+#: code:addons/kindee_data_sync_info/data.py:1764
+#: code:addons/kindee_data_sync_info/data.py:2686
+#: code:addons/kindee_data_sync_info/data.py:2870
+#: code:addons/kindee_data_sync_info/data.py:2994
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__foperno
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__foperno
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icno_opra__foperno
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_material_scrap_reasons__foperno
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price__foperno
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__foperno
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_route_scrap_reasons__foperno
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_routing_sync__foperno
 #, python-format
 msgid "OperationNo"
 msgstr "工序编码"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:117
-#: field:ck.routing.sync,fopersn:0
+#: code:addons/kindee_data_sync_info/data.py:131
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_routing_sync__fopersn
 #, python-format
 msgid "OperationSN"
 msgstr "工序序号"
 
 #. module: kindee_data_sync_info
-#: field:ck.hours.worker,name:0 field:ck.hours.worker.line,order_id:0 field:ck.route.scrap.reasons.line,order_id:0 field:ck.material.scrap.reasons.line,order_id:0
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__name
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__order_id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_material_scrap_reasons_line__order_id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_route_scrap_reasons_line__order_id
 msgid "Order Reference"
-msgstr "报工单号"
+msgstr "订单关联"
 
 #. module: kindee_data_sync_info
-#: field:ck.hours.worker.line,name:0
-msgid "Order Reference"
-msgstr "明细单号"
-
-#. module: kindee_data_sync_info
-#: field:ck.hours.worker.line,scrap_lines:0
-msgid "Scrap Quality Lines"
-msgstr "报废清单"
-
-#. module: kindee_data_sync_info
-#: field:ck.hours.worker.line,material_scrap_lines:0
-msgid "Material Scrap Quality Lines"
-msgstr "物料报废清单"
-
-#. module: kindee_data_sync_info
-#: field:ck.route.scrap.reasons,reason:0
-#: field:ck.route.scrap.reasons.line,reason:0
-#: field:ck.material.scrap.reasons.line,reason:0
-msgid "Reason"
-msgstr "报废原因"
-
-#. module: kindee_data_sync_info
-#: field:ck.route.scrap.reasons.line,qty:0
-#: field:ck.material.scrap.reasons.line,qty:0
-msgid "Quantity"
-msgstr "数量"
-
-#. module: kindee_data_sync_info
-#: field:ck.route.scrap.reasons.line,rate:0
-#: field:ck.material.scrap.reasons.line,rate:0
-msgid "Rate"
-msgstr "比例"
-
-#. module: kindee_data_sync_info
-#: field:ck.routing.sync,if_needrqty:0
-msgid "If Need Input Repair Number"
-msgstr "需要返修/排插数"
-
-#. module: kindee_data_sync_info
-#: field:ck.routing.sync,if_need_manypeoplereport:0
-msgid "If Need Many People Report"
-msgstr "需要报多人"
-
-#. module: kindee_data_sync_info
-#: field:ck.routing.sync,foperno:0
-#: field:ck.route.scrap.reasons,foperno:0
-#: field:ck.material.scrap.reasons,foperno:0
-msgid "OperationNo"
-msgstr "工序编号"
-
-#. module: kindee_data_sync_info
-#: field:ck.routing.sync,fopername:0
-#: field:ck.route.scrap.reasons,fopername:0
-#: field:ck.material.scrap.reasons,fopername:0
-msgid "OperationName"
-msgstr "工序名称"
-
-#. module: kindee_data_sync_info
-#: field:ck.routing.sync,reason:0
-#: field:ck.route.scrap.reasons,reason:0
-#: field:ck.material.scrap.reasons,reason:0
-msgid "OperationName"
-msgstr "报废原因"
-
-#. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:214
-#: code:addons/kindee_data_sync_info/data.py:985
-#: code:addons/kindee_data_sync_info/data.py:1457
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:45
-#: field:ck.hours.worker,user_id:0 field:ck.hours.worker.line,user_id:0
-#: field:ck.hours.worker.rep,user_id:0 field:ck.user.weixin,user_id:0
+#: code:addons/kindee_data_sync_info/data.py:231
+#: code:addons/kindee_data_sync_info/data.py:1733
+#: code:addons/kindee_data_sync_info/data.py:2651
+#: code:addons/kindee_data_sync_info/data.py:2906
+#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:46
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__user_id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__user_id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_weixin__user_id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_work_time__user_id
 #, python-format
 msgid "Owner"
 msgstr "用户"
@@ -671,23 +765,24 @@ msgid "Pass Rate"
 msgstr "合格率"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1625
+#: code:addons/kindee_data_sync_info/data.py:2821
 #: model:ir.model,name:kindee_data_sync_info.model_ck_pass_rate
 #, python-format
 msgid "Pass Rate Info"
 msgstr "合格率信息"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1486
-#: code:addons/kindee_data_sync_info/data.py:1629 field:ck.pass.rate,fpass:0
-#: field:ck.price.ext,fpass:0
+#: code:addons/kindee_data_sync_info/data.py:2679
+#: code:addons/kindee_data_sync_info/data.py:2825
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_pass_rate__fpass
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__fpass
 #, python-format
 msgid "Pass rate"
 msgstr "合格率"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1458
-#: field:ck.user.weixin,password:0
+#: code:addons/kindee_data_sync_info/data.py:2652
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_weixin__password
 #, python-format
 msgid "Password"
 msgstr "口令"
@@ -698,237 +793,236 @@ msgid "Personal Information"
 msgstr "个人信息"
 
 #. module: kindee_data_sync_info
-#: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_route_scrap_reasons
-msgid "CK Scrap Reason"
-msgstr "报废原因"
-
-#. module: kindee_data_sync_info
-#: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_material_scrap_reasons
-msgid "CK Material Scrap Reason"
-msgstr "材料报废原因"
-
-#. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:25
-#: code:addons/kindee_data_sync_info/data.py:231
-#: code:addons/kindee_data_sync_info/data.py:1021
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:49
-#: field:ck.hours.worker,pqty:0 field:ck.hours.worker.line,pqty:0
-#: field:ck.hours.worker.rep,feed_qty:0 field:ck.icno.opra,pqty:0
+#: code:addons/kindee_data_sync_info/data.py:27
+#: code:addons/kindee_data_sync_info/data.py:248
+#: code:addons/kindee_data_sync_info/data.py:1766
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__pqty
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__pqty
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icno_opra__pqty
 #, python-format
 msgid "Picking Quantity"
 msgstr "发料数量"
 
 #. module: kindee_data_sync_info
-#: view:ck.hours.worker.rep:kindee_data_sync_info.view_report_ck_hours_worker_filter
-msgid "Planned Month"
-msgstr "月计划"
-
-#. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:234
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:61
-#: field:ck.hours.worker,price:0 field:ck.hours.worker.line,price:0
-#: field:ck.hours.worker.rep,price:0
+#: code:addons/kindee_data_sync_info/data.py:251
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__price
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_rep__price
 #, python-format
 msgid "Price"
-msgstr "工价"
+msgstr "价格"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1170
-#: code:addons/kindee_data_sync_info/data.py:1434
+#: code:addons/kindee_data_sync_info/data.py:2106
+#: code:addons/kindee_data_sync_info/data.py:2628
 #, python-format
 msgid "Price not fount!"
 msgstr "没有找到价格数据！"
 
 #. module: kindee_data_sync_info
-#: view:ck.hours.worker.rep:kindee_data_sync_info.view_report_ck_hours_worker_filter
-msgid "Product"
-msgstr "产品"
-
-#. module: kindee_data_sync_info
-#: view:ck.hours.worker.rep:kindee_data_sync_info.view_report_ck_hours_worker_filter
-msgid "Product Model"
-msgstr "型号"
-
-#. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:57
-#: code:addons/kindee_data_sync_info/data.py:138
-#: code:addons/kindee_data_sync_info/data.py:222
-#: code:addons/kindee_data_sync_info/data.py:978
-#: code:addons/kindee_data_sync_info/data.py:1480
-#: code:addons/kindee_data_sync_info/data.py:1644
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:38
-#: field:ck.attrition.rate,fname:0 field:ck.hours.worker,fname:0
-#: field:ck.hours.worker.line,fname:0 field:ck.hours.worker.rep,product_name:0
-#: field:ck.icmo.sync,fname:0 field:ck.price,fname:0 field:ck.price.ext,fname:0
+#: code:addons/kindee_data_sync_info/data.py:59
+#: code:addons/kindee_data_sync_info/data.py:153
+#: code:addons/kindee_data_sync_info/data.py:239
+#: code:addons/kindee_data_sync_info/data.py:1728
+#: code:addons/kindee_data_sync_info/data.py:2673
+#: code:addons/kindee_data_sync_info/data.py:2840
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_attrition_rate__fname
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__fname
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__fname
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__fname
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price__fname
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__fname
 #, python-format
 msgid "ProductDesc"
 msgstr "产品描述"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:55
-#: code:addons/kindee_data_sync_info/data.py:136
-#: code:addons/kindee_data_sync_info/data.py:1478
-#: code:addons/kindee_data_sync_info/data.py:1642
-#: field:ck.attrition.rate,fitemid:0 field:ck.icmo.sync,fitemid:0
-#: field:ck.price,fitemid:0 field:ck.price.ext,fitemid:0
+#: code:addons/kindee_data_sync_info/data.py:57
+#: code:addons/kindee_data_sync_info/data.py:151
+#: code:addons/kindee_data_sync_info/data.py:2671
+#: code:addons/kindee_data_sync_info/data.py:2838
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_attrition_rate__fitemid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__fitemid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price__fitemid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__fitemid
 #, python-format
 msgid "ProductID"
 msgstr "产品ID"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:58
-#: code:addons/kindee_data_sync_info/data.py:1481
-#: code:addons/kindee_data_sync_info/data.py:1646
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:36
-#: field:ck.attrition.rate,fmodel:0 field:ck.hours.worker.rep,model:0
-#: field:ck.icmo.sync,fmodel:0 field:ck.price.ext,fmodel:0
+#: code:addons/kindee_data_sync_info/data.py:60
+#: code:addons/kindee_data_sync_info/data.py:2674
+#: code:addons/kindee_data_sync_info/data.py:2842
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_attrition_rate__fmodel
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__fmodel
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__fmodel
 #, python-format
 msgid "ProductModel"
 msgstr "产品型号"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:56
-#: code:addons/kindee_data_sync_info/data.py:137
-#: code:addons/kindee_data_sync_info/data.py:221
-#: code:addons/kindee_data_sync_info/data.py:977
-#: code:addons/kindee_data_sync_info/data.py:1479
-#: code:addons/kindee_data_sync_info/data.py:1643
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:37
-#: field:ck.attrition.rate,fnumber:0 field:ck.hours.worker,fnumber:0
-#: field:ck.hours.worker.line,fnumber:0 field:ck.hours.worker.rep,product_id:0
-#: field:ck.icmo.sync,fnumber:0 field:ck.price,fnumber:0
-#: field:ck.price.ext,fnumber:0
+#: code:addons/kindee_data_sync_info/data.py:58
+#: code:addons/kindee_data_sync_info/data.py:152
+#: code:addons/kindee_data_sync_info/data.py:238
+#: code:addons/kindee_data_sync_info/data.py:1727
+#: code:addons/kindee_data_sync_info/data.py:2672
+#: code:addons/kindee_data_sync_info/data.py:2839
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_attrition_rate__fnumber
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__fnumber
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__fnumber
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__fnumber
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price__fnumber
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__fnumber
 #, python-format
 msgid "ProductNo"
 msgstr "产品编码（长）"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:31
-#: view:ck.hours.worker.rep:kindee_data_sync_info.view_report_ck_hours_worker_filter
-#: field:ck.hours.worker.rep,moid:0
-#: model:ir.filters,name:kindee_data_sync_info.filter_ck_hours_worker_production
-#, python-format
-msgid "Production"
-msgstr "生产"
-
-#. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:17
+#: code:addons/kindee_data_sync_info/data.py:19
 #: model:ir.model,name:kindee_data_sync_info.model_ck_icno_opra
 #, python-format
 msgid "Production Opration"
 msgstr "生产工序"
 
 #. module: kindee_data_sync_info
-#: view:ck.icno.opra:kindee_data_sync_info.view_ck_icno_opra_form
-#: view:ck.icno.opra:kindee_data_sync_info.view_ck_icno_opra_tree
 #: model:ir.actions.act_window,name:kindee_data_sync_info.action_ck_icno_opra
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_icno_opra_form
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_icno_opra_tree
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_user_work_time_form
 msgid "Production Opration Picking QTY"
 msgstr "生产工序发料数量"
 
 #. module: kindee_data_sync_info
-#: view:ck.icmo.sync:kindee_data_sync_info.view_ck_icmo_sync_tree
 #: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_icmo_sync
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_icmo_sync_tree
 msgid "Production Order"
 msgstr "生产任务单"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:47
-#: view:ck.icmo.sync:kindee_data_sync_info.view_ck_icmo_sync_form
+#: code:addons/kindee_data_sync_info/data.py:49
 #: model:ir.actions.act_window,name:kindee_data_sync_info.action_ck_icmo_sync
 #: model:ir.model,name:kindee_data_sync_info.model_ck_icmo_sync
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_icmo_sync_form
 #, python-format
 msgid "Production Order Sync"
 msgstr "同步生产订单信息"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:54 field:ck.icmo.sync,name:0
+#: code:addons/kindee_data_sync_info/data.py:56
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__name
 #, python-format
 msgid "ProductionNo"
 msgstr "生产任务单号"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:22
-#: code:addons/kindee_data_sync_info/data.py:215
-#: code:addons/kindee_data_sync_info/data.py:1024
-#: field:ck.hours.worker,production_id:0
-#: field:ck.hours.worker.line,production_id:0
-#: field:ck.icno.opra,production_id:0
+#: code:addons/kindee_data_sync_info/data.py:24
+#: code:addons/kindee_data_sync_info/data.py:232
+#: code:addons/kindee_data_sync_info/data.py:1768
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__production_id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__production_id
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icno_opra__production_id
 #, python-format
 msgid "ProductionOrder"
 msgstr "生产任务单"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:53 field:ck.icmo.sync,finterid:0
+#: code:addons/kindee_data_sync_info/data.py:55
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__finterid
 #, python-format
 msgid "ProductionOrderID"
 msgstr "生产任务单ID"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:59
-#: code:addons/kindee_data_sync_info/data.py:146
-#: code:addons/kindee_data_sync_info/data.py:1496 field:ck.icmo.sync,fqty:0
-#: field:ck.price,fqty:0 field:ck.price.ext,fqty:0
+#: code:addons/kindee_data_sync_info/data.py:61
+#: code:addons/kindee_data_sync_info/data.py:161
+#: code:addons/kindee_data_sync_info/data.py:2689
+#: code:addons/kindee_data_sync_info/data.py:2893
+#: code:addons/kindee_data_sync_info/data.py:3018
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__fqty
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_material_scrap_reasons_line__qty
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price__fqty
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__fqty
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_route_scrap_reasons_line__qty
 #, python-format
 msgid "Quantity"
 msgstr "数量"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1604
-#: code:addons/kindee_data_sync_info/data.py:1617
-#: code:addons/kindee_data_sync_info/data.py:1631 field:ck.machine,rate:0
-#: field:ck.pass.rate,rate:0 field:ck.shift,rate:0
+#: code:addons/kindee_data_sync_info/data.py:2798
+#: code:addons/kindee_data_sync_info/data.py:2812
+#: code:addons/kindee_data_sync_info/data.py:2827
+#: code:addons/kindee_data_sync_info/data.py:2895
+#: code:addons/kindee_data_sync_info/data.py:3020
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_machine__rate
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_material_scrap_reasons_line__rate
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_pass_rate__rate
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_route_scrap_reasons_line__rate
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_shift__rate
 #, python-format
 msgid "Rate"
 msgstr "比率"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1029
-#: field:ck.hours.worker.line,remark1:0
+#: code:addons/kindee_data_sync_info/data.py:2872
+#: code:addons/kindee_data_sync_info/data.py:2892
+#: code:addons/kindee_data_sync_info/data.py:2996
+#: code:addons/kindee_data_sync_info/data.py:3017
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_material_scrap_reasons__reason
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_material_scrap_reasons_line__reason
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_route_scrap_reasons__reason
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_route_scrap_reasons_line__reason
+#, python-format
+msgid "Reason"
+msgstr "原因"
+
+#. module: kindee_data_sync_info
+#: code:addons/kindee_data_sync_info/data.py:262
+#: code:addons/kindee_data_sync_info/data.py:1781
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__rqty
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__rqty
+#, python-format
+msgid "Remade Quantity"
+msgstr "返工数量"
+
+#. module: kindee_data_sync_info
+#: code:addons/kindee_data_sync_info/data.py:2908
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_work_time__remark
+#, python-format
+msgid "Remark"
+msgstr "备注"
+
+#. module: kindee_data_sync_info
+#: code:addons/kindee_data_sync_info/data.py:1774
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__remark1
 #, python-format
 msgid "Remark1"
 msgstr "备注1"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1030
-#: field:ck.hours.worker.line,remark2:0
+#: code:addons/kindee_data_sync_info/data.py:1775
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__remark2
 #, python-format
 msgid "Remark2"
 msgstr "备注2"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1031
-#: field:ck.hours.worker.line,remark3:0
+#: code:addons/kindee_data_sync_info/data.py:1776
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__remark3
 #, python-format
 msgid "Remark3"
 msgstr "备注3"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1032
-#: field:ck.hours.worker.line,remark4:0
+#: code:addons/kindee_data_sync_info/data.py:1777
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__remark4
 #, python-format
 msgid "Remark4"
 msgstr "备注4"
 
 #. module: kindee_data_sync_info
-#: field:ck.hours.worker.line,reportpeople:0
-#, python-format
-msgid "Report people"
-msgstr "生产成员"
-
-#. module: kindee_data_sync_info
-#: view:ck.hours.worker.line:kindee_data_sync_info.view_ck_hours_worker_line_filter
-msgid "Report End Time"
-msgstr "报工时间到"
-
-#. module: kindee_data_sync_info
-#: view:ck.hours.worker.line:kindee_data_sync_info.view_ck_hours_worker_line_filter
-msgid "Report Start Time"
-msgstr "报工时间从"
-
-#. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:981
-#: field:ck.hours.worker.line,date_worker:0
-#: field:ck.user.work.time,date_worker:0
+#: code:addons/kindee_data_sync_info/data.py:1729
+#: code:addons/kindee_data_sync_info/data.py:2909
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__date_worker
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_work_time__date_worker
 #, python-format
 msgid "Report Time"
 msgstr "报工时间"
@@ -939,132 +1033,190 @@ msgid "Report Work Management"
 msgstr "报工管理"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1060
+#: code:addons/kindee_data_sync_info/data.py:1792
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__reportpeople
 #, python-format
-msgid "Report quantity can not exceed feeding quantity!"
-msgstr "报工数不能超过发料数！"
+msgid "Report people"
+msgstr "报工人"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:103
+#: code:addons/kindee_data_sync_info/data.py:117
 #: model:ir.model,name:kindee_data_sync_info.model_ck_routing_sync
 #, python-format
 msgid "Routing Sync"
 msgstr "同步工序信息"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:63
-#: code:addons/kindee_data_sync_info/data.py:109
-#: code:addons/kindee_data_sync_info/data.py:139
-#: code:addons/kindee_data_sync_info/data.py:1489
-#: field:ck.icmo.sync,froutingid:0 field:ck.price,froutingid:0
-#: field:ck.price.ext,froutingid:0 field:ck.routing.sync,froutingid:0
+#: code:addons/kindee_data_sync_info/data.py:65
+#: code:addons/kindee_data_sync_info/data.py:123
+#: code:addons/kindee_data_sync_info/data.py:154
+#: code:addons/kindee_data_sync_info/data.py:2682
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__froutingid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price__froutingid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__froutingid
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_routing_sync__froutingid
 #, python-format
 msgid "RoutingID"
 msgstr "工艺路线ID"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:114
-#: code:addons/kindee_data_sync_info/data.py:141
-#: code:addons/kindee_data_sync_info/data.py:1491 field:ck.price,froutingname:0
-#: field:ck.price.ext,froutingname:0 field:ck.routing.sync,froutingname:0
+#: code:addons/kindee_data_sync_info/data.py:128
+#: code:addons/kindee_data_sync_info/data.py:156
+#: code:addons/kindee_data_sync_info/data.py:2684
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price__froutingname
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__froutingname
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_routing_sync__froutingname
 #, python-format
 msgid "RoutingName"
 msgstr "工艺名称"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:64
-#: code:addons/kindee_data_sync_info/data.py:113
-#: code:addons/kindee_data_sync_info/data.py:140
-#: code:addons/kindee_data_sync_info/data.py:1490
-#: field:ck.icmo.sync,froutingno:0 field:ck.price,froutingno:0
-#: field:ck.price.ext,froutingno:0 field:ck.routing.sync,froutingno:0
+#: code:addons/kindee_data_sync_info/data.py:66
+#: code:addons/kindee_data_sync_info/data.py:127
+#: code:addons/kindee_data_sync_info/data.py:155
+#: code:addons/kindee_data_sync_info/data.py:2683
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__froutingno
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price__froutingno
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__froutingno
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_routing_sync__froutingno
 #, python-format
 msgid "RoutingNo"
 msgstr "工艺编码"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:66
-#: field:ck.icmo.sync,fsourceentryid:0
+#: code:addons/kindee_data_sync_info/data.py:78
+#: selection:ck.icmo.sync,state:0
+#, python-format
+msgid "Running"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: code:addons/kindee_data_sync_info/data.py:68
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__fsourceentryid
 #, python-format
 msgid "SaleItemID"
 msgstr "销售订单行ID"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:65
-#: field:ck.icmo.sync,forderinterid:0
+#: code:addons/kindee_data_sync_info/data.py:67
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__forderinterid
 #, python-format
 msgid "SaleOrderID"
 msgstr "销售订单ID"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:67
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:32
-#: field:ck.hours.worker.rep,sono:0 field:ck.icmo.sync,seobillno:0
+#: code:addons/kindee_data_sync_info/data.py:69
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__seobillno
 #, python-format
 msgid "SaleOrderNo"
 msgstr "销售订单号"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:232
-#: code:addons/kindee_data_sync_info/data.py:988
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:53
-#: field:ck.hours.worker,sqty:0 field:ck.hours.worker.line,sqty:0
-#: field:ck.hours.worker.rep,reject_qty:0
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_material_scrap_reasons_tree
+msgid "Scrap Material Reason"
+msgstr "材料报废原因"
+
+#. module: kindee_data_sync_info
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_material_scrap_reasons_line_tree
+msgid "Scrap Material Reason Quality"
+msgstr "材料报废原因"
+
+#. module: kindee_data_sync_info
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__scrap_lines
+msgid "Scrap Quality Lines"
+msgstr "报废数量线"
+
+#. module: kindee_data_sync_info
+#: code:addons/kindee_data_sync_info/data.py:249
+#: code:addons/kindee_data_sync_info/data.py:1737
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__sqty
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__sqty
 #, python-format
 msgid "Scrap Quantity"
 msgstr "报废数量"
 
 #. module: kindee_data_sync_info
-#: view:ck.hours.worker.rep:kindee_data_sync_info.view_report_ck_hours_worker_filter
-msgid "Search"
-msgstr "搜索"
+#: code:addons/kindee_data_sync_info/data.py:2868
+#: code:addons/kindee_data_sync_info/data.py:2889
+#: code:addons/kindee_data_sync_info/data.py:2992
+#: code:addons/kindee_data_sync_info/data.py:3013
+#: model:ir.actions.act_window,name:kindee_data_sync_info.action_ck_material_scrap_reasons
+#: model:ir.actions.act_window,name:kindee_data_sync_info.action_ck_route_scrap_reasons
+#: model:ir.model,name:kindee_data_sync_info.model_ck_material_scrap_reasons
+#: model:ir.model,name:kindee_data_sync_info.model_ck_material_scrap_reasons_line
+#: model:ir.model,name:kindee_data_sync_info.model_ck_route_scrap_reasons
+#: model:ir.model,name:kindee_data_sync_info.model_ck_route_scrap_reasons_line
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_daily_scrap_rep__reason
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_material_scrap_reasons_form
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_route_scrap_reasons_form
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_route_scrap_reasons_tree
+#, python-format
+msgid "Scrap Reason"
+msgstr "报废原因"
 
 #. module: kindee_data_sync_info
-#: view:ck.icmo.sync:kindee_data_sync_info.view_ck_icmo_sync_filter
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_material_scrap_reasons_line_form
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_route_scrap_reasons_line_form
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_route_scrap_reasons_line_tree
+msgid "Scrap Reason Quality"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_routing_sync_filter
+msgid "Search CK Worker"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_icmo_sync_filter
 msgid "Search CK icmo"
-msgstr "查找生产任务单"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: view:ck.hours.worker.line:kindee_data_sync_info.view_ck_hours_worker_line_filter
-msgid "Search CK worker.line"
-msgstr "查找 报工明细纪录"
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_material_scrap_reasons_filter
+msgid "Search Material Scrap Reasons"
+msgstr "搜索材料报废原因"
 
 #. module: kindee_data_sync_info
-#: view:ck.attrition.rate:kindee_data_sync_info.view_ck_attrition_rate_filter
-#: view:ck.icno.opra:kindee_data_sync_info.view_ck_icno_opra_filter
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_route_scrap_reasons_filter
+msgid "Search Scrap Reasons"
+msgstr "搜索报废原因"
+
+#. module: kindee_data_sync_info
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_user_work_time_filter
+msgid "Search Work Time"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_attrition_rate_filter
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_icno_opra_filter
 msgid "Search ck.attrition.rate"
-msgstr "查找损耗率"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: view:ck.hours.worker:kindee_data_sync_info.view_ck_hours_worker_filter
-msgid "Search ck.hours.worker"
-msgstr "查找报工单"
-
-#. module: kindee_data_sync_info
-#: view:ck.price.ext:kindee_data_sync_info.view_ck_price_ext_filter
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_price_ext_filter
 msgid "Search ck.price.ext"
-msgstr "查找价格"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: view:ck.user.weixin:kindee_data_sync_info.view_ck_user_weixin_filter
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_user_weixin_filter
 msgid "Search ck.user.weixin"
-msgstr "查找微信"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:996
-#: code:addons/kindee_data_sync_info/data.py:1483
-#: code:addons/kindee_data_sync_info/data.py:1600
-#: field:ck.hours.worker.line,fshift:0
-#: view:ck.machine:kindee_data_sync_info.view_ck_machine_form
-#: view:ck.machine:kindee_data_sync_info.view_ck_machine_tree
-#: view:ck.pass.rate:kindee_data_sync_info.view_ck_pass_rate_form
-#: view:ck.pass.rate:kindee_data_sync_info.view_ck_pass_rate_tree
-#: field:ck.price.ext,fshift:0
-#: view:ck.shift:kindee_data_sync_info.view_ck_shift_form
-#: view:ck.shift:kindee_data_sync_info.view_ck_shift_tree
-#: field:ck.shift,fshift:0
+#: code:addons/kindee_data_sync_info/data.py:1745
+#: code:addons/kindee_data_sync_info/data.py:2676
+#: code:addons/kindee_data_sync_info/data.py:2794
 #: model:ir.actions.act_window,name:kindee_data_sync_info.action_ck_machine_opra
 #: model:ir.actions.act_window,name:kindee_data_sync_info.action_ck_shift_opra
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__fshift
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__fshift
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_shift__fshift
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_machine_form
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_machine_tree
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_pass_rate_form
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_pass_rate_tree
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_shift_form
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_shift_tree
 #, python-format
 msgid "Shift"
 msgstr "班次"
@@ -1075,29 +1227,26 @@ msgid "Shift Must unique!"
 msgstr "班次必须唯一"
 
 #. module: kindee_data_sync_info
-#: view:ck.price.ext:kindee_data_sync_info.view_ck_price_ext_filter
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_price_ext_filter
 msgid "Start End Time"
-msgstr "有效期开始时间到"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: view:ck.price.ext:kindee_data_sync_info.view_ck_price_ext_filter
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_price_ext_filter
 msgid "Start Start Time"
-msgstr "有效期开始时间从"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:241
-#: code:addons/kindee_data_sync_info/data.py:987 field:ck.hours.worker,state:0
-#: field:ck.hours.worker.line,state:0
+#: code:addons/kindee_data_sync_info/data.py:78
+#: code:addons/kindee_data_sync_info/data.py:258
+#: code:addons/kindee_data_sync_info/data.py:1735
+#: code:addons/kindee_data_sync_info/data.py:2911
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__state
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__state
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__state
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_work_time__state
 #, python-format
 msgid "State"
-msgstr "状态"
-
-#. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:44
-#: view:ck.hours.worker.rep:kindee_data_sync_info.view_report_ck_hours_worker_filter
-#: field:ck.hours.worker.rep,state:0
-#, python-format
-msgid "Status"
 msgstr "状态"
 
 #. module: kindee_data_sync_info
@@ -1106,91 +1255,97 @@ msgid "Team leader"
 msgstr "班组长"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1602 field:ck.shift,date_stop:0
+#: code:addons/kindee_data_sync_info/data.py:2796
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_shift__date_stop
 #, python-format
 msgid "To"
 msgstr "时间到"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:236
-#: field:ck.hours.worker,amount_total:0
+#: code:addons/kindee_data_sync_info/data.py:253
 #, python-format
 msgid "Total"
-msgstr "合计"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:62
-#: code:addons/kindee_data_sync_info/data.py:145
-#: code:addons/kindee_data_sync_info/data.py:1495 field:ck.icmo.sync,funit:0
-#: field:ck.price,funit:0 field:ck.price.ext,funit:0
+#: model:res.groups,name:kindee_data_sync_info.group_rw_undefined_user
+msgid "Undefined"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: code:addons/kindee_data_sync_info/data.py:64
+#: code:addons/kindee_data_sync_info/data.py:160
+#: code:addons/kindee_data_sync_info/data.py:2688
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__funit
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price__funit
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__funit
 #, python-format
 msgid "Unit"
 msgstr "单位"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:72
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:35
-#: field:ck.hours.worker.rep,modate:0 field:ck.icmo.sync,fconfirmdate:0
+#: code:addons/kindee_data_sync_info/data.py:78
+#: selection:ck.icmo.sync,state:0
+#, python-format
+msgid "Update"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: code:addons/kindee_data_sync_info/data.py:74
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_icmo_sync__fconfirmdate
 #, python-format
 msgid "UpdateDate"
 msgstr "任务单更新日期"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:46
-#: field:ck.hours.worker.rep,pid:0
-#, python-format
-msgid "User No"
-msgstr "员工编号"
-
-#. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1459
-#: field:ck.user.weixin,date_active:0
+#: code:addons/kindee_data_sync_info/data.py:2653
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_weixin__date_active
 #, python-format
 msgid "Valid Date"
 msgstr "生效日期"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:229
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:41
-#: field:ck.hours.worker,date_start:0 field:ck.hours.worker.rep,date_start:0
-#: field:ck.price,date_start:0 field:ck.price.ext,date_start:0
+#: code:addons/kindee_data_sync_info/data.py:246
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__date_start
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price__date_start
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__date_start
 #, python-format
 msgid "Valid From"
 msgstr "报工开始日期"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:230
-#: code:addons/kindee_data_sync_info/report/ck_hours_worker_analysis.py:42
-#: field:ck.hours.worker,date_stop:0 field:ck.hours.worker.rep,date_stop:0
-#: field:ck.price,date_stop:0 field:ck.price.ext,date_stop:0
+#: code:addons/kindee_data_sync_info/data.py:247
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__date_stop
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price__date_stop
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__date_stop
 #, python-format
 msgid "Valid Until"
 msgstr "报工结束日期"
 
 #. module: kindee_data_sync_info
-#: view:ck.hours.worker.line:kindee_data_sync_info.view_ck_hours_worker_line_form
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_hours_worker_line_form
 msgid "WHours of Worker lines"
-msgstr "工时明细"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: view:ck.user.weixin:kindee_data_sync_info.view_ck_user_weixin_tree
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_user_weixin_tree
 msgid "WeiXin User Map"
 msgstr "微信用户映射"
 
 #. module: kindee_data_sync_info
-#: view:ck.user.weixin:kindee_data_sync_info.view_ck_user_weixin_form
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_user_weixin_form
 msgid "Weinxin User"
 msgstr "微信用户"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1456
-#: field:ck.user.weixin,open_id:0
+#: code:addons/kindee_data_sync_info/data.py:2650
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_weixin__open_id
 #, python-format
 msgid "Weixin ID"
 msgstr "微信ID"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1451
+#: code:addons/kindee_data_sync_info/data.py:2645
 #: model:ir.actions.act_window,name:kindee_data_sync_info.action_ck_user_weixin
 #: model:ir.model,name:kindee_data_sync_info.model_ck_user_weixin
 #: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_user_weixin
@@ -1199,31 +1354,28 @@ msgid "Weixin user Map"
 msgstr "微信用户映射"
 
 #. module: kindee_data_sync_info
-#: view:ck.hours.worker.rep:kindee_data_sync_info.view_report_ck_hours_worker_filter
-msgid "Work Operation"
-msgstr "工序"
-
-#. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:127
+#: code:addons/kindee_data_sync_info/data.py:143
+#: model:ir.model,name:kindee_data_sync_info.model_ck_price
 #, python-format
 msgid "Work Price"
 msgstr "工价"
 
 #. module: kindee_data_sync_info
-#: model:ir.model,name:kindee_data_sync_info.model_ck_price
-msgid "Work Price Sync"
-msgstr "同步工价信息"
-
-#. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1469
+#: code:addons/kindee_data_sync_info/data.py:2663
 #: model:ir.model,name:kindee_data_sync_info.model_ck_price_ext
 #, python-format
 msgid "Work Price extend"
 msgstr "工价"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1028
-#: field:ck.hours.worker.line,worktime:0
+#: code:addons/kindee_data_sync_info/data.py:1773
+#: code:addons/kindee_data_sync_info/data.py:2904
+#: code:addons/kindee_data_sync_info/data.py:2907
+#: model:ir.actions.act_window,name:kindee_data_sync_info.action_ck_user_work_time
+#: model:ir.model,name:kindee_data_sync_info.model_ck_user_work_time
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__worktime
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_work_time__worktime
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_user_work_time_tree
 #, python-format
 msgid "Work Time"
 msgstr "工时"
@@ -1234,666 +1386,294 @@ msgid "Work Timesheet"
 msgstr "报工"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:112
-#: field:ck.routing.sync,fworkcenterid:0
+#: code:addons/kindee_data_sync_info/data.py:126
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_routing_sync__fworkcenterid
 #, python-format
 msgid "WorkCenterID"
 msgstr "工作中心ID"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:121
-#: code:addons/kindee_data_sync_info/data.py:224
-#: code:addons/kindee_data_sync_info/data.py:1009
-#: field:ck.hours.worker,fworkcentername:0
-#: field:ck.hours.worker.line,fworkcentername:0
-#: field:ck.routing.sync,fworkcentername:0
+#: code:addons/kindee_data_sync_info/data.py:135
+#: code:addons/kindee_data_sync_info/data.py:241
+#: code:addons/kindee_data_sync_info/data.py:1758
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__fworkcentername
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__fworkcentername
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_routing_sync__fworkcentername
 #, python-format
 msgid "WorkCenterName"
 msgstr "工作中心名称"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:120
-#: code:addons/kindee_data_sync_info/data.py:223
-#: code:addons/kindee_data_sync_info/data.py:1015
-#: field:ck.hours.worker,fworkcenterno:0
-#: field:ck.hours.worker.line,fworkcenterno:0
-#: field:ck.routing.sync,fworkcenterno:0
+#: code:addons/kindee_data_sync_info/data.py:134
+#: code:addons/kindee_data_sync_info/data.py:240
+#: code:addons/kindee_data_sync_info/data.py:1762
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__fworkcenterno
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__fworkcenterno
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_routing_sync__fworkcenterno
 #, python-format
 msgid "WorkCenterNo"
 msgstr "工作中心编码"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:147
-#: code:addons/kindee_data_sync_info/data.py:1498 field:ck.price,fprice:0
-#: field:ck.price.ext,fprice:0
+#: code:addons/kindee_data_sync_info/data.py:162
+#: code:addons/kindee_data_sync_info/data.py:2691
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price__fprice
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_price_ext__fprice
 #, python-format
 msgid "WorkPrice"
 msgstr "工价"
 
 #. module: kindee_data_sync_info
-#: view:ck.icmo.sync:kindee_data_sync_info.view_ck_icmo_sync_form
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_icmo_sync_form
 msgid "WorkTime Confirm"
 msgstr "工时确认"
 
 #. module: kindee_data_sync_info
-#: view:ck.hours.worker.rep:kindee_data_sync_info.view_report_ck_hours_worker_graph
-msgid "Worker Hours"
-msgstr "报工"
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_hours_worker_line_graph 
+msgid "Worker analysis"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: view:ck.hours.worker.line:kindee_data_sync_info.view_ck_hours_worker_line_graph
-msgid "Worker analysis"
-msgstr "报工分析"
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.worker_line_view_form_batch_confirm
+msgid "Yes"
+msgstr ""
 
 #. module: kindee_data_sync_info
 #. openerp-web
 #: code:addons/kindee_data_sync_info/static/src/xml/qweb.xml:11
 #, python-format
 msgid "button_hw_confirms"
-msgstr "button_hw_confirms"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:242 field:ck.hours.worker,uflag:0
+#: model:ir.model,name:kindee_data_sync_info.model_ck_hours_worker_line_batch_approve
+msgid "ck.hours.worker.line.batch.approve"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.worker_line_view_form_batch_confirm
+msgid "or"
+msgstr "或"
+
+#. module: kindee_data_sync_info
+#: code:addons/kindee_data_sync_info/data.py:259
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__uflag
 #, python-format
 msgid "update qty flag"
 msgstr "更新数量标志"
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:997
-#: code:addons/kindee_data_sync_info/data.py:1006
-#: code:addons/kindee_data_sync_info/data.py:1484
-#: code:addons/kindee_data_sync_info/data.py:1614
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__price
+msgid "价格"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_user_work_time_filter
+msgid "创建日期大于"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_user_work_time_filter
+msgid "创建日期小于"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: selection:ck.hours.worker,state:0
+#: selection:ck.hours.worker.line,state:0
+#: selection:ck.user.work.time,state:0
+msgid "刪除"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: code:addons/kindee_data_sync_info/data.py:2111
+#, python-format
+msgid "单价的数量为0，不能报工，请找单价维护人员进行修改!"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: code:addons/kindee_data_sync_info/data.py:1746
+#: code:addons/kindee_data_sync_info/data.py:1754
+#: code:addons/kindee_data_sync_info/data.py:2677
+#: code:addons/kindee_data_sync_info/data.py:2809
 #: selection:ck.hours.worker.line,fmachine:0
 #: selection:ck.hours.worker.line,fmachine_pre:0
-#: selection:ck.machine,fmachine:0 selection:ck.price.ext,fmachine:0
+#: selection:ck.machine,fmachine:0
+#: selection:ck.price.ext,fmachine:0
 #, python-format
 msgid "单机"
-msgstr "单机"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:997
-#: code:addons/kindee_data_sync_info/data.py:1006
-#: code:addons/kindee_data_sync_info/data.py:1484
-#: code:addons/kindee_data_sync_info/data.py:1614
+#: code:addons/kindee_data_sync_info/data.py:1746
+#: code:addons/kindee_data_sync_info/data.py:1754
+#: code:addons/kindee_data_sync_info/data.py:2677
+#: code:addons/kindee_data_sync_info/data.py:2809
 #: selection:ck.hours.worker.line,fmachine:0
 #: selection:ck.hours.worker.line,fmachine_pre:0
-#: selection:ck.machine,fmachine:0 selection:ck.price.ext,fmachine:0
+#: selection:ck.machine,fmachine:0
+#: selection:ck.price.ext,fmachine:0
 #, python-format
 msgid "双机"
-msgstr "双机"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1026
-#: field:ck.hours.worker.line,fmodel:0
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_user_work_time_filter
+msgid "可用记录"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__amount_total
+msgid "合计"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: code:addons/kindee_data_sync_info/data.py:1771
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__fmodel
 #, python-format
 msgid "型号"
-msgstr "型号"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1007
-#: field:ck.hours.worker.line,fmachine_pre:0
+#: selection:ck.hours.worker,state:0
+#: selection:ck.hours.worker.line,state:0
+#: selection:ck.icmo.sync,state:0
+#: selection:ck.user.work.time,state:0
+msgid "完成"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: model_terms:ir.ui.view,arch_db:kindee_data_sync_info.view_ck_hours_worker_line_tree
+msgid "审批人"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: code:addons/kindee_data_sync_info/data.py:1755
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__fmachine_pre
 #, python-format
 msgid "审核前单双机"
-msgstr "审核前单双机"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1005
-#: field:ck.hours.worker.line,fshift_pre:0
+#: code:addons/kindee_data_sync_info/data.py:1753
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__fshift_pre
 #, python-format
 msgid "审核前班次"
-msgstr "审核前班次"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1003
-#: field:ck.hours.worker.line,gqty_pre:0
+#: code:addons/kindee_data_sync_info/data.py:1751
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__gqty_pre
 #, python-format
-msgid "审核前良品舒亮亮"
-msgstr "审核前良品舒亮亮"
+msgid "审核前良品"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1002
-#: field:ck.hours.worker.line,sqty_pre:0
+#: code:addons/kindee_data_sync_info/data.py:1756
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__rqty_pre
+#, python-format
+msgid "审核前返工数量"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: code:addons/kindee_data_sync_info/data.py:1750
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__sqty_pre
 #, python-format
 msgid "审核报废数量"
-msgstr "审核报废数量"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: view:ck.hours.worker.line:kindee_data_sync_info.view_ck_hours_worker_line_filter
-msgid "报工时间"
-msgstr "报工时间"
+#: code:addons/kindee_data_sync_info/data.py:2875
+#: code:addons/kindee_data_sync_info/data.py:2999
+#: sql_constraint:ck.material.scrap.reasons:0
+#: sql_constraint:ck.route.scrap.reasons:0
+#, python-format
+msgid "工序原因不能重复。"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:995
-#: code:addons/kindee_data_sync_info/data.py:1004
-#: code:addons/kindee_data_sync_info/data.py:1482
-#: code:addons/kindee_data_sync_info/data.py:1599
+#: code:addons/kindee_data_sync_info/data.py:1945
+#: code:addons/kindee_data_sync_info/data.py:1949
+#: code:addons/kindee_data_sync_info/data.py:2326
+#: code:addons/kindee_data_sync_info/data.py:2447
+#: code:addons/kindee_data_sync_info/data.py:2451
+#, python-format
+msgid "总数量超过工单数量，请检查数量是否正确。"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: selection:ck.machine,fmachine:0
+#: selection:ck.price.ext,fmachine:0
+#: selection:ck.price.ext,fshift:0
+#: selection:ck.shift,fshift:0
+msgid "所有"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: selection:ck.hours.worker,state:0
+msgid "打开"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: model:ir.actions.act_window,name:kindee_data_sync_info.worker_line_action_batch_confirm
+#: model:ir.actions.server,name:kindee_data_sync_info.worker_line_confirm_batch
+msgid "批量审核"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: selection:ck.hours.worker.line,state:0
+#: selection:ck.icmo.sync,state:0
+#: selection:ck.user.work.time,state:0
+msgid "新建"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: code:addons/kindee_data_sync_info/data.py:1744
+#: code:addons/kindee_data_sync_info/data.py:1752
+#: code:addons/kindee_data_sync_info/data.py:2675
+#: code:addons/kindee_data_sync_info/data.py:2793
 #: selection:ck.hours.worker.line,fshift:0
-#: selection:ck.hours.worker.line,fshift_pre:0 selection:ck.price.ext,fshift:0
+#: selection:ck.hours.worker.line,fshift_pre:0
+#: selection:ck.hours.worker.line.batch.approve,fshift:0
+#: selection:ck.price.ext,fshift:0
 #: selection:ck.shift,fshift:0
 #, python-format
 msgid "晚班"
-msgstr "晚班"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:995
-#: code:addons/kindee_data_sync_info/data.py:1004
-#: code:addons/kindee_data_sync_info/data.py:1482
-#: code:addons/kindee_data_sync_info/data.py:1599
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line_batch_approve__fshift
+msgid "班次"
+msgstr ""
+
+#. module: kindee_data_sync_info
+#: code:addons/kindee_data_sync_info/data.py:1744
+#: code:addons/kindee_data_sync_info/data.py:1752
+#: code:addons/kindee_data_sync_info/data.py:2675
+#: code:addons/kindee_data_sync_info/data.py:2793
 #: selection:ck.hours.worker.line,fshift:0
-#: selection:ck.hours.worker.line,fshift_pre:0 selection:ck.price.ext,fshift:0
+#: selection:ck.hours.worker.line,fshift_pre:0
+#: selection:ck.hours.worker.line.batch.approve,fshift:0
+#: selection:ck.price.ext,fshift:0
 #: selection:ck.shift,fshift:0
 #, python-format
 msgid "白班"
-msgstr "白班"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:999
-#: field:ck.hours.worker.line,fpass:0
+#: code:addons/kindee_data_sync_info/data.py:1748
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__fpass
 #, python-format
 msgid "良品率(%)"
-msgstr "良品率(%)"
+msgstr ""
 
 #. module: kindee_data_sync_info
-#: code:addons/kindee_data_sync_info/data.py:1034
-#: field:ck.hours.worker.line,department:0
+#: code:addons/kindee_data_sync_info/data.py:261
+#: code:addons/kindee_data_sync_info/data.py:1779
+#: code:addons/kindee_data_sync_info/data.py:2914
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker__department
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_hours_worker_line__department
+#: model:ir.model.fields,field_description:kindee_data_sync_info.field_ck_user_work_time__department
 #, python-format
 msgid "部门"
-msgstr "部门"
+msgstr ""
 
-#. module: kindee_data_sync_info
-#: field:ck.hours.worker.line,rqty:0
-#, python-format
-msgid "Remade Quantity"
-msgstr "返工/插排数量"
-
-
-#. module: kindee_data_sync_info
-#: field:ck.user.work.time,user_id:0
-msgid "Owner"
-msgstr "用户"
-
-#. module: kindee_data_sync_info
-#: field:ck.user.work.time,worktime:0
-msgid "Work Time"
-msgstr "工时"
-
-#. module: kindee_data_sync_info
-#: field:ck.user.work.time,remark:0
-msgid "Remark"
-msgstr "备注"
-
-#. module: kindee_data_sync_info
-#: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_user_work_time
-msgid "CK Work Time"
-msgstr "工时填报"
-
-#. module: kindee_data_sync_info
-#: field:ck.hours.worker.rep.four,real_name:0
-msgid "Worker Name"
-msgstr "姓名"
-
-#. module: kindee_data_sync_info
-#: field:ck.hours.worker.rep.four,fshift:0
-msgid "Shift"
-msgstr "班次"
-
-#. module: kindee_data_sync_info
-#: field:ck.hours.worker.rep.four,fmachine:0
-msgid "Number of machines"
-msgstr "机台数"
-
-#. module: kindee_data_sync_info
-#: field:ck.hours.worker.rep.four,state:0
-msgid "State"
-msgstr "状态"
-
-#. module: kindee_data_sync_info
-#: field:ck.hours.worker.rep.four,gqty:0
-msgid "Good Quantity"
-msgstr "良品数"
-
-#. module: kindee_data_sync_info
-#: field:ck.hours.worker.rep.four,sqty:0
-msgid "Scrap Quantity"
-msgstr "报废数"
-
-#. module: kindee_data_sync_info
-#: field:ck.hours.worker.rep.four,rqty:0
-msgid "Remade Quantity"
-msgstr "插排数"
-
-#. module: kindee_data_sync_info
-#: field:ck.hours.worker.rep.four,date_ascription:0
-msgid "Ascription Date"
-msgstr "报工归属日期"
-
-#. module: kindee_data_sync_info
-#: field:ck.hours.worker.rep.four,fmodel:0
-msgid "Product Model"
-msgstr "型号"
-
-#. module: kindee_data_sync_info
-#: field:ck.hours.worker.rep.four,fopername:0
-msgid "Operation Name"
-msgstr "工序名称"
-
-#. module: kindee_data_sync_info
-#: field:ck.hours.worker.rep.four,fworkcentername:0
-msgid "Work Center Name"
-msgstr "工作中心名称"
-
-#. module: kindee_data_sync_info
-#: field:ck.hours.worker.rep.four,froutingname:0
-msgid "Routing Name"
-msgstr "工艺路线名称"
-
-#. module: kindee_data_sync_info
-#: field:ck.operation.productivity.rep,froutingname:0
-msgid "Routing Name"
-msgstr "产品线"
-
-#. module: kindee_data_sync_info
-#: field:ck.operation.productivity.rep,fopername:0
-msgid "Operation Nam"
-msgstr "工序名称"
-
-#. module: kindee_data_sync_info
-#: field:ck.operation.productivity.rep,gqty_sum:0
-msgid "Good Quantity Sum"
-msgstr "良品总数"
-
-#. module: kindee_data_sync_info
-#: field:ck.operation.productivity.rep,sqty_sum:0
-msgid "Scrap Quantity Sum"
-msgstr "报废总数"
-
-#. module: kindee_data_sync_info
-#: field:ck.operation.productivity.rep,rqty_sum:0
-msgid "Remade Quantity Sum"
-msgstr "插排总数"
-
-#. module: kindee_data_sync_info
-#: field:ck.operation.productivity.rep,gqty:0
-msgid "Good Quantity Sum"
-msgstr "良品总数"
-
-#. module: kindee_data_sync_info
-#: field:ck.operation.productivity.rep,sqty:0
-msgid "Scrap Quantity Sum"
-msgstr "报废总数"
-
-#. module: kindee_data_sync_info
-#: field:ck.operation.productivity.rep,rqty:0
-msgid "Remade Quantity Sum"
-msgstr "插排总数"
-
-#. module: kindee_data_sync_info
-#: field:ck.operation.productivity.rep,srate:0
-msgid "Scrap Rate"
-msgstr "报废率(%)"
-
-#. module: kindee_data_sync_info
-#: field:ck.operation.productivity.rep,grate:0
-msgid "Good Rate"
-msgstr "良品率(%)"
-
-#. module: kindee_data_sync_info
-#: field:ck.operation.productivity.rep,rrate:0
-msgid "Remade Rate"
-msgstr "插排率(%)"
-
-#. module: kindee_data_sync_info
-#: field:ck.operation.productivity.rep,rep_num:0
-msgid "Number Of Report Workers"
-msgstr "报工人数"
-
-#. module: kindee_data_sync_info
-#: field:ck.operation.productivity.rep,pavg_out:0
-msgid "Average Output Of Workers"
-msgstr "人均产量"
-
-#. module: kindee_data_sync_info
-#: field:ck.operation.productivity.rep,workcenter_num:0
-msgid "Number Of Work Center"
-msgstr "机台数"
-
-#. module: kindee_data_sync_info
-#: field:ck.operation.productivity.rep,wavg_out:0
-msgid "Average Output Of Work Centers"
-msgstr "机台平均产能"
-
-#. module: kindee_data_sync_info
-#: field:ck.operation.productivity.rep,date_ascription:0
-msgid "Date_Ascription"
-msgstr "报工归属日期"
-
-#. module: kindee_data_sync_info
-#: field:ck.daily.income.rep,real_name:0
-msgid "Worker Name"
-msgstr "姓名"
-
-#. module: kindee_data_sync_info
-#: field:ck.daily.income.rep,fmodel:0
-msgid "Product Model"
-msgstr "型号"
-
-#. module: kindee_data_sync_info
-#: field:ck.daily.income.rep,gqty:0
-msgid "Good Quantity Sum"
-msgstr "产量（良品）"
-
-#. module: kindee_data_sync_info
-#: field:ck.daily.income.rep,amount:0
-msgid "Amount Sum"
-msgstr "金额"
-
-#. module: kindee_data_sync_info
-#: field:ck.daily.income.rep,froutingname:0
-msgid "Routing Name"
-msgstr "产品线"
-
-#. module: kindee_data_sync_info
-#: field:ck.daily.income.rep,fopername:0
-msgid "Operation Name"
-msgstr "工序名称"
-
-#. module: kindee_data_sync_info
-#: field:ck.daily.income.rep,date_ascription:0
-msgid "Date Ascription"
-msgstr "报工归属日期"
-
-#. module: kindee_data_sync_info
-#: field:ck.daily.scrap.rep,date_worker:0
-msgid "Date Worker"
-msgstr "报工归属日期"
-
-#. module: kindee_data_sync_info
-#: field:ck.daily.scrap.rep,fworkcentername:0
-msgid "Work Center Name"
-msgstr "工作中心名称"
-
-#. module: kindee_data_sync_info
-#: field:ck.daily.scrap.rep,fshift:0
-msgid "Shift"
-msgstr "班次"
-
-#. module: kindee_data_sync_info
-#: field:ck.daily.scrap.rep,fmodel:0
-msgid "Model"
-msgstr "型号"
-
-#. module: kindee_data_sync_info
-#: field:ck.daily.scrap.rep,gqty:0
-msgid "Good Quantity"
-msgstr "良品数"
-
-#. module: kindee_data_sync_info
-#: field:ck.daily.scrap.rep,qty:0
-msgid "Scrap Quantity"
-msgstr "报废数"
-
-#. module: kindee_data_sync_info
-#: field:ck.daily.scrap.rep,reason:0
-msgid "Scrap Reason"
-msgstr "报废原因"
-
-#. module: kindee_data_sync_info
-#: field:ck.work.order.production.rep,name:0
-msgid "Worder Order Name"
-msgstr "任务单名"
-
-#. module: kindee_data_sync_info
-#: field:ck.work.order.production.rep,froutingname:0
-msgid "Routing Name"
-msgstr "产品线"
-
-#. module: kindee_data_sync_info
-#: field:ck.work.order.production.rep,fopername:0
-msgid "Operation Name"
-msgstr "工序名称"
-
-#. module: kindee_data_sync_info
-#: field:ck.work.order.production.rep,gqty:0
-msgid "Good Quantity"
-msgstr "良品数"
-
-#. module: kindee_data_sync_info
-#: field:ck.work.order.production.rep,date_ascription:0
-msgid "Date Ascription"
-msgstr "报工归属日期"
-
-#. module: kindee_data_sync_info
-#: field: ck.working.summary.report,name:0
-msgid "Production Number"
-msgstr "任务单号"
-
-#. module: kindee_data_sync_info
-#: field: ck.working.summary.report,fname:0
-msgid "Product Dsescription"
-msgstr "产品描述"
-
-#. module: kindee_data_sync_info
-#: field: ck.working.summary.report,fmodel:0
-msgid "Product Model"
-msgstr "产品规格"
-
-#. module: kindee_data_sync_info
-#: field: ck.working.summary.report,gqty:0
-msgid "Good Quantity Total"
-msgstr "良品数"
-
-#. module: kindee_data_sync_info
-#: field: ck.working.summary.report,fnumber:0
-msgid "Product No"
-msgstr "产品编码"
-
-#. module: kindee_data_sync_info
-#: field: ck.working.summary.report,amount_total:0
-msgid "Amount Total"
-msgstr "金额"
-
-#. module: kindee_data_sync_info
-#: field: ck.working.summary.report,date_worker:0
-msgid "Working Day"
-msgstr "报工日期"
-
-#. module: kindee_data_sync_info
-#: field:ck.date.summary.report,name:0
-msgid "User"
-msgstr "用户"
-
-#. module: kindee_data_sync_info
-#: field:ck.date.summary.report,fname:0
-msgid "Product No"
-msgstr "产品描述"
-
-#. module: kindee_data_sync_info
-#: field:ck.date.summary.report,:year_worker:0
-msgid "Working Year"
-msgstr "年"
-
-#. module: kindee_data_sync_info
-#: field:ck.date.summary.report,month_worker:0
-msgid "Working Month"
-msgstr "月"
-
-#. module: kindee_data_sync_info
-#: field:ck.date.summary.report,day_worker:0
-msgid "Working Day"
-msgstr "日"
-
-#. module: kindee_data_sync_info
-#: field:ck.date.summary.report,gqty_sum:0
-msgid "Good Quantity Total"
-msgstr "良品数"
-
-#. module: kindee_data_sync_info
-#: field:ck.date.summary.report,amount_total:0
-msgid "Amount Total"
-msgstr "金额"
-
-#. module: kindee_data_sync_info
-#: field:ck.unfinished.accessary.form,name:0
-msgid "Production Number"
-msgstr "产品描述"
-
-#. module: kindee_data_sync_info
-#: field:ck.unfinished.accessary.form,create_date:0
-msgid "Create date"
-msgstr "日期"
-
-#. module: kindee_data_sync_info
-#: field:ck.unfinished.accessary.form,fmodel:0
-msgid "Product Model"
-msgstr "产品型号"
-
-#. module: kindee_data_sync_info
-#: field:ck.unfinished.accessary.form,fname:0
-msgid "Production name"
-msgstr "产品描述"
-
-#. module: kindee_data_sync_info
-#: field:ck.unfinished.accessary.form,fopername:0
-msgid "Operation name"
-msgstr "工序名称"
-
-#. module: kindee_data_sync_info
-#: field:ck.unfinished.accessary.form,sum_gqty:0
-msgid "Good Quantity Total"
-msgstr "良品数"
-
-#. module: kindee_data_sync_info
-#: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_reps
-msgid "Reports"
-msgstr "报表"
-
-#. module: kindee_data_sync_info
-#: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_hours_worker_rep_four
-msgid "Hours Worker Report Base"
-msgstr "（测试用表）"
-
-#. module: kindee_data_sync_info
-#: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_operation_productivity_rep
-msgid "Operation Productivity Report"
-msgstr "工序产能日汇总表"
-
-#. module: kindee_data_sync_info
-#: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_daily_income_rep
-msgid "CK Daily Income Report"
-msgstr "按工序日产量收入报表"
-
-#. module: kindee_data_sync_info
-#: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_daily_scrap_rep
-msgid "CK Daily Scrap Report"
-msgstr "按工序设备工作中心报废日报表"
-
-#. module: kindee_data_sync_info
-#: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_work_order_production_rep
-msgid "CK Work Order Production Report"
-msgstr "任务单每日各工序生产情况表"
-
-#. module: kindee_data_sync_info
-#: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_working_summary_report
-msgid "CK Working Summary Report"
-msgstr "生产任务单汇总"
-
-#. module: kindee_data_sync_info
-#: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_date_summary_report
-msgid "CK Date Summary Report"
-msgstr "按天汇总报表"
-
-#. module: kindee_data_sync_info
-#: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_unfinished_summary_report
-msgid "CK Unfinished Summary Report"
-msgstr "未完成数汇总报表"
-
-#. module: kindee_data_sync_info
-#: model:ir.ui.menu,name:kindee_data_sync_info.menu_ck_work_unfinished_summary_report
-msgid "CK Work Unfinished Summary Report"
-msgstr "未完成数按任务单汇总报表"
-
-#. module: kindee_data_sync_info
-#: view:ck.hours.worker.rep.four:kindee_data_sync_info.ck_hours_worker_rep_four_tree_view
-#: view:ck.hours.worker.rep.four:kindee_data_sync_info.ck_hours_worker_rep_four_form_view
-#: model:ir.actions.act_window,name:kindee_data_sync_info.action_ck_hours_worker_rep_four
-msgid "CK Hours Worker Report Four"
-msgstr "（测试用表）"
-
-#. module: kindee_data_sync_info
-#: view:ck.operation.productivity.rep:kindee_data_sync_info.ck_operation_productivity_rep_tree_view
-#: view:ck.operation.productivity.rep:kindee_data_sync_info.ck_operation_productivity_rep_form_view
-#: model:ir.actions.act_window,name:kindee_data_sync_info.action_ck_operation_productivity_rep
-msgid "CK Operation Productivity Report"
-msgstr "工序产能日汇总表"
-
-#. module: kindee_data_sync_info
-#: view:ck.daily.income.rep:kindee_data_sync_info.ck_daily_income_rep_tree_view
-#: view:ck.daily.income.rep:kindee_data_sync_info.ck_daily_income_rep_form_view
-#: model:ir.actions.act_window,name:kindee_data_sync_info.action_ck_daily_income_rep
-msgid "CK Daily Income Report"
-msgstr "按工序日产量收入报表"
-
-#. module: kindee_data_sync_info
-#: view:ck.daily.income.rep:kindee_data_sync_info.ck_daily_scrap_rep_tree_view
-#: view:ck.daily.income.rep:kindee_data_sync_info.ck_daily_scrap_rep_form_view
-#: view:ck.daily.income.rep:kindee_data_sync_info.ck_daily_scrap_rep_graph_view
-#: model:ir.actions.act_window,name:kindee_data_sync_info.action_ck_daily_scrap_rep
-msgid "CK Daily Scrap Report"
-msgstr "按工序设备工作中心报废日报表"
-
-#. module: kindee_data_sync_info
-#: view:ck.daily.income.rep:kindee_data_sync_info.ck_work_order_production_rep_tree_view
-#: view:ck.daily.income.rep:kindee_data_sync_info.ck_work_order_production_rep_form_view
-#: model:ir.actions.act_window,name:kindee_data_sync_info.action_ck_work_order_production_rep
-msgid "CK Work Order Production Report"
-msgstr "任务单每日各工序生产情况表"
-
-#. module: kindee_data_sync_info
-#: view:ck.daily.income.rep:kindee_data_sync_info.ck_working_summary_report_tree_view
-#: view:ck.daily.income.rep:kindee_data_sync_info.ck_working_summary_report_form_view
-msgid "CK Working Summary Report"
-msgstr "生产任务单汇总"
-
-#. module: kindee_data_sync_info
-#: view:ck.hours.worker.line.batch.approve:kindee_data_sync_info.worker_line_view_form_batch_confirm
-msgid "Approve Worker"
-msgstr "审批工单"
-
-#. module: kindee_data_sync_info
-#: view:ck.hours.worker.line.batch.approve:kindee_data_sync_info.worker_line_view_form_batch_confirm
-msgid "Do you really want to approve the order(s)?"
-msgstr "确定审批选择的报工信息吗？"
-
-#. module: kindee_data_sync_info
-#: view:ck.hours.worker.line.batch.approve:kindee_data_sync_info.worker_line_view_form_batch_confirm
-msgid "Yes"
-msgstr "确定"
-
-#. module: kindee_data_sync_info
-#: view:ck.hours.worker.line.batch.approve:kindee_data_sync_info.worker_line_view_form_batch_confirm
-msgid "Cancel"
-msgstr "取消"
-
-#. module: kindee_data_sync_info
-#: field:ck.user.work.time,create_date:0
-#, python-format
-msgid "Create on"
-msgstr "创建时间"
-
-#. module: kindee_data_sync_info
-#: field:ck.user.work.time,create_uid:0
-#, python-format
-msgid "Create by"
-msgstr "创建人"
-
-#. module: kindee_data_sync_info
-#: field:ck.user.work.time,write_date:0
-#, python-format
-msgid "Last Updated on"
-msgstr "更新时间"
-
-#. module: kindee_data_sync_info
-#: field:ck.user.work.time,write_uid:0
-#, python-format
-msgid "Last Updated by"
-msgstr "更新人"

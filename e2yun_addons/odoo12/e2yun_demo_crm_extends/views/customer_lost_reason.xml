@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_e2yun_customer_lost_form" model="ir.ui.view">
+        <field name="name">e2yun.customer.lost.form</field>
+        <field name="model">e2yun.customer.info.lost</field>
+        <field name="arch" type="xml">
+            <form string="拒绝原因">
+                <group class="oe_title">
+                    <field name="lost_reason" required="1"/>
+                </group>
+                <footer>
+                    <button name="confirm_customer_lost_reason" string="确认原因" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+     <record id="e2yun_customer_lost_action" model="ir.actions.act_window">
+        <field name="name">Customer Lost Reason</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">e2yun.customer.info.lost</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_e2yun_customer_lost_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

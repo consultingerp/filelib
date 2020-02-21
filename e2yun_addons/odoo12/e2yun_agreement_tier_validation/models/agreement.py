@@ -3,8 +3,13 @@
 
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
-from ast import literal_eval
 from odoo.exceptions import UserError
+import datetime
+try:
+    from odoo.addons.e2yun_agreement_tier_validation.models import get_zone_datetime
+except BaseException as b:
+    print(b)
+    pass
 class Agreement(models.Model):
     _name = "agreement"
     _inherit = ['agreement', 'tier.validation']
@@ -161,6 +166,15 @@ class Agreement(models.Model):
         #self.emil_temp(self.id, partner_ids)
         return created_trs
 
+
+    @api.multi
+    def restart_validation(self):
+        for rec in self:
+            if getattr(rec, self._state_field) in self._state_from:
+                rec.mapped('review_ids').unlink()
+                self._update_counter()
+        self.stage_id = 1
+
     def _rebut_tier(self, tiers=False):
         self.ensure_one()
         tier_reviews = tiers or self.review_ids
@@ -174,11 +188,12 @@ class Agreement(models.Model):
             if tier_review.sequence==sequence:
                 user_reviews=tier_review
 
-
+        GetDatetime = get_zone_datetime.GetDatetime()
+        reviewed_date = GetDatetime.get_datetime()
         user_reviews.write({
             'status': 'pending',
             'done_by': '',
-            'reviewed_date': fields.Datetime.now(),
+            'reviewed_date': reviewed_date,
         })
         for review in user_reviews:
             rec = self.env[review.model].browse(review.res_id)
@@ -209,10 +224,74 @@ class Agreement(models.Model):
         mails.send()
 
 
+    def _validate_tier(self, body,attachment_ids,tiers=False):
+        self.ensure_one()
+        tier_reviews = tiers or self.review_ids
+        user_reviews = tier_reviews.filtered(
+            lambda r: r.status in ('pending', 'rejected') and
+            (self.env.user in r.reviewer_ids))
+
+        GetDatetime = get_zone_datetime.GetDatetime()
+        reviewed_date = GetDatetime.get_datetime()
+
+        user_reviews.write({
+            'status': 'approved',
+            'done_by': self.env.user.id,
+            'reviewed_date': reviewed_date,
+        })
+        for review in user_reviews:
+            rec = self.env[review.model].browse(review.res_id)
+            rec._notify_accepted_reviews(body,attachment_ids)
+
+    def _notify_accepted_reviews(self,body,attachment_ids):
+        if hasattr(self, 'message_post'):
+            # Notify state change
+            getattr(self, 'message_post')(
+                subtype='mt_comment',
+                body=body,
+                attachment_ids=attachment_ids
+            )
+
+    def _rejected_tier(self, body,attachment_ids,tiers=False):
+        self.ensure_one()
+        tier_reviews = tiers or self.review_ids
+        user_reviews = tier_reviews.filtered(
+            lambda r: r.status in ('pending', 'approved') and
+            (r.reviewer_id == self.env.user or
+             r.reviewer_group_id in self.env.user.groups_id))
+
+        GetDatetime = get_zone_datetime.GetDatetime()
+        reviewed_date = GetDatetime.get_datetime()
+
+        user_reviews.write({
+            'status': 'rejected',
+            'done_by': self.env.user.id,
+            'reviewed_date':reviewed_date,
+        })
+        for review in user_reviews:
+            rec = self.env[review.model].browse(review.res_id)
+            rec._notify_rejected_review(body,attachment_ids)
+
+    def _notify_rejected_review(self,body,attachment_ids):
+        if hasattr(self, 'message_post'):
+            # Notify state change
+            getattr(self, 'message_post')(
+                subtype='mt_comment',
+                body=body,
+                attachment_ids=attachment_ids
+            )
+
 class CommentWizard(models.TransientModel):
     _inherit = 'comment.wizard'
     _description = 'Comment Wizard'
 
+    check_advise = fields.Html('Contents', default='', sanitize_style=True,  required=True,)
+    attachment_ids = fields.Many2many(
+        'ir.attachment', 'agreement_tier_validation_ir_attachments_rel',
+        'wizard_id', 'attachment_id', 'Attachments')
+
+    comment = fields.Char('comment', required=False)
+    comment_temp = fields.Char('comment Temp')
 
     @api.multi
     def add_comment(self):
@@ -224,18 +303,28 @@ class CommentWizard(models.TransientModel):
             ('res_id', '=', self.res_id),
             ('definition_id', 'in', self.definition_ids.ids)
         ])
-
+        import re
+        #check_advise_temp = re.findall(r'[^<p/>]', self.check_advise, re.S)
+        #check_advise_temp = "".join(check_advise_temp)
+        comp = re.compile('</?\w+[^>]*>')
+        check_advise_temp = comp.sub('', self.check_advise)
+        self.comment=check_advise_temp[0:3]+"..."
         for user_review in user_reviews:
             user_review.write({
                 'comment': self.comment,
+                'comment_temp':check_advise_temp,
             })
             if user_review.tier_stage_id:
                 tier_stage_id = user_review.tier_stage_id
-
+        attachment_ids=[]
+        for attachment_id in  self.attachment_ids:
+            attachment_ids.append(attachment_id.id)
         if self.validate_reject == 'validate':
-            rec._validate_tier()
+            body = '审批通过:' + self.check_advise
+            rec._validate_tier(body,attachment_ids)
         if self.validate_reject == 'reject':
-            rec._rejected_tier()
+            body = '审批拒绝:' + self.check_advise
+            rec._rejected_tier(body,attachment_ids)
         if self.validate_reject == 'rebut':
             rec._rebut_tier()
 
@@ -254,32 +343,19 @@ class TierValidation(models.AbstractModel):
     def write(self, vals):
         flag_stage_id=False
         flag_plan_sign_time = False
+        message_main_attachment_id=False
         for key in vals:
             if 'stage_id'!=key and 'revision'!=key:
                 flag_stage_id=True
             if 'plan_sign_time'!=key and 'revision'!=key:
                 flag_plan_sign_time=True
+            if 'message_main_attachment_id' != key and 'revision' != key:
+                message_main_attachment_id=True
+
         if not flag_stage_id:
             if vals['stage_id'] == 6 and not self.plan_sign_time:
               raise UserError(u'客户签章阶段计划回签时间必须写入')
-
             if vals['stage_id'] == 7:
-                # sql = "select res_name  from ir_attachment where  res_id = %s   and res_model = %s "
-                # self._cr.execute(sql, (self.id, 'agreement.file.upload'))
-                # attachmentSqlData = self._cr.fetchall()
-                # pdfswy='（PDF首尾页）'
-                # pdfqw = '（PDF全文版）'
-                # fktj = '（付款条件）'
-                # if attachmentSqlData:
-                #     for d in attachmentSqlData:
-                #         if d[0]=='pdfswy':
-                #             pdfswy=""
-                #         if d[0]=='pdfqw':
-                #             pdfqw=""
-                #         if d[0]=='fktj':
-                #             fktj=""
-                #
-
                 pdfswy='（PDF首尾页）'
                 pdfqw = '（PDF全文版）'
                 fktj = '（付款条件）'
@@ -289,10 +365,8 @@ class TierValidation(models.AbstractModel):
                     pdfqw = ""
                 if self.fktj:
                     fktj = ""
-
                 if pdfswy!="" or pdfqw!="" or fktj!="":
                     raise UserError(u'执行阶段必须上传'+pdfswy+pdfqw+fktj)
-
             sql="UPDATE  agreement set stage_id=%s where id=%s"
             self._cr.execute(sql,(vals['stage_id'],self.id))
             return True
@@ -305,6 +379,12 @@ class TierValidation(models.AbstractModel):
             self._cr.execute(sql, (plan_sign_time, self.id))
             return True
 
+        if not message_main_attachment_id:
+            sql = "UPDATE  agreement set plan_sign_time=%s where id=%s"
+            if vals['message_main_attachment_id']:
+                message_main_attachment_id=vals['message_main_attachment_id']
+            self._cr.execute(sql, (message_main_attachment_id, self.id))
+            return True
         for rec in self:
             if (getattr(rec, self._state_field) in self._state_from and
                     vals.get(self._state_field) in self._state_to):
@@ -325,6 +405,7 @@ class TierValidation(models.AbstractModel):
                     (self._state_to + [self._cancel_state]) and not
                     self._check_allow_write_under_validation(vals)):
                 raise ValidationError(_("The operation is under validation."))
+
         if vals.get(self._state_field) in self._state_from:
             self.mapped('review_ids').unlink()
         return super(TierValidation, self).write(vals)
@@ -344,3 +425,4 @@ class TierReview(models.Model):
     )
     tier_stage_id = fields.Integer("stage")
     is_send_email=fields.Boolean("is_send_email")
+    comment_temp = fields.Char('comment Temp')
