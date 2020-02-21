@@ -24,7 +24,7 @@ class Task(models.Model):
         # if not self.questionnaire_ids or not [page.question_ids for questionnaire in self.questionnaire_ids if page.question_ids]:
         #     raise UserError(_('You cannot send an invitation for a survey that has no questions.'))
 
-        if self.stage_id.name != '评估准备':
+        if self.stage_id.name == '评估结果' or self.stage_id.name == '后续行动':
             raise UserError(_("You cannot send invitations for closed surveys."))
 
         if self.questionnaire_ids:
