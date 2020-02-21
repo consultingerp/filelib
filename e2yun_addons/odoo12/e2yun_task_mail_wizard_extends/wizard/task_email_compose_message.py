@@ -195,7 +195,7 @@ class SurveyMailComposeMessage(models.TransientModel):
                     for input in survey_user_input:
                         input_token.append(input.token)
                     return input_token
-            if wizard.public !=  'email_private':
+            if wizard.public != 'email_private':
                 return None
             else:
                 token = pycompat.text_type(uuid.uuid4())

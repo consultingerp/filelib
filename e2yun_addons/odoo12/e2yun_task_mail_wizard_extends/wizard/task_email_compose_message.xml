@@ -39,7 +39,7 @@
                                 placeholder="Add a list of email of recipients (will not be converted into contacts). Separated by commas, semicolons or newline..."/>
                             <field name="subject" placeholder="Subject..."/>
                         </group>
-                        <field name="body" options="{'style-inline': true}"/>
+                        <field name="body" options="{'style-inline': true}" attrs="{'invisible': [('public','=','email_public_link')]}"/>
                         <group col="2">
                             <div>
                                 <label for="attachment_ids" />
