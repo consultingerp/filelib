@@ -64,7 +64,7 @@ class SurveyMailComposeMessage(models.TransientModel):
     @api.onchange('public')
     def onchange_partner_ids(self):
         if self.public == 'send_internal_process_messages':
-            domain = [('partner_share', '=', 'True')]
+            domain = [('user_id.share', '=', False)]
             return {
                 'domain': {'partner_ids': domain}
             }
