@@ -129,11 +129,10 @@ class SurveyMailComposeMessage(models.TransientModel):
             for u in wizard.survey_ids:
                 token = create_token(wizard, partner_id, email, u.id)
                 url = u.public_url
+                name = u.title
                 if token:
                     url = url + '/'+ token
-                body_a = body_a + """<a href='""" + url + """' style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
-                        开始调查
-                    </a>"""
+                body_a = body_a + """<a href='""" + url + """' style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">"""+ name + """</a>"""
 
             body = """
                 <div style="margin: 0px; padding: 0px; font-size: 13px;">
