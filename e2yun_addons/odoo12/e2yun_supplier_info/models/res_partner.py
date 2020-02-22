@@ -64,6 +64,14 @@ class res_partner(models.Model):
     website = fields.Char()
     # 修改供应商默认属性
 
+
+    @api.model
+    def create(self, values):
+        print("=================================创建合作伙伴开始==================================", values)
+        user = super(res_partner, self).create(values)
+        print("=================================创建合作伙伴==================================")
+        return user
+
     # 国家省份联动：
     @api.onchange('country_id')
     def _onchange_country_id(self):
