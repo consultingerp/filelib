@@ -2,7 +2,6 @@
 
 from odoo import models, fields, api
 
-
 class res_partner(models.Model):
     _inherit = 'res.partner'
 
@@ -21,17 +20,13 @@ class res_partner(models.Model):
 
     listed_company = fields.Boolean('是否上市')
 
-    # 新增添字段
+    #新增添字段
     comment = fields.Text(string='Notes')
     # 供应商类型
-    suppliertype_ids = fields.Many2many('supplier.type', string='供应商类型')
+    suppliertype_ids = fields.Many2many('supplier.type',string='供应商类型')
 
-    nature_enterprise = fields.Selection(
-        [('State Administrative Enterprises', '国家行政企业'), ('Public-Private Cooperative Enterprises', '公私合作企业'),
-         ('Sino-foreign joint ventures', '中外合资企业'), ('Social Organizations', '社会组织机构'),
-         ('International Organization Institutions', '国际组织机构'), ('Foreign enterprise', '外资企业'),
-         ('private enterprise', '私营企业'), ('Collective enterprise', '集体企业'), ('Defense Military Enterprises', '国防军事企业')],
-        '企业性质')
+
+    nature_enterprise = fields.Selection([('State Administrative Enterprises', '国家行政企业'), ('Public-Private Cooperative Enterprises', '公私合作企业'), ('Sino-foreign joint ventures', '中外合资企业'), ('Social Organizations', '社会组织机构'), ('International Organization Institutions', '国际组织机构'), ('Foreign enterprise', '外资企业'), ('private enterprise', '私营企业'), ('Collective enterprise', '集体企业'), ('Defense Military Enterprises', '国防军事企业')], '企业性质')
     registered_address = fields.Char('注册地址')
     company_profile = fields.Text('公司简介')
     # 新增公司信息
@@ -67,19 +62,7 @@ class res_partner(models.Model):
     city = fields.Many2one('res.city', 'City', ondelete='restrict')
     street = fields.Char('详细地址')
     website = fields.Char()
-
     # 修改供应商默认属性
-
-    @api.model
-    def create(self, values):
-        # overridden to automatically invite user to sign up
-        if 'name' not in values and not values('name'):
-            if 'email' in values and values['email']:
-                values['name'] = values['email']
-            else:
-                values['name'] = 'nonameandnoemail'
-        user = super(res_partner, self).create(values)
-        return user
 
     # 国家省份联动：
     @api.onchange('country_id')
