@@ -321,9 +321,8 @@ class SurveyMailComposeMessage(models.TransientModel):
             body_a = """"""
             for u in survey.browse(survey_ids):
                 url = u.public_url
-                body_a = body_a + """<a href='""" + url + """' style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
-                         开始调查
-                     </a>"""
+                name = u.title
+                body_a = body_a + """<a href='""" + url + """' style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">""" + name + """</a>"""
 
             body = """
                  <div style="margin: 0px; padding: 0px; font-size: 13px;">
