@@ -2,7 +2,7 @@
 import json
 
 from odoo import http
-from addons.website_form.controllers.main import WebsiteForm
+from odoo.addons.website_form.controllers.main import WebsiteForm
 from odoo.http import request
 from psycopg2 import IntegrityError
 from odoo.exceptions import ValidationError
