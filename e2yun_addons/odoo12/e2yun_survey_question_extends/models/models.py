@@ -89,6 +89,19 @@ class e2yun_survey_question_extends(models.Model):
         self.scoring_method = self.reference_existing_question.scoring_method
         self.labels_ids = self.reference_existing_question.labels_ids
 
+    @api.onchange('labels_ids')
+    def _onchange_labels_ids(self):
+        if self.scoring_method == '唯一性计分':
+            all = []
+            for label in self.labels_ids:
+                if label.quizz_mark > 0.0:
+                    all.append(label.quizz_mark)
+            if len(all) >= 2:
+                # statistics = all.count(0.0)
+                # if count > 2 or count == 1 or statistics == 0:
+                raise exceptions.Warning(_('唯一性计分只能给一个选项赋值，其他为0，请重新输入'))
+
+
     # 唯一性计分分值超出则弹框提醒；选择性计分只能有唯一答案，但每个选项都有分数，否则弹框提醒。
     @api.multi
     def write(self, vals):
