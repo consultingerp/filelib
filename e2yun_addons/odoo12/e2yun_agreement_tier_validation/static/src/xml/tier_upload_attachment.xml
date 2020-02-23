@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+    <t t-name="tier.upload.attachment">
+        <div>
+
+         <div class="o_chatter_composer_tools">
+               <button tabindex="5" class="btn btn-secondary fa fa-paperclip o_composer_button_add_attachment" type="button" aria-label="Add attachment" title="Add attachment"/>
+         </div>
+        <div class="o_composer_attachments_list"/>
+        <span class="d-none">
+            <t t-call="HiddenInputFile">
+                <t t-set="fileupload_id" t-value="widget.fileuploadID"/>
+                <t t-set="fileupload_action" t-translation="off">/web/binary/upload_attachment</t>
+                <t t-set="multi_upload" t-value="true"/>
+                <input type="hidden" name="model" value="mail.compose.message"/>
+                <input type="hidden" name="id" value="0"/>
+                <input type="hidden" name="session_id" t-att-value="widget.getSession().session_id"/>
+            </t>
+         </span>
+
+        </div>
+
+    </t>
+
+
+</templates>
