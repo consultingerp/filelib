@@ -1,0 +1,13 @@
+<odoo>
+    <record id="test_for_input_action_client" model="ir.actions.client">
+        <field name="name">输入界面测试</field>
+        <field name="tag">input_test_report</field>
+    </record>
+
+    <menuitem
+        id="input_test_report_menu"
+        name="Input Test"
+        action="test_for_input_action_client"
+        sequence="2"
+        parent="mrp_mps.mrp_mps_menu_planning"/>
+</odoo>
