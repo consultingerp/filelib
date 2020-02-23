@@ -33,13 +33,14 @@
                                 invisible="context.get('survey_resent_token')"
                                 widget="many2many_tags_email"
                                 placeholder="Add existing contacts..."
-                                context="{'force_email':True, 'show_email':True}" />
+                                context="{'force_email':True, 'show_email':True}"
+                                options="{'no_create_edit':1}"/>
                             <field name="multi_email"
                                 invisible="context.get('survey_resent_token')"
                                 placeholder="Add a list of email of recipients (will not be converted into contacts). Separated by commas, semicolons or newline..."/>
                             <field name="subject" placeholder="Subject..."/>
                         </group>
-                        <field name="body" options="{'style-inline': true}"/>
+                        <field name="body" options="{'style-inline': true}" attrs="{'invisible': [('public','in',['email_public_link', 'send_internal_process_messages'])]}"/>
                         <group col="2">
                             <div>
                                 <label for="attachment_ids" />

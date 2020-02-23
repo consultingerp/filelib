@@ -64,7 +64,7 @@ class SurveyMailComposeMessage(models.TransientModel):
     @api.onchange('public')
     def onchange_partner_ids(self):
         if self.public == 'send_internal_process_messages':
-            domain = [('partner_share', '=', 'True')]
+            domain = [('user_ids.share', '=', False)]
             return {
                 'domain': {'partner_ids': domain}
             }
@@ -123,50 +123,26 @@ class SurveyMailComposeMessage(models.TransientModel):
         Mail = self.env['mail.mail']
         notif_layout = self.env.context.get('notif_layout', self.env.context.get('custom_layout'))
 
-        def create_response_and_send_mail(wizard, token, partner_id, email):
+        def create_response_and_send_mail(wizard, partner_id, email):
             """ Create one mail by recipients and replace __URL__ by link with identification token """
-            #set url
-            urls = []
-            for u in wizard.survey_ids:
-                 urls.append(u.public_url)
-            if token:
-                for index in range(len(wizard.survey_ids)):
-                    urls = urls.replace(index, urls[index] + token[index])
-
-                # if len(wizard.survey_ids) == 1:
-                #     urls = urls.replace(0,urls[0]+token[0])
-                # elif len(wizard.survey_ids) == 2:
-                #     urls = urls.replace(0,urls[0]+token[0])
-                #     urls = urls.replace(1,urls[1]+token[1])
-                # elif len(wizard.survey_ids) == 3:
-                #     urls = urls.replace(0,urls[0]+token[0])
-                #     urls = urls.replace(1,urls[1]+token[1])
-                #     urls = urls.replace(2, urls[2] + token[2])
-            # urls = wizard.survey_id.public_url
-
-            # if token:
-            #     urls = []
-            #     for ul in urls:
-            #         ul = ul + '/' + token
-            #         urls.append(ul)
-            # post the message:判断问卷的个数，在进行url的替换
-
             body_a = ""
-
-            for u in urls:
-                body_a = body_a + """<a href='"""+u+"""' style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
-                            Start Survey
-                        </a>"""
+            for u in wizard.survey_ids:
+                token = create_token(wizard, partner_id, email, u.id)
+                url = u.public_url
+                name = u.title
+                if token:
+                    url = url + '/'+ token
+                body_a = body_a + """<a href='""" + url + """' style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">"""+ name + """</a>"""
 
             body = """
                 <div style="margin: 0px; padding: 0px; font-size: 13px;">
                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
-                        Hello<br /><br />
-                        We are conducting a survey, and your response would be appreciated.
+                        您好<br /><br />
+                        我们正在进行调查，您的回复将不胜感激。
                         <div style="margin: 16px 0px 16px 0px;">
                             """+body_a+"""
                         </div>
-                        Thanks for your participation!
+                        谢您的参与！
                     </p>
                 </div> 
            """
@@ -186,66 +162,6 @@ class SurveyMailComposeMessage(models.TransientModel):
             else:
                 values['email_to'] = email
 
-            # url1 = urls[0]
-            # url2 = urls[1]
-            # url3 = urls[2]
-            # if len(wizard.survey_ids) == 1:
-            #     url = urls[0]
-            #     values = {
-            #         'model': None,
-            #         'res_id': None,
-            #         'subject': wizard.subject,
-            #         'body': wizard.body.replace("__URL__", url),
-            #         'body_html': wizard.body.replace("__URL__", url),
-            #         'parent_id': None,
-            #         'attachment_ids': wizard.attachment_ids and [(6, 0, wizard.attachment_ids.ids)] or None,
-            #         'email_from': wizard.email_from or None,
-            #         'auto_delete': True,
-            #     }
-            #     if partner_id:
-            #         values['recipient_ids'] = [(4, partner_id)]
-            #     else:
-            #         values['email_to'] = email
-            #
-            # elif len(wizard.survey_ids) == 2:
-            #     url1 = urls[0]
-            #     url2 = urls[1]
-            #     values = {
-            #         'model': None,
-            #         'res_id': None,
-            #         'subject': wizard.subject,
-            #         'body': wizard.body.replace("zhangsan", url1).replace("lisi", url2),
-            #         'body_html': wizard.body.replace("zhangsan", url1).replace("lisi", url2),
-            #         'parent_id': None,
-            #         'attachment_ids': wizard.attachment_ids and [(6, 0, wizard.attachment_ids.ids)] or None,
-            #         'email_from': wizard.email_from or None,
-            #         'auto_delete': True,
-            #     }
-            #     if partner_id:
-            #         values['recipient_ids'] = [(4, partner_id)]
-            #     else:
-            #         values['email_to'] = email
-            # elif len(wizard.survey_ids) == 3:
-            #     url1 = urls[0]
-            #     url2 = urls[1]
-            #     url3 = urls[2]
-            #     values = {
-            #         'model': None,
-            #         'res_id': None,
-            #         'subject': wizard.subject,
-            #         'body': wizard.body.replace("zhangsan", url1).replace("lisi", url2).replace("wangwu", url3),
-            #         'body_html': wizard.body.replace("zhangsan", url1).replace("lisi", url2).replace("wangwu", url3),
-            #         'parent_id': None,
-            #         'attachment_ids': wizard.attachment_ids and [(6, 0, wizard.attachment_ids.ids)] or None,
-            #         'email_from': wizard.email_from or None,
-            #         'auto_delete': True,
-            #     }
-            #     if partner_id:
-            #         values['recipient_ids'] = [(4, partner_id)]
-            #     else:
-            #         values['email_to'] = email
-
-            # optional support of notif_layout in context
             if notif_layout:
                 try:
                     template = self.env.ref(notif_layout, raise_if_not_found=True)
@@ -262,42 +178,17 @@ class SurveyMailComposeMessage(models.TransientModel):
 
             Mail.create(values).send()
 
-        def create_token(wizard, partner_id, email):
+        def create_token(wizard, partner_id, email,survey_id):
             if context.get("survey_resent_user_input"):
                 survey_user_input = SurveyUserInput.browse(context.get("survey_resent_user_input"))
                 if survey_user_input.state in ('new', 'skip'):
                     return survey_user_input.token
             if context.get("survey_resent_token"):
-                all_surveys = []
-                for survey in wizard.survey_ids:
-                    all_surveys.append(survey.id)
                 survey_user_input = []
-                if len(all_surveys) == 1:
-                    survey_user_input.append(SurveyUserInput.search([('survey_id', '=', all_surveys[0]),
-                        ('state', 'in', ['new', 'skip']), '|', ('partner_id', '=', partner_id),
-                        ('email', '=', email)], limit=1))
-                    # if survey_user_input:
-                    #     return survey_user_input.token
-                elif len(all_surveys) == 2:
-                    survey_user_input.append(SurveyUserInput.search([('survey_id', '=', all_surveys[0]),
-                        ('state', 'in', ['new', 'skip']), '|', ('partner_id', '=', partner_id),
-                        ('email', '=', email)], limit=1))
-                    survey_user_input.append(SurveyUserInput.search([('survey_id', '=', all_surveys[1]),
-                                                ('state', 'in', ['new', 'skip']), '|', ('partner_id', '=', partner_id),
-                                                ('email', '=', email)], limit=1))
-                    # if survey_user_input:
-                    #     return survey_user_input.token
-                elif len(all_surveys) == 3:
-                    survey_user_input.append(SurveyUserInput.search([('survey_id', '=', all_surveys[0]),
-                        ('state', 'in', ['new', 'skip']), '|', ('partner_id', '=', partner_id),
-                        ('email', '=', email)], limit=1))
-                    survey_user_input.append(SurveyUserInput.search([('survey_id', '=', all_surveys[1]),
-                                                ('state', 'in', ['new', 'skip']), '|', ('partner_id', '=', partner_id),
-                                                ('email', '=', email)], limit=1))
-                    survey_user_input.append(SurveyUserInput.search([('survey_id', '=', all_surveys[2]),
-                                                                     ('state', 'in', ['new', 'skip']), '|',
-                                                                     ('partner_id', '=', partner_id),
-                                                                     ('email', '=', email)], limit=1))
+                survey_user_input.append(SurveyUserInput.search([('survey_id', '=', survey_id),
+                                                                 ('state', 'in', ['new', 'skip']), '|',
+                                                                 ('partner_id', '=', partner_id),
+                                                                 ('email', '=', email)], limit=1))
                 if survey_user_input:
                     input_token = []
                     for input in survey_user_input:
@@ -309,7 +200,7 @@ class SurveyMailComposeMessage(models.TransientModel):
                 token = pycompat.text_type(uuid.uuid4())
                 # create response with token
                 survey_user_input = SurveyUserInput.create({
-                    'survey_id': wizard.survey_id.id,
+                    'survey_id': survey_id,
                     'deadline': wizard.date_deadline,
                     'date_create': fields.Datetime.now(),
                     'type': 'link',
@@ -351,12 +242,12 @@ class SurveyMailComposeMessage(models.TransientModel):
 
             for email in emails_list:
                 partner = Partner.search([('email', '=', email)], limit=1)
-                token = create_token(wizard, partner.id, email)
-                create_response_and_send_mail(wizard, token, partner.id, email)
+                # token = create_token(wizard, partner.id, email)
+                create_response_and_send_mail(wizard, partner.id, email)
 
             for partner in partner_list:
-                token = create_token(wizard, partner['id'], partner['email'])
-                create_response_and_send_mail(wizard, token, partner['id'], partner['email'])
+                # token = create_token(wizard, partner['id'], partner['email'])
+                create_response_and_send_mail(wizard, partner['id'], partner['email'])
 
         return {'type': 'ir.actions.act_window_close'}
 
@@ -424,6 +315,27 @@ class SurveyMailComposeMessage(models.TransientModel):
             else:
                 subtype_id = self.env['ir.model.data'].xmlid_to_res_id('mail.mt_comment')
 
+            #消息内容
+            survey_ids = wizard._context['default_survey_ids']
+            survey = self.env['survey.survey']
+            body_a = """"""
+            for u in survey.browse(survey_ids):
+                url = u.public_url
+                name = u.title
+                body_a = body_a + """<a href='""" + url + """' style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">""" + name + """</a>"""
+
+            body = """
+                 <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                         您好<br /><br />
+                         我们正在进行调查，您的回复将不胜感激。
+                         <div style="margin: 16px 0px 16px 0px;">
+                             """ + body_a + """
+                         </div>
+                         谢您的参与！
+                     </p>
+                 </div> 
+            """
             for res_ids in sliced_res_ids:
                 batch_mails = Mail
                 all_mail_values = wizard.get_mail_values(res_ids)
@@ -431,6 +343,7 @@ class SurveyMailComposeMessage(models.TransientModel):
                     if wizard.composition_mode == 'mass_mail':
                         batch_mails |= Mail.create(mail_values)
                     else:
+                        mail_values['body'] = body
                         post_params = dict(
                             message_type=wizard.message_type,
                             subtype_id=subtype_id,
