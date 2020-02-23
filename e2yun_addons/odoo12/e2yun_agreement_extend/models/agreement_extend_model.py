@@ -15,6 +15,32 @@ class Agreement(models.Model):
     pdfqw = fields.Many2one('ir.attachment', string='Pdfqw',readonly='True' )
     fktj = fields.Many2one('ir.attachment', string='Fktj',readonly='True')
 
+    contract_text_attachment_ids = fields.Many2many(
+        'ir.attachment', 'agreement_contract_text_ir_attachments_rel',
+        'id', 'attachment_id', 'Contract Text')
+
+    pws_attachment_ids = fields.Many2many(
+        'ir.attachment', 'agreement_pws_ir_attachments_rel',
+        'id', 'attachment_id', 'PWS')
+
+    email_approval_attachment_ids = fields.Many2many(
+        'ir.attachment', 'agreement_email_approval_ir_attachments_rel',
+        'id', 'attachment_id', 'Email Approval')
+
+    pdfswy_attachment_ids = fields.Many2many(
+        'ir.attachment', 'agreement_pdfswy_ir_attachments_rel',
+        'id', 'attachment_id', 'PDF SWY')
+
+    pdfqw_attachment_ids = fields.Many2many(
+        'ir.attachment', 'agreement_pdfqw_ir_attachments_rel',
+        'id', 'attachment_id', 'PDF QW')
+
+    fktj_attachment_ids = fields.Many2many(
+        'ir.attachment', 'agreement_fktj_attachments_rel',
+        'id', 'attachment_id', 'Payment Clause')
+
+
+
     @api.onchange("x_studio_htbz")
     def onchange_x_studio_htbz(self):
         oldhtbz = self.env['agreement'].search([('id', '=', self._origin.id)])
@@ -171,9 +197,9 @@ class Agreement(models.Model):
 
         if 'stage_id' in vals.keys():
             if vals['stage_id']==7 and self.x_studio_htje\
-                    and self.partner_id and self.x_studio_jhhm_id:
+                    and self.x_studio_partner_id and self.x_studio_jhhm_id:
                 sql='update crm_lead set agreement_amount=%s,agreement_amount_usd=%s,agreement_code=%s,agreement_partner_id=%s where code=%s'
-                self._cr.execute(sql,(self.x_studio_htje,self.x_studio_mjhtje,self.id,self.partner_id.id,self.x_studio_jhhm_id))
+                self._cr.execute(sql,(self.x_studio_htje,self.x_studio_mjhtje,self.id,self.x_studio_partner_id.id,self.x_studio_jhhm_id))
 
         return super(Agreement,self).write(vals)
 

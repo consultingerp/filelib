@@ -5,7 +5,8 @@ import base64
 from odoo import api, fields, models, tools, _
 import xlrd
 import time
-
+from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError
 class AgreementPwsImport(models.TransientModel):
     _name = "agreement.pws.import"
     _description = "agreement pws Import"
@@ -20,16 +21,30 @@ class AgreementPwsImport(models.TransientModel):
         this = self[0]
         file =base64.decodestring(this.data)
         wb = xlrd.open_workbook(file_contents=file)
-        print(wb.sheet_names())
-        print(len(wb.sheets()))
+        #print(wb.sheet_names())
+        #print(len(wb.sheets()))
         if self.name=='solution':
             vals=this.pws_solution(wb)
             agreement=self.env['agreement'].create(vals)
         elif self.name=='odc':
             vals = this.pws_odc(wb)
             agreement = self.env['agreement'].create(vals)
+
         else:
             return  False
+
+        if agreement:
+            Model = self.env['ir.attachment']
+            attachment = Model.create({
+                'name': self.filename,
+                'datas': file,
+                'datas_fname': self.filename,
+                'res_model': 'agreement',
+                'res_id': 0
+            })
+            sql = "INSERT into agreement_pws_ir_attachments_rel(id,attachment_id)VALUES (%s,%s)"
+            self._cr.execute(sql, (agreement.id, attachment.id))
+
         return {
             'name': 'agreement',
             'view_mode': 'form',
@@ -51,8 +66,12 @@ class AgreementPwsImport(models.TransientModel):
                 parent = self.env['res.partner'].search(
                     [('name', 'ilike', cell_value),
                      ('company_id', '=', self.create_uid.company_id.id)], limit=1)
-                vals['partner_id'] = parent.id
-                vals['x_studio_customer_name'] = cell_value
+                if parent:
+                    vals['x_studio_partner_id'] = parent.id
+                    #vals['x_studio_customer_name'] = cell_value
+                else:
+                    raise UserError(("客户没有维护: %s")%(cell_value) )
+
 
             cell_value = table.cell(10, 5).value  # 客户所属BU
             if not (cell_value is None) and not (cell_value is ''):
@@ -163,8 +182,11 @@ class AgreementPwsImport(models.TransientModel):
                     parent = self.env['res.partner'].search(
                         [('name', 'ilike', cell_value),
                      ('company_id', '=', self.create_uid.company_id.id)], limit=1)
-                    vals['partner_id'] = parent.id
-                    vals['x_studio_customer_name']=cell_value
+                    if parent:
+                        vals['x_studio_partner_id'] = parent.id
+                        # vals['x_studio_customer_name'] = cell_value
+                    else:
+                        raise UserError(("客户没有维护: %s") % (cell_value))
 
                 cell_value = table.cell(6, 5).value  #机会编号
                 if not (cell_value is None) and not (cell_value is ''):
