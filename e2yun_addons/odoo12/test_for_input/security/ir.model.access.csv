@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_test_for_input_test_for_input,test_for_input.input_test,model_input_test,base.group_user,1,1,1,1
+access_test_for_input_test_for_input_value,test_for_input.input_test_value,model_input_test_value,base.group_user,1,1,1,1
