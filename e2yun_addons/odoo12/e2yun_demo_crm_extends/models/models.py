@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import models, fields, api, exceptions
 
 class e2yun_demo_crm_extends(models.Model):
     _inherit = "e2yun.customer.info"
@@ -110,6 +110,18 @@ class e2yun_demo_crm_extend_crm_lead(models.Model):
     proposal_type = fields.Selection([("recruiting", "邀请"),
                                       ("structured RFP", "招标"),
                                       ("prospecting", "探寻")], '方案类型', track_visibility='onchange')
+    @api.multi
+    def write(self, vals):
+        flag = self.env.context.get('falg_no_drop')
+        get_stage = vals.get('stage_id', False)
+        stage_per = self.env['crm.stage'].browse(get_stage).probability
+        if get_stage and stage_per == 0:
+            if flag == 20200220:
+                return super(e2yun_demo_crm_extend_crm_lead, self).write(vals)
+            else:
+                raise exceptions.Warning('请在商机中设置标记丢失/退出/暂停')
+        else:
+            return super(e2yun_demo_crm_extend_crm_lead, self).write(vals)
 
 class e2yun_demo_crm_extend_crm_lead_lost(models.TransientModel):
     _inherit = 'crm.lead.lost'

@@ -35,6 +35,22 @@
                 </xpath>
             </field>
         </record>
+        <!--标记失去按钮增加context:falg_no_drop-->
+        <record id="crm_case_form_view_oppor_democrm_extends2" model="ir.ui.view">
+            <field name="name">demo.crm.inherit.from.crm.lead2</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="e2yun_crm_lead_extends.crm_case_form_view_oppor_extends"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='%(crm.crm_lead_lost_action)d']" position="replace">
+                <button name="%(crm.crm_lead_lost_action)d" string="Mark Lost"
+                        type="action" class="oe_highlight"
+                        groups="ZCRM.lead close"
+                        context="{'falg_no_drop':20200220,'default_lead_id': active_id,'lost_reason':lost_reason,'btn_type':'Closed Lost','losssuspend_detail':losssuspend_detail}"
+                        attrs="{'invisible': [('active', '=', False),('probability', '&lt;', 100)]}"/>
+                </xpath>
+            </field>
+        </record>
+
 
         <record id="customerlost_view_partner_form_democrm_extends" model="ir.ui.view">
             <field name="name">customer.lost.view.partner.form.democrm.extends</field>
