@@ -18,7 +18,7 @@
                         <field name="survey_ids" readonly="context.get('default_survey_ids')" widget="many2many_tags"/>
                         <field name="public" widget="radio" invisible="context.get('survey_resent_token')" />
                     </group>
-                    <group col="1" invisible="context.get('survey_resent_token')" attrs="{'invisible':[('public','in',['email_public_link'])]}" class="oe_survey_email_public">
+                    <group col="1" invisible="context.get('survey_resent_token')" attrs="{'invisible':[('public','in',['email_private'])]}" class="oe_survey_email_public">
                         <div>
                             You can share your survey web public link and/or send private invitations to your audience. People can answer once per invitation, and whenever they want with the public web link (in this case, the "Login Required" setting must be disabled).
                         </div>
@@ -40,7 +40,7 @@
                                 placeholder="Add a list of email of recipients (will not be converted into contacts). Separated by commas, semicolons or newline..."/>
                             <field name="subject" placeholder="Subject..."/>
                         </group>
-                        <field name="body" options="{'style-inline': true}" attrs="{'invisible': [('public','in',['email_public_link', 'send_internal_process_messages'])]}"/>
+                        <field name="body" options="{'style-inline': true}" attrs="{'invisible': [('public','in',['email_private', 'send_internal_process_messages'])]}"/>
                         <group col="2">
                             <div>
                                 <label for="attachment_ids" />
@@ -52,7 +52,7 @@
                             </div>
                         </group>
                     </group>
-                    <footer attrs="{'invisible':[('public','in',['email_public_link', 'send_internal_process_messages'])]}">
+                    <footer attrs="{'invisible':[('public','in',['email_private', 'send_internal_process_messages'])]}">
                         <button string="Close" class="btn-primary" special="cancel" />
                     </footer>
                     <footer attrs="{'invisible':['|',('public','=',False),('public','in',['public_link', 'send_internal_process_messages'])]}">
@@ -66,7 +66,7 @@
                             <button icon="fa-save" type="object" name="save_as_template" string="Save as new template" class="oe_link" help="Save as a new template" />
                         </group>
                     </footer>
-                    <footer attrs="{'invisible':[('public','in',['public_link', 'email_public_link'])]}">
+                    <footer attrs="{'invisible':[('public','in',['public_link', 'email_private'])]}">
                         <button string="Send" name="action_send_mail" type="object" class="btn-primary" />
                         <div>
                             Use template
