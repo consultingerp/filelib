@@ -80,3 +80,53 @@ msgstr "合同编号"
 #: model:ir.model.fields,field_description:e2yun_agreement_extend.field_crm_lead__agreement_partner_id
 msgid "Agreement Partner"
 msgstr "合同客户"
+
+
+#. module: e2yun_agreement_extend
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_extend.view_agreement_file_import
+msgid "_Import"
+msgstr "导入"
+
+
+
+#. module: e2yun_agreement_extend
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_extend.view_agreement_file_import
+msgid "Cancel"
+msgstr "取消"
+
+
+
+#. module: e2yun_agreement_extend
+#: model:ir.model.fields,field_description:e2yun_agreement_extend.field_agreement__contract_text_attachment_ids
+msgid "Contract Text"
+msgstr "合同文本"
+
+
+#. module: e2yun_agreement_extend
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_extend.agreement_form_view_extend_default_download_group
+msgid "Contract Text"
+msgstr "合同文本"
+
+
+#. module: e2yun_agreement_extend
+#: model:ir.model.fields,field_description:e2yun_agreement_extend.field_agreement__email_approval_attachment_ids
+msgid "Email Approval"
+msgstr "PWS审批邮件"
+
+
+#. module: e2yun_agreement_extend
+#: model:ir.model.fields,field_description:e2yun_agreement_extend.field_agreement__pdfswy_attachment_ids
+msgid "PDF SWY"
+msgstr "PDF首尾页"
+
+
+#. module: e2yun_agreement_extend
+#: model:ir.model.fields,field_description:e2yun_agreement_extend.field_agreement__pdfqw_attachment_ids
+msgid "PDF QW"
+msgstr "PDF全文"
+
+
+#. module: e2yun_agreement_extend
+#: model:ir.model.fields,field_description:e2yun_agreement_extend.field_agreement__fktj_attachment_ids
+msgid "Payment Clause"
+msgstr "付款条件"

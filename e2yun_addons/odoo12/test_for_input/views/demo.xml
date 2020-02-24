@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="input_demo_value" model="ir.ui.view">
+        <field name="name">输入测试</field>
+        <field name="model">input.test</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="test_ids" widget="x2many_2d_matrix"
+                       field_x_axis="x_value" field_y_axis="y_value" field_value="input_value">
+                    <tree>
+                        <field name="x_value"/>
+                        <field name="y_value"/>
+                        <field name="input_value"/>
+                    </tree>
+                </field>
+            </form>
+        </field>
+    </record>
+
+    <record id="input_demo_selection" model="ir.ui.view">
+        <field name="name">输入测试</field>
+        <field name="model">input.test</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="test_ids" widget="x2many_2d_matrix"
+                       field_x_axis="x_value" field_y_axis="y_value" field_value="select_value">
+                    <tree>
+                        <field name="x_value"/>
+                        <field name="y_value"/>
+                        <field name="select_value"/>
+                    </tree>
+                </field>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_input_selection" model="ir.actions.act_window">
+        <field name="name">选择项输入测试</field>
+        <field name="res_model">input.test</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="input_demo_selection"/>
+    </record>
+
+    <record id="action_input_value" model="ir.actions.act_window">
+        <field name="name">输入测试</field>
+        <field name="res_model">input.test</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="input_demo_value"/>
+    </record>
+
+    <menuitem
+    id="input_test_selection"
+    name="input test selection"
+    parent = 'web_widget_x2many_2d_matrix_example.base_matrix_widget_menu'
+    action="action_input_selection"/>
+
+    <menuitem
+    id="input_test"
+    name="input test value"
+    parent = 'web_widget_x2many_2d_matrix_example.base_matrix_widget_menu'
+    action="action_input_value"/>
+
+</odoo>

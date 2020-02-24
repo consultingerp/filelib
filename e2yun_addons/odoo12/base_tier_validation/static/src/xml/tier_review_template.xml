@@ -17,6 +17,7 @@
     </t>
 
     <t t-name="tier.review.ReviewsTable">
+
         <table class="oe_mt32 table table-condensed">
             <thead>
                 <tr>
@@ -42,12 +43,13 @@
                         <td class="text-center">
                             <span t-esc="review.name"/>
                         </td>
+
                         <td class="text-center">
                             <t t-if="review.comment">
                                  <span t-esc="review.comment"/>
                             </t>
                         </td>
-                         <td class="text-center">
+                         <td class="text-center" >
                             <span t-esc="review.display_status"/>
                         </td>
                         <!--
