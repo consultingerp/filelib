@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'e2yun_customer_info'],
+    'depends': ['base', 'e2yun_customer_info', 'e2yun_crm_lead_extends'],
 
     # always loaded
     'data': [
