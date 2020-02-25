@@ -42,15 +42,46 @@
             <field name="inherit_id" ref="e2yun_crm_lead_extends.crm_case_form_view_oppor_extends"/>
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='%(crm.crm_lead_lost_action)d']" position="replace">
-                <button name="%(crm.crm_lead_lost_action)d" string="Mark Lost"
-                        type="action" class="oe_highlight"
-                        groups="ZCRM.lead close"
-                        context="{'falg_no_drop':20200220,'default_lead_id': active_id,'lost_reason':lost_reason,'btn_type':'Closed Lost','losssuspend_detail':losssuspend_detail}"
-                        attrs="{'invisible': [('active', '=', False),('probability', '&lt;', 100)]}"/>
+                    <button name="%(crm.crm_lead_lost_action)d" string="标记失去"
+                            type="action" class="oe_highlight"
+                            groups="ZCRM.lead close"
+                            context="{'falg_no_drop':20200220,'default_lead_id': active_id,'lost_reason':lost_reason,'btn_type':'Closed Lost','losssuspend_detail':losssuspend_detail}"
+                            attrs="{'invisible': [('active', '=', False),('probability', '&lt;', 100)]}"/>
+                </xpath>
+                <xpath expr="//page[@name='alliance']" position="after">
+                    <page name="products" string="产品" attrs="{'invisible': [('stage_id', '!=', 4)]}">
+                        <field name="lead_line_ids"/>
+                    </page>
+                    <page name="studio_page_Km9R7" string="机会商务信息" attrs="{'invisible': [('stage_id', '!=', 4)]}">
+                        <group name="studio_group_Km9R7">
+                            <group name="studio_group_Km9R7_left">
+                                <field name="x_studio_role" string="签约角色"/>
+                                <field name="x_studio_cgm"/>
+                                <field name="x_studio_project_start_date" string="项目开始日期"/>
+                                <field name="x_studio_project_end_date" string="项目完成日期"/>
+                            </group>
+                            <group name="studio_group_Km9R7_right">
+                                <field name="x_studio_offshore_effort_" string="离岸人员比例(%)"/>
+                                <field name="x_studio_quantity" string="预计人数"/>
+                                <field name="x_studio_customer_budget" string="客户预算"/>
+                                <field name="x_studio_digital_code" string="数字代码"/>
+                            </group>
+                        </group>
+                    </page>
                 </xpath>
             </field>
         </record>
 
+        <record id="crm_case_form_view_oppor_demo_extends" model="ir.ui.view">
+            <field name="name">crm.lead.form.oppor.demo.extends</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_lead_product.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+                <page name="products" position="replace">
+<!--                    <attribute name="invisible">1</attribute>-->
+                </page>
+            </field>
+        </record>
 
         <record id="customerlost_view_partner_form_democrm_extends" model="ir.ui.view">
             <field name="name">customer.lost.view.partner.form.democrm.extends</field>
