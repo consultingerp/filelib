@@ -47,7 +47,7 @@ class SurveyMailComposeMessage(models.TransientModel):
     # survey_id = fields.Many2many('survey.survey', string='Survey', default=default_survey_id, required=True)
     survey_ids = fields.Many2many('survey.survey', string='Survey', default=default_survey_ids, required=True)
     public = fields.Selection([('public_link', 'Share the public web link to your audience.'),
-                                ('email_public_link', 'Send by email the public web link to your audience.'),
+                                ('email_private', 'Send private invitation to your audience (only one response per recipient and per invitation.)'),
                                ('send_internal_process_messages', 'Send internal process messages.')],
                                 string='Share options', default='public_link', required=True)
     public_url = fields.Char(compute="_compute_survey_url", string="Public url")
@@ -194,9 +194,10 @@ class SurveyMailComposeMessage(models.TransientModel):
                     for input in survey_user_input:
                         input_token.append(input.token)
                     return input_token
-            if wizard.public != 'email_private':
+            # if wizard.public != 'email_private':
+            if wizard.public == 'public_link':
                 return None
-            else:
+            elif wizard.public == 'email_private':
                 token = pycompat.text_type(uuid.uuid4())
                 # create response with token
                 survey_user_input = SurveyUserInput.create({
@@ -315,48 +316,130 @@ class SurveyMailComposeMessage(models.TransientModel):
             else:
                 subtype_id = self.env['ir.model.data'].xmlid_to_res_id('mail.mt_comment')
 
-            #消息内容
+            SurveyUserInput = self.env['survey.user_input']
+            Partner = self.env['res.partner']
+            def create_token(wizard, partner_id, email, survey_id):
+                token = pycompat.text_type(uuid.uuid4())
+                # create response with token
+                survey_user_input = SurveyUserInput.create({
+                    'survey_id': survey_id,
+                    'deadline': wizard.date_deadline,
+                    'date_create': fields.Datetime.now(),
+                    'type': 'link',
+                    'state': 'new',
+                    'token': token,
+                    'partner_id': partner_id,
+                    'email': email})
+                return survey_user_input.token
+
+            # quick check of email list
+            emails_list = []
+            if wizard.multi_email:
+                emails = set(emails_split.split(wizard.multi_email)) - set(wizard.partner_ids.mapped('email'))
+                for email in emails:
+                    email = email.strip()
+                    if email_validator.match(email):
+                        emails_list.append(email)
+            # remove public anonymous access
+            partner_list = []
+            for partner in wizard.partner_ids:
+                partner_list.append({'id': partner.id, 'email': partner.email})
+            if not len(emails_list) and not len(partner_list):
+                if wizard.model == 'res.partner' and wizard.res_id:
+                    return False
+                raise UserError(_("Please enter at least one valid recipient."))
+
             survey_ids = wizard._context['default_survey_ids']
             survey = self.env['survey.survey']
             body_a = """"""
-            for u in survey.browse(survey_ids):
-                url = u.public_url
-                name = u.title
-                body_a = body_a + """<a href='""" + url + """' style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">""" + name + """</a>"""
+            for email in emails_list:
+                partner = Partner.search([('email', '=', email)], limit=1)
+                #消息内容
+                for u in survey.browse(survey_ids):
+                    url = u.public_url
+                    name = u.title
+                    token = create_token(wizard, partner.id, email, u.id)
+                    if token:
+                        url = url + '/' + token
+                    body_a = body_a + """<a href='""" + url + """' style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">""" + name + """</a>"""
 
-            body = """
-                 <div style="margin: 0px; padding: 0px; font-size: 13px;">
-                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
-                         您好<br /><br />
-                         我们正在进行调查，您的回复将不胜感激。
-                         <div style="margin: 16px 0px 16px 0px;">
-                             """ + body_a + """
-                         </div>
-                         谢您的参与！
-                     </p>
-                 </div> 
-            """
-            for res_ids in sliced_res_ids:
-                batch_mails = Mail
-                all_mail_values = wizard.get_mail_values(res_ids)
-                for res_id, mail_values in all_mail_values.items():
+                body = """
+                     <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                         <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                             您好<br /><br />
+                             我们正在进行调查，您的回复将不胜感激。
+                             <div style="margin: 16px 0px 16px 0px;">
+                                 """ + body_a + """
+                             </div>
+                             谢您的参与！
+                         </p>
+                     </div> 
+                """
+                for res_ids in sliced_res_ids:
+                    batch_mails = Mail
+                    all_mail_values = wizard.get_mail_values(res_ids)
+                    for res_id, mail_values in all_mail_values.items():
+                        if wizard.composition_mode == 'mass_mail':
+                            batch_mails |= Mail.create(mail_values)
+                        else:
+                            mail_values['body'] = body
+                            post_params = dict(
+                                message_type=wizard.message_type,
+                                subtype_id=subtype_id,
+                                notif_layout=notif_layout,
+                                add_sign=not bool(wizard.template_id),
+                                mail_auto_delete=wizard.template_id.auto_delete if wizard.template_id else False,
+                                model_description=model_description,
+                                **mail_values)
+                            if ActiveModel._name == 'mail.thread' and wizard.model:
+                                post_params['model'] = wizard.model
+                            ActiveModel.browse(res_id).message_post(**post_params)
+
                     if wizard.composition_mode == 'mass_mail':
-                        batch_mails |= Mail.create(mail_values)
-                    else:
-                        mail_values['body'] = body
-                        post_params = dict(
-                            message_type=wizard.message_type,
-                            subtype_id=subtype_id,
-                            notif_layout=notif_layout,
-                            add_sign=not bool(wizard.template_id),
-                            mail_auto_delete=wizard.template_id.auto_delete if wizard.template_id else False,
-                            model_description=model_description,
-                            **mail_values)
-                        if ActiveModel._name == 'mail.thread' and wizard.model:
-                            post_params['model'] = wizard.model
-                        ActiveModel.browse(res_id).message_post(**post_params)
+                        batch_mails.send(auto_commit=auto_commit)
 
-                if wizard.composition_mode == 'mass_mail':
-                    batch_mails.send(auto_commit=auto_commit)
+            for partner in partner_list:
+                # 消息内容
+                for u in survey.browse(survey_ids):
+                    url = u.public_url
+                    name = u.title
+                    token = create_token(wizard, partner['id'], partner['email'], u.id)
+                    if token:
+                        url = url + '/' + token
+                    body_a = body_a + """<a href='""" + url + """' style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">""" + name + """</a>"""
 
+                body = """
+                                     <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                                         <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                                             您好<br /><br />
+                                             我们正在进行调查，您的回复将不胜感激。
+                                             <div style="margin: 16px 0px 16px 0px;">
+                                                 """ + body_a + """
+                                             </div>
+                                             谢您的参与！
+                                         </p>
+                                     </div> 
+                                """
+                for res_ids in sliced_res_ids:
+                    batch_mails = Mail
+                    all_mail_values = wizard.get_mail_values(res_ids)
+                    for res_id, mail_values in all_mail_values.items():
+                        if wizard.composition_mode == 'mass_mail':
+                            batch_mails |= Mail.create(mail_values)
+                        else:
+                            mail_values['body'] = body
+                            post_params = dict(
+                                message_type=wizard.message_type,
+                                subtype_id=subtype_id,
+                                notif_layout=notif_layout,
+                                add_sign=not bool(wizard.template_id),
+                                mail_auto_delete=wizard.template_id.auto_delete if wizard.template_id else False,
+                                model_description=model_description,
+                                **mail_values)
+                            if ActiveModel._name == 'mail.thread' and wizard.model:
+                                post_params['model'] = wizard.model
+                            ActiveModel.browse(res_id).message_post(**post_params)
+
+                    if wizard.composition_mode == 'mass_mail':
+                        batch_mails.send(auto_commit=auto_commit)
 

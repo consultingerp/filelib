@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0+e-20190424\n"
+"Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-22 13:53+0000\n"
-"PO-Revision-Date: 2020-02-22 22:10+0800\n"
+"POT-Creation-Date: 2020-02-24 13:32+0000\n"
+"PO-Revision-Date: 2020-02-24 21:38+0800\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -169,6 +169,25 @@ msgid ""
 "            <!--</div>-->\n"
 "            "
 msgstr ""
+"<div></div>\n"
+"            <!--<div style=\"margin: 0px; padding: 0px; font-size: 13px;\">--"
+">\n"
+"                <!--<p style=\"margin: 0px; padding: 0px; font-size: 13px;"
+"\">-->\n"
+"                    <!--Hello<br /><br />-->\n"
+"                    <!--We are conducting a survey, and your response would "
+"be appreciated.-->\n"
+"                    <!--<div style=\"margin: 16px 0px 16px 0px;\">-->\n"
+"                        <!--<a href=\"__URL__\"-->\n"
+"                            <!--style=\"background-color: #875A7B; padding: "
+"8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; "
+"font-size:13px;\">-->\n"
+"                            <!--Start Survey-->\n"
+"                        <!--</a>-->\n"
+"                    <!--</div>-->\n"
+"                    <!--Thanks for your participation!-->\n"
+"                <!--</p>-->\n"
+"            <!--</div>-->"
 
 #. module: e2yun_task_mail_wizard_extends
 #: selection:task.mail.compose.message,moderation_status:0
@@ -541,13 +560,14 @@ msgid "Pending Moderation"
 msgstr "等待审核"
 
 #. module: e2yun_task_mail_wizard_extends
-#: code:addons/e2yun_task_mail_wizard_extends/wizard/task_email_compose_message.py:258
+#: code:addons/e2yun_task_mail_wizard_extends/wizard/task_email_compose_message.py:259
 #, python-format
 msgid "Please enter an existing contact or email list"
 msgstr "请输入现有的联系人或电子邮件列表"
 
 #. module: e2yun_task_mail_wizard_extends
-#: code:addons/e2yun_task_mail_wizard_extends/wizard/task_email_compose_message.py:241
+#: code:addons/e2yun_task_mail_wizard_extends/wizard/task_email_compose_message.py:242
+#: code:addons/e2yun_task_mail_wizard_extends/wizard/task_email_compose_message.py:350
 #, python-format
 msgid "Please enter at least one valid recipient."
 msgstr "请输入至少一个有效的收件人。"
@@ -621,13 +641,15 @@ msgstr "发送"
 
 #. module: e2yun_task_mail_wizard_extends
 #: selection:task.mail.compose.message,public:0
-msgid "Send by email the public web link to your audience."
-msgstr "通过电子邮件向您的听众发送公共web链接。"
+msgid "Send internal process messages."
+msgstr "发送内部消息。"
 
 #. module: e2yun_task_mail_wizard_extends
 #: selection:task.mail.compose.message,public:0
-msgid "Send internal process messages."
-msgstr "发送内部消息。"
+msgid ""
+"Send private invitation to your audience (only one response per recipient "
+"and per invitation.)"
+msgstr "向您的观众发送私人邮件(每个收件人只能答复一次)。"
 
 #. module: e2yun_task_mail_wizard_extends
 #: model_terms:ir.ui.view,arch_db:e2yun_task_mail_wizard_extends.task_form_extendds
@@ -677,6 +699,11 @@ msgstr "子类型"
 #. module: e2yun_task_mail_wizard_extends
 #: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__survey_ids
 msgid "Survey"
+msgstr "调查"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model:ir.model,name:e2yun_task_mail_wizard_extends.model_survey_user_input
+msgid "Survey User Input"
 msgstr "调查"
 
 #. module: e2yun_task_mail_wizard_extends
@@ -768,7 +795,7 @@ msgstr ""
 #: code:addons/e2yun_task_mail_wizard_extends/models/models.py:28
 #, python-format
 msgid "You cannot send invitations for closed surveys."
-msgstr ""
+msgstr "您不能发送封闭式调查的邀请。"
 
 #. module: e2yun_task_mail_wizard_extends
 #: model:mail.template,subject:e2yun_task_mail_wizard_extends.email_template_survey
