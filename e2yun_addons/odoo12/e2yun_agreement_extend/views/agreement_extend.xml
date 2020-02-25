@@ -81,11 +81,11 @@
                 <xpath expr="//group[@name='term_information']" position="after">
                     <group>
 
-                    <field name="email_approval_attachment_ids" widget="many2many_binary"  nolabel="1" colspan="2"/>
+                    <field name="email_approval_attachment_ids" widget="many2many_binary"  colspan="2"/>
                          <!--
                     <label for="contract_text_attachment_ids" string="Contract Text" class="o_form_label"/>
                      -->
-                    <field name="contract_text_attachment_ids" widget="many2many_binary"  nolabel="1" colspan="2"/>
+                    <field name="contract_text_attachment_ids" widget="many2many_binary"   colspan="2"/>
                     </group>
                 </xpath>
 
@@ -103,15 +103,15 @@
                          <!--
                     <label for="pdfswy_attachment_ids" string="PDF首尾页" class="o_form_label"/>
                             -->
-                    <field name="pdfswy_attachment_ids" widget="many2many_binary"   nolabel="1" colspan="2"/>
+                    <field name="pdfswy_attachment_ids" widget="many2many_binary"   colspan="2"/>
                            <!--
                     <label for="pdfqw_attachment_ids" string="PDF全文" class="o_form_label"/>
                         -->
-                    <field name="pdfqw_attachment_ids" widget="many2many_binary"  nolabel="1" colspan="2"/>
+                    <field name="pdfqw_attachment_ids" widget="many2many_binary"  colspan="2"/>
                         <!--
                     <label for="fktj_attachment_ids" string="付款条件" class="o_form_label"/>-->
 
-                    <field name="fktj_attachment_ids" widget="many2many_binary"  nolabel="1" colspan="2"/>
+                    <field name="fktj_attachment_ids" widget="many2many_binary"   colspan="2"/>
                     </group>
                     <!--
 
