@@ -40,9 +40,29 @@
 
        </xpath>
 
+
+        <xpath expr="//page[@name='products']" position="before">
+
+                 <page name="PWS" string="PWS">
+                            <field name="pws_line_ids" nolabel="1">
+                                <tree editable="top">
+                                    <field name="pid"/>
+                                    <field name="cgm"/>
+                                    <field name="x_studio_jfssbu"/>
+                                    <field name="x_studio_htbz"/>
+                                    <field name="x_studio_htje"/>
+                                    <field name="x_studio_mjhtje"/>
+                                    <field name="taxes_id" widget="many2many_tags"/>
+                                    <field name="pws_line_attachment_ids"  widget="many2many_binary"  options="{'no_open': True}" nolabel="1" colspan="2" groups="e2yun_agreement_extend.group_agreement_text_download"/>
+                                </tree>
+                            </field>
+                        </page>
+
+       </xpath>
+
         <button name="create_new_version" position="after">
              <button name="action_emil_send" string="Send by Email" type="object"  class="oe_highlight"/>
-             <button string="Import File" type="object" name="import_file" class="oe_highlight" />
+             <!-- <button string="Import File" type="object" name="import_file" class="oe_highlight" /> -->
         </button>
 
 
@@ -56,19 +76,12 @@
      <record id="agreement_form_view_extend_default_download_group" model="ir.ui.view">
             <field name="model">agreement</field>
             <field name="inherit_id" ref="agreement_legal.partner_agreement_form_view"/>
+            <field name="groups_id" eval="[(6, 0, [ref('e2yun_agreement_extend.group_agreement_text_download') ])]"/>
             <field name="arch" type="xml">
                 <xpath expr="//group[@name='term_information']" position="after">
                     <group>
-                        <!--
-                    <label for="pws_attachment_ids" string="PWS" class="o_form_label o_required_modifier"/>
-                        -->
-                    <field name="pws_attachment_ids" widget="many2many_binary"  nolabel="1" colspan="2"/>
 
-                             <!--
-                    <label for="email_approval_attachment_ids" string="PWS审批邮件" class="o_form_label"/>
-                -->
                     <field name="email_approval_attachment_ids" widget="many2many_binary"  nolabel="1" colspan="2"/>
-
                          <!--
                     <label for="contract_text_attachment_ids" string="Contract Text" class="o_form_label"/>
                      -->
@@ -198,7 +211,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="partner_agreement_search_view_extend">
+   <record model="ir.ui.view" id="partner_agreement_search_view_extend">
         <field name="name">Agreement Search</field>
         <field name="model">agreement</field>
         <field name="inherit_id" ref="agreement_legal.partner_agreement_search_view"/>

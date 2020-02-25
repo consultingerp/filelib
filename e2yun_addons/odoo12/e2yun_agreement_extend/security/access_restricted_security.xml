@@ -5,5 +5,9 @@
         <field name="name">合同下载PDF权限</field>
   </record>
 
+  <record model="res.groups" id="group_agreement_text_download">
+        <field name="name">合同文本下载</field>
+  </record>
+
 
 </odoo>
