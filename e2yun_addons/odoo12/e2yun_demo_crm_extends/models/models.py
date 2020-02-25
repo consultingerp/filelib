@@ -154,4 +154,30 @@ class e2yun_customer_info_lost(models.Model):
         if btn_rec:
             return btn_rec.with_context(cx).run()
 
+class E2yunCRMDemoMailActivity(models.Model):
+    _inherit = "mail.activity"
 
+    @api.onchange('crm_lead_id')
+    def onchange_crm_lead_res_id(self):
+        self.res_id = self.crm_lead_id.id
+
+    crm_lead_id = fields.Many2one('crm.lead', '对应商机', required=True)
+
+    # res_model_id = fields.Many2one(
+    #     'ir.model', 'Document Model',
+    #     index=True, ondelete='cascade', required=True, default=178)
+
+    @api.model
+    def default_get(self, fields_list):
+        flag = self.env.context.get('flag_crm_lead_activity', False)
+        if flag == 2020022501:
+            res = super(E2yunCRMDemoMailActivity, self).default_get(fields_list)
+            res.update({'res_model_id': 178})
+            return res
+        else:
+            return super(E2yunCRMDemoMailActivity, self).default_get(fields_list)
+
+    # @api.model
+    # def create(self, vals_list):
+    #     cx = self.env.context.copy()
+    #     return super(E2yunCRMDemoMailActivity, self).create(vals_list)
