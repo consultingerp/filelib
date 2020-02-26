@@ -46,7 +46,6 @@ class SurveyMailComposeMessage(models.TransientModel):
 
     def default_public_select(self):
         context = self.env.context
-        print(context, 'ooooooooooo')
         if context.get('default_model') == 'project.task':
             id = context.get('default_res_id')
             record = self.env['project.task'].search([('id', '=', id)])
