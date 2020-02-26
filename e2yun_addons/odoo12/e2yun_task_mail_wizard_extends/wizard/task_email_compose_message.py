@@ -44,12 +44,23 @@ class SurveyMailComposeMessage(models.TransientModel):
                     all_template.append(questionnaire.survey_temp_id.id)
                 return all_template
 
+    def default_public_select(self):
+        context = self.env.context
+        print(context, 'ooooooooooo')
+        if context.get('default_model') == 'project.task':
+            id = context.get('default_res_id')
+            record = self.env['project.task'].search([('id', '=', id)])
+            if record.questionnaire_classification == 'Internally':
+                return 'send_internal_process_messages'
+            else:
+                return 'email_private'
+
     # survey_id = fields.Many2many('survey.survey', string='Survey', default=default_survey_id, required=True)
     survey_ids = fields.Many2many('survey.survey', string='Survey', default=default_survey_ids, required=True)
     public = fields.Selection([('public_link', 'Share the public web link to your audience.'),
                                 ('email_private', 'Send private invitation to your audience (only one response per recipient and per invitation.)'),
                                ('send_internal_process_messages', 'Send internal process messages.')],
-                                string='Share options', default='public_link', required=True)
+                                string='Share options', default=default_public_select, required=True)
     public_url = fields.Char(compute="_compute_survey_url", string="Public url")
     public_url_html = fields.Char(compute="_compute_survey_url", string="Public HTML web link")
     # partner_ids = fields.Many2many('res.partner', 'survey_mail_compose_message_res_partner_rel', 'wizard_id', 'partner_id', string='Existing contacts')
@@ -368,7 +379,7 @@ class SurveyMailComposeMessage(models.TransientModel):
                     token = create_token(wizard, partner.id, email, u.id)
                     if token:
                         url = url + '/' + token
-                    body_a = body_a + """<a href='""" + url + """' style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">""" + name + """</a>"""
+                    body_a = body_a + """<a href='""" + url + """' target="_blank" style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">""" + name + """</a>"""
 
                 body = """
                      <div style="margin: 0px; padding: 0px; font-size: 13px;">
@@ -413,7 +424,7 @@ class SurveyMailComposeMessage(models.TransientModel):
                     token = create_token(wizard, partner['id'], partner['email'], u.id)
                     if token:
                         url = url + '/' + token
-                    body_a = body_a + """<a href='""" + url + """' style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">""" + name + """</a>"""
+                    body_a = body_a + """<a href='""" + url + """' target="_blank" style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">""" + name + """</a>"""
 
                 body = """
                                      <div style="margin: 0px; padding: 0px; font-size: 13px;">
