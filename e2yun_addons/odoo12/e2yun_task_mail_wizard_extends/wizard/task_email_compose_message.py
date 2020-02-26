@@ -68,6 +68,11 @@ class SurveyMailComposeMessage(models.TransientModel):
             return {
                 'domain': {'partner_ids': domain}
             }
+        elif self.public == 'email_private':
+            domain = [('user_ids.share', '=', True)]
+            return {
+                'domain': {'partner_ids': domain}
+            }
 
     @api.depends('survey_ids')
     def _compute_survey_url(self):
@@ -250,6 +255,8 @@ class SurveyMailComposeMessage(models.TransientModel):
                 # token = create_token(wizard, partner['id'], partner['email'])
                 create_response_and_send_mail(wizard, partner['id'], partner['email'])
 
+        if not self.partner_ids and not self.multi_email:
+            raise exceptions.Warning(_('Please select the existing contact person'))
         return {'type': 'ir.actions.act_window_close'}
 
     @api.multi
@@ -361,7 +368,7 @@ class SurveyMailComposeMessage(models.TransientModel):
                     token = create_token(wizard, partner.id, email, u.id)
                     if token:
                         url = url + '/' + token
-                    body_a = body_a + """<a href='""" + url + """' style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">""" + name + """</a>"""
+                    body_a = body_a + """<a href='""" + url + """' target="_blank" style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">""" + name + """</a>"""
 
                 body = """
                      <div style="margin: 0px; padding: 0px; font-size: 13px;">
@@ -406,7 +413,7 @@ class SurveyMailComposeMessage(models.TransientModel):
                     token = create_token(wizard, partner['id'], partner['email'], u.id)
                     if token:
                         url = url + '/' + token
-                    body_a = body_a + """<a href='""" + url + """' style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">""" + name + """</a>"""
+                    body_a = body_a + """<a href='""" + url + """' target="_blank" style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">""" + name + """</a>"""
 
                 body = """
                                      <div style="margin: 0px; padding: 0px; font-size: 13px;">
