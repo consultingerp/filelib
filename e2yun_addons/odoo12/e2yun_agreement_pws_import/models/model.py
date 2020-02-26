@@ -11,39 +11,86 @@ class AgreementPwsImport(models.TransientModel):
     _name = "agreement.pws.import"
     _description = "agreement pws Import"
 
-    name = fields.Selection((('solution','EAS PWS Industry Solution'), ('odc','EAS PWS ODC')), default="solution", string="The import type", required=True)
-    code = fields.Char('代码')
-    data = fields.Binary('File', required=True)
-    filename = fields.Char('File Name', required=True)
+    agreement_id = fields.Many2one(
+        "agreement",
+        string="agreement")
+
+    new = fields.Boolean(default=False)
+    name = fields.Selection((('solution','EAS PWS Industry Solution'), ('odc','EAS PWS ODC')), default="", string="The import type", required=True)
+    #code = fields.Char('代码')
+    #data = fields.Binary('File', required=True)
+    #filename = fields.Char('File Name', required=True)
+    import_pws_attachment_ids = fields.Many2many(
+        'ir.attachment', 'agreement_import_pws_ir_attachments_rel',
+        'id', 'attachment_id', 'Pws 文件')
+
 
     @api.multi
     def import_excel(self):
+        # if self.new==False and not self.agreement_id:
+        #     raise UserError("如果不是新建，请选择需要添加PWS的合同")
+        if not self.import_pws_attachment_ids:
+            return
+
+        status, headers, content=self.env['ir.http'].binary_content(xmlid=None, model='ir.attachment', id=self.import_pws_attachment_ids[0].id, field='datas', unique=False,
+                           filename=None, filename_field='datas_fname', download=False, mimetype=None,
+                           default_mimetype='application/octet-stream', related_id=None, access_mode=None,
+                           access_token=None,
+                           env=None)
+
         this = self[0]
-        file =base64.decodestring(this.data)
+        #content_base64 = base64.b64decode(content)
+        file =base64.decodestring(content)
         wb = xlrd.open_workbook(file_contents=file)
         #print(wb.sheet_names())
         #print(len(wb.sheets()))
         if self.name=='solution':
             vals=this.pws_solution(wb)
-            agreement=self.env['agreement'].create(vals)
+            if not self.agreement_id and self.new==True:
+                agreement=self.env['agreement'].create(vals)
+            else:
+                agreement=self.agreement_id
         elif self.name=='odc':
             vals = this.pws_odc(wb)
-            agreement = self.env['agreement'].create(vals)
-
+            if not self.agreement_id and self.new == True:
+                agreement = self.env['agreement'].create(vals)
+            else:
+                agreement = self.agreement_id
         else:
             return  False
 
-        if agreement:
-            Model = self.env['ir.attachment']
-            attachment = Model.create({
-                'name': self.filename,
-                'datas': file,
-                'datas_fname': self.filename,
-                'res_model': 'agreement',
-                'res_id': 0
+        #写行项目
+        if agreement and vals:
+            # Model = self.env['ir.attachment']
+            # attachment = Model.create({
+            #     'name': self.filename,
+            #     'datas': file,
+            #     'datas_fname': self.filename,
+            #     'res_model': 'agreement',
+            #     'res_id': 0
+            # })
+            #创建行项目
+            agreement_pws_lineObj=self.env['agreement.pws.line']
+            agreement_pws_lineObj.create({
+                'agreement_id':agreement.id,
+                'pid': '',
+                'cgm': '',
+                'x_studio_htje': vals['x_studio_htje'] if 'x_studio_htje' in vals.keys() else '',
+                'x_studio_jfssbu': vals['x_studio_jfssbu'] if 'x_studio_jfssbu' in vals.keys() else '',
+                'x_studio_htbz': vals['x_studio_htbz'] if 'x_studio_htbz' in vals.keys() else '',
+                'x_studio_mjhtje':vals['x_studio_mjhtje']if 'x_studio_mjhtje' in vals.keys() else '',
+                'pws_line_attachment_ids':[[6, False, [self.import_pws_attachment_ids[0].id]]],
             })
-            sql = "INSERT into agreement_pws_ir_attachments_rel(id,attachment_id)VALUES (%s,%s)"
-            self._cr.execute(sql, (agreement.id, attachment.id))
+
+            #写行项目附件
+            #sql = "INSERT into agreement_line_pws_ir_attachments_rel(id,attachment_id)VALUES (%s,%s)"
+            #self._cr.execute(sql, (agreement_pws_lineData.id, attachment.id))
+
+            #读取行项目数据汇总
+            if agreement.pws_line_ids:
+                for pwsObj in agreement.pws_line_ids:
+                    print(pwsObj.x_studio_htje)
+
 
         return {
             'name': 'agreement',
@@ -284,7 +331,7 @@ class AgreementPwsImport(models.TransientModel):
                     vals['x_studio_shwjxq'] = str(round(cell_value*100))+"%"
 
       except Exception as e:
-          print(e)
+          raise UserError(e)
       return vals
 
 

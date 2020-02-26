@@ -21,7 +21,7 @@ class Agreement(models.Model):
 
     pws_attachment_ids = fields.Many2many(
         'ir.attachment', 'agreement_pws_ir_attachments_rel',
-        'id', 'attachment_id', 'PWS')
+        'id', 'attachment_id', 'pws')
 
     email_approval_attachment_ids = fields.Many2many(
         'ir.attachment', 'agreement_email_approval_ir_attachments_rel',
@@ -39,6 +39,11 @@ class Agreement(models.Model):
         'ir.attachment', 'agreement_fktj_attachments_rel',
         'id', 'attachment_id', 'Payment Clause')
 
+    pws_line_ids = fields.One2many(
+        "agreement.pws.line",
+        "agreement_id",
+        string="PWS",
+        copy=False)
 
 
     @api.onchange("x_studio_htbz")
@@ -608,7 +613,6 @@ class AgreementLine(models.Model):
     price_subtotal = fields.Float(compute='_compute_amount', string='小计', store=True)
 
 
-
     @api.depends('qty', 'price_unit', 'taxes_id')
     def _compute_amount(self):
         for line in self:
@@ -630,3 +634,32 @@ class AgreementLine(models.Model):
             'qty': self.qty,
             'amount':self.taxes_id[0].amount/100,
         }
+
+
+
+class AgreementPwsLine(models.Model):
+    _name = "agreement.pws.line"
+    _description = "Agreement Pws Lines"
+
+    pid = fields.Char(
+        string="PID",
+        required=True)
+
+    cgm = fields.Char(
+        string="CGM")
+
+    pws_line_attachment_ids = fields.Many2many(
+        'ir.attachment', 'agreement_pws_line_ir_attachments_rel',
+        'id', 'attachment_id', 'PWS')
+
+    agreement_id = fields.Many2one(
+        "agreement",
+        string="Agreement",
+        ondelete="cascade")
+
+    taxes_id = fields.Many2many('account.tax', string='税率', domain=['|', ('active', '=', False), ('active', '=', True)])
+    x_studio_htje = fields.Float('htjr')
+    x_studio_jfssbu = fields.Char('jfssbu',)
+    x_studio_htbz= fields.Char('htbz',)
+    x_studio_mjhtje = fields.Float('mjhtjr')
+

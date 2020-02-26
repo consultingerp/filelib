@@ -30,3 +30,16 @@ msgstr "导入类型"
 #: model:ir.model.fields,field_description:e2yun_agreement_pws_import.field_agreement_pws_import__data
 msgid "File"
 msgstr "文件"
+
+
+#. module: e2yun_agreement_pws_import
+#: model:ir.model.fields,field_description:e2yun_agreement_pws_import.field_agreement_pws_import__agreement_id
+msgid "agreement"
+msgstr "合同"
+
+
+#. module: e2yun_agreement_pws_import
+#: model:ir.model.fields,field_description:e2yun_agreement_pws_import.field_agreement_pws_import__new
+msgid "new"
+msgstr "创建"
+
