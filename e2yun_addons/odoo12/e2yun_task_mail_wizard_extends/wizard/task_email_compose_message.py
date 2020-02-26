@@ -368,7 +368,7 @@ class SurveyMailComposeMessage(models.TransientModel):
                     token = create_token(wizard, partner.id, email, u.id)
                     if token:
                         url = url + '/' + token
-                    body_a = body_a + """<a href='""" + url + """' style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">""" + name + """</a>"""
+                    body_a = body_a + """<a href='""" + url + """' target="_blank" style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">""" + name + """</a>"""
 
                 body = """
                      <div style="margin: 0px; padding: 0px; font-size: 13px;">
@@ -413,7 +413,7 @@ class SurveyMailComposeMessage(models.TransientModel):
                     token = create_token(wizard, partner['id'], partner['email'], u.id)
                     if token:
                         url = url + '/' + token
-                    body_a = body_a + """<a href='""" + url + """' style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">""" + name + """</a>"""
+                    body_a = body_a + """<a href='""" + url + """' target="_blank" style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">""" + name + """</a>"""
 
                 body = """
                                      <div style="margin: 0px; padding: 0px; font-size: 13px;">
