@@ -68,6 +68,11 @@ class SurveyMailComposeMessage(models.TransientModel):
             return {
                 'domain': {'partner_ids': domain}
             }
+        elif self.public == 'email_private':
+            domain = [('user_ids.share', '=', True)]
+            return {
+                'domain': {'partner_ids': domain}
+            }
 
     @api.depends('survey_ids')
     def _compute_survey_url(self):
