@@ -47,7 +47,7 @@ class JobCostLine(models.Model):
         required=True,
     )
     uom_id = fields.Many2one(
-        'product.uom',
+        'uom.uom',
         string='UOM',
         required=True,
     )
@@ -187,7 +187,7 @@ class BomJobCostLine(models.Model):
         required=True,
     )
     uom_id = fields.Many2one(
-        'product.uom',
+        'uom.uom',
         string='UOM',
         required=True,
     )
@@ -281,7 +281,7 @@ class WorkJobCostLine(models.Model):
         required=True,
     )
     uom_id = fields.Many2one(
-        'product.uom',
+        'uom.uom',
         string='UOM',
         required=True,
     )
