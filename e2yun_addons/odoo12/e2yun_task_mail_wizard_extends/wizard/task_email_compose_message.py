@@ -255,6 +255,8 @@ class SurveyMailComposeMessage(models.TransientModel):
                 # token = create_token(wizard, partner['id'], partner['email'])
                 create_response_and_send_mail(wizard, partner['id'], partner['email'])
 
+        if not self.partner_ids and not self.multi_email:
+            raise exceptions.Warning(_('Please select the existing contact person'))
         return {'type': 'ir.actions.act_window_close'}
 
     @api.multi
