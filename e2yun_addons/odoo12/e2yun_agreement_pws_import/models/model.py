@@ -92,12 +92,14 @@ class AgreementPwsImport(models.TransientModel):
             if agreement.pws_line_ids:
                 for pwsObj in agreement.pws_line_ids:
                     #x_studio_cgmpd
-                    cgm=pwsObj.cgm.strip('%')
-                    sum_cgm=sum_cgm+(pwsObj.x_studio_htje*(float(cgm)/100))
-                    sum_amount=sum_amount+pwsObj.x_studio_htje
-                x_studio_cgmpd=  str(round((sum_cgm/sum_amount) * 100)) + "%"
-                sql = "update agreement set x_studio_cgmpd=%s where id=%s"
-                self._cr.execute(sql, (x_studio_cgmpd, agreement.id))
+                    if pwsObj.cgm and pwsObj.x_studio_htje:
+                        cgm=pwsObj.cgm.strip('%')
+                        sum_cgm=sum_cgm+(pwsObj.x_studio_htje*(float(cgm)/100))
+                        sum_amount=sum_amount+pwsObj.x_studio_htje
+                if sum_cgm!=0 and sum_amount!=0:
+                    x_studio_cgmpd=  str(round((sum_cgm/sum_amount) * 100)) + "%"
+                    sql = "update agreement set x_studio_cgmpd=%s where id=%s"
+                    self._cr.execute(sql, (x_studio_cgmpd, agreement.id))
 
 
 
