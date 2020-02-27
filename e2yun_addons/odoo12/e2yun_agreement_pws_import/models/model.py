@@ -82,7 +82,7 @@ class AgreementPwsImport(models.TransientModel):
                 'pws_line_attachment_ids':[[6, False, [self.import_pws_attachment_ids[0].id]]],
             })
 
-            #写行项目附件
+            #写行项目附件 E2yun Agreement 
             #sql = "INSERT into agreement_line_pws_ir_attachments_rel(id,attachment_id)VALUES (%s,%s)"
             #self._cr.execute(sql, (agreement_pws_lineData.id, attachment.id))
 
@@ -141,7 +141,7 @@ class AgreementPwsImport(models.TransientModel):
 
             cell_value = table.cell(11, 5).value  # 交付所属BU
             if not (cell_value is None) and not (cell_value is ''):
-                vals['x_studio_jfssbu'] = cell_value
+                vals['x_studio_jfssbu1'] = cell_value
 
             cell_value = table.cell(6, 5).value  # 机会编号
             if not (cell_value is None) and not (cell_value is ''):
@@ -262,7 +262,7 @@ class AgreementPwsImport(models.TransientModel):
 
                 cell_value = table.cell(11, 5).value  # 交付所属BU
                 if not (cell_value is None) and not (cell_value is ''):
-                    vals['x_studio_jfssbu'] = cell_value
+                    vals['x_studio_jfssbu1'] = cell_value
 
                 cell_value = table.cell(8, 5).value  # 项目名称
                 if not (cell_value is None) and not (cell_value is ''):
