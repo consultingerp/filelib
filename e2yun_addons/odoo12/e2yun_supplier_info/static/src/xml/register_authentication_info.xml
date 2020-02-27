@@ -170,19 +170,7 @@
                             <div class="form-group row">
                               <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
                                 <t t-if="is_view == False">
-                                  <script type="text/javascript" >
-                                      function change_tab(){
-                                        var tab_1 = document.getElementById('nav_tabs_content_1565876877708_11');
-                                        var tab_2 = document.getElementById('nav_tabs_content_1565876877708_12');
-                                        var a_1 = document.getElementById('nav_tabs_link_1565876877708_11');
-                                        var a_2 = document.getElementById('nav_tabs_link_1565876877708_12');
-                                        tab_1.className = "tab-pane fade";
-                                        tab_2.className = "tab-pane fade active show";
-                                        a_1.className = "nav-link";
-                                        a_2.className = "nav-link active show";
-                                    }
-                                  </script>
-                                  <input type="button" class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text" value="添加" onclick="change_tab()"/>
+                                  <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>
                                 </t>
                                 <span id="o_website_form_result" class="text-danger ml8"/>
                               </div>
@@ -336,19 +324,7 @@
                           <div class="form-group row">
                             <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
                               <t t-if="is_view == False">
-                                <script type="text/javascript" >
-                                      function change_tab_1(){
-                                        var tab_1 = document.getElementById('nav_tabs_content_1565876877708_12');
-                                        var tab_2 = document.getElementById('nav_tabs_content_1565876877708_13');
-                                        var a_1 = document.getElementById('nav_tabs_link_1565876877708_12');
-                                        var a_2 = document.getElementById('nav_tabs_link_1565876877708_13');
-                                        tab_1.className = "tab-pane fade";
-                                        tab_2.className = "tab-pane fade active show";
-                                        a_1.className = "nav-link";
-                                        a_2.className = "nav-link active show";
-                                    }
-                                </script>
-                                <input type="button" class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text" value="添加" onclick="change_tab_1()"/>
+                                <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>
                               </t>
                               <span id="o_website_form_result" class="text-danger ml8"/>
                             </div>
@@ -496,19 +472,7 @@
                           <div class="form-group row">
                             <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
                               <t t-if="is_view == False">
-                                <script type="text/javascript" >
-                                      function change_tab_2(){
-                                        var tab_1 = document.getElementById('nav_tabs_content_1565876877708_13');
-                                        var tab_2 = document.getElementById('nav_tabs_content_1565876877709_14');
-                                        var a_1 = document.getElementById('nav_tabs_link_1565876877708_13');
-                                        var a_2 = document.getElementById('nav_tabs_link_1565876877709_14');
-                                        tab_1.className = "tab-pane fade";
-                                        tab_2.className = "tab-pane fade active show";
-                                        a_1.className = "nav-link";
-                                        a_2.className = "nav-link active show";
-                                    }
-                                </script>
-                                <input type="button" class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text" value="添加" onclick="change_tab_2()"/>
+                                <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>
                               </t>
                               <span id="o_website_form_result" class="text-danger ml8"/>
                             </div>
@@ -653,19 +617,7 @@
                           <div class="form-group row">
                             <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
                               <t t-if="is_view == False">
-                                <script type="text/javascript" >
-                                      function change_tab_3(){
-                                        var tab_1 = document.getElementById('nav_tabs_content_1565876877709_14');
-                                        var tab_2 = document.getElementById('nav_tabs_content_1565876877709_16');
-                                        var a_1 = document.getElementById('nav_tabs_link_1565876877709_14');
-                                        var a_2 = document.getElementById('nav_tabs_link_1565876877709_16');
-                                        tab_1.className = "tab-pane fade";
-                                        tab_2.className = "tab-pane fade active show";
-                                        a_1.className = "nav-link";
-                                        a_2.className = "nav-link active show";
-                                    }
-                                </script>
-                                <input type="button" class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text" value="添加" onclick="change_tab_3()"/>
+                                <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>
                               </t>
                               <span id="o_website_form_result" class="text-danger ml8"/>
                             </div>
@@ -810,13 +762,7 @@
                           <div class="form-group row">
                             <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
                               <t t-if="is_view == False">
-<!--                                <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>-->
-                                <input type="button" class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text" value="添加" onclick="refresh()" />
-                                <script>
-                                    function refresh(){
-                                      setTimeout(function(){ location.assign(location); }, 500);
-                                    }
-                              </script>
+                                <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>
                               </t>
                               <span id="o_website_form_result" class="text-danger ml8"/>
                             </div>
@@ -832,7 +778,7 @@
                 </div>
                 <div class="col-lg-12 s_title pt16 pb16" style="text-align: center;">
                   <div class="s_btn pb0 pt0 text-center" data-name="Buttons">
-                    <t t-if="is_view == True">
+                    <t t-if="is_view == False">
                       <a href="/supplier/register_done" class="rounded-circle rounded-circle rounded-circle rounded-circle btn btn-success rounded-circle btn-lg" data-original-title="" title="" aria-describedby="tooltip84497">下一步</a>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;
                     </t>
                   </div>
