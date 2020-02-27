@@ -101,6 +101,13 @@ class e2yun_survey_question_extends(models.Model):
                 # if count > 2 or count == 1 or statistics == 0:
                 raise exceptions.Warning(_('唯一性计分只能给一个选项赋值，其他为0，请重新输入'))
 
+    @api.onchange('scoring_method')
+    def _onchange_scoring_method(self):
+        if self.scoring_method == '唯一性计分':
+            if self.labels_ids:
+                for label in self.labels_ids:
+                    label.quizz_mark = 0.0
+
 
     # 唯一性计分分值超出则弹框提醒；选择性计分只能有唯一答案，但每个选项都有分数，否则弹框提醒。
     @api.multi
