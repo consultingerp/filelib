@@ -8,7 +8,6 @@ import datetime
 try:
     from odoo.addons.e2yun_agreement_tier_validation.models import get_zone_datetime
 except BaseException as b:
-    print(b)
     pass
 class Agreement(models.Model):
     _name = "agreement"
@@ -362,8 +361,19 @@ class TierValidation(models.AbstractModel):
                 ('res_id', '=', self.id),
                 ('status', '=', 'pending')
             ])
+
             if user_reviews:
-                raise UserError(u'该操作正在审批中。')
+                raise UserError(u'合同正在审批中。')
+            else:
+                user_reviews = self.env['tier.review'].search([
+                    ('model', '=', 'agreement'),
+                    ('res_id', '=', self.id),
+                    ('status', '=', 'approved')
+                ])
+                if not user_reviews:
+                    raise UserError(u'合同未完成审批。')
+
+
 
             if vals['stage_id'] == 7:
                 pdfswy='（PDF首尾页）'
@@ -381,7 +391,23 @@ class TierValidation(models.AbstractModel):
             self._cr.execute(sql,(vals['stage_id'],self.id))
             return True
         if not flag_plan_sign_time:
-            sql = "UPDATE  agreement set plan_sign_time=%s where id=%s"
+            user_reviews = self.env['tier.review'].search([
+                ('model', '=', 'agreement'),
+                ('res_id', '=', self.id),
+                ('status', '=', 'pending')
+            ])
+            if user_reviews:
+                raise UserError(u'合同正在审批中。')
+            else:
+                user_reviews = self.env['tier.review'].search([
+                    ('model', '=', 'agreement'),
+                    ('res_id', '=', self.id),
+                    ('status', '=', 'approved')
+                ])
+                if not user_reviews:
+                    raise UserError(u'合同未完成审批。')
+
+            sql = "UPDATE  agreement set plan_sign_time=%s,stage_id=6 where id=%s"
             if vals['plan_sign_time']:
                 plan_sign_time=vals['plan_sign_time']
             else:
