@@ -21,7 +21,7 @@ class e2yun_survey_question_extends(models.Model):
     # type_id = fields.Many2one('question.type', string='问题类型')
     # type_name = fields.Char(string='问题类型')
     question_bank_type = fields.Selection([('供应商基本信息', '供应商基本信息'), ('人口属性', '人口属性'), ('市场调研', '市场调研')
-                                              , ('用户满意度', '用户满意度'), ('联系方式', '联系方式'), ('其他', '其他')], string='题库大类', required=True)
+                                              , ('用户满意度', '用户满意度'), ('联系方式', '联系方式'), ('其他', '其他')], default='供应商基本信息', string='题库大类', required=True)
     type = fields.Selection([
         ('free_text', 'Multiple Lines Text Box'),
         ('textbox', 'Single Line Text Box'),
