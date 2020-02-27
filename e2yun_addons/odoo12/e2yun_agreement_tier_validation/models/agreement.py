@@ -8,7 +8,6 @@ import datetime
 try:
     from odoo.addons.e2yun_agreement_tier_validation.models import get_zone_datetime
 except BaseException as b:
-    print(b)
     pass
 class Agreement(models.Model):
     _name = "agreement"

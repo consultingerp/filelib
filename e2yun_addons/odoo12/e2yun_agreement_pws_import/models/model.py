@@ -181,6 +181,7 @@ class AgreementPwsImport(models.TransientModel):
                         [('partner_id', '=', parent.id)], limit=1)
                     if user:
                         vals['x_studio_xsdb1'] = user.id
+                        vals['assigned_user_id'] = user.id
 
             cell_value = table.cell(2, 6).value  # 项目经理
             if not (cell_value is None) and not (cell_value is ''):
@@ -222,9 +223,9 @@ class AgreementPwsImport(models.TransientModel):
       if not (cell_value is None) and not (cell_value is ''):
           vals['x_studio_payment_method'] = cell_value
 
-      cell_value = table.cell(21, 2).value  # 回款账龄
-      if not (cell_value is None) and not (cell_value is ''):
-          vals['x_studio_hkzl'] = cell_value
+      # cell_value = table.cell(21, 2).value  # 回款账龄
+      # if not (cell_value is None) and not (cell_value is ''):
+      #     vals['x_studio_hkzl'] = cell_value
 
       return vals
 
@@ -279,7 +280,7 @@ class AgreementPwsImport(models.TransientModel):
                 if not (cell_value is None) and not (cell_value is ''):
                     vals['x_studio_htje'] = cell_value
 
-                cell_value = table.cell(2, 2).value  # 销售
+                cell_value = table.cell(2, 2).value  # 销售代表
                 if not (cell_value is None) and not (cell_value is ''):
                     parent = self.env['res.partner'].search(
                         [('name', 'ilike', cell_value),
@@ -289,6 +290,7 @@ class AgreementPwsImport(models.TransientModel):
                             [('partner_id', '=', parent.id)], limit=1)
                        if user:
                           vals['x_studio_xsdb1'] = user.id
+                          vals['assigned_user_id'] = user.id
 
 
                 cell_value = table.cell(2, 6).value  # 项目经理
@@ -325,9 +327,9 @@ class AgreementPwsImport(models.TransientModel):
                if not (cell_value is None) and not (cell_value is ''):
                    vals['x_studio_cpx'] = cell_value
 
-               cell_value = table.cell(21, 2).value  # 回款账龄
-               if not (cell_value is None) and not (cell_value is ''):
-                   vals['x_studio_hkzl'] = cell_value
+               # cell_value = table.cell(21, 2).value  # 回款账龄
+               # if not (cell_value is None) and not (cell_value is ''):
+               #     vals['x_studio_hkzl'] = cell_value
 
             if table.number == 6:
                 cell_value = table.cell(2, 4).value  # 合同起始日期

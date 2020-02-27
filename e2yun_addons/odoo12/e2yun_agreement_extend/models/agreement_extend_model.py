@@ -4,6 +4,7 @@
 from odoo import api, fields, models, tools, _
 from odoo import exceptions
 import datetime
+from odoo.exceptions import UserError
 class Agreement(models.Model):
     _inherit = "agreement"
 
@@ -45,6 +46,13 @@ class Agreement(models.Model):
         string="PWS",
         copy=False)
 
+
+    @api.onchange("agreement_subtype_id")
+    def onchange_agreement_subtype_id(self):
+        # 验证 MAD+SOW（主服务协议+工作说明书） 必须上传 PWS
+        if self.agreement_subtype_id.name == 'MAD+SOW（主服务协议+工作说明书）':
+            if not self.pws_line_ids and not self.pws_line_ids.pws_line_attachment_ids:
+                raise UserError("MAD+SOW（主服务协议+工作说明书），请上传PWS导入")
 
     @api.onchange("x_studio_htbz")
     def onchange_x_studio_htbz(self):
@@ -101,6 +109,7 @@ class Agreement(models.Model):
 
           if agreement_subtype_obj.for_code and not (agreement_subtype_obj.name in '集团转包'
                                                      or agreement_subtype_obj.name in 'Other（其他）'):
+
             sequence_obj = self.env['ir.sequence']
             if 'agreement_type_id' in vals.keys():
                 agreement_type_id=vals['agreement_type_id']
@@ -201,6 +210,7 @@ class Agreement(models.Model):
             vals['x_studio_htje'] = ("%.2f" % float(vals['x_studio_htje']))
 
         if 'stage_id' in vals.keys():
+            #回写机会 订单
             if vals['stage_id']==7 and self.x_studio_htje\
                     and self.x_studio_partner_id and self.x_studio_jhhm_id:
                 sql='update crm_lead set agreement_amount=%s,agreement_amount_usd=%s,agreement_code=%s,agreement_partner_id=%s where code=%s'
