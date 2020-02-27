@@ -74,7 +74,7 @@ class AgreementPwsImport(models.TransientModel):
             agreement_pws_lineObj.create({
                 'agreement_id':agreement.id,
                 'pid': '',
-                'cgm': '',
+                'cgm': vals['x_studio_cgmpd'] if 'x_studio_cgmpd' in vals.keys() else '',
                 'x_studio_htje': vals['x_studio_htje'] if 'x_studio_htje' in vals.keys() else '',
                 'x_studio_jfssbu': vals['x_studio_jfssbu'] if 'x_studio_jfssbu' in vals.keys() else '',
                 'x_studio_htbz': vals['x_studio_htbz'] if 'x_studio_htbz' in vals.keys() else '',
@@ -86,10 +86,19 @@ class AgreementPwsImport(models.TransientModel):
             #sql = "INSERT into agreement_line_pws_ir_attachments_rel(id,attachment_id)VALUES (%s,%s)"
             #self._cr.execute(sql, (agreement_pws_lineData.id, attachment.id))
 
-            #读取行项目数据汇总
+            #读取行项目数据汇总  计算CGM
+            sum_cgm=0
+            sum_amount=0
             if agreement.pws_line_ids:
                 for pwsObj in agreement.pws_line_ids:
-                    print(pwsObj.x_studio_htje)
+                    #x_studio_cgmpd
+                    cgm=pwsObj.cgm.strip('%')
+                    sum_cgm=sum_cgm+(pwsObj.x_studio_htje*(float(cgm)/100))
+                    sum_amount=sum_amount+pwsObj.x_studio_htje
+                x_studio_cgmpd=  str(round((sum_cgm/sum_amount) * 100)) + "%"
+                sql = "update agreement set x_studio_cgmpd=%s where id=%s"
+                self._cr.execute(sql, (x_studio_cgmpd, agreement.id))
+
 
 
         return {
@@ -303,6 +312,7 @@ class AgreementPwsImport(models.TransientModel):
 
                cell_value = table.cell(21, 4).value  # 付款方式
                if not (cell_value is None) and not (cell_value is ''):
+                      #x_studio_fkfs
                      vals['x_studio_payment_method'] = cell_value
 
                cell_value = table.cell(10, 4).value  # 收入确认类型
@@ -328,7 +338,8 @@ class AgreementPwsImport(models.TransientModel):
             if table.number == 2:
                 cell_value = table.cell(9, 5).value  # 税后未计息前合同利润率
                 if not (cell_value is None) and not (cell_value is ''):
-                    vals['x_studio_shwjxq'] = str(round(cell_value*100))+"%"
+                    #vals['x_studio_shwjxq'] = str(round(cell_value*100))+"%"
+                    vals['x_studio_cgmpd'] = str(round(cell_value*100))+"%"
 
       except Exception as e:
           raise UserError(e)

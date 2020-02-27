@@ -51,7 +51,7 @@
                                     <field name="x_studio_jfssbu"/>
                                     <field name="x_studio_htbz"/>
                                     <field name="x_studio_htje"/>
-                                    <field name="x_studio_mjhtje"/>
+                                    <!-- <field name="x_studio_mjhtje"/> -->
                                     <field name="taxes_id" widget="many2many_tags"/>
                                     <field name="pws_line_attachment_ids"  widget="many2many_binary"  options="{'no_open': True}" nolabel="1" colspan="2" groups="e2yun_agreement_extend.group_agreement_text_download"/>
                                 </tree>
