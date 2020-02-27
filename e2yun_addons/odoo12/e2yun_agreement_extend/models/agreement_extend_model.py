@@ -52,7 +52,7 @@ class Agreement(models.Model):
         # 验证 MAD+SOW（主服务协议+工作说明书） 必须上传 PWS
         if self.agreement_subtype_id.name == 'MAD+SOW（主服务协议+工作说明书）':
             if not self.pws_line_ids and not self.pws_line_ids.pws_line_attachment_ids:
-                raise UserError("MAD+SOW（主服务协议+工作说明书），请上传PWS导入")
+                raise UserError("合同子类型：MAD+SOW（主服务协议+工作说明书），请上传PWS导入")
 
     @api.onchange("x_studio_htbz")
     def onchange_x_studio_htbz(self):
