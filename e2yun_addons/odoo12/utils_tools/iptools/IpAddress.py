@@ -16,6 +16,17 @@ class IpAddress():
 
     @classmethod
     def getregion(cls, userip):
+        url = "http://ip-api.com/json/%s" % userip
+        ip_check = {'lang': 'zh-CN'}
+        ipresult = requests.request('GET', url, params=ip_check)
+        ipjson=ipresult.json()
+        ipinfo = dict()
+        ipinfo['ip'] = userip
+        ipinfo['region'] = ipjson.get("regionName")
+        return ipinfo
+
+    @classmethod
+    def getregion_2(cls, userip):
         url = "http://ip138.com/ips138.asp"
         ip_check = {'ip': userip}
         ipresult = requests.request('GET', url, params=ip_check)

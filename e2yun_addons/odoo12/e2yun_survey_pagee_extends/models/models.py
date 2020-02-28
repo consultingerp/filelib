@@ -33,6 +33,12 @@ class SurveyPage(models.Model):
     weight = fields.Char(string='权重')
     # 小计
     x_studio_survey_page_sum = fields.Float(string='小计', compute='_compute_page_sum')
+    survey_id = fields.Many2one(required=False)
+
+    @api.model
+    def create(self, vals_list):
+        res = super(SurveyPage, self).create(vals_list)
+        return res
 
     def _compute_page_sum(self):
         for record in self:
