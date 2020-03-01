@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="qc_inspection_form_view_mrp">
+        <field name="name">qc.inspection.form.view.mrp</field>
+        <field name="model">qc.inspection</field>
+        <field name="inherit_id" ref="e2yun_quality_stock.qc_inspection_form_view_picking"/>
+        <field name="arch" type="xml">
+
+            <field name="picking_id" position="after">
+                <field name="production_id"
+                       attrs="{'invisible': ['|',('object_id','=', False),
+                       ('object_type', 'not in', ('mrp.production','mrp.workorder','mrp.product.produce'))]}"/>
+                <field name="workorder_id"
+                       attrs="{'invisible': ['|',('object_id','=', False),
+                       ('object_type', 'not in', ('mrp.workorder'))]}"/>
+                <field name="operation_id"
+                       attrs="{'invisible': ['|',('object_id','=', False),
+                       ('object_type', 'not in', ('mrp.workorder'))]}"/>
+
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="qc_inspection_tree_view_mrp">
+        <field name="name">qc.inspection.tree.view.mrp</field>
+        <field name="model">qc.inspection</field>
+        <field name="inherit_id" ref="e2yun_quality_stock.qc_inspection_tree_view_picking"/>
+        <field name="arch" type="xml">
+            <field name="picking_id" position="after">
+                <field name="production_id"/>
+                <field name="workorder_id"/>
+                <field name="operation_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="qc_inspection_search_view_mrp">
+        <field name="name">qc.inspection.search.view.mrp</field>
+        <field name="model">qc.inspection</field>
+        <field name="inherit_id" ref="e2yun_quality_stock.qc_inspection_search_view_picking"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="production_id"/>
+                <field name="workorder_id"/>
+                <field name="operation_id"/>
+            </field>
+            <group expand="0" position="inside">
+                <filter string="Production Order"
+                        domain="[]"
+                        name="group_by_production_id"
+                        context="{'group_by': 'production_id'}"/>
+                <filter string="Opration"
+                        domain="[]"
+                        name="group_by_operation_id"
+                        context="{'group_by': 'operation_id'}"/>
+            </group>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="qc_inspection_line_tree_stock_view_mrp">
+        <field name="name">qc.inspection.line.tree.stock.mrp</field>
+        <field name="model">qc.inspection.line</field>
+        <field name="inherit_id" ref="e2yun_quality_stock.qc_inspection_line_tree_stock_view_picking"/>
+        <field name="arch" type="xml">
+            <field name="picking_id" position="after">
+                <field name="production_id"/>
+                <field name="workorder_id"/>
+                <field name="operation_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="qc_inspection_line_search_stock_view_mrp">
+        <field name="name">qc.inspection.line.search.stock.mrp</field>
+        <field name="model">qc.inspection.line</field>
+        <field name="inherit_id" ref="e2yun_quality_stock.qc_inspection_line_search_stock_view_picking"/>
+        <field name="arch" type="xml">
+            <field name="picking_id" position="after">
+                <field name="production_id"/>
+                <field name="workorder_id"/>
+                <field name="operation_id"/>
+            </field>
+            <group expand="0" position="inside">
+                <filter string="Production Order"
+                        domain="[]"
+                        name="group_by_production_id"
+                        context="{'group_by': 'production_id'}"/>
+                <filter string="Opration"
+                        domain="[]"
+                        name="group_by_operation_id"
+                        context="{'group_by': 'operation_id'}"/>
+            </group>
+        </field>
+    </record>
+</odoo>
