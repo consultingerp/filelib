@@ -669,7 +669,7 @@ class AgreementPwsLine(models.Model):
 
     taxes_id = fields.Many2many('account.tax', string='税率', domain=['|', ('active', '=', False), ('active', '=', True)])
     x_studio_htje = fields.Float('htjr')
-    x_studio_jfssbu = fields.Char('jfssbu',)
+    x_studio_jfssbu = fields.Char(string="DTD",)
     x_studio_htbz= fields.Char('htbz',)
     x_studio_mjhtje = fields.Float('mjhtjr')
 
