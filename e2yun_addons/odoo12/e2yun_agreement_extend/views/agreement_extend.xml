@@ -79,6 +79,7 @@
       <field name="arch" type="xml">
        <field name="x_studio_xsdb1" position="after">
             <field name="plan_sign_time" />
+            <field name="signed_time" />
         </field>
 
       </field>
