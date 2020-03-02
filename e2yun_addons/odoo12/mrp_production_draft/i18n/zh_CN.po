@@ -1,0 +1,97 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* mrp_production_draft
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e-20190424\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-28 03:18+0000\n"
+"PO-Revision-Date: 2020-02-28 11:25+0800\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: zh\n"
+"X-Generator: Poedit 2.2.3\n"
+
+#. module: mrp_production_draft
+#: selection:mrp.production,state:0
+msgid "Cancelled"
+msgstr "已取消"
+
+#. module: mrp_production_draft
+#: code:addons/mrp_production_draft/models/mrp_production.py:71
+#, python-format
+msgid "Cannot delete a manufacturing order not in draft or cancel state"
+msgstr "无法删除未处于新建或取消状态的生产订单"
+
+#. module: mrp_production_draft
+#: model_terms:ir.ui.view,arch_db:mrp_production_draft.mrp_production_form_view
+msgid "Confirm"
+msgstr "确认"
+
+#. module: mrp_production_draft
+#: selection:mrp.production,state:0
+msgid "Confirmed"
+msgstr "已确认"
+
+#. module: mrp_production_draft
+#: selection:mrp.production,state:0
+msgid "Done"
+msgstr "完成"
+
+#. module: mrp_production_draft
+#: selection:mrp.production,state:0
+msgid "Draft"
+msgstr "新建"
+
+#. module: mrp_production_draft
+#: selection:mrp.production,state:0
+msgid "In Progress"
+msgstr "进行中"
+
+#. module: mrp_production_draft
+#: model_terms:ir.ui.view,arch_db:mrp_production_draft.view_mrp_production_filter_extend
+msgid "Manufacturing Orders which are in confirmed state."
+msgstr "确认的生产单"
+
+#. module: mrp_production_draft
+#: code:addons/mrp_production_draft/models/mrp_production.py:77
+#: code:addons/mrp_production_draft/models/mrp_production.py:83
+#, python-format
+msgid "New"
+msgstr "新的"
+
+#. module: mrp_production_draft
+#: model_terms:ir.ui.view,arch_db:mrp_production_draft.mrp_production_form_view
+msgid "Picking"
+msgstr "分拣"
+
+#. module: mrp_production_draft
+#: selection:mrp.production,state:0
+msgid "Planned"
+msgstr "已计划"
+
+#. module: mrp_production_draft
+#: model:ir.model,name:mrp_production_draft.model_mrp_production
+msgid "Production Order"
+msgstr "生产订单"
+
+#. module: mrp_production_draft
+#: code:addons/mrp_production_draft/models/mrp_production.py:58
+#, python-format
+msgid "Reference must be unique per Company for confirmed orders!"
+msgstr "对于已确认的订单，每个公司的引用必须是唯一的!"
+
+#. module: mrp_production_draft
+#: model:ir.model.fields,field_description:mrp_production_draft.field_mrp_production__state
+msgid "State"
+msgstr "省/ 州"
+
+#. module: mrp_production_draft
+#: model_terms:ir.ui.view,arch_db:mrp_production_draft.view_mrp_production_filter_extend
+msgid "To Do"
+msgstr "待办"

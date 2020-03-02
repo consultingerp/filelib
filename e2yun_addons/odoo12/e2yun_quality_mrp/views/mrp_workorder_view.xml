@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="mrp_production_workorder_qc_form_view_inherit">
+        <field name="name">mrp.production.work.order.qc.form</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.mrp_production_workorder_form_view_inherit"/>
+        <field name="arch" type="xml">
+        <xpath expr="//button[@name='record_production']" position="after">
+                <button name="first_inspection" type="object" string="First Inspection" class="btn-info"
+                        attrs="{'invisible': [ '|',('is_produced', '=', True),('state', '=', 'cancel') ]}" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
