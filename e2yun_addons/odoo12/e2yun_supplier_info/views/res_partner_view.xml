@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='company_name']" position="attributes">
-                <attribute name="attrs"></attribute>
+                <attribute name="attrs">{'invisible': ['|', '|', ('company_name', '=', False), ('company_name', '=', ''), ('is_company', '=', False)]}</attribute>
             </xpath>
             <xpath expr="//label[@for='street']" position="attributes">
                 <attribute name="invisible">True</attribute>
