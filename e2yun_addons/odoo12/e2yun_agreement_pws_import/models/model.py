@@ -122,7 +122,7 @@ class AgreementPwsImport(models.TransientModel):
             cell_value = table.cell(5, 5).value  # 客户名称与合作伙伴
             if not (cell_value is None) and not (cell_value is ''):
                 parent = self.env['res.partner'].search(
-                    [('name', 'ilike', cell_value),
+                    [('name', 'ilike', cell_value.strip()),
                      ('company_id', '=', self.create_uid.company_id.id)], limit=1)
                 if parent:
                     vals['x_studio_partner_id'] = parent.id
@@ -135,14 +135,14 @@ class AgreementPwsImport(models.TransientModel):
             if not (cell_value is None) and not (cell_value is ''):
                 print(cell_value)
                 crm_teamObj = self.env['crm.team'].search(
-                    [('name', 'ilike', cell_value)], limit=1)
+                    [('name', 'ilike', cell_value.strip())], limit=1)
                 if crm_teamObj:
                     vals['x_studio_customer_bu'] = crm_teamObj.id
 
             cell_value = table.cell(11, 5).value  # 交付所属BU
             if not (cell_value is None) and not (cell_value is ''):
                 crm_teamObj = self.env['crm.team'].search(
-                    [('name', 'ilike', cell_value)], limit=1)
+                    [('name', 'ilike', cell_value.strip())], limit=1)
                 if crm_teamObj:
                     vals['x_studio_jfssbu1'] = crm_teamObj.id
 
@@ -177,7 +177,7 @@ class AgreementPwsImport(models.TransientModel):
             cell_value = table.cell(2, 2).value  # 销售
             if not (cell_value is None) and not (cell_value is ''):
                 parent = self.env['res.partner'].search(
-                    [('name', 'ilike', cell_value),
+                    [('name', 'ilike', cell_value.strip()),
                      ('company_id', '=', self.create_uid.company_id.id)], limit=1)
                 if parent:
                     user = self.env['res.users'].search(
@@ -189,7 +189,7 @@ class AgreementPwsImport(models.TransientModel):
             cell_value = table.cell(2, 6).value  # 项目经理
             if not (cell_value is None) and not (cell_value is ''):
                 parent = self.env['res.partner'].search(
-                    [('name', 'ilike', cell_value),
+                    [('name', 'ilike', cell_value.strip()),
                      ('company_id', '=', self.create_uid.company_id.id)], limit=1)
                 if parent:
                     user = self.env['res.users'].search(
@@ -242,7 +242,7 @@ class AgreementPwsImport(models.TransientModel):
                 cell_value = table.cell(5, 5).value  # 客户名称
                 if not (cell_value is None) and not (cell_value is ''):
                     parent = self.env['res.partner'].search(
-                        [('name', 'ilike', cell_value),
+                        [('name', 'ilike', cell_value.strip()),
                      ('company_id', '=', self.create_uid.company_id.id)], limit=1)
                     if parent:
                         vals['x_studio_partner_id'] = parent.id
@@ -258,14 +258,14 @@ class AgreementPwsImport(models.TransientModel):
                 cell_value = table.cell(10, 5).value  # 客户所属BU
                 if not (cell_value is None) and not (cell_value is ''):
                     crm_teamObj = self.env['crm.team'].search(
-                        [('name', 'ilike', cell_value)], limit=1)
+                        [('name', 'ilike', cell_value.strip())], limit=1)
                     if crm_teamObj:
                         vals['x_studio_customer_bu'] = crm_teamObj.id
 
                 cell_value = table.cell(11, 5).value  # 交付所属BU
                 if not (cell_value is None) and not (cell_value is ''):
                     crm_teamObj = self.env['crm.team'].search(
-                        [('name', 'ilike', cell_value)], limit=1)
+                        [('name', 'ilike', cell_value.strip())], limit=1)
                     if crm_teamObj:
                         vals['x_studio_jfssbu1'] = crm_teamObj.id
 
@@ -289,7 +289,7 @@ class AgreementPwsImport(models.TransientModel):
                 cell_value = table.cell(2, 2).value  # 销售代表
                 if not (cell_value is None) and not (cell_value is ''):
                     parent = self.env['res.partner'].search(
-                        [('name', 'ilike', cell_value),
+                        [('name', 'ilike', cell_value.strip()),
                          ('company_id', '=', self.create_uid.company_id.id)], limit=1)
                     if parent:
                        user=self.env['res.users'].search(
@@ -302,7 +302,7 @@ class AgreementPwsImport(models.TransientModel):
                 cell_value = table.cell(2, 6).value  # 项目经理
                 if not (cell_value is None) and not (cell_value is ''):
                     parent = self.env['res.partner'].search(
-                        [('name', 'ilike', cell_value),
+                        [('name', 'ilike', cell_value.strip()),
                          ('company_id', '=', self.create_uid.company_id.id)], limit=1)
                     if parent:
                         user = self.env['res.users'].search(
