@@ -74,7 +74,7 @@ class AgreementPwsImport(models.TransientModel):
             agreement_pws_lineObj.create({
                 'agreement_id':agreement.id,
                 'pid': '',
-                'cgm': '',
+                'cgm': vals['x_studio_cgmpd'] if 'x_studio_cgmpd' in vals.keys() else '',
                 'x_studio_htje': vals['x_studio_htje'] if 'x_studio_htje' in vals.keys() else '',
                 'x_studio_jfssbu': vals['x_studio_jfssbu'] if 'x_studio_jfssbu' in vals.keys() else '',
                 'x_studio_htbz': vals['x_studio_htbz'] if 'x_studio_htbz' in vals.keys() else '',
@@ -82,14 +82,25 @@ class AgreementPwsImport(models.TransientModel):
                 'pws_line_attachment_ids':[[6, False, [self.import_pws_attachment_ids[0].id]]],
             })
 
-            #写行项目附件
+            #写行项目附件 E2yun Agreement 
             #sql = "INSERT into agreement_line_pws_ir_attachments_rel(id,attachment_id)VALUES (%s,%s)"
             #self._cr.execute(sql, (agreement_pws_lineData.id, attachment.id))
 
-            #读取行项目数据汇总
+            #读取行项目数据汇总  计算CGM
+            sum_cgm=0
+            sum_amount=0
             if agreement.pws_line_ids:
                 for pwsObj in agreement.pws_line_ids:
-                    print(pwsObj.x_studio_htje)
+                    #x_studio_cgmpd
+                    if pwsObj.cgm and pwsObj.x_studio_htje:
+                        cgm=pwsObj.cgm.strip('%')
+                        sum_cgm=sum_cgm+(pwsObj.x_studio_htje*(float(cgm)/100))
+                        sum_amount=sum_amount+pwsObj.x_studio_htje
+                if sum_cgm!=0 and sum_amount!=0:
+                    x_studio_cgmpd=  str(round((sum_cgm/sum_amount) * 100)) + "%"
+                    sql = "update agreement set x_studio_cgmpd=%s where id=%s"
+                    self._cr.execute(sql, (x_studio_cgmpd, agreement.id))
+
 
 
         return {
@@ -130,7 +141,10 @@ class AgreementPwsImport(models.TransientModel):
 
             cell_value = table.cell(11, 5).value  # 交付所属BU
             if not (cell_value is None) and not (cell_value is ''):
-                vals['x_studio_jfssbu'] = cell_value
+                crm_teamObj = self.env['crm.team'].search(
+                    [('name', 'ilike', cell_value)], limit=1)
+                if crm_teamObj:
+                    vals['x_studio_jfssbu1'] = crm_teamObj.id
 
             cell_value = table.cell(6, 5).value  # 机会编号
             if not (cell_value is None) and not (cell_value is ''):
@@ -170,6 +184,7 @@ class AgreementPwsImport(models.TransientModel):
                         [('partner_id', '=', parent.id)], limit=1)
                     if user:
                         vals['x_studio_xsdb1'] = user.id
+                        vals['assigned_user_id'] = user.id
 
             cell_value = table.cell(2, 6).value  # 项目经理
             if not (cell_value is None) and not (cell_value is ''):
@@ -211,9 +226,9 @@ class AgreementPwsImport(models.TransientModel):
       if not (cell_value is None) and not (cell_value is ''):
           vals['x_studio_payment_method'] = cell_value
 
-      cell_value = table.cell(21, 2).value  # 回款账龄
-      if not (cell_value is None) and not (cell_value is ''):
-          vals['x_studio_hkzl'] = cell_value
+      # cell_value = table.cell(21, 2).value  # 回款账龄
+      # if not (cell_value is None) and not (cell_value is ''):
+      #     vals['x_studio_hkzl'] = cell_value
 
       return vals
 
@@ -242,7 +257,6 @@ class AgreementPwsImport(models.TransientModel):
 
                 cell_value = table.cell(10, 5).value  # 客户所属BU
                 if not (cell_value is None) and not (cell_value is ''):
-                    print(cell_value)
                     crm_teamObj = self.env['crm.team'].search(
                         [('name', 'ilike', cell_value)], limit=1)
                     if crm_teamObj:
@@ -250,7 +264,11 @@ class AgreementPwsImport(models.TransientModel):
 
                 cell_value = table.cell(11, 5).value  # 交付所属BU
                 if not (cell_value is None) and not (cell_value is ''):
-                    vals['x_studio_jfssbu'] = cell_value
+                    crm_teamObj = self.env['crm.team'].search(
+                        [('name', 'ilike', cell_value)], limit=1)
+                    if crm_teamObj:
+                        vals['x_studio_jfssbu1'] = crm_teamObj.id
+
 
                 cell_value = table.cell(8, 5).value  # 项目名称
                 if not (cell_value is None) and not (cell_value is ''):
@@ -268,7 +286,7 @@ class AgreementPwsImport(models.TransientModel):
                 if not (cell_value is None) and not (cell_value is ''):
                     vals['x_studio_htje'] = cell_value
 
-                cell_value = table.cell(2, 2).value  # 销售
+                cell_value = table.cell(2, 2).value  # 销售代表
                 if not (cell_value is None) and not (cell_value is ''):
                     parent = self.env['res.partner'].search(
                         [('name', 'ilike', cell_value),
@@ -278,6 +296,7 @@ class AgreementPwsImport(models.TransientModel):
                             [('partner_id', '=', parent.id)], limit=1)
                        if user:
                           vals['x_studio_xsdb1'] = user.id
+                          vals['assigned_user_id'] = user.id
 
 
                 cell_value = table.cell(2, 6).value  # 项目经理
@@ -303,6 +322,7 @@ class AgreementPwsImport(models.TransientModel):
 
                cell_value = table.cell(21, 4).value  # 付款方式
                if not (cell_value is None) and not (cell_value is ''):
+                      #x_studio_fkfs
                      vals['x_studio_payment_method'] = cell_value
 
                cell_value = table.cell(10, 4).value  # 收入确认类型
@@ -313,9 +333,9 @@ class AgreementPwsImport(models.TransientModel):
                if not (cell_value is None) and not (cell_value is ''):
                    vals['x_studio_cpx'] = cell_value
 
-               cell_value = table.cell(21, 2).value  # 回款账龄
-               if not (cell_value is None) and not (cell_value is ''):
-                   vals['x_studio_hkzl'] = cell_value
+               # cell_value = table.cell(21, 2).value  # 回款账龄
+               # if not (cell_value is None) and not (cell_value is ''):
+               #     vals['x_studio_hkzl'] = cell_value
 
             if table.number == 6:
                 cell_value = table.cell(2, 4).value  # 合同起始日期
@@ -328,7 +348,8 @@ class AgreementPwsImport(models.TransientModel):
             if table.number == 2:
                 cell_value = table.cell(9, 5).value  # 税后未计息前合同利润率
                 if not (cell_value is None) and not (cell_value is ''):
-                    vals['x_studio_shwjxq'] = str(round(cell_value*100))+"%"
+                    #vals['x_studio_shwjxq'] = str(round(cell_value*100))+"%"
+                    vals['x_studio_cgmpd'] = str(round(cell_value*100))+"%"
 
       except Exception as e:
           raise UserError(e)

@@ -143,11 +143,17 @@ msgid "mjhtjr"
 msgstr "美金金额"
 
 #. module: e2yun_agreement_extend
-#: model:ir.model.fields,field_description:e2yun_agreement_extend.field_agreement_pws_line__x_studio_jfssbu
-msgid "jfssbu"
-msgstr "交付所属BU"
-
-#. module: e2yun_agreement_extend
 #: model:ir.model.fields,field_description:e2yun_agreement_extend.field_agreement_pws_line__x_studio_htbz
 msgid "htbz"
 msgstr "合同币种"
+
+
+#. module: e2yun_agreement_extend
+#: model:ir.model.fields,field_description:e2yun_agreement_extend.field_agreement_pws_line__pid
+msgid "PID"
+msgstr "项目PID"
+
+#. module: e2yun_agreement_extend
+#: model:ir.model.fields,field_description:e2yun_agreement_extend.field_agreement_pws_line__x_studio_jfssbu
+msgid "DTD"
+msgstr "交付所属部门"

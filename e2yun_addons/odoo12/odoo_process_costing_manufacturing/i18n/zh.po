@@ -1,0 +1,661 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* odoo_process_costing_manufacturing
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e-20190424\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-26 09:45+0000\n"
+"PO-Revision-Date: 2020-02-26 19:27+0800\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: zh_CN\n"
+"X-Generator: Poedit 2.2.3\n"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>Actual Qty</strong>"
+msgstr "<strong>实际数量</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>Bill of Material:</strong>"
+msgstr "<strong>BOM:</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+msgid "<strong>Bom Type:</strong>"
+msgstr "<strong>BOM类型:</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+msgid "<strong>Consumed in Operation</strong>"
+msgstr "<strong>操作中消耗</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>Consumed</strong>"
+msgstr "<strong>消耗</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>Cost / Unit</strong>"
+msgstr "<strong>成本/单位</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>Deadline Start:</strong>"
+msgstr "<strong>截止日期开始:</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>Everage Cost of Product:</strong>"
+msgstr "<strong>产品平均成本：</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>Operation</strong>"
+msgstr "<strong>操作</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>Planned Qty</strong>"
+msgstr "<strong>计划数量</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>Produced</strong>"
+msgstr "<strong>制造</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+msgid "<strong>Product Qty</strong>"
+msgstr "<strong>产品数量</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+msgid "<strong>Product Quantity</strong>"
+msgstr "<strong>产品数量</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+msgid "<strong>Product Unit of Measure</strong>"
+msgstr "<strong>产品计量单位</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+msgid "<strong>Product Variant:</strong>"
+msgstr "<strong>产品变体:</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>Product:</strong>"
+msgstr "<strong>产品:</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>Product</strong>"
+msgstr "<strong>产品</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>Quantity Available</strong>"
+msgstr "<strong>可用数量</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>Quantity To Produce:</strong>"
+msgstr "<strong>生产量:</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+msgid "<strong>Quantity:</strong>"
+msgstr "<strong>数量:</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+msgid "<strong>Reference:</strong>"
+msgstr "<strong>参考:</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>Responsible:</strong>"
+msgstr "<strong>负责人：</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>Routing:</strong>"
+msgstr "<strong>工艺:</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>Source:</strong>"
+msgstr "<strong>来源:</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>To Consume</strong>"
+msgstr "<strong>消耗</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>To Produce</strong>"
+msgstr "<strong>生产</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>Total Actual Cost Price</strong>"
+msgstr "<strong>实际总成本价格</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>Total Cost Price</strong>"
+msgstr "<strong>总成本价格</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>Total Cost:</strong>"
+msgstr "<strong>总成本:</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+msgid "<strong>Total Cost</strong>"
+msgstr "<strong>总成本</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+msgid "<strong>Total Labour Cost:</strong>"
+msgstr "<strong>总人工成本：</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+msgid "<strong>Total Material Cost:</strong>"
+msgstr "<strong>总材料成本:</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+msgid "<strong>Total Overhead Cost:</strong>"
+msgstr "<strong>总费用成本:</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>Total:</strong>"
+msgstr "<strong>总计:</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>UOM</strong>"
+msgstr "<strong>单位</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "<strong>Unit of Measure</strong>"
+msgstr "<strong>计量单位</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+msgid "<strong>Variants</strong>"
+msgstr "<strong>变体</strong>"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_workorder_job_cost_line__actual_qty
+msgid "Actual Cost"
+msgstr "实际成本"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_bom_job_cost_line__actual_quantity
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__actual_quantity
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_workorder_job_cost_line__actual_quantity
+msgid "Actual Qty"
+msgstr "实际数量"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_bom_job_cost_line__bom_id
+msgid "BOM"
+msgstr "BOM"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model,name:odoo_process_costing_manufacturing.model_mrp_bom
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__bom_id
+msgid "Bill of Material"
+msgstr "物料清单"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+msgid "Bill of Materials"
+msgstr "物料清单"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,help:odoo_process_costing_manufacturing.field_mrp_job_cost_line__bom_id
+msgid "Bill of Materials allow you to define the list of required raw materials to make a finished product."
+msgstr "BOM 允许你定义生产成品所需原料的列表。"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.actions.report,name:odoo_process_costing_manufacturing.action_report_bom_cost
+msgid "Bom Cost Report"
+msgstr "BOM成本报告"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+msgid "By Products"
+msgstr "按产品"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__company_id
+msgid "Company"
+msgstr "公司"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+msgid "Components"
+msgstr "组件"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "Consumed Materials"
+msgstr "消耗的物料"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_bom_job_cost_line__cost_price
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__cost_price
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_workorder_job_cost_line__cost_price
+msgid "Cost / Unit"
+msgstr "成本/单位"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.workorder_job_cost_line_tree_view
+msgid "Cost Price"
+msgstr "成本价"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.mrp_job_cost_line_tree_view
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.workorder_job_costing_form_view
+msgid "Cost Unit"
+msgstr "成本单位"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.mrp_production_form_view_inherit_process_costing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.workorder_job_costing_form_view
+msgid "Costing"
+msgstr "成本"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_bom_job_cost_line__create_uid
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__create_uid
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_workorder_job_cost_line__create_uid
+msgid "Created by"
+msgstr "创建人"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_bom_job_cost_line__create_date
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__create_date
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_workorder_job_cost_line__create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_bom_job_cost_line__custom_currency_id
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_bom__custom_currency_id
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__currency_id
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_production__custom_currency_id
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_workorder__custom_currency_id
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_workorder_job_cost_line__currency_id
+msgid "Currency"
+msgstr "币种"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_bom_job_cost_line__date
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__date
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_workorder_job_cost_line__date
+msgid "Date"
+msgstr "日期"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_bom_job_cost_line__description
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__description
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_workorder_job_cost_line__description
+msgid "Description"
+msgstr "说明"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_workorder__labour_cost_ids
+msgid "Direct Labour"
+msgstr "直接人工"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.mrp_job_costing_tree_view
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.mrp_production_form_view_inherit_process_costing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.workorder_job_costing_form_view
+msgid "Direct Labour Cost"
+msgstr "直接人工成本"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_bom__direct_material_ids
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_bom__labour_cost_ids
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_bom__overhead_cost_ids
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_production__direct_material_ids
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_production__labour_cost_ids
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_production__overhead_cost_ids
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_workorder__direct_material_ids
+msgid "Direct Material"
+msgstr "直接材料"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.mrp_job_costing_tree_view
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.mrp_production_form_view_inherit_process_costing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.workorder_job_costing_form_view
+msgid "Direct Materials Cost"
+msgstr "直接材料成本"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_workorder__overhead_cost_ids
+msgid "Direct Overhead"
+msgstr "直接费用"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_bom_job_cost_line__display_name
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__display_name
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_workorder_job_cost_line__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_production__everage_price
+msgid "Everage Cost of Product"
+msgstr "产品平均成本"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "Finished Products"
+msgstr "产成品"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_bom_job_cost_line__id
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__id
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_workorder_job_cost_line__id
+msgid "ID"
+msgstr ""
+
+#. module: odoo_process_costing_manufacturing
+#: selection:bom.job.cost.line,job_type:0
+#: selection:mrp.job.cost.line,job_type:0
+#: selection:workorder.job.cost.line,job_type:0
+msgid "Labour"
+msgstr "人工"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_bom_job_cost_line____last_update
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line____last_update
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_workorder_job_cost_line____last_update
+msgid "Last Modified on"
+msgstr "最后修改日"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_bom_job_cost_line__write_uid
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__write_uid
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_workorder_job_cost_line__write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_bom_job_cost_line__write_date
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__write_date
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_workorder_job_cost_line__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__mrp_id
+msgid "Manufacturing Order"
+msgstr "生产订单"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "Manufacturing Orders -"
+msgstr "生产订单 -"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.mrp_production_form_view_inherit_process_costing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_mrporder_cost
+msgid "Manufacturing Overhead Cost"
+msgstr "制造费用成本"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.actions.act_window,name:odoo_process_costing_manufacturing.action_mrp_job_cost_line
+#: model:ir.ui.menu,name:odoo_process_costing_manufacturing.menu_mrp_job_cost_line
+msgid "Manufacturing Process Costing"
+msgstr "生产过程成本"
+
+#. module: odoo_process_costing_manufacturing
+#: selection:bom.job.cost.line,job_type:0
+#: selection:mrp.job.cost.line,job_type:0
+#: selection:workorder.job.cost.line,job_type:0
+msgid "Material"
+msgstr "材料"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_bom_job_cost_line__routing_workcenter_id
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__routing_workcenter_id
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_workorder_job_cost_line__routing_workcenter_id
+msgid "Operation"
+msgstr "作业"
+
+#. module: odoo_process_costing_manufacturing
+#: selection:bom.job.cost.line,job_type:0
+#: selection:mrp.job.cost.line,job_type:0
+#: selection:workorder.job.cost.line,job_type:0
+msgid "Overhead"
+msgstr "费用"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.mrp_job_costing_tree_view
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.report_bom_structure_cost
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.workorder_job_costing_form_view
+msgid "Overhead Cost"
+msgstr "费用成本"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_bom_job_cost_line__product_qty
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__product_qty
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_workorder_job_cost_line__product_qty
+msgid "Planned Qty"
+msgstr "计划的数量"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__job_type
+msgid "Process Cost Type"
+msgstr "过程成本类型"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.view_mrp_job_cost_line_pivot
+msgid "Process Job Cost Line"
+msgstr "工序成本线"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__to_produse_product
+msgid "Produced Product"
+msgstr "生产的产品"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_bom_job_cost_line__product_id
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__product_id
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_workorder_job_cost_line__product_id
+msgid "Product"
+msgstr "产品"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model,name:odoo_process_costing_manufacturing.model_mrp_production
+msgid "Production Order"
+msgstr "生产订单"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.actions.report,name:odoo_process_costing_manufacturing.action_report_production_order_cost
+msgid "Production Order Cost"
+msgstr "生产订单成本"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_bom_job_cost_line__reference
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__reference
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_workorder_job_cost_line__reference
+msgid "Reference"
+msgstr "编号"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__routing_id
+msgid "Routing"
+msgstr "工艺路线"
+
+#. module: odoo_process_costing_manufacturing
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.view_mrp_production_filter
+msgid "Search MRP Job Cost Line"
+msgstr "搜索MRP工作成本线"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,help:odoo_process_costing_manufacturing.field_mrp_job_cost_line__routing_id
+msgid "The list of operations (list of work centers) to produce the finished product. The routing is mainly used to compute work center costs during operations and to plan future loads on work centers based on production planning."
+msgstr "生产产成品需要的一系列作业（发生在一系列工作中心上）。工艺主要用于计算工作中心成本和根据生产计划来规划工作中心负载。"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__to_produse_qty
+msgid "To Produce Qty"
+msgstr "生产数量"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_bom__final_total_actual_cost
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__total_actual_cost
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_production__final_total_actual_cost
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_workorder__final_total_actual_cost
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_workorder_job_cost_line__total_actual_cost
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.mrp_job_cost_line_tree_view
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.workorder_job_cost_line_tree_view
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.workorder_job_costing_form_view
+msgid "Total Actual Cost"
+msgstr "实际总成本"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_bom_job_cost_line__total_actual_cost
+msgid "Total Actual Cost Price"
+msgstr "实际总成本价"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_bom__total_actual_labour_cost
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_production__total_actual_labour_cost
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_workorder__total_actual_labour_cost
+msgid "Total Actual Labour Cost"
+msgstr "实际总人工成本"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_bom__total_actual_material_cost
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_production__total_actual_material_cost
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_workorder__total_actual_material_cost
+msgid "Total Actual Material Cost"
+msgstr "实际总材料成本"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_bom__total_actual_overhead_cost
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_production__total_actual_overhead_cost
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_workorder__total_actual_overhead_cost
+msgid "Total Actual Overhead Cost"
+msgstr "实际总费用成本"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_bom_job_cost_line__total_cost
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_bom__final_total_cost
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__total_cost
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_production__final_total_cost
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_workorder__final_total_cost
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_workorder_job_cost_line__total_cost
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.mrp_job_cost_line_tree_view
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.workorder_job_cost_line_tree_view
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.workorder_job_costing_form_view
+msgid "Total Cost"
+msgstr "总成本"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_bom__labor_total
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_production__labor_total
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_workorder__labor_total
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.mrp_job_costing_tree_view
+msgid "Total Labour Cost"
+msgstr "总人工成本"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_bom__material_total
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_production__material_total
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_workorder__material_total
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.mrp_job_costing_tree_view
+msgid "Total Material Cost"
+msgstr "总材料成本"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_bom__overhead_total
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_production__overhead_total
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_workorder__overhead_total
+#: model_terms:ir.ui.view,arch_db:odoo_process_costing_manufacturing.mrp_job_costing_tree_view
+msgid "Total Overhead Cost"
+msgstr "总费用成本"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_bom_job_cost_line__job_type
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_workorder_job_cost_line__job_type
+msgid "Type"
+msgstr "类型"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_bom_job_cost_line__uom_id
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__uom_id
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_workorder_job_cost_line__uom_id
+msgid "UOM"
+msgstr "单位"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_production__unit_cost
+msgid "Unit Cost"
+msgstr "单位成本"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model,name:odoo_process_costing_manufacturing.model_mrp_workorder
+msgid "Work Order"
+msgstr "工单"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_workorder_job_cost_line__workorder_id
+msgid "Workorder"
+msgstr "工作订单"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model.fields,field_description:odoo_process_costing_manufacturing.field_mrp_job_cost_line__work_order_line_id
+msgid "Workorder Job Cost Line"
+msgstr "工单作业成本线"
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model,name:odoo_process_costing_manufacturing.model_bom_job_cost_line
+msgid "bom.job.cost.line"
+msgstr ""
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model,name:odoo_process_costing_manufacturing.model_mrp_job_cost_line
+msgid "mrp.job.cost.line"
+msgstr ""
+
+#. module: odoo_process_costing_manufacturing
+#: model:ir.model,name:odoo_process_costing_manufacturing.model_workorder_job_cost_line
+msgid "workorder.job.cost.line"
+msgstr ""
