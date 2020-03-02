@@ -141,7 +141,10 @@ class AgreementPwsImport(models.TransientModel):
 
             cell_value = table.cell(11, 5).value  # 交付所属BU
             if not (cell_value is None) and not (cell_value is ''):
-                vals['x_studio_jfssbu1'] = cell_value
+                crm_teamObj = self.env['crm.team'].search(
+                    [('name', 'ilike', cell_value)], limit=1)
+                if crm_teamObj:
+                    vals['x_studio_jfssbu1'] = crm_teamObj.id
 
             cell_value = table.cell(6, 5).value  # 机会编号
             if not (cell_value is None) and not (cell_value is ''):
@@ -254,7 +257,6 @@ class AgreementPwsImport(models.TransientModel):
 
                 cell_value = table.cell(10, 5).value  # 客户所属BU
                 if not (cell_value is None) and not (cell_value is ''):
-                    print(cell_value)
                     crm_teamObj = self.env['crm.team'].search(
                         [('name', 'ilike', cell_value)], limit=1)
                     if crm_teamObj:
@@ -262,7 +264,11 @@ class AgreementPwsImport(models.TransientModel):
 
                 cell_value = table.cell(11, 5).value  # 交付所属BU
                 if not (cell_value is None) and not (cell_value is ''):
-                    vals['x_studio_jfssbu1'] = cell_value
+                    crm_teamObj = self.env['crm.team'].search(
+                        [('name', 'ilike', cell_value)], limit=1)
+                    if crm_teamObj:
+                        vals['x_studio_jfssbu1'] = crm_teamObj.id
+
 
                 cell_value = table.cell(8, 5).value  # 项目名称
                 if not (cell_value is None) and not (cell_value is ''):
