@@ -1766,7 +1766,7 @@ class CK_Hours_Worker_line(models.Model):
 
     fworkcenterno = fields.Char(string=_('WorkCenterNo'), related='order_id.fworkcenterno', index=True)  # 工作中心编码
 
-    foperno = fields.Char(string=_('OperationNo'), related='order_id.foperno', index=True)  # 工序编码
+    foperno = fields.Char(string=_('OperationNo'), index=True)  # 工序编码
 
     pqty = fields.Float(string=_('Picking Quantity'), related='order_id.pqty')  # 投料数量
 
