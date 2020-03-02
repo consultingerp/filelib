@@ -592,6 +592,7 @@ class e2yun_supplier_info(models.Model):
                 'company_profile': self.company_profile,
                 'login_name': self.login_name,
                 'name': self.name,
+                'company_name': self.company_name,
                 })
                 id.parent_id.authenitcation_id = id.authenitcation_id
                 id.parent_id.secondary_industry_ids = id.secondary_industry_ids
