@@ -77,8 +77,8 @@
             <field name="model">crm.lead</field>
             <field name="inherit_id" ref="crm_lead_product.crm_case_form_view_oppor"/>
             <field name="arch" type="xml">
-                <page name="products" position="replace">
-<!--                    <attribute name="invisible">1</attribute>-->
+                <page name="products" position="attributes">
+                    <attribute name="invisible">1</attribute>
                 </page>
             </field>
         </record>
@@ -119,6 +119,32 @@
             <xpath expr="//kanban" position="attributes">
                 <attribute name="create">false</attribute>
             </xpath>
+            </field>
+        </record>
+
+        <record id="e2yun_customer_info.action_mail_activity_form" model="ir.actions.act_window">
+            <field name="context">{'flag_crm_lead_activity':2020022501}</field>
+        </record>
+
+        <record id="view_mail_activity_form_democrm_extends" model="ir.ui.view">
+            <field name="name">mail.activity.form.democrm.extends</field>
+            <field name="model">mail.activity</field>
+            <field name="inherit_id" ref="e2yun_customer_info.view_mail_activity_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='summary']" position="after">
+                    <field name="crm_lead_id" options='{"no_create": True,"no_open": True}'/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_mail_activity_calendar_crmdemo_extends" model="ir.ui.view">
+            <field name="name">mail.activity.calendar.demo.extends</field>
+            <field name="model">mail.activity</field>
+            <field name="inherit_id" ref="e2yun_customer_info.view_mail_activity_calendar"/>
+            <field name="arch" type="xml">
+                <field name="summary" position="after">
+                    <field name="res_name"/>
+                </field>
             </field>
         </record>
 

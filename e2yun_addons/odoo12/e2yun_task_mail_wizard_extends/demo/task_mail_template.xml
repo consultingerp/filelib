@@ -107,5 +107,15 @@
             <field name="user_signature" eval="False"/>
         </record>
 
+        <template id="mail_notification_light_extends" inherit_id="mail.mail_notification_light">
+            <xpath expr="//img" position="replace">
+<!--                限制宽度-->
+                <img t-att-src="'/logo.png?company=%s' % company.id" style="padding: 0px; margin: 0px; height: 48px; width: 48px;" t-att-alt="'%s' % company.name"/>
+            </xpath>
+
+        </template>
+
+
+
     </data>
 </odoo>

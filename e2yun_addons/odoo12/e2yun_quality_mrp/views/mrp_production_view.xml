@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Manufacturing Order -->
+        <record id="mrp_production_qc_form_view" model="ir.ui.view">
+            <field name="name">mrp.production.qc.form</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='button_plan']" position="after">
+                    <button name="first_inspection" type="object" string="First Inspection" class="btn-info"
+                            attrs="{'invisible': ['|',('routing_id', '!=', False), ('state', 'in', ('done','cancel'))]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_mrp_product_produce_qc_wizard" model="ir.ui.view">
+            <field name="name">MRP Product Produce QC</field>
+            <field name="model">mrp.product.produce</field>
+            <field name="inherit_id" ref="mrp.view_mrp_product_produce_wizard"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//button[@name='do_produce']" position="after">
+                    <button name="first_inspection" type="object" string="First Inspection" class="btn-info"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

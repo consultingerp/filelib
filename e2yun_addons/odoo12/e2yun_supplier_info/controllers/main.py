@@ -136,7 +136,7 @@ class Academy(http.Controller):
         if supplier_info.state == 'approval1' or supplier_info.state == 'done':
             is_view = True
         if authentication_info:
-            is_view = True
+            # is_view = True
             val = {
                 'is_view': is_view,
                 'ISO9000_info': authentication,

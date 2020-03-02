@@ -4,6 +4,7 @@
 from odoo import api, fields, models, tools, _
 from odoo import exceptions
 import datetime
+from odoo.exceptions import UserError
 class Agreement(models.Model):
     _inherit = "agreement"
 
@@ -21,7 +22,7 @@ class Agreement(models.Model):
 
     pws_attachment_ids = fields.Many2many(
         'ir.attachment', 'agreement_pws_ir_attachments_rel',
-        'id', 'attachment_id', 'PWS')
+        'id', 'attachment_id', 'pws')
 
     email_approval_attachment_ids = fields.Many2many(
         'ir.attachment', 'agreement_email_approval_ir_attachments_rel',
@@ -39,7 +40,19 @@ class Agreement(models.Model):
         'ir.attachment', 'agreement_fktj_attachments_rel',
         'id', 'attachment_id', 'Payment Clause')
 
+    pws_line_ids = fields.One2many(
+        "agreement.pws.line",
+        "agreement_id",
+        string="PWS",
+        copy=False)
 
+
+    @api.onchange("agreement_subtype_id")
+    def onchange_agreement_subtype_id(self):
+        # 验证 MAD+SOW（主服务协议+工作说明书） 必须上传 PWS
+        if self.agreement_subtype_id.name == 'MAD+SOW（主服务协议+工作说明书）':
+            if not self.pws_line_ids and not self.pws_line_ids.pws_line_attachment_ids:
+                raise UserError("合同子类型：MAD+SOW（主服务协议+工作说明书），请上传PWS导入")
 
     @api.onchange("x_studio_htbz")
     def onchange_x_studio_htbz(self):
@@ -96,6 +109,7 @@ class Agreement(models.Model):
 
           if agreement_subtype_obj.for_code and not (agreement_subtype_obj.name in '集团转包'
                                                      or agreement_subtype_obj.name in 'Other（其他）'):
+
             sequence_obj = self.env['ir.sequence']
             if 'agreement_type_id' in vals.keys():
                 agreement_type_id=vals['agreement_type_id']
@@ -196,6 +210,7 @@ class Agreement(models.Model):
             vals['x_studio_htje'] = ("%.2f" % float(vals['x_studio_htje']))
 
         if 'stage_id' in vals.keys():
+            #回写机会 订单
             if vals['stage_id']==7 and self.x_studio_htje\
                     and self.x_studio_partner_id and self.x_studio_jhhm_id:
                 sql='update crm_lead set agreement_amount=%s,agreement_amount_usd=%s,agreement_code=%s,agreement_partner_id=%s where code=%s'
@@ -608,7 +623,6 @@ class AgreementLine(models.Model):
     price_subtotal = fields.Float(compute='_compute_amount', string='小计', store=True)
 
 
-
     @api.depends('qty', 'price_unit', 'taxes_id')
     def _compute_amount(self):
         for line in self:
@@ -630,3 +644,32 @@ class AgreementLine(models.Model):
             'qty': self.qty,
             'amount':self.taxes_id[0].amount/100,
         }
+
+
+
+class AgreementPwsLine(models.Model):
+    _name = "agreement.pws.line"
+    _description = "Agreement Pws Lines"
+
+    pid = fields.Char(
+        string="PID",
+        required=True)
+
+    cgm = fields.Char(
+        string="CGM")
+
+    pws_line_attachment_ids = fields.Many2many(
+        'ir.attachment', 'agreement_pws_line_ir_attachments_rel',
+        'id', 'attachment_id', 'PWS')
+
+    agreement_id = fields.Many2one(
+        "agreement",
+        string="Agreement",
+        ondelete="cascade")
+
+    taxes_id = fields.Many2many('account.tax', string='税率', domain=['|', ('active', '=', False), ('active', '=', True)])
+    x_studio_htje = fields.Float('htjr')
+    x_studio_jfssbu = fields.Char(string="DTD",)
+    x_studio_htbz= fields.Char('htbz',)
+    x_studio_mjhtje = fields.Float('mjhtjr')
+
