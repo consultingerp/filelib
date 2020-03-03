@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-24 13:32+0000\n"
-"PO-Revision-Date: 2020-02-24 21:38+0800\n"
+"POT-Creation-Date: 2020-03-03 08:31+0000\n"
+"PO-Revision-Date: 2020-03-03 16:36+0800\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -415,7 +415,7 @@ msgid "ID"
 msgstr "身份证件"
 
 #. module: e2yun_task_mail_wizard_extends
-#: code:addons/e2yun_task_mail_wizard_extends/wizard/task_email_compose_message.py:103
+#: code:addons/e2yun_task_mail_wizard_extends/wizard/task_email_compose_message.py:118
 #, python-format
 msgid "Incorrect Email Address: %s"
 msgstr "错误的电子邮件地址:%s"
@@ -535,6 +535,11 @@ msgid "Notify followers of the document (mass post only)"
 msgstr "通知文档的关注者(仅限群发)"
 
 #. module: e2yun_task_mail_wizard_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_task_mail_wizard_extends.mail_notification_light
+msgid "Odoo"
+msgstr ""
+
+#. module: e2yun_task_mail_wizard_extends
 #: model:mail.template,subject:e2yun_task_mail_wizard_extends.email_template_survey_1
 msgid "One Questionnaire"
 msgstr "一份问卷调查"
@@ -560,17 +565,28 @@ msgid "Pending Moderation"
 msgstr "等待审核"
 
 #. module: e2yun_task_mail_wizard_extends
-#: code:addons/e2yun_task_mail_wizard_extends/wizard/task_email_compose_message.py:259
+#: code:addons/e2yun_task_mail_wizard_extends/wizard/task_email_compose_message.py:276
 #, python-format
 msgid "Please enter an existing contact or email list"
 msgstr "请输入现有的联系人或电子邮件列表"
 
 #. module: e2yun_task_mail_wizard_extends
-#: code:addons/e2yun_task_mail_wizard_extends/wizard/task_email_compose_message.py:242
-#: code:addons/e2yun_task_mail_wizard_extends/wizard/task_email_compose_message.py:350
+#: code:addons/e2yun_task_mail_wizard_extends/wizard/task_email_compose_message.py:257
+#: code:addons/e2yun_task_mail_wizard_extends/wizard/task_email_compose_message.py:367
 #, python-format
 msgid "Please enter at least one valid recipient."
-msgstr "请输入至少一个有效的收件人。"
+msgstr "请至少输入一个可用的收件人"
+
+#. module: e2yun_task_mail_wizard_extends
+#: code:addons/e2yun_task_mail_wizard_extends/wizard/task_email_compose_message.py:269
+#, python-format
+msgid "Please select the existing contact person"
+msgstr "请输入现有的联系人或电子邮件列表"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_task_mail_wizard_extends.mail_notification_light
+msgid "Powered by"
+msgstr "技术支持"
 
 #. module: e2yun_task_mail_wizard_extends
 #: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__public_url_html
@@ -654,12 +670,12 @@ msgstr "向您的观众发送私人邮件(每个收件人只能答复一次)。"
 #. module: e2yun_task_mail_wizard_extends
 #: model_terms:ir.ui.view,arch_db:e2yun_task_mail_wizard_extends.task_form_extendds
 msgid "Share and invite by email"
-msgstr "发送多问卷"
+msgstr "开始问卷邀请"
 
 #. module: e2yun_task_mail_wizard_extends
 #: model:ir.model.fields,field_description:e2yun_task_mail_wizard_extends.field_task_mail_compose_message__public
 msgid "Share options"
-msgstr "分享选项"
+msgstr "分享操作"
 
 #. module: e2yun_task_mail_wizard_extends
 #: selection:task.mail.compose.message,public:0
@@ -704,7 +720,7 @@ msgstr "调查"
 #. module: e2yun_task_mail_wizard_extends
 #: model:ir.model,name:e2yun_task_mail_wizard_extends.model_survey_user_input
 msgid "Survey User Input"
-msgstr "调查"
+msgstr "调查用户输入"
 
 #. module: e2yun_task_mail_wizard_extends
 #: selection:task.mail.compose.message,message_type:0
@@ -795,7 +811,12 @@ msgstr ""
 #: code:addons/e2yun_task_mail_wizard_extends/models/models.py:28
 #, python-format
 msgid "You cannot send invitations for closed surveys."
-msgstr "您不能发送封闭式调查的邀请。"
+msgstr "您不能发送关闭的调查的邀请。"
+
+#. module: e2yun_task_mail_wizard_extends
+#: model_terms:ir.ui.view,arch_db:e2yun_task_mail_wizard_extends.mail_notification_light
+msgid "Your"
+msgstr "你的"
 
 #. module: e2yun_task_mail_wizard_extends
 #: model:mail.template,subject:e2yun_task_mail_wizard_extends.email_template_survey
