@@ -9,7 +9,10 @@ class Agreement(models.Model):
     _inherit = "agreement"
 
     agreement_code=fields.Char('Agreement Code',default="/") #合同编码
-    plan_sign_time=fields.Datetime('Plan Sign Time') # 计划回签时间
+    plan_sign_time=fields.Date('Plan Sign Time') # 计划回签时间
+    signed_time = fields.Date('Signed Time')  # 合同签订时间
+    sales_department = fields.Many2one('crm.team', string='Sales department')  # 合同签订时间
+
     property_product_pricelist = fields.Many2one('product.pricelist', string='Pricelist',default=1,)
 
     pdfswy = fields.Many2one('ir.attachment', string='Pdfswy',readonly='True')
@@ -54,6 +57,13 @@ class Agreement(models.Model):
             if not self.pws_line_ids and not self.pws_line_ids.pws_line_attachment_ids:
                 raise UserError("合同子类型：MAD+SOW（主服务协议+工作说明书），请上传PWS导入")
 
+
+    @api.onchange("assigned_user_id")
+    def onchange_assigned_user_id(self):
+        # 销售所属团队取自销售的团队 sale_team_id
+        if self.assigned_user_id.sale_team_id:
+            self.sales_department=self.assigned_user_id.sale_team_id
+
     @api.onchange("x_studio_htbz")
     def onchange_x_studio_htbz(self):
         oldhtbz = self.env['agreement'].search([('id', '=', self._origin.id)])
@@ -89,7 +99,7 @@ class Agreement(models.Model):
     def _onchange_x_studio_mjhtje(self):
         company_id = self.company_id or self.env.user.company_id
         create_date = self.create_date or fields.Date.today()
-        currency = self.env['res.currency'].search([('name', 'like', '%CNY%')])
+        currency = self.env['res.currency'].search([('name', 'like', '%'+self.x_studio_htbz+'%')])
         property_product_pricelist = self.env['product.pricelist'].search(
             [('name', 'like', '%USD%')])
         if currency and property_product_pricelist:
@@ -157,9 +167,10 @@ class Agreement(models.Model):
                 if 'x_studio_htje' in vals.keys() and vals['x_studio_htje']:
                     vals['x_studio_htje'] = ("%.2f" % float(vals['x_studio_htje']))
 
+        if  not 'x_studio_htbz' in vals.keys():
+            vals['x_studio_htbz'] = 'CNY'
 
         vals['x_studio_usd'] = 'USD'
-        vals['x_studio_htbz'] = 'CNY'
         return super(Agreement, self).create(vals)
 
     def write(self, vals):
@@ -216,7 +227,44 @@ class Agreement(models.Model):
                 sql='update crm_lead set agreement_amount=%s,agreement_amount_usd=%s,agreement_code=%s,agreement_partner_id=%s where code=%s'
                 self._cr.execute(sql,(self.x_studio_htje,self.x_studio_mjhtje,self.id,self.x_studio_partner_id.id,self.x_studio_jhhm_id))
 
-        return super(Agreement,self).write(vals)
+        if 'pws_line_ids' in vals.keys():
+            super(Agreement, self).write(vals)
+
+            sum_cgm = 0
+            sum_amount = 0
+
+            if self.pws_line_ids:
+                for pwsObj in self.pws_line_ids:
+                    if pwsObj.cgm and pwsObj.x_studio_htje:
+                        cgm = pwsObj.cgm.strip('%')
+                        sum_cgm = sum_cgm + (pwsObj.x_studio_htje * (float(cgm) / 100))
+                        sum_amount = sum_amount + pwsObj.x_studio_htje
+
+            if sum_cgm != 0 and sum_amount != 0:
+                x_studio_cgmpd = str(round((sum_cgm / sum_amount) * 100)) + "%"
+                x_studio_mjhtje=0
+                #计算汇总后的美金金额
+                if self.x_studio_htbz:
+                    company_id = self.company_id or self.env.user.company_id
+                    create_date = self.create_date or fields.Date.today()
+                    currency = self.env['res.currency'].search([('name', 'like', '%USD%')])
+                    property_product_pricelist = self.env['product.pricelist'].search(
+                        [('name', 'like', '%' + self.x_studio_htbz + '%')])
+                    if currency and property_product_pricelist:
+                        currency_rate = self.env['res.currency']._get_conversion_rate(
+                            property_product_pricelist.currency_id, currency,
+                            company_id, create_date)
+                        x_studio_mjhtje = round(float(sum_amount) * currency_rate, 2)
+
+                sql = "update agreement set x_studio_cgmpd=%s,x_studio_htje=%s,x_studio_mjhtje=%s where id=%s"
+                self._cr.execute(sql, (x_studio_cgmpd, sum_amount,x_studio_mjhtje, self.id))
+
+            return True
+        else:
+            return super(Agreement, self).write(vals)
+
+
+
 
     def send_approval_warn_emlil(self,interval_time):
         #mail.template / name_search
@@ -670,6 +718,6 @@ class AgreementPwsLine(models.Model):
     taxes_id = fields.Many2many('account.tax', string='税率', domain=['|', ('active', '=', False), ('active', '=', True)])
     x_studio_htje = fields.Float('htjr')
     x_studio_jfssbu = fields.Char(string="DTD",)
-    x_studio_htbz= fields.Char('htbz',)
+    x_studio_htbz= fields.Many2one('res.currency', '币种')
     x_studio_mjhtje = fields.Float('mjhtjr')
 

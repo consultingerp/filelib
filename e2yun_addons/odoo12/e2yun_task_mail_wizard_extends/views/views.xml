@@ -6,7 +6,7 @@
             <field name="inherit_id" ref="project.view_task_form2"/>
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='%(portal.portal_share_action)d']" position="after">
-                    <button name="action_send_survey" string="Share and invite by email" type="object" class="oe_highlight" attrs="{'invisible': [('id', '=', False)]}"/>
+                    <button name="action_send_survey" string="Share and invite by email" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('id', '=', False), ('task_mode', '=', 'common mode')]}"/>
                 </xpath>
             </field>
     </record>
