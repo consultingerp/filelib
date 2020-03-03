@@ -18,6 +18,12 @@ msgstr "合同签订时间"
 
 
 #. module: e2yun_agreement_extend
+#: model:ir.model.fields,field_description:e2yun_agreement_extend.field_agreement__sales_department
+msgid "Sales department"
+msgstr "销售所属部门"
+
+
+#. module: e2yun_agreement_extend
 #: model:ir.model.fields,field_description:e2yun_agreement_extend.field_agreement_subtype__for_code
 msgid "For Code"
 msgstr "简写编码"
