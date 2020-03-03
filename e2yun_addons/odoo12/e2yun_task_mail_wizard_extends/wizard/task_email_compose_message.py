@@ -64,7 +64,7 @@ class SurveyMailComposeMessage(models.TransientModel):
     public_url_html = fields.Char(compute="_compute_survey_url", string="Public HTML web link")
     # partner_ids = fields.Many2many('res.partner', 'survey_mail_compose_message_res_partner_rel', 'wizard_id', 'partner_id', string='Existing contacts')
     partner_ids = fields.Many2many('res.partner', 'wizard_id', string='Existing contacts')
-    attachment_ids = fields.Many2many('ir.attachment', 'survey_mail_compose_message_ir_attachments_rel', 'wizard_id', 'attachment_id', string='Attachments')
+    attachment_ids = fields.Many2many('ir.attachment', 'task_mail_compose_message_ir_attachments_rel', 'wizard_id', 'attachment_id', string='Attachments')
     multi_email = fields.Text(string='List of emails', help="This list of emails of recipients will not be converted in contacts.\
         Emails must be separated by commas, semicolons or newline.")
     date_deadline = fields.Date(string="Deadline to which the invitation to respond is valid",
