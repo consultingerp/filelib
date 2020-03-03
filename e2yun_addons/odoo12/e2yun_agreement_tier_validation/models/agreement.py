@@ -366,7 +366,8 @@ class TierValidation(models.AbstractModel):
                 flag_message_main_attachment_id=True
 
             if 'pdfswy_attachment_ids' != key and   'pdfqw_attachment_ids' != key and 'fktj_attachment_ids' != key and \
-                    'contract_text_attachment_ids' != key and 'email_approval_attachment_ids' != key and  'revision' != key :
+                    'contract_text_attachment_ids' != key and 'email_approval_attachment_ids' != key \
+                    and 'x_studio_srqrlx' != key and  'revision' != key :
                 no_check=True
             elif  'contract_text_attachment_ids' == key and self.stage_id==6:
                 GetDatetime = get_zone_datetime.GetDatetime()

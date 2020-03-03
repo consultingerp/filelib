@@ -9,6 +9,7 @@
       <field name="arch" type="xml">
 
 
+
         <field name="name" position="before">
                     <field name="agreement_code" class="oe_inline"/>
                     <label for="agreement_code" string="  " class="oe_inline"/>
@@ -44,10 +45,10 @@
                             <field name="pws_line_ids" nolabel="1">
                                   <tree editable="top">
                                     <field name="pid"/>
-                                    <field name="cgm" readonly="1"/>
-                                    <field name="x_studio_jfssbu" string="交付所属部门" readonly="1" />
-                                    <field name="x_studio_htbz" readonly="1"/>
-                                    <field name="x_studio_htje" readonly="1"/>
+                                    <field name="cgm" required="1"/>
+                                    <field name="x_studio_jfssbu" string="交付所属部门"/>
+                                    <field name="x_studio_htbz" options="{'no_create':1,'no_create_edit': 1}"  required="1"/>
+                                    <field name="x_studio_htje" required="1"/>
                                     <!-- <field name="x_studio_mjhtje"/> -->
                                     <field name="taxes_id" widget="many2many_tags"/>
                                     <field name="pws_line_attachment_ids"  readonly="1" widget="many2many_binary"  options="{'no_open': True}" nolabel="1" colspan="2" groups="e2yun_agreement_extend.group_agreement_text_download"/>
@@ -78,6 +79,7 @@
       <field name="inherit_id" ref="studio_customization.odoo_studio_agreemen_ac29f9af-fcc2-49e8-b2c9-d270c730381d"/>
       <field name="arch" type="xml">
        <field name="x_studio_xsdb1" position="after">
+           <field name="sales_department" options="{'no_create':1,'no_create_edit': 1}"  />
             <field name="plan_sign_time" />
             <field name="signed_time" />
         </field>
