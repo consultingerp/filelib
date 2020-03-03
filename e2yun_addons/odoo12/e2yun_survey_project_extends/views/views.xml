@@ -62,10 +62,11 @@
                     </tree>
                 </xpath>
                 <xpath expr="//field[@name='questionnaire_ids']" position="after">
+                    <field name="questionnaire_ids_len" invisible="1"/>
                     <button name="project_task_survey_add_questionnaire" string="添加历史问卷" type="object" class='oe_edit_only'
-                    attrs="{'invisible': [('task_mode','!=', 'questionnaire model')]}"/>
+                    attrs="{'invisible': ['|', ('task_mode','!=', 'questionnaire model'), '&amp;', ('multiple_questionnaires', '=', 'no'), ('questionnaire_ids_len', '&gt;=', 1)]}"/>
                     <button name="project_task_survey_add_new_questionnaire" string="添加新问卷" type="object" class='oe_edit_only'
-                    attrs="{'invisible': [('task_mode','!=', 'questionnaire model')]}"/>
+                    attrs="{'invisible': ['|', ('task_mode','!=', 'questionnaire model'), '&amp;', ('multiple_questionnaires', '=', 'no'), ('questionnaire_ids_len', '&gt;=', 1)]}"/>
                 </xpath>
             </field>
         </record>

@@ -5,7 +5,7 @@ from odoo import models, fields, api
 class e2yun_suppliers_register(models.Model):
     _inherit = 'survey.survey'
 
-    lock_survey = fields.Boolean(string='问卷锁定', default=False)
+    lock_survey = fields.Boolean(string='问卷锁定', default=False, copy=False)
     survey_instruction = fields.Char('问卷说明')
 
 class e2yun_suppliers_register_lock_survey(models.TransientModel):
