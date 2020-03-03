@@ -602,7 +602,7 @@ class e2yun_supplier_info(models.Model):
 
         # except Exception as e:
         #     raise UserError(u'转正式客户失败，请在工作流中添加^完成^状态')
-        self.unlink()
+        # self.unlink()
         return False
 
     # @api.multi
