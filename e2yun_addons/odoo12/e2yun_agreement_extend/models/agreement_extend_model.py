@@ -9,7 +9,9 @@ class Agreement(models.Model):
     _inherit = "agreement"
 
     agreement_code=fields.Char('Agreement Code',default="/") #合同编码
-    plan_sign_time=fields.Datetime('Plan Sign Time') # 计划回签时间
+    plan_sign_time=fields.Date('Plan Sign Time') # 计划回签时间
+    signed_time = fields.Date('Signed Time')  # 合同签订时间
+
     property_product_pricelist = fields.Many2one('product.pricelist', string='Pricelist',default=1,)
 
     pdfswy = fields.Many2one('ir.attachment', string='Pdfswy',readonly='True')
