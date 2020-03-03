@@ -113,7 +113,7 @@
 <!--                </xpath>-->
                 <!--添加最高分值-->
                 <xpath expr="//field[@name='type']" position="after">
-                    <label for="highest_score" string="最高分值"/>
+<!--                    <label for="highest_score" string="最高分值"/>-->
                     <field name="highest_score" string="最高分值"/>
                 </xpath>
                 <!--添加计分方式-->
