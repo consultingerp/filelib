@@ -40,6 +40,8 @@ class SurveyPage(models.Model):
         res = super(SurveyPage, self).create(vals_list)
         return res
 
+    @api.multi
+    @api.depends('question_ids')
     def _compute_page_sum(self):
         for record in self:
             page_total_score = 0.0
