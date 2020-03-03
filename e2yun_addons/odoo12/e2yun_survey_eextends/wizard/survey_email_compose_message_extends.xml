@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="survey_email_compose_message_extends">
+            <field name="name">survey.mail.compose.message.form.extends</field>
+            <field name="model">survey.mail.compose.message</field>
+           <field name="inherit_id" ref="survey.survey_email_compose_message"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='body']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('public','in',['email_private', 'send_internal_process_messages'])]}</attribute>
+                </xpath>
+                <xpath expr="//group[2]" position="attributes">
+                    <attribute name="attrs">{'invisible':[('public','in',['email_private'])]}</attribute>
+                </xpath>
+                <xpath expr="//footer[1]" position="attributes">
+                    <attribute name="attrs">{'invisible':[('public','in',['email_private', 'send_internal_process_messages'])]}</attribute>
+                </xpath>
+                <xpath expr="//footer[2]" position="attributes">
+                    <attribute name="attrs">{'invisible':['|',('public','=',False),('public','in',['public_link', 'send_internal_process_messages'])]}</attribute>
+                </xpath>
+                <xpath expr="//footer[2]" position="after">
+                    <footer attrs="{'invisible':[('public','in',['public_link', 'email_private'])]}">
+                        <button string="Send" name="action_send_mail" type="object" class="btn-primary" />
+                        <div>
+                            Use template
+                            <field name="template_id" nolabel="1"/>
+                        </div>
+                    </footer>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

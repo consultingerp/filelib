@@ -25,7 +25,8 @@
     'data': [
         # 'security/ir.model.access.csv',
         'views/views.xml',
-        # 'views/templates.xml',
+        'wizard/survey_email_compose_message_extends.xml',
+        'data/survey_mail_template_data_extends.xml',
     ],
     # only loaded in demonstration mode
     # 'demo': [

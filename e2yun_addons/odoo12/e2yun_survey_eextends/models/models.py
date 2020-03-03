@@ -1,8 +1,22 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, _, exceptions
+from odoo import models, fields, api, _, exceptions, tools, SUPERUSER_ID
 from collections import Counter, OrderedDict
 from itertools import product
+
+import datetime
+import logging
+import re
+import uuid
+
+
+from werkzeug import urls
+
+
+from odoo.addons.http_routing.models.ir_http import slug
+from odoo.exceptions import UserError, ValidationError
+email_validator = re.compile(r"[^@]+@[^@]+\.[^@]+")
+_logger = logging.getLogger(__name__)
 
 
 
@@ -107,6 +121,37 @@ class E2yunProjectSurvey(models.Model):
             result['answered'] = len(set(question_input_ids) & set(total_input_ids))
             result['skipped'] = result['total_inputs'] - result['answered']
         return result
+
+    @api.multi
+    def action_send_survey(self):
+        """ Open a window to compose an email, pre-filled with the survey message """
+        # Ensure that this survey has at least one page with at least one question.
+        if not self.page_ids or not [page.question_ids for page in self.page_ids if page.question_ids]:
+            raise UserError(_('You cannot send an invitation for a survey that has no questions.'))
+
+        if self.stage_id.closed:
+            raise UserError(_("You cannot send invitations for closed surveys."))
+
+        template = self.env.ref('e2yun_survey_eextends.email_template_survey_extends', raise_if_not_found=False)
+
+        local_context = dict(
+            self.env.context,
+            default_model='survey.survey',
+            default_res_id=self.id,
+            default_survey_id=self.id,
+            default_use_template=bool(template),
+            default_template_id=template and template.id or False,
+            default_composition_mode='comment',
+            notif_layout='mail.mail_notification_light',
+        )
+        return {
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'survey.mail.compose.message',
+            'target': 'new',
+            'context': local_context,
+        }
 
 
 class E2yunSurveyUserInput(models.Model):
