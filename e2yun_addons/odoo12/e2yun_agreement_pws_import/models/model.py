@@ -231,7 +231,12 @@ class AgreementPwsImport(models.TransientModel):
       table = wb.sheets()[16]
       cell_value = table.cell(10, 4).value  # 收入确认类型
       if not (cell_value is None) and not (cell_value is ''):
-          vals['x_studio_srqrlx'] = cell_value
+          agreement_income_type = self.env['agreement.income.type'].search(
+              [('name', 'ilike', cell_value.strip())], limit=1)
+
+          income_type=[[6, False, [agreement_income_type.id]]]
+          if agreement_income_type:
+            vals['income_type'] = income_type
 
       cell_value = table.cell(10, 6).value  # 产品线
       if not (cell_value is None) and not (cell_value is ''):
@@ -348,7 +353,11 @@ class AgreementPwsImport(models.TransientModel):
 
                cell_value = table.cell(10, 4).value  # 收入确认类型
                if not (cell_value is None) and not (cell_value is ''):
-                   vals['x_studio_srqrlx'] = cell_value
+                   agreement_income_type = self.env['agreement.income.type'].search(
+                       [('name', 'ilike', cell_value.strip())], limit=1)
+                   income_type = [[6, False, [agreement_income_type.id]]]
+                   if agreement_income_type:
+                       vals['income_type'] = income_type
 
                cell_value = table.cell(10, 6).value  # 产品线
                if not (cell_value is None) and not (cell_value is ''):

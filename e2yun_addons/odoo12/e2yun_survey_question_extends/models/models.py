@@ -58,14 +58,18 @@ class e2yun_survey_question_extends(models.Model):
         else:
             return checker(post, answer_tag)
 
+    @api.multi
+    @api.depends('scoring_method', 'labels_ids')
     def _compute_highest_score(self):
         for record in self:
-            if len(record.labels_ids) > 0 and record.type in ['simple_choice', 'multiple_choice']:
+            if len(record.labels_ids) > 0 and record.type in ['simple_choice', 'multiple_choice'] and record.scoring_method in ['唯一性计分', '选择性计分']:
                 record_highest_score = 0.0
                 for line in record.labels_ids:
                     if line.quizz_mark > record_highest_score:
                         record_highest_score = line.quizz_mark
                 record.highest_score = record_highest_score
+            else:
+                record.highest_score = 0.0
 
     @api.onchange('labels_ids')
     def _onchange_score(self):
@@ -103,10 +107,9 @@ class e2yun_survey_question_extends(models.Model):
 
     @api.onchange('scoring_method')
     def _onchange_scoring_method(self):
-        if self.scoring_method == '唯一性计分':
-            if self.labels_ids:
-                for label in self.labels_ids:
-                    label.quizz_mark = 0.0
+        if self.labels_ids:
+            for label in self.labels_ids:
+                label.quizz_mark = 0.0
 
 
     # 唯一性计分分值超出则弹框提醒；选择性计分只能有唯一答案，但每个选项都有分数，否则弹框提醒。

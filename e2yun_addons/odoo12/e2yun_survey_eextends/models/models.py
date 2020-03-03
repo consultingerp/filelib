@@ -26,6 +26,16 @@ class E2yunProjectSurvey(models.Model):
     questionnaire_classification = fields.Selection([('Internally', '对内'), ('Foreign', '对外')], string='问卷分类')
     questionnaire_scenario = fields.Selection([('评分问卷', '评分问卷'), ('资质调查', '资质调查'), ('满意度调查', '满意度调查'),
                                                ('报名登记表', '报名登记表'), ('其他', '其他')], string='问卷场景')
+    score_total = fields.Float('问卷总分', compute='_compute_score_total')
+
+    @api.multi
+    @api.depends('page_ids')
+    def _compute_score_total(self):
+        for record in self:
+            score_total = 0.0
+            for page in record.page_ids:
+                score_total = score_total + page.x_studio_survey_page_sum
+            record.score_total = score_total
 
     @api.one
     def write(self, vals):

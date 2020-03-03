@@ -73,19 +73,19 @@
 
 
 
+    <!--
      <record id="agreement_form_view_view_studio_extend" model="ir.ui.view">
       <field name="name">agreement.form.studio.extend</field>
       <field name="model">agreement</field>
       <field name="inherit_id" ref="studio_customization.odoo_studio_agreemen_ac29f9af-fcc2-49e8-b2c9-d270c730381d"/>
       <field name="arch" type="xml">
        <field name="x_studio_xsdb1" position="after">
-           <field name="sales_department" options="{'no_create':1,'no_create_edit': 1}"  />
+            <field name="sales_department" options="{'no_create':1,'no_create_edit': 1}"  />
             <field name="plan_sign_time" />
             <field name="signed_time" />
         </field>
-
       </field>
-     </record>
+     </record> -->
 
 
    <record id="agreement_form_view_extend_default_download_group" model="ir.ui.view">

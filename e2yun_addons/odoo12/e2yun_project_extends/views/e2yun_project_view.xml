@@ -12,13 +12,13 @@
                 </xpath>
                 <!--增加转去问卷操作按钮，编辑时隐藏，保存时显示-->
                 <!--<xpath expr="//button[@name='%(portal.portal_share_action)d']" position="after">-->
-                    <!--<button name="turn_page" string="转去调查问卷操作页面" type="object" class="oe_highlight oe_read_only"-->
-                            <!--attrs="{'invisible' : [('task_mode', '=', 'common mode')]}"/>-->
+                <!--<button name="turn_page" string="转去调查问卷操作页面" type="object" class="oe_highlight oe_read_only"-->
+                <!--attrs="{'invisible' : [('task_mode', '=', 'common mode')]}"/>-->
                 <!--</xpath>-->
                 <!--添加问卷分类-->
                 <xpath expr="//field[@name='user_id']" position="after">
                     <field name="questionnaire_classification"
-                           attrs="{'invisible': [('task_mode', '=', 'common mode')]}"/>
+                           attrs="{'invisible': [('task_mode', '!=', 'questionnaire model')], 'required': [('task_mode','=','questionnaire model')]}"/>
                 </xpath>
                 <!--隐藏标签-->
                 <xpath expr="//field[@name='tag_ids']" position="attributes">
@@ -26,16 +26,17 @@
                 </xpath>
                 <!--添加任务模式和是否为多问卷-->
                 <xpath expr="//field[@name='date_deadline']" position="after">
-                    <field name="task_mode"/>
-                    <field name="multiple_questionnaires" attrs="{'invisible': [('task_mode', '=', 'common mode')]}"/>
+                    <field name="task_mode" required="1"/>
+                    <field name="multiple_questionnaires"
+                           attrs="{'invisible': [('task_mode', '!=', 'questionnaire model')], 'required': [('task_mode','=','questionnaire model')]}"/>
                 </xpath>
                 <xpath expr="//notebook" position="before">
                     <field name="questionnaire_ids" widget="one2many_list"
                            context="{'questionnaire_ids': questionnaire_ids}"
-                           attrs="{'invisible': [('task_mode', '=', 'common mode')]}">
+                           attrs="{'invisible': [('task_mode', '!=', 'questionnaire model')], 'required': [('task_mode','=','questionnaire model')]}">
                         <tree editable="bottom">
                             <field name="questionnaire_scenario"/>
-                             <!--<field name="questionnaire_classification"/>-->
+                            <!--<field name="questionnaire_classification"/>-->
                             <!--去掉创建并编辑：options="{'no_create_edit':1}"-->
                             <field name="survey_temp_id"/>
                             <field name="weight" attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>
@@ -50,7 +51,8 @@
                                 <group>
                                     <field name="questionnaire_scenario"/>
                                     <!--<field name="questionnaire_classification"/>-->
-                                    <field name="weight" attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>
+                                    <field name="weight"
+                                           attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>
                                     <!--<field name="weight_unit" attrs="{'invisible': [('questionnaire_scenario', '=', '其他')]}"/>-->
                                     <field name="survey_temp_id"/>
                                 </group>
@@ -62,6 +64,15 @@
                         </form>
                     </field>
                 </xpath>
+                <xpath expr="//field[@name='date_deadline']" position="attributes">
+                    <attribute name="attrs">{}</attribute>
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/field[@name='questionnaire_ids']/tree[1]/field[@name='survey_temp_id']"
+                       position="after">
+                    <xpath expr="//form[1]/sheet[1]/field[@name='questionnaire_ids']/tree[1]/field[@name='weight']"
+                           position="move"/>
+                </xpath>
             </field>
         </record>
 
@@ -71,12 +82,13 @@
             <field name="inherit_id" ref="project.view_task_kanban"/>
             <field name="arch" type="xml">
                 <xpath expr="//kanban[@class='o_kanban_small_column o_kanban_project_tasks']" position="attributes">
-                <attribute name="quick_create_view">0</attribute>
-                <attribute name="quick_create">0</attribute>
+                    <attribute name="quick_create_view">0</attribute>
+                    <attribute name="quick_create">0</attribute>
                 </xpath>
                 <xpath expr="//a[@type='set_cover']" position="replace"></xpath>
             </field>
         </record>
-        <menuitem name="Labels" groups="base.group_no_one" id="survey.menu_survey_label_form1" action="survey.action_survey_label_form" parent="survey.menu_surveys_configuration" sequence="3"/>
+        <menuitem name="Labels" groups="base.group_no_one" id="survey.menu_survey_label_form1"
+                  action="survey.action_survey_label_form" parent="survey.menu_surveys_configuration" sequence="3"/>
     </data>
 </odoo>    
