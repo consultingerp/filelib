@@ -58,7 +58,18 @@
                     <field name="id" invisible="1"/>
                     <field name="tot_start_survey" invisible="1"/>
                     <field name="is_closed" invisible="1"/>
+                    <header groups="survey.group_survey_manager">
+                        <field name="stage_id" widget="statusbar" options="{'clickable': '1'}"/>
+                    </header>
                     <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_survey_user_input" type="object" class="oe_stat_button" icon="fa-pencil-square-o">
+                                <field string="答案" name="tot_comp_survey" widget="statinfo"/>
+                            </button>
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive" attrs="{'invisible': [('is_closed', '=', False)]}">
+                                <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+                            </button>
+                        </div>
                         <div class="oe_title" style="width: 100%;">
                             <label for="title" string="问卷名称" class="oe_edit_only"/>
                             <h1>
