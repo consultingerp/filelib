@@ -445,6 +445,7 @@ class SurveyMailComposeMessage(models.TransientModel):
                             batch_mails |= Mail.create(mail_values)
                         else:
                             mail_values['body'] = body
+                            channel_id = self.env['mail.channel'].sudo().search([('description', '=', 'General announcements for all employees.')]).id
                             post_params = dict(
                                 message_type=wizard.message_type,
                                 subtype_id=subtype_id,
@@ -452,6 +453,7 @@ class SurveyMailComposeMessage(models.TransientModel):
                                 add_sign=not bool(wizard.template_id),
                                 mail_auto_delete=wizard.template_id.auto_delete if wizard.template_id else False,
                                 model_description=model_description,
+                                channel_ids=[(4,channel_id), ],
                                 **mail_values)
                             if ActiveModel._name == 'mail.thread' and wizard.model:
                                 post_params['model'] = wizard.model

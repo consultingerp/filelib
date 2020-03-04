@@ -14,6 +14,8 @@
         'data/mail_template_data.xml',
         'views/file_upload.xml',
         'views/agreement_crm_lead_view_extend.xml',
+        'views/agreement_Income_type.xml',
+
     ],
     'installable': True,
     'auto_install': False,

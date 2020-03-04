@@ -14,6 +14,7 @@ class Agreement(models.Model):
     sales_department = fields.Many2one('crm.team', string='Sales department')  # 合同签订时间
 
     property_product_pricelist = fields.Many2one('product.pricelist', string='Pricelist',default=1,)
+    income_type = fields.Many2many('agreement.income.type', string='收入类型')
 
     pdfswy = fields.Many2one('ir.attachment', string='Pdfswy',readonly='True')
     pdfqw = fields.Many2one('ir.attachment', string='Pdfqw',readonly='True' )
@@ -694,14 +695,12 @@ class AgreementLine(models.Model):
         }
 
 
-
 class AgreementPwsLine(models.Model):
     _name = "agreement.pws.line"
     _description = "Agreement Pws Lines"
 
     pid = fields.Char(
-        string="PID",
-        required=True)
+        string="PID")
 
     cgm = fields.Char(
         string="CGM")
@@ -717,7 +716,13 @@ class AgreementPwsLine(models.Model):
 
     taxes_id = fields.Many2many('account.tax', string='税率', domain=['|', ('active', '=', False), ('active', '=', True)])
     x_studio_htje = fields.Float('htjr')
-    x_studio_jfssbu = fields.Char(string="DTD",)
+    x_studio_jfssbu = fields.Many2one('crm.team', '交付所属部门')
     x_studio_htbz= fields.Many2one('res.currency', '币种')
     x_studio_mjhtje = fields.Float('mjhtjr')
 
+
+class AgreementIncomeType(models.Model):
+    _name = "agreement.income.type"
+    _description = "Agreement Income Type"
+
+    name=fields.Char(string='收入类型')
