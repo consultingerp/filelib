@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="print_qrcode_ck_routing_sync">
+        <div class="header">
+            <div class="row">
+                <div style="color:#000;">
+                    <span t-field="docs.ck_qrcode2" />
+                </div>
+            </div>
+        </div>
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="o">
+                    <div class="page" style="color:#000;">
+                        <div class="col-xs-4 pull-left">
+                            <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', o.ck_qrcode2, 500, 500)" style="width:500px;height:500px;"/>
+                        </div>
+                    </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="print_qrcode_ck_icmo_sync">
+        <div class="header">
+            <div class="row">
+                <div style="color:#000;">
+                    <span t-field="docs.name" />
+                </div>
+            </div>
+        </div>
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="o">
+                    <div class="page" style="color:#000;">
+                        <div class="col-xs-4 pull-left">
+                            <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', o.name, 500, 500)" style="width:500px;height:500px;"/>
+                        </div>
+                    </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

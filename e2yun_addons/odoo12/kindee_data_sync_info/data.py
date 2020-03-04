@@ -1089,12 +1089,11 @@ class CK_Hours_Worker(models.Model):
                 ml['amount'] = line[i] or 0.0  # 金额
                 i = i + 1
                 date = line[i] or ''
-                ml['date_worker'] = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(self.env.user.tz)).strftime(
-                    '%Y-%m-%d')
+                ml['date_worker'] = date
                 i = i + 1
                 # ml['date_worker'] = datetime.datetime.strptime(line.date_worker, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(self.env.user.tz)).date() #报工时间
                 # ml['date_worker']  = line.date_worker
-                ml['date_worker'] = ml['date_worker'][0:10]  # 报工时间
+                ml['date_worker'] = ml['date_worker']# 报工时间
                 ml['state'] = line[i] or ''  # 报工时间
                 i = i + 1
 
@@ -1116,8 +1115,7 @@ class CK_Hours_Worker(models.Model):
                 ml['reportpeople'] = line[i] or ''  # 多人报工人员备注
                 flag = True
                 for ll in l:
-                    line_date = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S").replace(
-                        tzinfo=pytz.utc).astimezone(pytz.timezone(self.env.user.tz)).strftime('%Y-%m-%d')
+                    line_date = date
                     group_date = ll['date_worker'][0:10]
                     if (ll['userid'] == ml['userid']) and (line_date == group_date):
                         flag = False;
@@ -1454,8 +1452,7 @@ class CK_Hours_Worker(models.Model):
             ml['sqty'] = line.sqty  # 报废数量
             ml['price'] = line.price  # 工价
             ml['amount'] = line.amount  # 金额
-            ml['date_worker'] = datetime.datetime.strptime(line.date_worker, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(self.env.user.tz)).strftime(
-                '%Y-%m-%d %H:%M:%S')  # 报工时间
+            ml['date_worker'] = line.date_worker # 报工时间
             ml['state'] = line.state  # 报工时间
             ml['id'] = line.id  # 报工时间
             ml['user_id'] = line.user_id.id  # 用户id

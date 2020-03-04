@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            string="ck routing sync qr code print"
+            menu="False"
+            id="report_qrcode_ck_routing_sync"
+            model="ck.routing.sync"
+            report_type="qweb-pdf"
+            name="e2yun_demo_work_barcode.print_qrcode_ck_routing_sync"
+            file="e2yun_demo_work_barcode.print_qrcode_ck_routing_sync"
+            print_report_name="'barcode - %s' % (object.ck_qrcode2)"
+        />
+
+        <report
+            string="ck icmo sync qr code print"
+            menu="False"
+            id="report_qrcode_ck_icmo_sync"
+            model="ck.icmo.sync"
+            report_type="qweb-pdf"
+            name="e2yun_demo_work_barcode.print_qrcode_ck_icmo_sync"
+            file="e2yun_demo_work_barcode.print_qrcode_ck_icmo_sync"
+            print_report_name="'barcode - %s' % (object.name)"
+        />
+
+    </data>
+</odoo>
