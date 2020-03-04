@@ -1454,7 +1454,7 @@ class CK_Hours_Worker(models.Model):
             ml['sqty'] = line.sqty  # 报废数量
             ml['price'] = line.price  # 工价
             ml['amount'] = line.amount  # 金额
-            ml['date_worker'] = datetime.datetime.strptime(line.date_worker, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(self.env.user.tz)).strftime(
+            ml['date_worker'] = datetime.datetime.strptime(str(line.date_worker), "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(self.env.user.tz)).strftime(
                 '%Y-%m-%d %H:%M:%S')  # 报工时间
             ml['state'] = line.state  # 报工时间
             ml['id'] = line.id  # 报工时间
