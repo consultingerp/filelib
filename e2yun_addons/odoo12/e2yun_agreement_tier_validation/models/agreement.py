@@ -335,6 +335,10 @@ class CommentWizard(models.TransientModel):
         if tier_stage_id!="":
             sql = "UPDATE  agreement set stage_id=%s where id=%s"
             self._cr.execute(sql, (tier_stage_id, self.res_id))
+            if int(tier_stage_id)==5:
+                #更新合同文本上传提醒邮件标识
+               sql = "UPDATE  agreement set is_email_contract_text=%s where id=%s"
+               self._cr.execute(sql, ('f',self.res_id))
 
         rec._update_counter()
 
@@ -350,9 +354,7 @@ class TierValidation(models.AbstractModel):
         flag_plan_sign_time = False
         flag_signed_time=False
         flag_message_main_attachment_id=False
-        flag_contract_text_attachment_ids=False
         no_check=False
-
         signed_time=None
         for key in vals:
             if 'stage_id'!=key and 'revision'!=key:
@@ -367,14 +369,72 @@ class TierValidation(models.AbstractModel):
 
             if 'pdfswy_attachment_ids' != key and   'pdfqw_attachment_ids' != key and 'fktj_attachment_ids' != key and \
                     'contract_text_attachment_ids' != key and 'email_approval_attachment_ids' != key \
-                    and 'x_studio_srqrlx' != key and  'revision' != key :
+                    and 'x_studio_srqrlx' != key and 'signed_time' !=key and 'revision' != key :
                 no_check=True
-            elif  'contract_text_attachment_ids' == key and self.stage_id==6:
+            elif  'contract_text_attachment_ids' == key and int(self.stage_id)==6:
+                #上传签章完成的合同，并回写签订时间
                 GetDatetime = get_zone_datetime.GetDatetime()
-                signed_time = GetDatetime.get_datetime(),
+                signed_time = GetDatetime.get_datetime()
+
+                #验证合同签订时间
+                if not self.signed_time and not 'signed_time' in vals.keys():
+                    raise UserError(u'请填写合同签订时间。')
+
+                # 处理历史文本合同
+                sql = 'select attachment_id from agreement_contract_text_ir_attachments_rel where id=%s'
+                self._cr.execute(sql, (self.id,))
+                iattachment_ids = self._cr.fetchall()
+                attachment = self.env['ir.attachment']
+                contract_text_attachment_ids=[]
+                for contract_text_attachment_id in  vals['contract_text_attachment_ids'][0][2]:
+                    is_add=True
+                    for iattachment_id in iattachment_ids:
+                        if iattachment_id[0]==contract_text_attachment_id:
+                            is_add=False
+                            attachment.browse(iattachment_id[0]).unlink()
+                    if is_add:
+                        contract_text_attachment_ids.append(contract_text_attachment_id)
+                vals['contract_text_attachment_ids']=[[6, False, contract_text_attachment_ids]]
+
+                sql = 'delete from agreement_contract_text_ir_attachments_rel where id=%s'
+                self._cr.execute(sql, (self.id,))
+
+            elif 'contract_text_attachment_ids' == key and int(self.stage_id) == 5:
+                # 更新提醒销售输入预计签回时间
+                sql = "UPDATE  agreement set is_email_sign_time=%s where id=%s"
+                self._cr.execute(sql, ('f', self.id))
+                # 处理历史文本合同
+                sql = 'select attachment_id from agreement_contract_text_ir_attachments_rel where id=%s'
+                self._cr.execute(sql, (self.id,))
+                iattachment_ids = self._cr.fetchall()
+                attachment = self.env['ir.attachment']
+                contract_text_attachment_ids = []
+                for contract_text_attachment_id in vals['contract_text_attachment_ids'][0][2]:
+                    is_add = True
+                    for iattachment_id in iattachment_ids:
+                        if iattachment_id[0] == contract_text_attachment_id:
+                            is_add = False
+                            attachment.browse(iattachment_id[0]).unlink()
+                    if is_add:
+                        contract_text_attachment_ids.append(contract_text_attachment_id)
+                vals['contract_text_attachment_ids'] = [[6, False, contract_text_attachment_ids]]
 
         if signed_time != None:
-            vals['signed_time'] = signed_time
+            vals['stage_id'] = 7
+            pdfswy = '（PDF首尾页）'
+            pdfqw = '（PDF全文版）'
+            fktj = '（付款条件）'
+            htwb = '（合同文本）'
+            if self.pdfswy_attachment_ids or  'pdfswy_attachment_ids' in  vals.keys():
+                pdfswy = ""
+            if self.pdfqw_attachment_ids or  'pdfqw_attachment_ids' in  vals.keys():
+                pdfqw = ""
+            if self.fktj_attachment_ids or  'fktj_attachment_ids' in  vals.keys():
+                fktj = ""
+            if self.contract_text_attachment_ids or 'contract_text_attachment_ids' in  vals.keys():
+                htwb = ""
+            if pdfswy != "" or pdfqw != "" or fktj != "" or htwb != "":
+                raise UserError(u'双方签章阶段必须上传' + pdfswy + pdfqw + fktj + htwb)
 
         if not flag_stage_id:
             user_reviews = self.env['tier.review'].search([
@@ -411,7 +471,7 @@ class TierValidation(models.AbstractModel):
                 if self.contract_text_attachment_ids:
                     htwb = ""
                 if pdfswy!="" or pdfqw!="" or fktj!="" or htwb!="":
-                    raise UserError(u'执行阶段必须上传'+pdfswy+pdfqw+fktj+htwb)
+                    raise UserError(u'双方签章阶段必须上传'+pdfswy+pdfqw+fktj+htwb)
             sql="UPDATE  agreement set stage_id=%s where id=%s"
             self._cr.execute(sql,(vals['stage_id'],self.id))
             return True
