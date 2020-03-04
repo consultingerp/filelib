@@ -50,7 +50,7 @@ class E2yunTaskInfo(models.Model):
     # 是否多问卷
     multiple_questionnaires = fields.Selection([('yes', '是'), ('no', '否')], string='是否多问卷')
     # 一对多连接列表对象
-    questionnaire_ids = fields.One2many('project.questionnaire', 'parent_id', string='Child Questionnaires')
+    questionnaire_ids = fields.One2many('project.questionnaire', 'parent_id', string='问卷')
 
     # 非多问卷时只展示一行
     @api.onchange('questionnaire_ids')
