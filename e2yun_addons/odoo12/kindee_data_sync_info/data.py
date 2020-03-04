@@ -1093,7 +1093,7 @@ class CK_Hours_Worker(models.Model):
                 i = i + 1
                 # ml['date_worker'] = datetime.datetime.strptime(line.date_worker, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(self.env.user.tz)).date() #报工时间
                 # ml['date_worker']  = line.date_worker
-                ml['date_worker'] = ml['date_worker'][0:10]  # 报工时间
+                ml['date_worker'] = ml['date_worker']# 报工时间
                 ml['state'] = line[i] or ''  # 报工时间
                 i = i + 1
 
