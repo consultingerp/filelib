@@ -1,0 +1,454 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* e2yun_survey_eextends
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-03-03 07:17+0000\n"
+"PO-Revision-Date: 2020-03-03 15:42+0800\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 2.3\n"
+"Last-Translator: \n"
+"Language: zh_CN\n"
+
+#. module: e2yun_survey_eextends
+#: model:mail.template,subject:e2yun_survey_eextends.email_template_survey_extends
+msgid "${object.title}: Survey"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: model:mail.template,body_html:e2yun_survey_eextends.email_template_survey_extends
+msgid "<div/>"
+msgstr ""
+"div style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        你好<br/><br/>\n"
+"        我们正在进行一份调查，您的回复将不胜感激。\n"
+"        <div style=\"margin: 16px 0px 16px 0px;\">\n"
+"            <a href=\"__URL__\" style=\"background-color: #875A7B; padding: "
+"8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; "
+"font-size:13px;\">\n"
+"                点击调查\n"
+"            </a>\n"
+"        </div>\n"
+"       谢谢你的参与！ \n"
+"    </p>\n"
+"</div>\n"
+"            "
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid ""
+"<i class=\"fa fa-2x\" role=\"img\" aria-label=\"Numeric\" title=\"Numeric"
+"\">123..</i>"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid ""
+"<i class=\"fa fa-align-justify fa-4x\" role=\"img\" aria-label=\"Multiple "
+"lines\" title=\"Multiple Lines\"/>"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid ""
+"<i class=\"fa fa-check-square-o fa-lg\"/>\n"
+"                        answer"
+msgstr "<i class=\"fa fa-check-square-o fa-lg\"></i>回答"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid ""
+"<i class=\"fa fa-circle-o  fa-lg\"/>\n"
+"                        answer"
+msgstr "<i class=\"fa fa-circle-o  fa-lg\"></i>回答"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid ""
+"<i class=\"fa fa-circle-o fa-lg\" role=\"img\" aria-label=\"Not checked\" "
+"title=\"Not checked\"/>"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid ""
+"<i class=\"fa fa-dot-circle-o fa-lg\" role=\"img\" aria-label=\"Checked\" "
+"title=\"Checked\"/>"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid ""
+"<i class=\"fa fa-dot-circle-o fa-lg\"/>\n"
+"                        answer"
+msgstr "<i class=\"fa fa-dot-circle-o fa-lg\"></i>回答"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid ""
+"<i class=\"fa fa-minus fa-4x\" role=\"img\" aria-label=\"Single Line\" title="
+"\"Single Line\"/>"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid ""
+"<i class=\"fa fa-square-o fa-lg\"/>\n"
+"                        answer"
+msgstr ""
+"<i class=\"fa fa-square-o fa-lg\"/>\n"
+"                        回答"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid ""
+"<i/>\n"
+"                        请选择 v"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid ""
+"<i/>\n"
+"                        请选择文件(30Mb以内)"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid ""
+"<i/>\n"
+"                        选项一"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid ""
+"<i/>\n"
+"                        选项二"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Allow Comments"
+msgstr "允许评论"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Answers"
+msgstr "答案"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Constraints"
+msgstr "限制"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Display mode"
+msgstr "显示模式"
+
+#. module: e2yun_survey_eextends
+#: model:ir.model,name:e2yun_survey_eextends.model_survey_mail_compose_message
+msgid "Email composition wizard for Survey"
+msgstr "调查的功能EMail撰写向导"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Format"
+msgstr "格式"
+
+#. module: e2yun_survey_eextends
+#: model:ir.model.fields,field_description:e2yun_survey_eextends.field_survey_user_input__is_test_answer
+#: model:ir.model.fields,field_description:e2yun_survey_eextends.field_survey_user_input_line__is_test_answer_line
+msgid "Is Test Answer"
+msgstr "是测试的答案"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Mandatory Answer"
+msgstr "强制性的回答"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Multiple choice with multiple answers"
+msgstr "多选：允许选择多个答案"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Multiple choice with one answer"
+msgstr "多选：只允许选择一个答案"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Number of columns"
+msgstr "栏位数"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Options"
+msgstr "选择"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.survey_form_change_page_ids_form
+msgid "Page Title"
+msgstr "页面标题"
+
+#. module: e2yun_survey_eextends
+#: code:addons/e2yun_survey_eextends/wizard/survey_email_wizard_extends.py:195
+#, python-format
+msgid "Please enter an existing contact or email list"
+msgstr "请输入现有的联系人或电子邮件列表"
+
+#. module: e2yun_survey_eextends
+#: code:addons/e2yun_survey_eextends/wizard/survey_email_wizard_extends.py:178
+#: code:addons/e2yun_survey_eextends/wizard/survey_email_wizard_extends.py:287
+#, python-format
+msgid "Please enter at least one valid recipient."
+msgstr "请至少输入一个可用的收件人"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Question Name"
+msgstr "问题名称"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Question name"
+msgstr "问题名称"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Row1"
+msgstr "第一行"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Row2"
+msgstr "第二行"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Row3"
+msgstr "第三行"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Rows"
+msgstr "一行行"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Scoring Method"
+msgstr "计分方式"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Select choice"
+msgstr "选择的选择"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.survey_email_compose_message_extends
+msgid "Send"
+msgstr "发送"
+
+#. module: e2yun_survey_eextends
+#: selection:survey.mail.compose.message,public:0
+msgid "Send internal process messages."
+msgstr "发送内部消息。"
+
+#. module: e2yun_survey_eextends
+#: selection:survey.mail.compose.message,public:0
+msgid ""
+"Send private invitation to your audience (only one response per recipient "
+"and per invitation.)"
+msgstr "向您的观众发送私人邮件(每个收件人只能答复一次)。"
+
+#. module: e2yun_survey_eextends
+#: model:ir.model.fields,field_description:e2yun_survey_eextends.field_survey_mail_compose_message__public
+msgid "Share options"
+msgstr "分享操作"
+
+#. module: e2yun_survey_eextends
+#: selection:survey.mail.compose.message,public:0
+msgid "Share the public web link to your audience."
+msgstr "与您的受众共享公共web链接。"
+
+#. module: e2yun_survey_eextends
+#: model:ir.model,name:e2yun_survey_eextends.model_survey_survey
+msgid "Survey"
+msgstr "调查"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Survey Label"
+msgstr "调查标签"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Survey Page"
+msgstr "调查页面"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Survey Question"
+msgstr "调查问题"
+
+#. module: e2yun_survey_eextends
+#: model:ir.model,name:e2yun_survey_eextends.model_survey_user_input
+msgid "Survey User Input"
+msgstr "调查用户输入"
+
+#. module: e2yun_survey_eextends
+#: model:ir.model,name:e2yun_survey_eextends.model_survey_user_input_line
+msgid "Survey User Input Line"
+msgstr "调查用户输入行"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Type of answers"
+msgstr "答案类型"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.survey_email_compose_message_extends
+msgid "Use template"
+msgstr "使用模板"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "Weight"
+msgstr "重量"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid ""
+"YYYY-MM-DD\n"
+"                        <i class=\"fa fa-calendar fa-2x\" role=\"img\" aria-"
+"label=\"Calendar\" title=\"Calendar\"/>"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: code:addons/e2yun_survey_eextends/models/models.py:130
+#, python-format
+msgid "You cannot send an invitation for a survey that has no questions."
+msgstr "您不能发送没有问题的调查邀请。"
+
+#. module: e2yun_survey_eextends
+#: code:addons/e2yun_survey_eextends/models/models.py:133
+#, python-format
+msgid "You cannot send invitations for closed surveys."
+msgstr "您不能发送关闭的调查的邀请。"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "ans"
+msgstr "答案"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "upload attachments"
+msgstr "下载附件"
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.survey_form_change_page_ids_form
+msgid "从模板问题库中选择问题"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: selection:survey.survey,questionnaire_scenario:0
+msgid "其他"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: selection:survey.survey,questionnaire_classification:0
+msgid "对内"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: selection:survey.survey,questionnaire_classification:0
+msgid "对外"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: selection:survey.survey,questionnaire_scenario:0
+msgid "报名登记表"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.survey_form_change_page_ids_form
+msgid "权重"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: code:addons/e2yun_survey_eextends/models/models.py:39
+#, python-format
+msgid "权重之和大于100%，请重新输入"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "标题一"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "标题二"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: selection:survey.survey,questionnaire_scenario:0
+msgid "满意度调查"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "计分方式"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: selection:survey.survey,questionnaire_scenario:0
+msgid "评分问卷"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: selection:survey.survey,questionnaire_scenario:0
+msgid "资质调查"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "选项"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: model:ir.model.fields,field_description:e2yun_survey_eextends.field_survey_survey__questionnaire_classification
+msgid "问卷分类"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.survey_form_extends
+msgid "问卷名称"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: model:ir.model.fields,field_description:e2yun_survey_eextends.field_survey_survey__questionnaire_scenario
+msgid "问卷场景"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "非常不满意"
+msgstr ""
+
+#. module: e2yun_survey_eextends
+#: model_terms:ir.ui.view,arch_db:e2yun_survey_eextends.form_view_for_survey_customization
+msgid "非常满意"
+msgstr ""

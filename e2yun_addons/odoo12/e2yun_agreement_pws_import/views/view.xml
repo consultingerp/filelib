@@ -11,7 +11,7 @@
                         <field name="new" />
                         <field name="agreement_id" options="{'no_create':True}"  attrs="{'invisible': [('new','=',True)],'required': [('new','=',False)]}" domain="[('create_uid','=',uid)]" />
                         <field name="name" />
-                        <field name="import_pws_attachment_ids" widget="many2many_binary"  nolabel="1" colspan="2"/>
+                        <field name="import_pws_attachment_ids" widget="many2many_binary" required="1" nolabel="1" colspan="2"/>
                                 <!--
                         <field name="data" filename="filename"/>
                         <field name="filename" invisible="1"/> -->

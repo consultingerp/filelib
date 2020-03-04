@@ -81,6 +81,19 @@ class E2yunProjectTaskAddQuestionnaire(models.TransientModel):
 class E2yunSurveyProjectExtends(models.Model):
     _inherit = 'project.task'
 
+    questionnaire_ids_len = fields.Integer('问卷数量', compute='_compute_questionnaire_ids_length', store=True)
+
+    # , compute='_compute_questionnaire_ids_length', store=True
+    @api.multi
+    @api.depends('questionnaire_ids')
+    def _compute_questionnaire_ids_length(self):
+        for rec in self:
+            rec.questionnaire_ids_len = len(rec.questionnaire_ids)
+
+    # @api.onchange('questionnaire_ids')
+    # def onchange_questionnaire_ids_len(self):
+    #     self.questionnaire_ids_len = len(self.questionnaire_ids)
+
     def project_task_survey_add_questionnaire(self):
         current_context = self._context.copy()
         current_context['current_questionnaire_classification'] = self.questionnaire_classification
