@@ -593,6 +593,7 @@ class e2yun_supplier_info(models.Model):
                 'login_name': self.login_name,
                 'name': self.name,
                 'company_name': self.company_name,
+                'comment': self.comment,
                 })
                 id.parent_id.authenitcation_id = id.authenitcation_id
                 id.parent_id.secondary_industry_ids = id.secondary_industry_ids
@@ -602,7 +603,7 @@ class e2yun_supplier_info(models.Model):
 
         # except Exception as e:
         #     raise UserError(u'转正式客户失败，请在工作流中添加^完成^状态')
-        self.unlink()
+        # self.unlink()
         return False
 
     # @api.multi
