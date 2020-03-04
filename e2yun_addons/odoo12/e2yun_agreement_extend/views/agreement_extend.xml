@@ -46,7 +46,7 @@
                                   <tree editable="top">
                                     <field name="pid"/>
                                     <field name="cgm" required="1"/>
-                                    <field name="x_studio_jfssbu" string="交付所属部门"/>
+                                    <field name="x_studio_jfssbu" required="1" string="交付所属部门"/>
                                     <field name="x_studio_htbz" options="{'no_create':1,'no_create_edit': 1}"  required="1"/>
                                     <field name="x_studio_htje" required="1"/>
                                     <!-- <field name="x_studio_mjhtje"/> -->

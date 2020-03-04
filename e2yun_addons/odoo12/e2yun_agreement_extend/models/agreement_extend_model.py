@@ -700,8 +700,7 @@ class AgreementPwsLine(models.Model):
     _description = "Agreement Pws Lines"
 
     pid = fields.Char(
-        string="PID",
-        required=True)
+        string="PID")
 
     cgm = fields.Char(
         string="CGM")
