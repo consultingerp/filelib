@@ -14,11 +14,15 @@
                   <group>
                     <field name="questionnaire_classification"/>
                     <field name="questionnaire_scenario"/>
+                    <field name="score_total"/>
                   </group>
                 </xpath>
                 <xpath expr="//field[@name='question_ids']" position="before">
                     <field name="weight"/>
                 </xpath>
+              <xpath expr="//field[@name='page_ids']/tree/field[@name='question_ids']" position="after">
+                <field name="x_studio_survey_page_sum"/>
+              </xpath>
             </field>
     </record>
 

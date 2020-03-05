@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api
 import datetime
+import time
 import pytz
 import logging, random
 from odoo.exceptions import UserError
@@ -591,16 +592,18 @@ class e2yun_supplier_info(models.Model):
                 'company_profile': self.company_profile,
                 'login_name': self.login_name,
                 'name': self.name,
-
-
-
+                'company_name': self.company_name,
+                'comment': self.comment,
                 })
                 id.parent_id.authenitcation_id = id.authenitcation_id
                 id.parent_id.secondary_industry_ids = id.secondary_industry_ids
                 id.parent_id.suppliertype_ids = id.suppliertype_ids
 
+        # self.state = 'done'
+
         # except Exception as e:
         #     raise UserError(u'转正式客户失败，请在工作流中添加^完成^状态')
+        # self.unlink()
         return False
 
     # @api.multi
