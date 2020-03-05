@@ -453,21 +453,21 @@
                             <div class="form-group row">
                               <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
                                 <t t-if="is_view == False">
-<!--                                  <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>-->
-                                  <script type="text/javascript" >
-                                      function change_tab(){
-                                        var tab_1 = document.getElementById('nav_tabs_content_1565869647814_2');
-                                        var tab_2 = document.getElementById('nav_tabs_content_1565869647814_5');
-                                        var a_1 = document.getElementById('nav_tabs_link_1565869647814_2');
-                                        var a_2 = document.getElementById('nav_tabs_link_1565869647814_5');
-                                        tab_1.className = "tab-pane fade";
-                                        tab_2.className = "tab-pane fade active show";
-                                        a_1.className = "nav-link";
-                                        a_2.className = "nav-link active show";
-                                    }
+                                  <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>
+<!--                                  <script type="text/javascript" >-->
+<!--                                      function change_tab(){-->
+<!--                                        var tab_1 = document.getElementById('nav_tabs_content_1565869647814_2');-->
+<!--                                        var tab_2 = document.getElementById('nav_tabs_content_1565869647814_5');-->
+<!--                                        var a_1 = document.getElementById('nav_tabs_link_1565869647814_2');-->
+<!--                                        var a_2 = document.getElementById('nav_tabs_link_1565869647814_5');-->
+<!--                                        tab_1.className = "tab-pane fade";-->
+<!--                                        tab_2.className = "tab-pane fade active show";-->
+<!--                                        a_1.className = "nav-link";-->
+<!--                                        a_2.className = "nav-link active show";-->
+<!--                                    }-->
 
-                                  </script>
-                                  <input type="button" class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text" value="添加" onclick="change_tab()" />
+<!--                                  </script>-->
+<!--                                  <input type="button" class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text" value="添加" onclick="change_tab()" />-->
 
                                 </t>
                                 <span id="o_website_form_result" class="text-danger ml8"/>
@@ -694,19 +694,20 @@
                             <div class="form-group row">
                               <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
                                 <t t-if="is_view == False">
-                                  <script type="text/javascript" >
-                                      function change_tab_1(){
-                                        var tab_1 = document.getElementById('nav_tabs_content_1565869647814_5');
-                                        var tab_2 = document.getElementById('nav_tabs_content_1565869647814_3');
-                                        var a_1 = document.getElementById('nav_tabs_link_1565869647814_5');
-                                        var a_2 = document.getElementById('nav_tabs_link_1565869647814_3');
-                                        tab_1.className = "tab-pane fade";
-                                        tab_2.className = "tab-pane fade active show";
-                                        a_1.className = "nav-link";
-                                        a_2.className = "nav-link active show";
-                                    }
-                                  </script>
-                                  <input type="button" class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text" value="添加" onclick="change_tab_1()"/>
+                                  <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>
+<!--                                  <script type="text/javascript" >-->
+<!--                                      function change_tab_1(){-->
+<!--                                        var tab_1 = document.getElementById('nav_tabs_content_1565869647814_5');-->
+<!--                                        var tab_2 = document.getElementById('nav_tabs_content_1565869647814_3');-->
+<!--                                        var a_1 = document.getElementById('nav_tabs_link_1565869647814_5');-->
+<!--                                        var a_2 = document.getElementById('nav_tabs_link_1565869647814_3');-->
+<!--                                        tab_1.className = "tab-pane fade";-->
+<!--                                        tab_2.className = "tab-pane fade active show";-->
+<!--                                        a_1.className = "nav-link";-->
+<!--                                        a_2.className = "nav-link active show";-->
+<!--                                    }-->
+<!--                                  </script>-->
+<!--                                  <input type="button" class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text" value="添加" onclick="change_tab_1()"/>-->
                                 </t>
                                 <span id="o_website_form_result" class="text-danger ml8"/>
                               </div>
@@ -836,19 +837,20 @@
                           <div class="form-group row">
                             <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
                               <t t-if="is_view == False">
-                                <script type="text/javascript" >
-                                      function change_tab_2(){
-                                        var tab_1 = document.getElementById('nav_tabs_content_1565869647814_3');
-                                        var tab_2 = document.getElementById('nav_tabs_content_1565869647814_6');
-                                        var a_1 = document.getElementById('nav_tabs_link_1565869647814_3');
-                                        var a_2 = document.getElementById('nav_tabs_link_1565869647814_6');
-                                        tab_1.className = "tab-pane fade";
-                                        tab_2.className = "tab-pane fade active show";
-                                        a_1.className = "nav-link";
-                                        a_2.className = "nav-link active show";
-                                    }
-                                </script>
-                                <input type="button" class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text" value="添加" onclick="change_tab_2()"/>
+                                <button class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text">添加</button>
+<!--                                <script type="text/javascript" >-->
+<!--                                      function change_tab_2(){-->
+<!--                                        var tab_1 = document.getElementById('nav_tabs_content_1565869647814_3');-->
+<!--                                        var tab_2 = document.getElementById('nav_tabs_content_1565869647814_6');-->
+<!--                                        var a_1 = document.getElementById('nav_tabs_link_1565869647814_3');-->
+<!--                                        var a_2 = document.getElementById('nav_tabs_link_1565869647814_6');-->
+<!--                                        tab_1.className = "tab-pane fade";-->
+<!--                                        tab_2.className = "tab-pane fade active show";-->
+<!--                                        a_1.className = "nav-link";-->
+<!--                                        a_2.className = "nav-link active show";-->
+<!--                                    }-->
+<!--                                </script>-->
+<!--                                <input type="button" class="btn btn-primary btn-lg o_website_form_send o_default_snippet_text" value="添加" onclick="change_tab_2()"/>-->
                               </t>
                               <span id="o_website_form_result" class="text-danger ml8"/>
                             </div>
