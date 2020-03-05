@@ -19,6 +19,7 @@
                                        options="{'no_create': True}"/>
                                 <field name="code" invisible="1"/>
                                 <field name="test"/>
+                                <field name="first_inspection"/>
                                 <field name="user" />
                                 <field name="partners" widget="many2many_tags" />
                             </tree>

@@ -16,6 +16,10 @@ class Agreement(models.Model):
     property_product_pricelist = fields.Many2one('product.pricelist', string='Pricelist',default=1,)
     income_type = fields.Many2many('agreement.income.type', string='收入类型')
 
+    is_email_contract_text = fields.Boolean("Is Email Contract Text",default=True)
+
+    is_email_sign_time = fields.Boolean("Is Email Sign time",default=True)
+
     pdfswy = fields.Many2one('ir.attachment', string='Pdfswy',readonly='True')
     pdfqw = fields.Many2one('ir.attachment', string='Pdfqw',readonly='True' )
     fktj = fields.Many2one('ir.attachment', string='Fktj',readonly='True')
@@ -300,7 +304,6 @@ class Agreement(models.Model):
                                     #partner_ids.append([6, False, partner_idsids])
                                     partner_ids.append(agreement_data.assigned_user_id.sale_team_id.user_id.partner_id.email)
                                     self.emil_temp(agreement_data.id, partner_ids)
-
                             break
                     else:
                         tier_review_data_temp = tier_review_datas[i-1]
@@ -383,13 +386,16 @@ class Agreement(models.Model):
 
 
     def send_approval_emil(self):
+        #阶段待处理审批邮件
         agreement_obj = self.env['agreement']
         agreement_datas = agreement_obj.search(
-            [('stage_id', '<', 5)])
+            [('stage_id', '<', 7)])
         tier_review_obj = self.env['tier.review']
 
         up_sequence={}
         for agreement_data in agreement_datas:
+            #阶段审批邮件提醒
+          if int(agreement_data.stage_id)<5:
             tier_review_datas = tier_review_obj.search(
                 [('res_id', '=', agreement_data.id)], order="sequence asc")
 
@@ -438,7 +444,27 @@ class Agreement(models.Model):
 
                 i = i + 1
 
+          elif int(agreement_data.stage_id)==5 and \
+                  agreement_data.is_email_contract_text==False:
+              partner_ids=[]
+              sql="select reviewer_id from tier_definition where  model='agreement' and name like '%法务%' limit 1 ";
 
+              self._cr.execute(sql)
+              partner_id=self._cr.fetchone()
+              if partner_id:
+                reviewer_user=self.env['res.users'].browse(partner_id[0])
+                partner_ids.append(reviewer_user.partner_id.email)
+                self.send_approval_emil_temp(agreement_data.id, partner_ids, 'email_template_upload_contract_agreement')
+                sql = "UPDATE  agreement set is_email_contract_text=%s where id=%s"
+                self._cr.execute(sql, ('t', agreement_data.id))
+          elif int(agreement_data.stage_id)==5 and agreement_data.is_email_sign_time==False:
+              partner_ids = []
+              if agreement_data.assigned_user_id:
+                  partner_ids.append(agreement_data.assigned_user_id.partner_id.email)
+                  self.send_approval_emil_temp(agreement_data.id, partner_ids,
+                                               'email_template_signing_back_agreement')
+                  sql = "UPDATE  agreement set is_email_sign_time=%s where id=%s"
+                  self._cr.execute(sql, ('t', agreement_data.id))
 
     def send_approval_emil_temp(self,id,partner_ids,emil_template):
         ir_model_data = self.env['ir.model.data']

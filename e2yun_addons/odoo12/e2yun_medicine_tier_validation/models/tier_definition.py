@@ -11,5 +11,6 @@ class TierDefinition(models.Model):
     def _get_tier_validation_model_names(self):
         res = super(TierDefinition, self)._get_tier_validation_model_names()
         res.append("mrp.production")
+        res.append("purchase.order")
         return res
 
