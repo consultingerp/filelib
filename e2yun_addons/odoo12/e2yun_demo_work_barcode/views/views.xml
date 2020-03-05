@@ -1,0 +1,27 @@
+<odoo>
+  <data>
+      <record id="view_view_ck_routing_sync_form_demowork_inherit" model="ir.ui.view">
+          <field name="name">ck.routing.sync.inherit.add.button</field>
+          <field name="model">ck.routing.sync</field>
+          <field name="inherit_id" ref="kindee_data_sync_info.view_ck_routing_sync_form"/>
+          <field name="arch" type="xml">
+              <xpath expr="//form/sheet" position="before">
+                  <header>
+                      <button name="print_qr_code" string="二维码" class="oe_highlight" type="object"/>
+                  </header>
+              </xpath>
+          </field>
+      </record>
+
+      <record id="view_view_ck_icmo_sync_form_demowork_inherit" model="ir.ui.view">
+          <field name="name">ck.icmo.sync.inherit.add.button</field>
+          <field name="model">ck.icmo.sync</field>
+          <field name="inherit_id" ref="kindee_data_sync_info.view_ck_icmo_sync_form"/>
+          <field name="arch" type="xml">
+              <xpath expr="//button[@name='button_hw_confirms']" position="after">
+                  <button name="print_qr_code" string="任务单号二维码" class="oe_highlight" type="object"/>
+              </xpath>
+          </field>
+      </record>
+  </data>
+</odoo>

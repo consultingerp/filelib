@@ -18,7 +18,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'project', 'e2yun_project_extends'],
+    'depends': ['base', 'project', 'e2yun_project_extends', 'e2yun_survey_eextends', 'e2yun_suppliers_register'],
 
     # always loaded
     'data': [
