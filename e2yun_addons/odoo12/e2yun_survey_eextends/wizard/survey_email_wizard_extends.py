@@ -193,6 +193,9 @@ class SurveyMailComposeMessage(models.TransientModel):
         self.mail_send()
         if not self.partner_ids and not self.multi_email:
             raise exceptions.Warning(_('Please enter an existing contact or email list'))
+        ctx = self.env.context.copy()
+        survey_status = self.env['survey.survey'].browse(ctx['default_survey_id'])
+        survey_status.write({'lock_survey': True})
         return {'type': 'ir.actions.act_window_close', 'infos': 'mail_sent'}
 
     @api.multi
