@@ -423,9 +423,15 @@ class TierValidation(models.AbstractModel):
                 vals['contract_text_attachment_ids'] = [[6, False, contract_text_attachment_ids]]
 
         if is_email_sign_time!=None:
-            vals['stage_id'] =5
+            #vals['stage_id'] =5
+            sql = "UPDATE  agreement set stage_id=%s where id=%s"
+            self._cr.execute(sql, ('5', self.res_id))
+
         if signed_time != None:
-            vals['stage_id'] = 7
+            #vals['stage_id'] = 7
+            sql = "UPDATE  agreement set stage_id=%s where id=%s"
+
+
             pdfswy = '（PDF首尾页）'
             pdfqw = '（PDF全文版）'
             fktj = '（付款条件）'
@@ -440,7 +446,7 @@ class TierValidation(models.AbstractModel):
                 htwb = ""
             if pdfswy != "" or pdfqw != "" or fktj != "" or htwb != "":
                 raise UserError(u'双方签章阶段必须上传' + pdfswy + pdfqw + fktj + htwb)
-
+            self._cr.execute(sql, ('7', self.res_id))
         if not flag_stage_id:
             raise UserError(u'合同阶段不能手工拖拽。')
             user_reviews = self.env['tier.review'].search([
