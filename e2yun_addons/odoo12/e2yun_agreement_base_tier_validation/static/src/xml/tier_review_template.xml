@@ -89,16 +89,16 @@
 
     <script type="text/javascript">
    function show(obj,id) {
-        debugger
-    var objDiv = $("#"+id+"");
-     $(objDiv).css("display","block");
-     $(objDiv).css("left", event.x);
-        <!--
-     $(objDiv).css("top", event.y); -->
-     $(objDiv).text("")
+
+      var objDiv = $("#"+id+"");
      if(value[""+obj.id+""]!='false'){
-	     $(objDiv).text(value[""+obj.id+""])
+        var text=value[""+obj.id+""]
+        $(objDiv).css("display","block");
+        $(objDiv).css("left", event.x);
+        $(objDiv).css("top", 900+event.y);
+        $(objDiv).text(text)
       }else{
+         $(objDiv).text("")
          $(objDiv).css("display", "none");
       }
     }
