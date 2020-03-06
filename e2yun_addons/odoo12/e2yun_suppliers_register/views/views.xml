@@ -38,7 +38,7 @@
         <field name="inherit_id" ref="survey.survey_email_compose_message"/>
         <field name="arch" type="xml">
             <xpath expr="//button[@name='send_mail_action']" position="attributes">
-                <attribute name="confirm">'发送邮件后将不能修改问卷。是否发送邮件？'</attribute>
+                <attribute name="confirm">发送邮件后将不能修改问卷。是否发送邮件？</attribute>
             </xpath>
         </field>
       </record>
