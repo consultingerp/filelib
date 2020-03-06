@@ -333,12 +333,13 @@ class CommentWizard(models.TransientModel):
             rec._rebut_tier()
 
         if tier_stage_id!="":
-            sql = "UPDATE  agreement set stage_id=%s where id=%s"
-            self._cr.execute(sql, (tier_stage_id, self.res_id))
             if int(tier_stage_id)==5:
                 #更新合同文本上传提醒邮件标识
                sql = "UPDATE  agreement set is_email_contract_text=%s where id=%s"
                self._cr.execute(sql, ('f',self.res_id))
+            else:
+                sql = "UPDATE  agreement set stage_id=%s where id=%s"
+                self._cr.execute(sql, (tier_stage_id, self.res_id))
 
         rec._update_counter()
 
@@ -356,6 +357,7 @@ class TierValidation(models.AbstractModel):
         flag_message_main_attachment_id=False
         no_check=False
         signed_time=None
+        is_email_sign_time=None
         for key in vals:
             if 'stage_id'!=key and 'revision'!=key:
                 flag_stage_id=True
@@ -399,8 +401,9 @@ class TierValidation(models.AbstractModel):
                 sql = 'delete from agreement_contract_text_ir_attachments_rel where id=%s'
                 self._cr.execute(sql, (self.id,))
 
-            elif 'contract_text_attachment_ids' == key and int(self.stage_id) == 5:
+            elif 'contract_text_attachment_ids' == key and int(self.stage_id) == 4:
                 # 更新提醒销售输入预计签回时间
+                is_email_sign_time=True
                 sql = "UPDATE  agreement set is_email_sign_time=%s where id=%s"
                 self._cr.execute(sql, ('f', self.id))
                 # 处理历史文本合同
@@ -419,8 +422,16 @@ class TierValidation(models.AbstractModel):
                         contract_text_attachment_ids.append(contract_text_attachment_id)
                 vals['contract_text_attachment_ids'] = [[6, False, contract_text_attachment_ids]]
 
+        if is_email_sign_time!=None:
+            #vals['stage_id'] =5
+            sql = "UPDATE  agreement set stage_id=%s where id=%s"
+            self._cr.execute(sql, ('5', self.res_id))
+
         if signed_time != None:
-            vals['stage_id'] = 7
+            #vals['stage_id'] = 7
+            sql = "UPDATE  agreement set stage_id=%s where id=%s"
+
+
             pdfswy = '（PDF首尾页）'
             pdfqw = '（PDF全文版）'
             fktj = '（付款条件）'
@@ -435,8 +446,9 @@ class TierValidation(models.AbstractModel):
                 htwb = ""
             if pdfswy != "" or pdfqw != "" or fktj != "" or htwb != "":
                 raise UserError(u'双方签章阶段必须上传' + pdfswy + pdfqw + fktj + htwb)
-
+            self._cr.execute(sql, ('7', self.res_id))
         if not flag_stage_id:
+            raise UserError(u'合同阶段不能手工拖拽。')
             user_reviews = self.env['tier.review'].search([
                 ('model', '=', 'agreement'),
                 ('res_id', '=', self.id),
@@ -475,6 +487,7 @@ class TierValidation(models.AbstractModel):
             sql="UPDATE  agreement set stage_id=%s where id=%s"
             self._cr.execute(sql,(vals['stage_id'],self.id))
             return True
+
         if not flag_plan_sign_time:
             user_reviews = self.env['tier.review'].search([
                 ('model', '=', 'agreement'),

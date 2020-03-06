@@ -444,7 +444,7 @@ class Agreement(models.Model):
 
                 i = i + 1
 
-          elif int(agreement_data.stage_id)==5 and \
+          elif int(agreement_data.stage_id)==4 and \
                   agreement_data.is_email_contract_text==False:
               partner_ids=[]
               sql="select reviewer_id from tier_definition where  model='agreement' and name like '%法务%' limit 1 ";
