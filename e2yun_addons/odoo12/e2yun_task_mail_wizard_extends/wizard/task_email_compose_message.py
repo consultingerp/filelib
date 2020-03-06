@@ -191,6 +191,9 @@ class SurveyMailComposeMessage(models.TransientModel):
                     body = template.render(template_ctx, engine='ir.qweb', minimal_qcontext=True)
                     values['body_html'] = self.env['mail.thread']._replace_local_links(body)
 
+            ctx = self.env.context.copy()
+            survey_status = self.env['project.task'].browse(ctx['default_res_id'])
+            survey_status.write({'lock_survey': True})
             Mail.create(values).send()
 
         def create_token(wizard, partner_id, email,survey_id):
@@ -267,13 +270,19 @@ class SurveyMailComposeMessage(models.TransientModel):
 
         if not self.partner_ids and not self.multi_email:
             raise exceptions.Warning(_('Please select the existing contact person'))
+
         return {'type': 'ir.actions.act_window_close'}
 
     @api.multi
     def action_send_mail(self):
-        self.mail_send()
         if not self.partner_ids and not self.multi_email:
             raise exceptions.Warning(_('Please enter an existing contact or email list'))
+
+        self.mail_send()
+
+        ctx = self.env.context.copy()
+        survey_status = self.env['project.task'].browse(ctx['default_res_id'])
+        survey_status.write({'lock_survey': True})
         return {'type': 'ir.actions.act_window_close', 'infos': 'mail_sent'}
 
     @api.multi

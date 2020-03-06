@@ -56,7 +56,7 @@
                         <button string="Close" class="btn-primary" special="cancel" />
                     </footer>
                     <footer attrs="{'invisible':['|',('public','=',False),('public','in',['public_link', 'send_internal_process_messages'])]}">
-                        <button string="Send" name="send_mail_action" type="object" class="btn-primary" />
+                        <button string="Send" name="send_mail_action" type="object" class="btn-primary" confirm="发送邮件后将不能修改任务。是否发送邮件？" />
                         <button string="Cancel" class="btn-secondary" special="cancel" />
                         <group class="oe_right" col="1">
                             <div>
@@ -67,7 +67,7 @@
                         </group>
                     </footer>
                     <footer attrs="{'invisible':[('public','in',['public_link', 'email_private'])]}">
-                        <button string="Send" name="action_send_mail" type="object" class="btn-primary" />
+                        <button string="Send" name="action_send_mail" type="object" class="btn-primary" confirm="发送邮件后将不能修改任务。是否发送邮件？"/>
                         <div>
                             Use template
                             <field name="template_id" nolabel="1"/>
