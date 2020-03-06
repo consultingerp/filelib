@@ -312,7 +312,8 @@ class CommentWizard(models.TransientModel):
         #check_advise_temp = "".join(check_advise_temp)
         comp = re.compile('</?\w+[^>]*>')
         check_advise_temp = comp.sub('', self.check_advise)
-        self.comment=check_advise_temp[0:3]+"..."
+
+        self.comment=check_advise_temp[0:5]+"..."
         for user_review in user_reviews:
             user_review.write({
                 'comment': self.comment,
@@ -425,7 +426,7 @@ class TierValidation(models.AbstractModel):
         if is_email_sign_time!=None:
             #vals['stage_id'] =5
             sql = "UPDATE  agreement set stage_id=%s where id=%s"
-            self._cr.execute(sql, ('5', self.res_id))
+            self._cr.execute(sql, ('5', self.id))
 
         if signed_time != None:
             #vals['stage_id'] = 7
