@@ -59,10 +59,10 @@
                             <span t-esc="review.name"/>
                         </td>
 
-                        <td class="text-center"  t-att-id="review.id"
-                            onMouseOver='javascript:show(this,"emerge_div" )' onMouseOut="hide(this,'emerge_div')">
+                        <td class="text-center">
                             <t t-if="review.comment">
-                                 <span t-esc="review.comment"/>
+                                <div t-att-id="review.id"
+                            onMouseOver='javascript:show(this,"emerge_div" )' onMouseOut="hide(this,'emerge_div')" > <span t-esc="review.comment"/> </div>
                             </t>
                         </td>
                          <td class="text-center" >
@@ -90,12 +90,16 @@
     <script type="text/javascript">
    function show(obj,id) {
 
-      var objDiv = $("#"+id+"");
+     var objDiv = $("#"+id+"");
      if(value[""+obj.id+""]!='false'){
         var text=value[""+obj.id+""]
         $(objDiv).css("display","block");
         $(objDiv).css("left", event.x);
-        $(objDiv).css("top", 900+event.y);
+        if (text.length>100){
+            $(objDiv).css("top", 600+event.y);
+        }else{
+            $(objDiv).css("top", 860+event.y);
+        }
         $(objDiv).text(text)
       }else{
          $(objDiv).text("")
