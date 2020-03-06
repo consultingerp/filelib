@@ -437,6 +437,7 @@ class TierValidation(models.AbstractModel):
                 raise UserError(u'双方签章阶段必须上传' + pdfswy + pdfqw + fktj + htwb)
 
         if not flag_stage_id:
+            raise UserError(u'合同阶段不能手工拖拽。')
             user_reviews = self.env['tier.review'].search([
                 ('model', '=', 'agreement'),
                 ('res_id', '=', self.id),
@@ -475,6 +476,7 @@ class TierValidation(models.AbstractModel):
             sql="UPDATE  agreement set stage_id=%s where id=%s"
             self._cr.execute(sql,(vals['stage_id'],self.id))
             return True
+
         if not flag_plan_sign_time:
             user_reviews = self.env['tier.review'].search([
                 ('model', '=', 'agreement'),
