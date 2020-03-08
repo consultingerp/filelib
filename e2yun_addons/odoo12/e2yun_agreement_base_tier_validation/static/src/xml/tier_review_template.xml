@@ -27,7 +27,7 @@
 
 </head>
 <body>
-        <div id="emerge_div" style="position:absolute;display:none;border:1px solid Black;background:Ivory;" />
+        <div id="emerge_div" style="position:absolute;display:none;border:1px solid Black;background:Ivory;width:500px" />
 
         <table class="oe_mt32 table table-condensed">
             <thead>
@@ -96,7 +96,7 @@
         $(objDiv).css("display","block");
         $(objDiv).css("left", event.x);
         if (text.length>100){
-            $(objDiv).css("top", 600+event.y);
+            $(objDiv).css("top", 500+event.y);
         }else{
             $(objDiv).css("top", 860+event.y);
         }
