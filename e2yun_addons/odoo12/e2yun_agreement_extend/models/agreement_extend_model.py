@@ -26,7 +26,16 @@ class Agreement(models.Model):
 
     contract_text_attachment_ids = fields.Many2many(
         'ir.attachment', 'agreement_contract_text_ir_attachments_rel',
-        'id', 'attachment_id', 'Contract Text')
+        'id', 'attachment_id', 'Contract Text End')   #合同文本最终版
+
+    contract_text_clean_attachment_ids = fields.Many2many(
+        'ir.attachment', 'agreement_contract_text_clean_ir_attachments_rel',
+        'id', 'attachment_id', 'Contract Text Clean')  #清洁版
+
+    contract_text_process_attachment_ids = fields.Many2many(
+        'ir.attachment', 'agreement_contract_text_process_ir_attachments_rel',
+        'id', 'attachment_id', 'Contract Text Process') #审批过程版
+
 
     pws_attachment_ids = fields.Many2many(
         'ir.attachment', 'agreement_pws_ir_attachments_rel',
@@ -102,6 +111,7 @@ class Agreement(models.Model):
 
     @api.onchange('x_studio_mjhtje')
     def _onchange_x_studio_mjhtje(self):
+      if self.x_studio_htbz:
         company_id = self.company_id or self.env.user.company_id
         create_date = self.create_date or fields.Date.today()
         currency = self.env['res.currency'].search([('name', 'like', '%'+self.x_studio_htbz+'%')])

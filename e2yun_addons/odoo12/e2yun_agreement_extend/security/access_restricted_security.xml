@@ -1,13 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo >
 
-  <record model="res.groups" id="group_agreement_download_pdf">
-        <field name="name">合同下载PDF权限</field>
+
+  <record model="res.groups" id="group_agreement_request_approval ">
+        <field name="name">按钮/合同/请求审批组</field>
   </record>
 
-  <record model="res.groups" id="group_agreement_text_download">
-        <field name="name">合同文本下载</field>
+  <record model="res.groups" id="group_agreement_pws">
+        <field name="name">附件/合同/pws组</field>
   </record>
+
+
+  <record model="res.groups" id="group_agreement_pws_email_approval">
+        <field name="name">附件/合同/pws审批邮件组</field>
+  </record>
+
+  <record model="res.groups" id="group_agreement_pdfqw">
+        <field name="name">附件/合同/PDF全文组</field>
+  </record>
+
+  <record model="res.groups" id="group_agreement_pdfswy">
+        <field name="name">附件/合同/PDF首尾页组</field>
+  </record>
+
+  <record model="res.groups" id="group_agreement_payment_clause">
+        <field name="name">附件/合同/付款条件组</field>
+  </record>
+
+  <record model="res.groups" id="group_agreement_text_approval_process">
+        <field name="name">附件/合同/文本审批过程组</field>
+  </record>
+
+    <record model="res.groups" id="group_agreement_text_clean">
+        <field name="name">附件/合同/文本清洁版组</field>
+  </record>
+
+    <record model="res.groups" id="group_agreement_text_end">
+        <field name="name">附件/合同/文本最终版组</field>
+  </record>
+
+
+
+
 
 
 </odoo>

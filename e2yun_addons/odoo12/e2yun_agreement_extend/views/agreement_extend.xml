@@ -61,7 +61,7 @@
                                     <field name="x_studio_htje" required="1"/>
                                     <!-- <field name="x_studio_mjhtje"/> -->
                                     <field name="taxes_id" widget="many2many_tags"/>
-                                    <field name="pws_line_attachment_ids"  readonly="1" widget="many2many_binary"  options="{'no_open': True}" nolabel="1" colspan="2" groups="e2yun_agreement_extend.group_agreement_text_download"/>
+                                    <field name="pws_line_attachment_ids"  readonly="1" widget="many2many_binary"  options="{'no_open': True}" nolabel="1" colspan="2" groups="e2yun_agreement_extend.group_agreement_pws"/>
                                 </tree>
                             </field>
                         </page>
@@ -74,14 +74,26 @@
         </button>
 
 
+        <!-- 附件 -->
+                <xpath expr="//group[@name='term_information']" position="after">
+                    <group>
+                    <field name="email_approval_attachment_ids" widget="many2many_binary"  colspan="2" groups="e2yun_agreement_extend.group_agreement_pws"/>
+                    <field name="fktj_attachment_ids" widget="many2many_binary"   colspan="2" groups="e2yun_agreement_extend.group_agreement_payment_clause"/>
+
+                    <field name="contract_text_process_attachment_ids" widget="many2many_binary"   colspan="2" groups="e2yun_agreement_extend.group_agreement_text_approval_process"/>
+                    <field name="contract_text_clean_attachment_ids" widget="many2many_binary"   colspan="2" groups="e2yun_agreement_extend.group_agreement_text_clean"/>
+                    <field name="contract_text_attachment_ids" widget="many2many_binary"   colspan="2" groups="e2yun_agreement_extend.group_agreement_text_end"/>
+
+                    <field name="pdfswy_attachment_ids" widget="many2many_binary"   colspan="2" groups="e2yun_agreement_extend.group_agreement_pdfswy" />
+                    <field name="pdfqw_attachment_ids" widget="many2many_binary"  colspan="2" groups="e2yun_agreement_extend.group_agreement_pdfqw"/>
+                    </group>
+                </xpath>
 
 
 
 
       </field>
    </record>
-
-
 
     <!--
      <record id="agreement_form_view_view_studio_extend" model="ir.ui.view">
@@ -96,73 +108,6 @@
         </field>
       </field>
      </record> -->
-
-
-   <record id="agreement_form_view_extend_default_download_group" model="ir.ui.view">
-            <field name="model">agreement</field>
-            <field name="inherit_id" ref="agreement_legal.partner_agreement_form_view"/>
-            <field name="groups_id" eval="[(6, 0, [ref('e2yun_agreement_extend.group_agreement_text_download') ])]"/>
-            <field name="arch" type="xml">
-                <xpath expr="//group[@name='term_information']" position="after">
-                    <group>
-
-                    <field name="email_approval_attachment_ids" widget="many2many_binary"  colspan="2"/>
-                         <!--
-                    <label for="contract_text_attachment_ids" string="Contract Text" class="o_form_label"/>
-                     -->
-                    <field name="contract_text_attachment_ids" widget="many2many_binary"   colspan="2"/>
-                    </group>
-                </xpath>
-
-            </field>
-     </record>
-
-     <record id="agreement_form_view_extend_download_group" model="ir.ui.view">
-            <field name="model">agreement</field>
-            <field name="inherit_id" ref="agreement_legal.partner_agreement_form_view"/>
-            <field name="groups_id" eval="[(6, 0, [ref('e2yun_agreement_extend.group_agreement_download_pdf') ])]"/>
-            <field name="arch" type="xml">
-                <xpath expr="//group[@name='term_information']" position="after">
-                    <group>
-
-                         <!--
-                    <label for="pdfswy_attachment_ids" string="PDF首尾页" class="o_form_label"/>
-                            -->
-                    <field name="pdfswy_attachment_ids" widget="many2many_binary"   colspan="2"/>
-                           <!--
-                    <label for="pdfqw_attachment_ids" string="PDF全文" class="o_form_label"/>
-                        -->
-                    <field name="pdfqw_attachment_ids" widget="many2many_binary"  colspan="2"/>
-                        <!--
-                    <label for="fktj_attachment_ids" string="付款条件" class="o_form_label"/>-->
-
-                    <field name="fktj_attachment_ids" widget="many2many_binary"   colspan="2"/>
-                    </group>
-                    <!--
-
-                        <button name="download_pdfswy" string="pdfswy" type="object" class="fa fa-download"/>
-                        <label for="pdfswy" string="  " class="oe_inline"/>
-                        <field name="pdfswy" options='{"no_open":True}' />
-
-                        <label for="download_pdfqw" string="  " class="oe_inline"/>
-                        <button name="download_pdfqw" string="pdfqw" type="object" class="fa fa-download"/>
-
-                         <label for="pdfqw" string="  " class="oe_inline"/>
-                         <field name="pdfqw" options='{"no_open":True}' />
-
-
-                        <label for="download_fktj" string="  " class="oe_inline"/>
-                        <button name="download_fktj" string="fktj" type="object" class="fa fa-download"/>
-
-                        <label for="fktj" string="  " class="oe_inline"/>
-                        <field name="fktj" options='{"no_open":True}' /> -->
-
-
-
-                </xpath>
-
-            </field>
-   </record>
 
    <record id="agreement_subtype_form_view_extend" model="ir.ui.view">
        <field name="name">Agreement Sub Type Form Extend</field>
