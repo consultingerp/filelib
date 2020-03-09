@@ -21,6 +21,9 @@ class Agreement(models.Model):
 
     bo_review= fields.Boolean(default=False)
 
+    is_creator=fields.Boolean(default=False)
+
+
     @api.multi
     def _compute_can_review(self):
         for rec in self:
@@ -126,6 +129,9 @@ class Agreement(models.Model):
         td_obj = self.env['tier.definition']
         tr_obj = created_trs = self.env['tier.review']
         partner_ids = []
+        if self._uid != self.create_uid.id and self._uid != self.assigned_user_id.id:
+            raise UserError(u'仅提交人可以修改发起的合同。')
+
         for rec in self:
             if getattr(rec, self._state_field) in self._state_from:
                 if rec.need_validation:
@@ -163,6 +169,7 @@ class Agreement(models.Model):
                                 'w_approver_id': w_approver_id,
                                 'tier_stage_id':td.tier_stage_id.id,
                                 'is_send_email':is_send_email,
+                                'node_name':td.name,
                             })
 
                     self._update_counter()
@@ -177,6 +184,8 @@ class Agreement(models.Model):
 
     @api.multi
     def restart_validation(self):
+        if self._uid != self.create_uid.id and self._uid != self.assigned_user_id.id:
+            raise UserError(u'仅提交人可以修改发起的合同。')
         for rec in self:
             if getattr(rec, self._state_field) in self._state_from:
                 rec.mapped('review_ids').unlink()
@@ -571,11 +580,12 @@ class TierValidation(models.AbstractModel):
             valid_tiers = any([rec.evaluate_tier(tier) for tier in tiers])
             rec.need_validation = not rec.review_ids and valid_tiers and \
                                   getattr(rec, self._state_field) in self._state_from
+
             if rec.need_validation:
-                if int(self.stage_id.id) <= 1 and (self._uid != self.create_uid.id and self._uid != self.assigned_user_id.id):
-                    rec.need_validation=False
-
-
+               if self._uid != self.create_uid.id and  self._uid != self.assigned_user_id.id:
+                 rec.need_validation = False
+            # if self._uid != self.create_uid.id and self._uid != self.assigned_user_id.id:
+            #      rec.is_creator=False
 
 
 
@@ -596,3 +606,4 @@ class TierReview(models.Model):
     tier_stage_id = fields.Integer("stage")
     is_send_email=fields.Boolean("is_send_email")
     comment_temp = fields.Char('comment Temp')
+    node_name= fields.Char('Node Name')
