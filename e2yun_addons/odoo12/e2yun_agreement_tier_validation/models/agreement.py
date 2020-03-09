@@ -19,6 +19,11 @@ class Agreement(models.Model):
 
     can_review = fields.Boolean(compute="_compute_can_review")
 
+    bo_review= fields.Boolean(default=False)
+
+    is_creator=fields.Boolean(default=False)
+
+
     @api.multi
     def _compute_can_review(self):
         for rec in self:
@@ -34,6 +39,9 @@ class Agreement(models.Model):
                     lambda r: r.status != 'approved' and r.sequence < my_sequence)
                 if tier_bf:
                     rec.can_review = False
+                else:
+                    if my_sequence==1:
+                        rec.bo_review=True
 
             if rec.can_review==True:
                 for review in  rec.review_ids:
@@ -121,6 +129,9 @@ class Agreement(models.Model):
         td_obj = self.env['tier.definition']
         tr_obj = created_trs = self.env['tier.review']
         partner_ids = []
+        if self._uid != self.create_uid.id and self._uid != self.assigned_user_id.id:
+            raise UserError(u'仅提交人可以修改发起的合同。')
+
         for rec in self:
             if getattr(rec, self._state_field) in self._state_from:
                 if rec.need_validation:
@@ -158,6 +169,7 @@ class Agreement(models.Model):
                                 'w_approver_id': w_approver_id,
                                 'tier_stage_id':td.tier_stage_id.id,
                                 'is_send_email':is_send_email,
+                                'node_name':td.name,
                             })
 
                     self._update_counter()
@@ -172,6 +184,8 @@ class Agreement(models.Model):
 
     @api.multi
     def restart_validation(self):
+        if self._uid != self.create_uid.id and self._uid != self.assigned_user_id.id:
+            raise UserError(u'仅提交人可以修改发起的合同。')
         for rec in self:
             if getattr(rec, self._state_field) in self._state_from:
                 rec.mapped('review_ids').unlink()
@@ -352,6 +366,11 @@ class TierValidation(models.AbstractModel):
 
     @api.multi
     def write(self, vals):
+        #草稿状态下 只能创建人能编辑
+        if int(self.stage_id.id)<=1 and (self._uid!=self.create_uid.id and self._uid!=self.assigned_user_id.id):
+            raise UserError(u'仅提交人可以修改发起的合同。')
+
+
         flag_stage_id=False
         flag_plan_sign_time = False
         flag_signed_time=False
@@ -359,6 +378,8 @@ class TierValidation(models.AbstractModel):
         no_check=False
         signed_time=None
         is_email_sign_time=None
+
+
         for key in vals:
             if 'stage_id'!=key and 'revision'!=key:
                 flag_stage_id=True
@@ -375,14 +396,12 @@ class TierValidation(models.AbstractModel):
                     and 'x_studio_srqrlx' != key and 'signed_time' !=key and 'revision' != key :
                 no_check=True
             elif  'contract_text_attachment_ids' == key and int(self.stage_id)==6:
-                #上传签章完成的合同，并回写签订时间
+                #上传签章完成的最终合同，并回写签订时间
                 GetDatetime = get_zone_datetime.GetDatetime()
                 signed_time = GetDatetime.get_datetime()
-
                 #验证合同签订时间
                 if not self.signed_time and not 'signed_time' in vals.keys():
                     raise UserError(u'请填写合同签订时间。')
-
                 # 处理历史文本合同
                 sql = 'select attachment_id from agreement_contract_text_ir_attachments_rel where id=%s'
                 self._cr.execute(sql, (self.id,))
@@ -402,26 +421,11 @@ class TierValidation(models.AbstractModel):
                 sql = 'delete from agreement_contract_text_ir_attachments_rel where id=%s'
                 self._cr.execute(sql, (self.id,))
 
-            elif 'contract_text_attachment_ids' == key and int(self.stage_id) == 4:
-                # 更新提醒销售输入预计签回时间
+            elif 'contract_text_clean_attachment_ids' == key and int(self.stage_id) == 4:
+                # 上传清洁版合同文本，更新提醒销售输入预计签回时间
                 is_email_sign_time=True
                 sql = "UPDATE  agreement set is_email_sign_time=%s where id=%s"
                 self._cr.execute(sql, ('f', self.id))
-                # 处理历史文本合同
-                sql = 'select attachment_id from agreement_contract_text_ir_attachments_rel where id=%s'
-                self._cr.execute(sql, (self.id,))
-                iattachment_ids = self._cr.fetchall()
-                attachment = self.env['ir.attachment']
-                contract_text_attachment_ids = []
-                for contract_text_attachment_id in vals['contract_text_attachment_ids'][0][2]:
-                    is_add = True
-                    for iattachment_id in iattachment_ids:
-                        if iattachment_id[0] == contract_text_attachment_id:
-                            is_add = False
-                            attachment.browse(iattachment_id[0]).unlink()
-                    if is_add:
-                        contract_text_attachment_ids.append(contract_text_attachment_id)
-                vals['contract_text_attachment_ids'] = [[6, False, contract_text_attachment_ids]]
 
         if is_email_sign_time!=None:
             #vals['stage_id'] =5
@@ -538,6 +542,10 @@ class TierValidation(models.AbstractModel):
         #     GetDatetime = get_zone_datetime.GetDatetime()
         #     vals['signed_time']=GetDatetime.get_datetime(),
         #     #self._cr.execute(sql, (GetDatetime.get_datetime(), self.id))
+        if  no_check:
+            # 判断 BO审阅 全程监管 角色仅在审核前可以审核当前数据
+            if self.can_review and self.bo_review:
+                no_check=False
 
         for rec in self:
             if (getattr(rec, self._state_field) in self._state_from and
@@ -564,6 +572,24 @@ class TierValidation(models.AbstractModel):
             self.mapped('review_ids').unlink()
         return super(TierValidation, self).write(vals)
 
+    @api.multi
+    def _compute_need_validation(self):
+        for rec in self:
+            tiers = self.env[
+                'tier.definition'].search([('model', '=', self._name)])
+            valid_tiers = any([rec.evaluate_tier(tier) for tier in tiers])
+            rec.need_validation = not rec.review_ids and valid_tiers and \
+                                  getattr(rec, self._state_field) in self._state_from
+
+            if rec.need_validation:
+               if self._uid != self.create_uid.id and  self._uid != self.assigned_user_id.id:
+                 rec.need_validation = False
+            # if self._uid != self.create_uid.id and self._uid != self.assigned_user_id.id:
+            #      rec.is_creator=False
+
+
+
+
 
 class TierReview(models.Model):
     _inherit = "tier.review"
@@ -580,3 +606,4 @@ class TierReview(models.Model):
     tier_stage_id = fields.Integer("stage")
     is_send_email=fields.Boolean("is_send_email")
     comment_temp = fields.Char('comment Temp')
+    node_name= fields.Char('Node Name')

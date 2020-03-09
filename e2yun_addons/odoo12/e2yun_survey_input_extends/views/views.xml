@@ -1,0 +1,64 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+
+    <record model="ir.ui.view" id="e2yun_survey_input_extends">
+      <field name="name">e2yun_survey_input_extends list</field>
+      <field name="model">survey.user_input</field>
+      <field name="inherit_id" ref="survey.survey_user_input_tree"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='deadline']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='deadline']" position="after">
+          <field name="new_deadline"/>
+        </xpath>
+      </field>
+    </record>
+
+
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="e2yun_survey_input_extends.action_window">
+      <field name="name">e2yun_survey_input_extends window</field>
+      <field name="res_model">e2yun_survey_input_extends.e2yun_survey_input_extends</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="e2yun_survey_input_extends.action_server">
+      <field name="name">e2yun_survey_input_extends server</field>
+      <field name="model_id" ref="model_e2yun_survey_input_extends_e2yun_survey_input_extends"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="e2yun_survey_input_extends" id="e2yun_survey_input_extends.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="e2yun_survey_input_extends.menu_1" parent="e2yun_survey_input_extends.menu_root"/>
+    <menuitem name="Menu 2" id="e2yun_survey_input_extends.menu_2" parent="e2yun_survey_input_extends.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="e2yun_survey_input_extends.menu_1_list" parent="e2yun_survey_input_extends.menu_1"
+              action="e2yun_survey_input_extends.action_window"/>
+    <menuitem name="Server to list" id="e2yun_survey_input_extends" parent="e2yun_survey_input_extends.menu_2"
+              action="e2yun_survey_input_extends.action_server"/>
+    -->
+  </data>
+</odoo>
