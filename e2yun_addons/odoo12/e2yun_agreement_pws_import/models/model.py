@@ -228,6 +228,15 @@ class AgreementPwsImport(models.TransientModel):
            if not (cell_value is None) and not (cell_value is ''):
                     vals['end_date'] = xlrd.xldate.xldate_as_datetime(cell_value, 0)
 
+
+      table = wb.sheets()[4]
+      # 20 9 cgm
+      cell_value=table.cell(20, 10).value
+      if not (cell_value is None) and not (cell_value is ''):
+          vals['x_studio_cgmpd'] = str(round(cell_value * 100)) + "%"
+
+
+
       table = wb.sheets()[16]
       cell_value = table.cell(10, 4).value  # 收入确认类型
       if not (cell_value is None) and not (cell_value is ''):
@@ -376,10 +385,13 @@ class AgreementPwsImport(models.TransientModel):
                    vals['end_date'] = xlrd.xldate.xldate_as_datetime(cell_value, 0)
 
             if table.number == 2:
-                cell_value = table.cell(9, 5).value  # 税后未计息前合同利润率
+               # cell_value = table.cell(9, 5).value  # 税后未计息前合同利润率
+                cell_value = table.cell(71, 5).value
                 if not (cell_value is None) and not (cell_value is ''):
                     #vals['x_studio_shwjxq'] = str(round(cell_value*100))+"%"
                     vals['x_studio_cgmpd'] = str(round(cell_value*100))+"%"
+                #  71 5 CGM
+
 
       except Exception as e:
           raise UserError(e)

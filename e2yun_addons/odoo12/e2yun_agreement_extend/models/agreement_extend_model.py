@@ -395,7 +395,7 @@ class Agreement(models.Model):
         up_sequence={}
         for agreement_data in agreement_datas:
             #阶段审批邮件提醒
-          if int(agreement_data.stage_id)<5:
+          if int(agreement_data.stage_id)<4:
             tier_review_datas = tier_review_obj.search(
                 [('res_id', '=', agreement_data.id)], order="sequence asc")
 
@@ -444,7 +444,7 @@ class Agreement(models.Model):
 
                 i = i + 1
 
-          elif int(agreement_data.stage_id)==5 and \
+          elif int(agreement_data.stage_id)==4 and \
                   agreement_data.is_email_contract_text==False:
               partner_ids=[]
               sql="select reviewer_id from tier_definition where  model='agreement' and name like '%法务%' limit 1 ";

@@ -6,6 +6,7 @@ from werkzeug import urls
 from odoo import api, fields, models, _,exceptions
 from odoo.exceptions import UserError
 from odoo.tools import pycompat
+from datetime import datetime
 
 _logger = logging.getLogger(__name__)
 
@@ -135,6 +136,10 @@ class SurveyMailComposeMessage(models.TransientModel):
             elif wizard.public == 'email_private':
                 token = pycompat.text_type(uuid.uuid4())
                 # create response with token
+                deadline = wizard.date_deadline
+                dt_now = datetime.today().date()
+                if dt_now > deadline:
+                    raise UserError(_("Please do not enter the invitation date before today!"))
                 survey_user_input = SurveyUserInput.create({
                     'survey_id': wizard.survey_id.id,
                     'deadline': wizard.date_deadline,
@@ -193,6 +198,9 @@ class SurveyMailComposeMessage(models.TransientModel):
         self.mail_send()
         if not self.partner_ids and not self.multi_email:
             raise exceptions.Warning(_('Please enter an existing contact or email list'))
+        ctx = self.env.context.copy()
+        survey_status = self.env['survey.survey'].browse(ctx['default_survey_id'])
+        survey_status.write({'lock_survey': True})
         return {'type': 'ir.actions.act_window_close', 'infos': 'mail_sent'}
 
     @api.multi
@@ -258,6 +266,10 @@ class SurveyMailComposeMessage(models.TransientModel):
             def create_token(wizard, partner_id, email, survey_id):
                 token = pycompat.text_type(uuid.uuid4())
                 # create response with token
+                deadline = wizard.date_deadline
+                dt_now = datetime.today().date()
+                if dt_now > deadline:
+                    raise UserError(_("Please do not enter the invitation date before today!"))
                 survey_user_input = SurveyUserInput.create({
                     'survey_id': survey_id,
                     'deadline': wizard.date_deadline,

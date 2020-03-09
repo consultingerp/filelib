@@ -44,7 +44,7 @@ class E2yunTaskInfo(models.Model):
 
     survey_id = fields.Many2one('survey.survey', string='问卷调查')
     # 新增任务模式字段
-    task_mode = fields.Selection([('common mode', '普通模式'), ('questionnaire model', '调查问卷模式')], string='任务模式')
+    task_mode = fields.Selection([('common mode', '普通模式'), ('questionnaire model', '调查问卷模式')], string='任务模式', required=True)
     # 问卷分类
     questionnaire_classification = fields.Selection([('Internally', '对内'), ('Foreign', '对外')], string='问卷分类')
     # 是否多问卷

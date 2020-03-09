@@ -114,5 +114,5 @@ class HrEmployee(models.Model):
             if rec.entry_date:
                 rec.worked_years = (
                     datetime.datetime.now() - datetime.datetime.strptime(
-                        rec.entry_date, '%Y-%m-%d')
+                        str(rec.entry_date), '%Y-%m-%d')
                 ).days / 360

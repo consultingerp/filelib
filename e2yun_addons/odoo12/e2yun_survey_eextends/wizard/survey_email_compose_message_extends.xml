@@ -20,7 +20,7 @@
                 </xpath>
                 <xpath expr="//footer[2]" position="after">
                     <footer attrs="{'invisible':[('public','in',['public_link', 'email_private'])]}">
-                        <button string="Send" name="action_send_mail" type="object" class="btn-primary" />
+                        <button string="Send" name="action_send_mail" type="object" class="btn-primary" confirm="发送邮件后将不能修改问卷。是否发送邮件？"/>
                         <div>
                             Use template
                             <field name="template_id" nolabel="1"/>
