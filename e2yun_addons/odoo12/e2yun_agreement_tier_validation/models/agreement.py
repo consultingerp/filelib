@@ -394,6 +394,22 @@ class TierValidation(models.AbstractModel):
             if 'message_main_attachment_id' != key and 'revision' != key:
                 flag_message_main_attachment_id=True
 
+            #验证清洁版附件不能删除
+            if 'contract_text_clean_attachment_ids'== key :
+                if self.contract_text_clean_attachment_ids:
+                    for contract_text_clean_attachment_id in self.contract_text_clean_attachment_ids :
+                        if not contract_text_clean_attachment_id.id in vals['contract_text_clean_attachment_ids'][0][2]:
+                            raise UserError(u'不能删除上传过的任何文档。')
+
+            #验证审批过程版的附件不能删除
+            if 'contract_text_process_attachment_ids' == key:
+                if self.contract_text_process_attachment_ids:
+                    for contract_text_process_attachment_id in self.contract_text_process_attachment_ids:
+                        if not contract_text_process_attachment_id.id in vals['contract_text_process_attachment_ids'][0][2]:
+                            raise UserError(u'不能删除上传过的任何文档。')
+
+
+
             if 'pdfswy_attachment_ids' != key and   'pdfqw_attachment_ids' != key and 'fktj_attachment_ids' != key and \
                     'contract_text_attachment_ids' != key and 'email_approval_attachment_ids' != key \
                     and 'x_studio_srqrlx' != key and 'signed_time' !=key  and 'contract_text_clean_attachment_ids' !=key  \
