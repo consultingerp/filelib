@@ -2224,19 +2224,25 @@ class CK_Hours_Worker_line(models.Model):
         # self.amount = amount
         # self.price = price
 
-    def unlink(self, cr, uid, ids, context=None):
-        if ids:
-            for rec in self.browse(cr, uid, ids, context=context):
-                rec.state = 'del'
-                # new_id = super(CK_Hours_Worker_line, self).unlink(cr, uid, ids, context)
-                rec.order_id.check_number()
-                if len(rec.order_id.lines) == 0:
-                    rec.order_id.unlink()
-                # else:
-                # rec.order_id = ''
-                # obj.write_uid = uid.id
-                # obj.write_date = datetime.datetime.now()
+    @api.multi
+    def unlink(self):
+        for r in self:
+            r.order_id.unlink()
         return True
+
+        # def unlink(self, cr, uid, ids, context=None):
+        # if ids:
+        #     for rec in self.browse(cr, uid, ids, context=context):
+        #         rec.state = 'del'
+        #         # new_id = super(CK_Hours_Worker_line, self).unlink(cr, uid, ids, context)
+        #         rec.order_id.check_number()
+        #         if len(rec.order_id.lines) == 0:
+        #             rec.order_id.unlink()
+        #         # else:
+        #         # rec.order_id = ''
+        #         # obj.write_uid = uid.id
+        #         # obj.write_date = datetime.datetime.now()
+        # return True
 
     '''
     def unlink(self, cr, uid, ids, context=None):
