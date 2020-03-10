@@ -10,6 +10,7 @@ from werkzeug import urls
 from odoo import api, fields, models, _,exceptions
 from odoo.exceptions import UserError
 from odoo.tools import pycompat
+from datetime import datetime
 
 _logger = logging.getLogger(__name__)
 
@@ -63,11 +64,11 @@ class SurveyMailComposeMessage(models.TransientModel):
     public_url = fields.Char(compute="_compute_survey_url", string="Public url")
     public_url_html = fields.Char(compute="_compute_survey_url", string="Public HTML web link")
     # partner_ids = fields.Many2many('res.partner', 'survey_mail_compose_message_res_partner_rel', 'wizard_id', 'partner_id', string='Existing contacts')
-    partner_ids = fields.Many2many('res.partner', 'wizard_id', string='Existing contacts')
+    partner_ids = fields.Many2many('res.partner', 'wizard_id', string='Existing contacts', required=True)
     attachment_ids = fields.Many2many('ir.attachment', 'task_mail_compose_message_ir_attachments_rel', 'wizard_id', 'attachment_id', string='Attachments')
     multi_email = fields.Text(string='List of emails', help="This list of emails of recipients will not be converted in contacts.\
         Emails must be separated by commas, semicolons or newline.")
-    date_deadline = fields.Date(string="Deadline to which the invitation to respond is valid",
+    date_deadline = fields.Date(required=True, string="Deadline to which the invitation to respond is valid",
         help="Deadline to which the invitation to respond for this survey is valid. If the field is empty,\
         the invitation is still valid.")
 
@@ -215,8 +216,13 @@ class SurveyMailComposeMessage(models.TransientModel):
             elif wizard.public == 'email_private':
                 token = pycompat.text_type(uuid.uuid4())
                 # create response with token
+                deadline = wizard.date_deadline
+                dt_now = datetime.today().date()
+                if dt_now > deadline:
+                    raise UserError(_("Please do not enter the invitation date before today!"))
                 survey_user_input = SurveyUserInput.create({
                     'survey_id': survey_id,
+                    'new_deadline': wizard.date_deadline,
                     'deadline': wizard.date_deadline,
                     'date_create': fields.Datetime.now(),
                     'type': 'link',
@@ -265,15 +271,20 @@ class SurveyMailComposeMessage(models.TransientModel):
                 # token = create_token(wizard, partner['id'], partner['email'])
                 create_response_and_send_mail(wizard, partner['id'], partner['email'])
 
-        if not self.partner_ids and not self.multi_email:
-            raise exceptions.Warning(_('Please select the existing contact person'))
+        # if not self.partner_ids and not self.multi_email:
+        #     raise exceptions.Warning(_('Please select the existing contact person'))
+        ctx = self.env.context.copy()
+        survey_status = self.env['project.task'].browse(ctx['default_res_id'])
+        survey_status.write({'lock_survey': True})
         return {'type': 'ir.actions.act_window_close'}
 
     @api.multi
     def action_send_mail(self):
         self.mail_send()
-        if not self.partner_ids and not self.multi_email:
-            raise exceptions.Warning(_('Please enter an existing contact or email list'))
+
+        ctx = self.env.context.copy()
+        survey_status = self.env['project.task'].browse(ctx['default_res_id'])
+        survey_status.write({'lock_survey': True})
         return {'type': 'ir.actions.act_window_close', 'infos': 'mail_sent'}
 
     @api.multi
@@ -338,8 +349,13 @@ class SurveyMailComposeMessage(models.TransientModel):
             def create_token(wizard, partner_id, email, survey_id):
                 token = pycompat.text_type(uuid.uuid4())
                 # create response with token
+                deadline = wizard.date_deadline
+                dt_now = datetime.today().date()
+                if dt_now > deadline:
+                    raise UserError(_("Please do not enter the invitation date before today!"))
                 survey_user_input = SurveyUserInput.create({
                     'survey_id': survey_id,
+                    'new_deadline': wizard.date_deadline,
                     'deadline': wizard.date_deadline,
                     'date_create': fields.Datetime.now(),
                     'type': 'link',

@@ -108,17 +108,6 @@ msgstr "取消"
 
 
 
-#. module: e2yun_agreement_extend
-#: model:ir.model.fields,field_description:e2yun_agreement_extend.field_agreement__contract_text_attachment_ids
-msgid "Contract Text"
-msgstr "合同文本"
-
-
-#. module: e2yun_agreement_extend
-#: model_terms:ir.ui.view,arch_db:e2yun_agreement_extend.agreement_form_view_extend_default_download_group
-msgid "Contract Text"
-msgstr "合同文本"
-
 
 #. module: e2yun_agreement_extend
 #: model:ir.model.fields,field_description:e2yun_agreement_extend.field_agreement__email_approval_attachment_ids
@@ -169,3 +158,21 @@ msgstr "项目PID"
 #: model:ir.model.fields,field_description:e2yun_agreement_extend.field_agreement_pws_line__x_studio_jfssbu
 msgid "DTD"
 msgstr "交付所属部门"
+
+
+#. module: e2yun_agreement_extend
+#: model:ir.model.fields,field_description:e2yun_agreement_extend.field_agreement__contract_text_attachment_ids
+msgid "Contract Text End"
+msgstr "文本最终版"
+
+
+#. module: e2yun_agreement_extend
+#: model:ir.model.fields,field_description:e2yun_agreement_extend.field_agreement__contract_text_clean_attachment_ids
+msgid "Contract Text Clean"
+msgstr "文本清洁版"
+
+
+#. module: e2yun_agreement_extend
+#: model:ir.model.fields,field_description:e2yun_agreement_extend.field_agreement__contract_text_process_attachment_ids
+msgid "Contract Text Process"
+msgstr "文本过程版"

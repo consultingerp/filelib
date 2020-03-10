@@ -16,13 +16,26 @@ class Agreement(models.Model):
     property_product_pricelist = fields.Many2one('product.pricelist', string='Pricelist',default=1,)
     income_type = fields.Many2many('agreement.income.type', string='收入类型')
 
+    is_email_contract_text = fields.Boolean("Is Email Contract Text",default=True)
+
+    is_email_sign_time = fields.Boolean("Is Email Sign time",default=True)
+
     pdfswy = fields.Many2one('ir.attachment', string='Pdfswy',readonly='True')
     pdfqw = fields.Many2one('ir.attachment', string='Pdfqw',readonly='True' )
     fktj = fields.Many2one('ir.attachment', string='Fktj',readonly='True')
 
     contract_text_attachment_ids = fields.Many2many(
         'ir.attachment', 'agreement_contract_text_ir_attachments_rel',
-        'id', 'attachment_id', 'Contract Text')
+        'id', 'attachment_id', 'Contract Text End')   #合同文本最终版
+
+    contract_text_clean_attachment_ids = fields.Many2many(
+        'ir.attachment', 'agreement_contract_text_clean_ir_attachments_rel',
+        'id', 'attachment_id', 'Contract Text Clean')  #清洁版
+
+    contract_text_process_attachment_ids = fields.Many2many(
+        'ir.attachment', 'agreement_contract_text_process_ir_attachments_rel',
+        'id', 'attachment_id', 'Contract Text Process') #审批过程版
+
 
     pws_attachment_ids = fields.Many2many(
         'ir.attachment', 'agreement_pws_ir_attachments_rel',
@@ -98,6 +111,7 @@ class Agreement(models.Model):
 
     @api.onchange('x_studio_mjhtje')
     def _onchange_x_studio_mjhtje(self):
+      if self.x_studio_htbz:
         company_id = self.company_id or self.env.user.company_id
         create_date = self.create_date or fields.Date.today()
         currency = self.env['res.currency'].search([('name', 'like', '%'+self.x_studio_htbz+'%')])
@@ -300,7 +314,6 @@ class Agreement(models.Model):
                                     #partner_ids.append([6, False, partner_idsids])
                                     partner_ids.append(agreement_data.assigned_user_id.sale_team_id.user_id.partner_id.email)
                                     self.emil_temp(agreement_data.id, partner_ids)
-
                             break
                     else:
                         tier_review_data_temp = tier_review_datas[i-1]
@@ -383,13 +396,16 @@ class Agreement(models.Model):
 
 
     def send_approval_emil(self):
+        #阶段待处理审批邮件
         agreement_obj = self.env['agreement']
         agreement_datas = agreement_obj.search(
-            [('stage_id', '<', 5)])
+            [('stage_id', '<', 7)])
         tier_review_obj = self.env['tier.review']
 
         up_sequence={}
         for agreement_data in agreement_datas:
+            #阶段审批邮件提醒
+          if int(agreement_data.stage_id)<4:
             tier_review_datas = tier_review_obj.search(
                 [('res_id', '=', agreement_data.id)], order="sequence asc")
 
@@ -438,23 +454,54 @@ class Agreement(models.Model):
 
                 i = i + 1
 
+          elif int(agreement_data.stage_id)==4 and \
+                  agreement_data.is_email_contract_text==False:
+              partner_ids=[]
+              sql="select reviewer_id from tier_definition where  model='agreement' and name like '%法务%' limit 1 ";
 
+              self._cr.execute(sql)
+              partner_id=self._cr.fetchone()
+              if partner_id:
+                reviewer_user=self.env['res.users'].browse(partner_id[0])
+                partner_ids.append(reviewer_user.partner_id.email)
+                self.send_approval_emil_temp(agreement_data.id, partner_ids, 'email_template_upload_contract_agreement')
+                sql = "UPDATE  agreement set is_email_contract_text=%s where id=%s"
+                self._cr.execute(sql, ('t', agreement_data.id))
+          elif int(agreement_data.stage_id)==5 and agreement_data.is_email_sign_time==False:
+              partner_ids = []
+              if agreement_data.assigned_user_id:
+                  partner_ids.append(agreement_data.assigned_user_id.partner_id.email)
+                  self.send_approval_emil_temp(agreement_data.id, partner_ids,
+                                               'email_template_signing_back_agreement')
+                  sql = "UPDATE  agreement set is_email_sign_time=%s where id=%s"
+                  self._cr.execute(sql, ('t', agreement_data.id))
 
     def send_approval_emil_temp(self,id,partner_ids,emil_template):
+        if not partner_ids:
+            return
         ir_model_data = self.env['ir.model.data']
         template_ids = ir_model_data.get_object_reference('e2yun_agreement_extend', emil_template)[1]
         email_template_obj_message = self.env['mail.compose.message']
         if template_ids:
             attachment_ids_value = email_template_obj_message.onchange_template_id(template_ids, 'comment',
                                                                                    'agreement', id)
-            if not partner_ids:
-                return
+
+            agreement_data=self.env['agreement'].browse(id)
+            # if agreement_data and agreement_data.fktj_attachment_ids:
+            #     # 带附件
+            #     sqld = "delete  from email_template_attachment_rel where email_template_id=%s "
+            #     self._cr.execute(sqld, (template_ids,))
+            #     for fktj_attachment_id in agreement_data.fktj_attachment_ids:
+            #         sql = "insert into email_template_attachment_rel(email_template_id,attachment_id)values (%s,%s)"
+            #         self._cr.execute(sql, (template_ids, fktj_attachment_id.id))
+
             mails = self.env['mail.mail']
             mail_values = {
                 'email_from': 'postmaster-odoo@e2yun.com',
                 'email_to': partner_ids[0],
                 'subject': attachment_ids_value['value']['subject'],
                 'body_html': attachment_ids_value['value']['body'],
+                'attachment_ids': [(4, attachment.id) for attachment in agreement_data.fktj_attachment_ids],
                 'notification': True,
                 'auto_delete': True,
             }
