@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_property_group,group_base_property_group_access,model_base_property_group,base.group_system,1,1,1,1
+access_property,group_base_property_access,model_base_property,base.group_system,1,1,1,1
+access_property_value,group_base_property_value_access,model_base_property_value,base.group_system,1,1,1,1
+access_lot_property_line,group_lot_property_line_access,model_lot_property_line,base.group_system,1,1,1,1
+

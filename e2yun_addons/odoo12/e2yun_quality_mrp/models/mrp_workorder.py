@@ -25,12 +25,12 @@ class MrpWorkorderQC(models.Model):
         for model in ['qc.trigger.product_category_line',
                       'qc.trigger.product_template_line',
                       'qc.trigger.product_line']:
-            partner = (self.partner_id
-                       if qc_trigger.partner_selectable else False)
+            # partner = (self.partner_id
+            #            if qc_trigger.partner_selectable else False)
 
             trigger_lines = trigger_lines.union(
                 self.env[model].get_trigger_line_for_product(
-                    qc_trigger, self.product_id, partner=partner))
+                    qc_trigger, self.product_id))
         for trigger_line in _filter_trigger_lines(trigger_lines):
             inspection_model._make_inspection(self, trigger_line)
         return res
@@ -45,12 +45,12 @@ class MrpWorkorderQC(models.Model):
         for model in ['qc.trigger.product_category_line',
                       'qc.trigger.product_template_line',
                       'qc.trigger.product_line']:
-            partner = (self.partner_id
-                       if qc_trigger.partner_selectable else False)
+            # partner = (self.partner_id
+            #            if qc_trigger.partner_selectable else False)
 
             trigger_lines = trigger_lines.union(
                 self.env[model].get_trigger_line_for_product(
-                    qc_trigger, self.product_id, partner=partner))
+                    qc_trigger, self.product_id))
         for trigger_line in _filter_trigger_lines_first(trigger_lines):
             inspection_model._make_inspection(self, trigger_line)
 

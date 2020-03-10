@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "e2yun_mail_wizard_extends",
+    'name': "e2yun_survey_input_extends",
 
     'summary': """
-        供应商评估邮件向导修改""",
+        问卷答案的修改""",
 
     'description': """
-        供应商评估邮件向导修改
+        问卷答案的修改
     """,
 
     'author': "Zhiyong.Cao",
@@ -19,18 +19,16 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','e2yun_project_extends','project', 'survey', 'e2yun_survey_input_extends'],
+    'depends': ['base', 'survey'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
-        'wizard/task_email_compose_message.xml',
-        'demo/task_mail_template.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
-        # 'data/data.xml',
+        'demo/demo.xml',
     ],
 }

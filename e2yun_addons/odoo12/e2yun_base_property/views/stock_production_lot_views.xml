@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_production_lot_property_form" model="ir.ui.view">
+        <field name="name">stock.production.lot.property.form</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form"/>
+        <field name="arch" type="xml">
+              <xpath expr="//group[@name='main_group']" position="after">
+
+                    <field name="property_line_ids" widget="one2many_list"
+                           context="{'show_property': False}"
+                           groups="e2yun_base_property.group_base_properties">
+                        <tree string="Properties" editable="bottom">
+                            <field name="property_id"/>
+                            <field name="value_ids" widget="many2many_tags"
+                                   options="{'no_create_edit': True}"
+                                   domain="[('property_id', '=', property_id)]"
+                                   context="{'default_property_id': property_id}"/>
+                        </tree>
+                    </field>
+
+              </xpath>
+        </field>
+    </record>
+    <record id="view_production_lot_property_form_simple" model="ir.ui.view">
+        <field name="name">stock.production.lot.property.form</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form_simple"/>
+        <field name="arch" type="xml">
+              <xpath expr="//group[@name='main_group']" position="after">
+
+                    <field name="property_line_ids" widget="one2many_list"
+                           context="{'show_property': False}"
+                           groups="e2yun_base_property.group_base_properties">
+                        <tree string="Properties" editable="bottom">
+                            <field name="property_id"/>
+                            <field name="value_ids" widget="many2many_tags"
+                                   options="{'no_create_edit': True}"
+                                   domain="[('property_id', '=', property_id)]"
+                                   context="{'default_property_id': property_id}"/>
+                        </tree>
+                    </field>
+
+              </xpath>
+        </field>
+    </record>
+    <record id="view_production_lot_property_tree" model="ir.ui.view">
+        <field name="name">stock.production.lot.property.tree</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+        <field name="arch" type="xml">
+              <xpath expr="//field[@name='ref']" position="after">
+                  <field string="Properties" name="property_line_ids"
+                         groups="e2yun_base_property.group_base_properties"/>
+              </xpath>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="search_product_lot_property_filter">
+        <field name="name">Production Lots Property Filter</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.search_product_lot_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="after">
+                  <field string="Properties" name="property_line_ids"
+                         groups="e2yun_base_property.group_base_properties"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

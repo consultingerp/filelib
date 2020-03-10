@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Property Group -->
+    <record id="base_property_group_form_view" model="ir.ui.view">
+        <field name="name">base.property.group.form</field>
+        <field name="model">base.property.group</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Properties categories">
+                <group>
+                    <field name="name"/>
+                </group>
+                <separator string="Description"/>
+                <field name="description" nolabel="1"/>
+            </form>
+        </field>
+    </record>
+    <record id="base_property_group_tree_view" model="ir.ui.view">
+        <field name="name">base.property.group.tree</field>
+        <field name="model">base.property.group</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <Tree string="Properties categories">
+
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+
+            </Tree>
+        </field>
+    </record>
+    <record id="base_property_group_action" model="ir.actions.act_window">
+        <field name="name">Property Groups</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">base.property.group</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to create a group of properties.
+          </p><p>
+            Define specific property groups that can be assigned to your
+            lots and sales orders. Properties allows E2yun
+            to automatically select the right lots according
+            to properties selected in the sales order by salesperson.
+          </p><p>
+            For instance, in the property group "Warranty", you an have
+            two properties: 1 year warranty, 3 years warranty. Depending
+            on the propoerties selected in the sales order, E2yun will
+            schedule a production using the matching lot.
+          </p>
+        </field>
+    </record>
+
+
+    <!-- Property  -->
+    <record id="base_property_tree_view" model="ir.ui.view">
+        <field name="name">base.property.tree</field>
+        <field name="model">base.property</field>
+        <field name="arch" type="xml">
+            <tree string="Properties">
+                <field name="sequence" widget="handle"/>
+                <field name="group_id"/>
+                <field name="name"/>
+                <field name="value_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+    <record id="base_property_form_view" model="ir.ui.view">
+        <field name="name">base.property.form</field>
+        <field name="model">base.property</field>
+        <field name="arch" type="xml">
+            <form string="Properties">
+                <group>
+                    <group name="main_fields">
+
+                        <field name="name" />
+                        <field name="group_id" />
+                    </group>
+                </group>
+                <group name="values_ids">
+                    <label for="value_ids" string="Properties Values"/>
+                    <field name="value_ids" widget="one2many_list" nolabel="1">
+                        <tree string="Values" editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="name"/>
+                        </tree>
+                    </field>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="view_base_property_search" model="ir.ui.view">
+        <field name="name">base.property.search</field>
+        <field name="model">base.property</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="name" string="Name"/>
+                <field name="group_id" />
+                <group expand="0" string="Group By">
+                    <filter string="Property Group"
+                            name="group_by_group_id" domain="[]"
+                            context="{'group_by':'group_id'}"/>
+                </group>
+           </search>
+        </field>
+    </record>
+    <record id="base_property_value_tree_view" model="ir.ui.view">
+        <field name="name">base.property.value.tree</field>
+        <field name="model">base.property.value</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Properties">
+                <field name="sequence" widget="handle"/>
+                <field name="property_id"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="base_property_value_view_form" model="ir.ui.view">
+        <field name="name">base.property.value.view.form.</field>
+        <field name="model">base.property.value</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Properties">
+                <group>
+                    <field name="property_id"/>
+                    <field name="name" />
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="lot_property_line_tree" model="ir.ui.view">
+        <field name="name">lot.property.line.tree</field>
+        <field name="model">lot.property.line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Properties">
+                <field name="sequence" widget="handle"/>
+                <field name="lot_id" />
+                <field name="property_id"/>
+                <field name="value_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+    <record id="lot_property_line_form" model="ir.ui.view">
+        <field name="name">lot.property.line.form</field>
+        <field name="model">lot.property.line</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Lots Property and Values">
+                <group name="main_field">
+                    <field name="property_id" />
+                    <field name="lot_id" />
+                    <field name="value_ids" widget="many2many_tags">
+                    </field>
+                </group>
+            </form>
+        </field>
+    </record>
+
+
+    <!--
+    <record id="lot_property_value_view_tree" model="ir.ui.view">
+        <field name="name">lot.property.value.view.tree</field>
+        <field name="model">lot.property.value</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Lot Properties" create="0" delete="0">
+                <field name="property_id"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="lot_property_value_view_form" model="ir.ui.view">
+        <field name="name">lot.property.value.view.form.</field>
+        <field name="model">lot.property.value</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Lot Properties" create="0" delete="0">
+                <group>
+                    <field name="name" />
+                    <field name="exclude_for" widget="one2many_list" mode="tree">
+                        <tree editable="bottom">
+                            <field name="lot_id" />
+                            <field name="value_ids" widget="many2many_tags" options="{'no_create': true}" />
+                        </tree>
+                    </field>
+                </group>
+            </form>
+        </field>
+    </record>
+    -->
+    <record id="base_property_action" model="ir.actions.act_window">
+            <field name="name">Properties</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">base.property</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_base_property_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a new property.
+              </p><p>
+                The Properties in e2yun are used to select the right bill of
+                materials for manufacturing a product when you have different
+                ways of building the same product.  You can assign several
+                properties to each lot.  When a salesperson
+                creates a sales order, they can relate it to several properties
+                and E2yun will automatically select the lot to use according
+                the needs.
+              </p>
+            </field>
+        </record>
+
+    <record id="base_property_value_action" model="ir.actions.act_window">
+        <field name="name">Properties Values</field>
+        <field name="res_model">base.property.value</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+    </record>
+
+    <record id="lot_property_line_action" model="ir.actions.act_window">
+        <field name="name">Lot Properties Line</field>
+        <field name="res_model">lot.property.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="view_ids"
+                eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('lot_property_line_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('lot_property_line_form')})]" />
+
+    </record>
+    <!--
+        <record id="lot_property_value_action" model="ir.actions.act_window">
+        <field name="name">Lot Properties Values </field>
+        <field name="res_model">base.property.value</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('lot_id', '=', active_id)]</field>
+        <field name="view_ids"
+                eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('lot_property_value_view_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('lot_property_value_view_form')})]" />
+        <field name="context">{'default_lot_id': active_id}</field>
+    </record>
+    -->
+    <menuitem id="menu_base_property"
+        name="Properties"
+        parent="stock.menu_stock_config_settings"
+        groups="base.group_no_one,group_base_properties"
+        sequence="35"/>
+    <menuitem id="menu_base_property_group_action"
+        action="base_property_group_action"
+        parent="e2yun_base_property.menu_base_property"
+        groups="base.group_no_one,group_base_properties"
+        sequence="10"/>
+    <menuitem id="menu_base_property_action"
+        action="base_property_action"
+        groups="base.group_no_one,group_base_properties"
+        parent="e2yun_base_property.menu_base_property"
+        sequence="20"/>
+    <menuitem id="menu_lot_property_line_action"
+        action="lot_property_line_action"
+        groups="base.group_no_one,group_base_properties"
+        parent="stock.menu_stock_inventory_control"
+        sequence="130"/>
+    <menuitem id="menu_base_property_value_action"
+        action="base_property_value_action"
+        groups="base.group_no_one,group_base_properties"
+        parent="e2yun_base_property.menu_base_property"
+        sequence="50"/>
+
+</odoo>

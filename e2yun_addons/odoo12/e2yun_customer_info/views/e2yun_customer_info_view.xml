@@ -263,7 +263,7 @@
                                 <field name="create_uid" readonly="True"/>
                                 <field name="user_id"/>
                                 <field name="activity_user_id" attrs="{'invisible':True}"/>
-                                <field name="team_id"/>
+                                <field name="team_id" domain="[('use_opportunities','=','1')]"/>
                                 <field name="parent_team_id" readonly="True"/>
                                 <field name="x_studio__1"/>
                                 <field name="property_payment_term_id"/>
