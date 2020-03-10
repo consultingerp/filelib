@@ -142,6 +142,7 @@ class SurveyMailComposeMessage(models.TransientModel):
                     raise UserError(_("Please do not enter the invitation date before today!"))
                 survey_user_input = SurveyUserInput.create({
                     'survey_id': wizard.survey_id.id,
+                    'new_deadline': wizard.date_deadline,
                     'deadline': wizard.date_deadline,
                     'date_create': fields.Datetime.now(),
                     'type': 'link',
@@ -272,6 +273,7 @@ class SurveyMailComposeMessage(models.TransientModel):
                     raise UserError(_("Please do not enter the invitation date before today!"))
                 survey_user_input = SurveyUserInput.create({
                     'survey_id': survey_id,
+                    'new_deadline': wizard.date_deadline,
                     'deadline': wizard.date_deadline,
                     'date_create': fields.Datetime.now(),
                     'type': 'link',
