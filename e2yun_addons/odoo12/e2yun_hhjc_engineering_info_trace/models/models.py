@@ -13,22 +13,35 @@ class E2yunHHJCEngineeringInfoTraceChangeProjectTracer(models.TransientModel):
 
     def action_change_project_tracer(self):
         current_lead_id = self._context.get('current_lead_id')
+        current_uid = self._context.get('uid')
         current_lead = self.env['crm.lead'].browse(current_lead_id)
         if self.project_tracer and current_lead:
-            current_lead.project_follower = self.project_tracer
+            if current_uid == current_lead.create_uid.id:
+                current_lead.business_tracer = self.project_tracer
+            else:
+                raise Warning(_('您不是该单的创建人，无法进行改派动作！'))
         else:
             raise Warning(_('请选择新的业务员！'))
 
     def action_change_project_tracer_multi(self):
         new_project_tracer = self.project_tracer.id
 
+        current_uid = self._context.get('uid')
+
         active_model = self.env.context.get('active_model')
         active_ids = self.env.context.get('active_ids')
         will_change = self.env[active_model].browse(active_ids)
 
         try:
+            error_msg = ""
             for need_change_id in will_change:
-                need_change_id.update({'business_tracer': new_project_tracer})
+                if current_uid == need_change_id.create_uid.id:
+                    need_change_id.update({'business_tracer': new_project_tracer})
+                else:
+                    error_msg = error_msg + need_change_id.name + '\n'
+            if error_msg:
+                error_msg = "您不是下列单据的创建者，无法进行改派动作\n" + error_msg + '\n' + "请重新选择单据。"
+                raise Warning(_(error_msg))
         except Exception as e:
             raise e
 
@@ -56,7 +69,6 @@ class E2yunHHJCEngineeringInfoTrace(models.Model):
     date_project_duration_end = fields.Date('建设周期结束日期', required=True)
 
     project_team = fields.Many2one('crm.team', string='门店', required=True)
-    project_follower = fields.Many2one('res.users', string='业务跟踪员', required=True)
     remark = fields.Text('备注')
 
     project_state = fields.Selection([('new', '新建'), ('allocated', '已分配'), ('processing', '进行中'),
@@ -163,11 +175,11 @@ class E2yunHHJCEngineeringInfoTrace(models.Model):
                 if str(date_project_duration_start) > str(date_project_duration_end):
                     start_and_end_date_invalid = True
         if first_party_phone_invalid:
-            error_message = error_message + '\n请输入合法的甲方联系电话!'
+            error_message = error_message + '请输入合法的甲方联系电话!\n'
         if second_party_phone_invalid:
-            error_message = error_message + '\n请输入合法的乙方联系电话!'
+            error_message = error_message + '请输入合法的乙方联系电话!\n'
         if start_and_end_date_invalid:
-            error_message = error_message + '\n建设周期开始日期必须小于建设周期结束日期!'
+            error_message = error_message + '建设周期开始日期必须小于建设周期结束日期!\n'
         if error_message:
             raise Warning(_(error_message))
         res = super(E2yunHHJCEngineeringInfoTrace, self).write(vals)
