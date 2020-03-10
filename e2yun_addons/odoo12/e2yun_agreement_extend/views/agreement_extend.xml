@@ -82,7 +82,7 @@
 
                     <field name="contract_text_process_attachment_ids" widget="many2many_binary"   colspan="2" groups="e2yun_agreement_extend.group_agreement_text_approval_process"/>
                     <field name="contract_text_clean_attachment_ids" widget="many2many_binary"   colspan="2" groups="e2yun_agreement_extend.group_agreement_text_clean"/>
-                    <field name="contract_text_attachment_ids" widget="many2many_binary"   colspan="2" groups="e2yun_agreement_extend.group_agreement_text_end"/>
+                    <field name="contract_text_attachment_ids" widget="many2many_binary"  string="文本最终版" colspan="2" groups="e2yun_agreement_extend.group_agreement_text_end"/>
 
                     <field name="pdfswy_attachment_ids" widget="many2many_binary"   colspan="2" groups="e2yun_agreement_extend.group_agreement_pdfswy" />
                     <field name="pdfqw_attachment_ids" widget="many2many_binary"  colspan="2" groups="e2yun_agreement_extend.group_agreement_pdfqw"/>

@@ -40,8 +40,11 @@ class Agreement(models.Model):
                 if tier_bf:
                     rec.can_review = False
                 else:
-                    if my_sequence==1:
-                        rec.bo_review=True
+                    node_name = rec.review_ids.filtered(
+                        lambda r: r.status in ('pending', 'rejected') and
+                                  (self.env.user in r.reviewer_ids)).mapped('node_name')
+                    if node_name:
+                        rec.bo_review=node_name
 
             if rec.can_review==True:
                 for review in  rec.review_ids:
@@ -393,9 +396,11 @@ class TierValidation(models.AbstractModel):
 
             if 'pdfswy_attachment_ids' != key and   'pdfqw_attachment_ids' != key and 'fktj_attachment_ids' != key and \
                     'contract_text_attachment_ids' != key and 'email_approval_attachment_ids' != key \
-                    and 'x_studio_srqrlx' != key and 'signed_time' !=key and 'revision' != key :
+                    and 'x_studio_srqrlx' != key and 'signed_time' !=key  and 'contract_text_clean_attachment_ids' !=key  \
+                    and 'contract_text_process_attachment_ids' !=key  \
+                    and 'revision' != key :
                 no_check=True
-            elif  'contract_text_attachment_ids' == key and int(self.stage_id)==6:
+            elif  'contract_text_attachment_ids' == key and int(self.stage_id)==6 :
                 #上传签章完成的最终合同，并回写签订时间
                 GetDatetime = get_zone_datetime.GetDatetime()
                 signed_time = GetDatetime.get_datetime()
@@ -422,6 +427,8 @@ class TierValidation(models.AbstractModel):
                 self._cr.execute(sql, (self.id,))
 
             elif 'contract_text_clean_attachment_ids' == key and int(self.stage_id) == 4:
+                if not self.bo_review=='审阅人-法务':
+                    raise UserError(u'仅法务可以更新清洁版合同文本。')
                 # 上传清洁版合同文本，更新提醒销售输入预计签回时间
                 is_email_sign_time=True
                 sql = "UPDATE  agreement set is_email_sign_time=%s where id=%s"
@@ -494,6 +501,8 @@ class TierValidation(models.AbstractModel):
             return True
 
         if not flag_plan_sign_time:
+            if self._uid != self.create_uid.id and self._uid != self.assigned_user_id.id:
+                raise UserError(u'仅销售可以更新,预计回签时间。')
             user_reviews = self.env['tier.review'].search([
                 ('model', '=', 'agreement'),
                 ('res_id', '=', self.id),
@@ -544,7 +553,7 @@ class TierValidation(models.AbstractModel):
         #     #self._cr.execute(sql, (GetDatetime.get_datetime(), self.id))
         if  no_check:
             # 判断 BO审阅 全程监管 角色仅在审核前可以审核当前数据
-            if self.can_review and self.bo_review:
+            if self.can_review and self.bo_review=='BO审阅-全程监管':
                 no_check=False
 
         for rec in self:

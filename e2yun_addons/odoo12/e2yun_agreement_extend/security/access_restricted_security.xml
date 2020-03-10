@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo >
 
+    <!--
+        <record model="ir.module.category" id="module_category_agreement_custom">
+            <field name="name">合同</field>
+            <field name="description">合同</field>
+            <field name="sequence">8</field>
+        </record> -->
+
+
+
 
   <record model="res.groups" id="group_agreement_request_approval ">
         <field name="name">按钮/合同/请求审批组</field>

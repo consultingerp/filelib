@@ -477,20 +477,31 @@ class Agreement(models.Model):
                   self._cr.execute(sql, ('t', agreement_data.id))
 
     def send_approval_emil_temp(self,id,partner_ids,emil_template):
+        if not partner_ids:
+            return
         ir_model_data = self.env['ir.model.data']
         template_ids = ir_model_data.get_object_reference('e2yun_agreement_extend', emil_template)[1]
         email_template_obj_message = self.env['mail.compose.message']
         if template_ids:
             attachment_ids_value = email_template_obj_message.onchange_template_id(template_ids, 'comment',
                                                                                    'agreement', id)
-            if not partner_ids:
-                return
+
+            agreement_data=self.env['agreement'].browse(id)
+            # if agreement_data and agreement_data.fktj_attachment_ids:
+            #     # 带附件
+            #     sqld = "delete  from email_template_attachment_rel where email_template_id=%s "
+            #     self._cr.execute(sqld, (template_ids,))
+            #     for fktj_attachment_id in agreement_data.fktj_attachment_ids:
+            #         sql = "insert into email_template_attachment_rel(email_template_id,attachment_id)values (%s,%s)"
+            #         self._cr.execute(sql, (template_ids, fktj_attachment_id.id))
+
             mails = self.env['mail.mail']
             mail_values = {
                 'email_from': 'postmaster-odoo@e2yun.com',
                 'email_to': partner_ids[0],
                 'subject': attachment_ids_value['value']['subject'],
                 'body_html': attachment_ids_value['value']['body'],
+                'attachment_ids': [(4, attachment.id) for attachment in agreement_data.fktj_attachment_ids],
                 'notification': True,
                 'auto_delete': True,
             }
