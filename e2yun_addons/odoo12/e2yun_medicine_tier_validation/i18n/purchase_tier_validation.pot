@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* purchase_tier_validation
+#	* e2yun_medicine_tier_validation
 #
 msgid ""
 msgstr ""
@@ -13,69 +13,69 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: purchase_tier_validation
-#: model_terms:ir.ui.view,arch_db:purchase_tier_validation.purchase_order_form
+#. module: e2yun_medicine_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.purchase_order_form
 msgid "<i class=\"fa fa-info-circle\"/>This PO needs to be\n"
 "                        validated."
 msgstr ""
 
-#. module: purchase_tier_validation
-#: model_terms:ir.ui.view,arch_db:purchase_tier_validation.purchase_order_form
+#. module: e2yun_medicine_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.purchase_order_form
 msgid "<i class=\"fa fa-thumbs-down\"/> Operation has been <b>rejected</b>."
 msgstr ""
 
-#. module: purchase_tier_validation
-#: model_terms:ir.ui.view,arch_db:purchase_tier_validation.purchase_order_form
+#. module: e2yun_medicine_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.purchase_order_form
 msgid "<i class=\"fa fa-thumbs-up\"/> Operation has been <b>validated</b>!"
 msgstr ""
 
-#. module: purchase_tier_validation
-#: model_terms:ir.ui.view,arch_db:purchase_tier_validation.view_purchase_order_filter
+#. module: e2yun_medicine_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.view_purchase_order_filter
 msgid "My Purchases to review"
 msgstr ""
 
-#. module: purchase_tier_validation
-#: model_terms:ir.ui.view,arch_db:purchase_tier_validation.view_purchase_order_filter
+#. module: e2yun_medicine_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.view_purchase_order_filter
 msgid "Needs my Review"
 msgstr ""
 
-#. module: purchase_tier_validation
-#: model_terms:ir.ui.view,arch_db:purchase_tier_validation.view_purchase_order_filter
+#. module: e2yun_medicine_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.view_purchase_order_filter
 msgid "POs validated and ready to be confirmed"
 msgstr ""
 
-#. module: purchase_tier_validation
-#: model:ir.model,name:purchase_tier_validation.model_purchase_order
+#. module: e2yun_medicine_tier_validation
+#: model:ir.model,name:e2yun_medicine_tier_validation.model_purchase_order
 msgid "Purchase Order"
 msgstr ""
 
-#. module: purchase_tier_validation
-#: model_terms:ir.ui.view,arch_db:purchase_tier_validation.purchase_order_form
+#. module: e2yun_medicine_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.purchase_order_form
 msgid "Reject"
 msgstr ""
 
-#. module: purchase_tier_validation
-#: model_terms:ir.ui.view,arch_db:purchase_tier_validation.purchase_order_form
+#. module: e2yun_medicine_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.purchase_order_form
 msgid "Request Validation"
 msgstr ""
 
-#. module: purchase_tier_validation
-#: model_terms:ir.ui.view,arch_db:purchase_tier_validation.purchase_order_form
+#. module: e2yun_medicine_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.purchase_order_form
 msgid "Restart Validation"
 msgstr ""
 
-#. module: purchase_tier_validation
-#: model:ir.model,name:purchase_tier_validation.model_tier_definition
+#. module: e2yun_medicine_tier_validation
+#: model:ir.model,name:e2yun_medicine_tier_validation.model_tier_definition
 msgid "Tier Definition"
 msgstr ""
 
-#. module: purchase_tier_validation
-#: model_terms:ir.ui.view,arch_db:purchase_tier_validation.purchase_order_form
+#. module: e2yun_medicine_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.purchase_order_form
 msgid "Validate"
 msgstr ""
 
-#. module: purchase_tier_validation
-#: model_terms:ir.ui.view,arch_db:purchase_tier_validation.view_purchase_order_filter
+#. module: e2yun_medicine_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.view_purchase_order_filter
 msgid "Validated"
 msgstr ""
 
