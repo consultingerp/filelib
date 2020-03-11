@@ -8,7 +8,7 @@ from odoo.exceptions import UserError
 class Agreement(models.Model):
     _inherit = "agreement"
 
-    agreement_code=fields.Char('Agreement Code',default="/") #合同编码
+    agreement_code=fields.Char('Agreement Code',default="") #合同编码
     plan_sign_time=fields.Date('Plan Sign Time') # 计划回签时间
     signed_time = fields.Date('Signed Time')  # 合同签订时间
     sales_department = fields.Many2one('crm.team', string='Sales department')  # 合同签订时间
