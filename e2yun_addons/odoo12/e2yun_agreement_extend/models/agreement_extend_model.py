@@ -20,7 +20,7 @@ class Agreement(models.Model):
 
     x_studio_xmmc= fields.Char(string='Project Name')  # 项目名称
 
-    x_studio_jhhm_id = fields.Char(string='Opportunity Number')  # 机会号码OPP ID
+    x_studio_jhhm_id = fields.Many2one('crm.lead', string='Opportunity Number')  # 机会号码OPP ID
 
     original_agreement_no= fields.Char(string='Original Agreement No')  # 原协议编号
 

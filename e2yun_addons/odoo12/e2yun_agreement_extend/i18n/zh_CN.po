@@ -260,6 +260,15 @@ msgstr "合同币种"
 msgid "Contract Amount"
 msgstr "合同金额"
 
+#. module: e2yun_agreement_extend
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_extend.agreement_income_type_list_view
+#: model_terms:ir.ui.view,arch_db:e2yun_agreement_extend.agreement_action_income_type
+#: model:ir.ui.menu,name:e2yun_agreement_extend.meunu_agreement_income_type
+msgid "Agreement Income Type"
+msgstr "收入类型"
+
+
+
 
 
 

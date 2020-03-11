@@ -165,7 +165,15 @@ class AgreementPwsImport(models.TransientModel):
             cell_value = table.cell(6, 5).value  # 机会编号
             if not (cell_value is None) and not (cell_value is ''):
                 import math
-                vals['x_studio_jhhm_id'] = math.floor(cell_value)
+                x_studio_jhhm = self.env['crm.lead'].search(
+                    [('name', 'ilike', math.floor(cell_value))], limit=1)
+                if x_studio_jhhm:
+                    vals['x_studio_jhhm_id'] = x_studio_jhhm.id
+                else:
+                    raise UserError(("机会号不存在: %s") % (math.floor(cell_value)))
+                #vals['x_studio_jhhm_id'] = math.floor(cell_value)
+
+
 
             cell_value = table.cell(8, 5).value  # 项目名称
             if not (cell_value is None) and not (cell_value is ''):
@@ -286,7 +294,15 @@ class AgreementPwsImport(models.TransientModel):
                 cell_value = table.cell(6, 5).value  #机会编号
                 if not (cell_value is None) and not (cell_value is ''):
                     import math
-                    vals['x_studio_jhhm_id'] = math.floor(cell_value)
+                    x_studio_jhhm = self.env['crm.lead'].search(
+                        [('name', 'ilike', math.floor(cell_value))], limit=1)
+                    if x_studio_jhhm:
+                        vals['x_studio_jhhm_id'] = x_studio_jhhm.id
+                    else:
+                        raise UserError(("机会号不存在: %s") % (math.floor(cell_value)))
+
+
+                    #vals['x_studio_jhhm_id'] = math.floor(cell_value)
 
                 cell_value = table.cell(10, 5).value  # 客户所属BU
                 if not (cell_value is None) and not (cell_value is ''):
