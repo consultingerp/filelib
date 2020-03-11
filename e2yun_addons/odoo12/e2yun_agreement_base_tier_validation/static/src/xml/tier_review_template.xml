@@ -98,7 +98,7 @@
         if (text.length>100){
             $(objDiv).css("top", 500+event.y);
         }else{
-            $(objDiv).css("top", 860+event.y);
+            $(objDiv).css("top", 700+event.y);
         }
         $(objDiv).text(text)
       }else{

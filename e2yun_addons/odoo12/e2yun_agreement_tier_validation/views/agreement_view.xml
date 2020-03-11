@@ -12,7 +12,7 @@
                 <button name="request_validation"
                     string="Request Validation"
                     attrs="{'invisible': ['|','|',('need_validation', '!=', True),('rejected','=',True)]}"
-                    type="object"/>
+                    type="object" />
                 <button name="restart_validation"
                     string="Restart Validation"
                     attrs="{'invisible': ['|',('review_ids', '=', [])]}"
