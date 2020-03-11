@@ -83,3 +83,66 @@ msgstr "验证"
 #: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.view_purchase_order_filter
 msgid "Validated"
 msgstr "已验证"
+
+#. module: e2yun_medicine_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.mrp_production_form_view
+msgid "<i class=\"fa fa-info-circle\"/>This MO needs to be\n"
+"                        validated."
+msgstr ""
+"<i class=\"fa fa-info-circle\"/>这个生产订单需要\n"
+"                        验证。"
+
+#. module: e2yun_medicine_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.mrp_production_form_view
+msgid "<i class=\"fa fa-thumbs-down\"/> Operation has been <b>rejected</b>."
+msgstr "<i class=\"fa fa-thumbs-down\"/> 操作已被<b>拒绝</b>."
+
+#. module: e2yun_medicine_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.mrp_production_form_view
+msgid "<i class=\"fa fa-thumbs-up\"/> Operation has been <b>validated</b>!"
+msgstr "<i class=\"fa fa-thumbs-up\"/> 操作已被 <b>验证</b>!"
+
+#. module: e2yun_medicine_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.view_mrp_production_filter
+msgid "My Production to review"
+msgstr "查看我的生产"
+
+#. module: e2yun_medicine_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.view_mrp_production_filter
+msgid "Needs my Review"
+msgstr "需要我审查的"
+
+#. module: e2yun_medicine_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.view_mrp_production_filter
+msgid "MOs validated and ready to be confirmed"
+msgstr "生产订单已验证，待确认"
+
+#. module: e2yun_medicine_tier_validation
+#: model:ir.model,name:e2yun_medicine_tier_validation.model_mrp_production
+msgid "Production Order"
+msgstr "生产订单"
+
+#. module: e2yun_medicine_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.model_mrp_production
+msgid "Reject"
+msgstr "拒绝"
+
+#. module: e2yun_medicine_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.mrp_production_form_view
+msgid "Request Validation"
+msgstr "请求验证"
+
+#. module: e2yun_medicine_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.mrp_production_form_view
+msgid "Restart Validation"
+msgstr "重新启动验证"
+
+#. module: e2yun_medicine_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.mrp_production_form_view
+msgid "Validate"
+msgstr "验证"
+
+#. module: e2yun_medicine_tier_validation
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.view_mrp_production_filter
+msgid "Validated"
+msgstr "已验证"

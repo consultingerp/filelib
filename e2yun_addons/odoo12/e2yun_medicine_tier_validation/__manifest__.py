@@ -16,5 +16,6 @@
     ],
     "data": [
         "views/purchase_order_view.xml",
+        "views/production_view.xml",
     ]
 }
