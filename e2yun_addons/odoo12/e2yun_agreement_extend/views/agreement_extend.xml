@@ -37,7 +37,6 @@
     <attribute name="string">合同名称</attribute>
   </xpath>
   <xpath expr="//field[@name='active']" position="before">
-    <field name="x_studio_xmbj" string="项目背景"/>
     <field name="x_studio_shjxh" string="税后/计息后合同利润率" attrs="{}" invisible="1"/>
     <field name="x_studio_shwjxq" string="税后未计息前合同利润率" attrs="{}" invisible="1"/>
     <field name="x_studio_cgmpd" string="CGM" required="1" attrs="{}"/>
