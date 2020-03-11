@@ -123,7 +123,7 @@ msgid "Production Order"
 msgstr "生产订单"
 
 #. module: e2yun_medicine_tier_validation
-#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.model_mrp_production
+#: model_terms:ir.ui.view,arch_db:e2yun_medicine_tier_validation.mrp_production_form_view
 msgid "Reject"
 msgstr "拒绝"
 
