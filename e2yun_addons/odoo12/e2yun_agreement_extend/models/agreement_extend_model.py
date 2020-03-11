@@ -8,7 +8,7 @@ from odoo.exceptions import UserError
 class Agreement(models.Model):
     _inherit = "agreement"
 
-    agreement_code=fields.Char('Agreement Code',default="") #合同编码
+    agreement_code=fields.Char('Agreement Code',default="/") #合同编码
     plan_sign_time=fields.Date('Plan Sign Time') # 计划回签时间
     signed_time = fields.Date('Signed Time')  # 合同签订时间
     sales_department = fields.Many2one('crm.team', string='Sales department')  # 合同签订时间
@@ -20,7 +20,9 @@ class Agreement(models.Model):
 
     x_studio_xmmc= fields.Char(string='Project Name')  # 项目名称
 
-    x_studio_jhhm_id = fields.Many2one('crm.lead', string='Opportunity Number')  # 机会号码OPP ID
+    #x_studio_jhhm_id = fields.Many2one('crm.lead', string='Opportunity Number')  # 机会号码OPP ID
+
+    x_studio_jhhm_id = fields.Char(string='Opportunity Number')  # 机会号码OPP ID
 
     original_agreement_no= fields.Char(string='Original Agreement No')  # 原协议编号
 
@@ -155,9 +157,9 @@ class Agreement(models.Model):
         if self.x_studio_htbz and oldhtbz and self.x_studio_htje:
             company_id = self.company_id or self.env.user.company_id
             create_date = self.create_date or fields.Date.today()
-            currency = self.env['res.currency'].search([('name', '=', self.x_studio_htbz)])
+            currency = self.env['res.currency'].search([('name', '=', self.x_studio_htbz.name)])
             property_product_pricelist = self.env['product.pricelist'].search(
-                [('name', 'like', '%' + oldhtbz.x_studio_htbz)])
+                [('name', 'like', '%' + oldhtbz.x_studio_htbz.name)])
             if currency and property_product_pricelist:
                 currency_rate = self.env['res.currency']._get_conversion_rate(
                         property_product_pricelist.currency_id,currency,
@@ -173,7 +175,7 @@ class Agreement(models.Model):
             create_date = self.create_date or fields.Date.today()
             currency = self.env['res.currency'].search([('name', 'like', '%USD%')])
             property_product_pricelist = self.env['product.pricelist'].search(
-                [('name', 'like', '%' + self.x_studio_htbz + '%')])
+                [('name', 'like', '%' + self.x_studio_htbz.name + '%')])
             if currency and property_product_pricelist:
                 currency_rate = self.env['res.currency']._get_conversion_rate(
                     property_product_pricelist.currency_id, currency,
@@ -185,7 +187,7 @@ class Agreement(models.Model):
       if self.x_studio_htbz:
         company_id = self.company_id or self.env.user.company_id
         create_date = self.create_date or fields.Date.today()
-        currency = self.env['res.currency'].search([('name', 'like', '%'+self.x_studio_htbz+'%')])
+        currency = self.env['res.currency'].search([('name', 'like', '%'+self.x_studio_htbz.name+'%')])
         property_product_pricelist = self.env['product.pricelist'].search(
             [('name', 'like', '%USD%')])
         if currency and property_product_pricelist:
@@ -335,7 +337,7 @@ class Agreement(models.Model):
                     create_date = self.create_date or fields.Date.today()
                     currency = self.env['res.currency'].search([('name', 'like', '%USD%')])
                     property_product_pricelist = self.env['product.pricelist'].search(
-                        [('name', 'like', '%' + self.x_studio_htbz + '%')])
+                        [('name', 'like', '%' + self.x_studio_htbz.name + '%')])
                     if currency and property_product_pricelist:
                         currency_rate = self.env['res.currency']._get_conversion_rate(
                             property_product_pricelist.currency_id, currency,
