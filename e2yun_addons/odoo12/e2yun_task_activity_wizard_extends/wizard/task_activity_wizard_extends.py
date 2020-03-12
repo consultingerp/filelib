@@ -20,7 +20,17 @@ _logger = logging.getLogger(__name__)
 class MailActivity(models.Model):
     _inherit = 'mail.activity'
 
-    user_ids = fields.Many2many('res.users', string="Users", index=True, required=True)
+    @api.model
+    def _default_users(self):
+        ctx = self.env.context.copy()
+        survey_status = self.env['project.task'].browse(ctx['default_res_id'])
+        res = survey_status.partner_ids
+        ids = []
+        for partner in res:
+            ids.append(partner.user_ids.ids[0])
+        return ids
+
+    user_ids = fields.Many2many('res.users', string="Users", index=True, required=True, default=_default_users)
     # partner_ids = fields.Many2many('res.partner', string='Existing contacts', required=True, domain="[('user_ids.share', '=', False)]")
 
     # @api.onchange('partner_ids')
