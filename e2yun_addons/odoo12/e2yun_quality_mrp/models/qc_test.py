@@ -55,49 +55,49 @@ class QcTestQuestion(models.Model):
     """Each test line is a question with its valid value(s)."""
     _inherit  = 'qc.test.question'
 
-    failure_message = fields.Html('Failure Message')
-    measure_frequency_type = fields.Selection([
-        ('all', 'All Operations'),
-        ('random', 'Randomly'),
-        ('periodical', 'Periodically')], string="Type of Frequency",
-        default='all', required=True)
-    measure_frequency_value = fields.Float('Percentage')  # TDE RENAME ?
-    measure_frequency_unit_value = fields.Integer('Frequency Unit Value')  # TDE RENAME ?
-    measure_frequency_unit = fields.Selection([
-        ('day', 'Day(s)'),
-        ('week', 'Week(s)'),
-        ('month', 'Month(s)')], default="day")  # TDE RENAME ?
-
-    norm = fields.Float('Norm', digits=dp.get_precision('Quality Tests'))  # TDE RENAME ?
-
-    note = fields.Html('Note')
-
-    @api.onchange('norm')
-    def onchange_norm(self):
-        if self.max_value == 0.0:
-            self.max_value = self.norm
-
-    @api.multi
-    def check_execute_now(self):
-        self.ensure_one()
-        if self.measure_frequency_type == 'all':
-            return True
-        elif self.measure_frequency_type == 'random':
-            return (random.random() < self.measure_frequency_value / 100.0)
-        elif self.measure_frequency_type == 'periodical':
-            delta = False
-            if self.measure_frequency_unit == 'day':
-                delta = relativedelta(days=self.measure_frequency_unit_value)
-            elif self.measure_frequency_unit == 'week':
-                delta = relativedelta(weeks=self.measure_frequency_unit_value)
-            elif self.measure_frequency_unit == 'month':
-                delta = relativedelta(months=self.measure_frequency_unit_value)
-            date_previous = datetime.today() - delta
-            checks = self.env['qc.inspection.line'].search([
-                ('point_id', '=', self.id),
-                ('create_date', '>=', date_previous.strftime(DEFAULT_SERVER_DATETIME_FORMAT))], limit=1)
-            return not (bool(checks))
-        return True
+    # failure_message = fields.Html('Failure Message')
+    # measure_frequency_type = fields.Selection([
+    #     ('all', 'All Operations'),
+    #     ('random', 'Randomly'),
+    #     ('periodical', 'Periodically')], string="Type of Frequency",
+    #     default='all', required=True)
+    # measure_frequency_value = fields.Float('Percentage')  # TDE RENAME ?
+    # measure_frequency_unit_value = fields.Integer('Frequency Unit Value')  # TDE RENAME ?
+    # measure_frequency_unit = fields.Selection([
+    #     ('day', 'Day(s)'),
+    #     ('week', 'Week(s)'),
+    #     ('month', 'Month(s)')], default="day")  # TDE RENAME ?
+    #
+    # norm = fields.Float('Norm', digits=dp.get_precision('Quality Tests'))  # TDE RENAME ?
+    #
+    # note = fields.Html('Note')
+    #
+    # @api.onchange('norm')
+    # def onchange_norm(self):
+    #     if self.max_value == 0.0:
+    #         self.max_value = self.norm
+    #
+    # @api.multi
+    # def check_execute_now(self):
+    #     self.ensure_one()
+    #     if self.measure_frequency_type == 'all':
+    #         return True
+    #     elif self.measure_frequency_type == 'random':
+    #         return (random.random() < self.measure_frequency_value / 100.0)
+    #     elif self.measure_frequency_type == 'periodical':
+    #         delta = False
+    #         if self.measure_frequency_unit == 'day':
+    #             delta = relativedelta(days=self.measure_frequency_unit_value)
+    #         elif self.measure_frequency_unit == 'week':
+    #             delta = relativedelta(weeks=self.measure_frequency_unit_value)
+    #         elif self.measure_frequency_unit == 'month':
+    #             delta = relativedelta(months=self.measure_frequency_unit_value)
+    #         date_previous = datetime.today() - delta
+    #         checks = self.env['qc.inspection.line'].search([
+    #             ('point_id', '=', self.id),
+    #             ('create_date', '>=', date_previous.strftime(DEFAULT_SERVER_DATETIME_FORMAT))], limit=1)
+    #         return not (bool(checks))
+    #     return True
 
     @api.constrains('ql_values')
     def _check_valid_answers(self):
@@ -105,7 +105,7 @@ class QcTestQuestion(models.Model):
             if (tc.type == 'qualitative' and tc.ql_values and
                     not tc.ql_values.filtered('ok')):
                 raise exceptions.ValidationError(
-                    _("Question '%s' is not valid: "
+                    _("Question %s is not valid: "
                       "you have to mark at least one value as OK.")
                     % tc.name_get()[0][1])
 
@@ -114,37 +114,37 @@ class QcTestQuestion(models.Model):
         for tc in self:
             if tc.type == 'quantitative' and tc.min_value > tc.max_value:
                 raise exceptions.ValidationError(
-                    _("Question '%s' is not valid: "
+                    _("Question %s is not valid: "
                       "minimum value can't be higher than maximum value.")
                     % tc.name_get()[0][1])
 
-    sequence = fields.Integer(
-        string='Sequence', required=True, default="10")
-    test = fields.Many2one(comodel_name='qc.test', string='Test')
-    name = fields.Char(
-        string='Name', required=True, translate=True)
-    type = fields.Selection(
-        [('qualitative', 'Qualitative'),
-         ('quantitative', 'Quantitative')], string='Type', required=True)
-    ql_values = fields.One2many(
-        comodel_name='qc.test.question.value', inverse_name="test_line",
-        string='Qualitative values', copy=True)
-    notes = fields.Text(string='Notes')
-    min_value = fields.Float(string='Min',
-                             digits=dp.get_precision('Quality Control'))
-    max_value = fields.Float(string='Max',
-                             digits=dp.get_precision('Quality Control'),)
-    uom_id = fields.Many2one(comodel_name='uom.uom', string='Uom')
+    # sequence = fields.Integer(
+    #     string='Sequence', required=True, default="10")
+    # test = fields.Many2one(comodel_name='qc.test', string='Test')
+    # name = fields.Char(
+    #     string='Name', required=True, translate=True)
+    # type = fields.Selection(
+    #     [('qualitative', 'Qualitative'),
+    #      ('quantitative', 'Quantitative')], string='Type', required=True)
+    # ql_values = fields.One2many(
+    #     comodel_name='qc.test.question.value', inverse_name="test_line",
+    #     string='Qualitative values', copy=True)
+    # notes = fields.Text(string='Notes')
+    # min_value = fields.Float(string='Min',
+    #                          digits=dp.get_precision('Quality Control'))
+    # max_value = fields.Float(string='Max',
+    #                          digits=dp.get_precision('Quality Control'),)
+    # uom_id = fields.Many2one(comodel_name='uom.uom', string='Uom')
 
 
-class QcTestQuestionValue(models.Model):
-    _name = 'qc.test.question.value'
-    _description = 'Possible values for qualitative questions.'
-
-    test_line = fields.Many2one(
-        comodel_name="qc.test.question", string="Test question")
-    name = fields.Char(
-        string='Name', required=True, translate=True)
-    ok = fields.Boolean(
-        string='Correct answer?',
-        help="When this field is marked, the answer is considered correct.")
+# class QcTestQuestionValue(models.Model):
+#     _name = 'qc.test.question.value'
+#     _description = 'Possible values for qualitative questions.'
+#
+#     test_line = fields.Many2one(
+#         comodel_name="qc.test.question", string="Test question")
+#     name = fields.Char(
+#         string='Name', required=True, translate=True)
+#     ok = fields.Boolean(
+#         string='Correct answer?',
+#         help="When this field is marked, the answer is considered correct.")
