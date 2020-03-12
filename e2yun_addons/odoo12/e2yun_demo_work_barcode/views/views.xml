@@ -23,5 +23,18 @@
               </xpath>
           </field>
       </record>
+
+      <!-- 测试按钮 -->
+<!--      <record id="view_view_ck_hours_worker_form_demowork_inherit" model="ir.ui.view">-->
+<!--          <field name="name">ck.hours.worker.inherit.add.button</field>-->
+<!--          <field name="model">ck.hours.worker</field>-->
+<!--          <field name="inherit_id" ref="kindee_data_sync_info.view_ck_hours_worker_form"/>-->
+<!--          <field name="arch" type="xml">-->
+<!--              <xpath expr="//button[@name='button_confirms']" position="after">-->
+<!--                  <button name="groupline_by_userid" string="test button" class="oe_highlight" type="object"/>-->
+<!--              </xpath>-->
+<!--          </field>-->
+<!--      </record>-->
+
   </data>
 </odoo>
