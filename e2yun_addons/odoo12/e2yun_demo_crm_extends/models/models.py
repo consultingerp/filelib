@@ -159,7 +159,8 @@ class E2yunCRMDemoMailActivity(models.Model):
 
     @api.onchange('crm_lead_id')
     def onchange_crm_lead_res_id(self):
-        self.res_id = self.crm_lead_id.id
+        if not self.res_id:
+            self.res_id = self.crm_lead_id.id
 
     crm_lead_id = fields.Many2one('crm.lead', '对应商机', required=True)
 
