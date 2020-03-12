@@ -73,9 +73,10 @@ class AgreementPwsImport(models.TransientModel):
             agreement_pws_lineObj=self.env['agreement.pws.line']
             x_studio_htbz=None
             if  'x_studio_htbz' in vals.keys():
-                currency = self.env['res.currency'].search([('name', 'like', '%'+vals['x_studio_htbz']+'%')])
-                if currency:
-                    x_studio_htbz=currency.id
+                x_studio_htbz=vals['x_studio_htbz']
+                # currency = self.env['res.currency'].search([('name', 'like', '%'+vals['x_studio_htbz']+'%')])
+                # if currency:
+                #     x_studio_htbz=currency.id
             agreement_pws_lineObj.create({
                 'agreement_id':agreement.id,
                 'pid': '',
@@ -108,7 +109,7 @@ class AgreementPwsImport(models.TransientModel):
                         create_date = agreement.create_date or fields.Date.today()
                         currency = self.env['res.currency'].search([('name', 'like', '%USD%')])
                         property_product_pricelist = self.env['product.pricelist'].search(
-                            [('name', 'like', '%' + agreement.x_studio_htbz + '%')])
+                            [('name', 'like', '%' + agreement.x_studio_htbz.name + '%')])
                         if currency and property_product_pricelist:
                             currency_rate = self.env['res.currency']._get_conversion_rate(
                                 property_product_pricelist.currency_id, currency,
@@ -165,13 +166,17 @@ class AgreementPwsImport(models.TransientModel):
             cell_value = table.cell(6, 5).value  # 机会编号
             if not (cell_value is None) and not (cell_value is ''):
                 import math
-                x_studio_jhhm = self.env['crm.lead'].search(
-                    [('name', 'ilike', math.floor(cell_value))], limit=1)
+                sql='select id  from crm_lead where   sf_no=%s'
+                self._cr.execute(sql,(str(math.floor(cell_value)),))
+                x_studio_jhhm=self._cr.fetchone()
+                # x_studio_jhhm = self.env['crm.lead'].search(
+                #     [('sf_no', '=', str(math.floor(cell_value)))], limit=1)
                 if x_studio_jhhm:
-                    vals['x_studio_jhhm_id'] = x_studio_jhhm.id
+                    vals['x_studio_jhhm_id'] = x_studio_jhhm[0]
                 else:
                     raise UserError(("机会号不存在: %s") % (math.floor(cell_value)))
-                #vals['x_studio_jhhm_id'] = math.floor(cell_value)
+
+                vals['x_studio_jhhm_id'] = math.floor(cell_value)
 
 
 
@@ -189,14 +194,18 @@ class AgreementPwsImport(models.TransientModel):
                     vals['x_studio_usd'] = cell_value
                     x_studio_htje='x_studio_mjhtje'
                 else:
-                    vals['x_studio_htbz'] = cell_value
+                    currency = self.env['res.currency'].search(
+                        [('name', '=', cell_value.strip())], limit=1)
+                    if currency:
+                        vals['x_studio_htbz'] = currency.id
+                    else:
+                        raise UserError(("币别不存在: %s") % (cell_value))
+
                     x_studio_htje = 'x_studio_htje'
 
             cell_value = table.cell(16, 8).value  # 金额
             if not (cell_value is None) and not (cell_value is ''):
                 vals[x_studio_htje] = ("%.2f" % float(cell_value))
-
-
 
             cell_value = table.cell(2, 2).value  # 销售
             if not (cell_value is None) and not (cell_value is ''):
@@ -294,15 +303,17 @@ class AgreementPwsImport(models.TransientModel):
                 cell_value = table.cell(6, 5).value  #机会编号
                 if not (cell_value is None) and not (cell_value is ''):
                     import math
-                    x_studio_jhhm = self.env['crm.lead'].search(
-                        [('name', 'ilike', math.floor(cell_value))], limit=1)
+                    sql = 'select id  from crm_lead where   sf_no=%s'
+                    self._cr.execute(sql, (str(math.floor(cell_value)),))
+                    x_studio_jhhm = self._cr.fetchone()
+                    # x_studio_jhhm = self.env['crm.lead'].search(
+                    #     [('sf_no', '=', str(math.floor(cell_value)))], limit=1)
                     if x_studio_jhhm:
-                        vals['x_studio_jhhm_id'] = x_studio_jhhm.id
+                        vals['x_studio_jhhm_id'] = x_studio_jhhm[0]
                     else:
                         raise UserError(("机会号不存在: %s") % (math.floor(cell_value)))
 
-
-                    #vals['x_studio_jhhm_id'] = math.floor(cell_value)
+                    vals['x_studio_jhhm_id'] = math.floor(cell_value)
 
                 cell_value = table.cell(10, 5).value  # 客户所属BU
                 if not (cell_value is None) and not (cell_value is ''):
@@ -329,7 +340,13 @@ class AgreementPwsImport(models.TransientModel):
 
                 cell_value = table.cell(16, 6).value  # 币种
                 if not (cell_value is None) and not (cell_value is ''):
-                    vals['x_studio_htbz'] = cell_value.strip()
+                    currency = self.env['res.currency'].search(
+                        [('name', '=', cell_value.strip())], limit=1)
+                    if currency:
+                        vals['x_studio_htbz'] = currency.id
+                    else:
+                        raise UserError(("币别不存在: %s") % (cell_value))
+                    #vals['x_studio_htbz'] = cell_value.strip()
 
                 cell_value = table.cell(16, 8).value  # 金额
                 if not (cell_value is None) and not (cell_value is ''):

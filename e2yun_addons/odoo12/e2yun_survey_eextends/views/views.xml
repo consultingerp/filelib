@@ -1,6 +1,6 @@
 <odoo>
-  <data>
-    <record id="survey_form_extends" model="ir.ui.view">
+    <data>
+        <record id="survey_form_extends" model="ir.ui.view">
             <field name="name">survey_form_extends</field>
             <field name="model">survey.survey</field>
             <field name="inherit_id" ref="survey.survey_form"/>
@@ -11,420 +11,484 @@
                 </xpath>
                 <!--增加问卷分类和问卷场景-->
                 <xpath expr="//div[@class='oe_title']/h1" position="after">
-                  <group>
-                    <field name="questionnaire_classification"/>
-                    <field name="questionnaire_scenario"/>
-                    <field name="score_total"/>
-                  </group>
+                    <group>
+                        <field name="questionnaire_classification"/>
+                        <field name="questionnaire_scenario"/>
+                        <field name="score_total"/>
+                    </group>
                 </xpath>
                 <xpath expr="//field[@name='question_ids']" position="before">
                     <field name="weight"/>
                 </xpath>
-              <xpath expr="//field[@name='page_ids']/tree/field[@name='question_ids']" position="after">
-                <field name="x_studio_survey_page_sum"/>
-              </xpath>
+                <xpath expr="//field[@name='page_ids']/tree/field[@name='question_ids']" position="after">
+                    <field name="x_studio_survey_page_sum"/>
+                </xpath>
             </field>
-    </record>
+        </record>
 
-    <record id="form_view_for_survey_customization" model="ir.ui.view">
+        <record id="form_view_for_survey_customization" model="ir.ui.view">
             <field name="name">Form view for survey customization</field>
             <field name="model">survey.survey</field>
             <field name="inherit_id" ref="survey.survey_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='action_test_survey']" position="attributes">
-    <attribute name="effect">False</attribute>
-  </xpath>
-  <xpath expr="//field[@name='questionnaire_classification']" position="attributes">
-    <attribute name="attrs">{'readonly': [('lock_survey', '=', True)]}</attribute>
-    <attribute name="required">1</attribute>
-  </xpath>
-  <xpath expr="//field[@name='questionnaire_scenario']" position="attributes">
-    <attribute name="attrs">{'readonly': [('lock_survey', '=', True)]}</attribute>
-    <attribute name="required">1</attribute>
-  </xpath>
-  <xpath expr="//form[1]/sheet[1]/div[not(@name)][1]" position="after">
-    <!--<group name="studio_group_joCni">-->
-      <!--<group name="studio_group_joCni_left">-->
-        <!--&lt;!&ndash;<field name="x_studio_" string="问卷说明" attrs="{}"/>&ndash;&gt;-->
-      <!--</group>-->
-    <!--</group>-->
-    <!--<group name="studio_group_0lxBr">-->
-      <!--</group>-->
-  </xpath>
-  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='page_ids']/tree[1]/field[@name='title']" position="after">
-    <!--<field name="x_studio_survey_page_sum"/>-->
-  </xpath>
-  <!--<xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='page_ids']/tree[1]/field[@name='weight']" position="attributes">-->
-    <!--<attribute name="attrs">{}</attribute>-->
-  <!--</xpath>-->
-  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='page_ids']/tree[1]" position="after">
-    <form string="Survey Page" create="false">
-      <sheet name="studio_sheet_50520a">
-        <div class="oe_title" style="width: 100%;" name="studio_div_85e208">
-          <label for="title" class="oe_edit_only"/>
-          <h1>
-            <field name="title" placeholder="Page Title"/>
-          </h1>
-        </div>
-        <group name="studio_group_QsF0z">
-          <group name="studio_group_QsF0z_left">
-            <!--<field name="x_studio_survey_page_sum" string="小计" attrs="{}" required="1"/>-->
-          </group>
-        </group>
-        <label for="weight" class="oe_edit_only"/>
-        <h1>
-          <field name="weight" placeholder="Weight" attrs="{}" required="1"/>
-        </h1>
-        <field name="question_ids" nolabel="1" mode="tree" context="{'default_page_id': active_id}">
-          <tree>
-            <field name="sequence" widget="handle"/>
-            <field name="question"/>
-            <field name="highest_score"/>
-            <field name="type"/>
-            <field name="scoring_method"/>
-            <field name="constr_mandatory"/>
-          </tree>
-          <form string="Survey Question" create="false">
-            <sheet name="studio_sheet_4bf5ff">
-              <div class="oe_title" style="width: 100%;" name="studio_div_9225bd">
-                <label for="question" string="Question name" class="oe_edit_only"/>
-                <h1>
-                  <field name="question" colspan="4" placeholder="Question Name"/>
-                </h1>
-                <separator/>
-              </div>
-              <!--<control>-->
-              <!--<create string="引用已有题库"/>-->
-              <!--</control>-->
-              <!--<button name="turn_question" string="引用已有题库按钮" type="object" class="oe_highlight oe_edit_only"/>-->
-              <label for="reference_existing_question"/>
-              <field name="reference_existing_question"/>
-              <group name="studio_group_80ae13">
-                <group name="studio_group_363596">
-                  <field name="question_bank_type" widget="radio" attrs="{}" required="1"/>
-                  <!--<field name="type_id" string="问题类型" widget="radio" attrs="{}" required="1"/>-->
-                  <!--<field name="type" widget="radio" invisible="True"/>-->
-                  <field name="type" widget="radio"/>
-                </group>
-                <group name="studio_group_3c7846">
-                  <div class="col-lg-6 offset-lg-3 o_preview_questions" name="studio_div_e214df">
-                    <!-- Multiple Lines Text Zone -->
-                    <div attrs="{'invisible': [('type', '!=', 'free_text')]}" name="studio_div_f176d6">
-                      <i class="fa fa-align-justify fa-4x" role="img" aria-label="Multiple lines"
-                         title="Multiple Lines"/>
-                    </div>
-                    <!-- Single Line Text Zone -->
-                    <div attrs="{'invisible': [('type', '!=', 'textbox')]}" name="studio_div_876475">
-                      <i class="fa fa-minus fa-4x" role="img" aria-label="Single Line" title="Single Line"/>
-                    </div>
-                    <!-- Numerical Value -->
-                    <div attrs="{'invisible': [('type', '!=', 'numerical_box')]}" name="studio_div_a36eaa">
-                      <i class="fa fa-2x" role="img" aria-label="Numeric" title="Numeric">123..</i>
-                    </div>
-                    <!-- Date and Time -->
-                    <div attrs="{'invisible': [('type', '!=', 'date')]}" name="studio_div_8e2dff">
-                      <p class="o_datetime">YYYY-MM-DD
-                        <i class="fa fa-calendar fa-2x" role="img" aria-label="Calendar" title="Calendar"/>
-                      </p>
-                    </div>
-                    <!-- Multiple choice: only one answer -->
-                    <div attrs="{'invisible': [('type', '!=', 'simple_choice')]}" role="img"
-                         aria-label="Multiple choice with one answer" title="Multiple choice with one answer"
-                         name="studio_div_9499bc">
-                      <div class="row" name="studio_div_7de481">
-                        <i class="fa fa-circle-o  fa-lg"/>
-                        answer
-                      </div>
-                      <div class="row" name="studio_div_f1c100">
-                        <i class="fa fa-dot-circle-o fa-lg"/>
-                        answer
-                      </div>
-                      <div class="row" name="studio_div_d55966">
-                        <i class="fa fa-circle-o  fa-lg"/>
-                        answer
-                      </div>
-                    </div>
-                    <!-- Multiple choice: multiple answers allowed -->
-                    <div attrs="{'invisible': [('type', '!=', 'multiple_choice')]}" role="img"
-                         aria-label="Multiple choice with multiple answers"
-                         title="Multiple choice with multiple answers" name="studio_div_8694b1">
-                      <div class="row" name="studio_div_9d6d98">
-                        <i class="fa fa-square-o fa-lg"/>
-                        answer
-                      </div>
-                      <div class="row" name="studio_div_d162a8">
-                        <i class="fa fa-check-square-o fa-lg"/>
-                        answer
-                      </div>
-                      <div class="row" name="studio_div_b2d40c">
-                        <i class="fa fa-square-o fa-lg"/>
-                        answer
-                      </div>
-                    </div>
-                    <!-- Matrix -->
-                    <div attrs="{'invisible': [('type', '!=', 'matrix')]}" name="studio_div_11f8c5">
-                      <div class="row o_matrix_head" name="studio_div_3c5e2b">
-                        <div class="col-lg-3" name="studio_div_7a6548"/>
-                        <div class="col-lg-3" name="studio_div_c2075f">ans</div>
-                        <div class="col-lg-3" name="studio_div_0854fd">ans</div>
-                        <div class="col-lg-3" name="studio_div_2ff1b8">ans</div>
-                      </div>
-                      <div class="row o_matrix_row" name="studio_div_c491a6">
-                        <div class="col-lg-3" name="studio_div_956806">Row1</div>
-                        <div class="col-lg-3" name="studio_div_8e62f9">
-                          <i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/>
-                        </div>
-                        <div class="col-lg-3" name="studio_div_8e051b">
-                          <i class="fa fa-dot-circle-o fa-lg" role="img" aria-label="Checked" title="Checked"/>
-                        </div>
-                        <div class="col-lg-3" name="studio_div_dc7d36">
-                          <i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/>
-                        </div>
-                      </div>
-                      <div class="row o_matrix_row" name="studio_div_50779a">
-                        <div class="col-lg-3" name="studio_div_c1858d">Row2</div>
-                        <div class="col-lg-3" name="studio_div_1189a7">
-                          <i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/>
-                        </div>
-                        <div class="col-lg-3" name="studio_div_5d42da">
-                          <i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/>
-                        </div>
-                        <div class="col-lg-3" name="studio_div_ccf8d7">
-                          <i class="fa fa-dot-circle-o fa-lg" role="img" aria-label="Checked" title="Checked"/>
-                        </div>
-                      </div>
-                      <div class="row o_matrix_row" name="studio_div_abe39c">
-                        <div class="col-lg-3" name="studio_div_d5cc0c">Row3</div>
-                        <div class="col-lg-3" name="studio_div_dfc4b8">
-                          <i class="fa fa-dot-circle-o fa-lg" role="img" aria-label="Checked" title="Checked"/>
-                        </div>
-                        <div class="col-lg-3" name="studio_div_bccc52">
-                          <i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/>
-                        </div>
-                        <div class="col-lg-3" name="studio_div_c90fdc">
-                          <i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/>
-                        </div>
-                      </div>
-                    </div>
-                    <div attrs="{'invisible': [('type', '!=', 'select_box')]}" role="img" aria-label="Select choice"
-                         title="Select choice" name="studio_div_59c779">
-                      <div class="row" name="studio_div_4a36ae">
-                        <i/>
-                        请选择 v
-                      </div>
-                      <div class="row" name="studio_div_947ab4">
-                        <i/>
-                        选项一
-                      </div>
-                      <div class="row" name="studio_div_75a55c">
-                        <i/>
-                        选项二
-                      </div>
-                    </div>
-                    <div attrs="{'invisible': [('type', '!=', 'scoring')]}" name="studio_div_44c5cf">
-                      <div class="row o_matrix_head" name="studio_div_2249cd">
-                        <div class="col-lg-2" name="studio_div_bcb0a0"/>
-                        <div class="col-lg-2" name="studio_div_952d10">非常不满意</div>
-                        <div class="col-lg-2" name="studio_div_28181b"/>
-                        <div class="col-lg-2" name="studio_div_b6aee0"/>
-                        <div class="col-lg-2" name="studio_div_5b12d5"/>
-                        <div class="col-lg-2" name="studio_div_e0632b">非常满意</div>
-                      </div>
-                      <div class="row o_matrix_head" name="studio_div_1bfc99">
-                        <div class="col-lg-2" name="studio_div_3d6853"/>
-                        <div class="col-lg-2" name="studio_div_872953">1</div>
-                        <div class="col-lg-2" name="studio_div_bad7a2">2</div>
-                        <div class="col-lg-2" name="studio_div_5596e8">3</div>
-                        <div class="col-lg-2" name="studio_div_a61814">4</div>
-                        <div class="col-lg-2" name="studio_div_0d138d">5</div>
-                      </div>
-                      <div class="row o_matrix_row" name="studio_div_83d379">
-                        <div class="col-lg-2" name="studio_div_2b7e6a">标题一</div>
-                        <div class="col-lg-2" name="studio_div_6df199">
-                          <i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/>
-                        </div>
-                        <div class="col-lg-2" name="studio_div_f1e217">
-                          <i class="fa fa-dot-circle-o fa-lg" role="img" aria-label="Checked" title="Checked"/>
-                        </div>
-                        <div class="col-lg-2" name="studio_div_465d24">
-                          <i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/>
-                        </div>
-                        <div class="col-lg-2" name="studio_div_4b2065">
-                          <i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/>
-                        </div>
-                        <div class="col-lg-2" name="studio_div_545be6">
-                          <i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/>
-                        </div>
-                      </div>
-                      <div class="row o_matrix_row" name="studio_div_82bec6">
-                        <div class="col-lg-2" name="studio_div_93797f">标题二</div>
-                        <div class="col-lg-2" name="studio_div_6d9e8a">
-                          <i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/>
-                        </div>
-                        <div class="col-lg-2" name="studio_div_0b3262">
-                          <i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/>
-                        </div>
-                        <div class="col-lg-2" name="studio_div_344dbc">
-                          <i class="fa fa-dot-circle-o fa-lg" role="img" aria-label="Checked" title="Checked"/>
-                        </div>
-                        <div class="col-lg-2" name="studio_div_cabfc0">
-                          <i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/>
-                        </div>
-                        <div class="col-lg-2" name="studio_div_acaaf6">
-                          <i class="fa fa-circle-o fa-lg" role="img" aria-label="Not checked" title="Not checked"/>
-                        </div>
-                      </div>
-                    </div>
-                    <div attrs="{'invisible': [('type', '!=', 'upload attachments')]}" role="img"
-                         aria-label="upload attachments" title="upload attachments" name="studio_div_c0af23">
-                      <div class="row" name="studio_div_5d8ae9">
-                        <i/>
-                        请选择文件(30Mb以内)
-                      </div>
-                    </div>
-                  </div>
-                </group>
-              </group>
-              <notebook name="studio_notebook_6c32fd">
-                <page string="Answers" name="studio_page_b68cc8">
-                  <field name="validation_email" attrs="{'invisible': [('type', '!=', 'textbox')]}"/>
-                  <label for="validation_email" attrs="{'invisible': [('type', '!=', 'textbox')]}"/>
-                  <separator/>
-                  <label for="scoring_method" string="计分方式"/>
-                  <field name="scoring_method" string="Scoring Method" attrs="{}" required="1"/>
-                  <field name="labels_ids" string="Type of answers" context="{'default_question_id': active_id}"
-                         attrs="{'invisible': [('type', 'not in', ['simple_choice', 'multiple_choice', 'matrix'])]}">
-                    <tree editable="bottom">
-                      <field name="sequence" widget="handle"/>
-                      <field name="value" string="选项"/>
-                      <field name="quizz_mark"/>
-                    </tree>
-                    <form>
-                      <sheet string="Survey Label" name="studio_sheet_98e3e0">
-                        <group col="4" name="studio_group_160d0a">
-                          <field name="question_id"/>
-                          <field name="question_id_2"/>
-                          <field name="sequence"/>
-                          <field name="value"/>
-                          <field name="quizz_mark" attrs="{}" required="1"/>
-                          <separator/>
-                        </group>
-                      </sheet>
+                    <attribute name="effect">False</attribute>
+                </xpath>
+                <xpath expr="//field[@name='questionnaire_classification']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('lock_survey', '=', True)]}</attribute>
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='questionnaire_scenario']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('lock_survey', '=', True)]}</attribute>
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/div[not(@name)][1]" position="after">
+                    <!--<group name="studio_group_joCni">-->
+                    <!--<group name="studio_group_joCni_left">-->
+                    <!--&lt;!&ndash;<field name="x_studio_" string="问卷说明" attrs="{}"/>&ndash;&gt;-->
+                    <!--</group>-->
+                    <!--</group>-->
+                    <!--<group name="studio_group_0lxBr">-->
+                    <!--</group>-->
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='page_ids']/tree[1]/field[@name='title']"
+                       position="after">
+                    <!--<field name="x_studio_survey_page_sum"/>-->
+                </xpath>
+                <!--<xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='page_ids']/tree[1]/field[@name='weight']" position="attributes">-->
+                <!--<attribute name="attrs">{}</attribute>-->
+                <!--</xpath>-->
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='page_ids']/tree[1]" position="after">
+                    <form string="Survey Page" create="false">
+                        <sheet name="studio_sheet_50520a">
+                            <div class="oe_title" style="width: 100%;" name="studio_div_85e208">
+                                <label for="title" class="oe_edit_only"/>
+                                <h1>
+                                    <field name="title" placeholder="Page Title"/>
+                                </h1>
+                            </div>
+                            <group name="studio_group_QsF0z">
+                                <group name="studio_group_QsF0z_left">
+                                    <!--<field name="x_studio_survey_page_sum" string="小计" attrs="{}" required="1"/>-->
+                                </group>
+                            </group>
+                            <label for="weight" class="oe_edit_only"/>
+                            <h1>
+                                <field name="weight" placeholder="Weight" attrs="{}" required="1"/>
+                            </h1>
+                            <field name="question_ids" nolabel="1" mode="tree" context="{'default_page_id': active_id}">
+                                <tree>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="question"/>
+                                    <field name="highest_score"/>
+                                    <field name="type"/>
+                                    <field name="scoring_method"/>
+                                    <field name="constr_mandatory"/>
+                                </tree>
+                                <form string="Survey Question" create="false">
+                                    <sheet name="studio_sheet_4bf5ff">
+                                        <div class="oe_title" style="width: 100%;" name="studio_div_9225bd">
+                                            <label for="question" string="Question name" class="oe_edit_only"/>
+                                            <h1>
+                                                <field name="question" colspan="4" placeholder="Question Name"/>
+                                            </h1>
+                                            <separator/>
+                                        </div>
+                                        <!--<control>-->
+                                        <!--<create string="引用已有题库"/>-->
+                                        <!--</control>-->
+                                        <!--<button name="turn_question" string="引用已有题库按钮" type="object" class="oe_highlight oe_edit_only"/>-->
+                                        <label for="reference_existing_question"/>
+                                        <field name="reference_existing_question"/>
+                                        <group name="studio_group_80ae13">
+                                            <group name="studio_group_363596">
+                                                <field name="question_bank_type" widget="radio" attrs="{}"
+                                                       required="1"/>
+                                                <!--<field name="type_id" string="问题类型" widget="radio" attrs="{}" required="1"/>-->
+                                                <!--<field name="type" widget="radio" invisible="True"/>-->
+                                                <field name="type" widget="radio"/>
+                                            </group>
+                                            <group name="studio_group_3c7846">
+                                                <div class="col-lg-6 offset-lg-3 o_preview_questions"
+                                                     name="studio_div_e214df">
+                                                    <!-- Multiple Lines Text Zone -->
+                                                    <div attrs="{'invisible': [('type', '!=', 'free_text')]}"
+                                                         name="studio_div_f176d6">
+                                                        <i class="fa fa-align-justify fa-4x" role="img"
+                                                           aria-label="Multiple lines"
+                                                           title="Multiple Lines"/>
+                                                    </div>
+                                                    <!-- Single Line Text Zone -->
+                                                    <div attrs="{'invisible': [('type', '!=', 'textbox')]}"
+                                                         name="studio_div_876475">
+                                                        <i class="fa fa-minus fa-4x" role="img" aria-label="Single Line"
+                                                           title="Single Line"/>
+                                                    </div>
+                                                    <!-- Numerical Value -->
+                                                    <div attrs="{'invisible': [('type', '!=', 'numerical_box')]}"
+                                                         name="studio_div_a36eaa">
+                                                        <i class="fa fa-2x" role="img" aria-label="Numeric"
+                                                           title="Numeric">123..
+                                                        </i>
+                                                    </div>
+                                                    <!-- Date and Time -->
+                                                    <div attrs="{'invisible': [('type', '!=', 'date')]}"
+                                                         name="studio_div_8e2dff">
+                                                        <p class="o_datetime">YYYY-MM-DD
+                                                            <i class="fa fa-calendar fa-2x" role="img"
+                                                               aria-label="Calendar" title="Calendar"/>
+                                                        </p>
+                                                    </div>
+                                                    <!-- Multiple choice: only one answer -->
+                                                    <div attrs="{'invisible': [('type', '!=', 'simple_choice')]}"
+                                                         role="img"
+                                                         aria-label="Multiple choice with one answer"
+                                                         title="Multiple choice with one answer"
+                                                         name="studio_div_9499bc">
+                                                        <div class="row" name="studio_div_7de481">
+                                                            <i class="fa fa-circle-o  fa-lg"/>
+                                                            answer
+                                                        </div>
+                                                        <div class="row" name="studio_div_f1c100">
+                                                            <i class="fa fa-dot-circle-o fa-lg"/>
+                                                            answer
+                                                        </div>
+                                                        <div class="row" name="studio_div_d55966">
+                                                            <i class="fa fa-circle-o  fa-lg"/>
+                                                            answer
+                                                        </div>
+                                                    </div>
+                                                    <!-- Multiple choice: multiple answers allowed -->
+                                                    <div attrs="{'invisible': [('type', '!=', 'multiple_choice')]}"
+                                                         role="img"
+                                                         aria-label="Multiple choice with multiple answers"
+                                                         title="Multiple choice with multiple answers"
+                                                         name="studio_div_8694b1">
+                                                        <div class="row" name="studio_div_9d6d98">
+                                                            <i class="fa fa-square-o fa-lg"/>
+                                                            answer
+                                                        </div>
+                                                        <div class="row" name="studio_div_d162a8">
+                                                            <i class="fa fa-check-square-o fa-lg"/>
+                                                            answer
+                                                        </div>
+                                                        <div class="row" name="studio_div_b2d40c">
+                                                            <i class="fa fa-square-o fa-lg"/>
+                                                            answer
+                                                        </div>
+                                                    </div>
+                                                    <!-- Matrix -->
+                                                    <div attrs="{'invisible': [('type', '!=', 'matrix')]}"
+                                                         name="studio_div_11f8c5">
+                                                        <div class="row o_matrix_head" name="studio_div_3c5e2b">
+                                                            <div class="col-lg-3" name="studio_div_7a6548"/>
+                                                            <div class="col-lg-3" name="studio_div_c2075f">ans</div>
+                                                            <div class="col-lg-3" name="studio_div_0854fd">ans</div>
+                                                            <div class="col-lg-3" name="studio_div_2ff1b8">ans</div>
+                                                        </div>
+                                                        <div class="row o_matrix_row" name="studio_div_c491a6">
+                                                            <div class="col-lg-3" name="studio_div_956806">Row1</div>
+                                                            <div class="col-lg-3" name="studio_div_8e62f9">
+                                                                <i class="fa fa-circle-o fa-lg" role="img"
+                                                                   aria-label="Not checked" title="Not checked"/>
+                                                            </div>
+                                                            <div class="col-lg-3" name="studio_div_8e051b">
+                                                                <i class="fa fa-dot-circle-o fa-lg" role="img"
+                                                                   aria-label="Checked" title="Checked"/>
+                                                            </div>
+                                                            <div class="col-lg-3" name="studio_div_dc7d36">
+                                                                <i class="fa fa-circle-o fa-lg" role="img"
+                                                                   aria-label="Not checked" title="Not checked"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row o_matrix_row" name="studio_div_50779a">
+                                                            <div class="col-lg-3" name="studio_div_c1858d">Row2</div>
+                                                            <div class="col-lg-3" name="studio_div_1189a7">
+                                                                <i class="fa fa-circle-o fa-lg" role="img"
+                                                                   aria-label="Not checked" title="Not checked"/>
+                                                            </div>
+                                                            <div class="col-lg-3" name="studio_div_5d42da">
+                                                                <i class="fa fa-circle-o fa-lg" role="img"
+                                                                   aria-label="Not checked" title="Not checked"/>
+                                                            </div>
+                                                            <div class="col-lg-3" name="studio_div_ccf8d7">
+                                                                <i class="fa fa-dot-circle-o fa-lg" role="img"
+                                                                   aria-label="Checked" title="Checked"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row o_matrix_row" name="studio_div_abe39c">
+                                                            <div class="col-lg-3" name="studio_div_d5cc0c">Row3</div>
+                                                            <div class="col-lg-3" name="studio_div_dfc4b8">
+                                                                <i class="fa fa-dot-circle-o fa-lg" role="img"
+                                                                   aria-label="Checked" title="Checked"/>
+                                                            </div>
+                                                            <div class="col-lg-3" name="studio_div_bccc52">
+                                                                <i class="fa fa-circle-o fa-lg" role="img"
+                                                                   aria-label="Not checked" title="Not checked"/>
+                                                            </div>
+                                                            <div class="col-lg-3" name="studio_div_c90fdc">
+                                                                <i class="fa fa-circle-o fa-lg" role="img"
+                                                                   aria-label="Not checked" title="Not checked"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div attrs="{'invisible': [('type', '!=', 'select_box')]}"
+                                                         role="img" aria-label="Select choice"
+                                                         title="Select choice" name="studio_div_59c779">
+                                                        <div class="row" name="studio_div_4a36ae">
+                                                            <i/>
+                                                            请选择 v
+                                                        </div>
+                                                        <div class="row" name="studio_div_947ab4">
+                                                            <i/>
+                                                            选项一
+                                                        </div>
+                                                        <div class="row" name="studio_div_75a55c">
+                                                            <i/>
+                                                            选项二
+                                                        </div>
+                                                    </div>
+                                                    <div attrs="{'invisible': [('type', '!=', 'scoring')]}"
+                                                         name="studio_div_44c5cf">
+                                                        <div class="row o_matrix_head" name="studio_div_2249cd">
+                                                            <div class="col-lg-2" name="studio_div_bcb0a0"/>
+                                                            <div class="col-lg-2" name="studio_div_952d10">非常不满意</div>
+                                                            <div class="col-lg-2" name="studio_div_28181b"/>
+                                                            <div class="col-lg-2" name="studio_div_b6aee0"/>
+                                                            <div class="col-lg-2" name="studio_div_5b12d5"/>
+                                                            <div class="col-lg-2" name="studio_div_e0632b">非常满意</div>
+                                                        </div>
+                                                        <div class="row o_matrix_head" name="studio_div_1bfc99">
+                                                            <div class="col-lg-2" name="studio_div_3d6853"/>
+                                                            <div class="col-lg-2" name="studio_div_872953">1</div>
+                                                            <div class="col-lg-2" name="studio_div_bad7a2">2</div>
+                                                            <div class="col-lg-2" name="studio_div_5596e8">3</div>
+                                                            <div class="col-lg-2" name="studio_div_a61814">4</div>
+                                                            <div class="col-lg-2" name="studio_div_0d138d">5</div>
+                                                        </div>
+                                                        <div class="row o_matrix_row" name="studio_div_83d379">
+                                                            <div class="col-lg-2" name="studio_div_2b7e6a">标题一</div>
+                                                            <div class="col-lg-2" name="studio_div_6df199">
+                                                                <i class="fa fa-circle-o fa-lg" role="img"
+                                                                   aria-label="Not checked" title="Not checked"/>
+                                                            </div>
+                                                            <div class="col-lg-2" name="studio_div_f1e217">
+                                                                <i class="fa fa-dot-circle-o fa-lg" role="img"
+                                                                   aria-label="Checked" title="Checked"/>
+                                                            </div>
+                                                            <div class="col-lg-2" name="studio_div_465d24">
+                                                                <i class="fa fa-circle-o fa-lg" role="img"
+                                                                   aria-label="Not checked" title="Not checked"/>
+                                                            </div>
+                                                            <div class="col-lg-2" name="studio_div_4b2065">
+                                                                <i class="fa fa-circle-o fa-lg" role="img"
+                                                                   aria-label="Not checked" title="Not checked"/>
+                                                            </div>
+                                                            <div class="col-lg-2" name="studio_div_545be6">
+                                                                <i class="fa fa-circle-o fa-lg" role="img"
+                                                                   aria-label="Not checked" title="Not checked"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row o_matrix_row" name="studio_div_82bec6">
+                                                            <div class="col-lg-2" name="studio_div_93797f">标题二</div>
+                                                            <div class="col-lg-2" name="studio_div_6d9e8a">
+                                                                <i class="fa fa-circle-o fa-lg" role="img"
+                                                                   aria-label="Not checked" title="Not checked"/>
+                                                            </div>
+                                                            <div class="col-lg-2" name="studio_div_0b3262">
+                                                                <i class="fa fa-circle-o fa-lg" role="img"
+                                                                   aria-label="Not checked" title="Not checked"/>
+                                                            </div>
+                                                            <div class="col-lg-2" name="studio_div_344dbc">
+                                                                <i class="fa fa-dot-circle-o fa-lg" role="img"
+                                                                   aria-label="Checked" title="Checked"/>
+                                                            </div>
+                                                            <div class="col-lg-2" name="studio_div_cabfc0">
+                                                                <i class="fa fa-circle-o fa-lg" role="img"
+                                                                   aria-label="Not checked" title="Not checked"/>
+                                                            </div>
+                                                            <div class="col-lg-2" name="studio_div_acaaf6">
+                                                                <i class="fa fa-circle-o fa-lg" role="img"
+                                                                   aria-label="Not checked" title="Not checked"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div attrs="{'invisible': [('type', '!=', 'upload attachments')]}"
+                                                         role="img"
+                                                         aria-label="upload attachments" title="upload attachments"
+                                                         name="studio_div_c0af23">
+                                                        <div class="row" name="studio_div_5d8ae9">
+                                                            <i/>
+                                                            请选择文件(30Mb以内)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </group>
+                                        </group>
+                                        <notebook name="studio_notebook_6c32fd">
+                                            <page string="Answers" name="studio_page_b68cc8">
+                                                <field name="validation_email"
+                                                       attrs="{'invisible': [('type', '!=', 'textbox')]}"/>
+                                                <label for="validation_email"
+                                                       attrs="{'invisible': [('type', '!=', 'textbox')]}"/>
+                                                <separator/>
+                                                <label for="scoring_method" string="计分方式"/>
+                                                <field name="scoring_method" string="Scoring Method" attrs="{}"
+                                                       required="1"/>
+                                                <field name="labels_ids" string="Type of answers"
+                                                       context="{'default_question_id': active_id}"
+                                                       attrs="{'invisible': [('type', 'not in', ['simple_choice', 'multiple_choice', 'matrix'])]}">
+                                                    <tree editable="bottom">
+                                                        <field name="sequence" widget="handle"/>
+                                                        <field name="value" string="选项"/>
+                                                        <field name="quizz_mark"/>
+                                                    </tree>
+                                                    <form>
+                                                        <sheet string="Survey Label" name="studio_sheet_98e3e0">
+                                                            <group col="4" name="studio_group_160d0a">
+                                                                <field name="question_id"/>
+                                                                <field name="question_id_2"/>
+                                                                <field name="sequence"/>
+                                                                <field name="value"/>
+                                                                <field name="quizz_mark" attrs="{}" required="1"/>
+                                                                <separator/>
+                                                            </group>
+                                                        </sheet>
+                                                    </form>
+                                                </field>
+                                                <separator/>
+                                                <label for="labels_ids_2"
+                                                       attrs="{'invisible': [('type', '!=', 'matrix')]}"/>
+                                                <field name="labels_ids_2"
+                                                       context="{'default_question_id_2': active_id}"
+                                                       attrs="{'invisible': [('type', '!=', 'matrix')]}">
+                                                    <tree editable="bottom">
+                                                        <field name="sequence" widget="handle"/>
+                                                        <field name="value" string="Rows"/>
+                                                    </tree>
+                                                </field>
+                                            </page>
+                                            <page string="Options" name="studio_page_bc3dcf">
+                                                <group string="Constraints" name="studio_group_d0d9e0">
+                                                    <group colspan="2" col="4" name="studio_group_e2d82c">
+                                                        <field name="constr_mandatory" string="Mandatory Answer"/>
+                                                        <field name="constr_error_msg"
+                                                               attrs="{'invisible': [('constr_mandatory', '=', False)]}"/>
+                                                    </group>
+                                                    <div colspan="2"
+                                                         attrs="{'invisible': [('type', 'not in', ['free_text','textbox','date'])]}"
+                                                         name="studio_div_c3571f">
+                                                        <group name="studio_group_b6460e">
+                                                            <field name="validation_required"
+                                                                   attrs="{'invisible': [('validation_email', '=', True), ('type', '=', 'textbox')]}"/>
+                                                        </group>
+                                                        <field name="validation_length_min"
+                                                               attrs="{'invisible': [('type', '!=', 'textbox')]}"/>
+                                                        <field name="validation_length_max"
+                                                               attrs="{'invisible': [('type', '!=', 'textbox')]}"/>
+                                                        <field name="validation_min_float_value"
+                                                               attrs="{'invisible': [('type', '!=', 'free_text')]}"/>
+                                                        <field name="validation_max_float_value"
+                                                               attrs="{'invisible': [('type', '!=', 'free_text')]}"/>
+                                                        <field name="validation_min_date"
+                                                               attrs="{'invisible': [('type', '!=', 'date')]}"/>
+                                                        <field name="validation_max_date"
+                                                               attrs="{'invisible': [('type', '!=', 'date')]}"/>
+                                                        <field name="validation_error_msg" colspan="4"/>
+                                                    </div>
+                                                    <group name="studio_group_bd2078">
+                                                        <field name="matrix_subtype"
+                                                               attrs="{'invisible':[('type','!=','matrix')]}"/>
+                                                    </group>
+                                                </group>
+                                                <group string="Display mode"
+                                                       attrs="{'invisible':[('type','not in',['textbox', 'free_text'])]}"
+                                                       name="studio_group_da12ee">
+                                                    <field name="display_mode" string="Format"
+                                                           attrs="{'invisible':[('type','not in',['simple_choice'])],'required':[('type','=','simple_choice')]}"/>
+                                                    <field name="column_nb" string="Number of columns"
+                                                           attrs="{'invisible':[('display_mode','=','dropdown'), ('type','=','simple_choice')]}"/>
+                                                </group>
+                                                <group string="Allow Comments"
+                                                       attrs="{'invisible':[('type','not in',['simple_choice','multiple_choice','matrix'])]}"
+                                                       name="studio_group_aecbc9">
+                                                    <field name="comments_allowed"/>
+                                                    <field name="comments_message"
+                                                           attrs="{'invisible': [('comments_allowed', '=', False)]}"/>
+                                                    <field name="comment_count_as_answer"
+                                                           attrs="{'invisible': ['|', ('comments_allowed', '=', False), ('type', 'in', ['matrix'])]}"/>
+                                                </group>
+                                            </page>
+                                        </notebook>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </sheet>
                     </form>
-                  </field>
-                  <separator/>
-                  <label for="labels_ids_2" attrs="{'invisible': [('type', '!=', 'matrix')]}"/>
-                  <field name="labels_ids_2" context="{'default_question_id_2': active_id}"
-                         attrs="{'invisible': [('type', '!=', 'matrix')]}">
-                    <tree editable="bottom">
-                      <field name="sequence" widget="handle"/>
-                      <field name="value" string="Rows"/>
-                    </tree>
-                  </field>
-                </page>
-                <page string="Options" name="studio_page_bc3dcf">
-                  <group string="Constraints" name="studio_group_d0d9e0">
-                    <group colspan="2" col="4" name="studio_group_e2d82c">
-                      <field name="constr_mandatory" string="Mandatory Answer"/>
-                      <field name="constr_error_msg" attrs="{'invisible': [('constr_mandatory', '=', False)]}"/>
-                    </group>
-                    <div colspan="2" attrs="{'invisible': [('type', 'not in', ['free_text','textbox','date'])]}"
-                         name="studio_div_c3571f">
-                      <group name="studio_group_b6460e">
-                        <field name="validation_required"
-                               attrs="{'invisible': [('validation_email', '=', True), ('type', '=', 'textbox')]}"/>
-                      </group>
-                      <field name="validation_length_min" attrs="{'invisible': [('type', '!=', 'textbox')]}"/>
-                      <field name="validation_length_max" attrs="{'invisible': [('type', '!=', 'textbox')]}"/>
-                      <field name="validation_min_float_value" attrs="{'invisible': [('type', '!=', 'free_text')]}"/>
-                      <field name="validation_max_float_value" attrs="{'invisible': [('type', '!=', 'free_text')]}"/>
-                      <field name="validation_min_date" attrs="{'invisible': [('type', '!=', 'date')]}"/>
-                      <field name="validation_max_date" attrs="{'invisible': [('type', '!=', 'date')]}"/>
-                      <field name="validation_error_msg" colspan="4"/>
-                    </div>
-                    <group name="studio_group_bd2078">
-                      <field name="matrix_subtype" attrs="{'invisible':[('type','!=','matrix')]}"/>
-                    </group>
-                  </group>
-                  <group string="Display mode" attrs="{'invisible':[('type','not in',['textbox', 'free_text'])]}"
-                         name="studio_group_da12ee">
-                    <field name="display_mode" string="Format"
-                           attrs="{'invisible':[('type','not in',['simple_choice'])],'required':[('type','=','simple_choice')]}"/>
-                    <field name="column_nb" string="Number of columns"
-                           attrs="{'invisible':[('display_mode','=','dropdown'), ('type','=','simple_choice')]}"/>
-                  </group>
-                  <group string="Allow Comments"
-                         attrs="{'invisible':[('type','not in',['simple_choice','multiple_choice','matrix'])]}"
-                         name="studio_group_aecbc9">
-                    <field name="comments_allowed"/>
-                    <field name="comments_message" attrs="{'invisible': [('comments_allowed', '=', False)]}"/>
-                    <field name="comment_count_as_answer"
-                           attrs="{'invisible': ['|', ('comments_allowed', '=', False), ('type', 'in', ['matrix'])]}"/>
-                  </group>
-                </page>
-              </notebook>
-            </sheet>
-          </form>
-        </field>
-      </sheet>
-    </form>
-  </xpath>
-        </field>
-    </record>
+                </xpath>
+            </field>
+        </record>
 
-    <record id="kanban_view_for_survey_customization" model="ir.ui.view">
+        <record id="kanban_view_for_survey_customization" model="ir.ui.view">
             <field name="name">Kanban view for survey customization</field>
             <field name="model">survey.survey</field>
             <field name="inherit_id" ref="survey.survey_kanban"/>
             <field name="arch" type="xml">
                 <xpath expr="//kanban[1]/templates[1]/div[1]/div[4]" position="after">
-                  <div class="oe_kanban_bottom_left" name="studio_div_089859">
-                    <!--<field name="x_priority" widget="priority"/>-->
-                  </div>
+                    <div class="oe_kanban_bottom_left" name="studio_div_089859">
+                        <!--<field name="x_priority" widget="priority"/>-->
+                    </div>
                 </xpath>
             </field>
-    </record>
+        </record>
 
-    <record id="survey_form_change_page_ids_form" model="ir.ui.view">
-      <field name="name">Survey Form Change Page IDS Form</field>
-      <field name="model">survey.survey</field>
-      <field name="inherit_id" ref="survey.survey_form"/>
-      <field name="arch" type="xml">
-        <xpath expr="//field[@name='page_ids']" position="inside">
-          <form>
-            <sheet>
-                        <div class="oe_title" style="width: 100%;">
-                            <label for="title" class="oe_edit_only"/>
-                            <h1><field name="title" placeholder="Page Title"/></h1>
-                        </div>
-              <group>
-                        <group>
-                            <field name="weight" placeholder="权重"/>
-                        </group>
-                        <group>
-                            <field name="x_studio_survey_page_sum" readonly="1"/>
-                        </group>
-                    </group>
-                        <field name="question_ids" nolabel="1" mode="tree" context="{'default_page_id': active_id}">
-                        <tree>
-                            <field name="sequence" widget="handle"/>
-                            <field name="question"/>
-                            <field name="highest_score"/>
-                            <field name="type"/>
-                            <field name="scoring_method"/>
-                            <field name="constr_mandatory"/>
-                        </tree>
-                    </field>
-<!--                    <button name="new_question" string="新建问题" type="object" class='oe_edit_only'/>-->
-                    <button name="chose_question_from_template" string="从模板问题库中选择问题" type="object" class="oe_edit_only"/>
+        <record id="survey_form_change_page_ids_form" model="ir.ui.view">
+            <field name="name">Survey Form Change Page IDS Form</field>
+            <field name="model">survey.survey</field>
+            <field name="inherit_id" ref="survey.survey_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='page_ids']" position="inside">
+                    <form>
+                        <sheet>
+                            <div class="oe_title" style="width: 100%;">
+                                <label for="title" class="oe_edit_only"/>
+                                <h1>
+                                    <field name="title" placeholder="Page Title"/>
+                                </h1>
+                            </div>
+                            <group>
+                                <group>
+                                    <field name="weight" placeholder="权重"/>
+                                </group>
+                                <group>
+                                    <field name="x_studio_survey_page_sum" readonly="1"/>
+                                </group>
+                            </group>
+                            <field name="question_ids" nolabel="1" mode="tree" context="{'default_page_id': active_id}">
+                                <tree>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="question"/>
+                                    <field name="highest_score"/>
+                                    <field name="type"/>
+                                    <field name="scoring_method"/>
+                                    <field name="constr_mandatory"/>
+                                </tree>
+                            </field>
+                            <!--                    <button name="new_question" string="新建问题" type="object" class='oe_edit_only'/>-->
+                          <label for="chose_from_template_question"/>
+                          <field name="chose_from_template_question"
+                                   options="{'no_create': True, 'no_create_edit':True}"
+                                   domain="[('is_template_question','=',True)]"/>
+<!--                            <button name="chose_question_from_template" string="从模板问题库中选择问题" type="object"-->
+<!--                                    class="oe_edit_only"/>-->
 
-                    </sheet>
-          </form>
-<!--                <attribute name="context">{'default_survey_id': active_id, 'form_view_ref': 'e2yun_survey_pagee_extends.survey_page_extends'}</attribute>-->
-        </xpath>
-      </field>
-    </record>
+                        </sheet>
+                    </form>
+                    <!--                <attribute name="context">{'default_survey_id': active_id, 'form_view_ref': 'e2yun_survey_pagee_extends.survey_page_extends'}</attribute>-->
+                </xpath>
+            </field>
+        </record>
 
 
-  </data>
+    </data>
 </odoo>
