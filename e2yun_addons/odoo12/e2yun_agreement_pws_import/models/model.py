@@ -166,10 +166,13 @@ class AgreementPwsImport(models.TransientModel):
             cell_value = table.cell(6, 5).value  # 机会编号
             if not (cell_value is None) and not (cell_value is ''):
                 import math
-                x_studio_jhhm = self.env['crm.lead'].search(
-                    [('sf_no', '=', math.floor(cell_value))], limit=1)
+                sql='select id  from crm_lead where   sf_no=%s'
+                self._cr.execute(sql,(str(math.floor(cell_value)),))
+                x_studio_jhhm=self._cr.fetchone()
+                # x_studio_jhhm = self.env['crm.lead'].search(
+                #     [('sf_no', '=', str(math.floor(cell_value)))], limit=1)
                 if x_studio_jhhm:
-                    vals['x_studio_jhhm_id'] = x_studio_jhhm.id
+                    vals['x_studio_jhhm_id'] = x_studio_jhhm[0]
                 else:
                     raise UserError(("机会号不存在: %s") % (math.floor(cell_value)))
 
@@ -203,8 +206,6 @@ class AgreementPwsImport(models.TransientModel):
             cell_value = table.cell(16, 8).value  # 金额
             if not (cell_value is None) and not (cell_value is ''):
                 vals[x_studio_htje] = ("%.2f" % float(cell_value))
-
-
 
             cell_value = table.cell(2, 2).value  # 销售
             if not (cell_value is None) and not (cell_value is ''):
@@ -302,10 +303,13 @@ class AgreementPwsImport(models.TransientModel):
                 cell_value = table.cell(6, 5).value  #机会编号
                 if not (cell_value is None) and not (cell_value is ''):
                     import math
-                    x_studio_jhhm = self.env['crm.lead'].search(
-                        [('sf_no', '=', math.floor(cell_value))], limit=1)
+                    sql = 'select id  from crm_lead where   sf_no=%s'
+                    self._cr.execute(sql, (str(math.floor(cell_value)),))
+                    x_studio_jhhm = self._cr.fetchone()
+                    # x_studio_jhhm = self.env['crm.lead'].search(
+                    #     [('sf_no', '=', str(math.floor(cell_value)))], limit=1)
                     if x_studio_jhhm:
-                        vals['x_studio_jhhm_id'] = x_studio_jhhm.id
+                        vals['x_studio_jhhm_id'] = x_studio_jhhm[0]
                     else:
                         raise UserError(("机会号不存在: %s") % (math.floor(cell_value)))
 

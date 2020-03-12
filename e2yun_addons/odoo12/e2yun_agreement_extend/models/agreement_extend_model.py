@@ -778,6 +778,12 @@ class Agreement(models.Model):
             'context': ctx,
         }
 
+    def unlink(self):
+        print(self)
+        super(Agreement).unlink()
+
+
+
 class AgreementSubtype(models.Model):
     _inherit = "agreement.subtype"
 
