@@ -1116,7 +1116,7 @@ class CK_Hours_Worker(models.Model):
                 flag = True
                 for ll in l:
                     line_date = date
-                    group_date = ll['date_worker'][0:10]
+                    group_date = ll['date_worker'].strftime("%Y-%m-%d %H:%M:%S")[0:10]
                     if (ll['userid'] == ml['userid']) and (line_date == group_date):
                         flag = False;
                         ll['gqty'] = ll['gqty'] + ml['gqty']

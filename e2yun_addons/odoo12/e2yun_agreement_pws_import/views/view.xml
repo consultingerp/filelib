@@ -33,10 +33,10 @@
             <field name="target">new</field>
         </record>
 
-
+        <!--
         <menuitem id="agreement_pws_import_management" name="Pws Import" parent="agreement.agreement_menu" />
 
-        <menuitem name="Pws Import" action="action_view_agreement_pws_import" id="menu_agreement_pws_import"  parent="agreement_pws_import_management"/>
+        <menuitem name="Pws Import" action="action_view_agreement_pws_import" id="menu_agreement_pws_import"  parent="agreement_pws_import_management"/> -->
 
     </data>
 </odoo>

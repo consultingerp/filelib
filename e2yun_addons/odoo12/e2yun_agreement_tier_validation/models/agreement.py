@@ -19,7 +19,7 @@ class Agreement(models.Model):
 
     can_review = fields.Boolean(compute="_compute_can_review")
 
-    bo_review= fields.Boolean(default=False)
+    bo_review= fields.Char()
 
     is_creator=fields.Boolean(default=False)
 
@@ -39,12 +39,6 @@ class Agreement(models.Model):
                     lambda r: r.status != 'approved' and r.sequence < my_sequence)
                 if tier_bf:
                     rec.can_review = False
-                else:
-                    node_name = rec.review_ids.filtered(
-                        lambda r: r.status in ('pending', 'rejected') and
-                                  (self.env.user in r.reviewer_ids)).mapped('node_name')
-                    if node_name:
-                        rec.bo_review=node_name
 
             if rec.can_review==True:
                 for review in  rec.review_ids:
@@ -57,6 +51,11 @@ class Agreement(models.Model):
                             else:
                                 rec.can_review = False
 
+                # node_name = rec.review_ids.filtered(
+                #     lambda r: r.status in ('pending', 'rejected') and
+                #                   (self.env.user in r.reviewer_ids)).mapped('node_name')
+                # if node_name:
+                #      rec.bo_review = node_name[0]
 
 
     approve_sequence = fields.Boolean(
@@ -369,6 +368,15 @@ class TierValidation(models.AbstractModel):
 
     @api.multi
     def write(self, vals):
+        #管理员 可做任何操作
+        #ZCTA.ZCONTRACT_SYS_MANAGE
+        groups_id = self.env.ref('ZCTA.ZCONTRACT_SYS_MANAGE').id
+        sql = 'SELECT * from res_groups_users_rel where gid=%s and uid=%s'
+        self._cr.execute(sql, (groups_id, self._uid,))
+        groups_users = self._cr.fetchone()
+        if groups_users:
+            return super(TierValidation, self).write(vals)
+
         #草稿状态下 只能创建人能编辑
         if int(self.stage_id.id)<=1 and (self._uid!=self.create_uid.id and self._uid!=self.assigned_user_id.id):
             raise UserError(u'仅提交人可以修改发起的合同。')
@@ -396,6 +404,17 @@ class TierValidation(models.AbstractModel):
 
             #验证清洁版附件不能删除
             if 'contract_text_clean_attachment_ids'== key :
+
+                # if self.bo_review != '审阅人-法务':
+                #     raise UserError(u'仅法务可以更新清洁版合同文本。')
+                groups_id = self.env.ref('ZCTA.ZCONTRACT_CHECK_LEGAL').id
+                sql = 'SELECT * from res_groups_users_rel where gid=%s and uid=%s'
+                self._cr.execute(sql, (groups_id, self._uid,))
+                groups_users = self._cr.fetchone()
+                if not groups_users:
+                    raise UserError(u'仅法务可以更新清洁版合同文本。')
+
+
                 if self.contract_text_clean_attachment_ids:
                     for contract_text_clean_attachment_id in self.contract_text_clean_attachment_ids :
                         if not contract_text_clean_attachment_id.id in vals['contract_text_clean_attachment_ids'][0][2]:
@@ -408,6 +427,21 @@ class TierValidation(models.AbstractModel):
                         if not contract_text_process_attachment_id.id in vals['contract_text_process_attachment_ids'][0][2]:
                             raise UserError(u'不能删除上传过的任何文档。')
 
+            # 验证文本最终版的附件不能删除
+            if 'contract_text_attachment_ids' == key:
+                #验证商务角色
+                groups_id = self.env.ref('ZCTA.ZCONTRACT_BUSINESS').id
+                sql = 'SELECT * from res_groups_users_rel where gid=%s and uid=%s'
+                self._cr.execute(sql, (groups_id, self._uid,))
+                groups_users = self._cr.fetchone()
+                if not groups_users:
+                    raise UserError(u'仅商务可以更新最终版合同文本')
+
+                if self.contract_text_attachment_ids:
+                    for contract_text_attachment_id in self.contract_text_attachment_ids:
+                        if not contract_text_attachment_id.id in \
+                               vals['contract_text_attachment_ids'][0][2]:
+                            raise UserError(u'不能删除上传过的任何文档。')
 
 
             if 'pdfswy_attachment_ids' != key and   'pdfqw_attachment_ids' != key and 'fktj_attachment_ids' != key and \
@@ -420,7 +454,15 @@ class TierValidation(models.AbstractModel):
                 #上传签章完成的最终合同，并回写签订时间
                 GetDatetime = get_zone_datetime.GetDatetime()
                 signed_time = GetDatetime.get_datetime()
-                #验证合同签订时间
+                #验证合同签订时间 ZCTA.ZCONTRACT_BUSINESS
+
+                groups_id = self.env.ref('ZCTA.ZCONTRACT_BUSINESS').id
+                sql = 'SELECT * from res_groups_users_rel where gid=%s and uid=%s'
+                self._cr.execute(sql, (groups_id, self._uid,))
+                groups_users = self._cr.fetchone()
+                if not groups_users:
+                    raise UserError(u'仅商务可以更新最终版合同文本')
+
                 if not self.signed_time and not 'signed_time' in vals.keys():
                     raise UserError(u'请填写合同签订时间。')
                 # 处理历史文本合同
@@ -443,8 +485,6 @@ class TierValidation(models.AbstractModel):
                 self._cr.execute(sql, (self.id,))
 
             elif 'contract_text_clean_attachment_ids' == key and int(self.stage_id) == 4:
-                if not self.bo_review=='审阅人-法务':
-                    raise UserError(u'仅法务可以更新清洁版合同文本。')
                 # 上传清洁版合同文本，更新提醒销售输入预计签回时间
                 is_email_sign_time=True
                 sql = "UPDATE  agreement set is_email_sign_time=%s where id=%s"
@@ -474,7 +514,7 @@ class TierValidation(models.AbstractModel):
                 htwb = ""
             if pdfswy != "" or pdfqw != "" or fktj != "" or htwb != "":
                 raise UserError(u'双方签章阶段必须上传' + pdfswy + pdfqw + fktj + htwb)
-            self._cr.execute(sql, ('7', self.res_id))
+            self._cr.execute(sql, ('7', self.id))
         if not flag_stage_id:
             raise UserError(u'合同阶段不能手工拖拽。')
             user_reviews = self.env['tier.review'].search([
@@ -517,6 +557,7 @@ class TierValidation(models.AbstractModel):
             return True
 
         if not flag_plan_sign_time:
+            #判断不能小于当前时间
             if self._uid != self.create_uid.id and self._uid != self.assigned_user_id.id:
                 raise UserError(u'仅销售可以更新,预计回签时间。')
             user_reviews = self.env['tier.review'].search([
@@ -569,8 +610,15 @@ class TierValidation(models.AbstractModel):
         #     #self._cr.execute(sql, (GetDatetime.get_datetime(), self.id))
         if  no_check:
             # 判断 BO审阅 全程监管 角色仅在审核前可以审核当前数据
-            if self.can_review and self.bo_review=='BO审阅-全程监管':
-                no_check=False
+            groups_id = self.env.ref('ZCAT.ZCONTRACT_BO_CHECK_SUPERVISE').id
+            sql = 'SELECT * from res_groups_users_rel where gid=%s and uid=%s'
+            self._cr.execute(sql, (groups_id, self._uid,))
+            groups_users = self._cr.fetchone()
+            if not groups_users:
+                no_check = False
+                #raise UserError(u'仅法务可以更新清洁版合同文本。')
+            # if self.can_review and self.bo_review=='BO审阅-全程监管':
+            #     no_check=False
 
         for rec in self:
             if (getattr(rec, self._state_field) in self._state_from and
