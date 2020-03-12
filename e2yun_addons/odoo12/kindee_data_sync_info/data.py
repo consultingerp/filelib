@@ -992,10 +992,6 @@ class CK_Hours_Worker(models.Model):
         thisinfos = self.env['ck.hours.worker.line'].search([('state', '=', 'new')])
         l = []
         data = []
-        if self.env.user.tz:
-            timezone = self.env.user.tz
-        else:
-            timezone = 'utc'
         while len(thisinfos) > 0:
             thisinfo = thisinfos[:100]
             thisinfos = thisinfos - thisinfo
@@ -1127,10 +1123,7 @@ class CK_Hours_Worker(models.Model):
                 flag = True
                 for ll in l:
                     line_date = date
-                    ll['date_worker'] = datetime.datetime.strptime(ll['date_worker'], "%Y-%m-%d %H:%M:%S").replace(
-                        tzinfo=pytz.utc).astimezone(pytz.timezone(timezone)).strftime(
-                        '%Y-%m-%d')
-                    group_date = ll['date_worker'][0:10]
+                    group_date = ll['date_worker'].strftime("%Y-%m-%d %H:%M:%S")[0:10]
                     if (ll['userid'] == ml['userid']) and (line_date == group_date):
                         flag = False;
                         ll['gqty'] = ll['gqty'] + ml['gqty']
