@@ -23,6 +23,7 @@
 
     # always loaded
     'data': [
+        # 'security/task_privilege.xml',
        'security/ir.model.access.csv',
        'views/e2yun_project_view.xml',
        'views/survey_page_tempalte.xml',
