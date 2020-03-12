@@ -10,8 +10,8 @@
                     <button name="action_send_survey" string="Share and invite by email" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('id', '=', False), ('task_mode', '=', 'common mode')]}" groups="project.group_project_manager"/>
 <!--                    <button name="action_send_survey" string="Share and invite by email" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('id', '=', False), ('task_mode', '=', 'common mode')]}"/>-->
                 </xpath>
-                <xpath expr="//field[@name='name']" position="after">
-                    <field name="lock_survey" invisible="1"/>
+                <xpath expr="//field[@name='questionnaire_classification']" position="after">
+                    <field name="lock_survey" attrs="{'invisible': [('lock_survey', '=', False)]}"/>
                 </xpath>
                 <xpath expr="//field[@name='name']" position="attributes">
                     <attribute name="attrs">{'readonly': [('lock_survey', '=', True)]}</attribute>
