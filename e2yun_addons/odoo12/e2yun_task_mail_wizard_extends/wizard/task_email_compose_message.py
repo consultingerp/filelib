@@ -281,10 +281,10 @@ class SurveyMailComposeMessage(models.TransientModel):
     @api.multi
     def action_send_mail(self):
         self.mail_send()
-
         ctx = self.env.context.copy()
         survey_status = self.env['project.task'].browse(ctx['default_res_id'])
         survey_status.write({'lock_survey': True})
+        survey_status.partner_ids = self.partner_ids
         return {'type': 'ir.actions.act_window_close', 'infos': 'mail_sent'}
 
     @api.multi

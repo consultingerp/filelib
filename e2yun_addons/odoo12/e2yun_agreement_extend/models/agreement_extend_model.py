@@ -779,9 +779,10 @@ class Agreement(models.Model):
         }
 
     def unlink(self):
-        if int(self.stage_id)>1:
-            raise UserError(("进入过BO审阅的合同申请记录都不能自行删除"))
-        super(Agreement).unlink()
+        for agree in self:
+            if int(agree.stage_id)>1 and self._uid!=2:
+                raise UserError(("进入过BO审阅的合同申请记录都不能自行删除"))
+            super(Agreement,agree).unlink()
 
 
 
