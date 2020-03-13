@@ -571,15 +571,19 @@ class CK_Hours_Worker(models.Model):
         # name = '00'
         # fmodel = '0'
         domain = []
+        if self.env.user.tz:
+            timezone = self.env.user.tz
+        else:
+            timezone = 'utc'
         if start_date:
             startdate = (datetime.datetime.strptime(start_date, '%Y-%m-%d')).replace(
-                tzinfo=pytz.timezone(self.env.user.tz)).astimezone(pytz.timezone(pytz.utc.zone))
+                tzinfo=pytz.timezone(timezone)).astimezone(pytz.timezone(pytz.utc.zone))
             start_date = startdate.strftime('%Y-%m-%d %H:%M:%S')
             domain_start_date = ('date_worker', '>=', start_date)
             domain.append(domain_start_date)
         if end_date:
             enddate = (datetime.datetime.strptime(end_date, '%Y-%m-%d')).replace(
-                tzinfo=pytz.timezone(self.env.user.tz)).astimezone(pytz.timezone(pytz.utc.zone))
+                tzinfo=pytz.timezone(timezone)).astimezone(pytz.timezone(pytz.utc.zone))
             end_date = enddate.strftime('%Y-%m-%d %H:%M:%S')
             domain_end_date = ('date_worker', '<', end_date)
             domain.append(domain_end_date)
@@ -698,7 +702,7 @@ class CK_Hours_Worker(models.Model):
                 ml['amount'] = line[i] or 0.0  # 金额
                 i = i + 1
                 date = line[i] or ''
-                ml['date_worker'] = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(self.env.user.tz)).strftime(
+                ml['date_worker'] = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(timezone)).strftime(
                     '%Y-%m-%d')
                 i = i + 1
                 # ml['date_worker'] = datetime.datetime.strptime(line.date_worker, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(self.env.user.tz)).date() #报工时间
@@ -737,17 +741,20 @@ class CK_Hours_Worker(models.Model):
         # enddate = (datetime.datetime.strptime(end_date, '%Y-%m-%d')).replace(tzinfo=pytz.timezone(self.env.user.tz)).astimezone(pytz.timezone(pytz.utc.zone))
         # start_date = startdate.strftime('%Y-%m-%d %H:%M:%S')
         # end_date =  enddate.strftime('%Y-%m-%d %H:%M:%S')
-
+        if self.env.user.tz:
+            timezone = self.env.user.tz
+        else:
+            timezone = 'utc'
         domain = []
         if start_date:
             startdate = (datetime.datetime.strptime(start_date, '%Y-%m-%d')).replace(
-                tzinfo=pytz.timezone(self.env.user.tz)).astimezone(pytz.timezone(pytz.utc.zone))
+                tzinfo=pytz.timezone(timezone)).astimezone(pytz.timezone(pytz.utc.zone))
             start_date = startdate.strftime('%Y-%m-%d %H:%M:%S')
             domain_start_date = ('date_worker', '>=', start_date)
             domain.append(domain_start_date)
         if end_date:
             enddate = (datetime.datetime.strptime(end_date, '%Y-%m-%d')).replace(
-                tzinfo=pytz.timezone(self.env.user.tz)).astimezone(pytz.timezone(pytz.utc.zone))
+                tzinfo=pytz.timezone(timezone)).astimezone(pytz.timezone(pytz.utc.zone))
             end_date = enddate.strftime('%Y-%m-%d %H:%M:%S')
             domain_end_date = ('date_worker', '<', end_date)
             domain.append(domain_end_date)
@@ -874,7 +881,7 @@ class CK_Hours_Worker(models.Model):
                 ml['amount'] = line[i] or 0.0  # 金额
                 i = i + 1
                 date = line[i] or ''
-                ml['date_worker'] = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(self.env.user.tz)).strftime(
+                ml['date_worker'] = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(timezone)).strftime(
                     '%Y-%m-%d')
                 i = i + 1
                 # ml['date_worker'] = datetime.datetime.strptime(line.date_worker, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(self.env.user.tz)).date() #报工时间
@@ -1116,7 +1123,7 @@ class CK_Hours_Worker(models.Model):
                 flag = True
                 for ll in l:
                     line_date = date
-                    group_date = ll['date_worker'][0:10]
+                    group_date = ll['date_worker'].strftime("%Y-%m-%d %H:%M:%S")[0:10]
                     if (ll['userid'] == ml['userid']) and (line_date == group_date):
                         flag = False;
                         ll['gqty'] = ll['gqty'] + ml['gqty']
@@ -1209,12 +1216,16 @@ class CK_Hours_Worker(models.Model):
     def search_by_userid_approve(self, userid, date):
         # date = '2017-06-15'
         # userid = 1
+        if self.env.user.tz:
+            timezone = self.env.user.tz
+        else:
+            timezone = 'utc'
 
         date_from = date + ' 00:00:00'
         date_to = date + ' 23:59:59'
 
-        current_date_from = (datetime.datetime.strptime(date_from, '%Y-%m-%d %H:%M:%S')).replace(tzinfo=pytz.timezone(self.env.user.tz)).astimezone(pytz.timezone(pytz.utc.zone))
-        current_date_to = (datetime.datetime.strptime(date_to, '%Y-%m-%d %H:%M:%S')).replace(tzinfo=pytz.timezone(self.env.user.tz)).astimezone(pytz.timezone(pytz.utc.zone))
+        current_date_from = (datetime.datetime.strptime(date_from, '%Y-%m-%d %H:%M:%S')).replace(tzinfo=pytz.timezone(timezone)).astimezone(pytz.timezone(pytz.utc.zone))
+        current_date_to = (datetime.datetime.strptime(date_to, '%Y-%m-%d %H:%M:%S')).replace(tzinfo=pytz.timezone(timezone)).astimezone(pytz.timezone(pytz.utc.zone))
 
         # current_date = (datetime.datetime.strptime(date, '%Y-%m-%d')).replace(tzinfo=pytz.timezone(self.env.user.tz)).astimezone(pytz.timezone(pytz.utc.zone))
         # date = current_date.strftime('%Y-%m-%d')
@@ -1329,7 +1340,7 @@ class CK_Hours_Worker(models.Model):
                 ml['amount'] = line[i] or 0.0  # 金额
                 i = i + 1
                 date = line[i] or ''
-                ml['date_worker'] = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(self.env.user.tz)).strftime(
+                ml['date_worker'] = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(timezone)).strftime(
                     '%Y-%m-%d')
                 i = i + 1
                 # ml['date_worker'] = datetime.datetime.strptime(line.date_worker, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(self.env.user.tz)).date() #报工时间
@@ -1479,6 +1490,11 @@ class CK_Hours_Worker(models.Model):
                                                         ('foperno', '=', foperno),
                                                         ('fworkcenterno', '=', fworkcenterno),
                                                         ('state', '!=', 'del')])
+        if self.env.user.tz:
+            timezone = self.env.user.tz
+        else:
+            timezone = 'utc'
+
         l = []
         data = []
         while len(thisinfos) > 0:
@@ -1586,7 +1602,7 @@ class CK_Hours_Worker(models.Model):
                 ml['amount'] = line[i] or 0.0  # 金额
                 i = i + 1
                 date = line[i] or ''
-                ml['date_worker'] = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(self.env.user.tz)).strftime(
+                ml['date_worker'] = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(timezone)).strftime(
                     '%Y-%m-%d')
                 i = i + 1
                 # ml['date_worker'] = datetime.datetime.strptime(line.date_worker, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(self.env.user.tz)).date() #报工时间
@@ -1665,7 +1681,7 @@ class CK_Hours_Worker(models.Model):
     def search_msg(self):
         # msginfos = self.env['mail.message'].search([])
         notifications = self.env['mail.notification'].search([
-            ('partner_id', 'in', [self.env.user.partner_id.id]),
+            ('res_partner_id', 'in', [self.env.user.partner_id.id]),
             ('is_read', '=', False)], order='id desc')
         # print notifications
         l = []
@@ -1763,7 +1779,7 @@ class CK_Hours_Worker_line(models.Model):
 
     fworkcenterno = fields.Char(string=_('WorkCenterNo'), related='order_id.fworkcenterno', index=True)  # 工作中心编码
 
-    foperno = fields.Char(string=_('OperationNo'), related='order_id.foperno', index=True)  # 工序编码
+    foperno = fields.Char(string=_('OperationNo'), index=True)  # 工序编码
 
     pqty = fields.Float(string=_('Picking Quantity'), related='order_id.pqty')  # 投料数量
 
@@ -2279,7 +2295,7 @@ class CK_Hours_Worker_line(models.Model):
             vals['fname'] = production_id.fname
 
             if self.env.user.tz:
-                timezone = self.self.env.user.tz
+                timezone = self.env.user.tz
             else:
                 timezone = 'utc'
             now_time = datetime.datetime.strptime(datetime.datetime.now().
@@ -2941,10 +2957,14 @@ class ck_user_worktime(models.Model):
     def search_by_useridanddatetime(self, start_date, end_date):
         # start_date = '2017-06-15'
         # end_date = '2017-06-21'
+        if self.env.user.tz:
+            timezone = self.env.user.tz
+        else:
+            timezone = 'utc'
         startdate = (datetime.datetime.strptime(start_date, '%Y-%m-%d')).replace(
-            tzinfo=pytz.timezone(self.env.user.tz)).astimezone(pytz.timezone(pytz.utc.zone))
+            tzinfo=pytz.timezone(timezone)).astimezone(pytz.timezone(pytz.utc.zone))
         enddate = (datetime.datetime.strptime(end_date, '%Y-%m-%d')).replace(
-            tzinfo=pytz.timezone(self.env.user.tz)).astimezone(pytz.timezone(pytz.utc.zone))
+            tzinfo=pytz.timezone(timezone)).astimezone(pytz.timezone(pytz.utc.zone))
         start_date = startdate.strftime('%Y-%m-%d %H:%M:%S')
         end_date = enddate.strftime('%Y-%m-%d %H:%M:%S')
         thisinfos = self.env['ck.user.work.time'].search(
@@ -2961,10 +2981,14 @@ class ck_user_worktime(models.Model):
     def search_by_useridanddatetimeline(self, start_date, end_date):
         # start_date = '2017-06-15'
         # end_date = '2017-06-21'
+        if self.env.user.tz:
+            timezone = self.env.user.tz
+        else:
+            timezone = 'utc'
         startdate = (datetime.datetime.strptime(start_date, '%Y-%m-%d')).replace(
-            tzinfo=pytz.timezone(self.env.user.tz)).astimezone(pytz.timezone(pytz.utc.zone))
+            tzinfo=pytz.timezone(timezone)).astimezone(pytz.timezone(pytz.utc.zone))
         enddate = (datetime.datetime.strptime(end_date, '%Y-%m-%d')).replace(
-            tzinfo=pytz.timezone(self.env.user.tz)).astimezone(pytz.timezone(pytz.utc.zone))
+            tzinfo=pytz.timezone(timezone)).astimezone(pytz.timezone(pytz.utc.zone))
         start_date = startdate.strftime('%Y-%m-%d %H:%M:%S')
         end_date = enddate.strftime('%Y-%m-%d %H:%M:%S')
         thisinfos = self.env['ck.user.work.time'].search(

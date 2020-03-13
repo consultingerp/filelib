@@ -12,10 +12,7 @@
     "application": False,
     "installable": True,
     "depends": [
-        "base_tier_validation","mrp","purchase"
+        "base_tier_validation","mrp",
     ],
-    "data": [
-        "views/purchase_order_view.xml",
-        "views/production_view.xml",
-    ]
+    "data": [],
 }

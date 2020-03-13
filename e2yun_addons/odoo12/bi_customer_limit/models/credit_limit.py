@@ -63,9 +63,9 @@ class sale_order(models.Model):
             'total_receivable': self.partner_id.credit,
             }
         if self.partner_id.user_id:
-            vals['user_id'] = self.partner_id.user_id.id
+            values['user_id'] = self.partner_id.user_id.id
         if self.partner_id.team_id:
-            vals['team_id'] = self.partner_id.team_id.id
+            values['team_id'] = self.partner_id.team_id.id
         self.update(vals)
 
     @api.multi

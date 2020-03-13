@@ -12,7 +12,7 @@
                 </xpath>
                 <!--增加转去问卷操作按钮，编辑时隐藏，保存时显示-->
                 <!--<xpath expr="//button[@name='%(portal.portal_share_action)d']" position="after">-->
-                <!--<button name="turn_page " string="转去调查问卷操作页面" type="object" class="oe_highlight oe_read_only"-->
+                <!--<button name="turn_page" string="转去调查问卷操作页面" type="object" class="oe_highlight oe_read_only"-->
                 <!--attrs="{'invisible' : [('task_mode', '=', 'common mode')]}"/>-->
                 <!--</xpath>-->
                 <!--添加问卷分类-->
