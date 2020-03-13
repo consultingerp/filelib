@@ -29,25 +29,11 @@ class AddQuestionFromTemplate(models.TransientModel):
 class SurveyPage(models.Model):
     _inherit = 'survey.page'
 
-    chose_from_template_question = fields.Many2one('survey.question', string='从模板问题中选择')
     # 调查问卷page页面添加’权重‘字段
     weight = fields.Char(string='权重')
     # 小计
     x_studio_survey_page_sum = fields.Float(string='小计', compute='_compute_page_sum')
     survey_id = fields.Many2one(required=False)
-
-    @api.onchange('chose_from_template_question')
-    def onchange_chose_question_from_template(self):
-        if not self.chose_from_template_question:
-            pass
-        else:
-            current_question_ids = self.question_ids.ids
-            question_after_copy = self.chose_from_template_question.copy()
-            question_after_copy.is_template_question = False
-            current_question_ids.append(question_after_copy.id)
-            current_questions = self.env['survey.question'].browse(current_question_ids)
-            self.question_ids = current_questions
-            self.chose_from_template_question = False
 
     @api.model
     def create(self, vals_list):

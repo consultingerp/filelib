@@ -2,7 +2,7 @@
 <odoo>
 
     <record model="ir.ui.view" id="agreement_income_type_list_view">
-        <field name="name">收入类型</field>
+        <field name="name">Agreement Income Type</field>
         <field name="model">agreement.income.type</field>
         <field name="arch" type="xml">
             <tree default_order='id' editable="top" create="true" >
@@ -13,7 +13,7 @@
 
 
     <record model="ir.actions.act_window" id="agreement_action_income_type">
-        <field name="name">收入类型</field>
+        <field name="name">Agreement Income Type</field>
         <field name="res_model">agreement.income.type</field>
         <field name="view_mode">tree</field>
     </record>

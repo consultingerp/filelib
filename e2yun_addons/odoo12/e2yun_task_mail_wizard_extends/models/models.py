@@ -17,7 +17,7 @@ _logger = logging.getLogger(__name__)
 class Task(models.Model):
     _inherit = 'project.task'
 
-    lock_survey = fields.Boolean(string='任务已发送', default=False, copy=False)
+    lock_survey = fields.Boolean(string='任务锁定', default=False, copy=False)
 
     @api.multi
     def action_send_survey(self):

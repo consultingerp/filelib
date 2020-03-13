@@ -101,14 +101,14 @@ msgstr "质检触发点"
 #. module: e2yun_quality_mrp
 #: code:addons/e2yun_quality_mrp/models/qc_test.py:117
 #, python-format
-msgid "Question %s is not valid: minimum value can't be higher than maximum value."
-msgstr "问题 %s 无效：最小值不能高于最大值。"
+msgid "Question '%s' is not valid: minimum value can't be higher than maximum value."
+msgstr "问题'%s'无效：最小值不能高于最大值。"
 
 #. module: e2yun_quality_mrp
 #: code:addons/e2yun_quality_mrp/models/qc_test.py:108
 #, python-format
-msgid "Question %s is not valid: you have to mark at least one value as OK."
-msgstr "问题 %s 无效：您必须将至少一个值标记为OK。"
+msgid "Question '%s' is not valid: you have to mark at least one value as OK."
+msgstr "问题'%s'无效：您必须将至少一个值标记为OK。"
 
 #. module: e2yun_quality_mrp
 #: model:ir.model,name:e2yun_quality_mrp.model_mrp_product_produce

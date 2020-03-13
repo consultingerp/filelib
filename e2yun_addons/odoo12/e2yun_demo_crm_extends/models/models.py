@@ -157,18 +157,11 @@ class e2yun_customer_info_lost(models.Model):
 class E2yunCRMDemoMailActivity(models.Model):
     _inherit = "mail.activity"
 
-    # 菜单：CRM-销售-活动
-    # 在日历页面创建的活动res_id和res_model_id为空
-    # 此时创建的活动默认关联商机 模型
-    # res_id： onchange关联crm_lead_id
-    # res_model_id： default_get为 178
-
     @api.onchange('crm_lead_id')
     def onchange_crm_lead_res_id(self):
-        if not self.res_id:
-            self.res_id = self.crm_lead_id.id
+        self.res_id = self.crm_lead_id.id
 
-    crm_lead_id = fields.Many2one('crm.lead', '对应商机')
+    crm_lead_id = fields.Many2one('crm.lead', '对应商机', required=True)
 
     # res_model_id = fields.Many2one(
     #     'ir.model', 'Document Model',
@@ -177,7 +170,7 @@ class E2yunCRMDemoMailActivity(models.Model):
     @api.model
     def default_get(self, fields_list):
         flag = self.env.context.get('flag_crm_lead_activity', False)
-        if flag == 2020022501 and self.res_model_id.id == False:
+        if flag == 2020022501:
             res = super(E2yunCRMDemoMailActivity, self).default_get(fields_list)
             res.update({'res_model_id': 178})
             return res
