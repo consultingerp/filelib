@@ -20,7 +20,7 @@ class Agreement(models.Model):
 
     x_studio_copy=fields.Char(string='备案号')  # 备案号
     x_studio_cytkh=fields.Char(string='差异条款号')  # 差异条款号
-    x_studio_scjd=fields.Char(string='截至提交审核时， 项目所处阶段')  # 截至提交审核时
+    x_studio_scjd=fields.Selection([["交付未完成","交付未完成"],["已验收，未付款","已验收，未付款"]],string='截至提交审核时， 项目所处阶段')  # 截至提交审核时
 
     x_studio_xmmc= fields.Char(string='Project Name')  # 项目名称
 

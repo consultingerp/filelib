@@ -257,14 +257,15 @@ class AgreementPwsImport(models.TransientModel):
 
 
       table = wb.sheets()[16]
-      cell_value = table.cell(10, 4).value  # 收入确认类型
+      cell_value = table.cell(10, 4).value  # 收入类型
       if not (cell_value is None) and not (cell_value is ''):
-          agreement_income_type = self.env['agreement.income.type'].search(
-              [('name', 'ilike', cell_value.strip())], limit=1)
-
-          income_type=[[6, False, [agreement_income_type.id]]]
-          if agreement_income_type:
-            vals['income_type'] = income_type
+          sql = 'select id from agreement_income_type where name =%s'
+          # self._cr.execute(sql, (str(math.floor(cell_value)),))
+          self._cr.execute(sql, (cell_value.strip(),))
+          income_type = self._cr.fetchone()
+          if income_type:
+              income_type = [[6, False, [income_type[0]]]]
+              vals['income_type'] = income_type
 
       cell_value = table.cell(10, 6).value  # 产品线
       if not (cell_value is None) and not (cell_value is ''):
@@ -398,12 +399,26 @@ class AgreementPwsImport(models.TransientModel):
                       #x_studio_fkfs
                      vals['x_studio_payment_method'] = cell_value
 
-               cell_value = table.cell(10, 4).value  # 收入确认类型
+               cell_value = table.cell(10, 4).value  # 收入类型
                if not (cell_value is None) and not (cell_value is ''):
-                   agreement_income_type = self.env['agreement.income.type'].search(
-                       [('name', 'ilike', cell_value.strip())], limit=1)
-                   income_type = [[6, False, [agreement_income_type.id]]]
-                   if agreement_income_type:
+                   # cell_values=cell_value.strip().split(',')
+                   # income_type=None
+                   # income_type_ids=[]
+                   # for cell_value in cell_values:
+                   #    agreement_income_type = self.env['agreement.income.type'].search(
+                   #       [('name', 'ilike', cell_value)], limit=1)
+                   #    if agreement_income_type:
+                   #      income_type_ids.append(agreement_income_type.id)
+                   #    if income_type_ids:
+                   #      income_type = [[6, False, income_type_ids]]
+                   # if income_type!=None:
+                   #     vals['income_type'] = income_type
+                   sql = 'select id from agreement_income_type where name =%s'
+                   # self._cr.execute(sql, (str(math.floor(cell_value)),))
+                   self._cr.execute(sql, (cell_value.strip(),))
+                   income_type = self._cr.fetchone()
+                   if income_type:
+                       income_type = [[6, False, [income_type[0]]]]
                        vals['income_type'] = income_type
 
                cell_value = table.cell(10, 6).value  # 产品线

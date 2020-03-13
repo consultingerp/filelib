@@ -620,6 +620,8 @@ class TierValidation(models.AbstractModel):
             groups_users = self._cr.fetchone()
             if not groups_users:
                 no_check = False
+            if not no_check:
+                raise UserError(u'合同正在审批中。')
                 #raise UserError(u'仅法务可以更新清洁版合同文本。')
             # if self.can_review and self.bo_review=='BO审阅-全程监管':
             #     no_check=False
