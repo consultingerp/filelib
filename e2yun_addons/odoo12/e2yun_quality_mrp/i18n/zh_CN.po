@@ -1,13 +1,13 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* e2yun_quality_mrp
+# 	* e2yun_quality_stock
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-01 07:00+0000\n"
-"PO-Revision-Date: 2020-03-01 15:11+0800\n"
+"POT-Creation-Date: 2020-03-01 07:21+0000\n"
+"PO-Revision-Date: 2020-03-01 15:32+0800\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,201 +17,145 @@ msgstr ""
 "Language: zh\n"
 "X-Generator: Poedit 1.8.12\n"
 
-#. module: e2yun_quality_mrp
-#: code:addons/e2yun_quality_mrp/models/mrp_workorder.py:285
-#, python-format
-msgid "A Manufacturing Order is already done or cancelled."
-msgstr "生产订单已完工或已取消！"
+#. module: e2yun_quality_stock
+#: model:ir.model.fields,field_description:e2yun_quality_stock.field_stock_picking__created_inspections
+#: model:ir.model.fields,field_description:e2yun_quality_stock.field_stock_production_lot__created_inspections
+msgid "Created inspections"
+msgstr "创建检验"
 
-#. module: e2yun_quality_mrp
-#: model:ir.model,name:e2yun_quality_mrp.model_qc_trigger_line
-msgid "Abstract line for defining triggers"
-msgstr "用于定义触发器的抽象明细"
+#. module: e2yun_quality_stock
+#: model:ir.model.fields,field_description:e2yun_quality_stock.field_stock_picking__done_inspections
+#: model:ir.model.fields,field_description:e2yun_quality_stock.field_stock_production_lot__done_inspections
+msgid "Done inspections"
+msgstr "完成检验"
 
-#. module: e2yun_quality_mrp
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_trigger_line__first_inspection
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_trigger_product_category_line__first_inspection
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_trigger_product_line__first_inspection
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_trigger_product_template_line__first_inspection
-#: model_terms:ir.ui.view,arch_db:e2yun_quality_mrp.mrp_production_qc_form_view
-#: model_terms:ir.ui.view,arch_db:e2yun_quality_mrp.mrp_production_workorder_qc_form_view_inherit
-#: model_terms:ir.ui.view,arch_db:e2yun_quality_mrp.view_mrp_product_produce_qc_wizard
-msgid "First Inspection"
-msgstr "首检"
+#. module: e2yun_quality_stock
+#: model:ir.model.fields,field_description:e2yun_quality_stock.field_stock_picking__qc_inspections_ids
+#: model:ir.model.fields,field_description:e2yun_quality_stock.field_stock_production_lot__qc_inspections_ids
+msgid "Inspections"
+msgstr "检验"
 
-#. module: e2yun_quality_mrp
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_inspection__lot_id
+#. module: e2yun_quality_stock
+#: model:ir.model.fields,field_description:e2yun_quality_stock.field_stock_picking__passed_inspections
+#: model:ir.model.fields,field_description:e2yun_quality_stock.field_stock_production_lot__passed_inspections
+msgid "Inspections OK"
+msgstr "检验合格"
+
+#. module: e2yun_quality_stock
+#: model:ir.model.fields,field_description:e2yun_quality_stock.field_stock_picking__failed_inspections
+#: model:ir.model.fields,field_description:e2yun_quality_stock.field_stock_production_lot__failed_inspections
+msgid "Inspections failed"
+msgstr "检验不合格"
+
+#. module: e2yun_quality_stock
+#: model:ir.model.fields,help:e2yun_quality_stock.field_stock_production_lot__qc_inspections_ids
+msgid "Inspections related to this lot."
+msgstr "关联批次检验"
+
+#. module: e2yun_quality_stock
+#: model:ir.model.fields,help:e2yun_quality_stock.field_stock_picking__qc_inspections_ids
+msgid "Inspections related to this picking."
+msgstr "关联拣货检验"
+
+#. module: e2yun_quality_stock
+#: model:ir.model.fields,field_description:e2yun_quality_stock.field_qc_inspection__lot_id
+#: model:ir.model.fields,field_description:e2yun_quality_stock.field_qc_inspection_line__lot_id
+#: model_terms:ir.ui.view,arch_db:e2yun_quality_stock.qc_inspection_line_search_stock_view_picking
+#: model_terms:ir.ui.view,arch_db:e2yun_quality_stock.qc_inspection_search_view_picking
 msgid "Lot"
 msgstr "批次"
 
-#. module: e2yun_quality_mrp
-#: model_terms:ir.ui.view,arch_db:e2yun_quality_mrp.qc_inspection_line_search_stock_view_mrp
-#: model_terms:ir.ui.view,arch_db:e2yun_quality_mrp.qc_inspection_search_view_mrp
-msgid "Opration"
-msgstr "生产工序"
+#. module: e2yun_quality_stock
+#: model:ir.model,name:e2yun_quality_stock.model_stock_production_lot
+msgid "Lot/Serial"
+msgstr "批次/序列号"
 
-#. module: e2yun_quality_mrp
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_trigger_line__routing_id
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_trigger_product_category_line__routing_id
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_trigger_product_line__routing_id
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_trigger_product_template_line__routing_id
-msgid "Parent Routing"
-msgstr "父级工艺路线"
+#. module: e2yun_quality_stock
+#: model:ir.model.fields,field_description:e2yun_quality_stock.field_qc_inspection__object_type
+msgid "Object Type"
+msgstr "单据类型"
 
-#. module: e2yun_quality_mrp
-#: code:addons/e2yun_quality_mrp/models/mrp_workorder.py:64
-#, python-format
-msgid "Please set the quantity you are currently producing. It should be different from zero."
-msgstr "请设置您当前生产的数量。它应该不等于零。"
+#. module: e2yun_quality_stock
+#: model:ir.model.fields,field_description:e2yun_quality_stock.field_qc_inspection__picking_id
+#: model:ir.model.fields,field_description:e2yun_quality_stock.field_qc_inspection_line__picking_id
+#: model_terms:ir.ui.view,arch_db:e2yun_quality_stock.qc_inspection_line_search_stock_view_picking
+#: model_terms:ir.ui.view,arch_db:e2yun_quality_stock.qc_inspection_search_view_picking
+msgid "Picking"
+msgstr "分拣"
 
-#. module: e2yun_quality_mrp
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_inspection__production_id
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_inspection_line__production_id
-msgid "Production"
-msgstr "生产"
+#. module: e2yun_quality_stock
+#: model:ir.model,name:e2yun_quality_stock.model_stock_picking_type
+#: model:ir.model.fields,field_description:e2yun_quality_stock.field_qc_trigger__picking_type_id
+msgid "Picking Type"
+msgstr "拣货类型"
 
-#. module: e2yun_quality_mrp
-#: model:ir.model,name:e2yun_quality_mrp.model_mrp_production
-#: model_terms:ir.ui.view,arch_db:e2yun_quality_mrp.qc_inspection_line_search_stock_view_mrp
-#: model_terms:ir.ui.view,arch_db:e2yun_quality_mrp.qc_inspection_search_view_mrp
-msgid "Production Order"
-msgstr "生产单"
-
-#. module: e2yun_quality_mrp
-#: model:ir.model,name:e2yun_quality_mrp.model_qc_inspection
+#. module: e2yun_quality_stock
+#: model:ir.model,name:e2yun_quality_stock.model_qc_inspection
 msgid "Quality control inspection"
-msgstr "质检"
+msgstr "质检单"
 
-#. module: e2yun_quality_mrp
-#: model:ir.model,name:e2yun_quality_mrp.model_qc_inspection_line
+#. module: e2yun_quality_stock
+#: model:ir.model,name:e2yun_quality_stock.model_qc_inspection_line
 msgid "Quality control inspection line"
 msgstr "质检行"
 
-#. module: e2yun_quality_mrp
-#: model:ir.model,name:e2yun_quality_mrp.model_qc_trigger
+#. module: e2yun_quality_stock
+#: model:ir.model,name:e2yun_quality_stock.model_qc_trigger
 msgid "Quality control trigger"
 msgstr "质检触发点"
 
-#. module: e2yun_quality_mrp
-#: model_terms:ir.ui.view,arch_db:e2yun_quality_mrp.product_category_qc_form_view
-#: model_terms:ir.ui.view,arch_db:e2yun_quality_mrp.product_template_qc_mrp_form_view
-msgid "Quality control triggers"
-msgstr "质检触发点"
+#. module: e2yun_quality_stock
+#: model:ir.actions.act_window,name:e2yun_quality_stock.action_qc_inspection_per_lot_done
+msgid "Quality inspection from lot done"
+msgstr "关联完成批次检验"
 
-#. module: e2yun_quality_mrp
-#: code:addons/e2yun_quality_mrp/models/qc_test.py:117
-#, python-format
-msgid "Question '%s' is not valid: minimum value can't be higher than maximum value."
-msgstr "问题'%s'无效：最小值不能高于最大值。"
+#. module: e2yun_quality_stock
+#: model:ir.actions.act_window,name:e2yun_quality_stock.action_qc_inspection_per_lot_passed
+msgid "Quality inspection from lot passed"
+msgstr "关联合格批次检验"
 
-#. module: e2yun_quality_mrp
-#: code:addons/e2yun_quality_mrp/models/qc_test.py:108
-#, python-format
-msgid "Question '%s' is not valid: you have to mark at least one value as OK."
-msgstr "问题'%s'无效：您必须将至少一个值标记为OK。"
+#. module: e2yun_quality_stock
+#: model:ir.actions.act_window,name:e2yun_quality_stock.action_qc_inspection_per_picking_done
+msgid "Quality inspection from picking done"
+msgstr "关联完成拣货检验"
 
-#. module: e2yun_quality_mrp
-#: model:ir.model,name:e2yun_quality_mrp.model_mrp_product_produce
-msgid "Record Production"
-msgstr "记录生产"
+#. module: e2yun_quality_stock
+#: model:ir.actions.act_window,name:e2yun_quality_stock.action_qc_inspection_per_picking_passed
+msgid "Quality inspection from picking passed"
+msgstr "关联合格拣货检验"
 
-#. module: e2yun_quality_mrp
-#: code:addons/e2yun_quality_mrp/models/mrp_workorder.py:294
-#, python-format
-msgid "Scrap"
-msgstr "报废"
+#. module: e2yun_quality_stock
+#: model:ir.actions.act_window,name:e2yun_quality_stock.action_qc_inspection_per_lot
+msgid "Quality inspections from lot"
+msgstr "关联批次检验"
 
-#. module: e2yun_quality_mrp
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_inspection__operation_id
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_inspection_line__operation_id
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_trigger_line__operation_id
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_trigger_product_category_line__operation_id
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_trigger_product_line__operation_id
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_trigger_product_template_line__operation_id
-msgid "Step"
-msgstr "步"
+#. module: e2yun_quality_stock
+#: model:ir.actions.act_window,name:e2yun_quality_stock.action_qc_inspection_per_lot_failed
+msgid "Quality inspections from lot failed"
+msgstr "关联不合格批次检验"
 
-#. module: e2yun_quality_mrp
-#: model:ir.model.fields,help:e2yun_quality_mrp.field_qc_trigger_line__routing_id
-#: model:ir.model.fields,help:e2yun_quality_mrp.field_qc_trigger_product_category_line__routing_id
-#: model:ir.model.fields,help:e2yun_quality_mrp.field_qc_trigger_product_line__routing_id
-#: model:ir.model.fields,help:e2yun_quality_mrp.field_qc_trigger_product_template_line__routing_id
-msgid "The routing contains all the Work Centers used and for how long. This will create work orders afterwards which alters the execution of the manufacturing order."
-msgstr "工艺路线包含所有使用的工作中心以及使用的时间。 这将在之后创建工作订单，这会改变制造订单的执行。"
+#. module: e2yun_quality_stock
+#: model:ir.actions.act_window,name:e2yun_quality_stock.action_qc_inspection_per_picking
+msgid "Quality inspections from picking"
+msgstr "关联拣货检验"
 
-#. module: e2yun_quality_mrp
-#: code:addons/e2yun_quality_mrp/models/mrp_workorder.py:215
-#, python-format
-msgid "Time Tracking: "
-msgstr "工时追踪："
+#. module: e2yun_quality_stock
+#: model:ir.actions.act_window,name:e2yun_quality_stock.action_qc_inspection_per_picking_failed
+msgid "Quality inspections from picking failed"
+msgstr "关联不合格拣货检验"
 
-#. module: e2yun_quality_mrp
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_trigger__code
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_trigger_line__code
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_trigger_product_category_line__code
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_trigger_product_line__code
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_trigger_product_template_line__code
-msgid "Type of Operation"
-msgstr "作业的类型"
+#. module: e2yun_quality_stock
+#: model:ir.model,name:e2yun_quality_stock.model_stock_picking
+msgid "Transfer"
+msgstr "调拨"
 
-#. module: e2yun_quality_mrp
-#: model:ir.model,name:e2yun_quality_mrp.model_mrp_workorder
-msgid "Work Order"
-msgstr "工单"
+#. module: e2yun_quality_stock
+#: model_terms:ir.ui.view,arch_db:e2yun_quality_stock.stock_picking_qc_view
+msgid "Fist Inspection"
+msgstr "首检"
 
-#. module: e2yun_quality_mrp
-#: model_terms:ir.ui.view,arch_db:e2yun_quality_mrp.product_category_qc_form_view
-#: model_terms:ir.ui.view,arch_db:e2yun_quality_mrp.product_template_qc_mrp_form_view
-msgid "Work Order Operation"
-msgstr "工序"
-
-#. module: e2yun_quality_mrp
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_inspection__workorder_id
-#: model:ir.model.fields,field_description:e2yun_quality_mrp.field_qc_inspection_line__workorder_id
-msgid "Workorder"
-msgstr "工单"
-
-#. module: e2yun_quality_mrp
-#: code:addons/e2yun_quality_mrp/models/mrp_workorder.py:205
-#, python-format
-msgid "You need to define at least one productivity loss in the category 'Performance'. Create one from the Manufacturing app, menu: Configuration / Productivity Losses."
-msgstr "需要在分类“效率”中定义至少一个生产力损失。 从生产模块创建一个，菜单：配置/生产力损失。"
-
-#. module: e2yun_quality_mrp
-#: code:addons/e2yun_quality_mrp/models/mrp_workorder.py:201
-#, python-format
-msgid "You need to define at least one productivity loss in the category 'Productivity'. Create one from the Manufacturing app, menu: Configuration / Productivity Losses."
-msgstr "需要在分类“生产率”中定义至少一个生产力损失。 从生产模块创建一个，菜单：配置/生产力损失。"
-
-#. module: e2yun_quality_mrp
-#: code:addons/e2yun_quality_mrp/models/mrp_workorder.py:259
-#, python-format
-msgid "You need to define at least one unactive productivity loss in the category 'Performance'. Create one from the Manufacturing app, menu: Configuration / Productivity Losses."
-msgstr "需要在分类“效率”中定义至少一个生产力损失。 从生产模块创建一个，菜单：配置/生产力损失。"
-
-#. module: e2yun_quality_mrp
-#: code:addons/e2yun_quality_mrp/models/mrp_workorder.py:92
-#, python-format
-msgid "You should provide a lot/serial number for a component."
-msgstr "需要给组件设置批号/系列号"
-
-#. module: e2yun_quality_mrp
-#: code:addons/e2yun_quality_mrp/models/mrp_workorder.py:67
-#, python-format
-msgid "You should provide a lot/serial number for the final product."
-msgstr "需要给成品设置批号/系列号"
-
-#. module: e2yun_quality_mrp
-#: model:ir.model,name:e2yun_quality_mrp.model_qc_trigger_product_category_line
-msgid "qc.trigger.product_category_line"
-msgstr ""
-
-#. module: e2yun_quality_mrp
-#: model:ir.model,name:e2yun_quality_mrp.model_qc_trigger_product_line
-msgid "qc.trigger.product_line"
-msgstr ""
-
-#. module: e2yun_quality_mrp
-#: model:ir.model,name:e2yun_quality_mrp.model_qc_trigger_product_template_line
-msgid "qc.trigger.product_template_line"
-msgstr ""
+#. module: e2yun_quality_stock
+#: model_terms:ir.ui.view,arch_db:e2yun_quality_stock.stock_lot_qc_view
+#: model_terms:ir.ui.view,arch_db:e2yun_quality_stock.stock_picking_qc_view
+msgid "inspections"
+msgstr "检验"
