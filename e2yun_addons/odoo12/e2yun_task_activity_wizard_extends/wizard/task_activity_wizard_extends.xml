@@ -1,0 +1,18 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="mail_activity_view_form_popup_extends">
+            <field name="name">mail_activity_view_form_popup_extends</field>
+            <field name="model">mail.activity</field>
+            <field name="inherit_id" ref="mail.mail_activity_view_form_popup"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="after">
+<!--                    <field name="partner_ids" widget="many2many_tags"/>-->
+                    <field name="user_ids" widget="many2many_tags"/>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+    </record>
+  </data>
+</odoo>
