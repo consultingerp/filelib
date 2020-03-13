@@ -7,13 +7,89 @@
       <field name="model">agreement</field>
       <field name="inherit_id" ref="agreement_legal.partner_agreement_form_view"/>
       <field name="arch" type="xml">
+    <xpath expr="//field[@name='code']" position="replace">
+    <field name="x_studio_partner_id" string="客户名称" required="1" attrs="{}" options="{'no_create':1,'no_create_edit': 1,'no_open': 1}"/>
+    <xpath expr="//field[@name='agreement_type_id']" position="move"/>
+    <xpath expr="//field[@name='agreement_subtype_id']" position="move"/>
+    <xpath expr="//field[@name='parent_agreement_id']" position="move"/>
+    <field name="x_studio_order_type1" string="订单类型" required="1" attrs="{}"/>
+    <field name="sales_c_c_process" string="销售合同的缔约流程" required="1" attrs="{}"/>
+    <xpath expr="//field[@name='assigned_user_id']" position="move"/>
+    <field name="x_studio_xmmc" string="项目名称" required="1" attrs="{}"/>
+
+    <field name="x_studio_jhhm_id" string="机会号码OPP ID " required="1" attrs="{}" options="{'no_create':1,'no_create_edit': 1,'no_open': 1}" />
+
+    <field name="original_agreement_no" string="原协议编号"/>
+    <field name="x_studio_customer_bu" string="客户所属部门" required="1" attrs="{}" options="{'no_create':1,'no_create_edit': 1,'no_open': 1}"/>
+    <field name="x_studio_jfssbu1" string="交付所属部门" attrs="{}" required="1" options="{'no_create':1,'no_create_edit': 1,'no_open': 1}"/>
+    <field name="income_type" string="收入类型" widget="many2many_tags" options="{'no_create':1,'no_create_edit': 1,'no_open': 1}"/>
+    <field name="x_studio_cpx" string="产品线" required="1" attrs="{}"/>
+    <field name="x_studio_signing_entity" string="文思海辉签约实体" required="1" attrs="{}"/>
+    <field name="x_studio_htbz" string="合同币种" required="1" attrs="{}"   options="{'no_create':1,'no_create_edit': 1,'no_open': 1}" />
+    <field name="x_studio_htje" string="合同金额" required="1" attrs="{}"/>
+    <field name="x_studio_usd" string="美金合同币种"/>
+    <field name="x_studio_mjhtje" string="美金合同金额"/>
+    <field name="x_studio_chco"/>
+    <xpath expr="//field[@name='is_template']" position="move"/>
+  </xpath>
+
+  <xpath expr="//field[@name='active']" position="before">
+    <field name="x_studio_cgmpd" string="CGM" required="1" attrs="{}"/>
+    <field name="x_studio_eatpygsj" string="Front log相关数据" attrs="{}" required="1"/>
+    <field name="x_studio_jfrys" string="交付人员数"/>
+    <field name="x_studio_fkfs" string="付款方式" attrs="{}" required="1"/>
+    <field name="x_studio_hkzl" string="回款账龄（自然日）"/>
+    <field name="x_studio_mslx" string="免税类型" attrs="{}"/>
+    <field name="x_studio__dso_dayyg" string="预估 DSO Day" required="1" attrs="{}"/>
+    <field name="x_studio_dso_daypd" string="DSO Day判断"/>
+    <field name="x_studio_wwyzrsxtk" string="是否包含“无违约责任上限”条款" required="1" attrs="{}"/>
+    <field name="x_studio_hmdkh" string="是否为“黑名单”中的客户"/>
+    <field name="x_studio_hmdyy" string="黑名单原因" attrs="{'invisible': [('x_studio_hmdkh', '=', '否')],'required': [('x_studio_hmdkh', '=', '是')]}"/>
+    <field name="x_studio_xmjl1" string="项目经理" required="1" attrs="{}" options="{'no_create':1,'no_create_edit': 1,'no_open': 1}"/>
+    <field name="x_studio_xsdb1" string="销售代表" required="1" attrs="{}" options="{'no_create':1,'no_create_edit': 1,'no_open': 1}"/>
+    <field name="sales_department" required="True" options="{'no_create':1,'no_create_edit': 1,'no_open': 1}"/>
+    <field name="plan_sign_time"/>
+    <field name="signed_time"/>
+  </xpath>
+  <xpath expr="//field[@name='description']" position="attributes">
+    <attribute name="attrs">{}</attribute>
+    <attribute name="required"/>
+  </xpath>
+  <xpath expr="//field[@name='partner_id']" position="attributes">
+    <attribute name="attrs">{}</attribute>
+    <attribute name="invisible">1</attribute>
+  </xpath>
+  <xpath expr="//field[@name='assigned_user_id']" position="attributes">
+    <attribute name="attrs">{"readonly": [["is_template","=",True]], "invisible": [["is_template","=",True]]}</attribute>
+    <attribute name="required">1</attribute>
+  </xpath>
+  <xpath expr="//field[@name='agreement_subtype_id']" position="attributes">
+    <attribute name="attrs">{}</attribute>
+    <attribute name="domain"></attribute>
+    <attribute name="required">1</attribute>
+    <attribute name="widget"></attribute>
+  </xpath>
 
 
+        <xpath expr="//sheet/div[2][@class='oe_title']" position="replace">
+                     <div class="oe_title">
+                     <label for="agreement_code" string="合同编号" class="oe_edit_only" />
 
+                     <h1>
+                     <field name="agreement_code"/>
+                      </h1>
+                   <label for="name" class="oe_edit_only" string="合同名称"/>
+                        <h1>
+                            <field name="name"/>
+                       </h1>
+             </div>
+         </xpath>
+
+              <!--
         <field name="name" position="before">
-                    <field name="agreement_code" class="oe_inline"/>
-                    <label for="agreement_code" string="  " class="oe_inline"/>
-        </field>
+                 <field name="agreement_code" string="合同编号"  />
+               <label for="agreement_code" string="合同编号" class="oe_inline" help="合同编号"/>
+        </field> -->
 
 
        <xpath expr="//page[@name='structure']" position="attributes">
@@ -23,11 +99,75 @@
        <xpath expr="//field[@name='agreement_subtype_id']" position="attributes">
                <attribute name="options">{'no_create':1,'no_create_edit': 1}</attribute>
        </xpath>
-          <xpath expr="//field[@name='assigned_user_id']" position="attributes">
-               <attribute name="options">{'no_create':1,'no_create_edit': 1}</attribute>
+          <xpath expr="//field[@name='assigned_user_id']" position="replace">
+              <field name="assigned_user_id"  string="合同责任人" required="True" options="{'no_create':1,'no_create_edit': 1}"/>
        </xpath>
 
+            <xpath expr="//sheet/group[1]" position="attributes">
+                 <attribute name="string"></attribute>
+             </xpath>
 
+            <xpath expr="//sheet/group[2]" position="replace">
+                     <group string="项目背景">
+                        <field name="description"
+                               nolabel="1"/>
+                    </group>
+            </xpath>
+
+           <xpath expr="//sheet/group[3]" position="attributes">
+            <attribute name="attrs">{'invisible': True}</attribute>
+           </xpath>
+
+             <xpath expr="//sheet/group[5]" position="attributes">
+            <attribute name="attrs">{'invisible': True}</attribute>
+           </xpath>
+
+
+           <xpath expr="//group[@name='parties']" position="attributes">
+            <attribute name="attrs">{'invisible': True}</attribute>
+           </xpath>
+
+            <xpath expr="//group[@name='parties_content']" position="attributes">
+            <attribute name="attrs">{'invisible': True}</attribute>
+           </xpath>
+
+
+           <xpath expr="//field[@name='expiration_notice']" position="attributes">
+            <attribute name="attrs">{'invisible': True}</attribute>
+           </xpath>
+
+           <xpath expr="//field[@name='change_notice']" position="attributes">
+            <attribute name="attrs">{'invisible': True}</attribute>
+           </xpath>
+
+           <xpath expr="//field[@name='is_template']" position="attributes">
+            <attribute name="attrs">{'invisible': True}</attribute>
+           </xpath>
+
+           <xpath expr="//field[@name='notification_address_id']" position="attributes">
+            <attribute name="attrs">{'invisible': True}</attribute>
+           </xpath>
+
+           <xpath expr="//field[@name='termination_requested']" position="attributes">
+            <attribute name="attrs">{'invisible': True}</attribute>
+           </xpath>
+
+          <xpath expr="//field[@name='termination_date']" position="attributes">
+            <attribute name="attrs">{'invisible': True}</attribute>
+          </xpath>
+
+         <xpath expr="//page[@name='signature']" position="attributes">
+            <attribute name="attrs">{'invisible': True}</attribute>
+          </xpath>
+
+
+          <xpath expr="//sheet/group[7]" position="attributes">
+            <attribute name="attrs">{'invisible': True}</attribute>
+          </xpath>
+
+           <xpath expr="//sheet/group[8]" position="attributes">
+            <attribute name="attrs">{'invisible': True}</attribute>
+          </xpath>
 
 
        <xpath expr="//page[@name='products']" position="replace">
@@ -56,7 +196,7 @@
                                   <tree editable="top">
                                     <field name="pid"/>
                                     <field name="cgm" required="1"/>
-                                    <field name="x_studio_jfssbu" required="1" string="交付所属部门" options="{'no_create':1,'no_create_edit': 1}" />
+                                    <field name="x_studio_jfssbu" required="1" string="交付所属部门" options="{'no_create':1,'no_create_edit': 1,'no_open': 1}" />
                                     <field name="x_studio_htbz" options="{'no_create':1,'no_create_edit': 1}"  required="1"/>
                                     <field name="x_studio_htje" required="1"/>
                                     <!-- <field name="x_studio_mjhtje"/> -->
@@ -69,11 +209,13 @@
        </xpath>
 
         <button name="create_new_version" position="after">
-             <button name="action_emil_send" string="Send by Email" type="object"  class="oe_highlight"/>
+             <button name="action_emil_send" string="Send by Email" type="object" invisible="True"  class="oe_highlight"/>
              <!-- <button string="Import File" type="object" name="import_file" class="oe_highlight" /> -->
         </button>
 
-
+             <xpath expr="//button[@name='create_new_version']" position="attributes">
+                <attribute name="attrs">{'invisible': True}</attribute>
+             </xpath>
         <!-- 附件 -->
                 <xpath expr="//group[@name='term_information']" position="after">
                     <group>
@@ -181,6 +323,8 @@
         </field>
     </record>
 
+
+    <!--
    <record model="ir.ui.view" id="partner_agreement_search_view_extend">
         <field name="name">Agreement Search</field>
         <field name="model">agreement</field>
@@ -193,7 +337,7 @@
                             <field name="agreement_subtype_id"/>
                             <field name="x_studio_customer_name"/>
                             <field name="parent_agreement_id"/>
-                            <field name="x_studio__6"/>
+                            <field name="original_agreement_no"/>
                             <field name="x_studio_order_type1"/>
                             <field name="assigned_user_id"/>
                             <field name="x_studio_xmmc"/>
@@ -211,5 +355,5 @@
 
         </field>
     </record>
-
+        -->
 </odoo>

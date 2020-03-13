@@ -13,8 +13,81 @@ class Agreement(models.Model):
     signed_time = fields.Date('Signed Time')  # 合同签订时间
     sales_department = fields.Many2one('crm.team', string='Sales department')  # 合同签订时间
 
-    property_product_pricelist = fields.Many2one('product.pricelist', string='Pricelist',default=1,)
-    income_type = fields.Many2many('agreement.income.type', string='收入类型')
+    x_studio_partner_id = fields.Many2one('res.partner', string='Customer Name')  # 客户名称
+    x_studio_order_type1 = fields.Char(string='Order Type')  # 订单类型
+    #销售合同的缔约流程
+    sales_c_c_process=fields.Selection(	[["一般缔约流程","一般缔约流程"],["绿色通道类 Fast Pass","绿色通道（有模板备案）"],["不可协商类 Non-negotiable","不可协商类"],["事后合同类 After-fact","事后合同"]],string='Sales C C Process')
+
+    x_studio_xmmc= fields.Char(string='Project Name')  # 项目名称
+
+    #x_studio_jhhm_id = fields.Many2one('crm.lead', string='Opportunity Number')  # 机会号码OPP ID
+
+    x_studio_jhhm_id = fields.Char(string='Opportunity Number')  # 机会号码OPP ID
+
+    original_agreement_no= fields.Char(string='Original Agreement No')  # 原协议编号
+
+    x_studio_customer_bu = fields.Many2one('crm.team', string='Customer Bu')  # 客户所属部门
+
+    x_studio_jfssbu1 = fields.Many2one('crm.team', string='Delivery Bu')  # 交付所属部门
+
+
+    property_product_pricelist = fields.Many2one('product.pricelist', string='Pricelist',default=1,)  #价格表
+
+    income_type = fields.Many2many('agreement.income.type', string='Income Type')  #收入类型
+
+    #产品线
+    x_studio_cpx = fields.Selection(
+        [["DGT", "DGT"], ["DTL", "DTL"], ["DVE", "DVE"], ["CHM", "CHM"], ["INN", "INN"], ["ERP", "ERP"], ["OCS", "OCS"],
+         ["SIC", "SIC"], ["ADM", "ADM"], ["EMB", "EMB"], ["DPE", "DPE"], ["CRM", "CRM"], ["BDP", "BDP"], ["CLD", "CLD"],
+         ["MSS", "MSS"], ["DVI", "DVI"], ["APT", "APT"], ["PRS", "PRS"], ["SIT", "SIT"], ["UXD", "UXD"], ["CMS", "CMS"],
+         ["ECM", "ECM"], ["MOB", "MOB"], ["NXE", "NXE"], ["ONM", "ONM"], ["ACP", "ACP"], ["PGS", "PGS"], ["BIS", "BIS"],
+         ["IMS", "IMS"], ["SPT", "SPT"], ["HDT", "HDT"], ["BPO", "BPO"], ["SIO", "SIO"], ["TRS", "TRS"], ["SIB", "SIB"]], string='Product line')
+
+    x_studio_signing_entity = fields.Char(string='Pactera Contract Entity')  # 文思海辉签约实体
+
+    x_studio_htbz = fields.Many2one('res.currency', string='Contract Currency')  #合同币种
+
+    x_studio_htje = fields.Float(string='Contract Amount')
+
+    x_studio_usd = fields.Char(string='美金合同币种',default='USD',readonly='True')
+
+    x_studio_mjhtje = fields.Float(string='美金合同金额')
+
+    x_studio_chco  = fields.Selection([["固定金额+计时计件","固定金额+计时计件"],["不涉及收费","不涉及收费"],["固定金额","固定金额"],["计时计件","计时计件"]],string='收费方式')  #收费方式
+
+    x_studio_cgmpd = fields.Char(string='CGM')
+
+    x_studio_eatpygsj = fields.Char(string='Front log相关数据') # Front log相关数据
+
+    x_studio_pjhtlrl = fields.Char(string='平均合同利润率')  # 平均合同利润率
+
+    x_studio_jfrys = fields.Char(string='平均合同利润率')  # 交付人员数
+
+    x_studio_fkfs = fields.Selection([["月结 Monthly","月结 Monthly"],["每两月结算 Bimonthly","每两月结算 Bimonthly"],
+                                          ["季结 Quarterly","季结 Quarterly"],
+                                          ["按合同里程碑 Based on the Contract Milestone",
+                                           "按合同里程碑 Based on the Contract Milestone"],
+                                          ["项目全部验收后 After Project Completion Acceptance",
+                                           "项目全部验收后 After Project Completion Acceptance"],["其他 Others","其他 Others"]],string='付款方式')
+
+    x_studio_hkzl = fields.Char(string='回款账龄（自然日）')  # 回款账龄（自然日）
+
+    #免税类型
+    x_studio_mslx = fields.Selection([["离岸免税-offshore","离岸免税-offshore"],["四技免税-4T","四技免税-4T"],["海外实体-oversea LE","海外实体-oversea LE"],["不可免税-NA","不可免税-NA"],["无税合同-NA","无税合同-NA"]],string='免税类型')
+
+    x_studio__dso_dayyg = fields.Char(string='预估 DSO Day')  #预估 DSO Day
+
+    x_studio_dso_daypd = fields.Char(string='DSO Day判断')  # DSO Day判断
+
+    x_studio_wwyzrsxtk = fields.Selection([["是","是"],["否","否"]],string='是否包含“无违约责任上限”条款')  # 是否包含“无违约责任上限”条款
+
+    x_studio_hmdkh = fields.Selection([["是","是"],["否","否"]],string='是否为“黑名单”中的客户')  # 是否为“黑名单”中的客户
+
+    x_studio_hmdyy = fields.Char(string='黑名单原因')  # DSO Day判断
+
+    x_studio_xmjl1=fields.Many2one('res.users',string='项目经理')
+
+    x_studio_xsdb1 = fields.Many2one('res.users', string='	销售代表')
 
     is_email_contract_text = fields.Boolean("Is Email Contract Text",default=True)
 
@@ -84,9 +157,9 @@ class Agreement(models.Model):
         if self.x_studio_htbz and oldhtbz and self.x_studio_htje:
             company_id = self.company_id or self.env.user.company_id
             create_date = self.create_date or fields.Date.today()
-            currency = self.env['res.currency'].search([('name', '=', self.x_studio_htbz)])
+            currency = self.env['res.currency'].search([('name', '=', self.x_studio_htbz.name)])
             property_product_pricelist = self.env['product.pricelist'].search(
-                [('name', 'like', '%' + oldhtbz.x_studio_htbz)])
+                [('name', 'like', '%' + oldhtbz.x_studio_htbz.name)])
             if currency and property_product_pricelist:
                 currency_rate = self.env['res.currency']._get_conversion_rate(
                         property_product_pricelist.currency_id,currency,
@@ -102,7 +175,7 @@ class Agreement(models.Model):
             create_date = self.create_date or fields.Date.today()
             currency = self.env['res.currency'].search([('name', 'like', '%USD%')])
             property_product_pricelist = self.env['product.pricelist'].search(
-                [('name', 'like', '%' + self.x_studio_htbz + '%')])
+                [('name', 'like', '%' + self.x_studio_htbz.name + '%')])
             if currency and property_product_pricelist:
                 currency_rate = self.env['res.currency']._get_conversion_rate(
                     property_product_pricelist.currency_id, currency,
@@ -114,7 +187,7 @@ class Agreement(models.Model):
       if self.x_studio_htbz:
         company_id = self.company_id or self.env.user.company_id
         create_date = self.create_date or fields.Date.today()
-        currency = self.env['res.currency'].search([('name', 'like', '%'+self.x_studio_htbz+'%')])
+        currency = self.env['res.currency'].search([('name', 'like', '%'+self.x_studio_htbz.name+'%')])
         property_product_pricelist = self.env['product.pricelist'].search(
             [('name', 'like', '%USD%')])
         if currency and property_product_pricelist:
@@ -264,7 +337,7 @@ class Agreement(models.Model):
                     create_date = self.create_date or fields.Date.today()
                     currency = self.env['res.currency'].search([('name', 'like', '%USD%')])
                     property_product_pricelist = self.env['product.pricelist'].search(
-                        [('name', 'like', '%' + self.x_studio_htbz + '%')])
+                        [('name', 'like', '%' + self.x_studio_htbz.name + '%')])
                     if currency and property_product_pricelist:
                         currency_rate = self.env['res.currency']._get_conversion_rate(
                             property_product_pricelist.currency_id, currency,
@@ -704,6 +777,14 @@ class Agreement(models.Model):
             'target': 'new',
             'context': ctx,
         }
+
+    def unlink(self):
+        for agree in self:
+            if int(agree.stage_id)>1 and self._uid!=2:
+                raise UserError(("进入过BO审阅的合同申请记录都不能自行删除"))
+            super(Agreement,agree).unlink()
+
+
 
 class AgreementSubtype(models.Model):
     _inherit = "agreement.subtype"
