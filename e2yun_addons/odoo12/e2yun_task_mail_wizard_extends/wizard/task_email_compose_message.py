@@ -281,10 +281,10 @@ class SurveyMailComposeMessage(models.TransientModel):
     @api.multi
     def action_send_mail(self):
         self.mail_send()
-
         ctx = self.env.context.copy()
         survey_status = self.env['project.task'].browse(ctx['default_res_id'])
         survey_status.write({'lock_survey': True})
+        survey_status.partner_ids = self.partner_ids
         return {'type': 'ir.actions.act_window_close', 'infos': 'mail_sent'}
 
     @api.multi
@@ -384,8 +384,9 @@ class SurveyMailComposeMessage(models.TransientModel):
 
             survey_ids = wizard._context['default_survey_ids']
             survey = self.env['survey.survey']
-            body_a = """"""
+            # body_a = """"""
             for email in emails_list:
+                body_a = """"""
                 partner = Partner.search([('email', '=', email)], limit=1)
                 #消息内容
                 for u in survey.browse(survey_ids):
@@ -433,6 +434,7 @@ class SurveyMailComposeMessage(models.TransientModel):
 
             for partner in partner_list:
                 # 消息内容
+                body_a = """"""
                 for u in survey.browse(survey_ids):
                     url = u.public_url
                     name = u.title
