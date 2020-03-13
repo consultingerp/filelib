@@ -133,6 +133,10 @@ class Agreement(models.Model):
         partner_ids = []
         if self._uid != self.create_uid.id and self._uid != self.assigned_user_id.id:
             raise UserError(u'仅提交人可以修改发起的合同。')
+        else:
+            if self.agreement_subtype_id.name == 'MAD+SOW（主服务协议+工作说明书）':
+                if not self.pws_line_ids and not self.pws_line_ids.pws_line_attachment_ids:
+                    raise UserError("合同子类型：MAD+SOW（主服务协议+工作说明书），请上传PWS导入")
 
         for rec in self:
             if getattr(rec, self._state_field) in self._state_from:
@@ -614,7 +618,7 @@ class TierValidation(models.AbstractModel):
             sql = 'SELECT * from res_groups_users_rel where gid=%s and uid=%s'
             self._cr.execute(sql, (groups_id, self._uid,))
             groups_users = self._cr.fetchone()
-            if not groups_users:
+            if self.can_review and groups_users:
                 no_check = False
                 #raise UserError(u'仅法务可以更新清洁版合同文本。')
             # if self.can_review and self.bo_review=='BO审阅-全程监管':
