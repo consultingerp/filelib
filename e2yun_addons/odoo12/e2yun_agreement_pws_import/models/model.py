@@ -237,7 +237,7 @@ class AgreementPwsImport(models.TransientModel):
 
             cell_value = table.cell(13, 5).value  # 项目背景
             if not (cell_value is None) and not (cell_value is ''):
-                vals['x_studio_xmbj'] = cell_value
+                vals['description'] = cell_value
 
         if table.number == 8:
            cell_value = table.cell(2, 3).value  # 合同起始日期
@@ -385,7 +385,7 @@ class AgreementPwsImport(models.TransientModel):
 
                 cell_value = table.cell(13, 5).value  # 项目背景
                 if not (cell_value is None) and not (cell_value is ''):
-                    vals['x_studio_xmbj'] = cell_value
+                    vals['description'] = cell_value
 
             if table.number == 10:
                cell_value = table.cell(10, 2).value  # 订单类型
