@@ -6,3 +6,4 @@ from . import qc_trigger
 from . import qc_trigger_line
 from . import mrp_production
 from . import mrp_workorder
+from . import qc_test
