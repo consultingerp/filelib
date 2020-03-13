@@ -166,13 +166,16 @@ class AgreementPwsImport(models.TransientModel):
             cell_value = table.cell(6, 5).value  # 机会编号
             if not (cell_value is None) and not (cell_value is ''):
                 # import math
-                sql = 'select id  from crm_lead where   sf_no=%s'
+                sql = 'select id ,won_status from crm_lead where   sf_no=%s or code=%s'
                 # self._cr.execute(sql, (str(math.floor(cell_value)),))
-                self._cr.execute(sql, (str(cell_value.strip()),))
+                self._cr.execute(sql, (str(cell_value.strip()), str(cell_value.strip()),))
                 x_studio_jhhm = self._cr.fetchone()
                 # x_studio_jhhm = self.env['crm.lead'].search(
                 #     [('sf_no', '=', str(math.floor(cell_value)))], limit=1)
                 if x_studio_jhhm:
+                    if x_studio_jhhm[1]!='won':
+                        raise UserError(("机会号需要先做close won处理: %s") % (cell_value))
+
                     vals['x_studio_jhhm_id'] = x_studio_jhhm[0]
                 else:
                     raise UserError(("机会号不存在: %s") % (cell_value))
@@ -302,13 +305,15 @@ class AgreementPwsImport(models.TransientModel):
                 cell_value = table.cell(6, 5).value  #机会编号
                 if not (cell_value is None) and not (cell_value is ''):
                     #import math
-                    sql = 'select id  from crm_lead where   sf_no=%s'
+                    sql = 'select id,won_status  from crm_lead where   sf_no=%s or code=%s'
                     #self._cr.execute(sql, (str(math.floor(cell_value)),))
-                    self._cr.execute(sql, (str(cell_value.strip()),))
+                    self._cr.execute(sql, (str(cell_value.strip()),str(cell_value.strip()),))
                     x_studio_jhhm = self._cr.fetchone()
                     # x_studio_jhhm = self.env['crm.lead'].search(
                     #     [('sf_no', '=', str(math.floor(cell_value)))], limit=1)
                     if x_studio_jhhm:
+                        if x_studio_jhhm[1] != 'won':
+                            raise UserError(("机会号需要先做close won处理: %s") % (cell_value))
                         vals['x_studio_jhhm_id'] = x_studio_jhhm[0]
                     else:
                         raise UserError(("机会号不存在: %s") % (cell_value))
