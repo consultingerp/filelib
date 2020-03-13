@@ -8,4 +8,4 @@ class MrpProduction(models.Model):
     _name = "mrp.production"
     _inherit = ['mrp.production', 'tier.validation']
     _state_from = ['draft']
-    _state_to = ['confirmed']
+    _state_to = ['','confirmed']
