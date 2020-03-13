@@ -31,7 +31,7 @@
 <!--          <field name="inherit_id" ref="kindee_data_sync_info.view_ck_hours_worker_form"/>-->
 <!--          <field name="arch" type="xml">-->
 <!--              <xpath expr="//button[@name='button_confirms']" position="after">-->
-<!--                  <button name="groupline_by_userid" string="test button" class="oe_highlight" type="object"/>-->
+<!--                  <button name="search_by_userid" string="test button" class="oe_highlight" type="object"/>-->
 <!--              </xpath>-->
 <!--          </field>-->
 <!--      </record>-->
