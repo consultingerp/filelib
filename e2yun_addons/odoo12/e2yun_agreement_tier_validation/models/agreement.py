@@ -618,10 +618,8 @@ class TierValidation(models.AbstractModel):
             sql = 'SELECT * from res_groups_users_rel where gid=%s and uid=%s'
             self._cr.execute(sql, (groups_id, self._uid,))
             groups_users = self._cr.fetchone()
-            if not groups_users:
+            if self.can_review and groups_users:
                 no_check = False
-            if not no_check:
-                raise UserError(u'合同正在审批中。')
                 #raise UserError(u'仅法务可以更新清洁版合同文本。')
             # if self.can_review and self.bo_review=='BO审阅-全程监管':
             #     no_check=False
