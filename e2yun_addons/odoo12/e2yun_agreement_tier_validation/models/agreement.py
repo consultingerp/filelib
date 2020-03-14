@@ -454,14 +454,15 @@ class TierValidation(models.AbstractModel):
 
 
             if 'pdfswy_attachment_ids' != key and   'pdfqw_attachment_ids' != key and  \
-                    'contract_text_attachment_ids' != key \
+                    'contract_text_attachment_ids' != key and 'fktj_attachment_ids'!=key \
                     and 'x_studio_srqrlx' != key and 'signed_time' !=key  and 'contract_text_clean_attachment_ids' !=key  \
                     and 'contract_text_process_attachment_ids' !=key  \
                     and 'revision' != key :
                 no_check=True
             elif  ('contract_text_attachment_ids' == key or
                    'pdfswy_attachment_ids' == key or
-                   'pdfqw_attachment_ids' == key)  and int(self.stage_id)==6 :
+                   'pdfqw_attachment_ids' == key or
+                   'fktj_attachment_ids' == key)  and int(self.stage_id)==6 :
                 #上传签章完成的最终合同，并回写签订时间
                 GetDatetime = get_zone_datetime.GetDatetime()
                 signed_time = GetDatetime.get_datetime()

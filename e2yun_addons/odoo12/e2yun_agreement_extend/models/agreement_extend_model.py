@@ -584,7 +584,7 @@ class Agreement(models.Model):
                 'email_to': partner_ids[0],
                 'subject': attachment_ids_value['value']['subject'],
                 'body_html': attachment_ids_value['value']['body'],
-                'attachment_ids': [(4, attachment.id) for attachment in agreement_data.fktj_attachment_ids],
+               # 'attachment_ids': [(4, attachment.id) for attachment in agreement_data.fktj_attachment_ids],
                 'notification': True,
                 'auto_delete': True,
             }
