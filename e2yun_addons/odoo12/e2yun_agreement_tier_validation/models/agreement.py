@@ -27,7 +27,9 @@ class Agreement(models.Model):
     @api.multi
     def _compute_can_review(self):
         for rec in self:
-            rec.can_review = self.env.user in rec.reviewer_ids
+            #rec.can_review = self.env.user in rec.reviewer_ids
+            rec.can_review = self.env.user in  rec.review_ids.filtered(
+                lambda r: r.status == 'pending').mapped('reviewer_ids')
 
             if rec.can_review and rec.approve_sequence:
                 sequence = rec.review_ids.filtered(
@@ -380,6 +382,9 @@ class TierValidation(models.AbstractModel):
         groups_users = self._cr.fetchone()
         if groups_users:
             return super(TierValidation, self).write(vals)
+        msg="该操作正在审批中"
+        if int(self.stage_id)>=6:
+            msg="该操作审批已结束"
 
         #草稿状态下 只能创建人能编辑
         if int(self.stage_id.id)<=1 and (self._uid!=self.create_uid.id and self._uid!=self.assigned_user_id.id):
@@ -448,13 +453,15 @@ class TierValidation(models.AbstractModel):
                             raise UserError(u'不能删除上传过的任何文档。')
 
 
-            if 'pdfswy_attachment_ids' != key and   'pdfqw_attachment_ids' != key and 'fktj_attachment_ids' != key and \
-                    'contract_text_attachment_ids' != key and 'email_approval_attachment_ids' != key \
+            if 'pdfswy_attachment_ids' != key and   'pdfqw_attachment_ids' != key and  \
+                    'contract_text_attachment_ids' != key \
                     and 'x_studio_srqrlx' != key and 'signed_time' !=key  and 'contract_text_clean_attachment_ids' !=key  \
                     and 'contract_text_process_attachment_ids' !=key  \
                     and 'revision' != key :
                 no_check=True
-            elif  'contract_text_attachment_ids' == key and int(self.stage_id)==6 :
+            elif  ('contract_text_attachment_ids' == key or
+                   'pdfswy_attachment_ids' == key or
+                   'pdfqw_attachment_ids' == key)  and int(self.stage_id)==6 :
                 #上传签章完成的最终合同，并回写签订时间
                 GetDatetime = get_zone_datetime.GetDatetime()
                 signed_time = GetDatetime.get_datetime()
@@ -465,7 +472,7 @@ class TierValidation(models.AbstractModel):
                 self._cr.execute(sql, (groups_id, self._uid,))
                 groups_users = self._cr.fetchone()
                 if not groups_users:
-                    raise UserError(u'仅商务可以更新最终版合同文本')
+                    raise UserError(u'仅商务可以更新最终版合同文本与PDF文本')
 
                 if not self.signed_time and not 'signed_time' in vals.keys():
                     raise UserError(u'请填写合同签订时间。')
@@ -570,7 +577,7 @@ class TierValidation(models.AbstractModel):
                 ('status', '=', 'pending')
             ])
             if user_reviews:
-                raise UserError(u'合同正在审批中。')
+                raise UserError(msg)
             else:
                 user_reviews = self.env['tier.review'].search([
                     ('model', '=', 'agreement'),
@@ -578,7 +585,7 @@ class TierValidation(models.AbstractModel):
                     ('status', '=', 'approved')
                 ])
                 if not user_reviews:
-                    raise UserError(u'合同未完成审批。')
+                    raise UserError(msg)
 
             sql = "UPDATE  agreement set plan_sign_time=%s,stage_id=6 where id=%s"
             if vals['plan_sign_time']:
@@ -643,7 +650,7 @@ class TierValidation(models.AbstractModel):
                     self._state_from and not vals.get(self._state_field) in
                     (self._state_to + [self._cancel_state]) and not
                     self._check_allow_write_under_validation(vals)) and no_check:
-                raise ValidationError(_("The operation is under validation."))
+                raise ValidationError(msg)
 
         if vals.get(self._state_field) in self._state_from:
             self.mapped('review_ids').unlink()

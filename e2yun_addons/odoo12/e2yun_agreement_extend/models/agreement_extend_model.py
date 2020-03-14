@@ -514,6 +514,12 @@ class Agreement(models.Model):
 
                         if up_sequence.get(tier_review_data.up_sequence):
                             tier_review_data_temp=up_sequence[tier_review_data.up_sequence]
+                            #上级平行审批情况下处理
+                            for datatemp in tier_review_datas:
+                                if datatemp.definition_id.sequence==tier_review_data.up_sequence:
+                                    if datatemp.status != 'approved':
+                                        tier_review_data_temp=datatemp
+                                        break
                         else:
                             tier_review_data_temp = tier_review_datas[i - 1]
                         if tier_review_data_temp.status == 'approved':
