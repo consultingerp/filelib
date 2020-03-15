@@ -30,7 +30,9 @@ class AgreementPwsImport(models.TransientModel):
         # if self.new==False and not self.agreement_id:
         #     raise UserError("如果不是新建，请选择需要添加PWS的合同")
         if not self.import_pws_attachment_ids:
-            return
+            raise UserError(("请上传PWS文件"))
+        if len(self.import_pws_attachment_ids)>1:
+            raise UserError(("请只上传并保留一个PWS文件"))
 
         status, headers, content=self.env['ir.http'].binary_content(xmlid=None, model='ir.attachment', id=self.import_pws_attachment_ids[0].id, field='datas', unique=False,
                            filename=None, filename_field='datas_fname', download=False, mimetype=None,
