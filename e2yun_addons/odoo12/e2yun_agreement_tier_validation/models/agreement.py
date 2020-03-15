@@ -437,11 +437,11 @@ class TierValidation(models.AbstractModel):
                             raise UserError(u'不能删除上传过的任何文档。')
 
             #验证审批过程版的附件不能删除
-            if 'contract_text_process_attachment_ids' == key:
-                if self.contract_text_process_attachment_ids:
-                    for contract_text_process_attachment_id in self.contract_text_process_attachment_ids:
-                        if not contract_text_process_attachment_id.id in vals['contract_text_process_attachment_ids'][0][2]:
-                            raise UserError(u'不能删除上传过的任何文档。')
+            # if 'contract_text_process_attachment_ids' == key:
+            #     if self.contract_text_process_attachment_ids:
+            #         for contract_text_process_attachment_id in self.contract_text_process_attachment_ids:
+            #             if not contract_text_process_attachment_id.id in vals['contract_text_process_attachment_ids'][0][2]:
+            #                 raise UserError(u'不能删除上传过的任何文档。')
 
             # 验证文本最终版的附件不能删除
             if 'contract_text_attachment_ids' == key:
