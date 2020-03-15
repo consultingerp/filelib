@@ -12,7 +12,7 @@ class Agreement(models.Model):
     plan_sign_time=fields.Date('Plan Sign Time') # 计划回签时间
     signed_time = fields.Date('Signed Time')  # 合同签订时间
     sales_department = fields.Many2one('crm.team', string='Sales department')  # 合同签订时间
-
+    rejected_emil=fields.Boolean(default=False)  #拒绝提醒
     x_studio_partner_id = fields.Many2one('res.partner', string='Customer Name')  # 客户名称
     x_studio_order_type1 = fields.Char(string='Order Type')  # 订单类型
     #销售合同的缔约流程
@@ -360,7 +360,7 @@ class Agreement(models.Model):
 
     def send_approval_warn_emlil(self,interval_time):
         #mail.template / name_search
-        #查找阶段为 待审批与审批中的数据
+        #查找阶段为 待审批与审批中的数据 定时提醒
         agreement_obj=self.env['agreement']
         tier_review_obj = self.env['tier.review']
         agreement_datas = agreement_obj.search(
@@ -473,7 +473,7 @@ class Agreement(models.Model):
 
 
     def send_approval_emil(self):
-        #阶段待处理审批邮件
+        #下一阶段待审批提醒
         agreement_obj = self.env['agreement']
         agreement_datas = agreement_obj.search(
             [('stage_id', '<', 7)])
@@ -481,7 +481,19 @@ class Agreement(models.Model):
 
         up_sequence={}
         for agreement_data in agreement_datas:
-            #阶段审批邮件提醒
+
+          if agreement_data.rejected_emil:
+               #被拒绝提醒
+               tier_review_datas = tier_review_obj.search(
+                   [('res_id', '=', agreement_data.id),('status', '=', 'rejected')])
+               if tier_review_datas:
+                   partner_ids = []
+                   partner_ids.append(agreement_data.create_uid.partner_id.email)
+                   self.send_approval_emil_temp(agreement_data.id, partner_ids, 'email_template_rejected_agreement')
+                   agreement_data.rejected_emil = False
+                   continue
+
+           #阶段审批邮件提醒
           if int(agreement_data.stage_id)<4:
             tier_review_datas = tier_review_obj.search(
                 [('res_id', '=', agreement_data.id)], order="sequence asc")
@@ -505,12 +517,6 @@ class Agreement(models.Model):
                             break
                     else:
                         partner_ids = []
-                        if tier_review_data.status == 'rejected':
-                            if tier_review_data.requested_by:
-                                partner_ids.append(tier_review_data.requested_by.partner_id.email)
-                                self.send_approval_emil_temp(agreement_data.id, partner_ids,'email_template_rejected_agreement')
-                                tier_review_data.is_send_email = True
-                                break
 
                         if up_sequence.get(tier_review_data.up_sequence):
                             tier_review_data_temp=up_sequence[tier_review_data.up_sequence]

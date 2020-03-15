@@ -352,6 +352,7 @@ class CommentWizard(models.TransientModel):
         if self.validate_reject == 'reject':
             body = '审批拒绝:' + self.check_advise
             rec._rejected_tier_extend(body,attachment_ids)
+            rec.rejected_emil=True
         if self.validate_reject == 'rebut':
             rec._rebut_tier()
 
@@ -383,8 +384,14 @@ class TierValidation(models.AbstractModel):
         if groups_users:
             return super(TierValidation, self).write(vals)
         msg="该操作正在审批中"
-        if int(self.stage_id)>=6:
+        if int(self.stage_id)>=5:
             msg="该操作审批已结束"
+        elif int(self.stage_id)==4:
+            tier_review_obj = self.env['tier.review']
+            tier_review_datas = tier_review_obj.search(
+                [('res_id', '=', self.id), ('status', '!=', 'approved')])
+            if not tier_review_datas:
+                msg = "该操作审批已结束"
 
         #草稿状态下 只能创建人能编辑
         if int(self.stage_id.id)<=1 and (self._uid!=self.create_uid.id and self._uid!=self.assigned_user_id.id):
@@ -454,7 +461,7 @@ class TierValidation(models.AbstractModel):
 
 
             if 'pdfswy_attachment_ids' != key and   'pdfqw_attachment_ids' != key and  \
-                    'contract_text_attachment_ids' != key and 'fktj_attachment_ids'!=key \
+                    'contract_text_attachment_ids' != key and 'fktj_attachment_ids'!=key  and 'rejected_emil' !=key \
                     and 'x_studio_srqrlx' != key and 'signed_time' !=key  and 'contract_text_clean_attachment_ids' !=key  \
                     and 'contract_text_process_attachment_ids' !=key  \
                     and 'revision' != key :
@@ -478,23 +485,24 @@ class TierValidation(models.AbstractModel):
                 if not self.signed_time and not 'signed_time' in vals.keys():
                     raise UserError(u'请填写合同签订时间。')
                 # 处理历史文本合同
-                sql = 'select attachment_id from agreement_contract_text_ir_attachments_rel where id=%s'
-                self._cr.execute(sql, (self.id,))
-                iattachment_ids = self._cr.fetchall()
-                attachment = self.env['ir.attachment']
-                contract_text_attachment_ids=[]
-                for contract_text_attachment_id in  vals['contract_text_attachment_ids'][0][2]:
-                    is_add=True
-                    for iattachment_id in iattachment_ids:
-                        if iattachment_id[0]==contract_text_attachment_id:
-                            is_add=False
-                            attachment.browse(iattachment_id[0]).unlink()
-                    if is_add:
-                        contract_text_attachment_ids.append(contract_text_attachment_id)
-                vals['contract_text_attachment_ids']=[[6, False, contract_text_attachment_ids]]
+                # sql = 'select attachment_id from agreement_contract_text_ir_attachments_rel where id=%s'
+                # self._cr.execute(sql, (self.id,))
+                # iattachment_ids = self._cr.fetchall()
+                # attachment = self.env['ir.attachment']
+                # contract_text_attachment_ids=[]
+                # for contract_text_attachment_id in  vals['contract_text_attachment_ids'][0][2]:
+                #     is_add=True
+                #     for iattachment_id in iattachment_ids:
+                #         if iattachment_id[0]==contract_text_attachment_id:
+                #             is_add=False
+                #             attachment.browse(iattachment_id[0]).unlink()
+                #     if is_add:
+                #         contract_text_attachment_ids.append(contract_text_attachment_id)
+                # vals['contract_text_attachment_ids']=[[6, False, contract_text_attachment_ids]]
+                #
+                # sql = 'delete from agreement_contract_text_ir_attachments_rel where id=%s'
+                # self._cr.execute(sql, (self.id,))
 
-                sql = 'delete from agreement_contract_text_ir_attachments_rel where id=%s'
-                self._cr.execute(sql, (self.id,))
 
             elif 'contract_text_clean_attachment_ids' == key and int(self.stage_id) == 4:
                 # 上传清洁版合同文本，更新提醒销售输入预计签回时间
