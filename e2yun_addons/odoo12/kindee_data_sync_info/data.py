@@ -1217,7 +1217,7 @@ class CK_Hours_Worker(models.Model):
     def search_by_userid_approve(self, userid, date):
     # @api.multi
     # def search_by_userid_approve(self):
-    #     date = '2020-03-13'
+    #     date = '2020-03-12 09:45:46'
     #     userid = 1
         logging.info("date是%s" % date)
         logging.info("useri是%s" % userid)
@@ -1226,18 +1226,18 @@ class CK_Hours_Worker(models.Model):
         else:
             timezone = 'utc'
 
-        date_from = date + ' 00:00:00'
-        date_to = date + ' 23:59:59'
+        date_from = date[:10] + ' 00:00:00'
+        date_to = date[:10] + ' 23:59:59'
+
         #new
-        current_date_from = (datetime.datetime.strptime(date_from, '%Y-%m-%d %H:%M:%S'))
-        current_date_to = (datetime.datetime.strptime(date_to, '%Y-%m-%d %H:%M:%S'))
-        logging.info("时间1是%s" % current_date_from)
+        # current_date_from = (datetime.datetime.strptime(date_from, '%Y-%m-%d %H:%M:%S'))
+        # current_date_to = (datetime.datetime.strptime(date_to, '%Y-%m-%d %H:%M:%S'))
+        # logging.info("时间1是%s" % current_date_from)
 
         # origin
         current_date_from = (datetime.datetime.strptime(date_from, '%Y-%m-%d %H:%M:%S')).replace(tzinfo=pytz.timezone(timezone)).astimezone(pytz.timezone(pytz.utc.zone))
         current_date_to = (datetime.datetime.strptime(date_to, '%Y-%m-%d %H:%M:%S')).replace(tzinfo=pytz.timezone(timezone)).astimezone(pytz.timezone(pytz.utc.zone))
-        logging.info("时间2是%s" % current_date_from)
-
+        logging.info("时间from是%s" % current_date_from)
         # current_date = (datetime.datetime.strptime(date, '%Y-%m-%d')).replace(tzinfo=pytz.timezone(self.env.user.tz)).astimezone(pytz.timezone(pytz.utc.zone))
         # date = current_date.strftime('%Y-%m-%d')
         date_format_from = current_date_from.strftime('%Y-%m-%d %H:%M:%S')
