@@ -494,7 +494,7 @@ class Agreement(models.Model):
                    continue
 
            #阶段审批邮件提醒
-          if int(agreement_data.stage_id)<4:
+          if int(agreement_data.stage_id)<=4:
             tier_review_datas = tier_review_obj.search(
                 [('res_id', '=', agreement_data.id)], order="sequence asc")
 
