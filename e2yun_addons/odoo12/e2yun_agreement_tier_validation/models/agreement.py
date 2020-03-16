@@ -27,7 +27,9 @@ class Agreement(models.Model):
     @api.multi
     def _compute_can_review(self):
         for rec in self:
-            rec.can_review = self.env.user in rec.reviewer_ids
+            #rec.can_review = self.env.user in rec.reviewer_ids
+            rec.can_review = self.env.user in  rec.review_ids.filtered(
+                lambda r: r.status == 'pending').mapped('reviewer_ids')
 
             if rec.can_review and rec.approve_sequence:
                 sequence = rec.review_ids.filtered(
@@ -350,6 +352,7 @@ class CommentWizard(models.TransientModel):
         if self.validate_reject == 'reject':
             body = '审批拒绝:' + self.check_advise
             rec._rejected_tier_extend(body,attachment_ids)
+            rec.rejected_emil=True
         if self.validate_reject == 'rebut':
             rec._rebut_tier()
 
@@ -380,6 +383,15 @@ class TierValidation(models.AbstractModel):
         groups_users = self._cr.fetchone()
         if groups_users:
             return super(TierValidation, self).write(vals)
+        msg="该操作正在审批中"
+        if int(self.stage_id)>=5:
+            msg="该操作审批已结束"
+        elif int(self.stage_id)==4:
+            tier_review_obj = self.env['tier.review']
+            tier_review_datas = tier_review_obj.search(
+                [('res_id', '=', self.id), ('status', '!=', 'approved')])
+            if not tier_review_datas:
+                msg = "该操作审批已结束"
 
         #草稿状态下 只能创建人能编辑
         if int(self.stage_id.id)<=1 and (self._uid!=self.create_uid.id and self._uid!=self.assigned_user_id.id):
@@ -425,11 +437,11 @@ class TierValidation(models.AbstractModel):
                             raise UserError(u'不能删除上传过的任何文档。')
 
             #验证审批过程版的附件不能删除
-            if 'contract_text_process_attachment_ids' == key:
-                if self.contract_text_process_attachment_ids:
-                    for contract_text_process_attachment_id in self.contract_text_process_attachment_ids:
-                        if not contract_text_process_attachment_id.id in vals['contract_text_process_attachment_ids'][0][2]:
-                            raise UserError(u'不能删除上传过的任何文档。')
+            # if 'contract_text_process_attachment_ids' == key:
+            #     if self.contract_text_process_attachment_ids:
+            #         for contract_text_process_attachment_id in self.contract_text_process_attachment_ids:
+            #             if not contract_text_process_attachment_id.id in vals['contract_text_process_attachment_ids'][0][2]:
+            #                 raise UserError(u'不能删除上传过的任何文档。')
 
             # 验证文本最终版的附件不能删除
             if 'contract_text_attachment_ids' == key:
@@ -448,13 +460,16 @@ class TierValidation(models.AbstractModel):
                             raise UserError(u'不能删除上传过的任何文档。')
 
 
-            if 'pdfswy_attachment_ids' != key and   'pdfqw_attachment_ids' != key and 'fktj_attachment_ids' != key and \
-                    'contract_text_attachment_ids' != key and 'email_approval_attachment_ids' != key \
+            if 'pdfswy_attachment_ids' != key and   'pdfqw_attachment_ids' != key and  \
+                    'contract_text_attachment_ids' != key and 'fktj_attachment_ids'!=key  and 'rejected_emil' !=key \
                     and 'x_studio_srqrlx' != key and 'signed_time' !=key  and 'contract_text_clean_attachment_ids' !=key  \
                     and 'contract_text_process_attachment_ids' !=key  \
                     and 'revision' != key :
                 no_check=True
-            elif  'contract_text_attachment_ids' == key and int(self.stage_id)==6 :
+            elif  ('contract_text_attachment_ids' == key or
+                   'pdfswy_attachment_ids' == key or
+                   'pdfqw_attachment_ids' == key or
+                   'fktj_attachment_ids' == key)  and int(self.stage_id)==6 :
                 #上传签章完成的最终合同，并回写签订时间
                 GetDatetime = get_zone_datetime.GetDatetime()
                 signed_time = GetDatetime.get_datetime()
@@ -465,28 +480,29 @@ class TierValidation(models.AbstractModel):
                 self._cr.execute(sql, (groups_id, self._uid,))
                 groups_users = self._cr.fetchone()
                 if not groups_users:
-                    raise UserError(u'仅商务可以更新最终版合同文本')
+                    raise UserError(u'仅商务可以更新最终版合同文本与PDF文本')
 
                 if not self.signed_time and not 'signed_time' in vals.keys():
                     raise UserError(u'请填写合同签订时间。')
                 # 处理历史文本合同
-                sql = 'select attachment_id from agreement_contract_text_ir_attachments_rel where id=%s'
-                self._cr.execute(sql, (self.id,))
-                iattachment_ids = self._cr.fetchall()
-                attachment = self.env['ir.attachment']
-                contract_text_attachment_ids=[]
-                for contract_text_attachment_id in  vals['contract_text_attachment_ids'][0][2]:
-                    is_add=True
-                    for iattachment_id in iattachment_ids:
-                        if iattachment_id[0]==contract_text_attachment_id:
-                            is_add=False
-                            attachment.browse(iattachment_id[0]).unlink()
-                    if is_add:
-                        contract_text_attachment_ids.append(contract_text_attachment_id)
-                vals['contract_text_attachment_ids']=[[6, False, contract_text_attachment_ids]]
+                # sql = 'select attachment_id from agreement_contract_text_ir_attachments_rel where id=%s'
+                # self._cr.execute(sql, (self.id,))
+                # iattachment_ids = self._cr.fetchall()
+                # attachment = self.env['ir.attachment']
+                # contract_text_attachment_ids=[]
+                # for contract_text_attachment_id in  vals['contract_text_attachment_ids'][0][2]:
+                #     is_add=True
+                #     for iattachment_id in iattachment_ids:
+                #         if iattachment_id[0]==contract_text_attachment_id:
+                #             is_add=False
+                #             attachment.browse(iattachment_id[0]).unlink()
+                #     if is_add:
+                #         contract_text_attachment_ids.append(contract_text_attachment_id)
+                # vals['contract_text_attachment_ids']=[[6, False, contract_text_attachment_ids]]
+                #
+                # sql = 'delete from agreement_contract_text_ir_attachments_rel where id=%s'
+                # self._cr.execute(sql, (self.id,))
 
-                sql = 'delete from agreement_contract_text_ir_attachments_rel where id=%s'
-                self._cr.execute(sql, (self.id,))
 
             elif 'contract_text_clean_attachment_ids' == key and int(self.stage_id) == 4:
                 # 上传清洁版合同文本，更新提醒销售输入预计签回时间
@@ -570,7 +586,7 @@ class TierValidation(models.AbstractModel):
                 ('status', '=', 'pending')
             ])
             if user_reviews:
-                raise UserError(u'合同正在审批中。')
+                raise UserError(msg)
             else:
                 user_reviews = self.env['tier.review'].search([
                     ('model', '=', 'agreement'),
@@ -578,7 +594,7 @@ class TierValidation(models.AbstractModel):
                     ('status', '=', 'approved')
                 ])
                 if not user_reviews:
-                    raise UserError(u'合同未完成审批。')
+                    raise UserError(msg)
 
             sql = "UPDATE  agreement set plan_sign_time=%s,stage_id=6 where id=%s"
             if vals['plan_sign_time']:
@@ -643,7 +659,7 @@ class TierValidation(models.AbstractModel):
                     self._state_from and not vals.get(self._state_field) in
                     (self._state_to + [self._cancel_state]) and not
                     self._check_allow_write_under_validation(vals)) and no_check:
-                raise ValidationError(_("The operation is under validation."))
+                raise ValidationError(msg)
 
         if vals.get(self._state_field) in self._state_from:
             self.mapped('review_ids').unlink()

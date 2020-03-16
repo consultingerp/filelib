@@ -100,7 +100,7 @@
     <p style="margin: 0px; padding: 0px; font-size: 13px;">
         Dear
         <br/><br/>
-        <strong>${object.name}</strong> 合同被拒绝，请您及时查看
+        <strong>${object.name}</strong> 合同已被拒绝，请您及时处理。
 
         <br/><br/>
         <div style="margin: 16px 0px;">

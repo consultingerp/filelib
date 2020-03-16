@@ -30,7 +30,9 @@ class AgreementPwsImport(models.TransientModel):
         # if self.new==False and not self.agreement_id:
         #     raise UserError("如果不是新建，请选择需要添加PWS的合同")
         if not self.import_pws_attachment_ids:
-            return
+            raise UserError(("请上传PWS文件"))
+        if len(self.import_pws_attachment_ids)>1:
+            raise UserError(("请只上传并保留一个PWS文件"))
 
         status, headers, content=self.env['ir.http'].binary_content(xmlid=None, model='ir.attachment', id=self.import_pws_attachment_ids[0].id, field='datas', unique=False,
                            filename=None, filename_field='datas_fname', download=False, mimetype=None,
@@ -138,14 +140,17 @@ class AgreementPwsImport(models.TransientModel):
         if table.number == 7:
             cell_value = table.cell(5, 5).value  # 客户名称与合作伙伴
             if not (cell_value is None) and not (cell_value is ''):
-                parent = self.env['res.partner'].search(
-                    [('name', 'ilike', cell_value.strip()),
-                     ('company_id', '=', self.create_uid.company_id.id)], limit=1)
+                # parent = self.env['res.partner'].search(
+                #     [('name', 'ilike', cell_value.strip()),
+                #      ('company_id', '=', self.create_uid.company_id.id)], limit=1)
+                sql = 'select id from res_partner where   name=%s '
+                self._cr.execute(sql, (str(cell_value.strip()),))
+                parent = self._cr.fetchone()
                 if parent:
-                    vals['x_studio_partner_id'] = parent.id
-                    #vals['x_studio_customer_name'] = cell_value
+                    vals['x_studio_partner_id'] = parent[0]
+                    # vals['x_studio_customer_name'] = cell_value
                 else:
-                    raise UserError(("客户没有维护: %s")%(cell_value) )
+                    raise UserError(("客户没有维护: %s") % (cell_value))
 
 
             cell_value = table.cell(10, 5).value  # 客户所属BU
@@ -294,11 +299,16 @@ class AgreementPwsImport(models.TransientModel):
             if table.number == 5:
                 cell_value = table.cell(5, 5).value  # 客户名称
                 if not (cell_value is None) and not (cell_value is ''):
-                    parent = self.env['res.partner'].search(
-                        [('name', 'ilike', cell_value.strip()),
-                     ('company_id', '=', self.create_uid.company_id.id)], limit=1)
+
+                    # parent = self.env['res.partner'].search(
+                    #     [('name', 'ilike', cell_value.strip()),
+                    #  ('company_id', '=', self.create_uid.company_id.id)], limit=1)
+
+                    sql = 'select id from res_partner where   name=%s '
+                    self._cr.execute(sql, (str(cell_value.strip()),))
+                    parent = self._cr.fetchone()
                     if parent:
-                        vals['x_studio_partner_id'] = parent.id
+                        vals['x_studio_partner_id'] = parent[0]
                         # vals['x_studio_customer_name'] = cell_value
                     else:
                         raise UserError(("客户没有维护: %s") % (cell_value))
