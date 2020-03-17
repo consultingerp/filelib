@@ -736,12 +736,19 @@ class CK_Hours_Worker(models.Model):
 
     @api.multi
     def search_by_useridcustomerdefault(self, start_date, end_date, name, fmodel, user_id, foperno):
-        # start_date = '2017-06-15'
-        # end_date = '2017-06-21'
+    # @api.multi
+    # def search_by_useridcustomerdefault(self):
+    #     name = 'WORK'
+    #     user_id = '25'
+    #     fmodel = '0'
+    #     foperno = 'B116'
+    #     start_date = '2017-06-15'
+    #     end_date = '2017-06-21'
+
         # startdate = (datetime.datetime.strptime(start_date, '%Y-%m-%d')).replace(tzinfo=pytz.timezone(self.env.user.tz)).astimezone(pytz.timezone(pytz.utc.zone))
         # enddate = (datetime.datetime.strptime(end_date, '%Y-%m-%d')).replace(tzinfo=pytz.timezone(self.env.user.tz)).astimezone(pytz.timezone(pytz.utc.zone))
         # start_date = startdate.strftime('%Y-%m-%d %H:%M:%S')
-        # end_date =  enddate.strftime('%Y-%m-%d %H:%M:%S')
+        # end_date = enddate.strftime('%Y-%m-%d %H:%M:%S')
         if self.env.user.tz:
             timezone = self.env.user.tz
         else:
@@ -882,7 +889,7 @@ class CK_Hours_Worker(models.Model):
                 ml['amount'] = line[i] or 0.0  # 金额
                 i = i + 1
                 date = line[i] or ''
-                ml['date_worker'] = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(timezone)).strftime(
+                ml['date_worker'] = datetime.datetime.strptime(date.strftime("%Y-%m-%d %H:%M:%S"), "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(timezone)).strftime(
                     '%Y-%m-%d')
                 i = i + 1
                 # ml['date_worker'] = datetime.datetime.strptime(line.date_worker, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(self.env.user.tz)).date() #报工时间
@@ -1213,24 +1220,31 @@ class CK_Hours_Worker(models.Model):
         return l
     '''
 
+    # @api.multi
+    # def search_by_userid_approve(self, userid, date):
     @api.multi
-    def search_by_userid_approve(self, userid, date):
-    # def search_by_userid_approve(self):
-    #     date = '2020-03-13'
-    #     userid = 1
+    def search_by_userid_approve(self):
+        date = '2020-03-12 09:45:46'
+        userid = 25
+        logging.info("date是%s" % date)
+        logging.info("useri是%s" % userid)
         if self.env.user.tz:
             timezone = self.env.user.tz
         else:
             timezone = 'utc'
 
-        date_from = date + ' 00:00:00'
-        date_to = date + ' 23:59:59'
+        date_from = date[:10] + ' 00:00:00'
+        date_to = date[:10] + ' 23:59:59'
 
-        current_date_from = (datetime.datetime.strptime(date_from, '%Y-%m-%d %H:%M:%S'))
-        current_date_to = (datetime.datetime.strptime(date_to, '%Y-%m-%d %H:%M:%S'))
-        # current_date_from = (datetime.datetime.strptime(date_from, '%Y-%m-%d %H:%M:%S')).replace(tzinfo=pytz.timezone(timezone)).astimezone(pytz.timezone(pytz.utc.zone))
-        # current_date_to = (datetime.datetime.strptime(date_to, '%Y-%m-%d %H:%M:%S')).replace(tzinfo=pytz.timezone(timezone)).astimezone(pytz.timezone(pytz.utc.zone))
+        #new
+        # current_date_from = (datetime.datetime.strptime(date_from, '%Y-%m-%d %H:%M:%S'))
+        # current_date_to = (datetime.datetime.strptime(date_to, '%Y-%m-%d %H:%M:%S'))
+        # logging.info("时间1是%s" % current_date_from)
 
+        # origin
+        current_date_from = (datetime.datetime.strptime(date_from, '%Y-%m-%d %H:%M:%S')).replace(tzinfo=pytz.timezone(timezone)).astimezone(pytz.timezone(pytz.utc.zone))
+        current_date_to = (datetime.datetime.strptime(date_to, '%Y-%m-%d %H:%M:%S')).replace(tzinfo=pytz.timezone(timezone)).astimezone(pytz.timezone(pytz.utc.zone))
+        logging.info("时间from是%s" % current_date_from)
         # current_date = (datetime.datetime.strptime(date, '%Y-%m-%d')).replace(tzinfo=pytz.timezone(self.env.user.tz)).astimezone(pytz.timezone(pytz.utc.zone))
         # date = current_date.strftime('%Y-%m-%d')
         date_format_from = current_date_from.strftime('%Y-%m-%d %H:%M:%S')
@@ -1344,7 +1358,7 @@ class CK_Hours_Worker(models.Model):
                 ml['amount'] = line[i] or 0.0  # 金额
                 i = i + 1
                 date = line[i] or ''
-                ml['date_worker'] = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(timezone)).strftime(
+                ml['date_worker'] = datetime.datetime.strptime(date.strftime("%Y-%m-%d %H:%M:%S"), "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(timezone)).strftime(
                     '%Y-%m-%d')
                 i = i + 1
                 # ml['date_worker'] = datetime.datetime.strptime(line.date_worker, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(self.env.user.tz)).date() #报工时间
@@ -1606,7 +1620,7 @@ class CK_Hours_Worker(models.Model):
                 ml['amount'] = line[i] or 0.0  # 金额
                 i = i + 1
                 date = line[i] or ''
-                ml['date_worker'] = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(timezone)).strftime(
+                ml['date_worker'] = datetime.datetime.strptime(date.strftime("%Y-%m-%d %H:%M:%S"), "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(timezone)).strftime(
                     '%Y-%m-%d')
                 i = i + 1
                 # ml['date_worker'] = datetime.datetime.strptime(line.date_worker, "%Y-%m-%d %H:%M:%S").replace(tzinfo=pytz.utc).astimezone(pytz.timezone(self.env.user.tz)).date() #报工时间
