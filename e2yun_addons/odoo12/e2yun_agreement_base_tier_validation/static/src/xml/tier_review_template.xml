@@ -95,12 +95,14 @@
         var text=value[""+obj.id+""]
         $(objDiv).css("display","block");
         $(objDiv).css("left", event.x);
-        if (text.length>100){
-            $(objDiv).css("top", 500+event.y);
+        if (text.length>250){
+            $(objDiv).css("top", 1000+event.y-50);
+            $(objDiv).text("请在右边消息区查看审批记录")
         }else{
-            $(objDiv).css("top", 700+event.y);
+            $(objDiv).css("top", 1000+event.y-50);
+            $(objDiv).text(text)
         }
-        $(objDiv).text(text)
+
       }else{
          $(objDiv).text("")
          $(objDiv).css("display", "none");

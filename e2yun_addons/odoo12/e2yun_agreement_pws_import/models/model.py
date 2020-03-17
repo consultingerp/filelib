@@ -30,7 +30,9 @@ class AgreementPwsImport(models.TransientModel):
         # if self.new==False and not self.agreement_id:
         #     raise UserError("如果不是新建，请选择需要添加PWS的合同")
         if not self.import_pws_attachment_ids:
-            return
+            raise UserError(("请上传PWS文件"))
+        if len(self.import_pws_attachment_ids)>1:
+            raise UserError(("请只上传并保留一个PWS文件"))
 
         status, headers, content=self.env['ir.http'].binary_content(xmlid=None, model='ir.attachment', id=self.import_pws_attachment_ids[0].id, field='datas', unique=False,
                            filename=None, filename_field='datas_fname', download=False, mimetype=None,
@@ -138,14 +140,17 @@ class AgreementPwsImport(models.TransientModel):
         if table.number == 7:
             cell_value = table.cell(5, 5).value  # 客户名称与合作伙伴
             if not (cell_value is None) and not (cell_value is ''):
-                parent = self.env['res.partner'].search(
-                    [('name', 'ilike', cell_value.strip()),
-                     ('company_id', '=', self.create_uid.company_id.id)], limit=1)
+                # parent = self.env['res.partner'].search(
+                #     [('name', 'ilike', cell_value.strip()),
+                #      ('company_id', '=', self.create_uid.company_id.id)], limit=1)
+                sql = 'select id from res_partner where   name=%s '
+                self._cr.execute(sql, (str(cell_value.strip()),))
+                parent = self._cr.fetchone()
                 if parent:
-                    vals['x_studio_partner_id'] = parent.id
-                    #vals['x_studio_customer_name'] = cell_value
+                    vals['x_studio_partner_id'] = parent[0]
+                    # vals['x_studio_customer_name'] = cell_value
                 else:
-                    raise UserError(("客户没有维护: %s")%(cell_value) )
+                    raise UserError(("客户没有维护: %s") % (cell_value))
 
 
             cell_value = table.cell(10, 5).value  # 客户所属BU
@@ -237,7 +242,7 @@ class AgreementPwsImport(models.TransientModel):
 
             cell_value = table.cell(13, 5).value  # 项目背景
             if not (cell_value is None) and not (cell_value is ''):
-                vals['x_studio_xmbj'] = cell_value
+                vals['description'] = cell_value
 
         if table.number == 8:
            cell_value = table.cell(2, 3).value  # 合同起始日期
@@ -257,14 +262,15 @@ class AgreementPwsImport(models.TransientModel):
 
 
       table = wb.sheets()[16]
-      cell_value = table.cell(10, 4).value  # 收入确认类型
+      cell_value = table.cell(10, 4).value  # 收入类型
       if not (cell_value is None) and not (cell_value is ''):
-          agreement_income_type = self.env['agreement.income.type'].search(
-              [('name', 'ilike', cell_value.strip())], limit=1)
-
-          income_type=[[6, False, [agreement_income_type.id]]]
-          if agreement_income_type:
-            vals['income_type'] = income_type
+          sql = 'select id from agreement_income_type where name =%s'
+          # self._cr.execute(sql, (str(math.floor(cell_value)),))
+          self._cr.execute(sql, (cell_value.strip(),))
+          income_type = self._cr.fetchone()
+          if income_type:
+              income_type = [[6, False, [income_type[0]]]]
+              vals['income_type'] = income_type
 
       cell_value = table.cell(10, 6).value  # 产品线
       if not (cell_value is None) and not (cell_value is ''):
@@ -293,11 +299,16 @@ class AgreementPwsImport(models.TransientModel):
             if table.number == 5:
                 cell_value = table.cell(5, 5).value  # 客户名称
                 if not (cell_value is None) and not (cell_value is ''):
-                    parent = self.env['res.partner'].search(
-                        [('name', 'ilike', cell_value.strip()),
-                     ('company_id', '=', self.create_uid.company_id.id)], limit=1)
+
+                    # parent = self.env['res.partner'].search(
+                    #     [('name', 'ilike', cell_value.strip()),
+                    #  ('company_id', '=', self.create_uid.company_id.id)], limit=1)
+
+                    sql = 'select id from res_partner where   name=%s '
+                    self._cr.execute(sql, (str(cell_value.strip()),))
+                    parent = self._cr.fetchone()
                     if parent:
-                        vals['x_studio_partner_id'] = parent.id
+                        vals['x_studio_partner_id'] = parent[0]
                         # vals['x_studio_customer_name'] = cell_value
                     else:
                         raise UserError(("客户没有维护: %s") % (cell_value))
@@ -385,7 +396,7 @@ class AgreementPwsImport(models.TransientModel):
 
                 cell_value = table.cell(13, 5).value  # 项目背景
                 if not (cell_value is None) and not (cell_value is ''):
-                    vals['x_studio_xmbj'] = cell_value
+                    vals['description'] = cell_value
 
             if table.number == 10:
                cell_value = table.cell(10, 2).value  # 订单类型
@@ -398,12 +409,26 @@ class AgreementPwsImport(models.TransientModel):
                       #x_studio_fkfs
                      vals['x_studio_payment_method'] = cell_value
 
-               cell_value = table.cell(10, 4).value  # 收入确认类型
+               cell_value = table.cell(10, 4).value  # 收入类型
                if not (cell_value is None) and not (cell_value is ''):
-                   agreement_income_type = self.env['agreement.income.type'].search(
-                       [('name', 'ilike', cell_value.strip())], limit=1)
-                   income_type = [[6, False, [agreement_income_type.id]]]
-                   if agreement_income_type:
+                   # cell_values=cell_value.strip().split(',')
+                   # income_type=None
+                   # income_type_ids=[]
+                   # for cell_value in cell_values:
+                   #    agreement_income_type = self.env['agreement.income.type'].search(
+                   #       [('name', 'ilike', cell_value)], limit=1)
+                   #    if agreement_income_type:
+                   #      income_type_ids.append(agreement_income_type.id)
+                   #    if income_type_ids:
+                   #      income_type = [[6, False, income_type_ids]]
+                   # if income_type!=None:
+                   #     vals['income_type'] = income_type
+                   sql = 'select id from agreement_income_type where name =%s'
+                   # self._cr.execute(sql, (str(math.floor(cell_value)),))
+                   self._cr.execute(sql, (cell_value.strip(),))
+                   income_type = self._cr.fetchone()
+                   if income_type:
+                       income_type = [[6, False, [income_type[0]]]]
                        vals['income_type'] = income_type
 
                cell_value = table.cell(10, 6).value  # 产品线

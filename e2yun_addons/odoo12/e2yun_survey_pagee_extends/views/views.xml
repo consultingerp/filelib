@@ -47,8 +47,10 @@
                             <field name="constr_mandatory"/>
                         </tree>
                     </field>
+                    <label for="chose_from_template_question"/>
+                    <field name="chose_from_template_question" options="{'no_create': True, 'no_create_edit':True}" domain="[('is_template_question','=',True)]"/>
 <!--                    <button name="new_question" string="新建问题" type="object" class='oe_edit_only'/>-->
-                    <button name="chose_question_from_template" string="从模板问题库中选择问题" type="object" class='oe_edit_only'/>
+<!--                    <button name="chose_question_from_template" string="从模板问题库中选择问题" type="object" class='oe_edit_only'/>-->
                 </xpath>
             </field>
         </record>
