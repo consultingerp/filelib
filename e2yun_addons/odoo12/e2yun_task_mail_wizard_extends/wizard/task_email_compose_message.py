@@ -416,6 +416,7 @@ class SurveyMailComposeMessage(models.TransientModel):
                         if wizard.composition_mode == 'mass_mail':
                             batch_mails |= Mail.create(mail_values)
                         else:
+                            mail_values['partner_ids'] = [partner['id']]
                             mail_values['body'] = body
                             post_params = dict(
                                 message_type=wizard.message_type,
@@ -462,6 +463,7 @@ class SurveyMailComposeMessage(models.TransientModel):
                         if wizard.composition_mode == 'mass_mail':
                             batch_mails |= Mail.create(mail_values)
                         else:
+                            mail_values['partner_ids'] = [partner['id']]
                             mail_values['body'] = body
                             channel_id = self.env['mail.channel'].sudo().search([('description', '=', 'General announcements for all employees.')]).id
                             post_params = dict(

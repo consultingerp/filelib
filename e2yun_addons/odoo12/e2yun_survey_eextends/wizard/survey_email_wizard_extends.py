@@ -302,11 +302,12 @@ class SurveyMailComposeMessage(models.TransientModel):
 
             # survey_ids = wizard._context['default_survey_ids']
             survey = self.env['survey.survey']
-            body_a = """"""
+            # body_a = """"""
             for email in emails_list:
                 partner = Partner.search([('email', '=', email)], limit=1)
                 # 消息内容
                 # for u in survey.browse(survey_ids):
+                body_a = """"""
                 url = wizard.survey_id.public_url
                 name = wizard.survey_id.title
                 token = create_token(wizard, partner.id, email, wizard.survey_id.id)
@@ -333,6 +334,7 @@ class SurveyMailComposeMessage(models.TransientModel):
                         if wizard.composition_mode == 'mass_mail':
                             batch_mails |= Mail.create(mail_values)
                         else:
+                            mail_values['partner_ids'] = [partner['id']]
                             mail_values['body'] = body
                             post_params = dict(
                                 message_type=wizard.message_type,
@@ -352,6 +354,7 @@ class SurveyMailComposeMessage(models.TransientModel):
             for partner in partner_list:
                 # 消息内容
                 # for u in survey.browse(survey_ids):
+                body_a = """"""
                 url = wizard.survey_id.public_url
                 name = wizard.survey_id.title
                 token = create_token(wizard, partner['id'], partner['email'], wizard.survey_id.id)
@@ -378,6 +381,7 @@ class SurveyMailComposeMessage(models.TransientModel):
                         if wizard.composition_mode == 'mass_mail':
                             batch_mails |= Mail.create(mail_values)
                         else:
+                            mail_values['partner_ids'] = [partner['id']]
                             mail_values['body'] = body
                             channel_id = self.env['mail.channel'].sudo().search([('description', '=', 'General announcements for all employees.')]).id
                             post_params = dict(
