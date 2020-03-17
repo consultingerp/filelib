@@ -35,6 +35,33 @@ class e2yun_survey_question_extends(models.Model):
         ('upload attachments', '附件上传'),
         ], required=False)
 
+    chose_template_question = fields.Many2one('survey.question', string='从模板问题中选择')
+
+    @api.onchange('chose_template_question')
+    def onchange_chose_template_question(self):
+        if not self.chose_template_question:
+            pass
+        elif self.chose_template_question:
+            # 表头
+            if self.chose_template_question.question:
+                self.question = self.chose_template_question.question
+            if self.chose_template_question.question_bank_type:
+                self.question_bank_type = self.chose_template_question.question_bank_type
+            if self.chose_template_question.type:
+                self.type = self.chose_template_question.type
+            # 选项 选项卡
+            if self.chose_template_question.constr_mandatory:
+                self.constr_mandatory = self.chose_template_question.constr_mandatory
+            # 答案选项卡
+            if self.chose_template_question.scoring_method:
+                self.scoring_method = self.chose_template_question.scoring_method
+            if self.chose_template_question.labels_ids:
+                self.labels_ids = self.chose_template_question.labels_ids
+            if self.chose_template_question.labels_ids_2:
+                self.labels_ids_2 = self.chose_template_question.labels_ids_2
+            self.chose_template_question = False
+
+
 
     @api.model
     def default_get(self, fields_list):

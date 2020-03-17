@@ -416,7 +416,7 @@
                         </tree>
                     </field>
 <!--                    <button name="new_question" string="新建问题" type="object" class='oe_edit_only'/>-->
-                    <button name="chose_question_from_template" string="从模板问题库中选择问题" type="object" class="oe_edit_only"/>
+<!--                    <button name="chose_question_from_template" string="从模板问题库中选择问题" type="object" class="oe_edit_only"/>-->
 
                     </sheet>
           </form>
