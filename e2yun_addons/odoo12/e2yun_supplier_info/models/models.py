@@ -47,6 +47,7 @@ class approval_remark(models.TransientModel):
 
 class e2yun_supplier_info(models.Model):
     _name = 'e2yun.supplier.info'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     def _default_category(self):
         return self.env['res.partner.category'].browse(self._context.get('category_id'))

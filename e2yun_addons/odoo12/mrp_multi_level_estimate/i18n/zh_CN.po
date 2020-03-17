@@ -1,0 +1,42 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* mrp_multi_level_estimate
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e-20190424\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-19 09:01+0000\n"
+"PO-Revision-Date: 2020-02-19 17:16+0800\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 2.2.3\n"
+
+#. module: mrp_multi_level_estimate
+#: model:ir.model.fields,field_description:mrp_multi_level_estimate.field_product_mrp_area__group_estimate_days
+msgid "Group Days of Estimates"
+msgstr "分组估算的天数"
+
+#. module: mrp_multi_level_estimate
+#: sql_constraint:product.mrp.area:0
+msgid "Group Days of Estimates must be greater than or equal to zero."
+msgstr "分组天数估计值必须大于或等于零."
+
+#. module: mrp_multi_level_estimate
+#: model:ir.model,name:mrp_multi_level_estimate.model_mrp_multi_level
+msgid "Multi Level MRP"
+msgstr "多层MRP"
+
+#. module: mrp_multi_level_estimate
+#: model:ir.model,name:mrp_multi_level_estimate.model_product_mrp_area
+msgid "Product MRP Area"
+msgstr "产品MRP区域"
+
+#. module: mrp_multi_level_estimate
+#: model:ir.model.fields,help:mrp_multi_level_estimate.field_product_mrp_area__group_estimate_days
+msgid "The days to group your estimates as demand for the MRP.It can be different from the lenght of the date ranges you use in the estimates."
+msgstr "根据MRP需求来分组估算的天数.它可能与您在估计值中使用的日期范围长度不同."
